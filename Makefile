@@ -562,6 +562,8 @@ Clean: clean
 #	@$(CURL) "http://$(HOST)/Catalog/manage_catalogClear"
 
 # i18n
+# remember, it goes like this:
+# 1. merge source files, 2. make pot, 3. replace po files, 4. make po
 
 LANGUAGES=en es fr-CA fr ga
 
