@@ -1,6 +1,10 @@
 <html i18n:domain="zwiki">
 
-<head metal:define-macro="head">
+<head metal:define-macro="head"
+      tal:define="dummy python:
+      request.RESPONSE.setHeader('Content-Type','text/html;; charset=utf-8')
+      # like PTS.. don't know why this is needed, but it is (firefox at least);
+      ">
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <meta metal:define-slot="noindex" tal:omit-tag="" />
   <title metal:define-slot="title">title..</title>
