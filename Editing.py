@@ -104,7 +104,7 @@ class EditingSupport:
                 p.read(),
                 REQUEST=REQUEST,
                 subjectSuffix='',
-                subject='(new) '+log,
+                subject='(%s) %s' % (_('new'),log),
                 message_id=self.messageIdFromTime(p.creationTime())
                 )
         # and move on
