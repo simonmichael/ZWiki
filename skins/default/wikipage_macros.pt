@@ -424,16 +424,6 @@ style="font-weight:normal"
 title="rename this page to the name you have entered, updating all links"
 tal:condition="python:user.has_permission('Zwiki: Rename pages',here)" 
 />
-<input type="hidden" name="leaveplaceholder" value="0" 
-class="shade2"
-title="when renaming, leave behind a page which points to the new location" 
-tal:condition="python:user.has_permission('Zwiki: Rename pages',here)"
-/><span tal:condition="nothing">&nbsp;placeholder</span>
-<input type="hidden" name="updatebacklinks" value="1" 
-class="shade2"
-title="when renaming, replace references to the old name throughout the wiki. Caution!" 
-tal:condition="python:user.has_permission('Zwiki: Rename pages',here)"
-/><span tal:condition="nothing">&nbsp;update all</span>
 <input type="submit" name="delete:method" value="delete!" 
 style="font-weight:normal"
 title="move this page to the recycle bin, and relink to the name you have entered."

@@ -79,13 +79,11 @@ UI.py:editform() calls us with these options:
                    tal:attributes="value page" />
         
             <input name="leaveplaceholder" 
-                   type="hidden"
                    value="" 
+                   type="hidden"
                    tal:condition="python:creating or renamingsolepage
-             # are we (a) creating a new page or (b) encouraging the 
-             # sole page to be renamed to FrontPage ? In these cases, 
-             # don't leave a placeholder if the name changes ;
-             " />
+                   # never leave a placeholder in these situations ;
+                   " />
     
         <div class="field"
              tal:define="error errors/title|nothing;
