@@ -2,29 +2,94 @@ Zwiki 0.29 in progress
 
     Summary
 
-        ...
+        Bugfixes for Zope 2.7 & Plone 2, skin tweaks.
+
+	NOTE: immediately following this release I am switching to darcs
+	as primary revision control system and considering CVS to be
+	frozen. Please see http://zwiki.org/ZwikiCVS for new procedures
+	and discussion.
 
     Upgrade notes
 
-	...
+	Nothing special; check past upgrade notes if appropriate
 
     Changes
 
       General
 
-	* ...
+	* wiki templates (added via ZMI Add ZWiki form) can now import
+	  zexp, xml, jpg, png, gif and pt files, and run a setup_WIKITYPE
+	  external method if present. This allows, eg, a latex-enabled
+	  wiki template to be distributed with the LatexWiki patch.
+	  (Bob McElrath)
+
+	* control page creation with add, not edit permission
+
+	* don't let python locale problems prevent product initialization
+	  (IssueNo0392, IssueNo0769)
+
+	* fix missing Reparent permission (IssueNo0748, IssueNo0757)
+
+	* wikiOutlineFromParents could break with zope 2.7, fixed (IssueNo0738)
+
+	* be more robust with junk in the catalog when adding/viewing a page (IssueNo0722)
+
+	* fix "must be lazy sequences" error in btree-based folders (IssueNo0713)
+	
+	* include .cvsignore files in CVS
 
       Skins and content
 
-	* ...
+	* xhtml fixes (bob mcelrath, cyrille lebeaupin)
+
+	* default: show next/up/prev links in full mode by default
+
+	* default: skin template code cleanups
+
+	* default: make sure small fonts are smaller than body
+
+	* default: use "options" instead of preferences, access key "o"
+
+	* default: hide explicit backlinks & diff links again - not needed
+
+	* default: tidier & customizable prev/up/next links
+
+	* default: show parent context in simple mode too
+
+	* default: try the linear parent display in full mode
+
+	* default: default to a smaller font
+
+	* default: tweak margins
+
+	* access keys "," "." "/" for full/simple/minimal
+
+	* access key "m" for subscribeform
+
+	* show wiki contents, not front page, when going up from a top-level page
+
+	* now using PTS-compatible message catalogs in i18n/
+	
+	* tell Epoz to look in epoz/ instead of ./ for it's files for easier setup
 
       Mail and messages
 
-	* ...
+	* a citations whitespace fix (bob mcelrath)
+
+	* obfuscate email addresses in messages slightly (bob mcelrath)
+
+	* disable mailout formatting (IssueNo0696, bob mcelrath)
+
+	* fix subscribing to the whole wiki (IssueNo0754)
+
+	* tweaks to support ezmlm integration
 
       Tracker
 
-	* ...
+	* make setupTracker do robust re-indexing like setupCatalog
+
+	* don't let metadataFor and issueColour mistake zodb objects for
+	  page properties (IssueNo0732)
 
 
 	
