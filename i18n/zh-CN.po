@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ZWiki-0-31-0rc1\n"
+"Project-Id-Version: ZWiki-0-31-0rc3\n"
 "POT-Creation-Date: Fri May 28 12:08:37 2004\n"
-"PO-Revision-Date: 2004-05-27 07:18+0800\n"
+"PO-Revision-Date: 2004-05-31 07:18+0800\n"
 "Last-Translator: T.C. Chou <tcchou-at-tcchou.org>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
 "MIME-Version: 1.0\n"
@@ -353,88 +353,82 @@ msgid ""
 "choose to upload an existing html file from your local computer by clicking "
 "the <i>Browse</i> button."
 msgstr ""
+"您可以用下面的表单建立新的ZWiki页面. 您也可以点选 <i>浏览</i> 按钮\n"
+"上传您计算机中已经存在的 HTML 档案."
 
 #: i/skins/dtmlmessages.pt:14
-#, fuzzy
 msgid "File"
-msgstr "简单"
+msgstr "档案"
 
 #: i/skins/dtmlmessages.pt:15
 msgid "Add"
-msgstr ""
+msgstr "新增"
 
 #: i/skins/dtmlmessages.pt:16
 msgid "Add and Edit"
-msgstr ""
+msgstr "新增并编辑"
 
 #: i/skins/dtmlmessages.pt:17 i/skins/dtmlmessages.pt:18
 #: i/skins/dtmlmessages.pt:26
 msgid "Enter a word"
-msgstr ""
+msgstr "输入一个字"
 
 # Default: "Page name"
 #: i/skins/dtmlmessages.pt:19
-#, fuzzy
 msgid "Name"
-msgstr "变更名称"
+msgstr "页面名称"
 
 #: i/skins/dtmlmessages.pt:2 i/skins/dtmlmessages.pt:3
 msgid "Add a ZWiki web"
-msgstr ""
+msgstr "新增一个ZWiki网站"
 
 #: i/skins/dtmlmessages.pt:20
 msgid "Category"
-msgstr ""
+msgstr "分类"
 
 #: i/skins/dtmlmessages.pt:21
-#, fuzzy
 msgid "Severity"
-msgstr "永不"
+msgstr "严重"
 
 #: i/skins/dtmlmessages.pt:22
 msgid "Status"
-msgstr ""
+msgstr "状态"
 
 #: i/skins/dtmlmessages.pt:23
-#, fuzzy
 msgid "Optional note"
 msgstr "变更注记(选项)"
 
 #: i/skins/dtmlmessages.pt:24
 msgid "Submitted by"
-msgstr ""
+msgstr "提出者"
 
 #: i/skins/dtmlmessages.pt:25
-#, fuzzy
 msgid "Details & comments"
-msgstr "建议"
+msgstr "细节与建议"
 
 #: i/skins/dtmlmessages.pt:4 i/skins/dtmlmessages.pt:12
 msgid "Id"
-msgstr ""
+msgstr "名称"
 
 #: i/skins/dtmlmessages.pt:5 i/skins/dtmlmessages.pt:13
 msgid "Title"
-msgstr ""
+msgstr "标题"
 
 #: i/skins/dtmlmessages.pt:6
-#, fuzzy
 msgid "Type"
 msgstr "型态"
 
 #: i/skins/dtmlmessages.pt:7
-#, fuzzy
 msgid "Create wiki"
-msgstr "建立"
+msgstr "建立wiki"
 
 #: i/skins/dtmlmessages.pt:8
 msgid "and enter"
-msgstr ""
+msgstr "并输入"
 
 #: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:10
-#, fuzzy
 msgid "Add ZWiki Page"
-msgstr "Wiki变更"
+msgstr "新增ZWiki页面"
 
 # Default: ""
 # "You can change this page's parent(s) to place it within the overall page\n"
@@ -601,19 +595,16 @@ msgid "voting as"
 msgstr "来自"
 
 #: i/skins/standard/subscribeform.pt:102
-#, fuzzy
 msgid " Unsubscribe from this page "
-msgstr "取消订阅整个Wiki."
+msgstr " 取消订阅这个Wiki页面 "
 
 #: i/skins/standard/subscribeform.pt:109
-#, fuzzy
 msgid " Subscribe to this page "
-msgstr "建立页面"
+msgstr " 订阅这个页面 "
 
 #: i/skins/standard/wikipage.pt:65
-#, fuzzy
 msgid "search all pages"
-msgstr "显示所有功能"
+msgstr "搜寻所有页面"
 
 #: i/skins/standard/wikipage_macros.pt:107
 msgid "show front page"
@@ -643,11 +634,11 @@ msgstr "变更"
 
 #: i/skins/standard/wikipage_macros.pt:125
 msgid "show discussion page"
-msgstr "以点选评价 (投票在"
+msgstr "显示讨论页面"
 
 #: i/skins/standard/wikipage_macros.pt:129
 msgid "discussion"
-msgstr "显示所有功能"
+msgstr "讨论"
 
 #: i/skins/standard/wikipage_macros.pt:131
 msgid "show issue tracker"
@@ -756,7 +747,6 @@ msgid "go to home page"
 msgstr "跳到首页"
 
 #: i/skins/standard/wikipage_macros.pt:400
-#, fuzzy
 msgid "replying"
 msgstr "回复"
 
@@ -770,14 +760,12 @@ msgid "${nb} subscribers"
 msgstr "${nb} 订阅者"
 
 #: i/skins/standard/wikipage_macros.pt:435
-#, fuzzy
 msgid "1 subscriber"
-msgstr "订阅"
+msgstr "1 位订阅者"
 
 #: i/skins/standard/wikipage_macros.pt:438
-#, fuzzy
 msgid "no subscribers"
-msgstr "${nb} 订阅者"
+msgstr "没有人订阅"
 
 # Default: "new parent, name or replacement"
 #: i/skins/standard/wikipage_macros.pt:466
@@ -816,11 +804,11 @@ msgstr "删除!"
 
 #: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
 msgid "Backlinks for"
-msgstr "回溯连结为"
+msgstr "回溯连结"
 
 #: i/skins/zwiki_plone/backlinks.pt:21
 msgid "Here are the pages which link to"
-msgstr "底下是相关连结到的页面:"
+msgstr "有相关连结的页面"
 
 # Default: ""
 # "You can also set this page's <em>parent(s)</em>, to locate it within the\n"
@@ -829,13 +817,13 @@ msgstr "底下是相关连结到的页面:"
 #: i/skins/zwiki_plone/backlinks.pt:30
 msgid "box_zwiki_showhierarchy"
 msgstr ""
-"您也可以设定这一页面的 <em>父层</em>, 安排成为\n"
-"内容阶层. 点取选项或输入新的页面名称并且点选重作\n"
-"父层. 单一父层通常就足够了."
+"您可设定页面的 <em>父层</em>, 安排Wiki内容的阶层关系. \n"
+"点取选项或输入名称并且点选 变更父层 按钮. \n"
+"通常单一父层就够了."
 
 #: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:99
 msgid "Other parent"
-msgstr "其它父层页面"
+msgstr "不同的父层页面"
 
 #: i/skins/zwiki_plone/backlinks.pt:72 i/skins/standard/backlinks.pt:101
 msgid "Reparent"
@@ -886,10 +874,16 @@ msgstr ""
 "            名称将会跟随一个小小的 <code>?</code> 连接. 当您点选时, 则依\n"
 "            该名称建立一新页面."
 
-# Default: "This wiki also supports WikiWords as a link mechanism."
+# Default: ""
+# "In a Wiki page, you use [square brackets] to create links. When you save the page, the contents\n"
+# "            of the square brackets will have a small <code>?</code> link next to it, which you click to create\n"
+# "            a new page with that name."
 #: i/skins/zwiki_plone/editform.pt:141
 msgid "help_wikiwords"
-msgstr "这Wiki也支持 \"Wiki字集\" 为建立连结机制."
+msgstr ""
+"在快纪页面中, 您可用 [方括号] 建立连接. 当您储存页面时, 方括号里头的\n"
+"            名称将会跟随一个小小的 <code>?</code> 连接. 当您点选时, 则依\n"
+"            该名称建立一新页面."
 
 # Default: "Note for the page history (optional)"
 #: i/skins/zwiki_plone/editform.pt:152
@@ -1075,14 +1069,12 @@ msgid "subscribed_page_no"
 msgstr "您目前没有订阅这一页面."
 
 #: i/skins/zwiki_plone/subscribeform.pt:78
-#, fuzzy
 msgid "Unsubscribe from this page"
-msgstr "取消订阅整个Wiki."
+msgstr "取消订阅这个Wiki页面"
 
 #: i/skins/zwiki_plone/subscribeform.pt:85
-#, fuzzy
 msgid "Subscribe to this page"
-msgstr "建立页面"
+msgstr "订阅这个页面"
 
 # Default: ""
 # "You are currently subscribed<br />\n"
