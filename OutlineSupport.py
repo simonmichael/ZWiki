@@ -305,6 +305,13 @@ class OutlineManagerMixin:
         if p: return p.pageUrl()
         else: return self.wikiUrl()
 
+    security.declareProtected(Permissions.View, 'firstPage')
+    def firstPage(self):
+        """
+        Get the name of the first page in the hierarchy.
+        """
+        return self.wikiOutline().first()
+
     security.declareProtected(Permissions.View, 'firstPageUrl')
     def firstPageUrl(self):
         """
@@ -313,6 +320,13 @@ class OutlineManagerMixin:
         p = self.pageWithName(self.firstPage())
         if p: return p.pageUrl()
         else: return None
+
+    security.declareProtected(Permissions.View, 'lastPage')
+    def lastPage(self):
+        """
+        Get the name of the last page in the hierarchy.
+        """
+        return self.wikiOutline().last()
 
     security.declareProtected(Permissions.View, 'lastPageUrl')
     def lastPageUrl(self):
