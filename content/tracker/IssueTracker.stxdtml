@@ -1,0 +1,326 @@
+<!-- start of tracker search panel -->
+<a name="tracker">
+<dtml-let
+open="_.len(pages(isIssue=1,status='open'))"
+tracked=issueCount
+>
+<form action="&dtml-URL;" method="GET">
+<table border="0" cellspacing="1" cellpadding="0" width="100%"><tr>
+<td valign="top">
+<b><input type="submit" value="Search the tracker:" style="font-weight:bold"></b>
+<b><input type="text" name="textortitle" value="<dtml-var textortitle missing>" size="40" maxlength="100" style="font-weight:bold" accesskey="s"></b><br>
+<!-- start of custom text -->
+This is the issue tracker. 
+The last 10 modified issues are shown by default.
+See also <a href="&dtml-filterUrl;">filter issues</a>.
+<!-- end of custom text -->
+</td>
+<td valign="top">
+<table border="0" cellspacing="2" cellpadding="0">
+<dtml-in issue_statuses prefix=x>
+<tr>
+<td align="right"><small><a href="&dtml-URL;?statuses:list=&dtml-x_sequence_item;"><dtml-var "_.len(pages(isIssue=1,status=x_sequence_item))"></a></small></td>
+<td align="left" nowrap><small> &dtml-x_sequence_item;</small></td>
+</tr>
+</dtml-in>
+</table>
+</td>
+<td valign="top">
+<table border="0" cellspacing="2" cellpadding="0">
+<dtml-in issue_categories>
+<tr>
+<td align="right"><small><a href="&dtml-URL;?categories:list=&dtml.url_quote-sequence-item;"><dtml-var "_.len(pages(isIssue=1,category=_['sequence-item']))"></a></small></td>
+<td align="left" nowrap><small> &dtml-sequence-item;</small></td>
+</tr>
+</dtml-in>
+</table>
+</td>
+<td align=right valign="top">
+<big><big><big><big><b>
+&dtml-open;/ &dtml-tracked;</b></big></big></big></big><br>
+<small>open/total<br>issues</small>
+</td>
+</tr></table>
+</form>
+</dtml-let>
+<!-- end of tracker search panel -->
+
+<!-- start of issue list -->
+<a name="issues">
+<dtml-comment>dtml madness</dtml-comment>
+<dtml-let 
+sortstart="_.string.find(QUERY_STRING,'sort_on')"
+sortend="_.string.find(QUERY_STRING,'&',sortstart)"
+sortend="(sortend != -1) and (sortend+1) or _.len(QUERY_STRING)"
+query="(sortstart == -1) and QUERY_STRING or (QUERY_STRING[:sortstart]+QUERY_STRING[sortend:])"
+query="query and ('&'+query) or ''"
+order="_.getattr(REQUEST,'sort_order','') and '&sort_order=' or '&sort_order=reverse'"
+>
+<table border=0 width="100%">
+<tr>
+<td align=left valign=top>
+<a href="&dtml-URL;?sort_on=id&dtml-query;#tracker">description</a>
+</td>
+<td align=left valign=top width="1%">
+<a href="&dtml-URL;?sort_on=category_index&dtml-query;#tracker">category</a>
+</td>
+<td align=left valign=top width="1%">
+<a href="&dtml-URL;?sort_on=severity_index&dtml-query;#tracker">severity</a>
+</td>
+<td align=left valign=top width="1%">
+<a href="&dtml-URL;?sort_on=status_index&dtml-query;#tracker">status</a>
+</td>
+<td align=left valign=top width="1%">
+<a href="&dtml-URL;?sort_on=creation_time&dtml-query;#tracker">age</a>
+</td>
+<td align=left valign=top width="1%">
+<a href="&dtml-URL;?sort_on=lastEditTime&dtml-query;#tracker">modified</a>
+</td>
+</tr>
+<dtml-comment>
+Catalog() won't sort on title for some reason; dtml-in will but seems
+unreliable. Need to use dtml-in sort when combining multiple catalog
+results. Try both at once I guess.
+XXX try again ?
+</dtml-comment>
+<dtml-in "
+(_.getattr(REQUEST,'textortitle','') and
+(
+pages(isIssue=1,
+        sort_on=_.getattr(REQUEST,'sort_on','id'),
+        Title=textortitle) +
+pages(isIssue=1,
+        sort_on=_.getattr(REQUEST,'sort_on','id'),
+        category=textortitle) +
+pages(isIssue=1,
+        sort_on=_.getattr(REQUEST,'sort_on','id'),
+        text=textortitle)
+)
+) 
+or 
+(not _.getattr(REQUEST,'textortitle','') and QUERY_STRING and
+pages(isIssue=1,
+        sort_on=_.getattr(REQUEST,'sort_on','id'),
+        text=_.getattr(REQUEST,'textsearch',''),
+        Title=_.getattr(REQUEST,'titlesearch',''),
+        category=_.getattr(REQUEST,'categories',''),
+        severity=_.getattr(REQUEST,'severities',''),
+        status=_.getattr(REQUEST,'statuses',''))
+)
+or
+(not _.getattr(REQUEST,'textortitle','') and not QUERY_STRING and
+pages(isIssue=1,
+        sort_on='lastEditTime',
+        sort_order='reverse')[:10]
+)
+">
+<dtml-try>
+<dtml-let
+ linktitle="'' #getObject().linkTitle()"
+ bold="0#(status in ('open','pending') and 
+        #severity not in ('wishlist',) and 
+        #page.ageInDays() > 60)"
+>
+<tr bgcolor="&dtml-issueColour;">
+<td align=left valign=top>
+<dtml-comment>
+<dtml-var "wikilink('['+Title+']')">
+</dtml-comment>
+<dtml-var "bold and '<b>' or ''"><a href="&dtml-wiki_url;/&dtml-id;" 
+title="<dtml-var "'' #page.linkTitle()">">&dtml-Title;</a>
+<dtml-var "bold and '</b>' or ''"></td>
+<td align=left valign=top nowrap><dtml-var category></td>
+<td align=left valign=top nowrap><dtml-var severity></td>
+<td align=left valign=top nowrap>
+<dtml-var "bold and '<b>' or ''">
+<dtml-var status>
+<dtml-var "bold and '</b>' or ''">
+</td>
+<td align=left valign=top nowrap>
+<dtml-var "bold and '<b>' or ''">
+<dtml-let
+creation_time="_.getattr(_['sequence-item'],'creation_time','')"
+creation="_.DateTime(_.getattr(_['sequence-item'],'creation_time','') or 1007105000)"
+current="_.DateTime(ZopeTime().strftime('%Y/%m/%d %H:%M:%S'))"
+elapsed="current-creation"
+hourfactor="0.041666666666666664"
+minutefactor="0.00069444444444444447"
+secondsfactor="1.1574074074074073e-05"
+days="_.int(_.math.floor(elapsed))"
+weeks="days / 7"
+months="days / 30"
+years="days / 365"
+hours="_.int(_.math.floor((elapsed-days)/hourfactor))"
+minutes="_.int(_.math.floor((elapsed-days-hourfactor*hours)/minutefactor))"
+seconds="_.int(_.round((elapsed-days-hourfactor*hours-minutefactor*minutes)/secondsfactor))"
+>
+<dtml-unless creation_time>></dtml-unless><dtml-if years>
+<dtml-var years> year<dtml-var "years > 1 and 's' or ''">
+<dtml-elif months>
+<dtml-var months> month<dtml-var "months > 1 and 's' or ''">
+<dtml-elif weeks>
+<dtml-var weeks> week<dtml-var "weeks > 1 and 's' or ''">
+<dtml-elif days>
+<dtml-var days> day<dtml-var "days > 1 and 's' or ''">
+<dtml-elif hours>
+<dtml-var hours> hour<dtml-var "hours > 1 and 's' or ''">
+<dtml-elif minutes>
+<dtml-var minutes> minute<dtml-var "minutes > 1 and 's' or ''">
+<dtml-else>
+<dtml-var seconds> second<dtml-var "seconds > 1 and 's' or ''">
+</dtml-if>
+</dtml-let>
+<dtml-var "bold and '</b>' or ''">
+</td>
+<td align=left valign=top nowrap>
+<!--start of age calculation-->
+<dtml-comment>
+could call lastEditInterval but would have to wake up objects
+</dtml-comment>
+<dtml-let
+elapsed="ZopeTime() - lastEditTime"
+hourfactor="0.041666666666666664"
+minutefactor="0.00069444444444444447"
+secondsfactor="1.1574074074074073e-05"
+days="_.int(_.math.floor(elapsed))"
+weeks="days / 7"
+months="days / 30"
+years="days / 365"
+hours="_.int(_.math.floor((elapsed-days)/hourfactor))"
+minutes="_.int(_.math.floor((elapsed-days-hourfactor*hours)/minutefactor))"
+seconds="_.int(_.round((elapsed-days-hourfactor*hours-minutefactor*minutes)/secondsfactor))"
+>
+<dtml-if years>
+<dtml-var years> year<dtml-var "years > 1 and 's' or ''">
+<dtml-elif months>
+<dtml-var months> month<dtml-var "months > 1 and 's' or ''">
+<dtml-elif weeks>
+<dtml-var weeks> week<dtml-var "weeks > 1 and 's' or ''">
+<dtml-elif days>
+<dtml-var days> day<dtml-var "days > 1 and 's' or ''">
+<dtml-elif hours>
+<dtml-var hours> hour<dtml-var "hours > 1 and 's' or ''">
+<dtml-elif minutes>
+<dtml-var minutes> minute<dtml-var "minutes > 1 and 's' or ''">
+<dtml-else>
+<dtml-var seconds> second<dtml-var "seconds > 1 and 's' or ''">
+</dtml-if>
+</dtml-let>
+<!--end of age calculation-->
+</td>
+</tr>
+</dtml-let>
+<dtml-except>
+<tr><td colspan=6>
+&dtml-Title; gave an error, bad catalog entry ?
+</td></tr>
+</dtml-try>
+<dtml-if sequence-end>
+<tr>
+<td colspan=6>
+<b><dtml-var sequence-number></b>
+<dtml-comment>issue<dtml-var "_['sequence-number'] != 1 and 's' or ''"> listed</dtml-comment>
+</td>
+</tr>
+</dtml-if>
+<dtml-else>
+<tr><td colspan=6>&nbsp;</td></tr>
+</dtml-in>
+</table>
+</dtml-let>
+<!-- end of issue list -->
+
+<!-- start of add issue form -->
+<a name="addissue">
+<form action="&dtml-URL;" method="POST">
+<table border="0" cellspacing="0" cellpadding="5" width="60%"><tr 
+bgcolor="<dtml-var "'#ffffff' #issueColourFor(status='open')">"><td nowrap>
+Description:
+<b><input type="text" name="newtitle" value="<dtml-var newtitle missing html_quote>" size="60" maxlength="200" style="font-weight:bold"></b>
+<br>
+Category:
+<select name="newcategory">
+<dtml-in issue_categories>
+<option <dtml-var "_['sequence-item'] == 'zwiki: general' and 'SELECTED' or ''">>
+&dtml-sequence-item;
+</option>
+</dtml-in>
+</select> 
+<a href="TrackerSearchTips">Severity</a>:
+<select name="newseverity">
+<dtml-in issue_severities>
+<option <dtml-var "_['sequence-item'] == 'normal' and 'SELECTED' or ''">>
+&dtml-sequence-item;
+</option>
+</dtml-in>
+</select> 
+Status:
+<select name="newstatus">
+<dtml-in issue_statuses>
+<option <dtml-var "_['sequence-item'] == 'open' and 'SELECTED' or ''">>
+&dtml-sequence-item;
+</option>
+</dtml-in>
+</select> 
+<br>
+Details:
+<br>
+<textarea name="newtext" wrap="virtual" rows=5 cols=60>
+</textarea>
+<input type="hidden" name="submitted" value="1">
+</td></tr>
+<tr>
+<td>
+<b><input name="submit" type="submit" value="Add issue" style="font-weight:bold"></b>
+<!-- start of custom text -->
+<!-- customize and enable this mailto if you have set up issue mail-in: -->
+<!-- (subscribers can also mail to <a href="mailto:bugs@example.org">bugs@example.org</a>).-->
+<!-- end of custom text -->
+</td>
+</tr>
+</table>
+</form>
+<!-- end of add issue form -->
+
+<!-- start of add issue form processing -->
+<dtml-if "_.getattr(REQUEST,'submitted','') and _.getattr(REQUEST,'newtitle','')">
+<dtml-try>
+<dtml-let
+  lastid="pages(isIssue=1,sort_on='id')[-1].id"
+  lastnumber="_.int(lastid[7:11])"
+  newnumber="lastnumber+1"
+  newid="'IssueNo'+_.string.zfill(newnumber,4)"
+>
+<dtml-call "REQUEST.set('newid',newid)">
+</dtml-let>
+<dtml-except>
+<dtml-call "REQUEST.set('newid','IssueNo0001')">
+</dtml-try>
+<dtml-let
+  newcategory="_.getattr(REQUEST,'newcategory','zwiki: general')"
+  newseverity="_.getattr(REQUEST,'newseverity','normal')"
+  newstatus="_.getattr(REQUEST,'newstatus','open')"
+  newtext="_.getattr(REQUEST,'newtext','')"
+  newtitle="newid+' '+_.getattr(REQUEST,'newtitle','')"
+  newid="canonicalIdFrom(newtitle)"
+>
+<dtml-comment>
+some problem here - properties don't get set
+stick with createIssue for the moment
+<dtml-call "create(newtitle,text=newtext,REQUEST=REQUEST)">
+<dtml-call "pageWithName(newtitle).changeProperties(
+REQUEST=_.None,
+title=newtitle,
+category=newcategory,
+severity=newseverity,
+status=newstatus
+)">
+</dtml-comment>
+<dtml-call "createIssue(newtitle,newtext,newtitle,
+                        newcategory,newseverity,newstatus,
+		        REQUEST=REQUEST)">
+</dtml-let>
+<dtml-call "RESPONSE.redirect(URL)">
+</dtml-if>
+<!-- end of add issue form processing -->
+

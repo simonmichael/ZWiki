@@ -1,0 +1,135 @@
+<p>
+  Enter a word or phrase and hit enter to search the entire wiki. 
+  This is the same as using the search field at top right.
+<p>
+  Tips: A single word works best for matching page names. 
+  Case-insensitivity and wildcards may be supported depending on your catalog configuration.
+  Leave it blank to list all pages. 
+</p>
+<dtml-comment>
+  this code needs an update
+</dtml-comment>
+<dtml-if "_.has_key('expr')">
+<form method="GET" action="&dtml-URL;">
+  <input type="hidden" name="source" value="search">
+  <div align="center">
+    <input name="expr" type="text" size="30" value="<dtml-var expr>" accesskey="s">
+    <input type="submit" name="submit" value="Search">
+  </div>
+  <p>
+<dtml-let wikiurl=wiki_url>
+<dtml-try>
+<dtml-if "catalog()=='NONE'">
+<dtml-raise type="nocatalog">nocatalog</dtml-raise>
+</dtml-if>
+<!-- using catalog search -->
+<dtml-let 
+ wildcardexpr="'*'+_.string.join(_.string.split(expr),'* *')+'*' 
+   # NB search results differ between catalog and no catalog, and between
+   # TextIndex, ZCTextIndex and TextIndexNG2 depending on configuration.
+   # TING2 with case folding and left and right wildcards is best here.
+   # A brute force search (no catalog) also can give good results.
+   # Other configurations aren't good for title matching.
+   # We'll hide the Matching page names heading when there are none,
+   # so as not to show obviously wrong results.
+   "
+ texthits="pages(text=expr)"
+ titlehits="pages(Title=wildcardexpr)" 
+ >
+<dtml-if titlehits>
+<p><b>Page names matching &dtml-wildcardexpr; (<dtml-var "_.len(titlehits)">):</b>
+<br /><br />
+<dtml-in titlehits sort=Title>
+<a href="&dtml-wikiurl;/&dtml.url_quote-id;">&dtml-Title;</a><br />
+</dtml-in>
+</p>
+</dtml-if>
+<p><b>Text matching &dtml-expr; (<dtml-var "_.len(texthits)">):</b>
+<br /><br />
+<dtml-in texthits sort=Title>
+<dl><dt><a href="&dtml-wikiurl;/&dtml.url_quote-id;">&dtml-Title;</a></dt><dd><dtml-if expr><small><em><dtml-var "pageWithName(id).excerptAt(expr,size=500)"></em></small></dtml-if></dd></dl>
+</dtml-in>
+</p>
+</dtml-let>
+<dtml-except>
+<!-- using brute force search (poor caching) -->
+<dtml-call "REQUEST.set('count',0)">
+<p>
+<dtml-in "aq_parent.objectValues(spec='ZWiki Page')" sort=Title>
+  <dtml-unless "_.string.find(_.string.lower(_.getitem('sequence-item').raw),_.string.lower(expr)) == -1 and _.string.find(_.string.lower(id()),_.string.lower(expr)) == -1">
+    <dtml-call "REQUEST.set('count',REQUEST.count + 1)">
+    <a href="&dtml-wikiurl;/&dtml.url_quote-id;">&dtml-Title;</a><br />
+  </dtml-unless></dtml-in>
+</p>
+<p><b><dtml-var count> hits</b></p>
+<p>(no catalog or the catalog search gave an error, a brute-force search was used)</p>
+</dtml-try>
+</dtml-let>
+</form>
+
+<dtml-else>
+
+<form method="GET" action="&dtml-URL;">
+  <div align="center">
+    <input name="expr" type="text" size="30">
+    <input type="submit" name="submit" value="Search">
+  </div>
+</form>
+
+</dtml-if>
+
+<dtml-comment>
+I for one don't use these much.. maybe shrink em or a new page later
+<hr>
+<p>
+  Some other search tools:
+</p>
+<div align="right">
+  <FORM METHOD="GET" ACTION="http://www.google.com/custom">
+    google-search this wiki:
+    <INPUT TYPE="hidden" NAME="sitesearch"  value="zwiki.org">
+    <input type="text" size="30" name="q" value="<dtml-var expr missing>">
+    <INPUT TYPE="hidden" name="cof" VALUE="L:http://zwiki.org/pc3.gif">
+    <INPUT TYPE="hidden" name="domains" value="zwiki.org">
+    <INPUT TYPE="submit" VALUE="Search">
+  </FORM>
+  <FORM method=get action="http://www.yahoogroups.com/messagesearch/zope">
+    zope list at yahoogroups:
+    <INPUT TYPE="text" name=query size="30" value="<dtml-var expr missing>">
+    <INPUT TYPE="submit" value="Search">
+  </FORM>
+  <FORM METHOD="POST" ACTION="http://sunir.org/apps/meta.pl" ENCTYPE="application/x-www-form-urlencoded">
+    wikis indexed by MetaWiki:
+    <INPUT TYPE="TEXT" NAME="words" size="30" value="<dtml-var expr missing>">
+    <INPUT TYPE="submit" VALUE="Search">
+  </FORM>
+  <FORM METHOD="GET" ACTION="http://www.google.com/search">
+    google
+    (<a href="http://www.google.com/advanced_search">advanced</a>,
+    <a href="http://www.google.com/help/basics.html">help</a>):
+    <INPUT TYPE="TEXT" NAME="q"  size="30" value="<dtml-var expr missing>">
+    <INPUT TYPE="submit" VALUE="Search">
+  </FORM>
+  <FORM METHOD="GET" ACTION="http://groups.google.com/groups">
+    google-search UseNet
+    (<a href="http://groups.google.com/advanced_group_search">advanced</a>,
+    <a href="http://groups.google.com/googlegroups/help.html">help</a>):
+    <INPUT TYPE="TEXT" NAME="q"  size="30" value="<dtml-var expr missing>">
+    <INPUT TYPE="submit" VALUE="Search">
+  </FORM>
+  <FORM METHOD="GET" ACTION="http://images.google.com/images">
+    google-search images 
+    (<a href="http://images.google.com/help/faq_images.html">help</a>):
+    <input type="hidden" name="safe" value="off">
+    <input type="hidden" name="imgsafe" value="off">
+    <INPUT TYPE="TEXT" NAME="q"  size="30" value="<dtml-var expr missing>">
+    <INPUT TYPE="submit" VALUE="Search">
+  </FORM>
+  <FORM METHOD="GET" ACTION="http://www.google.com/search?cat=gwd%2FTop&hl=%28null%29">
+    google-search the ODP:
+    (<a href="http://www.google.com/dirhelp.html">help</a>):
+    <INPUT TYPE="TEXT" NAME="q"  size="30" value="<dtml-var expr missing>">
+    <INPUT TYPE="submit" VALUE="Search">
+  </FORM>
+</div>
+</dtml-comment>

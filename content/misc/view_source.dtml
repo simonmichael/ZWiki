@@ -1,0 +1,4 @@
+<html><body><pre>
+<dtml-var "document_src(REQUEST,RESPONSE)" html_quote>
+</pre></body></html>
+<dtml-call "RESPONSE.setHeader('content-type','text/html')">
