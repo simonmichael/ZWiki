@@ -712,9 +712,12 @@ class ZWikiPage(
                 if lastlog: lastlog = ' ('+lastlog+')'
                 
                 # build the link around the interval
-                linked_interval = (' <a href="%(page_url)s/diff" title="' % self.page_url() +
-                                   _('show last edit %(lastlog)s') % {"lastlog":lastlog} +
-                                   ">" + interval + "</a>" )
+                linked_interval = (
+                    ' <a href="%s/diff" title="%s (%s)" >%s</a>' % (
+                    self.pageUrl(),
+                    _('show last edit'),
+                    lastlog, 
+                    interval))
                 
                 # use the link in a clear i18n way                                                                         
                 s =  _('last edited %(interval)s ago')  % {"interval": linked_interval}
