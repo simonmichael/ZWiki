@@ -111,6 +111,12 @@ rpush:
 
 ## upload to server (darcs push)
 
+check: 
+	darcs whatsnew
+
+summary: 
+	darcs whatsnew --summary
+
 push:
 	darcs push -v -a
 
