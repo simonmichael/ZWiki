@@ -22,7 +22,7 @@
   <table border="0">
     <tr valign="top">
       <dtml-if hasCatalog>
-      <td align="right">Pages changed in the last </td>
+      <td align="right"><dtml-translate domain=zwiki>Pages changed in the last</dtml-translate></td>
       <dtml-in "['Day','Week','Month','Year','Ever']" prefix=x>
       <td align="center">
         <input type=submit name=period value="&dtml-x_sequence_item;" 
