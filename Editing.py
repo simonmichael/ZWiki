@@ -77,7 +77,7 @@ class EditingSupport:
         p.setLastEditor(REQUEST)
         p.setLastLog(log)
         p._setOwnership(REQUEST)
-        p.parents = [self.title_or_id()]
+        p.parents = [self.pageName()]
         self.wikiOutline().add(p.pageName(),p.parents) # update wiki outline
 
         # choose the specified type, the default type or whatever we're allowed 
