@@ -65,7 +65,7 @@
 <a tal:attributes="href here/discussionUrl" accesskey=""></a>
 <a tal:attributes="href here/trackerUrl" accesskey=""></a>
 <a tal:attributes="href here/indexUrl" accesskey="i"></a>
-<a tal:attributes="href here/uploadsUrl" accesskey=""></a>
+<a tal:condition="python:0" tal:attributes="href here/uploadsUrl" accesskey=""></a>
 <a tal:attributes="href here/preferencesUrl" accesskey="o"></a>
 <a tal:attributes="href here/helpUrl" accesskey="h"></a>
 <a tal:attributes="href here/pageUrl" accesskey="v"></a>
@@ -140,9 +140,6 @@
 <!-- editlinks -->
 <span metal:define-macro="editlinks">
 
-<a tal:condition="python:0" 
-   href="http://validator.w3.org/check/referer" accesskey="v"
-   ><span class="accesskey">v</span>alidate</a>
 <a tal:condition="python:here.isMailoutEnabled()"
    tal:attributes="href python:here.page_url() + '/subscribeform'"
    href="page_url/subscribeform" accesskey=""
