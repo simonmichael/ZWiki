@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+      tal:define="
+      title   string:${container/title} ${here/title_or_id};
+      macros  python:here.wikipage_macros(request).macros;
+      ">
+<head metal:use-macro="macros/head">
+  <title tal:content="title" metal:fill-slot="title" ></title>
+  <meta name="robots" content="noindex,nofollow" metal:fill-slot="noindex" />
+</head>
+<body bgcolor="#ffffff">
+
+There was a problem with one of this wiki's skin templates. There may be
+an object with a skin template ID that is not a Page Template or DTML
+Method, or the template may be missing.
+
+</body>
+</html>
