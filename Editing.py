@@ -950,10 +950,8 @@ class EditingSupport:
         This will be all available page types, unless overridden by an
         allowed_page_types property.
         """
-        all = map(lambda x:x._id, PAGETYPES)
-        return (filter(lambda x:strip(x),
-                       getattr(self,'allowed_page_types',[]))
-                or all)
+        return (filter(lambda x:strip(x),getattr(self,'allowed_page_types',[]))
+                or map(lambda x:x._id, PAGETYPES))
 
     def defaultPageType(self):
         """This wiki's default page type."""
