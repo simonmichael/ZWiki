@@ -262,7 +262,9 @@ class OutlineManagerMixin:
         """
         p = self.primaryParent()
         if p: return p.pageUrl()
-        else: return self.wikiUrl()
+        # going up from a top level page leads to..
+        #else: return self.wikiUrl()    # the front page
+        else: return self.contentsUrl() # the wiki contents
 
     security.declareProtected(Permissions.View, 'nextPage')
     def nextPage(self):
