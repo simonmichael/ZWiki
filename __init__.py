@@ -3,10 +3,11 @@
 __doc__="""
 ZWiki product
 """
-__version__='0.36.0'
+__version__='0.36.1'
 
 import os, re
 import Globals, OFS.Folder
+#XXX import pagetypes
 import ZWikiPage, ZWikiWeb, Permissions, Defaults
 
 def initialize(context): 
