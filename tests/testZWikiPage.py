@@ -168,11 +168,11 @@ class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
                           '<a href="http://nohost/test_folder_1_/wiki/TestPage" title="" style="background-color:;">TestPage</a>')
 #                          '<a href="/test_folder_1_/wiki/TestPage" title="" style="background-color:;">TestPage</a>')
         self.assertEquals(self.p.renderLinksIn('NewTestPage'),
-                          'NewTestPage<a class="new" href="http://nohost/test_folder_1_/wiki/TestPage/editform?page=NewTestPage" title="create this page">?</a>')
+                          'NewTestPage<a class="new" href="http://nohost/test_folder_1_/wiki/TestPage/createform?page=NewTestPage" title="create this page">?</a>')
 #                          'NewTestPage<a class="new" href="/test_folder_1_/wiki/TestPage/editform?page=NewTestPage" title="create this page">?</a>')
         self.assertEquals(self.p.renderLinksIn('!TestPage'),'TestPage')
         self.assertEquals(self.p.renderLinksIn('[newpage]'),
-                          '[newpage]<a class="new" href="http://nohost/test_folder_1_/wiki/TestPage/editform?page=newpage" title="create this page">?</a>')
+                          '[newpage]<a class="new" href="http://nohost/test_folder_1_/wiki/TestPage/createform?page=newpage" title="create this page">?</a>')
 #                          '[newpage]<a class="new" href="/test_folder_1_/wiki/TestPage/editform?page=newpage" title="create this page">?</a>')
         # a problem with escaping remote wiki links was reported
         self.p.edit(text='RemoteWikiURL: URL/')
@@ -181,11 +181,11 @@ class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
         self.assertEquals(self.p.renderLinksIn('!TestPage:REMOTEPAGE'),
                           'TestPage:REMOTEPAGE')
         self.assertEquals(self.p.renderLinksIn('[ ]'),
-                          '[ ]<a class="new" href="http://nohost/test_folder_1_/wiki/TestPage/editform?page=%20" title="create this page">?</a>')
+                          '[ ]<a class="new" href="http://nohost/test_folder_1_/wiki/TestPage/createform?page=%20" title="create this page">?</a>')
 #                          '[ ]<a class="new" href="/test_folder_1_/wiki/TestPage/editform?page=%20" title="create this page">?</a>')
         # do display the brackets prior to page creation
         self.assertEquals(self.p.renderLinksIn('[newpage]'),
-                          '[newpage]<a class="new" href="http://nohost/test_folder_1_/wiki/TestPage/editform?page=newpage" title="create this page">?</a>')
+                          '[newpage]<a class="new" href="http://nohost/test_folder_1_/wiki/TestPage/createform?page=newpage" title="create this page">?</a>')
 #                          '[newpage]<a class="new" href="/test_folder_1_/wiki/TestPage/editform?page=newpage" title="create this page">?</a>')
         # don't link wikinames inside <a href...>...</a>
         self.assertEquals(self.p.renderLinksIn('<a href>WikiName</a>'),
@@ -193,7 +193,7 @@ class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
         # do link wikinames after <a name...> with no closing </a>
         self.assertEquals(self.p.renderLinksIn('<a name>WikiName'),
 #                          '<a name>WikiName<a class="new" href="/test_folder_1_/wiki/TestPage/editform?page=WikiName" title="create this page">?</a>')
-                          '<a name>WikiName<a class="new" href="http://nohost/test_folder_1_/wiki/TestPage/editform?page=WikiName" title="create this page">?</a>')
+                          '<a name>WikiName<a class="new" href="http://nohost/test_folder_1_/wiki/TestPage/createform?page=WikiName" title="create this page">?</a>')
 
 
 

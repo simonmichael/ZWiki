@@ -26,7 +26,7 @@ class PageTypesTests(ZopeTestCase.ZopeTestCase):
         self.p.edit(text='PageOne\n',type='dtmlhtml')
         self.assertEquals(
             self.p.render(bare=1),
-            'PageOne<a class="new" href="http://nohost/test_folder_1_/wiki/TestPage/editform?page=PageOne" title="create this page">?</a>\n\n')
+            'PageOne<a class="new" href="http://nohost/test_folder_1_/wiki/TestPage/createform?page=PageOne" title="create this page">?</a>\n\n')
 
     def test_ZwikiWwmlPageType(self):
         self.p.edit(text='! PageOne PageTwo\n',type='msgwwmlprelinkfitissue')
