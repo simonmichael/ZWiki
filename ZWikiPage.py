@@ -962,6 +962,8 @@ class ZWikiPage(
         or the first page object in the folder, 
 	or None.
         """
+        # XXX need to handle a plone-like list property also
+        # XXX and will this pick up default_page from portal_properties ?
         return (
             self.pageWithName(getattr(self.folder(),'default_page','FrontPage'))
             or (list(self.pageObjects())+[None])[0]) # pageObjects may be a LazyMap
