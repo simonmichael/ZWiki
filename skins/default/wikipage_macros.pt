@@ -415,7 +415,7 @@ tal:condition="python:user.has_permission('Zwiki: Rename pages',here)"
 /><span tal:condition="nothing">&nbsp;update all</span>
 <input type="submit" name="delete:method" value="delete!" 
 style="font-weight:normal"
-title="move this page to the recycle bin, relinking to the page you have entered if any."
+title="move this page to the recycle bin, and relink to the name you have entered."
 tal:condition="python:user.has_permission('Zwiki: Delete pages',here)" 
 />
 </small>
