@@ -194,7 +194,7 @@ FILE:=$(PRODUCT)-$(VERSIONNO).tgz
 version:
 	@echo setting version to $(VERSIONNO)
 	perl -pi -e "s/__version__='.*?'/__version__='$(VERSIONNO)'/" __init__.py
-	perl -pi -e "s/Zwiki version [0-9a-z.-]+\./Zwiki version $(VERSIONNO)./"\
+	perl -pi -e "s/Zwiki version [0-9a-z.-]+/Zwiki version $(VERSIONNO)/"\
 	  content/basic/HelpPage.stx
 
 releasebranch: mergetag
