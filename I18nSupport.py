@@ -20,7 +20,9 @@ try:
             XXX hacky wrapper ensuring proper utf-8 http header when _ is used.
 
             Called for every i18n string, performance sensitive ?
-            Disables itself during unit testing.  
+
+            When there is no request, does nothing to allow unit tests to
+            run.
 
             Also: an i18n doc I've seen (find ref) thinks that _()
             returning a MessageIDFactory rather than a string is a good
@@ -33,7 +35,9 @@ try:
                 if REQUEST:
                     REQUEST.RESPONSE.setHeader( 
                         'Content-Type','text/html; charset=utf-8')
-                return MessageIDFactory.__call__(self,ustr,default)
+                    return MessageIDFactory.__call__(self,ustr,default)
+                else:
+                    return ustr
         _ = lambda s:str(MessageIDFactoryWithUtf8Fix('zwiki')(s))
         from Products.PageTemplates.PageTemplateFile import PageTemplateFile
         from Globals import HTMLFile, DTMLFile
