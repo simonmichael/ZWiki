@@ -27,7 +27,7 @@
          <b>
            <input type="text" name="textortitle" size="25" maxlength="100" 
                   value="&dtml-searchexpr;" 
-                  class="shade2" style="font-weight:bold" accesskey="s"
+                  class="formfield" style="font-weight:bold" accesskey="s"
                   title="search issue pages" 
             /><input type="submit" value="<dtml-translate domain=zwiki>search issues</dtml-translate>" 
                      style="font-weight:bold" title="search issue pages" />
@@ -354,7 +354,7 @@
          <b>
            <input 
             type="text" name="newtitle" 
-            value="<dtml-var newtitle missing html_quote>" class="shade2"
+            value="<dtml-var newtitle missing html_quote>" class="formfield"
             size="40" maxlength="200" style="font-weight:bold;width:100%;" />
          </b>
        </td>
@@ -363,7 +363,7 @@
          <dtml-translate domain=zwiki>Category:</dtml-translate>
        </td>
        <td nowrap>
-         <select name="newcategory" class="shade2">
+         <select name="newcategory" class="formfield">
            <dtml-in issue_categories>
            <option <dtml-var "_['sequence-item'] == 'zwiki: general' and 'SELECTED' or ''">>
              &dtml-sequence-item;
@@ -371,7 +371,7 @@
            </dtml-in>
          </select> 
          &nbsp;<dtml-translate domain=zwiki>Severity:</dtml-translate
-         ><select name="newseverity" class="shade2">
+         ><select name="newseverity" class="formfield">
            <dtml-in issue_severities>
            <option <dtml-var "_['sequence-item'] == 'normal' and 'SELECTED' or ''">>
              &dtml-sequence-item;
@@ -379,7 +379,7 @@
            </dtml-in>
          </select> 
          &nbsp;<dtml-translate domain=zwiki>Status:</dtml-translate
-         ><select name="newstatus" class="shade2">
+         ><select name="newstatus" class="formfield">
            <dtml-in issue_statuses>
            <option <dtml-var "_['sequence-item'] == 'open' and 'SELECTED' or ''">>
              &dtml-sequence-item;
@@ -394,7 +394,7 @@
        </td>
        <td>
          <textarea name="newtext" wrap="virtual" rows="5" cols="40" 
-                   class="shade2" style="width:100%"></textarea>
+                   class="formfield" style="width:100%"></textarea>
        </td>
      </tr>
      <tr>

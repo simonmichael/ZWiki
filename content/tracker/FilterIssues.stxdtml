@@ -93,19 +93,19 @@
 <tr>
 <td align=left valign=top colspan=3>
 <dtml-translate domain=zwiki>Name contains any of:</dtml-translate><br />
-<input type="text" name="titlesearch" value="<dtml-var titlesearch missing>" size="40" maxlength="60" accesskey="s" class="shade2">
+<input type="text" name="titlesearch" value="<dtml-var titlesearch missing>" size="40" maxlength="60" accesskey="s" class="formfield">
 </td>
 </tr>
 <tr>
 <td align=left valign=top colspan=3>
 <dtml-translate domain=zwiki>Page text contains any of:</dtml-translate><br />
-<input type="text" name="textsearch" value="<dtml-var textsearch missing>" size="40" maxlength="60" class="shade2">
+<input type="text" name="textsearch" value="<dtml-var textsearch missing>" size="40" maxlength="60" class="formfield">
 </td>
 </tr>
 <tr>
 <td align=left valign=top>
 <dtml-translate domain=zwiki>Categories:</dtml-translate><br />
-<select name="category:list" multiple class="shade2">
+<select name="category:list" multiple class="formfield">
 <dtml-in issue_categories prefix=x>
 <option
 <dtml-if "x_sequence_item in category">SELECTED</dtml-if>
@@ -115,7 +115,7 @@
 </td>
 <td align=left valign=top>
 <dtml-translate domain=zwiki>Severities:</dtml-translate><br />
-<select name="severity:list" multiple class="shade2">
+<select name="severity:list" multiple class="formfield">
 <dtml-in issue_severities prefix=x>
 <option
 <dtml-if "x_sequence_item in severity">SELECTED</dtml-if>
@@ -125,7 +125,7 @@
 </td>
 <td align=left valign=top>
 <dtml-translate domain=zwiki>Statuses:</dtml-translate><br />
-<select name="status:list" multiple class="shade2">
+<select name="status:list" multiple class="formfield">
 <dtml-in issue_statuses prefix=x>
 <option
 <dtml-if "x_sequence_item in status">SELECTED</dtml-if>

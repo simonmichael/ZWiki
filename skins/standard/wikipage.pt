@@ -62,7 +62,7 @@
         <!-- twk: combine rest of tds so no subscribe doesn't leave blank spot -->
         <td id="searchbox" width="20%" align="right"
             tal:define="showsearch python:request.get('zwiki_showsearch',1)">
-          <input id="searchinput" class="shade2" tal:condition="showsearch"
+          <input id="searchinput" class="formfield" tal:condition="showsearch"
                  name="expr" type="text" size="20" maxlength="100" value="" 
                  title="search all pages" accesskey="s" i18n:attributes="title" /><br 
                  tal:condition="showsearch" />
@@ -108,7 +108,7 @@
           <span metal:use-macro="macros/displaymodes"></span>
           <span metal:use-macro="macros/editlinks"></span>
           <div tal:condition="python:1">
-            <input id="searchinput" class="shade2" tal:condition="showsearch"
+            <input id="searchinput" class="formfield" tal:condition="showsearch"
                    name="expr" type="text" size="20" maxlength="100" value="" 
                    title="search all pages" accesskey="s" style="width: 95%" /> 
             <!-- XXX hack: width 95% keeps moz from chopping off right end 

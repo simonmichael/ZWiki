@@ -54,7 +54,7 @@ sortedparents python:thisparents #sequence.sort(thisparents);
 ">
 <li tal:repeat="parent sortedparents"> 
 <span tal:omit-tag="">
-<input type="checkbox" name="parents" value="parent" checked class="shade2"
+<input type="checkbox" name="parents" value="parent" checked class="formfield"
 tal:attributes="value parent;"
 tal:condition="zwiki_showhierarchy" />
 <a href="" title=""
@@ -80,7 +80,7 @@ sorted_backlinks python:sequence.sort(backlinks,
 blpage bl/Title;
 blisparent python:(blpage in thisparents) #and zwiki_showhierarchy;
 ">
-<input type="checkbox" name="parents" value="blpage" class="shade2"
+<input type="checkbox" name="parents" value="blpage" class="formfield"
 tal:attributes="checked blisparent; value blpage;"
 tal:condition="zwiki_showhierarchy" />
 <a href="blurl" title=""
@@ -96,7 +96,7 @@ tal:content="blpage"
 
 <p tal:condition="zwiki_showhierarchy">
 <br />
-<span i18n:translate="">Other parent</span>: <input type="text" name="parents" class="shade2" />
+<span i18n:translate="">Other parent</span>: <input type="text" name="parents" class="formfield" />
 <br /><br />
 <strong><input type="submit" value="Reparent" style="font-weight:bold" i18n:attributes="value" /></strong>
 <br /><br />

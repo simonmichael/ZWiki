@@ -48,7 +48,7 @@
         <div tal:condition="not:here/inCMF">
           <span i18n:translate="">Your email address</span>:
           <input name="email" type="text" size=30 value="email" 
-                 tal:attributes="value email" class="shade2" />
+                 tal:attributes="value email" class="formfield" />
           <input name="emailchanged" type="hidden" value="1" />
           <input class="context"
                  type="submit" 
