@@ -106,17 +106,19 @@ class Outline:
         Change node's parents to newparents in the outline.
         """
         self.add(node,newparents,update)
-    def next(self,node):
+    def next(self,node,wrap=0):
         list = self.flat()
         if node in list:
             i = list.index(node)
             if i < len(list)-1: return list[i+1]
+            elif wrap: return list[0]
         return None
-    def previous(self,node):
+    def previous(self,node,wrap=0):
         list = self.flat()
         if node in list:
             i = list.index(node)
             if i > 0: return list[i-1]
+            elif wrap: return list[-1]
         return None
     def ancestors(self,node):
         """
