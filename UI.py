@@ -112,6 +112,9 @@ def onlyBodyFrom(t):
     # maybe better, but more inclined to mess with valid text ?
     #return re.sub(htmlbodyexpr, r'\1', t)
 
+def addErrorTo(text,error):
+    return """<div class="error">%s</div>\n%s""" % (error,text)
+
 
 DEFAULT_TEMPLATES = {
     'badtemplate'        : loadPageTemplate('badtemplate'),

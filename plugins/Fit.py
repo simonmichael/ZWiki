@@ -6,14 +6,24 @@ from AccessControl import getSecurityManager, ClassSecurityInfo
 from Globals import InitializeClass
 from OFS.DTMLDocument import DTMLDocument
 
+from Products.ZWiki import Permissions
 from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Defaults import registerPageMetaData
-from Products.ZWiki import Permissions
-from Products.ZWiki.Utils import Popen3
+from Products.ZWiki.Utils import Popen3, formattedTraceback
+from Products.ZWiki.UI import addErrorTo
 
 # from tests/support.py:
 def pdir(path): return os.path.split(path)[0]
 ZWIKIDIR = pdir(os.path.abspath(__file__))
+
+def hasFitTests(self):
+    """
+    Does this page have any tables containing fit tests ?
+
+    Should match python fit's regexp.
+    """
+    return re.search(r'([Ff]ixtures|\bfit)\.',self.read()
+                     ) is not None
 
 try:
     from fit.Parse import Parse
@@ -82,21 +92,16 @@ try:
             return self._runFitInternallyOn(text)
 
         security.declareProtected(Permissions.View, 'hasFitTests')
-        def hasFitTests(self):
-            """
-            Does this page have any tables containing fit tests ?
+        def hasFitTests(self): return hasFitTests(self)
 
-            Should match python fit's regexp.
-            """
-            return re.search(r'([Ff]ixtures|\bfit)\.',self.read()
-                             ) is not None
 
 except ImportError:
+    error = formattedTraceback()
     class FitSupport:
         security = ClassSecurityInfo()
         security.declareProtected(Permissions.View, 'hasFitTests')
-        def hasFitTests(self):
-            return 0
+        def hasFitTests(self): return hasFitTests(self)
+        def runFitTestsIn(self,text): return addErrorTo(text,error)
 
 InitializeClass(FitSupport)
 registerPlugin(FitSupport)
