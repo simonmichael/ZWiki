@@ -3,7 +3,7 @@
 <table border="0" cellspacing="0" cellpadding="5"
 bgcolor="&dtml-issueColour;">
 <tr><td>
-**Description:**
+**Name:**
 <b><input type="text" name="title" value="<dtml-var "title[12:]" missing html_quote>" size="50" maxlength="200" style="font-weight:bold"></b>
 <dtml-let
   issue_categories="_.getattr(this(),'issue_categories','') or ['general']"
