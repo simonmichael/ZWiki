@@ -7,7 +7,9 @@
 # Be brave. Read on.
 
 import re, string
+
 import Defaults
+from Utils import BLATHER
 
 # URLs/URIs (better regexps in urllib/urlparse ?)
 urlchars         = r'[A-Za-z0-9/:;@_%~#=&\.\-\?\+\$,]+'
@@ -63,12 +65,15 @@ doublebracketedexpr = r'\[\[([^\n\]]+)\]\]'
 # regardless of locale ? How far should we go ? Are regexps getting slow ?
 
 import locale
-# "This sets the locale for all categories to the user's default
-#  setting (typically specified in the `LANG' environment variable)."
-#locale.setlocale(locale.LC_ALL, '') # troublemaker
-lang, encoding = locale.getlocale()
+# work around a python bug (IssueNo0392)
+# don't require python 2.3's getpreferredencoding
+try:
+    lang, encoding = locale.getlocale()
+except ValueError:
+    lang, encoding = None, None
+    BLATHER('Warning: getlocale() ValueError, WikiNames will not use the system locale')
 
-if lang:
+if encoding:
     # recognize this locale's upper and lower-case characters
     # old single-byte regexps:
     #U = string.uppercase
@@ -76,14 +81,23 @@ if lang:
     #wikiname1 = r'(?L)\b[%s]+[%s]+[%s][%s]*[0-9]*' % (U,L,U,U+L)
     #wikiname2 = r'(?L)\b[%s][%s]+[%s][%s]*[0-9]*'  % (U,U,L,U+L)
     # utf-8-aware regexps:
-    U='|'.join([x.encode('utf8') for x in unicode(string.uppercase,encoding)])
-    L='|'.join([x.encode('utf8') for x in unicode(string.lowercase,encoding)])
+    # XXX work around a python bug (?) (IssueNo0769)
+    try:
+        uppercase_uc = unicode(string.uppercase,encoding)
+        lowercase_uc = unicode(string.lowercase,encoding)
+    except LookupError:
+        uppercase_uc = unicode(string.uppercase)
+        lowercase_uc = unicode(string.lowercase)
+        BLATHER('Warning: unicode() LookupError for encoding %s, WikiNames will not use the system locale' % encoding)
+    U = '|'.join([x.encode('utf8') for x in uppercase_uc])
+    L = '|'.join([x.encode('utf8') for x in lowercase_uc])
     wikiname1 = r'(?L)\b(?:%s)+(?:%s)+(?:%s)(?:%s|%s)*[0-9]*' % (U,L,U,U,L)
     wikiname2 = r'(?L)\b(?:%s)(?:%s)+(?:%s)(?:%s|%s)*[0-9]*'  % (U,U,L,U,L)
 else:
-    # no locale is set, we'll try to recognize a default set of
-    # international characters. In this case we emulate \b and word
-    # boundaries may not be quite as accurate.
+    # it looks like no locale is set, or we could not detect it; we'll try
+    # to recognize a default set of international characters.
+    # In this case we emulate \b and word boundaries may not be quite as
+    # accurate.
     # single-byte regexps:
     #U = 'A-Z\xc0-\xdf'
     #L = 'a-z\xe0-\xff'
@@ -94,12 +108,12 @@ else:
     # default set includes european chars from InternationalCharacterExamples
     # not latvian, polish, etc. as I don't have a complete list
     # XXX they are there now.. how many chars should we recognize here
-    U = string.uppercase + \
+    uppercase = string.uppercase + \
         '\xc3\x80\xc3\x81\xc3\x82\xc3\x83\xc3\x84\xc3\x85\xc3\x86\xc3\x88\xc3\x89\xc3\x8a\xc3\x8b\xc3\x8c\xc3\x8d\xc3\x8e\xc3\x8f\xc3\x92\xc3\x93\xc3\x94\xc3\x95\xc3\x96\xc3\x98\xc3\x99\xc3\x9a\xc3\x9b\xc3\x9c\xc3\x9d\xc3\x87\xc3\x90\xc3\x91\xc3\x9e'
-    L = string.lowercase + \
+    lowercase = string.lowercase + \
         '\xc3\xa0\xc3\xa1\xc3\xa2\xc3\xa3\xc3\xa4\xc3\xa5\xc3\xa6\xc3\xa8\xc3\xa9\xc3\xaa\xc3\xab\xc3\xac\xc3\xad\xc3\xae\xc3\xaf\xc3\xb2\xc3\xb3\xc3\xb4\xc3\xb5\xc3\xb6\xc3\xb8\xc3\xb9\xc3\xba\xc3\xbb\xc3\xbc\xc3\xbd\xc3\xbf\xc2\xb5\xc3\x9f\xc3\xa7\xc3\xb0\xc3\xb1\xc3\xbe'
-    U='|'.join([x.encode('utf8') for x in unicode(U,'utf-8')])
-    L='|'.join([x.encode('utf8') for x in unicode(L,'utf-8')])
+    U='|'.join([x.encode('utf8') for x in unicode(uppercase,'utf-8')])
+    L='|'.join([x.encode('utf8') for x in unicode(lowercase,'utf-8')])
     # can't easily emulate \b.. look-behind must be fixed-width.
     # this should work in a lot of cases:
     #b = '(?<![A-Za-z0-9\x80\x81\x82\x83\x84\x85\x86\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x92\x93\x94\x95\x96\x98\x99\x9a\x9b\x9c\x9d\x87\x90\x91\x9e\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb2\xb3\xb4\xb5\xb6\xb8\xb9\xba\xbb\xbc\xbd\xbf\xc2\xb5\x9f\xa7\xb0\xb1\xbe])' 
