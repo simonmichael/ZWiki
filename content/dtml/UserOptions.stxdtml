@@ -147,7 +147,7 @@ missing="">">
 <br />
 (appear in footer; konqueror users, separate your bookmarks with , not space)
 </dtml-comment>
-
+</p>
 <p>
 Show logo ? 
 <select name="zwiki_showlogo" tabindex=10>
@@ -156,7 +156,7 @@ Show logo ?
   <dtml-if "REQUEST.get('zwiki_showlogo',1)">selected</dtml-if>
   >Yes</option>
 </select>
-
+</p>
 <p>
 Show page hierarchy ?
 <select name="zwiki_showhierarchy" tabindex=7>
@@ -166,7 +166,7 @@ Show page hierarchy ?
   >Yes</option>
 </select>
 (This wiki keeps a page hierarchy, which you can use or ignore.)
-
+</p>
 <p>
 Show search field ? (except in minimal mode)
 <select name="zwiki_showsearch" tabindex=8>
@@ -175,8 +175,9 @@ Show search field ? (except in minimal mode)
   <dtml-if "REQUEST.get('zwiki_showsearch',1)">selected</dtml-if>
   >Yes</option>
 </select>
-
+</p>
 <dtml-comment>
+
 <p>
 Show AnnoyingQuote ? (in full mode)
 <select name="zwiki_showquote" tabindex=9>
@@ -185,6 +186,7 @@ Show AnnoyingQuote ? (in full mode)
   <dtml-if "REQUEST.get('zwiki_showquote',1)">selected</dtml-if>
   >Yes</option>
 </select>
+</p>
 </dtml-comment>
 
 <p>
@@ -196,7 +198,7 @@ Show page management form ? (in full mode)
   >Yes</option>
 </select>
 (You must also configure a username or be logged in.)
-
+</p>
 <dtml-comment>see http://zwiki.org/ZwikiSkins
 <p>
 Use which zwiki skin ?
@@ -215,7 +217,7 @@ Use which zwiki skin ?
 </dtml-let>
 </select>
 (Skins other than default may have problems. Commonplace is slow on this site.)
-
+</p>
 <p>
 Use which theme with the commonplace skin ?
 <select name="zwiki_theme" tabindex=12>
