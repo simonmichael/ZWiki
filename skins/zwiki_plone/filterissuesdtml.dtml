@@ -6,7 +6,7 @@
  num="_.int(REQUEST.get('num',99999))"
  searchexpr="REQUEST.get('textortitle','')"
  category="REQUEST.get('category',[])"
- status="REQUEST.get('status',['open','pending'])"
+ status="REQUEST.get('status',[])"
  severity="REQUEST.get('severity',[])"
  single_category="((_.len(category)==1) and category[0]) or ''"
  single_status="((_.len(status)==1) and status[0]) or ''"
@@ -32,19 +32,23 @@ More advanced <a href="&dtml-trackerUrl;">issue tracker</a> search options.
 <td align="right"><dtml-var cat_sequence_item></td>
 <dtml-in issue_statuses prefix=stat>
 <td align="right">
-<dtml-if "cat_sequence_item in category and stat_sequence_item in status"><b></dtml-if>
-<a href="&dtml-page_url;?category:list=&dtml.url_quote-cat_sequence_item;&status:list=&dtml.url_quote-stat_sequence_item;"
+<dtml-let bold="cat_sequence_item in category and stat_sequence_item in status">
+<dtml-if bold><b></dtml-if>
+<a href="&dtml-page_url;?category:list=&dtml.url_quote-cat_sequence_item;&status:list=&dtml.url_quote-stat_sequence_item;&sort_on=severity_index"
 ><dtml-var "_.len(pages(isIssue=1,category=cat_sequence_item,status=stat_sequence_item))"
 ></a>
-<dtml-if "cat_sequence_item in category and stat_sequence_item in status"></b></dtml-if>
+<dtml-if bold></b></dtml-if>
+</dtml-let>
 </td>
 </dtml-in>
 <td align="right">
-<dtml-if "not category or _.len(category)==_.len(issue_categories)"><b></dtml-if>
-<a href="&dtml-page_url;?categories:list=&dtml.url_quote-cat_sequence_item;"
+<dtml-let bold="category and (cat_sequence_item in category) and not status">
+<dtml-if bold><b></dtml-if>
+<a href="&dtml-page_url;?category:list=&dtml.url_quote-cat_sequence_item;&sort_on=severity_index"
 ><dtml-var "_.len(pages(isIssue=1,category=cat_sequence_item))"
 ></a>
-<dtml-if "not category or _.len(category)==_.len(issue_categories)"></b></dtml-if>
+<dtml-if bold></b></dtml-if>
+</dtml-let>
 </td>
 </tr>
 </dtml-in>
@@ -52,27 +56,27 @@ More advanced <a href="&dtml-trackerUrl;">issue tracker</a> search options.
 <td align="right">&nbsp;</td>
 <dtml-in issue_statuses prefix=stat>
 <td align="right">
-<dtml-if "not status or _.len(status) == _.len(issue_statuses)"><b></dtml-if>
-<a href="&dtml-page_url;?statuses:list=&dtml.url_quote-stat_sequence_item;"
+<dtml-let bold="status and (stat_sequence_item in status) and not category">
+<dtml-if bold><b></dtml-if>
+<a href="&dtml-page_url;?status:list=&dtml.url_quote-stat_sequence_item;&sort_on=severity_index"
 ><dtml-var "_.len(pages(isIssue=1,status=stat_sequence_item))"
 ></a>
-<dtml-if "not status or _.len(status) == _.len(issue_statuses)"></b></dtml-if>
+<dtml-if bold></b></dtml-if>
+</dtml-let>
 </td>
 </dtml-in>
 <td align="right">
-<dtml-if "(QUERY_STRING and
+<dtml-let bold="(QUERY_STRING and
            _.len(category)==0 or 
            _.len(category)==_.len(issue_categories)) and
           (_.len(status)==0 or 
-           _.len(status)==_.len(issue_statuses))"><b></dtml-if>
-<a href="&dtml-page_url;?titlesearch="
+           _.len(status)==_.len(issue_statuses))">
+<dtml-if bold><b></dtml-if>
+<a href="&dtml-page_url;?titlesearch=&sort_on=severity_index"
 ><dtml-var "_.len(pages(isIssue=1))"
 ></a>
-<dtml-if "(QUERY_STRING and
-           _.len(category)==0 or 
-           _.len(category)==_.len(issue_categories)) and
-          (_.len(status)==0 or 
-           _.len(status)==_.len(issue_statuses))"></b></dtml-if>
+<dtml-if bold></b></dtml-if>
+</dtml-let>
 </td>
 </tr>
 </table>
@@ -88,13 +92,13 @@ More advanced <a href="&dtml-trackerUrl;">issue tracker</a> search options.
 <table border="0" cellspacing="0" cellpadding="3">
 <tr>
 <td align=left valign=top colspan=3>
-Title contains any of:<br>
+Name contains any of:<br>
 <input type="text" name="titlesearch" value="<dtml-var titlesearch missing>" size="40" maxlength="60" accesskey="s" class="shade2">
 </td>
 </tr>
 <tr>
 <td align=left valign=top colspan=3>
-Comments contain any of:<br>
+Page text contains any of:<br>
 <input type="text" name="textsearch" value="<dtml-var textsearch missing>" size="40" maxlength="60" class="shade2">
 </td>
 </tr>
@@ -172,7 +176,8 @@ Statuses:<br>
     pages(isIssue=1, sort_on=sort_on, sort_limit=num, category=searchexpr) +
     pages(isIssue=1, sort_on=sort_on, sort_limit=num, text=searchexpr))[:num])
   or 
-  (pages(isIssue=   1,
+  (QUERY_STRING and
+   pages(isIssue=   1,
          sort_on=   sort_on,
          sort_order=REQUEST.get('sort_order','ascending'),
          sort_limit=num,
@@ -181,10 +186,7 @@ Statuses:<br>
          category=  REQUEST.get('category',''),
          severity=  REQUEST.get('severity',''),
          status=    REQUEST.get('status',''))[:num])
-  #(not searchexpr and QUERY_STRING and ...
-  or
-  (not searchexpr and not QUERY_STRING and
-   pages(isIssue=1, status=['open','pending'], sort_on='severity_index', sort_limit=num))
+  or []
   "
   >
    <table border=0 width="100%">
@@ -192,7 +194,7 @@ Statuses:<br>
        <td align=left valign=top>
          <dtml-let bold="sort_on=='id'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=id&dtml-query;&dtml-scrollto;">description</a>
+         <a href="&dtml-URL;?sort_on=id&dtml-query;&dtml-scrollto;">name</a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>

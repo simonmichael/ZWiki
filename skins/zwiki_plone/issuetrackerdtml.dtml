@@ -2,7 +2,7 @@
  scrollto="'' #'#tracker'"
  issueCount=issueCount 
  sort_order="REQUEST.get('sort_order','')"
- sort_on="REQUEST.get('sort_on','id')"
+ sort_on="REQUEST.get('sort_on','severity_index')"
  num="_.int(REQUEST.get('num',99999))"
  searchexpr="REQUEST.get('textortitle','')"
  category="REQUEST.get('category',[])"
@@ -16,7 +16,7 @@
      <tr>
        <td valign="top">
          <!-- CUSTOM TEXT -->
-         This is the wiki's issue tracker. 
+         Here is the wiki's issue tracker.
          <!-- END OF CUSTOM TEXT -->
  
          Enter a search term, or click the numbers to the right, or <a href="&dtml-filterUrl;">filter issues</a>.
@@ -33,12 +33,12 @@
        <td valign="top" class="">
          <table border="0" cellspacing="2" cellpadding="0" 
            <dtml-in issue_statuses prefix=x>
-             <dtml-let bold="x_sequence_item in REQUEST.get('status','')">
+             <dtml-let bold="x_sequence_item in REQUEST.get('status','') or (x_sequence_item in ['open','pending'] and not QUERY_STRING)">
                <tr>
                  <td align="right">
                    <small>
                      <dtml-var "bold and '<b>' or ''">
-                     <a href="&dtml-URL;?status:list=&dtml-x_sequence_item;&sort_on=&dtml-sort_on;&dtml-scrollto;"
+                     <a href="&dtml-URL;?status:list=&dtml-x_sequence_item;&sort_on=severity_index&dtml-scrollto;"
                       ><dtml-var "_.len(pages(isIssue=1,status=x_sequence_item))"
                       ></a>
                      <dtml-var "bold and '</b>' or ''">
@@ -52,7 +52,7 @@
                </tr>
              </dtml-let>
            </dtml-in>
-           <dtml-let bold="sort_on=='lastEditTime' and num==30">
+           <dtml-let bold="num==30">
              <tr>
                <td align="right">
                  <br />
@@ -71,12 +71,12 @@
                </td>
              </tr>
            </dtml-let>
-           <dtml-let bold="num == 99999 and not (status or severity or category or searchexpr)">
+           <dtml-let bold="QUERY_STRING and not (status or severity or category or searchexpr or (num==30))">
              <tr>
                <td align="right">
                  <dtml-var "bold and '<b>' or ''">
                  <small>
-                   <a href="&dtml-URL;?sort_on=&dtml-sort_on;&dtml-scrollto;"
+                   <a href="&dtml-URL;?sort_on=id&dtml-scrollto;"
                    >&dtml-issueCount;</a>
                  </small>
                  <dtml-var "bold and '</b>' or ''">
@@ -98,7 +98,7 @@
                  <td align="right">
                    <small>
                    <dtml-var "bold and '<b>' or ''">
-                   <a href="&dtml-URL;?category:list=&dtml.url_quote-sequence-item;&sort_on=&dtml-sort_on;&dtml-scrollto;"
+                   <a href="&dtml-URL;?category:list=&dtml.url_quote-sequence-item;&sort_on=status_index&dtml-scrollto;"
                      ><dtml-var "_.len(pages(isIssue=1,category=_['sequence-item']))"
                      ></a>
                    <dtml-var "bold and '</b>' or ''">
@@ -115,7 +115,6 @@
          </table>
        </td>
        <dtml-comment>
-       </dtml-comment>
        <td align=right valign="top" class="">
          <big><big><big><big>
            <b><a href="&dtml-URL;?status:list=open&status:list=pending&sort_on=&dtml-sort_on;&sort_order=reverse&dtml-scrollto;"
@@ -124,6 +123,7 @@
          </big></big></big></big>
          <small>open/total issues</small>
        </td>
+       </dtml-comment>
      </tr>
    </table>
  </form>
@@ -178,7 +178,7 @@
        <td align=left valign=top>
          <dtml-let bold="sort_on=='id'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=id&dtml-query;&dtml-scrollto;">description</a>
+         <a href="&dtml-URL;?sort_on=id&dtml-query;&dtml-scrollto;">name</a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
