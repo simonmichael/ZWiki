@@ -81,25 +81,13 @@ from Admin import AdminSupport
 from Editing import EditingSupport
 from I18nSupport import DTMLFile, _
 
+#from pagetypes import MIDSECTIONMARKER, PAGETYPES, PAGE_TYPES, ZwikiStxPageType
 # these seem to need to be in this module or zope complains couldn't load state
-#from PageTypes import MIDSECTIONMARKER,PAGETYPES,PAGE_TYPES
-from PageTypes import MIDSECTIONMARKER, \
-    ZwikiStxPageType, \
-    ZwikiRstPageType, \
-    ZwikiWwmlPageType, \
-    ZwikiHtmlPageType, \
-    ZwikiPlaintextPageType
-PAGETYPES = [
-    ZwikiStxPageType,
-    ZwikiRstPageType,
-    ZwikiWwmlPageType,
-    ZwikiHtmlPageType,
-    ZwikiPlaintextPageType,
-    ]
-# a dictionary of ids and names used by legacy skin templates
-PAGE_TYPES = {}
-for t in PAGETYPES: PAGE_TYPES[t._id]=t._name
-
+from pagetypes import \
+    MIDSECTIONMARKER, \
+    PAGETYPES, \
+    PAGE_TYPES, \
+    ZwikiStxPageType
 
 
 class ZWikiPage(
