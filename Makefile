@@ -568,23 +568,21 @@ Clean: clean
 LANGUAGES=en es fr-CA fr ga
 
 # using zope 3's i18nextract.py with my patches (-x option, multiline defaults fix)
-pot:
+pot: 
 	PYTHONPATH=/usr/local/src/Zope3/src python \
 	  /usr/local/src/Zope3/utilities/i18nextract.py -d zwiki -p . -o ./i18n \
 	    -x _darcs -x old -x misc -x ftests 
 	python \
 	-c "import re; \
-	    f = open('i18n/zwiki.pot','r+'); \
-	    t = f.read(); \
+	    t = open('i18n/zwiki.pot').read(); \
 	    t = re.sub(r'(?s)^.*?msgid',r'msgid',t); \
 	    t = re.sub(r'Zope 3 Developers <zope3-dev@zope.org>',\
 	               r'<zwiki@zwiki.org>', \
 	               t); \
-	    t = re.sub(r'(?s)\"(Generated-By:.*?\n)', \
-	               r'\"Language-code: xx\\\n\"\n\"Language-name: X\\\n\"\n\"Preferred-encodings: utf-8 latin1\\\n\"\n\"Domain: zwiki\\\n\"\n', \
+	    t = re.sub(r'(?s)(\"Generated-By:.*?\n)', \
+	               r'\1\"Language-code: xx\\\n\"\n\"Language-name: X\\\n\"\n\"Preferred-encodings: utf-8 latin1\\\n\"\n\"Domain: zwiki\\\n\"\n', \
 	               t); \
-	    f.seek(0); \
-	    f.write(t)"
+	    open('i18n/zwiki.pot','w').write(t)"
 
 po:
 	cd i18n; \
