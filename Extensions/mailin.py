@@ -443,8 +443,7 @@ def mailin(self,
     m.checkMailinAllowed()
     if m.error: return m.error
 
-    # stash the sender's username in REQUEST so zwiki can use it to set
-    # last_editor
+    # stash the sender's username in REQUEST as a hint for usernameFrom
     self.REQUEST.set('MAILIN_USERNAME', m.FromUserName)
 
     # now, create new page ?
@@ -462,8 +461,8 @@ def mailin(self,
     elif m.trackerissue:
         # cf IssueNo0879
         # citations are normally formatted only within comments, but they
-        # are often found in the body of mailed-in issue pages and we'd
-        # like to display these nicely. Options ?
+        # are often found in mailed-in issues and we'd like to display
+        # these nicely. Options ?
         # - format them here as a special case. This means the mailout
         #   and page source contains ugly html.
         # - enable citation rendering everywhere. This deviates from
@@ -483,10 +482,9 @@ def mailin(self,
     # how the latter works out
     # mailing list support: when a list and wiki are mutually subscribed,
     # and a mail comes in from the list, we want to forward it out to all
-    # subscribers except the list, which has done it's own delivery. So,
-    # tell zwiki to exclude the X-BeenThere address from mailout. We could
-    # just rely on the list's duplicate filtering if message-id was
-    # preserved.
+    # subscribers except the list, which has done it's own delivery.
+    # Some lists will detect the duplicate automatically, for others we
+    # expect the X-BeenThere header and tell zwiki to exclude that address.
     m.destpage.comment(text=m.body,
                        username=m.FromUserName,
                        REQUEST=self.REQUEST,
