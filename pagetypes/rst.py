@@ -70,6 +70,5 @@ class ZwikiRstPageType(AbstractPageType):
         return '\n\n.. image:: %s\n' % path
    
     def linkFile(self, page, id, path):
-        # how do you link a file in RST ?
-        return AbstractPageType.linkFile(self, page, id, path)
+        return '\n\n!`%s`__\n\n__ %s\n' % (id, path)
 
