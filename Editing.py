@@ -681,22 +681,21 @@ class EditingSupport:
 
     def _addFileLink(self, file_id, content_type, size, REQUEST):
         """
-        Add a link to the specified file at the end of this page,
-        unless a link already exists.
-        If the file is an image and not too big, inline it instead.
+        Link a file or image at the end of this page, if not already linked.
+        
+        If it's an image and not too big, display it inline.
         """
         if re.search(r'(src|href)="%s"' % file_id,self.text()): return
 
-        if hasattr(self,'uploads'):
-            filepath = 'uploads/'
-        else:
-            filepath = ''
+        if hasattr(self,'uploads'): folder = 'uploads/'
+        else: folder = ''
+
         if content_type[0:5] == 'image' and \
            not (hasattr(REQUEST,'dontinline') and REQUEST.dontinline) and \
            size <= LARGE_FILE_SIZE :
-            linktxt = '\n\n<img src="%s%s" />\n' % (filepath,file_id)
+            linktxt = self.pageType().inlineImage(self, file_id, folder+file_id)
         else:
-            linktxt = '\n\n<a href="%s%s">%s</a>\n' % (filepath,file_id,file_id)
+            linktxt = self.pageType().linkFile(self, file_id, folder+file_id)
         self.setText(self.read()+linktxt,REQUEST)
         self.setLastEditor(REQUEST)
 

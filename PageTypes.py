@@ -128,6 +128,12 @@ class AbstractPageType:
     def addPurpleNumbersTo(self,page,t):
         return add_purple_numbers_to(t,page)
 
+    def inlineImage(self, page, id, path):
+        return '\n\nimage: %s/%s\n' % (page.pageUrl(),path)
+
+    def linkFile(self, page, id, path):
+        return '\n\nfile: %s/%s\n' % (page.pageUrl(),path)
+
 class AbstractHtmlPageType(AbstractPageType):
     supportsHtml = yes
 
@@ -189,6 +195,12 @@ class AbstractHtmlPageType(AbstractPageType):
         # will work
         return '\n\n<a name="comments"><br><b><span class="commentsheading">comments:</span></b></a>\n\n'
     
+    def inlineImage(self, page, id, path):
+        return '\n\n<img src="%s" />\n' % path
+
+    def linkFile(self, page, id, path):
+        return '\n\n<a href="%s">%s</a>\n' % (path,id)
+
 class ZwikiStxPageType(AbstractHtmlPageType):
     _id = 'msgstxprelinkdtmlfitissuehtml'
     _name = 'Structured Text'
@@ -351,6 +363,13 @@ class ZwikiRstPageType(AbstractPageType):
 
     def discussionSeparator(self,page):
         return '\n\n-----\n\n'
+
+    def inlineImage(self, page, id, path):
+        return '\n\n.. image:: %s\n' % path
+   
+    def linkFile(self, page, id, path):
+        # how do you link a file in RST ?
+        return AbstractPageType.linkFile(self, page, id, path)
 
 class ZwikiWwmlPageType(AbstractPageType):
     _id = 'msgwwmlprelinkfitissue'
