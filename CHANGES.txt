@@ -1,14 +1,15 @@
     Summary
 
-	Bugfixes, preliminary built-in RSS support.
+	New issuebrowser/IssueBrowser form, preliminary built-in RSS
+	support, bugfixes.
 
     Upgrade notes
 
-        There have been changes to the zwiki catalog fields.  
-	After upgrading, if your wikis use a catalog or are in a CMF/plone
-	site, visit FRONTPAGE/setupCatalog, or if issue tracking is
-	enabled, visit FRONTPAGE/setupTracker, to ensure your catalog
-	is configured for best large-wiki performance.
+        There have been changes to the zwiki catalog fields.  After
+	upgrading, if your wikis use a catalog or are in a CMF/plone site,
+	visit FRONTPAGE/setupCatalog, or if issue tracking is enabled,
+	visit FRONTPAGE/setupTracker, to ensure your catalog is configured
+	for best large-wiki performance.
 	
 	index_object's arguments have changed and the reindex_object and
 	updateCatalog methods are deprecated.
@@ -17,8 +18,8 @@
 
       Configuring
 
-        * don't require /setupTracker for good large-wiki performance;
-	  /setupCatalog now always adds all metadata fields (#993)
+        * fix dependency on /setupTracker for good large-wiki performance;
+	  /setupCatalog is now sufficient (#993)
 
         * be compatible with plone's default_page lines property (#914)
 
@@ -28,10 +29,14 @@
 
       Issue tracking
 
+        * fix sorting issues by number (#934)
+
+        * issuebrowser/IssueBrowser form for reviewing open issues
+
         * make closed issues greener.. may be different on your screen,
 	  feedback welcome
 
-        * make filter issues matrix clearer (hide zeros)
+        * hide zeros to make filter issues matrix clearer
 
         * try to improve spacing glitch with dtml-translate on filter issues
 
