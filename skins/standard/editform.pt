@@ -166,36 +166,6 @@
               </td>
             </tr>
 
-            <!-- subtopics option -->
-            <tr tal:condition="python:
-                getattr(here.folder(),'show_subtopics',0) and
-                user.has_permission('Zwiki: Reparent pages',here)">
-              <td valign="middle" align="left" colspan="2" bgcolor="#dddddd">
-                <span i18n:translate="">Show subtopics on this page & below ?</span>
-                <input name="subtopics" value="-1" type="radio" tabindex=""
-                       tal:attributes="
-                       checked python:here.subtopicsPropertyStatus()==-1;"
-                       title="show subtopics in full mode, or if ancestor page has 'always'" 
-		       i18n:attributes="title"
-		/>
-                <span i18n:translate="">default</span>
-                <input name="subtopics" value="0" type="radio" tabindex=""
-                       tal:attributes="
-                       checked python:here.subtopicsPropertyStatus()==0;"
-                       title="never show subtopics on this page" 
-		       i18n:attributes="title"
-		/>
-                <span i18n:translate="">never</span>
-                <input name="subtopics" value="1" type="radio" tabindex=""
-                       tal:attributes="
-                       checked python:here.subtopicsPropertyStatus()==1;"
-                       title="always show subtopics on this page" 
-       		       i18n:attributes="title"
-		/>
-                <span i18n:translate="">always</span>
-              </td>
-            </tr>
-            
             <!-- help links, save and cancel buttons -->
             <tr>
               <td valign="" align="left" bgcolor="#dddddd" colspan="1">
