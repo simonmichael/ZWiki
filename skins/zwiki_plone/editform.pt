@@ -17,6 +17,12 @@ UI.py:editform() calls us with these options:
            global type       request/form/type|python:(creating and here.defaultPageType()) or here.pageTypeId();
            global timestamp  request/form/timeStamp|here/timeStamp;
            global pagetypes  here/allowedPageTypes;
+           global log        python:request.form.get('log',
+                          ((editing and 
+                            here.usernameFrom(request) == here.last_editor and
+                            here.ZopeTime() - here.lastEditTime() < 1) and here.last_log) or ''
+                           );
+           global file       python:'' #doesn't work too well request/form/file|nothing ;
            " />
 
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
@@ -164,11 +170,11 @@ UI.py:editform() calls us with these options:
 
             <input type="text" 
                    name="log" 
-                   value=""  class="formfield"
+                   value=""  
+                   class="formfield"
                    size="40" 
                    tabindex=""
-                   tal:attributes="tabindex tabindex/next|nothing;
-                                   value python:(editing and here.usernameFrom(request) == here.last_editor and here.ZopeTime() - here.lastEditTime() < 1) and here.last_log or '' #format that :) ;"
+                   tal:attributes="value log; tabindex tabindex/next|nothing;"
                    />
         </div>
 
@@ -187,11 +193,12 @@ UI.py:editform() calls us with these options:
             <div tal:content="error">Validation error output</div>
 
             <input type="file" 
-                 name="file" 
-                 size="30"  class="formfield"
-                 tabindex="" 
-                 tal:attributes="tabindex tabindex/next|nothing;" 
-                 />
+                   name="file" 
+                   size="30"  
+                   class="formfield"
+                   tabindex="" 
+                   tal:attributes="value file; tabindex tabindex/next|nothing;" 
+                   />
         </div>
 
 
