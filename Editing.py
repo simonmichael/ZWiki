@@ -155,7 +155,7 @@ class EditingSupport:
         m = Message()
         m['From'] = username
         m['Date'] = time
-        m['Subject'] = subject_heading
+        m['Subject'] = self.cleanupText(subject_heading)
         m['Message-ID'] = message_id
         if in_reply_to: m['In-Reply-To'] = in_reply_to
         m.set_payload(self.cleanupText(text))
@@ -164,6 +164,7 @@ class EditingSupport:
         # discard junk comments
         if not (m['Subject'] or m.get_payload()): return
 
+        # optimisation:
         # add the comment to the page with minimal work - carefully append
         # it to both source and _prerendered cached without re-rendering
         # the whole thing! This might not be legal for all future page
