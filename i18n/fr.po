@@ -1,10 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: Mon Apr 19 21:44:15 2004\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: ZWiki-0-30-0dev\n"
+"POT-Creation-Date: Sun Apr 25 15:51:54 2004\n"
+"PO-Revision-Date: 2004-04-25 21:02+0002\n"
+"Last-Translator: Nicolas Laurent <foenyx(at)online(dot)fr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: ENCODING\n"
@@ -16,91 +15,113 @@ msgstr ""
 #: i/Admin.py:102
 msgid "You are not authorized to upgrade all pages."
 msgstr ""
+"Vous n'&ecirc;tes pas autoris&eacute; &agrave; mettre &agrave; niveau "
+"l'ensemble des pages"
 
 #: i/Admin.py:103
 msgid "(folder -> Manage properties)"
-msgstr ""
+msgstr "(Dossier -> Gestion propri&eacute;t&eacute;s)"
 
 #: i/Editing.py:290
 msgid ""
 "You are not authorized to reparent or change subtopics links on this ZWiki "
 "Page."
 msgstr ""
+"Vous n'&ecirc;tes pas autoris&eacute; &agrave; modifier l'ascendance ou "
+"changer les liens des sous rubriques sur cette page ZWiki."
 
 #: i/Editing.py:312
 msgid "You are not authorized to change this ZWiki Page's type."
 msgstr ""
+"Vous n'&ecirc;tes pas autoris&eacute; &agrave; changer le type de cette page "
+"ZWiki."
 
 #: i/Editing.py:345 i/Editing.py:368
 msgid "You are not authorized to edit this ZWiki Page."
 msgstr ""
+"Vous n'&ecirc;tes pas autoris&eacute; &agrave; &eacute;diter cette page "
+"ZWiki."
 
 #: i/Editing.py:371 i/Editing.py:412
 msgid "You are not authorized to delete this ZWiki Page."
 msgstr ""
+"Vous n'&ecirc;tes pas autoris&eacute; &agrave; supprimer cette page ZWiki."
 
 #: i/Editing.py:478
 msgid "You are not authorized to rename this ZWiki Page."
 msgstr ""
+"Vous n'&ecirc;tes pas autoris&eacute; &agrave; renommer cette page ZWiki."
 
 #: i/Editing.py:522
 msgid ""
 "This page was renamed to %s. You can delete this one if no longer needed.\n"
 msgstr ""
+"Cette page a &eacute;t&eacute; renomm&eacute;e en &laquo;%s&raquo;. Vous "
+"pouvez supprimer celle-ci si elle n'est plus requise.\n"
 
 #: i/Editing.py:618
 msgid "You are not authorized to upload files here."
 msgstr ""
+"Vous n'&ecirc;tes pas autoris&eacute; &agrave; t&eacute;l&eacute;charger de "
+"fichiers vers cette destination."
 
 #: i/Editing.py:622
 msgid "You are not authorized to add a link on this ZWiki Page."
 msgstr ""
+"Vous n'&ecirc;tes pas autoris&eacute; &agrave; ajouter de lien sur cette "
+"page ZWiki."
 
-#: i/UI.py:489
+#: i/UI.py:488
 msgid "Edit conflict"
-msgstr ""
+msgstr "&Eacute;diter le conflit"
 
-#: i/UI.py:509
+#: i/UI.py:508
 msgid "Someone else has saved this page while you were editing"
 msgstr ""
+"Une autre personne a modifi&eacute; cette page pendant que vous l'&eacute;"
+"ditiez"
+
+#: i/UI.py:509
+msgid "To resolve the conflict, do this"
+msgstr "Pour r&eacute;soudre ce conflit, veuillez proc&eacute;der ainsi"
 
 #: i/UI.py:510
-msgid "To resolve the conflict, do this"
-msgstr ""
-
-#: i/UI.py:511
 msgid "Click your browser's back button"
 msgstr ""
+"Cliquez sur le boutton &laquo;Page Pr&eacute;c&eacute;dent&raquo; de votre "
+"navigateur"
+
+#: i/UI.py:511
+msgid "Copy your recent edits to the clipboard"
+msgstr "Copiez vos modifications dans le presse-papier"
 
 #: i/UI.py:512
-msgid "Copy your recent edits to the clipboard"
-msgstr ""
+msgid "Click your browser's refresh button"
+msgstr "Cliquez sur le boutton &laquo;Actualiser&raquo; de votre navigateur"
 
 #: i/UI.py:513
-msgid "Click your browser's refresh button"
-msgstr ""
-
-#: i/UI.py:514
 msgid "Paste in your edits again, being mindful of the latest changes"
 msgstr ""
+"Collez &agrave; nouveau vos modifications, mais en tenant compte des "
+"changements apport&eacute;s entre temps"
 
-#: i/UI.py:515
+#: i/UI.py:514
 msgid "Click the Change button again"
-msgstr ""
+msgstr "Cliquez sur le boutton &laquo;Changer&raquo; &agrave; nouveau"
+
+#: i/UI.py:515 i/skins/standard/editform.pt:197
+msgid "or"
+msgstr "ou"
 
 #: i/UI.py:516
-msgid "or"
-msgstr ""
-
-#: i/UI.py:517
 msgid "To discard your changes and start again, click OK"
-msgstr ""
+msgstr "Pour abandonner vos changements et recommencer, cliquez sur OK"
 
-#: i/UI.py:526
+#: i/UI.py:525
 msgid "Page is locked"
-msgstr ""
+msgstr "La page est v&eacute;rouill&eacute;e"
 
-#: i/UI.py:537
+#: i/UI.py:536
 msgid ""
 "\n"
 "            This page has a webDAV lock. Someone is probably editing it\n"
@@ -110,14 +131,24 @@ msgid ""
 "            reference.\n"
 "            "
 msgstr ""
+"\n"
+"            Un v&eacute;rrou webDAV est pos&eacute; sur cette page. "
+"Quelqu'un est probablement\n"
+"            en train de la modifier avec un &eacute;diteur externe. Attendez "
+"qu'il\n"
+"            ait fini, puis r&eacute;essayer. Si vous avez fait des "
+"changements,\n"
+"            vous devriez copier et enregistrer votre version du texte pour\n"
+"            vous y r&eacute;ferer ult&eacute;rieurement.\n"
+"            "
 
-#: i/UI.py:544
+#: i/UI.py:543
 msgid "To discard your changes and try again, click OK."
-msgstr ""
+msgstr "Pour abandonner vos changements et r&eacute;essayer, cliquez sur OK"
 
 #: i/skins/standard/backlinks.pt:101
 msgid "Reparent"
-msgstr ""
+msgstr "R&eacute;-hi&eacute;rarchiser"
 
 # Default: ""
 # "You can change this page's parent(s) to place it within the overall page\n"
@@ -126,26 +157,31 @@ msgstr ""
 #: i/skins/standard/backlinks.pt:103
 msgid "backlinks_reparent_help"
 msgstr ""
+"Vous pouvez changer l'ascendance de cette page pour la placer dans\n"
+"la hi&eacute;rarchie globale des pages. Cochez les cases ou entrez un "
+"nouveau\n"
+"nom de pages et cliquez sur R&eacute;-hi&eacute;rarchiser.\n"
+"Une seul page parente est g&eacute;n&eacute;ralement suffisante."
 
 #: i/skins/standard/backlinks.pt:29
 msgid "Backlinks for"
-msgstr ""
+msgstr "R&eacute;tro-liens pour"
 
 #: i/skins/standard/backlinks.pt:46
 msgid "is a top-level topic."
-msgstr ""
+msgstr "est un sujet de premier ordre."
 
 #: i/skins/standard/backlinks.pt:47
 msgid "is a subtopic of:"
-msgstr ""
+msgstr "est une sous rubrique de:"
 
 #: i/skins/standard/backlinks.pt:69
 msgid "Here are the pages which link to it:"
-msgstr ""
+msgstr "Voici les pages qui pointent sur celle-ci:"
 
 #: i/skins/standard/backlinks.pt:99
 msgid "Other parent"
-msgstr ""
+msgstr "Autre parent"
 
 #: i/skins/standard/badtemplate.pt:12
 msgid ""
@@ -153,39 +189,81 @@ msgid ""
 "object with a skin template ID that is not a Page Template or DTML Method, "
 "or the template may be missing."
 msgstr ""
+"Il y avait un probl&eagrave;me avec un des mod&eagrave;le d'apparences du "
+"wiki.Il se pourrait qu'un objet avec un identifiant de mod&eagrave;le "
+"d'apparence ne soit pas un mod&eagrave;le de page ou une m&eacute;thode "
+"DTML, ou que le mod&eagrave;le soit manquant."
 
 #: i/skins/standard/contentspage.pt:29
 msgid "Contents"
-msgstr ""
+msgstr "Contenu"
 
 #: i/skins/standard/contentspage.pt:40
 msgid "Singletons"
-msgstr ""
+msgstr "Singletons"
 
 #: i/skins/standard/diffform.pt:31
 msgid "Diffs for"
-msgstr ""
+msgstr "Diff&eacute;rences pour"
 
 #: i/skins/standard/diffform.pt:46
 msgid "full history"
-msgstr ""
+msgstr "Historique complet"
 
 #: i/skins/standard/diffform.pt:48
 msgid "<< previous edit"
-msgstr ""
+msgstr "<< pr&eacute;c&eacute;dente &eacute;dition"
 
 #: i/skins/standard/diffform.pt:50
 msgid "next edit >>"
-msgstr ""
+msgstr "prochaine &eacute;dition >>"
 
 #: i/skins/standard/diffform.pt:52
 msgid "cancel"
+msgstr "annuler"
+
+#: i/skins/standard/editform.pt:139
+msgid "Optional change note"
+msgstr ""
+
+#: i/skins/standard/editform.pt:157
+msgid "Upload a file or image"
+msgstr ""
+
+#: i/skins/standard/editform.pt:168
+msgid "Show subtopics on this page & below ?"
+msgstr ""
+
+#: i/skins/standard/editform.pt:174
+msgid "default"
+msgstr ""
+
+#: i/skins/standard/editform.pt:179
+msgid "never"
+msgstr ""
+
+#: i/skins/standard/editform.pt:184
+msgid "always"
+msgstr ""
+
+#: i/skins/standard/editform.pt:191
+msgid "For editing help, see"
+msgstr ""
+
+# Default: "Page name"
+#: i/skins/standard/editform.pt:69
+#, fuzzy
+msgid "Page name"
+msgstr "Nom de la page"
+
+#: i/skins/standard/editform.pt:79
+msgid "type"
 msgstr ""
 
 # Default: "Body text"
 #: i/skins/zwiki_plone/editform.pt:117
 msgid "label_body_text"
-msgstr ""
+msgstr "Corps du texte"
 
 # Default: ""
 # "In a Wiki page, you use [square brackets] to create links. When you save the page, the contents\n"
@@ -194,31 +272,37 @@ msgstr ""
 #: i/skins/zwiki_plone/editform.pt:119 i/skins/zwiki_plone/editform.pt:147
 msgid "help_wikibody"
 msgstr ""
+"Dans une page Wiki, utilisez des [crochets] pour cr&eacute;er des liens. "
+"Quand vous enregistrerez la page,\n"
+"            le nom entre crochet sera suffix&eacute; par un <code>?</code>. "
+"Quand vous cliquerez dessus,\n"
+"            une nouvelle page sera cr&eacute;&eacute;e avec ce nom."
 
 # Default: "Note for the page history (optional)"
 #: i/skins/zwiki_plone/editform.pt:158
 msgid "label_note"
-msgstr ""
+msgstr "Note pour l'historique de la page (optionel)"
 
 # Default: "A short description of your changes."
 #: i/skins/zwiki_plone/editform.pt:160
 msgid "help_wikinote"
-msgstr ""
+msgstr "Une courte description de vos changements"
 
 # Default: "Upload file or image (optional)"
 #: i/skins/zwiki_plone/editform.pt:182
 msgid "label_upload_contents_optional"
 msgstr ""
+"T&eacute;l&eacute;charger vers le Wiki un fichier ou une image (optionel)"
 
 # Default: "Attaches a file or an image to this wiki page."
 #: i/skins/zwiki_plone/editform.pt:184
 msgid "help_wikiupload"
-msgstr ""
+msgstr "Attacher un fichier ou une image &agrave; cette page wiki"
 
 # Default: "Page Format"
 #: i/skins/zwiki_plone/editform.pt:202
 msgid "label_format"
-msgstr ""
+msgstr "Format de la page"
 
 # Default: ""
 # "If you are unsure of which format to use, just select Plain\n"
@@ -226,6 +310,10 @@ msgstr ""
 #: i/skins/zwiki_plone/editform.pt:204
 msgid "help_format"
 msgstr ""
+"Si vous n'&ecirc;tes pas sure du format &agrave; utiliser, s&eacute;"
+"lectionnez\n"
+"            Plain Text (texte non format&eacute;) et tapez le document\n"
+"            comme vous le fa&icirc;tes d'habitude."
 
 # Default: ""
 #: i/skins/zwiki_plone/editform.pt:236
@@ -234,7 +322,7 @@ msgstr ""
 
 #: i/skins/zwiki_plone/editform.pt:251
 msgid "Save"
-msgstr ""
+msgstr "Enregistrer"
 
 # Default: ""
 # "Edit\n"
@@ -244,62 +332,70 @@ msgstr ""
 #: i/skins/zwiki_plone/editform.pt:42 i/skins/zwiki_plone/editform.pt:54
 msgid "heading_edit_wiki_page"
 msgstr ""
+"&Eacute;diter\n"
+"        ${itemtype} \n"
+"\n"
+"        \"${pagename}\""
 
 # Default: "A Wiki Page allows you to create richly interconnected pages."
 #: i/skins/zwiki_plone/editform.pt:58
 msgid "description_edit_wiki_page"
 msgstr ""
+"Une page Wiki vous permet de cr&eacute;er des pages richement "
+"interconnect&eacute;es."
 
 # Default: "Wiki Page Details"
 #: i/skins/zwiki_plone/editform.pt:69
 msgid "legend_wiki_page_details"
-msgstr ""
+msgstr "D&eacute;tails de la page Wiki"
 
 # Default: "Page name"
 #: i/skins/zwiki_plone/editform.pt:92
 msgid "label_pagename"
-msgstr ""
+msgstr "Nom de la page"
 
 # Default: "(Required)"
 #: i/skins/zwiki_plone/editform.pt:94
 msgid "label_required"
-msgstr ""
+msgstr "(Requis)"
 
 #: i/skins/zwiki_plone/editform.pt:94
 msgid "Required"
-msgstr ""
+msgstr "Requis"
 
 # Default: "Note: Renaming a page in a large wiki may be slow. Other pages will be updated if possible."
 #: i/skins/zwiki_plone/editform.pt:98
 msgid "help_shortname"
 msgstr ""
+"Note: Renommer une page dans un wiki de taille importante peut &ecirc;tre "
+"lent. Les autres pages seront mis &agrave; jour si cela est possible."
 
 # Default: "Filter issues"
 #: i/skins/zwiki_plone/filterissues.pt:12
 msgid "heading_wiki_filter_issues"
-msgstr ""
+msgstr "Filtrer les controverses"
 
 # Default: "Issue tracker"
 #: i/skins/zwiki_plone/issuetracker.pt:12
 msgid "heading_wiki_issue_tracker"
-msgstr ""
+msgstr "Surveiller les controverses"
 
 # Default: "Recent changes"
 #: i/skins/zwiki_plone/recentchanges.pt:12
 msgid "heading_wiki_recent_changes"
-msgstr ""
+msgstr "Changements r&eacute;cents"
 
 # Default: "Search this wiki"
 #: i/skins/zwiki_plone/searchwiki.pt:12
 msgid "heading_wiki_search_wiki"
-msgstr ""
+msgstr "Chercher dans ce Wiki"
 
 # Default: "User options"
 #: i/skins/zwiki_plone/useroptions.pt:12
 msgid "heading_wiki_user_options"
-msgstr ""
+msgstr "Options de l'utilisateur"
 
 # Default: "Wiki Navigation"
 #: i/skins/zwiki_plone/wikinav_portlet.pt:15
 msgid "box_wiki_navigation"
-msgstr ""
+msgstr "Navigation Wiki"
