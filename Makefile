@@ -123,7 +123,7 @@ summary:
 	darcs whatsnew --summary
 
 push:
-	darcs push -v -a
+	darcs push -v -a zwiki.org:/usr/local/src/ZWiki
 
 ## server control
 
