@@ -30,8 +30,7 @@
                                path=cookiepath, expires=cookieduration)">
 </dtml-if>
 </dtml-in>
-<!-- dtml-call "RESPONSE.redirect(REQUEST.get('redirectURL',pageUrl()))" -->
-HERE: <dtml-var cookiepath>
+<dtml-call "RESPONSE.redirect(REQUEST.get('redirectURL',pageUrl()))">
 <dtml-elif clearcookies>
 <dtml-in "cookielist+['zwiki_bookmarks','zwiki_showquote']" prefix=x>
 <dtml-call "RESPONSE.expireCookie(x_sequence_item,path=cookiepath)">
