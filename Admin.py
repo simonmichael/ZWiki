@@ -436,6 +436,8 @@ class AdminSupport:
             'last_editor',
             'meta_type',
             'page_type',
+            'rating',
+            'voteCount',
             ]
         KeywordIndexes = [
             'canonicalLinks',
@@ -464,6 +466,8 @@ class AdminSupport:
             'size',
             'subscriber_list',
             'summary',
+            'rating',
+            'voteCount',
             ]
         #XXX during unit testing, somehow a non-None catalog is false
         #if not self.catalog():

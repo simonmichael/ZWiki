@@ -28,12 +28,14 @@ class RatingSupport:
     security.declarePrivate('votes')
     def votes(self):
         """Private accessor."""
-        return self.aq_base._votes or {}
+        self = getattr(self,'aq_base',self)
+        return self._votes or {}
 
     security.declarePrivate('setVotes')
     def setVotes(self,votes):
         """Private accessor."""
-        self.aq_base._votes = votes
+        self = getattr(self,'aq_base',self)
+        self._votes = votes
         
     security.declarePrivate('resetVotes')
     def resetVotes(self):

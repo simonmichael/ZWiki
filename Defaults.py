@@ -88,6 +88,7 @@ PAGE_METADATA = [
     #'links', # XXX problems for epoz/plone, not needed ?
     'page_type',     
     'parents',
+    'rating',
     'severity',
     'severity_index',
     'size',
@@ -95,6 +96,7 @@ PAGE_METADATA = [
     'status_index',
     'subscriber_list',
     'summary',
+    'voteCount',
     ]
 
 IDS_TO_AVOID = ['RESPONSE','REQUEST','Epoz','epoz']
