@@ -7,7 +7,7 @@
       minimal     python: displaymode=='minimal';
       simple      python: displaymode=='simple';
       full        python: displaymode=='full';
-      hierarchy   python: request.get('zwiki_showhierarchy',0);
+      showhierarchy   python: displaymode!='minimal';
       linearhdr   python: 0 #displaymode=='full';
       ">
 <head metal:use-macro="macros/head">
@@ -22,7 +22,7 @@
 
 <div metal:use-macro="macros/linkpanel">site links panel</div>
 
-<div metal:use-macro="macros/navpanel">hierarchy navigation panel</div>
+<div metal:use-macro="macros/navpanel">showhierarchy navigation panel</div>
 
 <div id="pageheading">
   <form method="GET" 
@@ -50,15 +50,15 @@
 
         <!-- ...page name + maybe parent context -->
         <td id="pagenameand_linear" align="left" width="79%"
-            tal:condition="python: hierarchy and linearhdr">
+            tal:condition="python: showhierarchy and linearhdr">
           <span metal:use-macro="macros/pagenameand_linear"></span>
         </td>
         <td id="pagenameand" align="left" width="79%"
-            tal:condition="python: hierarchy and not linearhdr">
+            tal:condition="python: showhierarchy and not linearhdr">
           <span metal:use-macro="macros/pagenameand"></span>
         </td>
         <td id="pagenameonly" align="left" width="79%"
-            tal:condition="not: hierarchy">
+            tal:condition="not: showhierarchy">
           <span metal:use-macro="macros/pagename"></span>
         </td>
 
@@ -93,21 +93,21 @@
 
         <!-- ...page name + maybe parent context -->
         <td id="pagenameand_linear" align="left" width="79%"
-            tal:condition="python: hierarchy and linearhdr">
+            tal:condition="python: showhierarchy and linearhdr">
           <span metal:use-macro="macros/pagenameand_linear"></span>
         </td>
         <td id="pagenameand" align="left" width="79%"
-            tal:condition="python: hierarchy and not linearhdr">
+            tal:condition="python: showhierarchy and not linearhdr">
           <span metal:use-macro="macros/pagenameand"></span>
         </td>
         <td id="pagenameonly" align="left" width="79%"
-            tal:condition="not: hierarchy">
+            tal:condition="not: showhierarchy">
           <span metal:use-macro="macros/pagename"></span>
         </td>
 
         <!-- ...edit links + search box -->
         <!-- twk: put otherlinks here rather than in a table above this -->
-        <td id="searchbox" width="20%" align="right"  nowrap
+        <td id="searchbox" width="20%" align="right" nowrap
             tal:define="showsearch python:request.get('zwiki_showsearch',1)">
           <span metal:use-macro="macros/displaymodes" />
           <span metal:use-macro="macros/editlinks" />

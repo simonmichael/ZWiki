@@ -14,7 +14,7 @@
 <h1><span i18n:translate="">Backlinks for</span> <span tal:replace="here/Title">Pagename..</span></h1>
 
 <tal:block define="
-                   zwiki_showhierarchy request/zwiki_showhierarchy|nothing;
+                   canreparent python:user.has_permission('Zwiki: Reparent pages',here);
                    thispage here/Title;
                    ">
 <p>
@@ -26,8 +26,8 @@
 
 <form action="reparent" tal:attributes="action string:${here/page_url}/reparent">
 
-    <p tal:condition="zwiki_showhierarchy">
-	<span i18n:translate="box_zwiki_showhierarchy">
+    <p tal:condition="canreparent">
+	<span i18n:translate="box_canreparent">
     You can also set this page's <em>parent(s)</em>, to locate it within the
     contents hierarchy.  Check the boxes or enter a new page name and click
     Reparent.  A single parent is usually sufficient.
@@ -44,14 +44,14 @@
         <li tal:repeat="bl sorted_backlinks"> 
         <tal:block define="
                            blpage bl/Title;
-                           blisparent python:(blpage in thisparents) #and zwiki_showhierarchy;
+                           blisparent python:(blpage in thisparents);
                           ">
                           
         <input type="checkbox"
                name="parents" 
                value="blpage" class="formfield"
                tal:attributes="checked blisparent; value blpage;"
-               tal:condition="zwiki_showhierarchy"/>
+               tal:condition="canreparent"/>
 
         <strong tal:omit-tag="not:blisparent">
              <a href="blurl" 
@@ -67,7 +67,7 @@
         </li>
     </ol>
 
-    <p tal:condition="zwiki_showhierarchy">
+    <p tal:condition="canreparent">
     <span i18n:translate="">Other parent</span>: <input type="text" name="parents" class="formfield" />
     <input type="submit" value="Reparent" i18n:attributes="value" />
     </p>

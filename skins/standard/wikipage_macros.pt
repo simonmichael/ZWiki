@@ -180,21 +180,21 @@
 <a href="" title="show all features" 
 i18n:attributes="title"
 accesskey="+"
-   tal:define="prefs string:?setcookies=1&zwiki_displaymode=full&zwiki_showhierarchy=1&redirectURL=${here/pageUrl};"
+   tal:define="prefs string:?setcookies=1&zwiki_displaymode=full&redirectURL=${here/pageUrl};"
    tal:attributes="style python:[nothing,'font-weight:bold'][full];
                    href python:here.preferencesUrl()+prefs;"
   ><span i18n:translate="">full</span></a
 >/<a href="" title="show basic features" 
 i18n:attributes="title"
 accesskey="="
-   tal:define="prefs string:?setcookies=1&zwiki_displaymode=simple&zwiki_showhierarchy=1&redirectURL=${here/pageUrl};"
+   tal:define="prefs string:?setcookies=1&zwiki_displaymode=simple&redirectURL=${here/pageUrl};"
    tal:attributes="style python:[nothing,'font-weight:bold'][simple];
                    href python:here.preferencesUrl()+prefs;"
   ><span i18n:translate="">simple</span></a
 >/<a href="" title="show only essential features" 
 i18n:attributes="title"
 accesskey="-"
-   tal:define="prefs string:?setcookies=1&zwiki_displaymode=minimal&zwiki_showhierarchy=&redirectURL=${here/pageUrl};"
+   tal:define="prefs string:?setcookies=1&zwiki_displaymode=minimal&redirectURL=${here/pageUrl};"
    tal:attributes="style python:[nothing,'font-weight:bold'][minimal];
                    href python:here.preferencesUrl()+prefs;"
   ><span i18n:translate="">minimal</span></a>
