@@ -205,10 +205,10 @@ UI.py:editform() calls us with these options:
         <div class="field" 
              tal:condition="python:user.has_permission('Zwiki: Change page types', here)">
 
-            <label i18n:translate="label_format">Page Format</label>
+            <label i18n:translate="label_format">Page Type</label>
 
             <div class="formHelp" i18n:translate="help_format">
-            If you are unsure of which format to use, just select Plain
+            If you are unsure of which markup type to use, just select Plain
             Text and type the document as you usually do.
             </div>
             
