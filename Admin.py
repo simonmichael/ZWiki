@@ -14,8 +14,6 @@ from App.Common import absattr
 from DateTime import DateTime
 
 from Utils import BLATHER,formattedTraceback, DateTimeSyntaxError
-from Defaults import ISSUE_CATEGORIES, ISSUE_SEVERITIES, ISSUE_STATUSES, \
-     ISSUE_COLOURS
 
 # if page types are states, here is the table of transitions for upgrading
 PAGE_TYPE_UPGRADES = {
@@ -297,19 +295,7 @@ class AdminSupport:
 
         # install issue properties if needed, ie if this page is being
         # viewed as an issue for the first time
-        # could do this in isIssue instead
-        if (realself.isIssue() and not 'severity' in props):
-            # may need to set these up too
-            folder = realself.folder()
-            if (not hasattr(folder,'issue_categories') or
-                not hasattr(folder,'issue_severities') or
-                not hasattr(folder,'issue_statuses')):
-                realself.setupIssuePropertyValues()
-            realself.manage_addProperty('category','issue_categories','selection')
-            realself.manage_addProperty('severity','issue_severities','selection')
-            realself.manage_addProperty('status','issue_statuses','selection')
-            realself.severity = 'normal'
-            changed = 1
+        if realself.isIssue(): changed = realself.upgradeIssueProperties()
 
         if changed:
             # bobobase_modification_time changed - put in a dummy user so
@@ -512,106 +498,3 @@ class AdminSupport:
         if REQUEST:
             REQUEST.RESPONSE.redirect(self.page_url())
             
-    security.declareProtected('Manage properties', 'setupTracker')
-    def setupTracker(self,REQUEST=None,pages=0):
-        """
-        Configure this wiki for issue tracking.
-
-        This
-        - sets up the necessary extra catalog fields
-        - sets up issue_* folder properties, for customizing
-        - creates a dummy issue, if needed, to activate the issue links/tabs
-        - if pages=1, installs forms as DTML pages, for easy customizing
-        
-        Safe to call more than once; will ignore any already existing
-        items.  Based on the setupIssueTracker.py external method and the
-        data at http://zwiki.org/ZwikiAndZCatalog.
-        """
-        TextIndexes = [
-            ]
-        FieldIndexes = [
-            'category',
-            'category_index',
-            'isIssue',
-            'severity',
-            'severity_index',
-            'status',
-            'status_index',
-            ]
-        KeywordIndexes = [
-            ]
-        DateIndexes = [
-            ]
-        PathIndexes = [
-            ]
-        metadata = [
-            'category',
-            'category_index',
-            'issueColour',
-            'severity',
-            'severity_index',
-            'status',
-            'status_index',
-            ]
-        # make sure we have a basic zwiki catalog set up
-        self.setupCatalog(reindex=0)
-        catalog = self.catalog()
-        catalogindexes, catalogmetadata = catalog.indexes(), catalog.schema()
-        PluginIndexes = catalog.manage_addProduct['PluginIndexes']
-        # add indexes,
-        for i in TextIndexes:
-            if not i in catalogindexes: PluginIndexes.manage_addTextIndex(i)
-        for i in FieldIndexes:
-            if not i in catalogindexes: PluginIndexes.manage_addFieldIndex(i)
-        for i in KeywordIndexes:
-            if not i in catalogindexes: PluginIndexes.manage_addKeywordIndex(i)
-        for i in DateIndexes:
-            if not i in catalogindexes: PluginIndexes.manage_addDateIndex(i)
-        for i in PathIndexes:
-            if not i in catalogindexes: PluginIndexes.manage_addPathIndex(i)
-        # metadata,
-        for m in metadata:
-            if not m in catalogmetadata: catalog.manage_addColumn(m)
-        # properties,
-        self.setupIssuePropertyValues()
-        # dtml pages,
-        if pages:
-            dir = package_home(globals())+os.sep+'content'+os.sep+'tracker'+os.sep
-            for page in ['IssueTracker','FilterIssues']:
-                if not self.pageWithName(page):
-                    self.create(page,text=open(dir+page+'.stxdtml','r').read())
-        # index each page, to make all indexes and metadata current
-        # may duplicate some work in setupCatalog
-        n = 0
-        cid = self.catalog().getId()
-        for p in self.pageObjects():
-            n = n + 1
-            try:
-                BLATHER('indexing page #%d %s in %s'%(n,p.id(),cid))
-                p.index_object(log=0)
-            except:
-                BLATHER('failed to index page #%d %s: %s' \
-                        % (n,p.id(),formattedTraceback()))
-        BLATHER('indexing complete, %d pages processed' % n)
-        # and a dummy issue to enable site navigation links
-        if not self.hasIssues():
-            self.createNextIssue(
-                'first issue',
-                'This issue was created to activate the issue tracker links/tabs. You can re-use it.',
-                ISSUE_CATEGORIES[-1],
-                ISSUE_SEVERITIES[-1],
-                ISSUE_STATUSES[-1],
-                REQUEST=REQUEST)
-        if REQUEST: REQUEST.RESPONSE.redirect(self.trackerUrl())
-
-    def setupIssuePropertyValues(self):
-        folder = self.folder()
-        existingprops = map(lambda x:x['id'], folder._properties)
-        for property, values in [
-            ['issue_severities',ISSUE_SEVERITIES],
-            ['issue_categories',ISSUE_CATEGORIES],
-            ['issue_statuses',ISSUE_STATUSES],
-            ['issue_colours',ISSUE_COLOURS],
-            ]:
-            if not property in existingprops:
-                folder.manage_addProperty(property,join(values,'\n'),'lines')
