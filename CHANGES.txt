@@ -1,32 +1,16 @@
-Zwiki 0.32.0rc3 2004/07/04
-
-	* new german translation (Andreas Mayer)
-	
-	* allow a per-page mailout_policy (Bob McElrath)
-
-	* fix mailout of edit with empty log note via PUT (Bob McElrath)
-
-Zwiki 0.32.0rc2 2004/07/03
-
-        * clean up release notes
-
-	* unit test and fixes for citation formatting (IssueNo0863)
-
-        * fix page management form i18n, rebuild pot/po, fix fuzzy nl translations
-
-	* dutch translation updates (Jaap Noordzij)
-
-Zwiki 0.32.0rc1 2004/07/02
 
     Summary
 
         Zwiki's skin is about fully internationalised; translation
-	updates, new dutch & polish translations; skin cleanups;
-	"pluggable" page types; refactoring, bugfixes.
+	updates, new polish, dutch & german translations; skin cleanups;
+	pluggable page types; refactoring, bugfixes.
 
     Upgrade notes
     
         zwiki_plone/wikipage_view template has been renamed to wikipage
+
+	If you use a character encoding other than utf-8: zwiki has been
+	hard-coding utf-8 since 0.31 - see IssueNo0855.
         
     Changes
 
@@ -69,6 +53,12 @@ Zwiki 0.32.0rc1 2004/07/02
 
       Mail and comments
 
+	* make citation formatting in comments more robust (IssueNo0863)
+
+	* allow a per-page mailout_policy (Bob McElrath)
+
+	* fix mailout of edit with empty log note via PUT (Bob McElrath)
+
         * subscribeform: remove duplicate you are not subscribed
 
         * Do not add extra space on mailin Subject lines. (Bob McElrath)
@@ -84,6 +74,10 @@ Zwiki 0.32.0rc1 2004/07/02
         * disable subtopics display on the IssueTracker page by default when doing /setupTracker?pages=1
 
       I18n
+
+	* new german translation (Andreas Mayer)
+	
+        * fix page management form message extraction
 
         * chinese translation updates (T.C.Chou)
 
