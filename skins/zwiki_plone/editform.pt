@@ -98,7 +98,7 @@ UI.py:editform() calls us with these options:
             <input type="text"
                    id="title"
                    name="title" 
-                   value="" 
+                   value="" class="shade2"
                    size="40" 
                    tabindex=""
                    tal:attributes="value title;
@@ -117,7 +117,7 @@ UI.py:editform() calls us with these options:
             </div>
             
             <textarea tal:condition="not:here/supportsEpoz"
-                      name="text" 
+                      name="text"  class="shade2"
                       rows="20" 
                       cols="60"
                       tabindex=""
@@ -159,7 +159,7 @@ UI.py:editform() calls us with these options:
 
             <input type="text" 
                    name="log" 
-                   value="" 
+                   value=""  class="shade2"
                    size="40" 
                    tabindex=""
                    tal:attributes="tabindex tabindex/next|nothing;
@@ -183,7 +183,7 @@ UI.py:editform() calls us with these options:
 
             <input type="file" 
                  name="file" 
-                 size="30" 
+                 size="30"  class="shade2"
                  tabindex="" 
                  tal:attributes="tabindex tabindex/next|nothing;" 
                  />
@@ -219,7 +219,7 @@ UI.py:editform() calls us with these options:
                                  text_format python:request.get('text_format', getattr(here,'text_format','structured-text'))">
                 <input class="noborder" 
                        type="radio" 
-                       name="type"
+                       name="type" class="shade2"
                        value="pagetype" 
                        tabindex=""
                        id="pagetype"

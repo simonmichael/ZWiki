@@ -49,7 +49,7 @@
                           
         <input type="checkbox"
                name="parents" 
-               value="blpage"
+               value="blpage" class="shade2"
                tal:attributes="checked blisparent; value blpage;"
                tal:condition="zwiki_showhierarchy"/>
 
@@ -68,7 +68,7 @@
     </ol>
 
     <p tal:condition="zwiki_showhierarchy">
-    <span i18n:translate="">Other parent</span>: <input type="text" name="parents"/>
+    <span i18n:translate="">Other parent</span>: <input type="text" name="parents" class="shade2" />
     <input type="submit" value="Reparent" i18n:attributes="value" />
     </p>
 

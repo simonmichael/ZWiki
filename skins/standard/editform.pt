@@ -54,7 +54,7 @@
             tal:attributes="action string:${here/page_url}/">
         <input name="timeStamp" type="hidden" value="editTimestamp"
                tal:attributes="value here/editTimestamp" />
-        <input name="page" type=hidden value="page" 
+        <input name="page" type=hidden value="page"
                tal:attributes="value page" />
         <input name="leaveplaceholder" value="" type="hidden"
                tal:condition="python:creating #no placeholder when creating" />
@@ -69,7 +69,7 @@
                   <span i18n:translate="">Page name</span>: 
                   <input name="title" size="30" maxlength="100" value="" 
                          title="the name of this wiki page (changing this may be slow!)"                          
-                         tabindex="" style="font-weight:bold;"
+                         tabindex="" class="shade2" style="font-weight:bold;"
 			 i18n:attributes="title"
                          tal:attributes="value python:page;" />
                 </span>
@@ -78,7 +78,7 @@
                 <span tal:condition="python:
                       user.has_permission('Zwiki: Change page types',here)">
                   <span i18n:translate="">type</span>:
-                  <select name="type" tabindex="" 
+                  <select name="type" tabindex="" class="shade2"
                           title="select the formatting and rendering style for this page"
 			  i18n:attributes="title" >
                     <tal:options tal:repeat="type pagetypes">
@@ -127,7 +127,7 @@
             <!-- better-positioned epoz source-mode checkbox -->
             <tr tal:condition="python:0 #here/supportsEpoz">
               <td valign="top" align="right" bgcolor="#dddddd" colspan="2"
-                  ><input id="EpozViewMode" type="checkbox" 
+                  ><input id="EpozViewMode" type="checkbox" class="shade2"
                   onclick="SwitchViewMode(this.checked)" 
                   title="toggle source/WYSIWYG mode" 
 		  i18n:attributes="title"
@@ -141,7 +141,7 @@
                   nowrap="nowrap">
                 <span i18n:translate="">Optional change note</span>: 
                 <input name="log" size="50" maxlength="100" value="" 
-                       tabindex=""
+                       tabindex="" class="shade2"
                        title="a note makes RecentChanges more useful" 
 			i18n:attributes="title"
                        tal:attributes="value python:
@@ -161,7 +161,7 @@
                 <span i18n:translate="">Upload a file or image</span>: 
                 <input type="file" name="file" size="30" value="" tabindex=""
                        title="upload a file and link it on this page ?" 
-		       i18n:attributes="title"
+		       class="shade2" i18n:attributes="title"
 		/>
               </td>
             </tr>
