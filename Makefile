@@ -562,13 +562,12 @@ pot:
 	    -x _darcs -x old -x misc -x ftests 
 	# ----------------------------------
 	# now do fixups to zwiki.pot:
-	# 1. remove license
-	# 2. update Project-Id-Version & Language-Team
-	# 3. add meta data required by PTS:
-	#    "Language-code: xx\n"
-	#    "Language-name: X\n"
-	#    "Preferred-encodings: utf-8 latin1\n"
-	#    "Domain: zwiki\n"
+	# 1. update license & Language-Team
+	# 2. add meta data required by PTS:
+	# "Language-code: xx\n"
+	# "Language-name: X\n"
+	# "Preferred-encodings: utf-8 latin1\n"
+	# "Domain: zwiki\n"
 	# ----------------------------------
 
 po:
