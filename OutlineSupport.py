@@ -703,7 +703,7 @@ class OutlineRenderingMixin:
         for n in nesting:
             if type(n) == ListType:
                 if not (n[0]==here and suppress_current): #XXX temp
-                    got.append('%s <li>[%s]' % (indent,n[0]))
+                    got.append('%s <li>[%s]</li>' % (indent,n[0]))
                 if len(n) > 1:
                     if not (n[0]==here and suppress_current): #XXX temp
                         got.append("<ul>")
@@ -712,13 +712,13 @@ class OutlineRenderingMixin:
                             got = self.renderNesting(
                                 [i],here,did=did,got=got,indent=indent+' ')
                         else:
-                            got.append('%s <li>[%s]' % (indent,i))
+                            got.append('%s <li>[%s]</li>' % (indent,i))
                     if not (n[0]==here and suppress_current): #XXX temp
                         got.append("</ul>")
                 else:
                     got[-1] += ' ...' # a parent whose children were omitted
             else:
-                got.append('%s <li>[%s]' % (indent,n))
+                got.append('%s <li>[%s]</li>' % (indent,n))
         if recursing: return got
 
         # finish up, do pretty printing options and wiki links
