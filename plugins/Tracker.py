@@ -295,10 +295,11 @@ class TrackerSupport:
             if status != self.status:
                 comment += "Status: %s => %s \n" % (self.status,status)
                 self.manage_changeProperties(status=status)
-        log = log or 'property change'
-        self.comment(text=comment, subject_heading=log, REQUEST=REQUEST)
-        self.setLastEditor(REQUEST)
-        self.index_object()
+        if log or (comment != ''):
+            log = log or 'property change'
+            self.comment(text=comment, subject_heading=log, REQUEST=REQUEST)
+            self.setLastEditor(REQUEST)
+            self.reindex_object()
         if REQUEST: REQUEST.RESPONSE.redirect(self.page_url())
 
     def category_index(self):
