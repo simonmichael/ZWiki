@@ -91,6 +91,8 @@ if encoding:
         BLATHER('Warning: unicode() LookupError for encoding %s, WikiNames will not use the system locale' % encoding)
     U = '|'.join([x.encode('utf8') for x in uppercase_uc])
     L = '|'.join([x.encode('utf8') for x in lowercase_uc])
+    Ub = '[%s]' % ''.join([x.encode('utf8') for x in uppercase_uc])
+    Lb = '[%s]' % ''.join([x.encode('utf8') for x in lowercase_uc])
     wikiname1 = r'(?L)\b(?:%s)+(?:%s)+(?:%s)(?:%s|%s)*[0-9]*' % (U,L,U,U,L)
     wikiname2 = r'(?L)\b(?:%s)(?:%s)+(?:%s)(?:%s|%s)*[0-9]*'  % (U,U,L,U,L)
 else:
@@ -114,6 +116,8 @@ else:
         '\xc3\xa0\xc3\xa1\xc3\xa2\xc3\xa3\xc3\xa4\xc3\xa5\xc3\xa6\xc3\xa8\xc3\xa9\xc3\xaa\xc3\xab\xc3\xac\xc3\xad\xc3\xae\xc3\xaf\xc3\xb2\xc3\xb3\xc3\xb4\xc3\xb5\xc3\xb6\xc3\xb8\xc3\xb9\xc3\xba\xc3\xbb\xc3\xbc\xc3\xbd\xc3\xbf\xc2\xb5\xc3\x9f\xc3\xa7\xc3\xb0\xc3\xb1\xc3\xbe'
     U='|'.join([x.encode('utf8') for x in unicode(uppercase,'utf-8')])
     L='|'.join([x.encode('utf8') for x in unicode(lowercase,'utf-8')])
+    Ub = '[%s]' % ''.join([x.encode('utf8') for x in unicode(uppercase,'utf-8')])
+    Lb = '[%s]' % ''.join([x.encode('utf8') for x in unicode(lowercase,'utf-8')])
     # can't easily emulate \b.. look-behind must be fixed-width.
     # this should work in a lot of cases:
     #b = '(?<![A-Za-z0-9\x80\x81\x82\x83\x84\x85\x86\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x92\x93\x94\x95\x96\x98\x99\x9a\x9b\x9c\x9d\x87\x90\x91\x9e\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb2\xb3\xb4\xb5\xb6\xb8\xb9\xba\xbb\xbc\xbd\xbf\xc2\xb5\x9f\xa7\xb0\xb1\xbe])' 
@@ -138,6 +142,7 @@ anywikilinkexpr  = re.compile(r'(%s|%s)' % (interwikilink,wikilink))
 markedwikilinkexpr  = re.compile(r'<zwiki>(.*?)</zwiki>')
 untitledwikilinkexpr = \
           re.compile(r'<a href="([^"/]*/)*(?P<page>[^/"]*)" title="">.*?</a>')
+wikinamewords    = r'((%s(?!%s))+[0-9]*|%s%s+[0-9]*)'%(Ub,Lb,Ub,Lb)
 remotewikiurl    = r'(?mi)RemoteWikiURL[:\s]+(?P<remoteurl>[^\s]*)\s*$'
 protected_line   = r'(?m)^!(.*)$'
 

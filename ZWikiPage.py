@@ -64,7 +64,7 @@ from Regexps import url, bracketedexpr, doublebracketedexpr, \
      wikiname, wikilink, interwikilink, remotewikiurl, \
      protected_line, zwikiidcharsexpr, anywikilinkexpr, \
      markedwikilinkexpr, localwikilink, spaceandlowerexpr, \
-     dtmlorsgmlexpr
+     dtmlorsgmlexpr, wikinamewords
 from Utils import Utils, BLATHER
 from UI import UI
 from OutlineSupport import OutlineSupport
@@ -715,6 +715,21 @@ class ZWikiPage(
         to handle eg pages created via the ZMI.
         """
         return self.title_or_id()
+    
+    security.declareProtected(Permissions.View, 'spacedPageName')
+    def spacedPageName(self):
+        """
+        Return this page's name, with spaces inserted if it's a WikiName.
+
+        We use this for eg the html title tag to improve search engine relevance.
+        Attempts to use the same characters and patterns as the wikiname regexp.
+        """
+        pagename = self.pageName()
+        if re.match('^%s$' % wikiname, pagename):
+            words = [x[0] for x in re.findall(wikinamewords,pagename)]
+            return ' '.join(words)
+        else:
+            return pagename
     
     security.declarePublic('Title')
     def Title(self):
