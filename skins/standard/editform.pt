@@ -34,10 +34,10 @@
         <td width="1%" valign="middle">
           <a tal:condition="python:request.get('zwiki_showlogo',1)"
              tal:attributes="href here/wiki_url"
-             href="wiki_url" title="go to home page" accesskey="f">
+             href="wiki_url" title="go to home page" accesskey="f" i18n:attributes="title">
             <img tal:replace="structure container/site_logo|default"
                  src="/misc_/ZWiki/ZWikiPage_icon.gif" height="48" width="48" 
-                 border="0" alt="home" />
+                 border="0" alt="home" i18n:attributes="alt"/>
           </a>
         </td>
         <td valign="middle">
@@ -70,6 +70,7 @@
                   <input name="title" size="30" maxlength="100" value="" 
                          title="the name of this wiki page (changing this may be slow!)"                          
                          tabindex="" style="font-weight:bold;"
+			 i18n:attributes="title"
                          tal:attributes="value python:page;" />
                 </span>
               </td>
@@ -78,7 +79,8 @@
                       user.has_permission('Zwiki: Change page types',here)">
                   <span i18n:translate="">type</span>:
                   <select name="type" tabindex="" 
-                          title="select the formatting and rendering style for this page">
+                          title="select the formatting and rendering style for this page"
+			  i18n:attributes="title" >
                     <tal:options tal:repeat="type pagetypes">
                       <option value="type"
                               tal:define="
@@ -128,6 +130,7 @@
                   ><input id="EpozViewMode" type="checkbox" 
                   onclick="SwitchViewMode(this.checked)" 
                   title="toggle source/WYSIWYG mode" 
+		  i18n:attributes="title"
                   tabindex=""
               /></td>
             </tr>
@@ -140,6 +143,7 @@
                 <input name="log" size="50" maxlength="100" value="" 
                        tabindex=""
                        title="a note makes RecentChanges more useful" 
+			i18n:attributes="title"
                        tal:attributes="value python:
                        (editing and 
                        here.usernameFrom(request) == here.last_editor and
@@ -156,7 +160,9 @@
                   nowrap="nowrap">
                 <span i18n:translate="">Upload a file or image</span>: 
                 <input type="file" name="file" size="30" value="" tabindex=""
-                       title="upload a file and link it on this page ?" />
+                       title="upload a file and link it on this page ?" 
+		       i18n:attributes="title"
+		/>
               </td>
             </tr>
 
@@ -165,22 +171,27 @@
                 getattr(here.folder(),'show_subtopics',0) and
                 user.has_permission('Zwiki: Reparent pages',here)">
               <td valign="middle" align="left" colspan="2" bgcolor="#dddddd">
-                <span i18n:translate="">Show subtopics on this page & below ?
-                </span>
+                <span i18n:translate="">Show subtopics on this page & below ?</span>
                 <input name="subtopics" value="-1" type="radio" tabindex=""
                        tal:attributes="
                        checked python:here.subtopicsPropertyStatus()==-1;"
-                       title="show subtopics in full mode, or if ancestor page has 'always'" />
+                       title="show subtopics in full mode, or if ancestor page has 'always'" 
+		       i18n:attributes="title"
+		/>
                 <span i18n:translate="">default</span>
                 <input name="subtopics" value="0" type="radio" tabindex=""
                        tal:attributes="
                        checked python:here.subtopicsPropertyStatus()==0;"
-                       title="never show subtopics on this page" />
+                       title="never show subtopics on this page" 
+		       i18n:attributes="title"
+		/>
                 <span i18n:translate="">never</span>
                 <input name="subtopics" value="1" type="radio" tabindex=""
                        tal:attributes="
                        checked python:here.subtopicsPropertyStatus()==1;"
-                       title="always show subtopics on this page" />
+                       title="always show subtopics on this page" 
+       		       i18n:attributes="title"
+		/>
                 <span i18n:translate="">always</span>
               </td>
             </tr>
@@ -190,27 +201,35 @@
               <td valign="" align="left" bgcolor="#dddddd" colspan="1">
                 <span i18n:translate="">For editing help, see</span> 
                 <a tal:attributes="href string:${wiki_url}/HelpPage#editing"
-                >HelpPage</a> 
+                ><span i18n:translate="">HelpPage</span></a> 
                 <span tal:omit-tag="" 
                       tal:condition="python:
                       here.pageWithId('TextFormattingRules')">
                   <span i18n:translate="">or</span> 
                   <a 
                    tal:attributes="href string:${wiki_url}/TextFormattingRules"
-                  >TextFormattingRules</a> 
+                  ><span i18n:translate="">TextFormattingRules</span></a> 
                   </span>.
               </td>
               <td valign="top" align="right" bgcolor="#dddddd" colspan="1">
                 <strong><input type="submit" name="edit:method" 
-                value=" Save " title="change this wiki page"
+                value="Save" title="change this wiki page"
                 tabindex="" style="font-weight:bold" accesskey="s"
                 tal:attributes="
-                value python:creating and ' Create ' or default;
-                title python:creating and 'create this wiki page' or default;
-                " /></strong>
-                <input type="submit" value=" Cancel " 
+                value python:creating and ('Create') or default;
+                title python:creating and ('create this wiki page') or default;"
+		i18n:attributes="title;value"
+		/></strong>
+		<span tal:condition="python: False">
+			<!-- force i18n extraction -->
+			<span title="Create" i18n:attributes="title"></span>
+			<span title="create this wiki page" i18n:attributes="title"></span>
+		</span>
+                <input type="submit" value="Cancel" 
                        title="cancel this edit and return to the page"
-                       tabindex="" />
+                       tabindex="" 
+		       i18n:attributes="title;value"
+		/>		
               </td>
             </tr>
 
