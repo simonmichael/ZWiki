@@ -21,7 +21,6 @@
       pagetypes  here/allowedPageTypes;
       wiki_url   here/wikiUrl;
       rows       python:request.get('zwiki_height',20);
-      cols       python:request.get('zwiki_width',60);
       uploaddir  python:getattr(container,'uploads',container);
       macros     python:here.wikipage_macros(request).macros;
       "
@@ -120,7 +119,7 @@
                           wrap="virtual" name="text" rows="20" cols="60"
                           style="width:100%; background-color:#f0f0f0" 
                           tabindex=""
-                          tal:attributes="rows rows; cols cols"
+                          tal:attributes="rows rows;"
                           tal:content="text">text...</textarea>
                 <span tal:condition="here/supportsEpoz"
                       tal:replace="structure python:

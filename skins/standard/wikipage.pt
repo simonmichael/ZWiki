@@ -159,12 +159,11 @@
 </div>
 
 <div tal:condition="python:
-     request.get('zwiki_showpagemgmt',1)
-     and full
-     and (   user.has_permission('Zwiki: Rename pages',here)
+     full and
+     (user.has_permission('Zwiki: Rename pages',here)
      or user.has_permission('Zwiki: Reparent pages',here)
      or user.has_permission('Zwiki: Delete pages',here))
-     and (user.has_role('Authenticated') or request.get('zwiki_username',''))
+     #and (user.has_role('Authenticated') or request.get('zwiki_username',''))
      ">
   <!-- page management panel -->
   <div metal:use-macro="macros/pagemanagement"></div>

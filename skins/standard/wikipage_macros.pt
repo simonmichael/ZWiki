@@ -405,7 +405,6 @@ tal:attributes="
 <tr>
 <td align="center" valign="bottom" bgcolor="" colspan="2">
 <textarea 
-tal:attributes="cols python:request.get('zwiki_width','') or 60"
 wrap="virtual" name="text" rows="3" cols="60" 
 style="width:100%;"  class="formfield"
 title="to comment (and cc any subscribers) enter text here and click add"

@@ -133,7 +133,6 @@ UI.py:editform() calls us with these options:
                       cols="60"
                       tabindex=""
                       tal:attributes="rows python:request.get('zwiki_height','') or 20;
-                                      cols python:request.get('zwiki_width','') or 60;
                                       tabindex tabindex/next|nothing;"
                       tal:content="text">
                 text

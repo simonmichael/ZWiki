@@ -24,7 +24,6 @@
       <tr>
         <td>
     <textarea name="text" rows="3" style="width:100%;" cols="60" wrap="virtual" 
-              tal:attributes="cols python:request.get('zwiki_width','') or 60"
               title="enter comments here and click add; or, click edit"
 	      i18n:attributes="title"
     ></textarea>
@@ -60,7 +59,7 @@
      (user.has_permission('Zwiki: Rename pages',here)
      or user.has_permission('Zwiki: Reparent pages',here)
      or user.has_permission('Zwiki: Delete pages',here))
-     and (user.has_role('Authenticated') or request.get('zwiki_username',''))
+     #and (user.has_role('Authenticated') or request.get('zwiki_username',''))
      ">
   <!-- page management panel -->
   <span metal:use-macro="python:here.wikipage_macros().macros['pagemanagement']" />
