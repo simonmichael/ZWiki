@@ -35,8 +35,7 @@ class EditingSupport:
 
     security.declareProtected(Permissions.Add, 'create') 
     def create(self,page,text=None,type=None,title='',REQUEST=None,log='',
-               leaveplaceholder=1, updatebacklinks=1, sendmail=1,
-               parents=None, subtopics=None):
+               sendmail=1, parents=None, subtopics=None):
         """
         Create a new wiki page, with optional extras.
 
@@ -87,13 +86,14 @@ class EditingSupport:
         if p.autoSubscriptionEnabled(): p.subscribeThisUser(REQUEST)
         #if p.usingRegulations(): p.setRegulations(REQUEST,new=1)
         # users can alter the page name in the creation form; allow that.
-        # We do a full rename, after all the above, to make sure
+        # We do a full rename, only after all the above, to make sure
         # everything gets handled properly.  We must first commit though,
         # to get p.cb_isMoveable(). Renaming will also get us indexed.
+        # We never leave a placeholder, always update backlinks.
         if title and title != p.title_or_id():
             get_transaction().note('rename during creation')
             get_transaction().commit()
-            p.handleRename(title,leaveplaceholder,updatebacklinks,REQUEST,log)
+            p.handleRename(title,0,1,REQUEST,log)
         else:
             # we got indexed after _setObject, but do it again with our text
             p.index_object()
