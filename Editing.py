@@ -156,6 +156,7 @@ class EditingSupport:
                 _('You are not authorized to comment on this ZWiki Page.'))
         if hasattr(self,'wl_isLocked') and self.wl_isLocked():
             return self.davLockDialog()
+
         # gather various bits and pieces
         oldtext = self.read()
         text = self._cleanupText(text)
@@ -164,8 +165,10 @@ class EditingSupport:
             username = self.usernameFrom(REQUEST)
             if re.match(r'^[0-9\.\s]*$',username): 
                 username = ''
-        # basic junk comment detection
+
+        # do basic junk comment filtering
         if not subject and not text: return
+
         # ensure message_id is defined at this point so page and mail-out
         # will use the same value and threading will work
         # also ensure it matches time where possible (!) may help debugging
@@ -176,29 +179,6 @@ class EditingSupport:
             time = dtime.rfc822()
         if not message_id:
             message_id = self.messageIdFromTime(dtime)
-        if getattr(self.folder(),'fewer_threads',0):
-            # when there's no specific in-reply-to, we'd like comments to the
-            # same page to form a shallow thread by default. How ?
-            # We could reply-to the page's original creation message; a
-            # shallow thread will be formed - but only as long as that message
-            # is in view, in the mail client or in the current month's mailman
-            # archive. So..  make a new default reply-to target (thread root)
-            # in each month.  The overall thread will be flat, bumping in one
-            # each month but not growing steadily deeper. Ie..
-            # if commenting in the same month as self.currentThreadRoot,
-            # reply to it, otherwise replace it and reply to creationTime.
-            # too clever ? an abuse of the semantics of in-reply-to ?
-            if not in_reply_to:
-                root = getattr(self,'currentThreadRoot',None)
-                if root:
-                    rootmonth = int(root[1:5])*12+int(root[6:7])
-                    thismonth = dtime.year()*12+dtime.month()
-                if root and thismonth == rootmonth:
-                    in_reply_to = self.currentThreadRoot
-                else:
-                    #BLATHER('resetting monthly thread root for',self.id())
-                    self.currentThreadRoot = message_id
-                    in_reply_to = self.messageIdFromTime(self.creationTime())
 
         # add message to page - append it to both source and _prerendered
         # without redoing the whole thing!
@@ -289,6 +269,7 @@ class EditingSupport:
             username = self.usernameFrom(REQUEST)
             if re.match(r'^[0-9\.\s]*$',username): 
                 username = ''
+
         # ensure message_id is defined at this point so page and mail-out
         # will use the same value and threading will work
         # also ensure it matches time where possible (!) may help debugging
@@ -299,29 +280,6 @@ class EditingSupport:
             time = dtime.rfc822()
         if not message_id:
             message_id = self.messageIdFromTime(dtime)
-        if getattr(self.folder(),'fewer_threads',0):
-            # when there's no specific in-reply-to, we'd like comments to the
-            # same page to form a shallow thread by default. How ?
-            # We could reply-to the page's original creation message; a
-            # shallow thread will be formed - but only as long as that message
-            # is in view, in the mail client or in the current month's mailman
-            # archive. So..  make a new default reply-to target (thread root)
-            # in each month.  The overall thread will be flat, bumping in one
-            # each month but not growing steadily deeper. Ie..
-            # if commenting in the same month as self.currentThreadRoot,
-            # reply to it, otherwise replace it and reply to creationTime.
-            # too clever ? an abuse of the semantics of in-reply-to ?
-            if not in_reply_to:
-                root = getattr(self,'currentThreadRoot',None)
-                if root:
-                    rootmonth = int(root[1:5])*12+int(root[6:7])
-                    thismonth = dtime.year()*12+dtime.month()
-                if root and thismonth == rootmonth:
-                    in_reply_to = self.currentThreadRoot
-                else:
-                    #BLATHER('resetting monthly thread root for',self.id())
-                    self.currentThreadRoot = message_id
-                    in_reply_to = self.messageIdFromTime(self.creationTime())
 
         # add message to page
         # testing support: only if subject is not [test] except on TestPage
