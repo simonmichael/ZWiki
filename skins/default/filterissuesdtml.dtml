@@ -79,19 +79,19 @@ current_single_status="((_.len(current_statuses)==1) and current_statuses[0]) or
 <table border="0" cellspacing="0" cellpadding="3">
 <tr>
 <td align=left valign=top colspan=3>
-Title contains any of:<br>
+Title contains any of:<br/>
 <input type="text" name="titlesearch" value="<dtml-var titlesearch missing>" size="40" maxlength="60" accesskey="s">
 </td>
 </tr>
 <tr>
 <td align=left valign=top colspan=3>
-Comments contain any of:<br>
+Comments contain any of:<br/>
 <input type="text" name="textsearch" value="<dtml-var textsearch missing>" size="40" maxlength="60">
 </td>
 </tr>
 <tr>
 <td align=left valign=top>
-Categories:<br>
+Categories:<br/>
 <select name="categories:list" multiple>
 <dtml-in issue_categories>
 <option
@@ -101,7 +101,7 @@ Categories:<br>
 </select> 
 </td>
 <td align=left valign=top>
-Severities:<br>
+Severities:<br/>
 <select name="severities:list" multiple>
 <dtml-in issue_severities>
 <option
@@ -111,7 +111,7 @@ Severities:<br>
 </select> 
 </td>
 <td align=left valign=top>
-Statuses:<br>
+Statuses:<br/>
 <select name="statuses:list" multiple>
 <dtml-in issue_statuses>
 <option

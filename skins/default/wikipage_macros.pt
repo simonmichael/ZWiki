@@ -294,7 +294,7 @@ tal:attributes="href ctx/contentsUrl" tal:content="python: container.title + ' c
 
   <span tal:condition="python: '=' in ii['type']">
     <span tal:condition="python: '!' in ii['type']">
-      <br><big><big><big><big><strong>&nbsp;&nbsp;<a href="href" name="name"
+      <br/><big><big><big><big><strong>&nbsp;&nbsp;<a href="href" name="name"
       tal:attributes="href python: ii['href'] + '/backlinks'; name ii/name"
       tal:content="ii/page">page</a></strong></big></big></big></big>
       <span tal:condition="python: '.' in ii['type']"> ...</span>

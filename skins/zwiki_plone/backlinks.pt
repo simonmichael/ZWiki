@@ -44,11 +44,11 @@ Here are the pages which link to
                            blisparent python:(blpage in thisparents) #and zwiki_showhierarchy;
                           ">
                           
-        <input type=checkbox 
+        <input type="checkbox"
                name="parents" 
                value="blpage"
                tal:attributes="checked blisparent; value blpage;"
-               tal:condition="zwiki_showhierarchy">
+               tal:condition="zwiki_showhierarchy"/>
 
         <strong tal:omit-tag="not:blisparent">
              <a href="blurl" 
@@ -65,8 +65,8 @@ Here are the pages which link to
     </ol>
 
     <p tal:condition="zwiki_showhierarchy">
-    Other parent: <input type="text" name="parents">
-    <input type="submit" value="Reparent">
+    Other parent: <input type="text" name="parents"/>
+    <input type="submit" value="Reparent"/>
     </p>
 
 </form>
