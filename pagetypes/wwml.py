@@ -2,6 +2,7 @@
 # contributed by Tres Seaver <tseaver@palladion.com>
 
 from common import *
+from Products.ZWiki.I18nSupport import _
 
 class ZwikiWwmlPageType(AbstractPageType):
     _id = 'wwml'

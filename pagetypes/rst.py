@@ -1,4 +1,5 @@
 from common import *
+from Products.ZWiki.I18nSupport import _
 
 try:
     import reStructuredText # import this one first

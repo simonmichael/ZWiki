@@ -1,4 +1,5 @@
 from common import *
+from Products.ZWiki.I18nSupport import _
 
 import StructuredText
 from StructuredText.DocumentWithImages import DocumentWithImages
