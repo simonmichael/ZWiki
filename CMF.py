@@ -109,6 +109,14 @@ try:
         def SearchableText(self):
             return self.text()
 
+        security.declareProtected(Permissions.View, 'Subject')
+        def Subject(self):
+            return self.spacedPageName()
+
+        security.declareProtected(Permissions.View, 'Description')
+        def Description(self):
+            return self.summary()
+
         def wiki_context(self, REQUEST=None, with_siblings=0):
             return self.context(REQUEST, with_siblings)
 
