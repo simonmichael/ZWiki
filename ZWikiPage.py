@@ -68,6 +68,7 @@ from Regexps import url, bracketedexpr, doublebracketedexpr, \
 from Utils import Utils, BLATHER
 from UI import UI
 from OutlineSupport import OutlineSupport
+from Rating import RatingSupport
 from Diff import DiffSupport
 from Mail import SubscriberManagerMixin, MailSupport
 from CatalogAwareness import CatalogAwareness
@@ -117,6 +118,7 @@ class ZWikiPage(
     FitSupport,
     CommentsSupport,
     PurpleNumbersSupport,
+    RatingSupport,
     AdminSupport,
     Utils,
     ):
