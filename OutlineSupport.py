@@ -57,7 +57,7 @@ import Persistence
 
 import Permissions
 from Utils import flatten, BLATHER
-from Defaults import PAGE_METATYPE
+from Defaults import PAGE_METATYPE, SHOW_CURRENT_PAGE_IN_CONTENTS
 from Regexps import bracketedexpr
 import Outline
 
@@ -689,8 +689,10 @@ class OutlineRenderingMixin:
           (backwards compatibility for old editforms)
         - if suppress_current is true, here will not be shown at all
         - did, got & indent are for recursion, callers should not use
-        
+
         """
+        #XXX cleanup
+        
         if suppress_current and nesting[0] == here: # a single childless page
             return ''
         if did is None: did = []
@@ -730,13 +732,15 @@ class OutlineRenderingMixin:
                            t)
                 # XXX temporary kludge.. assume we are in the page header here
                 t = re.sub(r'(\[%s\])' % re.escape(self.pageName()),
-                           ('<a href="%s/backlinks" ' % (self.page_url())) +
-                           ' title="' + _("which pages link to this one ?").__str__() +
-                           ('">%s</a>' % (self.pageName())),
+                           '<a href="%s/backlinks" title="%s">%s</a>' % (
+                               self.page_url(),
+                               _("which pages link to this one ?"),
+                               self.pageName()),
                            t)
-            else:
+            elif SHOW_CURRENT_PAGE_IN_CONTENTS:
                 t = re.sub(r'(\[%s\])' % re.escape(here),
-                           r'\1 <b><-- ' + _("You are here").__str__() + '.</b>',t)
+                           r'\1 <b><-- %s.</b>' % _("You are here"),
+                           t)
             if suppress_hyperlink:
                 t = re.sub(r'(\[%s\])' % re.escape(here), r'!\1', t)
         #t = self.renderLinksIn(t) # too expensive for now.. do it on the cheap

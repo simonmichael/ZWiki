@@ -25,7 +25,8 @@ except:
     ZOPEVERSION = (9,9,9) # (cvs)
 
 from Products.ZWiki import __version__
-from Defaults import PREFER_USERNAME_COOKIE, PAGE_METADATA, SCROLL_CONTENTS
+from Defaults import PREFER_USERNAME_COOKIE, PAGE_METADATA, \
+     SHOW_CURRENT_PAGE_IN_CONTENTS
 import Permissions
 from I18nSupport import _
 
@@ -290,7 +291,7 @@ class Utils:
         out from under you anyhow. Try without it for a bit.
         
         """
-        if SCROLL_CONTENTS:
+        if SHOW_CURRENT_PAGE_IN_CONTENTS:
             quotedname = quote(self.pageName())
             if self.pageWithId('SiteMap'): 
                 return '%s/SiteMap?here=%s#%s' \
