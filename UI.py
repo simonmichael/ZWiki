@@ -248,6 +248,61 @@ class UIUtils:
     #    else:
     #        return '<p>This wiki has a custom standard_wiki_header but no corresponding standard_wiki_footer. Suggestion: remove it.</body></html>'
 
+    security.declareProtected(Permissions.View, 'setSkinMode')
+    def setSkinMode(self,REQUEST,mode):
+        """
+        Change the user's display mode cookie for the standard skin.
+        
+        The display mode affects the appearance of Zwiki's standard skin;
+        it may be full, simple, or minimal.
+
+        XXX nb keep useroptions synced with this.
+        """
+        RESPONSE = REQUEST.RESPONSE
+        RESPONSE.setCookie('zwiki_displaymode',
+                           mode,
+                           path='/',
+                           expires=(self.ZopeTime() + 365).rfc822()) # 1 year
+        REQUEST.RESPONSE.redirect(REQUEST.get('URL1'))
+
+    security.declareProtected(Permissions.View, 'setCMFSkin')
+    def setCMFSkin(self,REQUEST,skin):
+        """
+        Change the user's CMF/Plone skin preference, if possible.
+        """
+        if not self.inCMF(): return
+        portal_skins = self.portal_url.getPortalObject().portal_skins
+        portal_membership = self.portal_url.getPortalObject().portal_membership
+        if not portal_skins.getSkinPath(skin): return
+        REQUEST.form['portal_skin'] = skin
+        portal_membership.getAuthenticatedMember().setProperties(REQUEST)
+        portal_skins.updateSkinCookie()
+        REQUEST.RESPONSE.redirect(REQUEST.get('URL1'))
+
+    security.declareProtected(Permissions.View, 'setSkin')
+    def setskin(self,REQUEST,skin=None):
+        """
+        Change the user's skin, or skin display mode.
+
+        skin can be either a display mode of Zwiki's standard skin - full,
+        simple, minimal - or the name of a CMF/Plone skin, or just plone.
+        (standard skin modes can work in cmf/plone, if there is a skin
+        named "Zwiki" with the "standard" layer above "zwiki_plone".)
+
+        Calling this with no arguments will select the standard skin's
+        simple mode, or the Plone Default skin if you are in CMF.
+        """
+        # convenient defaults:
+        if not skin or skin in ['plone','cmf']:
+            if self.inCMF(): skin = 'Plone Default'
+            else: skin = 'simple'
+        RESPONSE = REQUEST.RESPONSE
+        if skin in ['full','simple','minimal']:
+            self.setSkinMode(REQUEST,skin)
+            self.setCMFSkin(REQUEST,'Zwiki')
+        else:
+            self.setCMFSkin(REQUEST,skin)
+
 InitializeClass(UIUtils)
 
 

@@ -87,6 +87,10 @@
 <a tal:attributes="href here/uploadsUrl" accesskey="" tal:condition="python:0 #here/uploadsUrl"></a>
 <a tal:attributes="href here/preferencesUrl" accesskey="o"></a>
 <a tal:attributes="href here/helpUrl" accesskey="h" tal:condition="here/helpUrl"></a>
+<a tal:attributes="href python:here.firstPageUrl()+'/setskin?skin=plone'" accesskey="+" tal:condition="here/inCMF"></a>
+<a tal:attributes="href python:here.firstPageUrl()+'/setskin?skin=full'" accesskey="="></a>
+<a tal:attributes="href python:here.firstPageUrl()+'/setskin?skin=simple'" accesskey="_"></a>
+<a tal:attributes="href python:here.firstPageUrl()+'/setskin?skin=minimal'" accesskey="-"></a>
 <a tal:attributes="href here/pageUrl" accesskey="v"></a>
 <a tal:attributes="href string:${here/pageUrl}/subscribeform" accesskey="m"></a>
 <a tal:attributes="href string:${here/pageUrl}/backlinks" accesskey="b"></a>
@@ -177,26 +181,25 @@
         simple      python: displaymode=='simple';
         full        python: displaymode=='full';
         ">
-<a href="" title="show all features" 
-i18n:attributes="title"
-accesskey="+"
-   tal:define="prefs string:?setcookies=1&zwiki_displaymode=full&redirectURL=${here/pageUrl};"
+<span tal:condition="here/inCMF">
+<a accesskey="+" href="" 
+   title="show plone skin" i18n:attributes="title"
+   tal:attributes="href python:here.pageUrl()+'/setskin';"
+  ><span i18n:translate="">plone</span></a
+>/</span><a accesskey="=" href="" 
+   title="show all features" i18n:attributes="title"
    tal:attributes="style python:[nothing,'font-weight:bold'][full];
-                   href python:here.preferencesUrl()+prefs;"
+                   href python:here.pageUrl()+'/setskin?skin=full';"
   ><span i18n:translate="">full</span></a
->/<a href="" title="show basic features" 
-i18n:attributes="title"
-accesskey="="
-   tal:define="prefs string:?setcookies=1&zwiki_displaymode=simple&redirectURL=${here/pageUrl};"
+>/<a accesskey="_" href=""
+   title="show basic features" i18n:attributes="title"
    tal:attributes="style python:[nothing,'font-weight:bold'][simple];
-                   href python:here.preferencesUrl()+prefs;"
+                   href python:here.pageUrl()+'/setskin?skin=simple';"
   ><span i18n:translate="">simple</span></a
->/<a href="" title="show only essential features" 
-i18n:attributes="title"
-accesskey="-"
-   tal:define="prefs string:?setcookies=1&zwiki_displaymode=minimal&redirectURL=${here/pageUrl};"
+>/<a accesskey="-" href="" 
+   title="show only essential features" i18n:attributes="title"
    tal:attributes="style python:[nothing,'font-weight:bold'][minimal];
-                   href python:here.preferencesUrl()+prefs;"
+                   href python:here.pageUrl()+'/setskin?skin=minimal';"
   ><span i18n:translate="">minimal</span></a>
 
 </span> 
