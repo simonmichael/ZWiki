@@ -466,12 +466,11 @@ class MailSupport:
 
 	# some lists (ezmlm) require the list address in To, and if it also 
 	# appears in subscriber_list will deliver two copies. Just remove
-	# duplicates to be safe.
+	# all duplicates to be safe.
 	def uniq(list):
-            u = []
-            for i in list:
-                if not i in u: u.append(i)
-	    return u
+	    set = {}
+	    map(set.__setitem__, list, [])
+	    return set.keys()
         recipients = uniq(recipients)
 
         if not recipients: return

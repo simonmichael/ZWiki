@@ -386,7 +386,7 @@ in reply to: <span tal:replace="request/in_reply_to"></span>
 <em><small><span tal:content="python:'('+str(here.subscriberCount() + here.wikiSubscriberCount()) + ' subscribers)'">
 N subscribers
 </span></small></em>
-<input type="submit" name="comment:method" value=" add a comment " 
+<input type="submit" name="quickcomment:method" value=" add a comment " 
 style="font-weight:bold" /></td>
 </tr>
 
