@@ -34,7 +34,7 @@ bgcolor="&dtml-issueColour;">
 </dtml-in>
 </select>
 </dtml-let>
-<br><b><dtml-translate domain="zwiki">Optional note</dtml-translate>:</b> <input type="text" name="log" value="" size="55" maxlength="55" class="formfield">&nbsp;
+<br><b><dtml-translate domain="zwiki">Optional note</dtml-translate>:</b> <input type="text" name="log" value="" size="55" maxlength="100" class="formfield">&nbsp;
 <input name="submit" type="submit" value="Change">
 <br>
 <b><dtml-translate domain="zwiki">Submitted by</dtml-translate>:</b>
