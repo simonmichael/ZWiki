@@ -1,7 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
-       xmlns:metal="http://xml.zope.org/namespaces/metal"
-       metal:use-macro="here/main_template/macros/master">
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="zwiki">
 <body>
 
 <div metal:fill-slot="main"	  
@@ -9,7 +10,7 @@
 
       <span metal:use-macro="python:here.wikipage_macros().macros['quickaccesskeys']" />
 
-      <h1 tal:condition="here/inCMF">Mail subscription</h1>
+      <h1 tal:condition="here/inCMF"><span i18n:translate="">Mail subscription</span></h1>
       <span tal:condition="request/emailchanged|nothing">
         <!-- remember email address with a cookie like UserOptions -->
         <tal:dummy tal:define="r python:request.RESPONSE.setCookie(
@@ -31,10 +32,12 @@
             split python:modules['string'].split;
             ">
         <p>
+	  <span i18n:translate="subscribe_desc">
           You can subscribe to this page or to the whole wiki.
           Subscribers receive a copy of comments via email
           (but not general edits, unless enabled by the site admin).
-          Or return to 
+          Or return to
+	  </span>
           <a href="page_url" tal:attributes="href here/page_url" 
              tal:content="here/title_or_id">Page name</a>.
         </p>
@@ -43,17 +46,18 @@
           <input name="email" type="hidden" tal:attributes="value email" />
         </div>
         <div tal:condition="not:here/inCMF">
-          Your email address:
+          <span i18n:translate="">Your email address</span>:
           <input name="email" type="text" size=30 value="email" tal:attributes="value email" />
           <input name="emailchanged" type="hidden" value="1" />
           <input class="context"
                  type="submit" 
                  name="../subscribeform:method" 
                  value="Change" 
+		 i18n:attributes="value"
                  />
         </div>
 
-        <div tal:condition="not:email">
+        <div tal:condition="not:email" i18n:translate="subscribe_no_email">
           To subscribe, please configure your email address.
         </div>
         <table width="100%" cellpadding="2" cellspacing="1" border="0">
@@ -63,26 +67,28 @@
                 (pagesubscriber and 'subscribed') or 'notsubscribed'">
               <br />
               <span tal:condition="pagesubscriber">
-                <b>You are currently subscribed<br />
+                <b i18n:translate="subscribed_page_ok">You are currently subscribed<br />
                 to this page.</b>
               </span>
               <span tal:condition="not:pagesubscriber">
-                You are currently not subscribed<br />
-                to this page.
+                <span i18n:translate="subscribed_page_no">You are currently not subscribed<br />
+                to this page.</span>
               </span>
               <br />
               <input tal:condition="pagesubscriber" 
                      class="standalone"
                      type="submit" 
                      name="../unsubscribe:method" 
-                     value=" Unsubscribe from pagename " 
+                     value="Unsubscribe from pagename" 
+		     i18n:attributes="value"
                      tal:attributes="value string: Unsubscribe from ${here/title_or_id} " 
                      />
               <input tal:condition="not:pagesubscriber" 
                      class="standalone"
                      type="submit" 
                      name="../subscribe:method" 
-                     value=" Subscribe to pagename " 
+                     value="Subscribe to pagename" 
+	             i18n:attributes="value"
                      tal:attributes="value string: Subscribe to ${here/title_or_id} " 
                      />
             </td>
@@ -91,12 +97,12 @@
                 (pagesubscriber and 'subscribed') or 'notsubscribed'">
               <br />
               <span tal:condition="wikisubscriber">
-                <b>You are currently subscribed<br />
+                <b i18n:translate="subscribed_wiki_ok">You are currently subscribed<br />
                 to the whole wiki.</b>
               </span>
               <span tal:condition="not:wikisubscriber">
-                You are currently not subscribed<br />
-                to the whole wiki.
+                <span i18n:translate="subscribed_wiki_no">You are currently not subscribed<br />
+                to the whole wiki.</span>
               </span>
               <br />
               <input tal:condition="wikisubscriber" 
@@ -104,18 +110,20 @@
                      type="submit" 
                      name="../wikiUnsubscribe:method" 
                      value="Unsubscribe from whole wiki" 
+		     i18n:attributes="value"
                      />
               <input tal:condition="not:wikisubscriber" 
                      class="standalone"
                      type="submit" 
                      name="../wikiSubscribe:method" 
                      value="Subscribe to whole wiki" 
+		     i18n:attributes="value"
                      />
             </td>
           </tr>
           <tr tal:condition="python:email and othersubscriptions">
             <td>
-              You are subscribed to these other pages: <br />
+              <span i18n:translate="other_page_subscribed">You are subscribed to these other pages</span>: <br />
               <a tal:repeat="pageid othersubscriptions" 
                  href="../pageid/subscribeform?email=email"
                  tal:attributes="href python:
@@ -132,7 +140,7 @@
           <tr>
             <td valign="top" width="50%">
               <br />
-              Page subscribers:
+              <span i18n:translate="">Page subscribers</span>:
               <br />
               <span tal:repeat="sub here/subscriberList">
                 <span tal:replace="python:split(sub,'@')[0]"></span><br />
@@ -140,7 +148,7 @@
             </td>
             <td valign="top" width="50%">
               <br />
-              Wiki subscribers:
+              <span i18n:translate="">Wiki subscribers</span>:
               <br />
               <span tal:repeat="sub here/wikiSubscriberList">
                 <span tal:replace="python:split(sub,'@')[0]"></span>

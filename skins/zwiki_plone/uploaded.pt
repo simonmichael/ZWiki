@@ -1,8 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
-       xmlns:metal="http://xml.zope.org/namespaces/metal"
-       metal:use-macro="here/main_template/macros/master">
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      metal:use-macro="here/main_template/macros/master"
+      i18n:domain="zwiki">
 <body>
 
 
@@ -10,9 +11,9 @@
 
 <span metal:use-macro="python:here.wikipage_macros().macros['quickaccesskeys']" />
 
-<h1>File Uploads</h1>
+<h1 i18n:translate="">File Uploads</h1>
 
-<p>This page lists all uploads in this Wiki.</p>
+<p i18n:translate="uploads_desc">This page lists all uploads in this Wiki.</p>
 
 <tal:filelist define="files python:container.objectValues('File')">
 
@@ -21,11 +22,11 @@
         <img tal:attributes="src string:${portal_url}/file_icon.gif" alt="File" />
         <a href="thisfile/absolute_url" tal:content="thisfile/id">ID</a>
         (<span tal:replace="thisfile/content_type">Content type</span>)
-        - <a href="thisfile/absolute_url">View/Save</a> 
+        - <a href="thisfile/absolute_url"><span i18n:translate="">View</span>/<span i18n:translate="">Save</span></a> 
         </p>
     </tal:files>
     
-    <p tal:condition="not: files">
+    <p tal:condition="not: files" i18n:translate="no_files_uploaded">
     No files have been uploaded.
     </p>
 

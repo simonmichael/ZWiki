@@ -2,7 +2,8 @@
 
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
        xmlns:metal="http://xml.zope.org/namespaces/metal"
-       metal:use-macro="here/main_template/macros/master">
+       metal:use-macro="here/main_template/macros/master"
+	i18n:domain="zwiki">
 <body>
 
 
@@ -10,15 +11,15 @@
 
 <span metal:use-macro="python:here.wikipage_macros().macros['quickaccesskeys']" />
 
-<h1>Wiki contents</h1>
+<h1 i18n:translate="">Wiki contents</h1>
 
 <span tal:replace="structure options/hierarchy">page hierarchy..</span>
 
 <div tal:condition="options/singletons">
 
-<h2>Singletons</h2> 
+<h2 i18n:translate="">Singletons</h2>
 
-<div class="description">
+<div class="description" i18n:translate="singleton_desc">
 Singletons are pages that are not connected to other pages.
 </div>
 

@@ -2,7 +2,8 @@
 
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
        xmlns:metal="http://xml.zope.org/namespaces/metal"
-       metal:use-macro="here/main_template/macros/master">
+       metal:use-macro="here/main_template/macros/master"
+       i18n:domain="zwiki">
 <body>
 
 
@@ -10,14 +11,14 @@
 
 <span metal:use-macro="python:here.wikipage_macros().macros['quickaccesskeys']" />
 
-<h1>Backlinks for <span tal:replace="here/Title">Pagename..</span></h1>
+<h1><span i18n:translate="">Backlinks for</span> <span tal:replace="here/Title">Pagename..</span></h1>
 
 <tal:block define="
                    zwiki_showhierarchy request/zwiki_showhierarchy|nothing;
                    thispage here/Title;
                    ">
 <p>
-Here are the pages which link to 
+<span i18n:translate="">Here are the pages which link to</span> 
 <a tal:attributes="href here/absolute_url; title here/linkTitle;" 
    tal:content="thispage"
    >thispage</a>:
@@ -26,9 +27,11 @@ Here are the pages which link to
 <form action="reparent" tal:attributes="action string:${here/page_url}/reparent">
 
     <p tal:condition="zwiki_showhierarchy">
+	<span i18n:translate="box_zwiki_showhierarchy">
     You can also set this page's <em>parent(s)</em>, to locate it within the
     contents hierarchy.  Check the boxes or enter a new page name and click
     Reparent.  A single parent is usually sufficient.
+	</span>
     </p>
 
     <ol tal:define="
@@ -65,8 +68,8 @@ Here are the pages which link to
     </ol>
 
     <p tal:condition="zwiki_showhierarchy">
-    Other parent: <input type="text" name="parents"/>
-    <input type="submit" value="Reparent"/>
+    <span i18n:translate="">Other parent</span>: <input type="text" name="parents"/>
+    <input type="submit" value="Reparent" i18n:attributes="value" />
     </p>
 
 </form>

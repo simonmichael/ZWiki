@@ -2,7 +2,8 @@
 
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
        xmlns:metal="http://xml.zope.org/namespaces/metal"
-       metal:use-macro="here/main_template/macros/master">
+       metal:use-macro="here/main_template/macros/master"
+      i18n:domain="zwiki">
 <body>
 
 
@@ -11,7 +12,7 @@
 
 <span metal:use-macro="python:here.wikipage_macros().macros['quickaccesskeys']" />
 
-<h1>History for <span tal:replace="here/title_or_id">Pagename..</span></h1>
+<h1><span i18n:translate="">History for</span> <span tal:replace="here/title_or_id">Pagename..</span></h1>
 
 <em tal:content="python:here.lastlog(revA-1)">log note..</em>
 
@@ -23,6 +24,7 @@
            type="submit" 
            name="history_form:method"
            value="full history" 
+	   i18n:attributes="value"
 	   tal:condition="python:user.has_permission('View history',here)"
            />
            
@@ -31,6 +33,7 @@
            type="submit" 
            name="prevDiff:method" 
            value="&laquo; previous edit" 
+	   i18n:attributes="value"
            />
            
     <input class="context"
@@ -38,12 +41,14 @@
            type="submit" 
            name="nextDiff:method" 
            value="next edit &raquo;"
+	   i18n:attributes="value"
            />
            
     <input class="standalone"
            type="submit" 
            name="" 
            value="return to page"
+           i18n:attributes="value"
            />
            
     <input type="hidden" 

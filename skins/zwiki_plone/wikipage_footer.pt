@@ -24,6 +24,7 @@
     <textarea name="text" rows="3" cols="60" wrap="virtual" 
               tal:attributes="cols python:request.get('zwiki_width','') or 60"
               title="enter comments here and click add; or, click edit"
+		i18n:attributes="title"
     ></textarea>
         </td>
       </tr>
@@ -39,6 +40,7 @@
            type="submit" 
            name="comment:method" 
            value="Add a comment" 
+	   i18n:attributes="value"
            style="font-weight:bold;" />
         </td>
       </tr>
