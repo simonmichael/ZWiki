@@ -187,7 +187,7 @@ class TrackerSupport:
         """
         Create a new issue page, using the next available issue number.
         """
-        issues = self.pages(isIssue=1,sort_on='Title')
+        issues = self.pages(isIssue=1,sort_on='id')
         if issues:
             lastnumber = self.issueNumber(issues[-1].Title)
             newnumber = lastnumber + 1
