@@ -270,13 +270,19 @@ class UIUtils:
         """
         Change the user's CMF/Plone skin preference, if possible.
         """
+        # are we in a CMF site ?
         if not self.inCMF(): return
         portal_skins = self.portal_url.getPortalObject().portal_skins
         portal_membership = self.portal_url.getPortalObject().portal_membership
+        # does the named skin exist ?
         def hasSkin(s): return portal_skins.getSkinPath(s) != s
         if not hasSkin(skin): return
+        # is the user logged in ? 
+        member = portal_membership.getAuthenticatedMember()
+        if not hasattr(member,'setProperties'): return
+        # change their skin preference and reload page
         REQUEST.form['portal_skin'] = skin
-        portal_membership.getAuthenticatedMember().setProperties(REQUEST)
+        member.setProperties(REQUEST)
         portal_skins.updateSkinCookie()
         REQUEST.RESPONSE.redirect(REQUEST.get('URL1'))
 
