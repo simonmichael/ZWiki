@@ -332,9 +332,13 @@ class OutlineManagerMixin:
         """
         p = self.primaryParent()
         if p: return p.pageUrl()
-        # going up from a top level page leads to..
-        #else: return self.wikiUrl()    # the front page
-        else: return self.contentsUrl() # the wiki contents
+        else: return None
+
+    def upUrl(self):
+        """
+        Get the URL of whatever is "above" this page.
+        """
+        return self.primaryParentUrl() or self.defaultPageUrl()
 
     security.declareProtected(Permissions.View, 'firstPage')
     def firstPage(self):

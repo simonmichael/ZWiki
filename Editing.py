@@ -420,7 +420,7 @@ class EditingSupport:
         if pagename and string.strip(pagename):
             self.replaceLinksThroughoutWiki(oldname,pagename,REQUEST)
         # get parent url while we still can
-        parenturl = self.primaryParentUrl()
+        redirecturl = self.upUrl()
         # unindex (and remove from outline) and move to the recycle bin folder
         self.recycle(REQUEST)
         # notify subscribers if appropriate
@@ -430,7 +430,7 @@ class EditingSupport:
                 REQUEST=REQUEST,
                 subjectSuffix='',
                 subject='(deleted)')
-        if REQUEST: REQUEST.RESPONSE.redirect(parenturl)
+        if REQUEST: REQUEST.RESPONSE.redirect(redirecturl)
 
     def ensureRecycleBin(self):
         if not hasattr(self.folder(),'recycle_bin'):
