@@ -1,0 +1,123 @@
+/* colours */
+/* default gray */
+.shade1                  {background: #dddddd; color: gray;}
+.shade1 a:link           {color: gray;}
+.shade1 a:visited        {color: #aaaaaa;}
+.shade2                  {background: #f0f0f0;}
+.dimtext                 {color: gray;}
+.commentsheading         {color:gray;font-weight:bold;}
+.subscribed              {} /* for subscribeform */
+.notsubscribed           {}
+
+#searchbox a:link        {color: gray;}
+#searchbox a:visited     {color: #aaaaaa;}
+#lasteditor              {color:gray;}
+#subtopicspanel          {/*background: #dddddd;*/ color: gray;}
+#commentform             {color:gray;}
+
+/* pink */
+/*.shade1                  {background: #ffeeee; color: #ddaaaa;}*/
+/*.shade1 a:link           {color: #ddaaaa;}*/
+/*.shade1 a:visited        {color: #ee8888;}*/
+/*.shade2                  {background: #fff0f0;}*/
+/*.dimtext                 {color: gray;}*/
+/*#searchbox a:link        {color: #ddaaaa;}*/
+/*#searchbox a:visited     {color: #ee8888;}*/
+/*#lasteditor              {color:#ddaaaa;}*/
+/*#subtopicspanel          {color:#ddaaaa; border-top:thin solid #ddaaaa;}*/
+/*#commentform             {color:#ddaaaa;}*/
+
+/* padding */
+body                     {margin:0; padding:0;}
+/* (adjust left margin to approx. logo width) */
+#content                 {margin-left:64px; margin-right:32px;} 
+#formcontent                 {margin:8px;} 
+#logo_full, #logo_simple {padding:4px;}
+#searchinput             {margin-top:0px;}
+#pageheading ul    {margin-top:0px; margin-bottom:0px; margin-left:6px; padding-left:6px;}
+#subtopicspanel ul {margin-top:0px; margin-bottom:0px; margin-left:12px; padding-left:12px;}
+#pageheading li, #subtopicspanel li {list-style:none;}
+
+/* fonts */
+body                     {font-family:verdana, arial, helvetica, sans-serif;}
+#subtopicspanel td ul    {font-weight:bold;}
+#subtopicspanel td ul ul {font-weight:normal; font-size:0.9em;}
+
+#linkpanel {
+  }
+#linkpanel_minimal {
+  }
+#linkpanel td, #linkpanel_minimal td {
+  color: gray;
+  font-size: small;
+  }
+#pagemanagement {
+  }
+#quicklinks {
+  font-weight: normal;
+  vertical-align: middle;
+  }
+#otherlinks {
+  vertical-align: middle;
+  }
+#otherlinks_minimal {
+  vertical-align: top;
+  padding: 0px;
+  }
+
+#navpanel {
+  margin-top: 1px;
+  color: gray;
+  font-size: small;
+  }
+
+#logo_full { /*td*/
+  padding-top: 0.5em;
+  padding-right: 4px;
+}
+#logo_simple { /*td*/
+  padding-top: 1em;
+  padding-right: 4px;
+}
+#logo_minimal {
+  padding-top: 1em;
+  padding-right: 4px;
+}
+
+#pagenameand { /*td*/
+  padding: 0;
+  vertical-align: middle;
+  }
+#pagenameand_X { /*td*/
+  padding: 1.15em 3em;
+  vertical-align: middle;
+  }
+#pagenameand_linear { /*td*/
+  padding: 1.15em;
+  vertical-align: middle;
+  }
+#pagenameonly { /*td*/
+  font-size: xx-large;
+  font-weight: bold;
+  vertical-align: bottom
+  }
+#pagename_minimal {
+  font-size: xx-large;
+  font-weight: bold;
+  vertical-align: bottom
+  }
+#searchbox {
+  vertical-align: top;
+  font-size: small;
+  }
+#searchinput {
+  width:100%; 
+  margin-top: 3px;
+  }
+#lasteditor {
+  font-size: small;
+  font-style: italic;
+  }
+#commentform {
+  /*font-size: small;*/
+  }
