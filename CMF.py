@@ -64,7 +64,7 @@ try:
             return self.creationTime().ISO()
 
         security.declarePublic( 'getPageTitle' )
-        def getPageTitle(self, template=None, portal_title=None):
+        def getPageTitle(self, here=None, template=None, portal_title=None):
             """
             Return the proper name of this page for use by Plone.
 
