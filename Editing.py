@@ -38,7 +38,7 @@ class EditingSupport:
     security.declareProtected(Permissions.Add, 'create') 
     def create(self,page,text=None,type=None,title='',REQUEST=None,log='',
                leaveplaceholder=1, updatebacklinks=1, sendmail=1,
-               subtopics=None):
+               parents=None, subtopics=None):
         """
         Create a new wiki page, with optional extras.
 
@@ -77,7 +77,8 @@ class EditingSupport:
         p.setLastEditor(REQUEST)
         p.setLastLog(log)
         p._setOwnership(REQUEST)
-        p.parents = [self.pageName()]
+        if parents == None: p.parents = [self.pageName()]
+        else: p.parents = parents
         self.wikiOutline().add(p.pageName(),p.parents) # update wiki outline
 
         # choose the specified type, the default type or whatever we're allowed 

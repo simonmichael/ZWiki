@@ -270,6 +270,13 @@ class EditingTests(ZopeTestCase.ZopeTestCase):
         self.assertEqual(f.TestPage1.text(),'')
         # the wiki outline object is also updated
         self.assert_(p.wikiOutline().hasNode('TestPage1'))
+        # the parent is the creating page
+        self.assertEqual(f.TestPage1.parents,['TestPage'])
+        # or can be specified..
+        p.create('TestPageA',parents=['a','b'])
+        self.assertEqual(f.TestPageA.parents,['a','b'])
+        p.create('TestPageB',parents=[])
+        self.assertEqual(f.TestPageB.parents,[])
         
         # create a wwml page with some text
         p.create('TestPage2',text='test page data',type='msgwwmlprelinkfitissue')
