@@ -10,9 +10,11 @@
 # moved here and pluginised. Some of them still have dependencies in other
 # parts of the code, eg
 #
-# PurpleNumbers
+# - plugin-provided fields are named in Defaults.PAGE_METADATA
+#
 # - Editing calls purple numbers when setting text
-# - pagetypes/* calls purple numbers methods
+# 
+# - some page types call purple numbers during rendering
 #
 # page types are another kind of "plugin", residing in their own pagetypes
 # package. 
@@ -63,8 +65,5 @@ import os,glob
 os.chdir(__path__[0])
 modules = glob.glob('*.py')
 modules.remove('__init__.py')
-modules = filter(lambda x:not x.startswith('test'), modules)
 for file in modules:
     __import__('Products.ZWiki.plugins.%s' % file[:-3])
-
-#print 'plugin registry:',PLUGINS
