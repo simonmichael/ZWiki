@@ -59,18 +59,17 @@ class Utils:
         strings = filter(lambda x:type(x)==type(''), strings)
         return len(join(strings,''))
 
-    def summary(self,size=100):
+    def summary(self,size=100,paragraphs=1):
         """
         Give a short summary of this page's content.
 
-        Take the first paragraph of the document part and cut it to size
+        Take the first N paragraphs of the document part; cut to size
         characters & replace the last word with ellipsis if necessary.
         """
-        firstparagraph = split(self.documentPart(),'\n\n')[0]
-        summary = firstparagraph[:size]
-        if len(summary) == size:
-            summary = re.sub(r'\W*\w*$',r'',summary) + '...'
-        return html_quote(summary)
+        size, paragraphs = int(size), int(paragraphs)
+        t = join(split(self.documentPart(),'\n\n')[:paragraphs],'\n\n')[:size]
+        if len(t) == size: t = re.sub(r'\W*\w*$',r'',t) + '...'
+        return html_quote(t)
 
     security.declareProtected(Permissions.View, 'excerptAt')
     def excerptAt(self, expr, size=100, highlight=1):
