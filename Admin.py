@@ -129,7 +129,7 @@ class AdminSupport:
         # last pages will get committed as this request ends
         # but finish this.. probably good to do in any case
         self.updateWikiOutline()
-        BLATHER('%d pages processed' % n)
+        BLATHER('upgrade complete, %d pages processed' % n)
 
     #security.declarePublic('upgradeId')
     security.declareProtected(Permissions.View, 'upgradeId')
@@ -504,6 +504,7 @@ class AdminSupport:
                 except:
                     BLATHER('failed to index page #%d %s: %s' \
                             % (n,p.id(),formattedTraceback()))
+                BLATHER('indexing complete, %d pages processed' % n)
         if REQUEST:
             REQUEST.RESPONSE.redirect(self.page_url())
             
@@ -587,6 +588,7 @@ class AdminSupport:
             except:
                 BLATHER('failed to index page #%d %s: %s' \
                         % (n,p.id(),formattedTraceback()))
+            BLATHER('indexing complete, %d pages processed' % n)
         # and a dummy issue to enable site navigation links
         if not self.hasIssues():
             self.createNextIssue(
