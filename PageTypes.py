@@ -183,8 +183,14 @@ class AbstractHtmlPageType(AbstractPageType):
         else:
             heading += html_quote(time)
             inreplytobit = ''
+        #heading += ( (' <a href="%s?subject=%s%s#bottom">' 
+        #             % (page.page_url(),quote(subject or ''),inreplytobit)) +
+        #             + _("reply").__str__() + '</a>' )
+        
         heading += ' <a href="%s?subject=%s%s#bottom">reply</a>'\
                    % (page.page_url(),quote(subject or ''),inreplytobit)
+
+                     
         heading += '<br />\n'
         return heading
 
@@ -193,8 +199,9 @@ class AbstractHtmlPageType(AbstractPageType):
         # but also have it look ok by default in plone, which has it's own..
         # without preventing it being overridden - perhaps b outside the span
         # will work
-        return '\n\n<a name="comments"><br><b><span class="commentsheading">comments:</span></b></a>\n\n'
-    
+        return ( '\n\n<a name="comments"><br><b><span class="commentsheading">%(comments)s:</span></b></a>\n\n'
+                 % { "comments" : ( _("comments").__str__() ) } )
+            
     def inlineImage(self, page, id, path):
         return '\n\n<img src="%s" />\n' % path
 
@@ -351,7 +358,7 @@ class ZwikiRstPageType(AbstractPageType):
         heading += '**%s** --' % (subject or '...')
         if username: heading = heading + '`%s`, ' % (username)
         heading += time
-        heading += ' `%s`__\n\n' % _('reply')
+        heading += ' `%s`__\n\n' % ( _("reply").__str__())
         if message_id:
             inreplytobit = '&in_reply_to='+quote(message_id)
         else:

@@ -423,20 +423,24 @@ class Utils:
         minutes=int(math.floor((elapsed-days-hourfactor*hours)/minutefactor))
         seconds=int(round((
             elapsed-days-hourfactor*hours-minutefactor*minutes)/secondsfactor))
+  
+        datepattern = ("%(nb)d %(period)s")
+       
         if years:
-            s = "%d year%s" % (years, years > 1 and 's' or '')
+            s = datepattern % {"nb": years, "period": years > 1 and _('years') or _('year')}
         elif months:
-            s = "%d month%s" % (months, months > 1 and 's' or '')
+            s = datepattern % {"nb":months, "period":months > 1 and _('months') or _('month')}
         elif weeks:
-            s = "%d week%s" % (weeks, weeks > 1 and 's' or '')
+            s = datepattern % {"nb":weeks, "period":weeks > 1 and _('weeks') or _('week')}
         elif days:
-            s = "%d day%s" % (days, days > 1 and 's' or '')
+            s = datepattern % {"nb":days, "period": days > 1 and _('days') or _('day') }
         elif hours:
-            s = "%d hour%s" % (hours, hours > 1 and 's' or '')
+            s = datepattern % {"nb":hours, "period":hours > 1 and _('hours') or _('hour')}
         elif minutes:
-            s = "%d minute%s" % (minutes, minutes > 1 and 's' or '')
+            s = datepattern % {"nb":minutes, "period":minutes > 1 and _('minutes') or _('minute')}
         else:
-            s = "%d second%s" % (seconds, seconds > 1 and 's' or '')
+            s = datepattern % {"nb":seconds, "period":seconds > 1 and _('seconds') or _('second')}
+            
         return s
 
 InitializeClass(Utils)

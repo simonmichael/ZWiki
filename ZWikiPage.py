@@ -576,13 +576,13 @@ class ZWikiPage(
         if (hasattr(self.folder(),'aq_parent') and
               hasattr(self.folder().aq_parent, link) and
               self.isZwikiPage(getattr(self.folder().aq_parent,link))): #XXX poor caching
-            return '<a href="%s/../%s" title="page in parent wiki">../%s</a>'\
-                   % (self.wiki_url(),quote(link),linkorig)
+            return '<a href="%s/../%s" title="%s">../%s</a>'\
+                   % (self.wiki_url(),quote(link),_("page in parent wiki"),linkorig)
 
         # otherwise, provide a creation link
-        return '%s<a class="new" href="%s/%s/createform?page=%s" title="create this page">?</a>' \
+        return ('%s<a class="new" href="%s/%s/createform?page=%s" title="%s">?</a>') \
                % (linkorig, self.wiki_url(), quote(self.id()),
-                  quote(linknobrackets))
+                  quote(linknobrackets), _("create this page"))
 
     def renderInterwikiLink(self, link):
         """
@@ -658,24 +658,33 @@ class ZWikiPage(
         """
         interval = self.asAgeString(last_edit_time)
         if not prettyprint:
-            s = "last edited %s ago" % (interval)
+            s = _("last edited %(interval)s ago").__str__() % {"interval":interval}
         else:
             try:
                 #XXX do timezone conversion ?
                 lastlog = self.lastlog()
                 if lastlog: lastlog = ' ('+lastlog+')'
-                s = 'last edited <a href="%s/diff" title="show last edit%s">%s</a> ago' % \
-                    (self.page_url(), lastlog, interval)
+                
+                # build the link around the interval
+                linked_interval = (' <a href="%(page_url)s/diff" title="' % (self.page_url()) +
+                                   (_('show last edit %(lastlog)s').__str__() % {"lastlog":lastlog}) +
+                                   ">" + interval + "</a>" )
+                
+                # use the link in a clear i18n way                                                                         
+                s =  (_('last edited %(interval)s ago').__str__())  % {"interval": linked_interval}
+
             except:
-                s = 'last edited %s ago' % (interval)
+                s = (_('last edited %(interval)s ago').__str__()) % {"interval": interval}
+                
         if (last_editor and
             not re.match(r'^[0-9\.\s]*$',last_editor)):
             # escape some things that might cause trouble in an attribute
             editor = re.sub(r'"',r'',last_editor)
+
             if not prettyprint:
-                s = s + " by %s" % (editor)
+                s = s + " " + (_("by %(editor)s").__str__() % {"editor":editor})
             else:
-                s = s + " by <b>%s</b>" % (editor)
+                s = s + " " + (_("by %(editor)s").__str__() % {"editor": ("<b>%s</b>" % (editor)) })                
         return s
     
     def linkToAllCataloged(self):
@@ -1060,6 +1069,29 @@ class ZWikiPage(
                 if linkpat.search(p.read()):
                     results.append(self.metadataFor(p))
             return results
+
+    security.declareProtected(Permissions.View, 'translateHelper')
+    def translateHelper(self,msgid,map=None):
+        """
+        When you want to translate a part of a sentence in a tag attribute,
+        which is computed, you can not use i18n:attribute. and it's difficult
+        to call _("") from the python: Expression.
+
+        dont forget to force i18n extraction with something like
+        
+        <span tal:condition='python: False'>
+            <!-- force i18n extraction -->
+            <span title='Sentence' i18n:attributes='title'></span>            
+        </span>
+        """
+    
+        translate_msg = _(msgid).__str__()
+        if map:
+            try:
+                translate_msg = translate_msg % (map)
+            except:
+                return translate_msg
+        return translate_msg
 
     ######################################################################
     # backwards compatibility
