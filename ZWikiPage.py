@@ -76,11 +76,11 @@ from Tracker import TrackerSupport
 from CMF import CMFAwareness
 from Fit import FitSupport
 from Comments import CommentsSupport
-from PurpleNumbers import PurpleNumbersSupport
 from Admin import AdminSupport
 from Editing import EditingSupport
 from I18nSupport import DTMLFile, _
 from pagetypes import MIDSECTIONMARKER, PAGETYPES, PAGE_TYPES, ZwikiStxPageType
+from plugins.PurpleNumbers import PurpleNumbersSupport
 
 
 class ZWikiPage(

@@ -11,7 +11,7 @@ import os, sys, re, string
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 
-from Regexps import fromlineexpr, nidexpr
+from Products.ZWiki.Regexps import fromlineexpr, nidexpr
 
 purplestyle = """
 a.nid {
