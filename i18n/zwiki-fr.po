@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-31-0dev\n"
 "POT-Creation-Date: Thu Sep 30 14:19:57 2004\n"
-"PO-Revision-Date: 2004-10-01 00:07+0200\n"
+"PO-Revision-Date: 2004-10-14 11:36+0200\n"
 "Last-Translator: Nicolas Laurent <foenyx[at]online{dot}fr>,Raphael Badin "
 "<raphael(dot)badin{at}sopinspace[dot]com>\n"
 "Language-Team: <zwiki(at)zwiki.org>\n"
@@ -202,7 +202,7 @@ msgstr ""
 "        c    afficher le contenu du Wiki\n"
 "        r    afficher les changements récents dans le Wiki\n"
 "             afficher la page de discussion\n"
-"        t    afficher la page de surveillance des controverses\n"
+"        t    afficher la page de suivi des problèmes\n"
 "        i    afficher l'index du Wiki\n"
 "        o    afficher la page d'options du Wiki (préférences)\n"
 "        h    afficher la page d'aide\n"
@@ -355,7 +355,7 @@ msgstr "Pour modifier cette page, cliquez sur OK."
 
 #: i/skins/dtmlmessages.pt:100 i/skins/dtmlmessages.pt:190
 msgid "Filter issues"
-msgstr "Filtrer les controverses"
+msgstr "Filtrer les problèmes"
 
 #: i/skins/dtmlmessages.pt:11
 msgid ""
@@ -689,7 +689,7 @@ msgstr "Les pages marquées (NOUVEAU) ont été créées il y a moins d'une sema
 
 #: i/skins/dtmlmessages.pt:73 i/skins/dtmlmessages.pt:163
 msgid "Here are the wiki's issue pages."
-msgstr "Voici les pages de controverses du Wiki."
+msgstr "Voici les pages concernant les problèmes du Wiki."
 
 #: i/skins/dtmlmessages.pt:74 i/skins/dtmlmessages.pt:164
 msgid "Enter a search term, or click the numbers to the right, or"
@@ -698,11 +698,11 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:75 i/skins/dtmlmessages.pt:165
 msgid "filter issues"
-msgstr "filtrer les controverses"
+msgstr "filtrer les problèmes"
 
 #: i/skins/dtmlmessages.pt:76 i/skins/dtmlmessages.pt:166
 msgid "search issues"
-msgstr "Recherche de controverses"
+msgstr "Recherche de problèmes"
 
 #: i/skins/dtmlmessages.pt:77 i/skins/dtmlmessages.pt:167
 msgid "recent"
@@ -748,7 +748,7 @@ msgstr "modifié"
 
 #: i/skins/dtmlmessages.pt:85 i/skins/dtmlmessages.pt:175
 msgid "Add a new issue:"
-msgstr "Ajouter une nouvelle controverse:"
+msgstr "Signaler un nouveau problème :"
 
 #: i/skins/dtmlmessages.pt:86 i/skins/dtmlmessages.pt:176
 msgid "Name:"
@@ -776,7 +776,7 @@ msgstr "Détails:"
 
 #: i/skins/dtmlmessages.pt:91 i/skins/dtmlmessages.pt:181
 msgid "add issue"
-msgstr "ajouter une controverse"
+msgstr "signaler un problème"
 
 #: i/skins/dtmlmessages.pt:92 i/skins/dtmlmessages.pt:182
 msgid "More advanced"
@@ -784,7 +784,7 @@ msgstr "Plus précis"
 
 #: i/skins/dtmlmessages.pt:93 i/skins/dtmlmessages.pt:183
 msgid "issue tracker"
-msgstr "suivi de controverses"
+msgstr "suivi des problèmes"
 
 #: i/skins/dtmlmessages.pt:94 i/skins/dtmlmessages.pt:184
 msgid "search options"
@@ -997,11 +997,11 @@ msgstr "discussion"
 
 #: i/skins/standard/wikipage_macros.pt:133
 msgid "show issue tracker"
-msgstr "afficher la page de surveillance des controverses"
+msgstr "afficher la page de suivi des problèmes"
 
 #: i/skins/standard/wikipage_macros.pt:137
 msgid "issues"
-msgstr "controverses"
+msgstr "problèmes"
 
 #: i/skins/standard/wikipage_macros.pt:139
 msgid "show wiki index"
@@ -1313,12 +1313,12 @@ msgstr ""
 # Default: "Filter issues"
 #: i/skins/zwiki_plone/filterissues.pt:12
 msgid "heading_wiki_filter_issues"
-msgstr "Filtrer les controverses"
+msgstr "Filtrer les problèmes"
 
 # Default: "Issue tracker"
 #: i/skins/zwiki_plone/issuetracker.pt:12
 msgid "heading_wiki_issue_tracker"
-msgstr "Surveillance des controverses"
+msgstr "Suivi des problèmes"
 
 # Default: "Recent changes"
 #: i/skins/zwiki_plone/recentchanges.pt:12
