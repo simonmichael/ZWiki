@@ -1,39 +1,72 @@
 <div i18n:domain="zwiki">
 <a name="ratingform"></a>
+<style type="text/css">
+  input.rating {border:none;}
+</style>
 <form method="POST" id="ratingform" 
-      tal:define="myvote python:here.myVote(request); rating here/rating"
+      tal:define="
+        rating here/rating;
+        votecount here/voteCount;
+        myvote python:here.myVote(request); 
+        votedescriptions python:{
+          '0':'poor',
+          '1':'average',
+          '2':'above average',
+          '3':'good',
+          '4':'highly recommended',
+          '5':'superb',
+          };
+        mouseovertitle python:(myvote == None) 
+          and (lambda n:'click to vote %s (%s) for this page (%d votes)'
+            % (n,votedescriptions[n],votecount))
+          or (lambda n:'click to change your %s vote to %s (%s) (%d votes)'
+            % (myvote,n,votedescriptions[n],votecount));
+        "
       tal:attributes="
         action string:${here/pageUrl}/vote;
         class here/ratingStyle;
         "
       >
-  <span i18n:translate="">page rating</span>: 
-  <span i18n:translate="rating_score">
-  <span tal:replace="here/rating" style="font-weight:bold" i18n:name="score" /> from
-  <span tal:replace="here/voteCount" i18n:name="nb_votes" /> votes
-  </span> <br />
-  <input type="submit" name="score:int" 
-         tal:condition="python:0 #no good, leaves space between" 
-         tal:repeat="v python:['-1','0','+1','+2','+3']"
+  <input tal:condition="python:0 #leaves whitespace between; use css/table ?"
+         tal:repeat="vote python:['-1','0','1','2','3']"
+         type="image" name="score:int" class="rating"
          tal:attributes="
-         value v;
-         style python:(myvote == int(v)) and 'font-weight:bold' or '';
-         "/>
-   <STYLE type="text/css">
-    .ratebtn {width: 40px;}
-   </STYLE>
-   <input type="submit" name="score:int" value="-1" class="ratebtn"
-   tal:attributes="style python:(myvote == -1) and 'font-weight:bold' or ''"
-   /><input type="submit" name="score:int" value="0"  class="ratebtn"
-   tal:attributes="style python:(myvote ==  0) and 'font-weight:bold' or ''"
-   /><input type="submit" name="score:int" value="+1" class="ratebtn"
-   tal:attributes="style python:(myvote == +1) and 'font-weight:bold' or ''"
-   /><input type="submit" name="score:int" value="+2" class="ratebtn"
-   tal:attributes="style python:(myvote == +2) and 'font-weight:bold' or ''"
-   /><input type="submit" name="score:int" value="+3" class="ratebtn"
-   tal:attributes="style python:(myvote == +3) and 'font-weight:bold' or ''"
-   /><br />
-  <span i18n:translate="">click to rate</span> (<span i18n:translate="">voting as</span>: 
-  <span tal:replace="python:here.usernameFrom(request)" />)
+           value repeat/vote;
+           name  repeat/vote;
+           alt   repeat/vote;
+           src   python:(rating>=vote) and '/misc_/ZWiki/star_icon' 
+                                        or '/misc_/ZWiki/blank_star_icon';
+           ">
+   <input 
+       type="image" name="score:int" value="0" alt="0"  class="rating"
+       width="14" height="13" 
+       tal:attributes="src python:'/p_/sp';
+                       title python:mouseovertitle('0');"
+   /><input 
+       type="image" name="score:int" value="1" alt="1"  class="rating"
+       tal:attributes="src python:(rating >= 1) and '/misc_/ZWiki/star_icon' 
+                                                  or '/misc_/ZWiki/blank_star_icon';
+                       title python:mouseovertitle('1');"
+   /><input 
+       type="image" name="score:int" value="2" alt="2"  class="rating"
+       tal:attributes="src python:(rating >= 2) and '/misc_/ZWiki/star_icon' 
+                                                 or '/misc_/ZWiki/blank_star_icon';
+                       title python:mouseovertitle('2');"
+   /><input 
+       type="image" name="score:int" value="3" alt="3" class="rating"
+       tal:attributes="src python:(rating >= 3) and '/misc_/ZWiki/star_icon' 
+                                                 or '/misc_/ZWiki/blank_star_icon';
+                       title python:mouseovertitle('3');"
+   /><input 
+       type="image" name="score:int" value="4" alt="4" class="rating"
+       tal:attributes="src python:(rating >= 4) and '/misc_/ZWiki/star_icon' 
+                                                 or '/misc_/ZWiki/blank_star_icon';
+                       title python:mouseovertitle('4');"
+   /><input 
+       type="image" name="score:int" value="5" alt="5" class="rating"
+       tal:attributes="src python:(rating >= 5) and '/misc_/ZWiki/star_icon' 
+                                                 or '/misc_/ZWiki/blank_star_icon';
+                       title python:mouseovertitle('5');"
+   />
 </form>
 </div>

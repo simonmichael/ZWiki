@@ -128,6 +128,10 @@
 
   </form>
 </div>
+<div align="right">  
+          <span tal:condition="python:user.has_permission('Zwiki: Rate pages',here)" 
+                tal:replace="structure here/ratingform" />
+</div>
 <!-- end of header -->
 
 <div id="content">
@@ -142,20 +146,6 @@
     <br />
     <br />
     <span metal:use-macro="macros/commentform"></span>
-  </div>
-  <div>
-    <table width="100%" border=0 cellpadding=0 cellspacing=0>
-      <tr>
-        <td align="left" valign="top" width="50%">
-          <span class="dimtext">&nbsp;</span>
-        </td>
-        <td align="right" valign="top" width="50%">
-          <br />
-          <span tal:condition="python:user.has_permission('Zwiki: Rate pages',here)" 
-                tal:replace="structure here/ratingform" />
-        </td>
-      </tr>
-    </table>
   </div>
 </div>
 

@@ -33,6 +33,10 @@
             <!-- XXX move html in linkTitle to here? -->
     last edited n days ago by by so-and-so
     </div>
+    <div align="right">  
+      <span tal:condition="python:user.has_permission('Zwiki: Rate pages',here)" 
+            tal:replace="structure here/ratingform" />
+    </div>
 
     <div tal:replace="structure options/body">
       page body goes here..

@@ -49,12 +49,6 @@
   </form>
 </div>
 
-  <div tal:condition="python:user.has_permission('Zwiki: Rate pages',here)# and not minimal" 
-       align="right">
-    <br />
-    <span tal:replace="structure here/ratingform"></span>
-  </div>
-
 <div tal:condition="python:
      (user.has_permission('Zwiki: Add pages',here) or
       user.has_permission('Zwiki: Rename pages',here) or

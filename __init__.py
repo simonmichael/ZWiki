@@ -6,9 +6,19 @@ ZWiki product
 __version__='0.36.2'
 
 import os, re
+from os import path
 import Globals, OFS.Folder
 #XXX import pagetypes
 import ZWikiPage, ZWikiWeb, Permissions, Defaults
+
+misc_ = {
+    'ZWikiPage_icon': Globals.ImageFile(path.join('images','ZWikiPage_icon.gif'),
+                                   globals()),
+    'star_icon': Globals.ImageFile(path.join('images','star.png'),
+                                   globals()),
+    'blank_star_icon': Globals.ImageFile(path.join('images','blank_star.png'),
+                                   globals()),
+    }
 
 def initialize(context): 
     """Initialize the ZWiki product.
