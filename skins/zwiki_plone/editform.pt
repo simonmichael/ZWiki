@@ -274,7 +274,7 @@ UI.py:editform() calls us with these options:
     </form>
 
     <div tal:condition="previewing">
-      <table border="0" width="100%"><tr>
+      <table border="0" width="100%" class="dimtext"><tr>
       <td align="center"><b>PREVIEW</b></td>
       <td align="center"><b>PREVIEW</b></td>
       <td align="center"><b>PREVIEW</b></td>
@@ -287,7 +287,7 @@ UI.py:editform() calls us with these options:
           request.form.get('text',''),request,request.RESPONSE)"></td>
         </tr>
       </table>
-      <table border="0" width="100%"><tr>
+      <table border="0" width="100%" class="dimtext"><tr>
       <td align="center"><b>PREVIEW</b></td>
       <td align="center"><b>PREVIEW</b></td>
       <td align="center"><b>PREVIEW</b></td>
