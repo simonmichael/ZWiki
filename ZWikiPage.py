@@ -54,7 +54,7 @@ from types import *
 from AccessControl import getSecurityManager, ClassSecurityInfo
 from App.Common import rfc1123_date
 from DateTime import DateTime
-import Globals
+from Globals import InitializeClass
 from OFS.DTMLDocument import DTMLDocument
 
 import Permissions
@@ -1082,7 +1082,7 @@ class ZWikiPage(
     zwiki_username_or_ip = Utils.usernameFrom
     applyLineEscapesIn = applyWikiLinkLineEscapesIn 
 
-Globals.InitializeClass(ZWikiPage)
+InitializeClass(ZWikiPage)
 
 # rendering helpers
 def thunk_substituter(func, text, allowed):

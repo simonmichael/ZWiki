@@ -7,7 +7,10 @@ Based on initial implementation by mike@nthwave.net.
 """
 
 import os, sys, re, string
+
 from AccessControl import ClassSecurityInfo
+from Globals import InitializeClass
+
 from Regexps import fromlineexpr, nidexpr
 
 purplestyle = """
@@ -79,6 +82,8 @@ class PurpleNumbersSupport:
     def renderPurpleLink(self, purpleNumberString):
         return '&nbsp;&nbsp;<a href="%s#nid%s" class="nid" style="font-family:Helvetica,Arial,sans-serif;font-weight:bold;font-size:x-small;text-decoration:none;color:#C8A8FF">(%s)</a>'\
                % (self.page_url(),purpleNumberString,purpleNumberString)
+
+InitializeClass(PurpleNumbersSupport)
 
 # mike's code
 #

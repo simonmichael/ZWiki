@@ -7,7 +7,7 @@ from string import join, split, strip
 import DocumentTemplate
 from AccessControl import getSecurityManager, ClassSecurityInfo
 import Permissions
-from Globals import package_home
+from Globals import InitializeClass, package_home
 
 from Utils import BLATHER,formattedTraceback
 from Defaults import ISSUE_CATEGORIES, ISSUE_SEVERITIES, ISSUE_STATUSES, \
@@ -411,3 +411,4 @@ class TrackerSupport:
                     changed = 1
         return changed
 
+InitializeClass(TrackerSupport)

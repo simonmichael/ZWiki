@@ -49,11 +49,11 @@ from string import join
 from types import *
 from urllib import quote, unquote
 
-import Acquisition
-import Persistence
-import Globals
 from AccessControl import ClassSecurityInfo
+import Acquisition
 from App.Common import absattr
+from Globals import InitializeClass
+import Persistence
 
 import Permissions
 from Utils import flatten, BLATHER
@@ -152,6 +152,8 @@ class ParentsPropertyMixin:
             self.setParents(cleanedupparents)
             self.index_object() #XXX only need update parents index & metadata
             if update_outline: self.updateWikiOutline()
+
+InitializeClass(ParentsPropertyMixin) 
 
 class OutlineManagerMixin:
     """
@@ -386,6 +388,8 @@ class OutlineManagerMixin:
         """
         return self.wikiOutline().offspring([self.pageName()])
 
+InitializeClass(OutlineManagerMixin)
+
 class SubtopicsPropertyMixin:
     """
     I determine when to display subtopics on a page.
@@ -467,6 +471,8 @@ class SubtopicsPropertyMixin:
             else:
                 self.manage_changeProperties(show_subtopics=0,
                                              REQUEST=REQUEST)
+
+InitializeClass(SubtopicsPropertyMixin)
 
 class OutlineRenderingMixin:
     """
@@ -795,6 +801,8 @@ class OutlineRenderingMixin:
     # backwards compatibility
     map = contents
 
+InitializeClass(OutlineRenderingMixin)
+
 class OutlineSupport(
     OutlineManagerMixin, 
     ParentsPropertyMixin,
@@ -806,6 +814,3 @@ class OutlineSupport(
     (page hierarchy).
     """
     pass
-
-# install permissions - covers base classes, yes ?
-Globals.InitializeClass(OutlineSupport) 

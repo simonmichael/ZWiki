@@ -1,9 +1,12 @@
 # fit (framework for interactive testing) support
 
 import sys, os, string, re
+
+from AccessControl import getSecurityManager, ClassSecurityInfo
+from Globals import InitializeClass
 from OFS.DTMLDocument import DTMLDocument
 from Utils import Popen3
-from AccessControl import getSecurityManager, ClassSecurityInfo
+
 import Permissions
 
 # from tests/support.py:
@@ -92,3 +95,5 @@ except ImportError:
         security.declareProtected(Permissions.View, 'hasFitTests')
         def hasFitTests(self):
             return 0
+
+InitializeClass(FitSupport)

@@ -12,7 +12,7 @@ import ZODB # need this for pychecker
 from AccessControl import getSecurityManager, ClassSecurityInfo
 from App.Common import rfc1123_date
 from DateTime import DateTime
-import Globals
+from Globals import InitializeClass
 from OFS.content_types import guess_content_type
 from OFS.DTMLDocument import DTMLDocument
 from OFS.ObjectManager import BadRequestException
@@ -948,5 +948,5 @@ class EditingSupport:
         """This wiki's default page type."""
         return self.allowedPageTypes()[0]
     
-Globals.InitializeClass(EditingSupport)
+InitializeClass(EditingSupport)
 

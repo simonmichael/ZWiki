@@ -5,14 +5,15 @@ from mailbox import UnixMailbox, PortableUnixMailbox
 from urllib import quote
 from cStringIO import StringIO
 
+from AccessControl import getSecurityManager, ClassSecurityInfo
 from App.Common import absattr
 from DateTime import DateTime
-from AccessControl import getSecurityManager, ClassSecurityInfo
+from Globals import InitializeClass
 
 import Permissions
+from Regexps import fromlineexpr
 from Utils import BLATHER, html_quote, DateTimeSyntaxError, \
   stringBefore, stringBeforeAndIncluding, stringAfter, stringAfterAndIncluding
-from Regexps import fromlineexpr
 
 
 class CommentsSupport:
@@ -160,4 +161,6 @@ class CommentsSupport:
     messagesPart = discussionPart
     messages = comments
     upgradeMessages = upgradeComments
+
+InitializeClass(CommentsSupport)
 

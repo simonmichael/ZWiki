@@ -5,14 +5,14 @@ import os, re, os.path
 from string import join, split, strip
 
 from AccessControl import getSecurityManager, ClassSecurityInfo
-import Permissions
-from Globals import package_home
+from Globals import package_home, InitializeClass
 from OFS.CopySupport import CopyError
 from OFS.DTMLMethod import DTMLMethod
-from I18nSupport import _
 from App.Common import absattr
 from DateTime import DateTime
 
+from I18nSupport import _
+import Permissions
 from Utils import BLATHER,formattedTraceback, DateTimeSyntaxError
 
 # if page types are states, here is the table of transitions for upgrading
@@ -498,3 +498,4 @@ class AdminSupport:
         if REQUEST:
             REQUEST.RESPONSE.redirect(self.page_url())
             
+InitializeClass(AdminSupport)

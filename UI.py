@@ -10,8 +10,7 @@ from string import split,join,find,lower,rfind,atoi,strip
 from App.Common import rfc1123_date
 from AccessControl import getSecurityManager, ClassSecurityInfo
 import Permissions
-import Globals
-from Globals import MessageDialog
+from Globals import InitializeClass, MessageDialog
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from OFS.Image import File
 from Products.PageTemplates.Expressions import SecureModuleImporter
@@ -243,6 +242,8 @@ class UIUtils:
     #        return self.folder().standard_wiki_footer(self,REQUEST)
     #    else:
     #        return '<p>This wiki has a custom standard_wiki_header but no corresponding standard_wiki_footer. Suggestion: remove it.</body></html>'
+
+InitializeClass(UIUtils)
 
 
 class GeneralForms:
@@ -593,9 +594,10 @@ class GeneralForms:
         p    previous edit
         """)
     
+InitializeClass(GeneralForms)
+
+
 class UI(
     UIUtils,
     GeneralForms):
     pass
-
-Globals.InitializeClass(UI)

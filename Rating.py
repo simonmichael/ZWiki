@@ -5,7 +5,7 @@ import string, re
 #from urllib import quote, unquote
 
 from AccessControl import ClassSecurityInfo
-import Globals
+from Globals import InitializeClass
 
 import Permissions
 from Utils import BLATHER
@@ -119,5 +119,4 @@ class RatingSupport:
         if rating == '' or rating == None: rating = self.rating()
         return '<span class="%s">(%s)</span>' % (self.ratingStyle(rating),rating)
 
-# install permissions
-Globals.InitializeClass(RatingSupport) 
+InitializeClass(RatingSupport) 

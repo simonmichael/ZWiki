@@ -8,7 +8,7 @@ from urllib import quote, unquote
 
 from AccessControl import getSecurityManager, ClassSecurityInfo
 from App.Common import absattr
-import Globals
+from Globals import InitializeClass
 from OFS.SimpleItem import SimpleItem
 import zLOG # LOG,ERROR,INFO,WARNING,BLATHER,DEBUG
 from DateTime import DateTime
@@ -439,7 +439,7 @@ class Utils:
             s = "%d second%s" % (seconds, seconds > 1 and 's' or '')
         return s
 
-Globals.InitializeClass(Utils)
+InitializeClass(Utils)
 
 
 # generic utilities

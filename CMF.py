@@ -9,9 +9,9 @@
 try:
     from types import *
     import string, re, os
-    import Globals
     from AccessControl import ClassSecurityInfo
     from Acquisition import aq_base, aq_inner, aq_parent
+    from Globals import InitializeClass
     from OFS.DTMLDocument import DTMLDocument
     from Products.CMFCore.PortalContent import PortalContent
     from Products.CMFCore.utils import _getViewFor
@@ -30,7 +30,8 @@ try:
         security.declarePublic('allowedContentTypes')
         def allowedContentTypes( self ):
             return []
-
+    InitializeClass(WikiFolder)
+        
     class ZwikiDublinCoreImpl(DefaultDublinCoreImpl):
         """
         Zwiki's implementation of Dublin Core.
@@ -61,6 +62,8 @@ try:
         security.declarePublic( 'CreationDate' )
         def CreationDate(self):
             return self.creationTime().ISO()
+
+    InitializeClass(ZwikiDublinCoreImpl)
 
     class CMFAwareness(PortalContent, ZwikiDublinCoreImpl):
         """
@@ -127,9 +130,10 @@ try:
         def wiki_context(self, REQUEST=None, with_siblings=0):
             return self.context(REQUEST, with_siblings)
 
-    Globals.InitializeClass(CMFAwareness) # install permissions
-
 except ImportError:
     class CMFAwareness:
         def supportsCMF(self): return 0
         def inCMF(self): return 0
+
+InitializeClass(CMFAwareness)
+

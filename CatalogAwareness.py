@@ -4,13 +4,13 @@
 # todo: may want to make these all safe against Catalog errors
 
 import string
-from Utils import BLATHER
-from AccessControl import getSecurityManager, ClassSecurityInfo
-import Permissions
 
-###########################################################################
-# CLASS CatalogAwareness
-###########################################################################
+from AccessControl import getSecurityManager, ClassSecurityInfo
+from Globals import InitializeClass
+
+import Permissions
+from Utils import BLATHER
+
 
 class CatalogAwareness:
     """
@@ -135,5 +135,8 @@ class CatalogAwareness:
             self.unindex_object()
         self.index_object()
 
-# enable catalog awareness for common ZMI operations
-# have to do this in __init__ because of an import loop ?
+InitializeClass(CatalogAwareness)
+
+
+# enable catalog awareness for common ZMI operations -
+# had to do this in __init__ because of an import loop ?
