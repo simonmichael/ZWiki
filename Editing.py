@@ -181,7 +181,7 @@ class EditingSupport:
         self.cookDtmlIfNeeded()
 
         self.setLastEditor(REQUEST)
-        self.setLastLog(note)
+        self.setLastLog(subject_heading)
         if self.autoSubscriptionEnabled(): self.subscribeThisUser(REQUEST)
         self.updateCatalog()
 
