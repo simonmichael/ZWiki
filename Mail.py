@@ -659,6 +659,7 @@ List-Subscribe: <%s/subscribeform>
 List-Unsubscribe: <%s/subscribeform>
 List-Archive: <%s>
 List-Help: <%s>
+Content-Type: text/plain; charset="utf-8"
 
 %s
 %s
