@@ -767,7 +767,8 @@ class EditingSupport:
         # block spammer links - for now, just give an unexplained site error
         for pat in getattr(self.folder(),'banned_links',[]):
             pat = strip(pat)
-            if pat and re.search(pat,t): raise
+            if pat and re.search(pat,t): raise "The content you posted is banned "\
+                +"from this site.  Please contact the site administrator."
         
         # strip any browser-appended ^M's
         t = re.sub('\r\n', '\n', t)
