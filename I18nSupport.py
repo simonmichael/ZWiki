@@ -17,7 +17,7 @@ try:
         from Products.PlacelessTranslationService.PatchStringIO import get_request
         class MessageIDFactoryWithUtf8Fix(MessageIDFactory):
             """
-            XXX hacky wrapper ensuring proper utf-8 negotiation when _ is used.
+            XXX hacky wrapper ensuring proper utf-8 http header when _ is used.
 
             Called for every i18n string, performance sensitive ?
             Disables itself during unit testing.  
