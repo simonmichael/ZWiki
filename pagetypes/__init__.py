@@ -31,7 +31,7 @@ PAGETYPES = []
 # ids-to-names mapping used by legacy skin templates
 PAGE_TYPES = {}
 
-# how to upgrade legacy page types, used by upgrade()
+# legacy page types to auto-upgrade
 PAGE_TYPE_UPGRADES = {
     # early zwiki
     'Structured Text'              :'stx',
@@ -73,8 +73,8 @@ PAGE_TYPE_UPGRADES = {
     'rstprelinkfitissue'           :'rst',
     'wwmlprelinkfitissue'          :'wwml',
     # pre-0.22
-    # warning: pre-.22 'html' pages will not be auto-upgraded
     'msgstxprelinkfitissuehtml'    :'stx',
+    # nb pre-.22 'html' pages will not be auto-upgraded
     #'html'                         :'html',
     # pre-0.32
     'msgstxprelinkdtmlfitissuehtml':'stx',
