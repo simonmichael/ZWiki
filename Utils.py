@@ -216,15 +216,16 @@ class Utils:
         return unquote(text)
 
     security.declareProtected(Permissions.View, 'usernameFrom')
-    def usernameFrom(self, REQUEST=None):
+    def usernameFrom(self, REQUEST=None, ip_address=1):
         """
         Get the best available user id from the current visitor's REQUEST.
 
         We use the first of:
         - a MAILIN_USERNAME set by mailin.py
+        #- an authenticated CMF user's fullname property #XXX check old code
         - an authenticated username
         - a zwiki_username cookie
-        - the client's IP address
+        - the client's IP address, unless disabled
 
         Or, if PREFER_USERNAME_COOKIE in Defaults.py is true, we'll let
         the cookie take precedence. This means an authenticated user could
@@ -246,7 +247,7 @@ class Utils:
                 authenticated_name = None
         cookie_name = REQUEST.cookies.get('zwiki_username',None)
         mailin_name = REQUEST.get('MAILIN_USERNAME',None)
-        ip_addr = REQUEST.REMOTE_ADDR
+        ip_addr = ip_address and REQUEST.REMOTE_ADDR or ''
         if PREFER_USERNAME_COOKIE:
             return mailin_name or cookie_name or authenticated_name or ip_addr
         else:
@@ -711,7 +712,7 @@ def isEmailAddress(s):
 
 def isUsername(s):
     """
-    True if s looks like a username.
+    True if s looks like a username (for Mail.py's purposes).
     """
     return not isEmailAddress(s)
 
