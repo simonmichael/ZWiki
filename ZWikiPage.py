@@ -160,6 +160,7 @@ class ZWikiPage(
     # behaviour. It will return the old id string when called, which
     # should keep existing catalogs working.
     page_type = PAGETYPES[0]()
+    # XXX page_type's are separate instances - use class or singleton instance ?
     def setPageType(self,id=None): self.page_type = self.lookupPageType(id)()
     def pageType(self):
         # I'd rather keep this in upgrade(), but someone might do

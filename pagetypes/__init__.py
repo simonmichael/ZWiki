@@ -1,12 +1,11 @@
 # PAGE TYPES
 """
 Zwiki page type objects are State objects which encapsulate any behaviour
-which is specific to the different kinds of zwiki page. All pages hold a
-reference to the appropriate page type class in their page_type attribute
-(page types are singleton objects, never instantiated). Page type objects
-hold no state of their own so when calling them we usually pass in the
-page object as first argument.
-XXX cf ram cache manager code to check for persistence issues
+which is specific to the different kinds of zwiki page. All pages hold an
+instance of the appropriate page type class in their page_type attribute.
+XXX cf ram cache manager code to check for persistence issues ?
+Page type objects hold no state of their own so when calling them we
+usually pass in the page object as first argument.
 
 You can plug in new zwiki page types by adding a new page type module in this
 package, or in a separate zope product, and calling registerPageType at
