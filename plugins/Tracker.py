@@ -413,6 +413,7 @@ class TrackerSupport:
             'category',
             'category_index',
             'isIssue',
+            'issueNumber',
             'severity',
             'severity_index',
             'status',

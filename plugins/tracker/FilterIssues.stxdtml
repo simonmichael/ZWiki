@@ -3,7 +3,7 @@
  scrollto="'' #'#tracker'"
  issueCount=issueCount 
  sort_order="REQUEST.get('sort_order','')"
- sort_on="REQUEST.get('sort_on','id')"
+ sort_on="REQUEST.get('sort_on','issueNumber')"
  num="_.int(REQUEST.get('num',99999))"
  searchexpr="REQUEST.get('textortitle','')"
  category="REQUEST.get('category',[])"
@@ -195,9 +195,9 @@
    <table border=0 width="100%">
      <tr>
        <td align=left valign=top>
-         <dtml-let bold="sort_on=='id'">
+         <dtml-let bold="sort_on=='issueNumber'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=id&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>name</dtml-translate></a>
+         <a href="&dtml-URL;?sort_on=issueNumber&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>#</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>

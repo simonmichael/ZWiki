@@ -18,10 +18,10 @@
    <table border="0" cellspacing="1" cellpadding="0" width="100%">
      <tr>
        <td valign="top">
-         <!-- CUSTOM TEXT -->
+<!-- CUSTOM TEXT -->
          <dtml-translate domain=zwiki>Here are the wiki's issue pages.</dtml-translate>
 
-         <!-- END OF CUSTOM TEXT -->
+<!-- END OF CUSTOM TEXT -->
          <dtml-translate domain=zwiki>Enter a search term, or click the numbers to the right, or</dtml-translate>
           <a href="&dtml-filterUrl;"><dtml-translate domain=zwiki>filter issues</dtml-translate></a>.
          <br />
@@ -56,7 +56,7 @@
              <tr>
                <td align="right">
                  <dtml-var "bold and '<b>' or ''">
-                   <a href="&dtml-URL;?sort_on=id&dtml-scrollto;"
+                   <a href="&dtml-URL;?sort_on=issueNumber&dtml-scrollto;"
                    >&dtml-issueCount;</a>
                  <dtml-var "bold and '</b>' or ''">
                </td>
@@ -127,7 +127,7 @@
                  <td align="right">
                    <dtml-var "bold and '<b>' or ''">
                    <a href="&dtml-URL;?category:list=&dtml.url_quote-sequence-item;&sort_on=status_index&dtml-scrollto;"
-                     ><dtml-var "_.len(pages(isIssue=1,category=_['sequence-item']))#,status=['open','pending']))"
+                     ><dtml-var "_.len(pages(isIssue=1,category=_['sequence-item']))"
                      ></a>
                    <dtml-var "bold and '</b>' or ''">
                  </td>
@@ -194,9 +194,9 @@
    <table border=0 width="100%">
      <tr>
        <td align=left valign=top>
-         <dtml-let bold="sort_on=='id'">
+         <dtml-let bold="sort_on=='issueNumber'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=id&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>name</dtml-translate></a>
+         <a href="&dtml-URL;?sort_on=issueNumber&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>#</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
@@ -384,7 +384,7 @@
        <td nowrap>
          <select name="newcategory" class="formfield">
            <dtml-in issue_categories>
-           <option <dtml-var "_['sequence-item'] == 'zwiki: general' and 'SELECTED' or ''">>
+           <option <dtml-var "_['sequence-item'] == 'general' and 'SELECTED' or ''">>
              &dtml-sequence-item;
            </option>
            </dtml-in>
