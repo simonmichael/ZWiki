@@ -73,7 +73,8 @@ from email.Iterators import typed_subpart_iterator
 from Products.ZWiki.Regexps import wikiname1,wikiname2,bracketedexpr
 from Products.ZWiki.Utils import BLATHER
 
-DEFAULTPAGE = 'FrontPage'
+# which page should be used when there is no bracketed page name in the subject
+DEFAULTMAILINPAGE = None 
 #PAGEINSUBJECTEXP = r'(%s|%s)' % (wikiname1,wikiname2)
 #PAGEINSUBJECTEXP = r'(%s|%s|%s)' % (wikiname1,wikiname2,bracketedexpr)
 PAGEINSUBJECTEXP = bracketedexpr
@@ -127,7 +128,7 @@ def isJunk(msgtext):
 
 class MailIn:
     """
-    I represent a wiki mail-in (incoming mail message).
+    I represent an incoming mail message being posted to a wiki folder.
 
     I parse the incoming rfc2822 message string and expose the parts of
     interest, and (given a wiki context) figure out how to deliver myself
@@ -147,10 +148,10 @@ class MailIn:
     def __init__(self,
                  context,
                  message,
-                 defaultpage=DEFAULTPAGE,
+                 defaultpage=DEFAULTMAILINPAGE,
                  subscribersonly=1,
                  trackerissue=0,
-                 checkrecipient=1,
+                 checkrecipient=0,
                  checksubject=1,
                  ):
         BLATHER('mailin.py: processing incoming message:\n%s' % message)
@@ -184,8 +185,7 @@ class MailIn:
 	# XXX x-beenthere is mailman-specific - need to support ezmlm & others here
         #self.xbeenthere = (self.msg.get('X-BeenThere') or
 	#                   re.search(r'[^\s<]+@[^\s>]+',self.msg.get('Delivered-To')).group())
-	# Type Error
-	# made ezmlm include beenthere
+	# ..Type Error - configured ezmlm to provide beenthere instead (?)
         self.xbeenthere = self.msg.get('X-BeenThere')
 
         plaintextpart = typed_subpart_iterator(self.msg,
@@ -221,118 +221,162 @@ class MailIn:
             body = re.sub(re.escape(signature),'',body)
         return body
     
+    def contextIsPage(self):
+        return self.context.meta_type=='ZWiki Page'
+    
+    def contextIsFolder(self):
+        return not self.contextIsPage()
+    
+    def folder(self):
+        """
+        The wiki folder to which we are delivering.
+        """
+        if self.contextIsPage(): return self.context.aq_parent
+        else: return self.context
+
+    def recipient(self):
+        """
+        The message recipient that was used for delivery here (an email tuple).
+
+        The recipient helps determine the mailin action; if there are
+        several, we need to find out which one refers to the wiki.  We'll
+        use the folder's mail_from property as a hint, or guess if we have
+        to. 
+        """
+        if len(self.recipients) == 1:
+            return self.recipients[0]
+        folder_mail_from = getattr(self.folder(),'mail_from',None)
+        if folder_mail_from:
+            for r in self.recipients:
+                if r[1] == folder_mail_from:
+                    return r
+        for r in self.recipients:
+            if re.search(MAILINADDREXP,r[1]):
+                return r
+        return self.recipients[0]
+
+    def workingPage(self):
+        """
+        A wiki page object which we can use for further operations. tricksy XXX
+        """
+        pass
+        
+    def defaultMailinPage(self):
+        """
+        The default wiki page for receiving mailins. May be None.
+        """
+        pass
+        
     def decideDestination(self):
         """
         Figure out what wiki page this mail-in should go to.
 
-        Sets self.destpage and self.creating, self.trackerissue flags.
-        If we run into problems, we'll return a message in self.error.
+        Fairly involved calculations trying to figure out what to do in a
+        robust way. Sets self.destpage, self.destpagename, self.creating,
+        self.trackerissue, or sets a message in self.error if it can't.
+        
         """
-        if self.context.meta_type == 'ZWiki Page':
-            self.folder = self.context.aq_parent
+        if self.contextIsPage():
             self.destpage = self.workingpage = self.context
             self.destpagename = self.destpage.title_or_id()
-            self.creating = 0
-        else:
-            self.folder = self.context
-            # find default and working pages..
-            # NB the default page may have a freeform name
-            defaultpagename = getattr(self.folder,'default_page',self.defaultpage)
-            self.workingpage = getattr(self.folder,defaultpagename,None)
-            if not self.workingpage:
-                allpages = self.folder.objectValues(spec='ZWiki Page')
-                if len(allpages):
-                    firstpage = allpages[0]
-                    self.workingpage = \
-                        firstpage.pageWithName(defaultpagename) or firstpage
-                    defaultpagename = self.workingpage.title_or_id()
-                else:
-                    BLATHER('mailin.py: could not find a working page')
-                    self.error = '\nSorry, I could not find an existing wiki page to work with.\n\n\n'
-                    return
+            self.creating = self.trackerissue = 0
+            return
 
-        # Check if the sender (From or Sender address) is allowed to post
-        # there.
-        # - if open posting is allowed, we'll accept anybody.
-        # - otherwise they must be a subscriber somewhere in the wiki.
-        # - or, if the wiki is gatewayed with a mailing list we want to
-        # accept list subscribers. Since we're not fully integrated with
-        # mailman (and to support other list software) I think the
-        # simplest thing is a mailman-style option for extra acceptable
-        # posters, containing eg the list's Sender address (-bounces).
-        postingpolicy = getattr(self.folder,'mailin_policy',
-                                getattr(self.folder,'posting_policy',None))
-        accept = getattr(self.folder,'mail_accept_nonmembers',[])
-        if not self.subscribersonly or postingpolicy == 'open':
-            pass
-        # XXX poor caching
-        elif (self.workingpage.allSubscriptionsFor(self.FromEmail) or
-              self.workingpage.allSubscriptionsFor(self.senderEmail)):
-            pass
-        elif (self.FromEmail in accept or self.senderEmail in accept):
-            pass
+        # posting in wiki folder context (the normal case)
+
+        # find the default mailin page if any
+        # note this is now different from the default_page folder property
+        #defaultpagename = getattr(self.folder(),'default_page',self.defaultpage)
+        defaultpagename = self.defaultpage
+
+        # find a preliminary working page
+        #self.workingpage = self.workingPage()
+        if defaultpagename:
+            self.workingpage = getattr(self.folder(),defaultpagename,None)
+        if not self.workingpage:
+            allpages = self.folder().objectValues(spec='ZWiki Page')
+            if allpages:
+                firstpage = allpages[0]
+                self.workingpage = \
+                    firstpage.pageWithName(defaultpagename) or firstpage
+        if not self.workingpage:
+            BLATHER('mailin.py: could not find a working page')
+            self.error = '\nSorry, I could not find an existing wiki page to work with.\n\n\n'
+            return
+        # update defaultpagename if it was wrong
+        defaultpagename = self.workingpage.title_or_id()
+
+        # find the destination page
+        # look for a page name
+        # in the recipient's real name part if enabled..
+        if self.checkrecipient:
+            m = re.search(PAGEINREALNAMEEXP,self.recipient()[0])
+            if m:
+                self.destpagename = m.group('page')
+        # or in the subject if enabled.. (default)
+        if (not self.destpagename) and self.checksubject:
+            matches = re.findall(PAGEINSUBJECTEXP,self.subject)
+            if matches:
+                self.destpagename = matches[-1] # use rightmost
+                # strip enclosing []'s
+                self.destpagename = re.sub(bracketedexpr, r'\1',self.destpagename)
+
+        # or use the default mailin page if any..
+        if (not self.destpagename) and self.defaultpage:
+            self.destpagename = defaultpagename
+
+        # now, either we have identified an existing destination page
+        # (fuzzy naming allowed)..
+        page = (self.destpagename and
+                self.workingpage.pageWithFuzzyName(self.destpagename,
+                                                   ignore_case=1))
+        if page:
+            # also change working page to get right parentage etc.
+            self.destpage = self.workingpage = page
+            self.destpagename = self.destpage.title_or_id()
+            self.creating = 0
+        # or we have the name of a new page to create
+        elif self.destpagename:
+            self.creating = 1
+        # or we are creating a tracker issue, which doesn't need a name
+        elif (self.trackerissue or re.search(TRACKERADDREXP,self.recipient()[1])):
+            self.trackerissue = self.creating = 1
+        # or we discard this message
+        else:
+            self.error = '\nMessage had no destination page, ignored.\n\n\n'
+            BLATHER('mailin.py: message had no destination page, ignored')
+
+        return
+
+    def checkMailinAllowed(self):
+        """
+        Check if the mailin determined by decideDestination() is permitted.
+
+        Is the sender allowed to mail in here ?
+        - if open posting is allowed, we'll accept anybody.
+        - otherwise they must be a subscriber somewhere in the wiki
+        - or be listed in the mail_accept_nonmembers property
+          (useful to allow mailing lists, etc)
+        Set self.error if not permitted.
+        """
+        postingpolicy = getattr(self.folder(),'mailin_policy',
+                                # backwards compatibility
+                                getattr(self.folder(),'posting_policy',None)) 
+        accept = getattr(self.folder(),'mail_accept_nonmembers',[])
+        if (not self.subscribersonly or
+            postingpolicy == 'open' or
+            self.FromEmail in accept or
+            self.senderEmail in accept or
+            # XXX poor caching
+            self.workingpage.allSubscriptionsFor(self.FromEmail) or
+            self.workingpage.allSubscriptionsFor(self.senderEmail)):
+            return
         else:
             self.error = '\nSorry, you must be a subscriber to send mail to this wiki.\n\n\n'
             BLATHER('mailin.py: bounced mail from non-subscriber',
-                 self.FromEmail)
-            return
+                    self.FromEmail)
 
-        # decide which of the recipients is us
-        if len(self.recipients) == 1:
-            self.recipient = self.recipients[0]
-        elif getattr(self.folder,'mail_from',None):
-            folder_mail_from = getattr(self.folder,'mail_from')
-            for r in self.recipients:
-                if r[1] == folder_mail_from:
-                    self.recipient = r
-                    break
-        if not self.recipient:
-            for r in self.recipients:
-                if re.search(MAILINADDREXP,r[1]):
-                    self.recipient = r
-                    break
-        if not self.recipient:
-            self.recipient = self.recipients[0]
-
-        # decide if this is a tracker issue
-        if (self.trackerissue or re.search(TRACKERADDREXP,self.recipient[1])):
-            self.trackerissue = 1
-            return
-
-        # finalize our choice of destination page
-        if not self.destpage:
-            # look for a page name in recipient real name
-            if self.checkrecipient:
-                m = re.search(PAGEINREALNAMEEXP,self.recipient[0])
-                if m:
-                    self.destpagename = m.group('page')
-            # or in the subject
-            if (not self.destpagename) and self.checksubject:
-                matches = re.findall(PAGEINSUBJECTEXP,self.subject)
-                if matches:
-                    self.destpagename = matches[-1] # use rightmost
-
-            # and strip any enclosing []'s
-            if self.destpagename:
-                self.destpagename = re.sub(bracketedexpr, r'\1',
-                                           self.destpagename)
-            # or use the default page name
-            if not self.destpagename:
-                self.destpagename = defaultpagename
-
-            # destination page identified!
-            # now, does it exist (fuzzy naming allowed) ? if not we'll create
-            if self.destpagename and \
-               self.workingpage.pageWithFuzzyName(self.destpagename,
-                                                  ignore_case=1):
-                self.workingpage = self.destpage = \
-                     self.workingpage.pageWithFuzzyName(self.destpagename,
-                                                        ignore_case=1)
-                self.creating = 0
-            else:
-                self.creating = 1
-
-#    def findDestinationVirtualHost(self, msg):
+#    def destinationVHost(self, msg):
 #        """
 #        Do tricky vhost-folder-finding.
 #        
@@ -370,7 +414,7 @@ class MailIn:
 def mailin(self,
            msg,
            pagenameexp=None, #XXX temporary backwards compatibility
-           defaultpage=DEFAULTPAGE,
+           defaultpage=DEFAULTMAILINPAGE,
            separator=None, #XXX temporary backwards compatibility
            checkrecipient=0,
            checksubject=1,
@@ -397,6 +441,7 @@ def mailin(self,
                checksubject=checksubject,
                )
     m.decideDestination()
+    m.checkMailinAllowed()
     if m.error: return m.error
 
     # stash the sender's username in REQUEST so zwiki can use it to set
@@ -411,7 +456,7 @@ def mailin(self,
         body = re.sub(r'(?m)^>(.*)',r'<br />><i>\1</i>',m.body)
         self.REQUEST.set('newtext', body)
         self.REQUEST.set('submitted', 1)
-        m.folder.IssueTracker(REQUEST=self.REQUEST)
+        m.folder().IssueTracker(REQUEST=self.REQUEST)
         #BLATHER('mailin.py: created issue '+subject)
         return 
 
