@@ -42,11 +42,12 @@ class Parser:
 
     # some common strings
     PARENT_PREFIX = '' #wikiutil.PARENT_PREFIX
-    attachment_schemas = [] #["attachment", "inline", "drawing"]
+    attachment_schemas = ["attachment", "inline", "drawing"]
     punct_pattern = re.escape(u'''"\'}]|:,.)?!''')
-    url_pattern = (u'http|https|ftp|nntp|news|mailto|telnet|wiki|file|' +
-            u'|'.join(attachment_schemas) + 
-            '') #(config.url_schemas and u'|' + u'|'.join(config.url_schemas) or ''))
+    #url_pattern = (u'http|https|ftp|nntp|news|mailto|telnet|wiki|file|' +
+    url_pattern = (u'http|https|ftp|nntp|news|mailto|telnet|file')
+            #u'|'.join(attachment_schemas) + 
+            #(config.url_schemas and u'|' + u'|'.join(config.url_schemas) or ''))
 
     # some common rules
     word_rule = ur'(?:(?<![%(l)s])|^)%(parent)s(?:%(subpages)s(?:[%(u)s][%(l)s]+){2,})+(?![%(u)s%(l)s]+)' % {
