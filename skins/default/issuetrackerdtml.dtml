@@ -8,7 +8,7 @@ tracked=issueCount
 <table border="0" cellspacing="1" cellpadding="0" width="100%"><tr>
 <td valign="top">
 <b><input type="submit" value="Search the tracker:" style="font-weight:bold"></b>
-<b><input type="text" name="textortitle" value="<dtml-var textortitle missing>" size="40" maxlength="100" style="font-weight:bold" accesskey="s"></b><br/>
+<b><input type="text" name="textortitle" value="<dtml-var textortitle missing>" size="40" maxlength="100" style="font-weight:bold" accesskey="s"></b><br>
 <!-- start of custom text -->
 This is the issue tracker. 
 The last 10 modified issues are shown by default.
@@ -37,8 +37,8 @@ See also <a href="&dtml-filterUrl;">filter issues</a>.
 </td>
 <td align=right valign="top">
 <big><big><big><big><b>
-&dtml-open;/ &dtml-tracked;</b></big></big></big></big><br/>
-<small>open/total<br/>issues</small>
+&dtml-open;/ &dtml-tracked;</b></big></big></big></big><br>
+<small>open/total<br>issues</small>
 </td>
 </tr></table>
 </form>
@@ -237,7 +237,7 @@ seconds="_.int(_.round((elapsed-days-hourfactor*hours-minutefactor*minutes)/seco
 bgcolor="<dtml-var "'#ffffff' #issueColourFor(status='open')">"><td nowrap>
 Description:
 <b><input type="text" name="newtitle" value="<dtml-var newtitle missing html_quote>" size="60" maxlength="200" style="font-weight:bold"></b>
-<br/>
+<br>
 Category:
 <select name="newcategory">
 <dtml-in issue_categories>
@@ -262,9 +262,9 @@ Status:
 </option>
 </dtml-in>
 </select> 
-<br/>
+<br>
 Details:
-<br/>
+<br>
 <textarea name="newtext" wrap="virtual" rows=5 cols=60>
 </textarea>
 <input type="hidden" name="submitted" value="1">
