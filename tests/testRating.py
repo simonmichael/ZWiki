@@ -3,23 +3,34 @@ import os, sys
 if __name__ == '__main__': execfile(os.path.join(sys.path[0], 'framework.py'))
 from Testing import ZopeTestCase
 from support import *
-ZopeTestCase.installProduct('ZCatalog')
-ZopeTestCase.installProduct('ZWiki')
+#ZopeTestCase.installProduct('ZCatalog')
+#ZopeTestCase.installProduct('ZWiki')
 from Products.ZWiki.Rating import RatingSupport
 
 
 class RatingTests(ZopeTestCase.ZopeTestCase):
     def setUp(self):
-        pass
+        self.rs = RatingSupport()
 
     def afterSetUp(self):
         pass #zwikiAfterSetUp(self)
 
     def test_rating(self):
-        pass
+        self.rs.resetRating()
+        self.assert_(self.rs.rating() == 0)
+        self.rs.setRating(2)
+        self.assert_(self.rs.rating() == 2)
 
     def test_resetRating(self):
-        pass
+        self.rs.setRating(2)
+        self.assert_(self.rs.rating() != 0)
+        self.rs.resetRating()
+        self.assert_(self.rs.rating() == 0)
+
+    def test_setRating(self):
+        self.assert_(self.rs.rating() != 2)
+        self.rs.setRating(2)
+        self.assert_(self.rs.rating() == 2)
 
     def test_rate(self):
         pass

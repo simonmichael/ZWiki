@@ -18,26 +18,23 @@ class RatingSupport:
 
     _rating = 0
 
+    def setRating(self,score): self._rating = score
+
+    def resetRating(self): self.setRating(0)
+
     security.declareProtected(Permissions.View, 'rating')
     def rating(self):
         """
         Get this page's rating (an integer).
         """
-        pass
-
-    security.declareProtected(Permissions.View, 'resetRating')
-    def resetRating(self):
-        """
-        Reset this page's rating to the default value.
-        """
-        pass
+        return self._rating
 
     security.declareProtected(Permissions.View, 'rate')
     def rate(self,score,REQUEST=None):
         """
         Update this page's rating based on a user's vote.
         """
-        pass
+        self.setRating(score)
 
 
 # install permissions
