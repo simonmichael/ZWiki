@@ -108,19 +108,19 @@ def registerPageTypeUpgrade(old,new):
     """
     PAGE_TYPE_UPGRADES[old] = new
 
-from common import MIDSECTIONMARKER
-from plaintext import ZwikiPlaintextPageType
-from html import ZwikiHtmlPageType
-from stx import ZwikiStxPageType
-from rst import ZwikiRstPageType
-from wwml import ZwikiWwmlPageType
-
-# the order these are registered in is the order they will appear
-# in the editform by default, and the first is the default type
-for t in [
-    ZwikiStxPageType,
-    ZwikiRstPageType,
-    ZwikiWwmlPageType,
-    ZwikiHtmlPageType,
-    ZwikiPlaintextPageType,
-    ]: registerPageType(t)
+# import all modules in this directory so that each will register its page type
+import os,glob
+os.chdir(__path__[0])
+modules = glob.glob('*.py')
+modules.remove('__init__.py')
+# force the usual ordering of standard page types in the editform
+firstmods = ['stx.py','rst.py','wwml.py','html.py','plaintext.py']
+firstmods.reverse()
+for mod in firstmods:
+    try:
+        modules.remove(mod)
+        modules.insert(0,mod)
+    except ValueError:
+        pass
+for file in modules:
+    __import__('Products.ZWiki.pagetypes.%s' % file[:-3])

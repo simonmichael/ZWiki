@@ -1,5 +1,6 @@
 from common import *
 from Products.ZWiki.I18nSupport import _
+from Products.ZWiki.pagetypes import registerPageType
 
 import StructuredText
 from StructuredText.DocumentWithImages import DocumentWithImages
@@ -383,3 +384,4 @@ class MyDocumentWithImages(DocumentWithImages):
             
 MyDocumentWithImages = MyDocumentWithImages()
     
+registerPageType(ZwikiStxPageType)

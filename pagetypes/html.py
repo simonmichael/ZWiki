@@ -1,5 +1,6 @@
 from common import *
 from Products.ZWiki.I18nSupport import _
+from Products.ZWiki.pagetypes import registerPageType
 
 class ZwikiHtmlPageType(AbstractHtmlPageType):
     _id = 'html'
@@ -25,3 +26,4 @@ class ZwikiHtmlPageType(AbstractHtmlPageType):
         t = page.addSkinTo(t,**kw)
         return t
 
+registerPageType(ZwikiHtmlPageType)

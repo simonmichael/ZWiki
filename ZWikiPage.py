@@ -76,7 +76,9 @@ from Comments import CommentsSupport
 from Admin import AdminSupport
 from Editing import EditingSupport
 from I18nSupport import DTMLFile, _
-from pagetypes import MIDSECTIONMARKER, PAGETYPES, PAGE_TYPES, ZwikiStxPageType
+from pagetypes import PAGETYPES, PAGE_TYPES
+from pagetypes.common import MIDSECTIONMARKER
+from pagetypes.stx import ZwikiStxPageType
 from plugins import PLUGINS
 
 

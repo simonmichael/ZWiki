@@ -3,6 +3,7 @@
 
 from common import *
 from Products.ZWiki.I18nSupport import _
+from Products.ZWiki.pagetypes import registerPageType
 
 class ZwikiWwmlPageType(AbstractPageType):
     _id = 'wwml'
@@ -498,3 +499,5 @@ And [these words] should be linked, too.
     grandparent = FakeParent( None, WikiName = 0 )
 #    print translate_WMML( FakeParent( grandparent, id = 'parent' ), testString )
     print translate_WMML( testString )
+
+registerPageType(ZwikiWwmlPageType)

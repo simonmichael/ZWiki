@@ -1,5 +1,6 @@
 from common import *
 from Products.ZWiki.I18nSupport import _
+from Products.ZWiki.pagetypes import registerPageType
 
 try:
     import reStructuredText # import this one first
@@ -72,3 +73,4 @@ class ZwikiRstPageType(AbstractPageType):
     def linkFile(self, page, id, path):
         return '\n\n!`%s`__\n\n__ %s\n' % (id, path)
 
+registerPageType(ZwikiRstPageType)
