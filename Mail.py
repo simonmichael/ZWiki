@@ -4,6 +4,7 @@ import string, re, sys
 from string import split,join,find,lower,rfind,atoi,strip,lstrip
 from types import *
 
+from I18nSupport import _
 from TextFormatter import TextFormatter
 from Utils import html_unquote,BLATHER,formattedTraceback,stripList, \
      isIpAddress,isEmailAddress,isUsername
@@ -403,27 +404,25 @@ class SubscriberManagerMixin:
         members with that email address.
 
         XXX too expensive; on plone.org with 7k members, this maxed out
-        cpu for 10 minutes.
+        cpu for 10 minutes. Refactor.
         
         """
         if isUsername(subscriber):
             return [subscriber]
         else:
             return []
-            # XXX
-        
-            email = string.lower(subscriber)
-            usernames = []
-            folder = self.folder()
-            try:
-                for user in folder.portal_membership.listMembers():
-                    member = folder.portal_memberdata.wrapUser(user)
-                    if string.lower(member.email) == email:
-                        usernames.append(member.name)
-            except AttributeError:
-                pass
-            return usernames
-
+            # XXX plone.org performance issue
+            #email = string.lower(subscriber)
+            #usernames = []
+            #folder = self.folder()
+            #try:
+            #    for user in folder.portal_membership.listMembers():
+            #        member = folder.portal_memberdata.wrapUser(user)
+            #        if string.lower(member.email) == email:
+            #            usernames.append(member.name)
+            #except AttributeError:
+            #    pass
+            #return usernames
         
 
 class MailSupport:
@@ -566,27 +565,15 @@ class MailSupport:
         """
         Give the appropriate From: header for mail-outs from this page.
 
-        Tries to make use of the current user's username and email address
-        if available.
-
-        XXX todo: use an authenticated CMF member's email property
+        Tries to give the best attribution based on configuration and
+        available information.  XXX todo: use an authenticated CMF
+        member's email property
         """
-        username = self.usernameFrom(REQUEST)
-        # use the wiki's hard-coded from address if configured;
-        # add the username if it helps identification
-        if self.fromProperty():
-            fromhdr = self.fromProperty()
-            if not (isIpAddress(username) or isEmailAddress(username)):
-                fromhdr += ' (%s)' % username
-        # or use the user's address if we know it
-        elif isEmailAddress(username):
-            fromhdr = username
-        # or use the wiki's reply-to address, adding the username if it helps
-        else:
-            fromhdr = self.replyToProperty()
-            if not isIpAddress(username):
-                fromhdr += ' (%s)' % username
-        return fromhdr
+        address = (self.fromProperty() or
+                   self.usersEmailAddress() or
+                   self.replyToProperty())
+        realname = self.usernameFrom(REQUEST,ip_address=0) or _('anonymous')
+        return '%s (%s)' % (address, realname)
 
     def replyToHeader(self):
         """
