@@ -37,26 +37,31 @@ class TrackerSupport:
         #return '%04d %s' % (number,name)
         #return '#%04d %s' % (number,name)
 
+    security.declareProtected(Permissions.View, 'issueNumberAndNameFrom')
+    def issueNumberAndNameFrom(self, pagename):
+        """
+        Extract issue number and issue name from a page name if possible.
+
+        If pagename matches one of these formats, where NNNN is one or
+        more digits and ISSUENAME is any text:
+
+         IssueNoNNNN ISSUENAME
+         #NNNN ISSUENAME
+
+        we return (NNNN, ISSUENAME), otherwise None. ISSUENAME is stripped
+        of surrounding whitespace.
+        """
+        m = (re.match(r'(?s)^IssueNo([0-9]+)(.*)',pagename) # IssueNoNNNN...
+             or re.match(r'(?s)^#([0-9]+)(.*)',pagename))   # or #NNNN...
+        if m: return (int(m.group(1)), m.group(2).strip())
+        else: return None
+
     security.declareProtected(Permissions.View, 'issueNumberAndName')
     def issueNumberAndName(self, pagename=None):
         """
-        Return issue number and name parts from this page's name if possible.
-
-        An arbitrary pagename can also be specified. Valid formats for
-        issue page names are:
-
-        IssueNoNNNN ...
-        NNNN ...
-        #NNNN ...
-
-        where NNNN is one or more digits. Returns a (number:int, name:str)
-        tuple or None. The name part is stripped of surrounding whitespace.
+        Return the issue number and name parts from this page's name if possible.
         """
-        pagename = pagename or self.pageName()
-        m = (re.match(r'(?s)^IssueNo([0-9]+)(.*)',pagename) # IssueNoNNNN...
-             or re.match(r'(?s)^#?([0-9]+)(.*)',pagename))  # NNNN... or #NNNN...
-        if m: return (int(m.group(1)), m.group(2).strip())
-        else: return None
+        return self.issueNumberAndNameFrom(self.pageName())
 
     security.declareProtected(Permissions.View, 'issueNumber')
     def issueNumber(self, pagename=None):

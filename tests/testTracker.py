@@ -20,8 +20,8 @@ class Tests(ZopeTestCase.ZopeTestCase):
         self.failIf(isIssue('IssueNo'))
         self.assert_(isIssue('IssueNo1'))
         self.assert_(isIssue('IssueNo1 blah'))
-        self.assert_(isIssue('1'))
         self.assert_(isIssue('#1 blah'))
+        self.failIf(isIssue('1'))
 
     def test_upgradeIssueProperties(self):
         self.p.create('IssueNo0001')
