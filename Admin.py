@@ -34,7 +34,7 @@ class AdminSupport:
     security = ClassSecurityInfo()
 
     security.declarePublic('upgradeAll') # we check folder permission at runtime
-    def upgradeAll(self,render=1,partial_commits=0,REQUEST=None):
+    def upgradeAll(self,render=1,partial_commits=0,rename_issues=0,REQUEST=None):
                    
         """
         Upgrade, tone and pre-render all pages, rebuild the wiki outline, etc.
@@ -66,7 +66,7 @@ class AdminSupport:
             n += 1
             try:
                 p.upgrade(REQUEST)
-                p.upgradeId(REQUEST)
+                p.upgradeId(REQUEST,rename_issues)
                 if render:
                     p.preRender(clear_cache=1)
                     msg = 'upgraded and pre-rendered page'
@@ -86,33 +86,36 @@ class AdminSupport:
 
     #security.declarePublic('upgradeId')
     security.declareProtected(Permissions.View, 'upgradeId')
-    def upgradeId(self,REQUEST=None):
+    def upgradeId(self,REQUEST=None,rename_issues=0):
         """
         Make sure a page's id conforms with it's title, renaming as needed.
 
-        Does not leave a placeholder, so may break incoming links.
-        Too slow for auto-upgrade, so people must call this manually or
-        via upgradeAll.
+        Does not leave a placeholder, so may break incoming links.  Does
+        update backlinks, because it's less work than fixing up links by
+        hand afterward. This makes it too slow to use in auto-upgrade,
+        though, so people must call this manually or more usually via
+        upgradeAll.
 
-        updatebacklinks=1 is used even though it's slow, because it's less
-        work than fixing up links by hand afterward.
+        This can also rename old IssueNoNNNN pages to the new #NNNN.style.
+        For the moment this is off by default.
 
         With legacy pages (or manually renamed pages), it may happen that
         there's a clash between two similarly-named pages mapping to the
         same canonical id. In this case we just log the error and move on.
         """
-        id, cid = self.getId(), self.canonicalId()
-        if id != cid:
-            oldtitle = title = self.title_or_id()
-            # as a special case, preserve tracker issue numbers in the title
-            m = re.match(r'IssueNo[0-9]+$',id)
-            if m:
-                title = '%s %s' % (m.group(),self.title)
-            try:
-                self.rename(title,updatebacklinks=1,sendmail=0,REQUEST=REQUEST)
-            except CopyError:
-                BLATHER('failed to rename "%s" (%s) to "%s" (%s) - id clash ?' \
-                     % (oldtitle,id,title,self.canonicalIdFrom(title)))
+        # we can just call rename, it will do what's necessary
+        # XXX maybe it should call here
+        if rename_issues and self.isIssue():
+            name = self.pageNameFromIssueNumberAndName(self.issueNumber(),
+                                                       self.issueName())
+        else:
+            name = self.pageName()
+        try:
+            self.rename(name,updatebacklinks=1,sendmail=0,REQUEST=REQUEST)
+        except CopyError:
+            BLATHER(
+                'upgradeId for "%s" (%s) failed - does %s already exist ?' \
+                % (self.pageName(),self.getId(),self.canonicalIdFrom(name)))
 
     # performance-sensitive ?
     security.declareProtected(Permissions.View, 'upgrade')
