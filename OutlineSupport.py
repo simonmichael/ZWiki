@@ -226,7 +226,6 @@ class OutlineManagerMixin:
 
         parent page names may be passed in several ways:
         - in the parents argument (a list or string of page names)
-        - in a parents REQUEST attribute (ditto) #XXX needed ?
         - in the pagename argument (a single name)
         (this last is to support the page management form).
 
@@ -235,7 +234,7 @@ class OutlineManagerMixin:
         """
         # validate args
         if pagename: parents = [pagename]
-        if parents is None: parents = REQUEST.get('parents', [])
+        if not parents: parents = []
         if type(parents) != ListType: parents = [parents]
         parents = map(lambda x:absattr(x.Title),
                       filter(lambda x:x,
