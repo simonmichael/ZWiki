@@ -181,6 +181,26 @@ class MailinTests(unittest.TestCase):
         m.decideDestination()
         self.assertEqual(m.destpagename,'Some Page')
     
+    def testDestinationFromLongSubject(self):
+        m = mailin.MailIn(
+            self.p.aq_parent,
+            str(TestMessage(subject='['+' ....'*20+'Test Page'+' ....'*20+']')),
+            subscribersonly=0)
+        m.decideDestination()
+        self.assertEqual(m.destpage.pageName(),'TestPage')
+    
+    def testDestinationFromLongSubjectWithLineBreak(self):
+        m = mailin.MailIn(
+            self.p.aq_parent,
+            str(TestMessage(subject='''\
+Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
+ (test with long long long long long long subject)] property change''')),
+            subscribersonly=0)
+        m.decideDestination()
+        self.assertEqual(
+            m.destpagename,
+            'IssueNo0547 mail (with long subject ?) may go to wrong page (test with long long long long long long subject)')
+    
     def testDestinationWithBlankRealName(self):
         m = mailin.MailIn(self.p.aq_parent,str(TestMessage(
             to='wiki@b.c (   )',

@@ -162,7 +162,7 @@ class MailIn:
         self.checksubject = checksubject
         self.msg = email.message_from_string(message)
         self.date = self.msg['Date']
-        self.subject = self.msg.get('Subject','')
+        self.subject = re.sub(r'\n',r'',self.msg.get('Subject',''))
         self.realSubject = re.sub(r'.*?\[.*?\](.*)',r'\1',self.subject)
         self.messageid = self.msg.get('Message-id','')
         self.inreplyto = self.msg.get('In-reply-to','')
@@ -311,16 +311,17 @@ class MailIn:
                 matches = re.findall(PAGEINSUBJECTEXP,self.subject)
                 if matches:
                     self.destpagename = matches[-1] # use rightmost
-            # (and strip enclosing []'s if needed)
+
+            # and strip any enclosing []'s
             if self.destpagename:
                 self.destpagename = re.sub(bracketedexpr, r'\1',
                                            self.destpagename)
             # or use the default page name
             if not self.destpagename:
                 self.destpagename = defaultpagename
-                    
+
             # destination page identified!
-            # use it if it exists, otherwise we'll create
+            # now, does it exist (fuzzy naming allowed) ? if not we'll create
             if self.destpagename and \
                self.workingpage.pageWithFuzzyName(self.destpagename,
                                                   ignore_case=1):
