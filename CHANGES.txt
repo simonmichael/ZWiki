@@ -1,4 +1,8 @@
-Zwiki 0.32.0rc2 2004/07/03
+	* new german translation (Andreas Mayer)
+	
+	* allow a per-page mailout_policy (Bob McElrath)
+
+	* fix mailout of edit with empty log note via PUT (Bob McElrath)
 
 Zwiki 0.32.0rc2 2004/07/03
 
@@ -49,9 +53,7 @@ Zwiki 0.32.0rc1 2004/07/02
 
         * diffform: full history button was not checking correct permission (Bob McElrath)
 
-        * rename shade2 class to formfield
-
-        * add background shading to more form elements: backlinks, editform, subscribeform
+        * rename shade2 class to formfield, use consistent background shading in form elements
 
         * standard: make form inputs & selects inherit font size
 
