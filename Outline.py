@@ -53,7 +53,9 @@ class Outline:
         preserve this information, which complicates things.
         """
         nodes = self.nodes()
-        if reset:
+        # XXX still problems with things not getting updated properly
+        #if reset:
+        if 1:
             # start afresh
             childmap = {}
         else:
