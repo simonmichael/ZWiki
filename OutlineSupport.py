@@ -604,7 +604,7 @@ class OutlineRenderingMixin:
         # format and link it
         # backwards compatibility: in case of an old editform template
         # which shows context, include the new page name at the bottom (unlinked)
-        if REQUEST and REQUEST.has_key('page') and REQUEST['page'] is not here:
+        if REQUEST and REQUEST.has_key('page') and REQUEST['page'] != here:
             here = REQUEST['page']
             nesting = deepappend(nesting, here)
             suppress_hyperlink=1
