@@ -242,7 +242,7 @@ class OutlineManagerMixin:
 
         We'll generate it if needed.
         """
-        if (not hasattr(self.folder(),'outline')
+        if (not hasattr(self.folder().aq_base,'outline')
             or not self.folder().outline):
             self.updateWikiOutline()
         return self.folder().outline
