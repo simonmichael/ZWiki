@@ -214,7 +214,7 @@ class OutlineManagerMixin:
         is not done frequently.
         """
         BLATHER('regenerating outline data for wiki',self.folder().getId())
-        oldchildmap = None
+        oldchildmap = {}
         # backwards compatibility
         # a pre-0.39 outline is just an attribute, delete (but save childmap)
         if (hasattr(self.folder().aq_base,'outline') and

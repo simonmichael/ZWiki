@@ -58,7 +58,8 @@ class Outline:
         if reset:
             childmap = {}
         else:
-            childmap = self.childmap()
+            # backwards compatibility: 0.39 might have set this to None
+            childmap = self.childmap() or {} 
             # remove any no-longer-existing nodes from childmap
             for p in childmap.keys()[:]:
                 if not p in nodes: del childmap[p]
