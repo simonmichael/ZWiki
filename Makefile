@@ -101,10 +101,18 @@ mo:
 	rm -f *.mo
 
 ## testing
+# to run Zwiki unit tests, you probably need:
+# Zope 2.7.3 or greater
+# ZopeTestCase, linked under .../lib/python/Testing
+# CMF 1.5
+# Plone 
+# PlacelessTranslationService ? maybe
 
 # all tests, test.py
 test:
-	python /zope/test.py -vv -C /zope1/etc/zope.conf --libdir .
+	/zope1/bin/zopectl test -v --libdir .
+
+# old:
 
 # all tests, gui
 gtest:
