@@ -25,6 +25,17 @@ class TrackerSupport:
     security = ClassSecurityInfo()
     
     security.declareProtected(Permissions.View, 'issueNumberAndName')
+    def pageNameFromIssueNumberAndName(self, number, name):
+        """
+        Generate an issue page name according to this wiki's style.
+
+        Expects number:int, name:str. One of the formats below is hard-coded.
+        """
+        return 'IssueNo%04d %s' % (number,name)
+        #return '%04d %s' % (number,name)
+        #return '#%04d %s' % (number,name)
+
+    security.declareProtected(Permissions.View, 'issueNumberAndName')
     def issueNumberAndName(self):
         """
         Return issue number and name parts from this page's name if possible.
@@ -224,16 +235,15 @@ class TrackerSupport:
     #    if REQUEST:
     #        REQUEST.RESPONSE.redirect(self.page_url())
             
-    def changeIssueProperties(self, title=None, category=None, severity=None, 
+    def changeIssueProperties(self, name=None, category=None, severity=None, 
                               status=None, log=None, REQUEST=None):
         """
         Change an issue page's properties and redirect back there.
 
         Also, add a comment to the page describing what was done.
 
-        It expects title to be the issue description, not the complete
-        page name.  Changing this will trigger a page rename, which may be
-        slow.
+        name is the issue name excluding the issue number. Changing this
+        will trigger a page rename, which may be slow.
         
         XXX security: allows title/category/severity/status properties to
         be set without Manage properties permission.
@@ -242,29 +252,32 @@ class TrackerSupport:
         a 0.17-style page id will mess up the id/title.
         """
         comment = ''
-        if title:
-            title = self.getId()[:11]+' '+title
-            if title != self.title_or_id():
-                comment += "Title: '%s' => '%s' \n" % (self.title_or_id(),title)
-            self.rename(title,updatebacklinks=1,sendmail=0,REQUEST=REQUEST)
+        if name:
+            if name != self.issueName():
+                newpagename = self.pageNameFromIssueNumberAndName(
+                    self.issueNumber(),
+                    name)
+                comment += "Name: '%s' => '%s' \n" % (self.pageName(),
+                                                      newpagename)
+                self.rename(newpagename, updatebacklinks=1, sendmail=0,
+                            REQUEST=REQUEST)
         if category:
             if category != self.category:
                 comment += "Category: %s => %s \n" % (self.category,category)
-            self.manage_changeProperties(category=category)
+                self.manage_changeProperties(category=category)
         if severity:
             if severity != self.severity:
                 comment += "Severity: %s => %s \n" % (self.severity,severity)
-            self.manage_changeProperties(severity=severity)
+                self.manage_changeProperties(severity=severity)
         if status:
             if status != self.status:
                 comment += "Status: %s => %s \n" % (self.status,status)
-            self.manage_changeProperties(status=status)
+                self.manage_changeProperties(status=status)
         log = log or 'property change'
         self.comment(text=comment, subject_heading=log, REQUEST=REQUEST)
         self.setLastEditor(REQUEST)
         self.reindex_object()
-        if REQUEST:
-            REQUEST.RESPONSE.redirect(self.page_url())
+        if REQUEST: REQUEST.RESPONSE.redirect(self.page_url())
 
     def category_index(self):
         """helper method to facilitate sorting catalog results"""

@@ -4,7 +4,7 @@
 bgcolor="&dtml-issueColour;">
 <tr><td>
 **Name:**
-<b><input type="text" name="title" value="<dtml-var "title[12:]" missing html_quote>" size="50" maxlength="200" style="font-weight:bold"></b>
+<b><input type="text" name="name" value="<dtml-var issueName html_quote>" size="50" maxlength="200" style="font-weight:bold"></b>
 <dtml-let
   issue_categories="_.getattr(this(),'issue_categories','') or ['general']"
   issue_severities="_.getattr(this(),'issue_severities','') or ['serious','normal','wishlist']"
