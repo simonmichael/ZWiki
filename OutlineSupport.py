@@ -109,7 +109,30 @@ class ParentsPropertyMixin:
         {'id':'parents', 'type': 'lines', 'mode': 'w'},
         )
 
+    def ensureParentsPropertyIsList(self):
+        """
+        Ensure our parents property is a list, returning true if changed.
+
+        Zope lines properties switched from tuple to list a while back,
+        and lingering tuples cause ongoing breakage.  Called by upgrade,
+        ensureValidParents and accessors for maximum robustness.
+        """
+        if type(self.parents) != ListType:
+            BLATHER("converting %s's parents property to a list" % self.pageName())
+            self.setParents(self.parents)
+            return True
+        else:
+            return False
+
+    # I'd call this parents, but too many upgrade hassles ?
+    def getParents(self):
+        """
+        Robust accessor returning a copy of our parents list.
+        """
+        return list(self.parents)
+
     def setParents(self,parents):
+        parents = list(parents)
         parents.sort()
         self.parents = parents
 
@@ -119,15 +142,17 @@ class ParentsPropertyMixin:
             # ordering hack.. 
             #parent = string.strip(parent)
             if parent and not parent in self.parents:
+                self.ensureParentsPropertyIsList()
                 self.parents.append(parent)
 
     def removeParent(self,parent):
+        self.ensureParentsPropertyIsList()
         try: self.parents.remove(parent)
         except ValueError:
             BLATHER("failed to remove %s from %s's parents (%s)" \
                  % (parent,self.getId(),self.parents))
 
-    def checkParents(self, update_outline=1):
+    def ensureValidParents(self):
         """
         Make sure that this page's parents property is all valid.
 
@@ -135,8 +160,7 @@ class ParentsPropertyMixin:
         want to do a bunch of these). This is a little higher-level
         than setParents.
         """
-        parents = self.parents
-        parents.sort()
+        parents = self.getParents()
         # convert to exact page names, filtering out any which don't exist
         cleanedupparents = map(lambda x:absattr(x.Title),
                                filter(lambda x:x,
@@ -145,9 +169,9 @@ class ParentsPropertyMixin:
         # make sure we're not parented under ourself
         if self.pageName() in cleanedupparents:
             cleanedupparents.remove(self.pageName())
-        # and sort
+        # sort
         cleanedupparents.sort()
-        # if it's changed, save it and update everything
+        # if changed, save and reindex
         if cleanedupparents != parents:
             BLATHER("adjusting %s's parents from %s to %s" % 
                  (self.pageName(), parents, cleanedupparents))
