@@ -9,6 +9,8 @@
 <dtml-with REQUEST>
 <dtml-let 
  RESPONSE="REQUEST.RESPONSE"
+ cookiepath="wikiUrl() # SERVER_URL or '/' for fewer cookies"
+ cookieduration="(ZopeTime() + 365).rfc822()"
  cookielist="[
    'zwiki_username',
    'email',
@@ -20,26 +22,19 @@
    'zwiki_showhierarchy',
    'zwiki_showpagemgmt',
    'zwiki_displaymode',
-   ]
-   #multi-skin setup, see ZwikiSkins
-   #'skin',
-   #'zwiki_theme',
-   #]
-   ">
+   ]">
 <dtml-if setcookies>
-<dtml-let e="(ZopeTime() + 365).rfc822()">
 <dtml-in cookielist prefix=x>
 <dtml-if "_.has_key(x_sequence_item)">
 <dtml-call "RESPONSE.setCookie(x_sequence_item, REQUEST.get(x_sequence_item), 
-                               path='/', expires=e)">
-<dtml-comment>use path=wiki_url() if you want per-wiki cookies</dtml-comment>
+                               path=cookiepath, expires=cookieduration)">
 </dtml-if>
 </dtml-in>
-</dtml-let>
-<dtml-call "RESPONSE.redirect(REQUEST.get('redirectURL',pageUrl()))">
+<!-- dtml-call "RESPONSE.redirect(REQUEST.get('redirectURL',pageUrl()))" -->
+HERE: <dtml-var cookiepath>
 <dtml-elif clearcookies>
 <dtml-in "cookielist+['zwiki_bookmarks','zwiki_showquote']" prefix=x>
-<dtml-call "RESPONSE.expireCookie(x_sequence_item,path='/')">
+<dtml-call "RESPONSE.expireCookie(x_sequence_item,path=cookiepath)">
 </dtml-in>
 <dtml-comment>reload page to get a REQUEST with the new cookie values
 </dtml-comment>
@@ -208,45 +203,6 @@ missing="">">
 <br />
 ( <dtml-translate domain=zwiki>You must also configure a username or be logged in.</dtml-translate>)
 </p>
-<dtml-comment>see http://zwiki.org/ZwikiSkins
-<p>
-Use which zwiki skin ?
-<select name="skin" tabindex=11>
-<dtml-let skins="[
-  'standard',
-  'commonplace',
-  'wikipagex',
-  ]">
-<dtml-in skins prefix=x>
-<option value="&dtml-x_sequence_item;"
-<dtml-if "REQUEST.get('skin','standard') == x_sequence_item">selected</dtml-if>
->
-&dtml-x_sequence_item;
-</dtml-in>
-</dtml-let>
-</select>
-(Skins other than standard may have problems. Commonplace is slow on this site.)
-</p>
-<p>
-Use which theme with the commonplace skin ?
-<select name="zwiki_theme" tabindex=12>
-<dtml-let themes="[
-  'arcadian.css',
-  'default.css',
-  'earthy.css',
-  'sensible.css',
-  'tide.css',
-  'zettai.css',
-  ]">
-<dtml-in themes prefix=x>
-<option value="&dtml-x_sequence_item;"
-<dtml-if "REQUEST.get('zwiki_theme','default.css') == x_sequence_item">selected</dtml-if>
->
-&dtml-x_sequence_item;
-</dtml-in>
-</dtml-let>
-</select>
-</dtml-comment>
 
 <div align="right"> 
 <b><input type="submit" name="setcookies" 
