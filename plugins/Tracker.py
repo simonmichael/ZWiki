@@ -163,9 +163,31 @@ class TrackerSupport:
         Expects number:int, name:str.
         """
         if self.shortIssueNamesEnabled():
-            return '#%d %s' % (number,name)
+            return self.shortIssueNameFrom(number,name)
         else:
-            return 'IssueNo%04d %s' % (number,name)
+            return self.longIssueNameFrom(number,name)
+
+    def shortIssueNameFrom(self, number, name=''):
+        return '#%d %s' % (number,name)
+
+    def longIssueNameFrom(self, number, name=''):
+        return 'IssueNo%04d %s' % (number,name)
+
+    security.declareProtected(Permissions.View, 'issuePageWithNumber')
+    def issuePageWithNumber(self, number):
+        """
+        Return the issue page with the specified issue number, or None.
+
+        Tries both the short and long issue page name formats.
+        Should match issueNumberAndNameFrom.
+        """
+        return (
+            self.pageWithFuzzyName(self.shortIssueNameFrom(number),
+                                   allow_partial=1,
+                                   numeric_match=1) or
+            self.pageWithFuzzyName(self.longIssueNameFrom(number),
+                                   allow_partial=1,
+                                   numeric_match=1))
 
     security.declareProtected(Permissions.Add, 'createIssue')
     def createIssue(self, pageid='', text='', title=None,
@@ -201,20 +223,6 @@ class TrackerSupport:
                                       )
         self.reindex_object()
 
-    security.declareProtected(Permissions.View, 'nextIssueNumber')
-    def nextIssueNumber(self, REQUEST=None):
-        """
-        Get the next available issue number.
-
-        Does a catalog search, so REQUEST may be required to authenticate
-        and get the proper results. I think.
-        """
-        issues = self.pages(isIssue=1,sort_on='id',REQUEST=REQUEST)
-        if issues:
-            return self.issueNumberFrom(issues[-1].Title) + 1
-        else:
-            return 1
-
     security.declareProtected(Permissions.Add, 'createNextIssue')
     def createNextIssue(self,name='',text='',category='',severity='',status='',
                         REQUEST=None,sendmail=1):
@@ -228,6 +236,20 @@ class TrackerSupport:
         self.createIssue(pagename, text, None, 
                          category, severity, status, REQUEST,sendmail)
         return pagename
+
+    security.declareProtected(Permissions.View, 'nextIssueNumber')
+    def nextIssueNumber(self, REQUEST=None):
+        """
+        Get the next available issue number.
+
+        Does a catalog search, so REQUEST may be required to authenticate
+        and get the proper results. I think.
+        """
+        issues = self.pages(isIssue=1,sort_on='id',REQUEST=REQUEST)
+        if issues:
+            return self.issueNumberFrom(issues[-1].Title) + 1
+        else:
+            return 1
 
     security.declareProtected(Permissions.Edit, 'changeIssueProperties')
     def changeIssueProperties(self, name=None, category=None, severity=None, 

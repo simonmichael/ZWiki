@@ -77,10 +77,19 @@ class TrackerTests(ZopeTestCase.ZopeTestCase):
         self.assert_(self.p.pageWithName('#3 c'))
         self.assertEqual(self.p.issueCount(),3)
 
+    def test_issuePageWithNumber(self):
+        self.assert_(self.p.issuePageWithNumber(1))
+        self.assert_(not self.p.issuePageWithNumber(2))
+        self.p.createIssue('#456 test')
+        self.assert_(not self.p.issuePageWithNumber(4))
+        self.assert_(not self.p.issuePageWithNumber(4567))
+        self.assert_(self.p.issuePageWithNumber(456))
+
     def test_short_issue_links(self):
         # test the full two-step linking procedure
         link = lambda t: self.p.renderMarkedLinksIn(self.p.markLinksIn(t))
         self.p.folder().short_issue_names = 1
+        self.assertEquals(link('#1')[-6:],  '#1</a>')
         self.p.createNextIssue('b')
         self.assertEquals(link('[#2]')[-6:],  '#2</a>')
         self.p.createIssue('#987 test')

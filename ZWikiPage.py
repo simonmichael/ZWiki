@@ -563,12 +563,9 @@ class ZWikiPage(
                 (not re.match(doublebracketedexpr,link) and
                  self.bracketLinksAllowed())):
                 # yes - convert to the id of an existing page if possible,
-                # using fuzzy matching, and continue. Allow partial fuzzy
-                # matching if it looks like an issue number.
-                p = self.pageWithFuzzyName(
-                    linknobrackets,
-                    allow_partial=self.issueNumberFrom(linknobrackets) != None,
-                    numeric_match=1)
+                # using fuzzy matching, and continue. 
+                p = self.pageWithFuzzyName(linknobrackets) or \
+                    self.issuePageWithNumber(self.issueNumberFrom(linknobrackets))
                 if p:
                     try: link = p.getId() # XXX poor caching
                     except: link = p.id # all-brains
@@ -579,13 +576,13 @@ class ZWikiPage(
 
         # is it a hash number (#123) ?
         if re.match(hashnumberexpr,link):
-            # yes - convert to the id of the issue (any page whose name
-            # begins with that number, really) and continue if possible;
-            p = self.pageWithFuzzyName(link,allow_partial=1,numeric_match=1)
+            # yes - convert to the id of the issue page with that number
+            # and continue, if possible; if not, don't bother adding a
+            # creation link
+            p = self.issuePageWithNumber(self.issueNumberFrom(link))
             if p:
                 try: link = p.getId() # XXX poor caching
                 except: link = p.id # all-brains
-            # if no such page exists, don't bother adding a creation link
             else:
                 return link
 
