@@ -806,7 +806,7 @@ class Parser:
             word = ''
             self.in_pre = 3
             return  self.formatter.preformatted(1)
-        elif s_word[:2] == '#!':
+        elif 0: #s_word[:2] == '#!':
             # first try to find a processor for this (will go away in 1.4)
             processor_name = s_word[2:].split()[0]
             self.processor = wikiutil.importPlugin("processor", 
