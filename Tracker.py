@@ -235,6 +235,7 @@ class TrackerSupport:
     #    if REQUEST:
     #        REQUEST.RESPONSE.redirect(self.page_url())
             
+    security.declareProtected(Permissions.Edit, 'changeIssueProperties')
     def changeIssueProperties(self, name=None, category=None, severity=None, 
                               status=None, log=None, REQUEST=None):
         """
@@ -245,11 +246,12 @@ class TrackerSupport:
         name is the issue name excluding the issue number. Changing this
         will trigger a page rename, which may be slow.
         
-        XXX security: allows title/category/severity/status properties to
-        be set without Manage properties permission.
+        Security: allows modification of some properties
+        (title/category/severity/status) with zwiki edit permission rather
+        than zope Manage properties permission.
 
-        XXX upgrade issue: calling this before upgrading an issue to
-        a 0.17-style page id will mess up the id/title.
+        Upgrade issue: calling this before upgrading an issue to a
+        0.17-style page id will mess up the id/title.
         """
         comment = ''
         if name:
