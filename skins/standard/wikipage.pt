@@ -160,9 +160,10 @@
 
 <div tal:condition="python:
      full and
-     (user.has_permission('Zwiki: Rename pages',here)
-     or user.has_permission('Zwiki: Reparent pages',here)
-     or user.has_permission('Zwiki: Delete pages',here))
+     (user.has_permission('Zwiki: Add pages',here) or
+      user.has_permission('Zwiki: Rename pages',here) or
+      user.has_permission('Zwiki: Reparent pages',here) or
+      user.has_permission('Zwiki: Delete pages',here))
      #and (user.has_role('Authenticated') or request.get('zwiki_username',''))
      ">
   <!-- page management panel -->
