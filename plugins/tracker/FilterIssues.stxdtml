@@ -37,7 +37,7 @@
 <td align="right">
 <dtml-let bold="cat_sequence_item in category and stat_sequence_item in status">
 <dtml-if bold><b></dtml-if>
-<a href="&dtml-page_url;/filterissues?category:list=&dtml.url_quote-cat_sequence_item;&status:list=&dtml.url_quote-stat_sequence_item;&sort_on=severity_index"
+<a href="&dtml-URL;?category:list=&dtml.url_quote-cat_sequence_item;&status:list=&dtml.url_quote-stat_sequence_item;&sort_on=severity_index"
 ><dtml-var "_.len(pages(isIssue=1,category=cat_sequence_item,status=stat_sequence_item))"
 ></a>
 <dtml-if bold></b></dtml-if>
@@ -47,7 +47,7 @@
 <td align="right">
 <dtml-let bold="category and (cat_sequence_item in category) and not status">
 <dtml-if bold><b></dtml-if>
-<a href="&dtml-page_url;/filterissues?category:list=&dtml.url_quote-cat_sequence_item;&sort_on=severity_index"
+<a href="&dtml-URL;?category:list=&dtml.url_quote-cat_sequence_item;&sort_on=severity_index"
 ><dtml-var "_.len(pages(isIssue=1,category=cat_sequence_item))"
 ></a>
 <dtml-if bold></b></dtml-if>
@@ -61,7 +61,7 @@
 <td align="right">
 <dtml-let bold="status and (stat_sequence_item in status) and not category">
 <dtml-if bold><b></dtml-if>
-<a href="&dtml-page_url;/filterissues?status:list=&dtml.url_quote-stat_sequence_item;&sort_on=severity_index"
+<a href="&dtml-URL;?status:list=&dtml.url_quote-stat_sequence_item;&sort_on=severity_index"
 ><dtml-var "_.len(pages(isIssue=1,status=stat_sequence_item))"
 ></a>
 <dtml-if bold></b></dtml-if>
@@ -75,7 +75,7 @@
           (_.len(status)==0 or 
            _.len(status)==_.len(issue_statuses))">
 <dtml-if bold><b></dtml-if>
-<a href="&dtml-page_url;/filterissues?titlesearch=&sort_on=severity_index"
+<a href="&dtml-URL;?titlesearch=&sort_on=severity_index"
 ><dtml-var "_.len(pages(isIssue=1))"
 ></a>
 <dtml-if bold></b></dtml-if>
@@ -91,7 +91,7 @@
 </td>
 <td>
 <!-- start of filter form -->
-<form action="&dtml-page_url;/filterissues" method="GET">
+<form action="&dtml-URL;" method="GET">
 <table border="0" cellspacing="0" cellpadding="3">
 <tr>
 <td align=left valign=top colspan=3>
