@@ -79,17 +79,15 @@
                      class="standalone"
                      type="submit" 
                      name="../unsubscribe:method" 
-                     value="Unsubscribe from pagename" 
+                     value="Unsubscribe from this page" 
 		     i18n:attributes="value"
-                     tal:attributes="value string: Unsubscribe from ${here/title_or_id} " 
                      />
               <input tal:condition="not:pagesubscriber" 
                      class="standalone"
                      type="submit" 
                      name="../subscribe:method" 
-                     value="Subscribe to pagename" 
+                     value="Subscribe to this page" 
 	             i18n:attributes="value"
-                     tal:attributes="value string: Subscribe to ${here/title_or_id} " 
                      />
             </td>
             <td valign="top" width="50%"
