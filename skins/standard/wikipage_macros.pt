@@ -397,7 +397,7 @@ tal:attributes="
 <small>
 <span i18n:translate="">subject</span>: <input type="text" name="subject_heading" value="" size="40" maxlength="100" style="font-weight:bold;" class="shade2" title="a subject helps clarify threads and RecentChanges" i18n:attributes="title" tal:attributes="value request/subject|nothing" />
 <span tal:condition="request/in_reply_to|nothing">
-<span i18n:translate="">in reply to</span>: <span tal:replace="request/in_reply_to"></span>
+  (<span i18n:translate="">replying</span>)
 </span>
 </small>
 </td>
