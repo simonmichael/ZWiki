@@ -201,8 +201,8 @@ class TrackerSupport:
             return l[0]['colour']
     
     security.declareProtected(Permissions.Add, 'createIssue')
-    def createIssue(self, pageid, text=None, title='',
-                    category=None, severity=None, status=None, REQUEST=None):
+    def createIssue(self, pageid, text='', title='',
+                    category='', severity='', status='', REQUEST=None):
         """
         Convenience method for creating an issue page.
 
@@ -233,8 +233,8 @@ class TrackerSupport:
         self.reindex_object()
 
     security.declareProtected(Permissions.Add, 'createNextIssue')
-    def createNextIssue(self, description, text=None,
-                        category=None, severity=None, status=None,
+    def createNextIssue(self, description, text='',
+                        category='', severity='', status='',
                         REQUEST=None):
         """
         Create a new issue page, using the next available issue number.
