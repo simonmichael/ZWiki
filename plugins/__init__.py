@@ -61,9 +61,10 @@ def registerPlugin(c):
     BLATHER('could not register plugin: %s, need more plugin slots!' % name)
 
 # import all modules in this directory so that each will register its plugin
-import os,glob
-os.chdir(__path__[0])
-modules = glob.glob('*.py')
-modules.remove('__init__.py')
+import os,glob,re
+modules = glob.glob(__path__[0] + os.sep + '*.py')
+modules.remove(__path__[0] + os.sep + '__init__.py')
 for file in modules:
-    __import__('Products.ZWiki.plugins.%s' % file[:-3])
+    m = re.search(r'%s([^%s]+?)\.py$'%(os.sep, os.sep), file)
+    file = m.group(1)
+    __import__('Products.ZWiki.plugins.%s' % file)

@@ -109,21 +109,25 @@ def registerPageTypeUpgrade(old,new):
     PAGE_TYPE_UPGRADES[old] = new
 
 # import all modules in this directory so that each will register its page type
-import os,glob
-os.chdir(__path__[0])
-modules = glob.glob('*.py')
-modules.remove('__init__.py')
+import os,glob,re
+modules = glob.glob(__path__[0] + os.sep + '*.py')
+modules.remove(__path__[0] + os.sep + '__init__.py')
 # force the usual ordering of standard page types in the editform
+# FIXME this is not robust against new page types, or the removal of a page
+# type.  Instead the ZWikiWeb install should add the folder property
+# 'allowed_page_types' which specifies an order.
 firstmods = ['stx.py','rst.py','wwml.py','html.py','plaintext.py']
 firstmods.reverse()
 for mod in firstmods:
     try:
-        modules.remove(mod)
-        modules.insert(0,mod)
+        modules.remove(__path__[0] + os.sep + mod)
+        modules.insert(0,__path__[0] + os.sep + mod)
     except ValueError:
         pass
 for file in modules:
-    __import__('Products.ZWiki.pagetypes.%s' % file[:-3])
+    m = re.search(r'%s([^%s]+?)\.py$'%(os.sep, os.sep), file)
+    file = m.group(1)
+    __import__('Products.ZWiki.pagetypes.%s' % file)
 
 # XXX backwards compatibility
 # keep the classes here for a bit to stop warnings
