@@ -88,6 +88,18 @@ class DiffSupport:
         except:
             return '' # we don't have a version that old
 
+    def revert(self, currentRevision, REQUEST=None):
+        """
+        Revert the most recent change
+        """
+        lastrevision = self.manage_change_history()[int(currentRevision)]
+        key = lastrevision['key']
+        serial=apply(pack, ('>HHHH',)+tuple(map(atoi, split(key,'.'))))
+        lastself=historicalRevision(self, serial)
+        self.setText(lastself.text())
+        if REQUEST is not None:
+            REQUEST.RESPONSE.redirect(self.wiki_page_url())
+
     def lastlog(self, versionsBack=0, withQuotes=0):
         """
         Get the log note from an earlier revision of this page.

@@ -126,7 +126,12 @@
  value="&lt;&lt; previous edit" i18n:attributes="value" accesskey="p" />
 <input tal:condition="python:revA > 1" type="submit" name="nextDiff:method" 
  value="next edit &gt;&gt;"  i18n:attributes="value" accesskey="n" />
-<input type="submit" name="" value="cancel" i18n:attributes="value" accesskey="v" />
+<input tal:condition="python:not(revA > 1)" disabled="1" type="submit" name="nextDiff:method" 
+ value="next edit &gt;&gt;"  i18n:attributes="value" accesskey="n" />
+<input tal:condition="python:user.has_permission('Zwiki: Edit pages', here)" 
+    type="submit" name="revert:method" value="Revert this change and all successive changes" 
+    i18n:attributes="value" accesskey="v" />
+<input type="submit" name="return" value="Return to page" />
 <input type="hidden" name="currentRevision" tal:attributes="value revA" />
 </form>
 </td>
