@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import unittest
 import os, sys
 if __name__ == '__main__': execfile(os.path.join(sys.path[0], 'framework.py'))
@@ -29,9 +31,15 @@ class Tests(ZopeTestCase.ZopeTestCase):
 
     def test_python_i18n(self):
         self.assertTranslation('Page is locked','Page is locked')
-        self.assertTranslation('Page is locked','La pagina � bloccata','it')
+        self.assertTranslation('Page is locked','La pagina è bloccata','it')
         self.assertTranslation('Page is locked',
                                'La page est v&eacute;rouill&eacute;e','fr')
+        self.assertTranslation('Page is locked',
+                               'A página está bloqueada','pt-br')
+        self.assertTranslation(
+            'Page is locked',
+            '頁面被鎖',
+            'zh-tw')
 
     #def test_PT_i18n(self):
 
