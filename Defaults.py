@@ -18,26 +18,6 @@ PAGE_PORTALTYPE =    'Wiki Page'  # content type used in CMF/Plone
 WIKI_ADD_MENU_NAME = 'ZWiki'      # items in ZMI add menu.. 
 PAGE_ADD_MENU_NAME = 'ZWiki Page' # (this one must match PAGE_METATYPE)
 
-# XXX clean this up somehow, as Bob suggests
-# the page types we'll offer in the default edit form,
-# unless overridden by an allowed_page_types property.
-# These must match the ids in pagetypes
-ALLOWED_PAGE_TYPES = [
-    'stx',
-    'rst',
-    'wwml',
-    'html',
-    'plaintext',
-    ]
-# ditto for wikis in CMF/Plone
-ALLOWED_PAGE_TYPES_IN_PLONE = [
-    'stx',
-    'rst',
-    #'wwml',
-    'html',
-    'plaintext',
-    ]
-
 # issue tracker defaults, will be installed as folder properties
 ISSUE_CATEGORIES = [
     'general',

@@ -12,7 +12,7 @@ from OFS.ObjectManager import customImporters
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from Products.PythonScripts.PythonScript import PythonScript
 from ZWikiPage import ZWikiPage
-from Defaults import ALLOWED_PAGE_TYPES
+from pagestypes import PAGETYPES
 from I18nSupport import DTMLFile
 
 
@@ -130,7 +130,7 @@ def _addDTMLMethod(self, id, title='', file=''):
     self._setObject(id, ob)
 
 def _addZWikiPage(self, id, title='',
-                  page_type=ALLOWED_PAGE_TYPES[0], file=''):
+                  page_type=PAGETYPES[0]._id, file=''):
     id=str(id)
     title=str(title)
 

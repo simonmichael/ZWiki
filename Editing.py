@@ -18,8 +18,8 @@ from OFS.DTMLDocument import DTMLDocument
 from OFS.ObjectManager import BadRequestException
 import OFS.Image
 
-from Defaults import DISABLE_JAVASCRIPT, LARGE_FILE_SIZE, \
-     ALLOWED_PAGE_TYPES, ALLOWED_PAGE_TYPES_IN_PLONE, LEAVE_PLACEHOLDER
+from pagetypes import PAGETYPES
+from Defaults import DISABLE_JAVASCRIPT, LARGE_FILE_SIZE, LEAVE_PLACEHOLDER
 import Permissions
 from Regexps import javascriptexpr, htmlheaderexpr, htmlfooterexpr
 from Utils import BLATHER, parseHeadersBody
@@ -941,12 +941,17 @@ class EditingSupport:
 
     def allowedPageTypes(self):
         """
-        This wiki's "allowed" page types, ie those offered in the edit form.
+        List the page type ids which may be selected in this wiki's edit form.
+
+        This will be all available page types, unless overridden by an
+        allowed_page_types property.
         """
-        if self.inCMF(): default = ALLOWED_PAGE_TYPES_IN_PLONE
-        else: default = ALLOWED_PAGE_TYPES
-        return filter(lambda x:strip(x),
-                      getattr(self,'allowed_page_types',[])) or default
+        all = map(lambda x:x._id, PAGETYPES)
+        # special case for limi, don't offer WWML in plone - just hard code
+        if self.inCMF(): all.remove('wwml')
+        return (filter(lambda x:strip(x),
+                       getattr(self,'allowed_page_types',[]))
+                or all)
 
     def defaultPageType(self):
         """This wiki's default page type."""

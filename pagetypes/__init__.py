@@ -108,6 +108,8 @@ from stx import ZwikiStxPageType
 from rst import ZwikiRstPageType
 from wwml import ZwikiWwmlPageType
 
+# the order these are registered in is the order they will appear
+# in the editform by default, and the first is the default type
 for t in [
     ZwikiStxPageType,
     ZwikiRstPageType,
