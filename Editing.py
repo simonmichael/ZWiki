@@ -24,7 +24,7 @@ import Permissions
 from Regexps import javascriptexpr, htmlheaderexpr, htmlfooterexpr
 from Utils import BLATHER, parseHeadersBody
 from UI import onlyBodyFrom
-from LocalizerSupport import LocalDTMLFile, _, N_
+from I18nSupport import LocalDTMLFile, _, N_
 DTMLFile = LocalDTMLFile
 del LocalDTMLFile
 

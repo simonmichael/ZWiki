@@ -12,7 +12,7 @@ from OFS.ObjectManager import customImporters
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from ZWikiPage import ZWikiPage
 from Defaults import ALLOWED_PAGE_TYPES
-from LocalizerSupport import LocalDTMLFile
+from I18nSupport import LocalDTMLFile
 DTMLFile = LocalDTMLFile
 del LocalDTMLFile
 

@@ -79,7 +79,7 @@ from Comments import CommentsSupport
 from PurpleNumbers import PurpleNumbersSupport
 from Admin import AdminSupport
 from Editing import EditingSupport
-from LocalizerSupport import LocalDTMLFile, _, N_
+from I18nSupport import LocalDTMLFile, _, N_
 DTMLFile = LocalDTMLFile
 del LocalDTMLFile
 

@@ -21,7 +21,7 @@ except ImportError:
 from WWML import translate_WMML
 from PurpleNumbers import add_purple_numbers_to
 from Regexps import dtmlorsgmlexpr, footnoteexpr
-from LocalizerSupport import _, N_
+from I18nSupport import _, N_
 
 
 # XXX temporary hack, used for placing subtopics in the page. Supposed to

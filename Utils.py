@@ -27,7 +27,7 @@ except:
 from Products.ZWiki import __version__
 from Defaults import PREFER_USERNAME_COOKIE, PAGE_METADATA, SCROLL_CONTENTS
 import Permissions
-from LocalizerSupport import _, N_
+from I18nSupport import _, N_
 
 
 class Utils:

@@ -9,7 +9,7 @@ import Permissions
 from Globals import package_home
 from OFS.CopySupport import CopyError
 from OFS.DTMLMethod import DTMLMethod
-from LocalizerSupport import LocalDTMLFile, _, N_
+from I18nSupport import LocalDTMLFile, _, N_
 from App.Common import absattr
 from DateTime import DateTime
 
