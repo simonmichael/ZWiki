@@ -12,7 +12,7 @@ from OFS.ObjectManager import customImporters
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from Products.PythonScripts.PythonScript import PythonScript
 from ZWikiPage import ZWikiPage
-from pagestypes import PAGETYPES
+from pagetypes import PAGETYPES
 from I18nSupport import DTMLFile
 
 
