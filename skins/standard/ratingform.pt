@@ -1,0 +1,25 @@
+<a name="ratingform"></a>
+<form method="POST" id="ratingform" class="dimtext"
+      tal:attributes="action string:${here/pageUrl}/vote"
+      tal:define="myvote python:here.myVote(request)">
+  page rating: <b><span tal:replace="here/rating" /></b> from <span tal:replace="here/voteCount" /> votes<br>
+  <input type="submit" name="score:int" 
+         tal:condition="python:0 #no good, leaves space between" 
+         tal:repeat="v python:['-1','0','+1','+2','+3']"
+         tal:attributes="
+         value v;
+         style python:(myvote == int(v)) and 'font-weight:bold' or '';
+         "/>
+  <input type="submit" name="score:int" value="-1"
+         tal:attributes="style python:(myvote == -1) and 'font-weight:bold' or ''"
+         /><input type="submit" name="score:int" value="0"
+         tal:attributes="style python:(myvote ==  0) and 'font-weight:bold' or ''"
+         /><input type="submit" name="score:int" value="+1"
+         tal:attributes="style python:(myvote == +1) and 'font-weight:bold' or ''"
+         /><input type="submit" name="score:int" value="+2"
+         tal:attributes="style python:(myvote == +2) and 'font-weight:bold' or ''"
+         /><input type="submit" name="score:int" value="+3"
+         tal:attributes="style python:(myvote == +3) and 'font-weight:bold' or ''"
+         /><br>
+  click to rate (voting as: <span tal:replace="python:here.usernameFrom(request)" />)
+  </form>
