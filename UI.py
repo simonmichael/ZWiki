@@ -19,7 +19,7 @@ from Products.PageTemplates.Expressions import SecureModuleImporter
 from Defaults import PAGE_METATYPE, DEFAULT_DISPLAYMODE
 from Utils import BLATHER,formattedTraceback
 from Regexps import htmlheaderexpr, htmlfooterexpr, htmlbodyexpr
-from I18nSupport import _, N_
+from I18nSupport import _
 
 
 # utilities

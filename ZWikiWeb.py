@@ -12,9 +12,7 @@ from OFS.ObjectManager import customImporters
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from ZWikiPage import ZWikiPage
 from Defaults import ALLOWED_PAGE_TYPES
-from I18nSupport import LocalDTMLFile
-DTMLFile = LocalDTMLFile
-del LocalDTMLFile
+from I18nSupport import DTMLFile
 
 
 # ZMI wiki creation form

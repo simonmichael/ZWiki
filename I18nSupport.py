@@ -31,122 +31,80 @@ USE_PTS=1
 try:
     if USE_PTS:
         from Products.PlacelessTranslationService.MessageID import MessageIDFactory
-        # XXX temp
+        # XXX temp workaround
         from Products.PlacelessTranslationService.PatchStringIO import get_request
         class MessageIDFactoryWithUtf8Fix(MessageIDFactory):
             """
             A hacky wrapper to ensure utf-8 encoding whenever _ is used.
             """
             def __call__(self, ustr, default=None):
-                get_request().RESPONSE.setHeader('Content-Type','text/html; charset=utf-8') 
+                try:
+                    get_request().RESPONSE.setHeader(
+                        'Content-Type','text/html; charset=utf-8')
+                except AttributeError:
+                    pass # for unit testing
                 return MessageIDFactory.__call__(self,ustr,default)
-        _ = MessageIDFactoryWithUtf8Fix('zwiki') 
-        N_ = _
-        BLATHER('using PlacelessTranslationService for i18n')
-        # copied from below
-        # For DTML and Page Templates
-        def gettext(self, message, language=None):
-            """ """
-            return message
-        # Document Template Markup Langyage (DTML)
-        from Globals import DTMLFile
-        class LocalDTMLFile(DTMLFile):
-            def _exec(self, bound_data, args, kw):
-                # Add our gettext first
-                bound_data['gettext'] = self.gettext
-                return apply(LocalDTMLFile.inheritedAttribute('_exec'),
-                             (self, bound_data, args, kw))
-            gettext = gettext
-        # for Page Templates
-        try:
-            from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-        except ImportError:
-            # If ZPT is not installed
-            class LocalPageTemplateFile:
-                pass
-        else:
-            class LocalPageTemplateFile(PageTemplateFile):
-                def _exec(self, bound_data, args, kw):
-                    # Add our gettext first
-                    bound_data['gettext'] = self.gettext
 
-                    return apply(LocalPageTemplateFile.inheritedAttribute('_exec'),
-                                 (self, bound_data, args, kw))
-                gettext = gettext
+        # python code
+        # does not support language arg
+        _ = gettext = MessageIDFactoryWithUtf8Fix('zwiki') 
+
+        # page templates
+        from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+
+        # DTML
+        from Globals import DTMLFile as DTMLFileBase
+        class DTMLFile(DTMLFileBase):
+            def gettext(self, message, language=None): return _(message)
+            def _exec(self, bound_data, args, kw):
+                import pdb; pdb.set_trace()
+                bound_data['gettext'] = self.gettext
+                return apply(DTMLFileBase.inheritedAttribute('_exec'),
+                             (self, bound_data, args, kw))
         
+        BLATHER('using PlacelessTranslationService for i18n')
+
     elif USE_LOCALIZER:
         from Products.Localizer import Gettext
         _ = Gettext.translation(globals())
-        N_ = Gettext.dummy
-        from Products.Localizer import LocalDTMLFile, LocalPageTemplateFile
-        BLATHER('using Localizer for i18n')
+        from Products.Localizer import LocalPageTemplateFile as PageTemplateFile
+        from Products.Localizer import LocalDTMLFile as DTMLFile
+
+        BLATHER('using Localizer for i18n - not implemented')
 
 except (ImportError, NameError):
-    BLATHER('using no i18n')
-    # for Python code
-    def _(s, language=None):
-        return s
-    N_ = _
+    # python code
+    def _(s, language=None): return s
 
-    # For DTML and Page Templates
-    def gettext(self, message, language=None):
-        """ """
-        return message
+    # page templates
+    from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 
-    # Document Template Markup Langyage (DTML)
-    from Globals import DTMLFile
-
-    class LocalDTMLFile(DTMLFile):
+    # DTML
+    from Globals import DTMLFile as DTMLFileBase
+    class DTMLFile(DTMLFileBase):
+        # does not support language arg
+        def gettext(self, message, language=None): return _(message)
         def _exec(self, bound_data, args, kw):
-            # Add our gettext first
             bound_data['gettext'] = self.gettext
-            return apply(LocalDTMLFile.inheritedAttribute('_exec'),
+            return apply(DTMLFileBase.inheritedAttribute('_exec'),
                          (self, bound_data, args, kw))
 
-        gettext = gettext
+    BLATHER('using no i18n')
 
-    # for Page Templates
-    try:
-        from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-    except ImportError:
-        # If ZPT is not installed
-        class LocalPageTemplateFile:
-            pass
-    else:
-        class LocalPageTemplateFile(PageTemplateFile):
-            def _exec(self, bound_data, args, kw):
-                # Add our gettext first
-                bound_data['gettext'] = self.gettext
-
-                return apply(LocalPageTemplateFile.inheritedAttribute('_exec'),
-                             (self, bound_data, args, kw))
-
-            gettext = gettext
-
-    # for DTML
+# register the dtml-gettext tag.. ?
+from DocumentTemplate.DT_String import String
+if not String.commands.has_key('gettext'): 
     from DocumentTemplate.DT_Util import InstanceDict, namespace, render_blocks
-
     class GettextTag:
-        """ """
-
         name = 'gettext'
         blockContinuations = ()
-
         def __init__(self, blocks):
             tname, args, section = blocks[0]
             self.section = section.blocks
-
-
         def __call__(self, md):
             ns = namespace(md)[0]
             md._push(InstanceDict(ns, md))
             message = render_blocks(self.section, md)
             md._pop(1)
-
             return message
-
-
-    # Register the dtml-gettext tag
-    from DocumentTemplate.DT_String import String
-    if not String.commands.has_key('gettext'):
-        String.commands['gettext'] = GettextTag
+    String.commands['gettext'] = GettextTag    

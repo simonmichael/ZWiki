@@ -79,9 +79,7 @@ from Comments import CommentsSupport
 from PurpleNumbers import PurpleNumbersSupport
 from Admin import AdminSupport
 from Editing import EditingSupport
-from I18nSupport import LocalDTMLFile, _, N_
-DTMLFile = LocalDTMLFile
-del LocalDTMLFile
+from I18nSupport import DTMLFile, _
 
 # these seem to need to be in this module or zope complains couldn't load state
 #from PageTypes import MIDSECTIONMARKER,PAGETYPES,PAGE_TYPES
