@@ -1,92 +1,22 @@
-Zwiki 0.31.0rc4 2004/05/29
-
-        * always update backlinks by default when renaming (page
-	management form was not)
-
-        * show current page in contents by default again
-        This is much more convenient for a human user. The drawback is
-	more hits to contents (one for each page) from robots which treat
-	#ref as a separate url.
-
-        * defaultPage (and navigation links) were ignoring the
-	default_page folder property
-
-        * issue tracker: show recent issues by default again
-
-        * standard wikipage.pt: add a left/right layout table around ratingform
-
-        * issuepropertiesform: replace stx markup with html
-
-        * FrenchGrammarAndVocabularyFix2 (foenyx@online.fr)
-
-        * add dtml messages to pot & po files
-
-        * plone editform: don't attempt to translate page names, showing
-	duplicates instead (IssueNo0823)
-
-Zwiki 0.31rc3 2004/05/28
-
-        * update pot and po files
-
-        * minor additional i18n, pluralize number of subscribers correctly
-	(foenyx@online.fr)
-
-        * FrenchGrammarAndVocabularyFix1 (foenyx@online.fr)
-
-        * fix a UI regression (simpler replying indicator)
-
-        * fix some permissions preventing anonymous recent changes access
-
-        * fix stx asterisks in add issue form (IssueNo0826)
-
-        * drop the page name from the subscribe to page button to simplify i18n
-
-        * Important fixes to italian subscription messages (Lele Gaifax)
-
-        * don't show a .svn subdirectory in add wiki form (Lele Gaifax)
-
-        * undo page management form layout tweaks (IssueNo0827)
-
-        * fr.po: fix number of subscribers translation
-
-        * chinese translations update (T.C. Chou)
-
-        * Italian messages update (Lele Gaifax)
-
-        * fix rating button spacing
-
-	* remove CMF dependency (IssueNo0824)
-
-Zwiki 0.31rc2 2004/05/26
-
-	* updated zh-TW.po and new zh-CN.po (T.C. Chou)
-
-	* updated, utf-8 fr.po (Foenyx)
-
-	* more standard skin i18n (Foenyx)
-
-	* python i18n (Foenyx)
-
-	* prevent dtml-translate tag errors when PTS is not installed
-
-        * work around i18n unit test issues
-	
-Zwiki 0.31rc1 2004/05/25
-
     Summary
 
-        I18n progress including a number of new translations; tracker
-	usability improvements; tests, code cleanups, bugfixes.
+        Much i18n progress including a number of new translations; tracker
+	cleanups and usability improvements; permissions fixes; tests,
+	code cleanups, bugfixes.
 
     Upgrade notes
 
-        Same as 0.30.. 
-
-	changeIssueProperties() "title" argument is now "name".
+        Similar to 0.30. changeIssueProperties() "title" argument is now
+	"name".
 
     Changes
 
       General
+
+        * always update links by default when renaming (page
+	management form was not)
+
+        * don't show a .svn subdirectory in add wiki form (Lele Gaifax)
 
         * make image and file links sensitive to page type (IssueNo0737, peterq)
 
@@ -100,15 +30,19 @@ Zwiki 0.31rc1 2004/05/25
 
 	* cmf/plone: forcing a sole page's name field to FrontPage was unhelpful, remove
 
-	* link banning: edits containing urls in the banned_links property will fail
+	* link banning: edits containing urls in the banned_links property
+	will fail (for spam prevention)
 
 	* make summary() smarter, include only the first paragraph by default
 
-	* create() can now also set parent(s)
+	* create() can now also set parents
 
       I18n
 
-        * standard and plone skin i18n (foenyx, simon)
+        * plone editform: don't show duplicate pages types due to i18n
+	problem (IssueNo0823)
+
+	* standard and plone skin i18n (foenyx, simon)
 
 	* french translation updates (foenyx)
 
@@ -116,20 +50,28 @@ Zwiki 0.31rc1 2004/05/25
 
 	* portuguese-brazilian translation (Jean Rodrigo Ferri)
 
-	* traditional chinese translation (T.C. Chou)
+	* traditional and simplified chinese translations (T.C. Chou)
 
 	* always send the HTTP header to help character encoding negotiation
 
 	* renamed LocalizerSupport to I18nSupport; we now try to use
 	  PlaclessTranslationService first
 
-        * PTS-based DTML i18n support
-
-	* PTS-based python code i18n support
+	* PTS-based i18n support for python code and DTML
 
 	* fully automate pot extraction
 
       Skins and content
+
+        * show current page in contents by default again
+        This is much more convenient for a human user. The drawback is
+	more hits to contents (one for each page) from robots which treat
+	#ref as a separate url.
+
+        * defaultPage() and the wiki navigation links were ignoring a
+	default_page folder property
+
+        * standard wikipage.pt: add a left/right layout table around ratingform
 
 	* make plone action urls point to customized pages if present (IssueNo0786)
 
