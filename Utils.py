@@ -76,29 +76,28 @@ class Utils:
         return html_quote(t)
 
     security.declareProtected(Permissions.View, 'excerptAt')
-    def excerptAt(self, expr, size=100, highlight=1):
+    def excerptAt(self, expr, size=100, highlight=1, text=None):
         """
-        Return an excerpt of this page at the first occurence of expr.
+        Return a highlighted search result excerpt from this page (or text).
 
-        Useful when presenting search results.  Does a straight
-        case-insensitive string search, after first removing any *
-        wildcard character (this may not agree exactly with the catalog
-        index's search). SGML tags are quoted.
+        This method searches this page's text, or the provided text, for
+        the first occurrence of expr (cleaned up) and returns the
+        surrounding text chunk, html quoted, and optionally with the
+        matches enclosed in styled spans. If no match is found, it just
+        returns a chunk from the beginning.
 
-        If no match is found or expr is blank, returns an empty string.
-
-        When highlight is true, each match within the excerpt is enclosed
-        in a span with class "hit". This is not 100% reliable because of
-        html quoting and because we don't handle wildcards.
-        
+        It should mimic the search strategy of SearchPage, but that
+        depends on catalog configuration and it currently doesn't do a
+        very good job, so the excerpts and highlights can be misleading.
         """
+        text = text or self.text()
         string = re.sub(r'\*','',expr)
-        m = re.search(r'(?i)'+re.escape(string),self.text())
+        m = re.search(r'(?i)'+re.escape(string),text)
         if m and string:
             middle = (m.start()+m.end())/2
             exstart = max(middle-size/2-1,0)
-            exend = min(middle+size/2+1,len(self.text()))
-            excerpt = html_quote(self.text()[exstart:exend])
+            exend = min(middle+size/2+1,len(text))
+            excerpt = html_quote(text[exstart:exend])
             if highlight:
                 excerpt = re.sub(
                     r'(?i)'+re.escape(html_quote(string)),
@@ -108,7 +107,7 @@ class Utils:
                     excerpt)
             return excerpt
         else:
-            return ''
+            return html_quote(text[:size])
 
     def metadataFor(self,page):
         """
