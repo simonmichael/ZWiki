@@ -461,7 +461,9 @@ class TrackerSupport:
             dir = package_home(globals())+os.sep+'tracker'+os.sep
             for page in ['IssueTracker','FilterIssues']:
                 if not self.pageWithName(page):
-                    self.create(page,text=open(dir+page+'.stxdtml','r').read())
+                    self.create(page,
+                                text=open(dir+page+'.stxdtml','r').read(),
+                                sendmail=0)
             # also, disable subtopics display under IssueTracker
             self.IssueTracker.setSubtopicsPropertyStatus(0)
         # index each page, to make all indexes and metadata current
