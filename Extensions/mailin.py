@@ -163,7 +163,7 @@ class MailIn:
         self.msg = email.message_from_string(message)
         self.date = self.msg['Date']
         self.subject = re.sub(r'\n',r'',self.msg.get('Subject',''))
-        self.realSubject = re.sub(r'.*?\[.*?\](.*)',r'\1',self.subject)
+        self.realSubject = re.sub(r'.*?\[.*?\] ?(.*)',r'\1',self.subject)
         self.messageid = self.msg.get('Message-id','')
         self.inreplyto = self.msg.get('In-reply-to','')
         self.From = self.msg.get('From')
