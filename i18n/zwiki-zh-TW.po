@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-31-0rc3\n"
-"POT-Creation-Date: Sat Jun 12 11:38:11 2004\n"
+"POT-Creation-Date: Sat Jun 12 14:15:35 2004\n"
 "PO-Revision-Date: 2004-05-31 07:18+0800\n"
 "Last-Translator: T.C. Chou <tcchou-at-tcchou.org>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
@@ -954,8 +954,8 @@ msgid "home"
 msgstr "首頁"
 
 #: i/skins/standard/wikipage_macros.pt:113
-#: i/skins/standard/wikipage_macros.pt:294
-#: i/skins/standard/wikipage_macros.pt:333
+#: i/skins/standard/wikipage_macros.pt:290
+#: i/skins/standard/wikipage_macros.pt:329
 msgid "show wiki contents"
 msgstr "顯示Wiki內容"
 
@@ -1064,92 +1064,87 @@ msgstr "顯示這一頁的變更歷史"
 msgid "diff"
 msgstr "比較"
 
-# Default: "edit this page"
-#: i/skins/standard/wikipage_macros.pt:242
-msgid "edit-page"
-msgstr "修改這一頁面"
-
-#: i/skins/standard/wikipage_macros.pt:244
+#: i/skins/standard/wikipage_macros.pt:240
 msgid "edit"
 msgstr "修改"
 
-#: i/skins/standard/wikipage_macros.pt:245
+#: i/skins/standard/wikipage_macros.pt:241
 msgid "edit using external editor"
 msgstr "使用外部編輯器修改"
 
-#: i/skins/standard/wikipage_macros.pt:257
+#: i/skins/standard/wikipage_macros.pt:253
 msgid "(external edit)"
 msgstr "(外部編輯器修改)"
 
-#: i/skins/standard/wikipage_macros.pt:265 i/skins/standard/editform.pt:35
+#: i/skins/standard/wikipage_macros.pt:261 i/skins/standard/editform.pt:35
 msgid "go to home page"
 msgstr "跳到首頁"
 
-#: i/skins/standard/wikipage_macros.pt:400
+#: i/skins/standard/wikipage_macros.pt:396
 msgid "replying"
 msgstr "回覆"
 
-#: i/skins/standard/wikipage_macros.pt:409
+#: i/skins/standard/wikipage_macros.pt:405
 msgid "to comment (and cc any subscribers) enter text here and click add"
 msgstr ""
 "想要建議 (並且 cc 給所有訂閱者) 請在這裡輸入文字然後點選 新增(add) 按鈕"
 
-#: i/skins/standard/wikipage_macros.pt:433
+#: i/skins/standard/wikipage_macros.pt:429
 msgid "${nb} subscribers"
 msgstr "${nb} 訂閱者"
 
-#: i/skins/standard/wikipage_macros.pt:435
+#: i/skins/standard/wikipage_macros.pt:431
 msgid "1 subscriber"
 msgstr "1 位訂閱者"
 
-#: i/skins/standard/wikipage_macros.pt:438
+#: i/skins/standard/wikipage_macros.pt:434
 msgid "no subscribers"
 msgstr "沒有人訂閱"
 
 # Default: "new parent, name or replacement"
-#: i/skins/standard/wikipage_macros.pt:465
+#: i/skins/standard/wikipage_macros.pt:461
 msgid "parent_name_replace"
 msgstr "新父層, 頁面或替代名稱"
 
-#: i/skins/standard/wikipage_macros.pt:467
+#: i/skins/standard/wikipage_macros.pt:463
 #, fuzzy
 msgid ""
 "enter a new parent, new name, replacement page (if any) or subtopic name"
 msgstr "新父層, 頁面或替代名稱"
 
-#: i/skins/standard/wikipage_macros.pt:473
+#: i/skins/standard/wikipage_macros.pt:469
 msgid "reparent"
 msgstr "變更父層"
 
-#: i/skins/standard/wikipage_macros.pt:473
+#: i/skins/standard/wikipage_macros.pt:469
 msgid "reparent this page under the page you have entered"
 msgstr "變更這一個頁面的父頁, 讓它在已有頁面之下"
 
-#: i/skins/standard/wikipage_macros.pt:478
+#: i/skins/standard/wikipage_macros.pt:474
 msgid "rename this page to the name you have entered, updating all links"
 msgstr "變更這一頁面名稱為您已輸入的, 更新所有連結"
 
 # Default: "Page name"
-#: i/skins/standard/wikipage_macros.pt:478
+#: i/skins/standard/wikipage_macros.pt:474
 msgid "rename"
 msgstr "變更名稱"
 
-#: i/skins/standard/wikipage_macros.pt:483
+#: i/skins/standard/wikipage_macros.pt:479
 msgid "delete!"
 msgstr "刪除!"
 
-#: i/skins/standard/wikipage_macros.pt:483
+#: i/skins/standard/wikipage_macros.pt:479
 #, fuzzy
 msgid ""
 "move this page to the recycle bin, and relink to the name you have entered"
 msgstr "把這一頁面搬移到垃圾桶, 並且重新連結到您已輸入的名稱."
 
-#: i/skins/standard/wikipage_macros.pt:488
+#: i/skins/standard/wikipage_macros.pt:484
 #, fuzzy
 msgid "create"
 msgstr "建立"
 
-#: i/skins/standard/wikipage_macros.pt:488
+#: i/skins/standard/wikipage_macros.pt:484
 #, fuzzy
 msgid "create a new subtopic of this page"
 msgstr "永不顯示子主題在這頁嗎?"
@@ -1479,12 +1474,12 @@ msgid "box_wiki_navigation"
 msgstr "快紀瀏覽"
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:16
-#: i/skins/standard/wikipage_macros.pt:398
+#: i/skins/standard/wikipage_macros.pt:394
 msgid "a subject helps clarify threads and RecentChanges"
 msgstr "個標題可以協助釐清相關討論串以及瞭解最近變更"
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:16
-#: i/skins/standard/wikipage_macros.pt:398
+#: i/skins/standard/wikipage_macros.pt:394
 msgid "subject"
 msgstr "標題"
 
@@ -1494,9 +1489,13 @@ msgstr "在這裡輸入建議並且點選 新增(add) 按鈕, 或點選 修改(e
 
 # Default: "Add a comment"
 #: i/skins/zwiki_plone/wikipage_footer.pt:41
-#: i/skins/standard/wikipage_macros.pt:444
+#: i/skins/standard/wikipage_macros.pt:440
 msgid "add-comment"
 msgstr "新增一個建議"
+
+# Default: "edit this page"
+#~ msgid "edit-page"
+#~ msgstr "修改這一頁面"
 
 #, fuzzy
 #~ msgid "Description:"

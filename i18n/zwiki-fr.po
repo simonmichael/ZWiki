@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-31-0dev\n"
-"POT-Creation-Date: Sat Jun 12 11:38:11 2004\n"
+"POT-Creation-Date: Sat Jun 12 14:15:35 2004\n"
 "PO-Revision-Date: 2004-06-05 14:00+0200\n"
 "Last-Translator: Nicolas Laurent <foenyx(at)online(dot)fr>,Raphael Badin "
 "<raphael(dot)badin(at)sopinspace(dot)com>\n"
@@ -969,8 +969,8 @@ msgid "home"
 msgstr "accueil"
 
 #: i/skins/standard/wikipage_macros.pt:113
-#: i/skins/standard/wikipage_macros.pt:294
-#: i/skins/standard/wikipage_macros.pt:333
+#: i/skins/standard/wikipage_macros.pt:290
+#: i/skins/standard/wikipage_macros.pt:329
 msgid "show wiki contents"
 msgstr "afficher le contenu du wiki"
 
@@ -1079,55 +1079,50 @@ msgstr "afficher l'historique des changements de cette page"
 msgid "diff"
 msgstr "différences"
 
-# Default: "edit this page"
-#: i/skins/standard/wikipage_macros.pt:242
-msgid "edit-page"
-msgstr "éditer cette page"
-
-#: i/skins/standard/wikipage_macros.pt:244
+#: i/skins/standard/wikipage_macros.pt:240
 msgid "edit"
 msgstr "éditer"
 
-#: i/skins/standard/wikipage_macros.pt:245
+#: i/skins/standard/wikipage_macros.pt:241
 msgid "edit using external editor"
 msgstr "modifier avec un éditeur externe"
 
-#: i/skins/standard/wikipage_macros.pt:257
+#: i/skins/standard/wikipage_macros.pt:253
 msgid "(external edit)"
 msgstr "(éditeur externe)"
 
-#: i/skins/standard/wikipage_macros.pt:265 i/skins/standard/editform.pt:35
+#: i/skins/standard/wikipage_macros.pt:261 i/skins/standard/editform.pt:35
 msgid "go to home page"
 msgstr "Aller sur la page d'accueil"
 
-#: i/skins/standard/wikipage_macros.pt:400
+#: i/skins/standard/wikipage_macros.pt:396
 msgid "replying"
 msgstr "répondre"
 
-#: i/skins/standard/wikipage_macros.pt:409
+#: i/skins/standard/wikipage_macros.pt:405
 msgid "to comment (and cc any subscribers) enter text here and click add"
 msgstr ""
 "Pour ajouter un commentaire (et le faire parvenir aux abonnés par courriel) "
 "entrez votre texte ici et cliquez sur ajouter"
 
-#: i/skins/standard/wikipage_macros.pt:433
+#: i/skins/standard/wikipage_macros.pt:429
 msgid "${nb} subscribers"
 msgstr "${nb} abonnés"
 
-#: i/skins/standard/wikipage_macros.pt:435
+#: i/skins/standard/wikipage_macros.pt:431
 msgid "1 subscriber"
 msgstr "1 abonné"
 
-#: i/skins/standard/wikipage_macros.pt:438
+#: i/skins/standard/wikipage_macros.pt:434
 msgid "no subscribers"
 msgstr "aucun abonné"
 
 # Default: "new parent, name or replacement"
-#: i/skins/standard/wikipage_macros.pt:465
+#: i/skins/standard/wikipage_macros.pt:461
 msgid "parent_name_replace"
 msgstr "Nouvelle hiérarchie, nouveau nom, ou remplacement"
 
-#: i/skins/standard/wikipage_macros.pt:467
+#: i/skins/standard/wikipage_macros.pt:463
 #, fuzzy
 msgid ""
 "enter a new parent, new name, replacement page (if any) or subtopic name"
@@ -1135,31 +1130,31 @@ msgstr ""
 "entrer une nouvelle page parente, un nouveau nom, ou une page de "
 "remplacement (au besoin) pour celle-ci"
 
-#: i/skins/standard/wikipage_macros.pt:473
+#: i/skins/standard/wikipage_macros.pt:469
 msgid "reparent"
 msgstr "ré-hiérarchiser"
 
-#: i/skins/standard/wikipage_macros.pt:473
+#: i/skins/standard/wikipage_macros.pt:469
 msgid "reparent this page under the page you have entered"
 msgstr ""
 "Placer la page courante sous la hiérarchie de la page dont vous avez entré "
 "le nom"
 
-#: i/skins/standard/wikipage_macros.pt:478
+#: i/skins/standard/wikipage_macros.pt:474
 msgid "rename this page to the name you have entered, updating all links"
 msgstr ""
 "Renommer cette page avec le nom que vous avez entré, et mettre à jour tous "
 "les liens"
 
-#: i/skins/standard/wikipage_macros.pt:478
+#: i/skins/standard/wikipage_macros.pt:474
 msgid "rename"
 msgstr "renommer"
 
-#: i/skins/standard/wikipage_macros.pt:483
+#: i/skins/standard/wikipage_macros.pt:479
 msgid "delete!"
 msgstr "supprimer"
 
-#: i/skins/standard/wikipage_macros.pt:483
+#: i/skins/standard/wikipage_macros.pt:479
 #, fuzzy
 msgid ""
 "move this page to the recycle bin, and relink to the name you have entered"
@@ -1167,12 +1162,12 @@ msgstr ""
 "Déplacer cette page vers la corbeille, et rediriger les anciens liens, "
 "pointant sur la page à supprimer, vers le nom que vous avez entré."
 
-#: i/skins/standard/wikipage_macros.pt:488
+#: i/skins/standard/wikipage_macros.pt:484
 #, fuzzy
 msgid "create"
 msgstr "Créer"
 
-#: i/skins/standard/wikipage_macros.pt:488
+#: i/skins/standard/wikipage_macros.pt:484
 #, fuzzy
 msgid "create a new subtopic of this page"
 msgstr "ne jamais afficher les sous-rubriques sur cette page"
@@ -1510,14 +1505,14 @@ msgid "box_wiki_navigation"
 msgstr "Navigation Wiki"
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:16
-#: i/skins/standard/wikipage_macros.pt:398
+#: i/skins/standard/wikipage_macros.pt:394
 msgid "a subject helps clarify threads and RecentChanges"
 msgstr ""
 "Un sujet aide à clarifier le fil des opérations et la page des changements "
 "récents"
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:16
-#: i/skins/standard/wikipage_macros.pt:398
+#: i/skins/standard/wikipage_macros.pt:394
 msgid "subject"
 msgstr "Sujet"
 
@@ -1527,9 +1522,13 @@ msgstr ""
 "Entrez vos commentaires ici et cliquez sur ajouter; ou cliquez sur éditer"
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:41
-#: i/skins/standard/wikipage_macros.pt:444
+#: i/skins/standard/wikipage_macros.pt:440
 msgid "add-comment"
 msgstr "Ajouter un commentaire"
+
+# Default: "edit this page"
+#~ msgid "edit-page"
+#~ msgstr "éditer cette page"
 
 #, fuzzy
 #~ msgid "Description:"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-31-0rc3\n"
-"POT-Creation-Date: Sat Jun 12 11:38:11 2004\n"
+"POT-Creation-Date: Sat Jun 12 14:15:35 2004\n"
 "PO-Revision-Date: 2004-05-31 07:18+0800\n"
 "Last-Translator: T.C. Chou <tcchou-at-tcchou.org>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
@@ -954,8 +954,8 @@ msgid "home"
 msgstr "首页"
 
 #: i/skins/standard/wikipage_macros.pt:113
-#: i/skins/standard/wikipage_macros.pt:294
-#: i/skins/standard/wikipage_macros.pt:333
+#: i/skins/standard/wikipage_macros.pt:290
+#: i/skins/standard/wikipage_macros.pt:329
 msgid "show wiki contents"
 msgstr "显示Wiki内容"
 
@@ -1064,92 +1064,87 @@ msgstr "显示这一页的变更历史"
 msgid "diff"
 msgstr "比较"
 
-# Default: "edit this page"
-#: i/skins/standard/wikipage_macros.pt:242
-msgid "edit-page"
-msgstr "修改这一页面"
-
-#: i/skins/standard/wikipage_macros.pt:244
+#: i/skins/standard/wikipage_macros.pt:240
 msgid "edit"
 msgstr "修改"
 
-#: i/skins/standard/wikipage_macros.pt:245
+#: i/skins/standard/wikipage_macros.pt:241
 msgid "edit using external editor"
 msgstr "使用外部编辑器修改"
 
-#: i/skins/standard/wikipage_macros.pt:257
+#: i/skins/standard/wikipage_macros.pt:253
 msgid "(external edit)"
 msgstr "(外部编辑器修改)"
 
-#: i/skins/standard/wikipage_macros.pt:265 i/skins/standard/editform.pt:35
+#: i/skins/standard/wikipage_macros.pt:261 i/skins/standard/editform.pt:35
 msgid "go to home page"
 msgstr "跳到首页"
 
-#: i/skins/standard/wikipage_macros.pt:400
+#: i/skins/standard/wikipage_macros.pt:396
 msgid "replying"
 msgstr "回复"
 
-#: i/skins/standard/wikipage_macros.pt:409
+#: i/skins/standard/wikipage_macros.pt:405
 msgid "to comment (and cc any subscribers) enter text here and click add"
 msgstr ""
 "想要建议 (并且 cc 给所有订阅者) 请在这里输入文字然后点选 新增(add) 按钮"
 
-#: i/skins/standard/wikipage_macros.pt:433
+#: i/skins/standard/wikipage_macros.pt:429
 msgid "${nb} subscribers"
 msgstr "${nb} 订阅者"
 
-#: i/skins/standard/wikipage_macros.pt:435
+#: i/skins/standard/wikipage_macros.pt:431
 msgid "1 subscriber"
 msgstr "1 位订阅者"
 
-#: i/skins/standard/wikipage_macros.pt:438
+#: i/skins/standard/wikipage_macros.pt:434
 msgid "no subscribers"
 msgstr "没有人订阅"
 
 # Default: "new parent, name or replacement"
-#: i/skins/standard/wikipage_macros.pt:465
+#: i/skins/standard/wikipage_macros.pt:461
 msgid "parent_name_replace"
 msgstr "新父层, 页面或替代名称"
 
-#: i/skins/standard/wikipage_macros.pt:467
+#: i/skins/standard/wikipage_macros.pt:463
 #, fuzzy
 msgid ""
 "enter a new parent, new name, replacement page (if any) or subtopic name"
 msgstr "新父层, 页面或替代名称"
 
-#: i/skins/standard/wikipage_macros.pt:473
+#: i/skins/standard/wikipage_macros.pt:469
 msgid "reparent"
 msgstr "变更父层"
 
-#: i/skins/standard/wikipage_macros.pt:473
+#: i/skins/standard/wikipage_macros.pt:469
 msgid "reparent this page under the page you have entered"
 msgstr "变更这一个页面的父页, 让它在已有页面之下"
 
-#: i/skins/standard/wikipage_macros.pt:478
+#: i/skins/standard/wikipage_macros.pt:474
 msgid "rename this page to the name you have entered, updating all links"
 msgstr "变更这一页面名称为您已输入的, 更新所有连结"
 
 # Default: "Page name"
-#: i/skins/standard/wikipage_macros.pt:478
+#: i/skins/standard/wikipage_macros.pt:474
 msgid "rename"
 msgstr "变更名称"
 
-#: i/skins/standard/wikipage_macros.pt:483
+#: i/skins/standard/wikipage_macros.pt:479
 msgid "delete!"
 msgstr "删除!"
 
-#: i/skins/standard/wikipage_macros.pt:483
+#: i/skins/standard/wikipage_macros.pt:479
 #, fuzzy
 msgid ""
 "move this page to the recycle bin, and relink to the name you have entered"
 msgstr "把这一页面搬移到垃圾桶, 并且重新连结到您已输入的名称."
 
-#: i/skins/standard/wikipage_macros.pt:488
+#: i/skins/standard/wikipage_macros.pt:484
 #, fuzzy
 msgid "create"
 msgstr "建立"
 
-#: i/skins/standard/wikipage_macros.pt:488
+#: i/skins/standard/wikipage_macros.pt:484
 #, fuzzy
 msgid "create a new subtopic of this page"
 msgstr "永不显示子主题在这页吗?"
@@ -1479,12 +1474,12 @@ msgid "box_wiki_navigation"
 msgstr "快纪浏览"
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:16
-#: i/skins/standard/wikipage_macros.pt:398
+#: i/skins/standard/wikipage_macros.pt:394
 msgid "a subject helps clarify threads and RecentChanges"
 msgstr "个标题可以协助厘清相关讨论串以及了解最近变更"
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:16
-#: i/skins/standard/wikipage_macros.pt:398
+#: i/skins/standard/wikipage_macros.pt:394
 msgid "subject"
 msgstr "标题"
 
@@ -1494,9 +1489,13 @@ msgstr "在这里输入建议并且点选 新增(add) 按钮, 或点选 修改(e
 
 # Default: "Add a comment"
 #: i/skins/zwiki_plone/wikipage_footer.pt:41
-#: i/skins/standard/wikipage_macros.pt:444
+#: i/skins/standard/wikipage_macros.pt:440
 msgid "add-comment"
 msgstr "新增一个建议"
+
+# Default: "edit this page"
+#~ msgid "edit-page"
+#~ msgstr "修改这一页面"
 
 #, fuzzy
 #~ msgid "Description:"

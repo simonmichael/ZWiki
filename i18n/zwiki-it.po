@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-30-0\n"
-"POT-Creation-Date: Sat Jun 12 11:38:11 2004\n"
+"POT-Creation-Date: Sat Jun 12 14:15:35 2004\n"
 "PO-Revision-Date: 2004-06-12 01:59+0200\n"
 "Last-Translator: Lele Gaifax <lele@seldati.it>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
@@ -944,8 +944,8 @@ msgid "home"
 msgstr "principale"
 
 #: i/skins/standard/wikipage_macros.pt:113
-#: i/skins/standard/wikipage_macros.pt:294
-#: i/skins/standard/wikipage_macros.pt:333
+#: i/skins/standard/wikipage_macros.pt:290
+#: i/skins/standard/wikipage_macros.pt:329
 msgid "show wiki contents"
 msgstr "contenuti del wiki"
 
@@ -1059,38 +1059,33 @@ msgstr "mostra la storia delle modifiche a questa pagina"
 msgid "diff"
 msgstr "differenze"
 
-# Default: "edit this page"
-#: i/skins/standard/wikipage_macros.pt:242
-msgid "edit-page"
-msgstr "modifica questa pagina"
-
-#: i/skins/standard/wikipage_macros.pt:244
+#: i/skins/standard/wikipage_macros.pt:240
 msgid "edit"
 msgstr "modifica"
 
-#: i/skins/standard/wikipage_macros.pt:245
+#: i/skins/standard/wikipage_macros.pt:241
 msgid "edit using external editor"
 msgstr "modifica con un editor esterno"
 
-#: i/skins/standard/wikipage_macros.pt:257
+#: i/skins/standard/wikipage_macros.pt:253
 msgid "(external edit)"
 msgstr "(editor esterno)"
 
-#: i/skins/standard/wikipage_macros.pt:265 i/skins/standard/editform.pt:35
+#: i/skins/standard/wikipage_macros.pt:261 i/skins/standard/editform.pt:35
 msgid "go to home page"
 msgstr "vai alla pagina principale"
 
-#: i/skins/standard/wikipage_macros.pt:400
+#: i/skins/standard/wikipage_macros.pt:396
 msgid "replying"
 msgstr "replicando a"
 
-#: i/skins/standard/wikipage_macros.pt:409
+#: i/skins/standard/wikipage_macros.pt:405
 msgid "to comment (and cc any subscribers) enter text here and click add"
 msgstr ""
 "Per commentare (in CC agli abbonati) inserisci qui il testo e premi sul "
 "pulsante"
 
-#: i/skins/standard/wikipage_macros.pt:433
+#: i/skins/standard/wikipage_macros.pt:429
 msgid "${nb} subscribers"
 msgstr "${nb} abbonati"
 
@@ -1099,60 +1094,60 @@ msgstr "${nb} abbonati"
 # "          Subscribers receive a copy of comments via email\n"
 # "          (but not general edits, unless enabled by the site admin).\n"
 # "          Or return to"
-#: i/skins/standard/wikipage_macros.pt:435
+#: i/skins/standard/wikipage_macros.pt:431
 msgid "1 subscriber"
 msgstr "1 abbonato"
 
-#: i/skins/standard/wikipage_macros.pt:438
+#: i/skins/standard/wikipage_macros.pt:434
 msgid "no subscribers"
 msgstr "nessun abbonato"
 
 # Default: "new parent, name or replacement"
-#: i/skins/standard/wikipage_macros.pt:465
+#: i/skins/standard/wikipage_macros.pt:461
 msgid "parent_name_replace"
 msgstr "nuova pagina sovrastante, nome o sostituzione"
 
-#: i/skins/standard/wikipage_macros.pt:467
+#: i/skins/standard/wikipage_macros.pt:463
 msgid ""
 "enter a new parent, new name, replacement page (if any) or subtopic name"
 msgstr ""
 "inserisci il nome della nuova pagina sovrastante, il nuovo nome o la pagina "
 "(eventualmente) sostituita da questa oppure il nome del sotto argomento"
 
-#: i/skins/standard/wikipage_macros.pt:473
+#: i/skins/standard/wikipage_macros.pt:469
 msgid "reparent"
 msgstr "ricolloca"
 
-#: i/skins/standard/wikipage_macros.pt:473
+#: i/skins/standard/wikipage_macros.pt:469
 msgid "reparent this page under the page you have entered"
 msgstr "posiziona questa pagina sotto la pagina che hai inserito"
 
-#: i/skins/standard/wikipage_macros.pt:478
+#: i/skins/standard/wikipage_macros.pt:474
 msgid "rename this page to the name you have entered, updating all links"
 msgstr ""
 "cambia il nome di questa pagina con quello che hai inserito, aggiornando "
 "tutti i collegamenti"
 
-#: i/skins/standard/wikipage_macros.pt:478
+#: i/skins/standard/wikipage_macros.pt:474
 msgid "rename"
 msgstr "rinomina"
 
-#: i/skins/standard/wikipage_macros.pt:483
+#: i/skins/standard/wikipage_macros.pt:479
 msgid "delete!"
 msgstr "cancella!"
 
-#: i/skins/standard/wikipage_macros.pt:483
+#: i/skins/standard/wikipage_macros.pt:479
 msgid ""
 "move this page to the recycle bin, and relink to the name you have entered"
 msgstr ""
 "sposta questa pagina nel cestino e sostituisci tutti i riferimenti con "
 "quella che hai inserito"
 
-#: i/skins/standard/wikipage_macros.pt:488
+#: i/skins/standard/wikipage_macros.pt:484
 msgid "create"
 msgstr "crea"
 
-#: i/skins/standard/wikipage_macros.pt:488
+#: i/skins/standard/wikipage_macros.pt:484
 msgid "create a new subtopic of this page"
 msgstr "crea un nuovo sotto argomento di questa pagina"
 
@@ -1488,12 +1483,12 @@ msgid "box_wiki_navigation"
 msgstr "Navigazione del Wiki"
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:16
-#: i/skins/standard/wikipage_macros.pt:398
+#: i/skins/standard/wikipage_macros.pt:394
 msgid "a subject helps clarify threads and RecentChanges"
 msgstr "l'oggetto aiuta a mantenere chiari i thread e le ModificheRecenti"
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:16
-#: i/skins/standard/wikipage_macros.pt:398
+#: i/skins/standard/wikipage_macros.pt:394
 msgid "subject"
 msgstr "oggetto"
 
@@ -1504,6 +1499,10 @@ msgstr ""
 "modifica"
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:41
-#: i/skins/standard/wikipage_macros.pt:444
+#: i/skins/standard/wikipage_macros.pt:440
 msgid "add-comment"
 msgstr "aggiungi un commento"
+
+# Default: "edit this page"
+#~ msgid "edit-page"
+#~ msgstr "modifica questa pagina"
