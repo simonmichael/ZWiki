@@ -163,12 +163,14 @@ class SubscriberManagerMixin:
 
     ## page subscription api #############################################
 
+    # XXX rename to subscribers() & wikiSubscribers() ?
     def subscriberList(self, parent=0):
         """
-        Return a list of this page's subscribers
+        Return a list of this page's subscribers.
+
         With parent flag, manage the parent folder's subscriber list instead.
         """
-        return self._getSubscribers(parent)
+        return stripList(self._getSubscribers(parent))
 
     def subscriberCount(self, parent=0):
         """
@@ -274,21 +276,6 @@ class SubscriberManagerMixin:
                 REQUEST.cookies.get('email',None))
         if user and not (self.isSubscriber(user) or self.isWikiSubscriber(user)):
             self.subscribe(user)
-
-    def allSubscribers(self):
-        """
-        Return a list of subscribers to this page or the whole wiki.
-
-        Special case: if this page is named TestPage or SandBox, return
-        only the page subscribers. (Only page subscribers will receive
-        mail from these pages.)
-        """
-        subs = []
-        subs.extend(self.subscriberList()) # copy, don't reference
-        if self.title_or_id() not in ['TestPage','SandBox']: 
-            for s in self.wikiSubscriberList():
-                if not (s in subs): subs.append(s)
-        return subs
 
     def allSubscriptionsFor(self, email):
         """
@@ -446,102 +433,12 @@ class MailSupport:
         """
         return getattr(self,'mailout_policy','comments')
 
-    #def formatMailout(self, text):
-    #    """
-    #    Format some text (usually a page diff) for email delivery.
-    #
-    #    This is supposed to present a diff, but in the most human-readable
-    #    and clutter-free way possible, since people may be receiving many
-    #    of these. In the case of a simple comment, it should look as if
-    #    the comment was just forwarded out.  See
-    #    test_formatMailout/testEndToEndCommentFormatting for examples.
-    #
-    #    """
-    #    if not text: return ''
-    #    
-    #    # try to do some useful formatting
-    #    # wrap and fill each paragraph, except indented ones,
-    #    # and preserve citation prefixes
-    #    paragraphs = stripList(split(text,'\n\n'))
-    #    for i in range(len(paragraphs)):
-    #        p = paragraphs[i]
-    #        indent = len(p) - len(lstrip(p))
-    #        #if indent or p[0] == '>': continue
-    #        if indent: continue
-    #        m = re.match(r'^[>\s]+',p)
-    #        if m:
-    #            prefix = m.group()
-    #            p = re.sub(r'(?m)^'+prefix,'',p)
-    #        else:
-    #            prefix = ''
-    #        # TextFormatter loses a trailing newline
-    #        # (and a single leading newline, but that shouldn't apply)
-    #        if p[-1] == '\n': nl = '\n'
-    #        else: nl = ''
-    #        p = TextFormatter([{'width':70-len(prefix),
-    #                            'margin':0,
-    #                            'fill':1,
-    #                            'pad':0}]).compose([p])
-    #        p = re.sub(r'(?m)^',prefix,p)
-    #        p += nl
-    #        paragraphs[i] = p
-    #        
-    #    text = join(paragraphs,'\n\n')
-    #
-    #    # strip leading newlines
-    #    text = re.sub(r'(?s)^\n+',r'',text)
-    #    # strip trailing newlines
-    #    text = re.sub(r'(?s)\n+$',r'\n',text)
-    #    # lose any html quoting
-    #    text = html_unquote(text)
-    #    return text
-
-    def sendMailToSubscribers(self, text, REQUEST, subjectSuffix='',
-                              subject='',message_id=None,in_reply_to=None,
-                              exclude_address=None):
+    def quietPages(self):
         """
-        Send mail to any page subscribers, and log any errors.
-        
-        If a mailhost and mail_from property have been configured and
-        there are subscribers to this page, email text to them.  So as not
-        to prevent page edits, catch any mail-sending errors (and log and
-        try to forward them to an admin).
+        Names of pages which should send mail only to direct page subscribers.
         """
-        recipients = self.emailAddressesFrom(self.allSubscribers())
-	# mailin.py may need to exclude an address to avoid a loop
-        try: recipients.remove(exclude_address)
-        except ValueError: pass
-
-        if not recipients: return
-        
-	# some lists will deliver duplicated addresses twice ? try to avoid
-        unique = []
-        for r in recipients:
-            if not r in unique:
-                unique.append(r)
-        if self.toProperty() in unique: unique.remove(self.toProperty())
-        
-        # send the mail
-        try:
-            self.sendMailTo(unique,text,REQUEST,
-                            subjectSuffix=subjectSuffix,
-                            subject=subject,
-                            message_id=message_id,
-                            in_reply_to=in_reply_to)
-        # if there is any failure, notify admin or log
-        except:
-            BLATHER('failed to send mail to %s: %s' % (recipients,
-                                                       formattedTraceback()))
-            admin = getattr(self.folder(),'mail_admin',None)
-            if admin:
-                try:
-                    self.sendMailTo(
-                        [],text,REQUEST,
-                        subjectSuffix='ERROR, subscriber mailout failed',
-                        to=admin)
-                except:
-                    BLATHER('failed to send error report to admin: %s' % \
-                            formattedTraceback())
+        #return getattr(self.folder(),'mail_quiet_pages',
+        return (['TestPage','SandBox']) #i18n
 
     def fromProperty(self):
         """
@@ -671,27 +568,82 @@ class MailSupport:
         """
         return self.MailHost
 
+    def sendMailToSubscribers(self, text, REQUEST, subjectSuffix='',
+                              subject='',message_id=None,in_reply_to=None,
+                              exclude_address=None):
+        """
+        Send mail to this page's subscribers, if any.
+        
+        If a mailhost and mail_from property have been configured and
+        there are subscribers to this page, email text to them.  S as not
+        to prevent page edits, catch any mail-sending errors (and log and
+        try to forward them to an admin).
+
+        In some cases we will skip some or all subscribers, eg if this
+        has been designated one of the "quiet" pages, but we do this
+        filtering down in sendMailTo. XXX that is, we would if we knew how.
+        """
+        to = None
+        recipients = self.subscriberList()
+        if not self.title_or_id() in self.quietPages():
+            recipients += self.wikiSubscriberList()
+            to = ';'
+        recipients = self.emailAddressesFrom(recipients)
+
+        self.sendMailTo(recipients,
+                        text,
+                        REQUEST,
+                        subjectSuffix=subjectSuffix,
+                        subject=subject,
+                        message_id=message_id,
+                        in_reply_to=in_reply_to,
+                        exclude_address=exclude_address)
+
     def sendMailTo(self, recipients, text, REQUEST,
                    subjectSuffix='',
                    subject='',
                    message_id=None,
                    in_reply_to=None,
                    to=None,
+                   exclude_address=None,
                    ):
         """
-        Send a mail-out to recipients, if mail properties are configured.
+        Send a mail-out containing text to a list of email addresses.
 
-        Tries to provide the best possible headers based on available
-        information in arguments, zodb, username cookie etc.
-
+        If mail-out is not configured in this wiki or there are no valid
+        recipients, do nothing.  Catch and log any errors when sending
+        mail.
+        
         XXX templatize ?
-        XXX mailing list integration issues
-        - ezmlm won't deliver precedence: bulk, which these are, what to do
-	- ezmlm was delivering duplicates due to duplicate addresses at one point..
-          we seem ok now
+        XXX ezmlm won't deliver with precedence: bulk, which these are, what to do
         """
         if not self.isMailoutEnabled(): return
+
+        # gather bits and pieces
         msgid = message_id or self.messageIdFromTime(self.ZopeTime())
+        tohdr = to or self.toHeader()
+
+        # do some last-minute winnowing-out of recipients we don't want to
+        # send to (and mail we don't want to send)
+
+	# help mailin.py to exclude a list address to avoid a loop
+        try: recipients.remove(exclude_address)
+        except ValueError: pass
+
+        # 
+
+
+        if not recipients: return
+        
+	# some lists may deliver duplicated addresses twice; try to avoid
+        # unnecessary
+        #unique = []
+        #for r in recipients:
+        #    if not r in unique:
+        #        unique.append(r)
+        #if self.toProperty() in unique: unique.remove(self.toProperty())
+        
+
         msg = """\
 From: %s
 Reply-To: %s
@@ -713,7 +665,7 @@ List-Help: <%s>
 """ \
         % (self.fromHeader(REQUEST),
            self.replyToHeader(),
-           to or self.toHeader(),
+           tohdr,
            self.bccHeader(recipients),
            self.subjectHeader(subject,subjectSuffix),
            msgid,
@@ -726,21 +678,31 @@ List-Help: <%s>
            self.pageUrl(),
            self.pageUrl(),
            self.wikiUrl(),
-           text, #self.formatMailout(text) # IssueNo0696
+           text,
            self.signature(msgid),
            )
-
-        if subject == '[test]':
-            # for testing:
-            BLATHER('discarding test mailout:\n%s' % msg)
-            #self.sendTestMail()
-        else:
-            BLATHER('sending mailout:\n%s' % msg)
+        # send
+        try:
             self.mailhost().send(msg)
+            BLATHER('sent mail:\n%s' % msg)
+        # if there is any failure, notify admin or log
+        except:
+            BLATHER('failed to send mail to %s: %s' % (recipients,
+                                                       formattedTraceback()))
+            admin = getattr(self.folder(),'mail_admin',None)
+            if admin:
+                try:
+                    self.sendMailTo(
+                        [],text,REQUEST,
+                        subjectSuffix='ERROR, subscriber mailout failed',
+                        to=admin)
+                except:
+                    BLATHER('failed to send error report to admin: %s' % \
+                            formattedTraceback())
+
+
         # XXX experimental
         #self.sendCiaBotMail
-
-
 #    def sendCiaBotMail(self):
 #        """
 #        Send mail to an IRC channel via ciabot (or similar).
@@ -767,6 +729,10 @@ List-Help: <%s>
 #            self.mailhost().send(msg)
 #            BLATHER('sending mailout to IRC:',msg)
 
+
+        #if subject == 'test':
+        #    BLATHER('discarding test mailout:\n%s' % msg)
+        #    #self.sendTestMail()
 #    def sendTestMail(self):
 #        """
 #        Send a mail which users won't see, but we can monitor in tests
@@ -795,7 +761,54 @@ List-Help: <%s>
 #        BLATHER('sending mailout:\n%s' % msg)
 #        self.mailhost().send(msg)
 
-#if __name__ == '__main__':
-#    import contract, doctest, Mail
-#    contract.checkmod(Mail)
-#    doctest.testmod(mid)
+
+    #def formatMailout(self, text):
+    #    """
+    #    Format some text (usually a page diff) for email delivery.
+    #
+    #    This is supposed to present a diff, but in the most human-readable
+    #    and clutter-free way possible, since people may be receiving many
+    #    of these. In the case of a simple comment, it should look as if
+    #    the comment was just forwarded out.  See
+    #    test_formatMailout/testEndToEndCommentFormatting for examples.
+    #
+    #    """
+    #    if not text: return ''
+    #    
+    #    # try to do some useful formatting
+    #    # wrap and fill each paragraph, except indented ones,
+    #    # and preserve citation prefixes
+    #    paragraphs = stripList(split(text,'\n\n'))
+    #    for i in range(len(paragraphs)):
+    #        p = paragraphs[i]
+    #        indent = len(p) - len(lstrip(p))
+    #        #if indent or p[0] == '>': continue
+    #        if indent: continue
+    #        m = re.match(r'^[>\s]+',p)
+    #        if m:
+    #            prefix = m.group()
+    #            p = re.sub(r'(?m)^'+prefix,'',p)
+    #        else:
+    #            prefix = ''
+    #        # TextFormatter loses a trailing newline
+    #        # (and a single leading newline, but that shouldn't apply)
+    #        if p[-1] == '\n': nl = '\n'
+    #        else: nl = ''
+    #        p = TextFormatter([{'width':70-len(prefix),
+    #                            'margin':0,
+    #                            'fill':1,
+    #                            'pad':0}]).compose([p])
+    #        p = re.sub(r'(?m)^',prefix,p)
+    #        p += nl
+    #        paragraphs[i] = p
+    #        
+    #    text = join(paragraphs,'\n\n')
+    #
+    #    # strip leading newlines
+    #    text = re.sub(r'(?s)^\n+',r'',text)
+    #    # strip trailing newlines
+    #    text = re.sub(r'(?s)\n+$',r'\n',text)
+    #    # lose any html quoting
+    #    text = html_unquote(text)
+    #    return text
+
