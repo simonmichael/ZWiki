@@ -5,17 +5,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pl\n"
 "POT-Creation-Date: Wed Jun  9 14:41:31 2004\n"
-"PO-Revision-Date: 2004-06-08 23:15+0200\n"
+"PO-Revision-Date: 2004-06-10 10:38+0100\n"
 "Last-Translator: Jakub Wiśniowski <klippe@pf.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language-code: pl\n"
-"Language-name: Polish\n"
-"Preferred-encodings: utf-8 latin2\n"
-"Domain: zwiki\n"
-"X-Generator: KBabel 1.3.1\n"
 
 #: i/Admin.py:100
 msgid "You are not authorized to upgrade all pages."
@@ -594,8 +589,9 @@ msgstr "Określ parametry wyszukiwania, kliknij na numery po prawej lub"
 
 #: i/skins/dtmlmessages.pt:65 i/skins/dtmlmessages.pt:141
 #: i/skins/dtmlmessages.pt:224
+#, fuzzy
 msgid "filter issues."
-msgstr "przeszukaj sprawy."
+msgstr "przeszukaj sprawy"
 
 #: i/skins/dtmlmessages.pt:66 i/skins/dtmlmessages.pt:142
 #: i/skins/dtmlmessages.pt:225
@@ -684,7 +680,7 @@ msgstr "i wprowadź"
 #: i/skins/dtmlmessages.pt:80 i/skins/dtmlmessages.pt:156
 #: i/skins/dtmlmessages.pt:239
 msgid "More advanced"
-msgstr "Zaawansowane opcje przeszukiwania"
+msgstr "Przeszukaj"
 
 #: i/skins/dtmlmessages.pt:81 i/skins/dtmlmessages.pt:157
 #: i/skins/dtmlmessages.pt:240
@@ -747,7 +743,7 @@ msgid ""
 "or the template may be missing."
 msgstr ""
 "Wystąpił problem z szablonami skórki wiki. Być może ID obiektu skórki nie "
-"jest szablonem lub stroną DTML lub szblon został skasowany."
+"jest szablonem lub stroną DTML lub szablon został skasowany."
 
 #: i/skins/standard/contentspage.pt:29
 msgid "Contents"
@@ -779,7 +775,7 @@ msgstr "Opcjonalna zmiana notatki"
 
 #: i/skins/standard/editform.pt:143
 msgid "a note makes RecentChanges more useful"
-msgstr "notatka spowoduje bardziej użyteczne zmiany"
+msgstr "notatka uczyni listę ostatnich zmian bardziej użyteczną"
 
 #: i/skins/standard/editform.pt:161
 msgid "Upload a file or image"
@@ -787,7 +783,7 @@ msgstr "Wczytanie pliku lub obrazka"
 
 #: i/skins/standard/editform.pt:162
 msgid "upload a file and link it on this page ?"
-msgstr "wczytać plik i odnośnik na tej stronie?"
+msgstr "wczytać plik i utworzyć odnośnik do niego na tej stronie?"
 
 #: i/skins/standard/editform.pt:172
 msgid "For editing help, see"
@@ -823,7 +819,7 @@ msgstr "Nazwa strony"
 
 #: i/skins/standard/editform.pt:70
 msgid "the name of this wiki page (changing this may be slow!)"
-msgstr "nazwa tej strony wiwki (zmiana nazwy może się wydłużyć)"
+msgstr "nazwa tej strony wiwki (zmiana nazwy może trwać długo)"
 
 #: i/skins/standard/editform.pt:80
 msgid "type"
@@ -850,7 +846,7 @@ msgstr "kliknij aby zwiększyć ranking"
 
 #: i/skins/standard/ratingform.pt:36
 msgid "voting as"
-msgstr "głosuj na"
+msgstr "głosujesz jako"
 
 #: i/skins/standard/subscribeform.pt:102
 msgid " Unsubscribe from this page "
@@ -858,7 +854,7 @@ msgstr " Skasuj subskrypcje z tej strony "
 
 #: i/skins/standard/subscribeform.pt:109
 msgid " Subscribe to this page "
-msgstr "Zaprenumeruj tę stronę"
+msgstr " Zaprenumeruj tę stronę"
 
 #: i/skins/standard/wikipage.pt:65
 msgid "search all pages"
@@ -900,7 +896,7 @@ msgstr "dyskusja"
 
 #: i/skins/standard/wikipage_macros.pt:131
 msgid "show issue tracker"
-msgstr "pokaż ścieżkę zmian"
+msgstr "pokaż rejestr spraw"
 
 #: i/skins/standard/wikipage_macros.pt:135
 msgid "issues"
@@ -1048,7 +1044,8 @@ msgstr "Uczyń stronę której nazwę wpisałeś rodzicem bieżącej strony"
 #: i/skins/standard/wikipage_macros.pt:478
 msgid "rename this page to the name you have entered, updating all links"
 msgstr ""
-"nadaj tej stronie taką nazwę jaką wpisałeś, aktualizując wszystkie odnośniki"
+"Zmień nazwę strony na taką jaką wpisałeś (wszystkie odnośniki zostaną "
+"zaktualizowane)"
 
 #: i/skins/standard/wikipage_macros.pt:478
 msgid "rename"
@@ -1421,31 +1418,20 @@ msgstr "Szukaj w Wiki"
 msgid "Wiki options"
 msgstr "Opcje Wiki"
 
-#~ msgid "Enter a word"
-#~ msgstr "Wpisz słowo"
-
-#~ msgid "Show subtopics on this page & below ?"
-#~ msgstr "Pokazać temat drugorzędny na tej stronie i poniżej?"
-
-#~ msgid "show subtopics in full mode, or if ancestor page has 'always'"
-#~ msgstr ""
-#~ "pokaż temat drugorzędny w trybie pełnym lub jeśli strona dziedziczy "
-#~ "parametr 'zawsze' (always)"
-
-#~ msgid "default"
-#~ msgstr "domyślnie"
-
-#~ msgid "never"
-#~ msgstr "nigdy"
-
-#~ msgid "always show subtopics on this page"
-#~ msgstr "zawsze pokazuj temat podrzędny na tej stronie"
-
-#~ msgid "always"
-#~ msgstr "zawsze"
+#~ msgid "total"
+#~ msgstr "łącznie"
 
 #~ msgid "issue tracker"
-#~ msgstr "rejestru spraw."
+#~ msgstr "rejestr spraw"
 
 #~ msgid "search options."
-#~ msgstr " "
+#~ msgstr "określając zaawansowane parametry wyszukiwania."
+
+#~ msgid "recent"
+#~ msgstr "najnowszych"
+
+#~ msgid "all"
+#~ msgstr "w sumie"
+
+#~ msgid "Add a new issue:"
+#~ msgstr "Dodaj nową sprawę:"
