@@ -7,7 +7,9 @@ from Globals import package_home
 from OFS.Folder import Folder
 from OFS.DTMLMethod import DTMLMethod
 from AccessControl import getSecurityManager
-
+from OFS.Image import Image, File
+from OFS.ObjectManager import customImporters
+from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from ZWikiPage import ZWikiPage
 from Defaults import ALLOWED_PAGE_TYPES
 from LocalizerSupport import LocalDTMLFile
@@ -46,7 +48,10 @@ def manage_addZWikiWeb(self, new_id, new_title='', wiki_type='zwikidotorg',
             messageDialog('unknown wiki type')
 
         if REQUEST is not None:
-            if enter:
+            folder = getattr(self, new_id)
+            if hasattr(folder, 'setup_%s'%(wiki_type)):
+                REQUEST.RESPONSE.redirect(REQUEST['URL3']+'/'+new_id+'/setup_%s'%(wiki_type))
+            elif enter:
                 # can't see why this doesn't work after addZWikiWebFromFs
                 #REQUEST.RESPONSE.redirect(getattr(self,new_id).absolute_url())
                 REQUEST.RESPONSE.redirect(REQUEST['URL3']+'/'+new_id+'/')
@@ -91,16 +96,26 @@ def addZWikiWebFromFs(self, new_id, title='', wiki_type='zwikidotorg',
     filenames = os.listdir(dir)
     # hmm auto-cataloging is really slowing this down!
     for filename in filenames:
-        if filename[-5:] == '.dtml':
-            text = open(dir + os.sep + filename, 'r').read()
+        if re.match(r'(?:\.(?:svn|cvs)|CVS)', filename): continue
+        m = re.search(r'(.+)\.(.+)',filename)
+        id, type = filename, ''
+        if m: id, type = m.groups()
+        text = open(dir + os.sep + filename, 'r').read()
+        if type == 'dtml':
             _addDTMLMethod(ob, filename[:-5], title='', file=text)
+        elif re.match(r'(?:(?:stx|html|latex)(?:dtml)?|txt)', type):
+            _addZWikiPage(ob,id,title='',page_type=type,file=text)
+        elif type == 'pt':
+            ob._setObject(id, ZopePageTemplate(id, text, 'text/html'))
+        elif type == 'zexp' or type == 'xml':
+            connection = self.getPhysicalRoot()._p_jar
+            ob._setObject(id, connection.importFile(dir + os.sep + filename, 
+                customImporters=customImporters))
+            #self._getOb(id).manage_changeOwnershipType(explicit=0)
+        elif re.match(r'(?:jpe?g|gif|png)', type):
+            ob._setObject(id, Image(id, '', text))
         else:
-            m = re.search(r'(.+)\.(.+)',filename)
-            if m:
-                text = open(dir + os.sep + filename, 'r').read()
-                name, type = m.group(1), m.group(2)
-                _addZWikiPage(ob,name,title='',page_type=type,file=text)
-        # files without a suffix are ignored
+            ob._setObject(id, File(id, '', text))
 
 def _addDTMLMethod(self, id, title='', file=''):
     id=str(id)
