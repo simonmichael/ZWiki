@@ -565,7 +565,7 @@ Clean: clean
 # remember, it goes like this:
 # 1. merge source files, 2. make pot, 3. replace po files, 4. make po
 
-LANGUAGES=en es fr-CA fr ga zh-TW pt-br
+LANGUAGES=en es fr-CA fr ga zh-TW pt-BR
 
 # using zope 3's i18nextract.py with my patches (-x option, multiline defaults fix)
 pot: 
