@@ -646,7 +646,7 @@ class OutlineRenderingMixin:
                      self.children())
         if subtopics:
             return '\n\n<a name="subtopics"><br /></a>\n<p><table id="subtopicspanel"><tr><td><b>subtopics:</b>\n%s</td></tr></table>' \
-                   % (subtopics)
+                   % (subtopics) #XXX i18n
         else: return ''
 
     security.declareProtected(Permissions.View, 'navlinks')
