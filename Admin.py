@@ -90,9 +90,6 @@ class AdminSupport:
         BLATHER('upgrade complete, %d pages processed in %fs, %f pages/s' \
                 %(n, endtime-starttime, n/(endtime-starttime)))
 
-        BLATHER('upgrade complete, %d pages processed' % n)
-
-    #security.declarePublic('upgradeId')
     security.declareProtected(Permissions.View, 'upgradeId')
     def upgradeId(self,REQUEST=None):
         """
