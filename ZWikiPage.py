@@ -689,6 +689,7 @@ class ZWikiPage(
 
         Constraints for zwiki page ids:
         - it needs to be a legal zope object id
+        - to avoid gross acquisition problems, it can't be RESPONSE or REQUEST
         - to simplify linking, we will require it to be a valid url
         - it should be unique for a given name (ignoring whitespace)
         - we'd like it to be as similar to the name and as simple to read
@@ -701,7 +702,8 @@ class ZWikiPage(
         - converts remaining punctuation to spaces
         - capitalizes and joins whitespace-separated words into a wikiname
         - converts any non-zope-and-url-safe characters and _ to _hexvalue
-        - if the above results in an id beginning with _, prepends X
+        - if the above results in an id that's still illegal (it begins with _
+          or it is RESPONSE or REQUEST), prepends X
           (XXX this breaks the uniqueness requirement, better ideas ?)
 
         performance-sensitive
@@ -727,7 +729,9 @@ class ZWikiPage(
                 safeid = safeid + '_%02x' % ord(c)
 
         # zope ids may not begin with _
-        if len(safeid) > 0 and safeid[0] == '_':
+        if ((len(safeid) > 0 and safeid[0] == '_') or
+            safeid == 'RESPONSE' or
+            safeid == 'REQUEST'):
             safeid = 'X'+safeid
         return safeid
 
@@ -932,7 +936,9 @@ class ZWikiPage(
         else:
             f = self.folder()
             # don't acquire
-            if hasattr(f.aq_base,id) and self.isZwikiPage(f[id]): # poor caching
+            # XXX special case: aq_base adds a REQUEST attribute
+            # ('<Special Object Used to Force Acquisition>')
+            if id in f.objectIds() and self.isZwikiPage(f[id]): # poor caching
                 return f[id]
             elif ignore_case:
                 id = string.lower(id)
