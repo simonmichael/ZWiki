@@ -117,7 +117,7 @@ class MailIn:
         unnecessary resource usage.
         """
         #BLATHER('mailin.py processing incoming message:\n%s' % message)
-        BLATHER('mailin.py processing incoming message\n')
+        BLATHER('mailin.py processing incoming message')
         self.context = context
         self.original = message
         self.msg = email.message_from_string(self.original)
