@@ -152,9 +152,11 @@ footnoteexpr     = r'(?sm)^\.\. \[([^\n\]]+)\]'
 javascriptexpr   = r'(?iL)<(([^>\w]*script|iframe)[^>]*)>' # \1 will be displayed
 
 # for stripping HTML header/footer
-# XXX strip these from the middle of pages too ?
+# XXX these are expensive, may hit max recursion limit on bsd
 htmlheaderexpr = r'(?si)^(\s*<!doctype.*?)?\s*<html.*?<body.*?>'
 htmlfooterexpr = r'(?si)</body.*?>\s*</html.*?>\s*$'
+# better ? safe ?
+htmlbodyexpr = r'(?si)^.*?<body[^>]*?>(.*)</body[^>]*?>.*?$'
 
 # sgml tags, including those containing dtml/python and multi-line
 # XXX needs more work, does not match all tags

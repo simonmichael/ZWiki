@@ -23,6 +23,7 @@ from Defaults import DISABLE_JAVASCRIPT, LARGE_FILE_SIZE, \
 import Permissions
 from Regexps import javascriptexpr, htmlheaderexpr, htmlfooterexpr
 from Utils import BLATHER, parseHeadersBody
+from UI import onlyBodyFrom
 from LocalizerSupport import LocalDTMLFile, _, N_
 DTMLFile = LocalDTMLFile
 del LocalDTMLFile
@@ -773,13 +774,8 @@ class EditingSupport:
         if DISABLE_JAVASCRIPT:
             t = re.sub(javascriptexpr,r'&lt;disabled \1&gt;',t)
 
-        # strip out HTML document header/footer if added
-        # XXX these can be expensive, for now just skip if there's a problem
-        try:
-            t = re.sub(htmlheaderexpr,'',t)
-            t = re.sub(htmlfooterexpr,'',t)
-        except RuntimeError:
-            pass
+        # strip out HTML header tags if present
+        t = onlyBodyFrom(t)
 
         return t
 

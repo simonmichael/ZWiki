@@ -34,6 +34,7 @@ from Products.PageTemplates.Expressions import SecureModuleImporter
 
 from Defaults import PAGE_METATYPE, DEFAULT_DISPLAYMODE
 from Utils import BLATHER,formattedTraceback
+from Regexps import htmlheaderexpr, htmlfooterexpr, htmlbodyexpr
 from LocalizerSupport import _, N_
 
 # built-in defaults for skin objects
@@ -119,6 +120,15 @@ def isZwikiPage(obj):
         PAGE_METATYPE,
         )
 
+def onlyBodyFrom(t):
+    # XXX these can be expensive, for now just skip if there's a problem
+    try:
+        t = re.sub(htmlheaderexpr,'',t)
+        t = re.sub(htmlfooterexpr,'',t)
+    except RuntimeError: pass
+    return t
+    # this might be better, but more inclined to mess with valid text ?
+    #return re.sub(htmlbodyexpr, r'\1', t)
 
 class UI:
     # see above
