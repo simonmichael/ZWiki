@@ -151,7 +151,7 @@ class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
 
     def test_formatWikiname(self):
         self.assertEquals(self.p.formatWikiname('CamelCase'),'CamelCase')
-        self.p.folder().spaced_wikinames = 1
+        self.p.folder().space_wikinames = 1
         self.assertEquals(self.p.formatWikiname('CamelCase'),'Camel Case')
 
     def test_renderLink(self):
@@ -161,7 +161,7 @@ class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
         self.assertEquals(
             self.p.renderLink('http://some.url'),
             '<a href="http://some.url">http://some.url</a>')
-        #self.p.folder().spaced_wikinames = 1
+        #self.p.folder().space_wikinames = 1
         #self.assertEquals(self.p.renderLink('CamelCase')[:10],'Camel Case')
         
     def test_renderLinksIn(self):

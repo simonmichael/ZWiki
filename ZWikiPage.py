@@ -478,7 +478,7 @@ class ZWikiPage(
     security.declareProtected(Permissions.View, 'spacedWikinamesEnabled')
     def spacedWikinamesEnabled(self):
         """Should all wikinames be displayed with spaces in this wiki ?"""
-        return getattr(self.folder(),'spaced_wikinames',0) and 1
+        return getattr(self.folder(),'space_wikinames',0) and 1
 
     security.declareProtected(Permissions.View, 'spacedNameFrom')
     def spacedNameFrom(self,pagename):
@@ -502,7 +502,7 @@ class ZWikiPage(
         Convert a wikiname to this wiki's standard display format.
 
         Ie, leave it be or add ungodly spaces depending on the
-        'spaced_wikinames' property.
+        'space_wikinames' property.
         """
         if self.spacedWikinamesEnabled():
             return self.spacedNameFrom(wikiname)
