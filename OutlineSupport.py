@@ -220,7 +220,7 @@ class OutlineManagerMixin:
         return PersistentOutline(parentmap)
 
     security.declareProtected(Permissions.Reparent, 'reparent')
-    def reparent(self, parents=None, REQUEST=None, pagename=None):
+    def reparent(self, parents=[], REQUEST=None, pagename=None):
         """
         Move this page under the named parent pages in the wiki outline.
 
@@ -232,23 +232,32 @@ class OutlineManagerMixin:
         Page names may be ids, or fuzzy, even partial. Any which do not
         resolve to an existing page or are duplicates will be ignored.
         """
-        # validate args
-        if pagename: parents = [pagename]
-        if not parents: parents = []
-        if type(parents) != ListType: parents = [parents]
-        parents = map(lambda x:absattr(x.Title),
-                      filter(lambda x:x,
-                             map(lambda x:self.pageWithFuzzyName(x,allow_partial=1),
-                                 parents)))
+        # clean the arguments carefully to avoid parenting anomalies
+        # page mgmt form must use pagename field:
+        if pagename:
+            parents = [pagename] 
+        # or parents might be a string
+        elif type(parents) != ListType:
+            parents = [parents] 
+        # empty strings are common, remove before calling pageWithFuzzyName
+        parents = filter(lambda x:x, parents)
+        # look up the page (brain) corresponding to each (fuzzy) parent name
+        parents = map(lambda x:self.pageWithFuzzyName(x,allow_partial=1),
+                      parents)
+        # strip out Nones (pages not found)
+        parents = filter(lambda x:x, parents)
+        # convert back to proper page names
+        parents = map(lambda x:absattr(x.Title), parents)
+        # remove any duplicates
         uniqueparents = []
         for p in parents:
             if not p in uniqueparents: uniqueparents.append(p)
-        # update page's parents attribute
+            
+        # finally - update our parents property, the outline cache, and catalog
         self.setParents(uniqueparents) 
-        # update wiki outline
         self.wikiOutline().reparent(self.pageName(),uniqueparents)
-        # update wiki catalog
         self.index_object()
+
         if REQUEST is not None: REQUEST.RESPONSE.redirect(REQUEST['URL1'])
 
     # queries
