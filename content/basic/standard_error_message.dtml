@@ -29,7 +29,7 @@ Assumes at least one zwiki page exists.
   <body>
     <p>
       I could not find any likely page matching 
-      "<b><dtml-var "here.urlunquote(searchexpr)"></b>"
+      "<b><dtml-var "here.urlunquote(searchexpr)" html_quote></b>"
     </p>
     <p>
       Click here to 
