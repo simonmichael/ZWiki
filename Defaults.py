@@ -19,7 +19,7 @@ PAGE_PORTALTYPE =    'Wiki Page'  # content type used in CMF/Plone
 WIKI_ADD_MENU_NAME = 'ZWiki'      # items in ZMI add menu.. 
 PAGE_ADD_MENU_NAME = 'ZWiki Page' # (this one must match PAGE_METATYPE)
 
-IDS_TO_AVOID = ['RESPONSE','REQUEST','Epoz','epoz']
+IDS_TO_AVOID = ['RESPONSE','REQUEST','Epoz','epoz','URL']
 
 # standard metadata fields Zwiki expects/provides in page brain objects
 # for best large-wiki performance, ensure all of these are in catalog
