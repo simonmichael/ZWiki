@@ -1,3 +1,5 @@
+<div i18n:domain="zwiki">
+
 <a name="bottom"></a>
 
 <div tal:condition="python:user.has_permission('Zwiki: Add comments',here)">
@@ -62,4 +64,6 @@
      ">
   <!-- page management panel -->
   <span metal:use-macro="python:here.wikipage_macros().macros['pagemanagement']" />
+</div>
+
 </div>

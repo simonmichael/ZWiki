@@ -1,3 +1,4 @@
+<div i18n:domain="zwiki">
 <a name="ratingform"></a>
 <form method="POST" id="ratingform" 
       tal:define="myvote python:here.myVote(request); rating here/rating"
@@ -32,3 +33,4 @@
   <span i18n:translate="">click to rate (voting as</span>: 
   <span tal:replace="python:here.usernameFrom(request)" />)
 </form>
+</div>
