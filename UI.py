@@ -548,7 +548,7 @@ class GeneralForms:
         """
         Show the access keys supported by the built-in skins.
         """
-        return """
+        return _("""
         0    show these access key assignments
 
         wiki functions:
@@ -589,7 +589,7 @@ class GeneralForms:
         when viewing diffs:
         n    next edit
         p    previous edit
-        """
+        """)
     
 class UI(
     UIUtils,

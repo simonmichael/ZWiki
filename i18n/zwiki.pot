@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-30-0\n"
-"POT-Creation-Date: Wed May 12 21:35:59 2004\n"
+"POT-Creation-Date: Sat May 22 13:33:10 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
@@ -14,95 +14,95 @@ msgstr ""
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: zwiki\n"
 
-#: i/Admin.py:102
+#: i/Admin.py:100
 msgid "You are not authorized to upgrade all pages."
 msgstr ""
 
-#: i/Admin.py:103
+#: i/Admin.py:101
 msgid "(folder -> Manage properties)"
 msgstr ""
 
-#: i/Editing.py:290
+#: i/Editing.py:291
 msgid "You are not authorized to reparent or change subtopics links on this ZWiki Page."
 msgstr ""
 
-#: i/Editing.py:312
+#: i/Editing.py:313
 msgid "You are not authorized to change this ZWiki Page's type."
 msgstr ""
 
-#: i/Editing.py:345
-#: i/Editing.py:368
+#: i/Editing.py:346
+#: i/Editing.py:369
 msgid "You are not authorized to edit this ZWiki Page."
 msgstr ""
 
-#: i/Editing.py:371
-#: i/Editing.py:412
+#: i/Editing.py:372
+#: i/Editing.py:413
 msgid "You are not authorized to delete this ZWiki Page."
 msgstr ""
 
-#: i/Editing.py:478
+#: i/Editing.py:479
 msgid "You are not authorized to rename this ZWiki Page."
 msgstr ""
 
-#: i/Editing.py:522
+#: i/Editing.py:523
 msgid ""
 "This page was renamed to %s. You can delete this one if no longer needed.\n"
 msgstr ""
 
-#: i/Editing.py:618
+#: i/Editing.py:619
 msgid "You are not authorized to upload files here."
 msgstr ""
 
-#: i/Editing.py:622
+#: i/Editing.py:623
 msgid "You are not authorized to add a link on this ZWiki Page."
 msgstr ""
 
-#: i/UI.py:488
+#: i/UI.py:487
 msgid "Edit conflict"
 msgstr ""
 
-#: i/UI.py:508
+#: i/UI.py:507
 msgid "Someone else has saved this page while you were editing"
 msgstr ""
 
-#: i/UI.py:509
+#: i/UI.py:508
 msgid "To resolve the conflict, do this"
 msgstr ""
 
-#: i/UI.py:510
+#: i/UI.py:509
 msgid "Click your browser's back button"
 msgstr ""
 
-#: i/UI.py:511
+#: i/UI.py:510
 msgid "Copy your recent edits to the clipboard"
 msgstr ""
 
-#: i/UI.py:512
+#: i/UI.py:511
 msgid "Click your browser's refresh button"
 msgstr ""
 
-#: i/UI.py:513
+#: i/UI.py:512
 msgid "Paste in your edits again, being mindful of the latest changes"
 msgstr ""
 
-#: i/UI.py:514
+#: i/UI.py:513
 msgid "Click the Change button again"
 msgstr ""
 
-#: i/UI.py:515
+#: i/UI.py:514
 #: i/skins/standard/editform.pt:197
 msgid "or"
 msgstr ""
 
-#: i/UI.py:516
+#: i/UI.py:515
 msgid "To discard your changes and start again, click OK"
 msgstr ""
 
-#: i/UI.py:525
+#: i/UI.py:524
 msgid "Page is locked"
 msgstr ""
 
-#: i/UI.py:536
+#: i/UI.py:535
 msgid ""
 "\n"
 "            This page has a webDAV lock. Someone is probably editing it\n"
@@ -113,8 +113,54 @@ msgid ""
 "            "
 msgstr ""
 
-#: i/UI.py:543
+#: i/UI.py:542
 msgid "To discard your changes and try again, click OK."
+msgstr ""
+
+#: i/UI.py:551
+msgid ""
+"\n"
+"        0    show these access key assignments\n"
+"\n"
+"        wiki functions:\n"
+"        f    show front page\n"
+"        c    show wiki contents\n"
+"        r    show wiki recent changes\n"
+"             show discussion page\n"
+"        t    show issue tracker\n"
+"        i    show wiki index\n"
+"        o    show wiki options (preferences)\n"
+"        h    show help page\n"
+"        s    go to search field\n"
+"        \n"
+"        page functions:\n"
+"        v    view page\n"
+"        +    view pages in full mode\n"
+"        =    view pages in simple mode\n"
+"        -    view pages in minimal mode\n"
+"        m    mail subscription\n"
+"        b    show backlinks (links to this page)\n"
+"        d    show diffs (page edit history)\n"
+"        y    show full history (in ZMI)\n"
+"        e    edit this page                       \n"
+"        x    edit with an external editor\n"
+"             print this page (and subtopics)\n"
+"        q    view page source (quick-view)\n"
+"             wipe and regenerate this page's render cache\n"
+"             go to subtopics\n"
+"             go to comments (messages)\n"
+"             go to page author's home page, if possible\n"
+"        n    next page\n"
+"        p    previous page\n"
+"        u    up to parent page\n"
+"        \n"
+"        in edit form:\n"
+"        s    save changes\n"
+"        \n"
+"        when viewing diffs:\n"
+"        n    next edit\n"
+"        p    previous edit\n"
+"        "
 msgstr ""
 
 #: i/skins/standard/backlinks.pt:103
@@ -195,6 +241,22 @@ msgstr ""
 
 #: i/skins/standard/editform.pt:79
 msgid "type"
+msgstr ""
+
+#: i/skins/standard/ratingform.pt:10
+msgid "page rating"
+msgstr ""
+
+#: i/skins/standard/ratingform.pt:12
+msgid "from"
+msgstr ""
+
+#: i/skins/standard/ratingform.pt:13
+msgid "votes"
+msgstr ""
+
+#: i/skins/standard/ratingform.pt:33
+msgid "click to rate (voting as"
 msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:141
@@ -329,12 +391,12 @@ msgstr ""
 msgid "return to page"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:117
+#: i/skins/zwiki_plone/editform.pt:111
 # Default: "Body text"
 msgid "label_body_text"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:119
+#: i/skins/zwiki_plone/editform.pt:113
 # Default: ""
 # "In a Wiki page, you use [square brackets] to create links. When you save the page, the contents\n"
 # "            of the square brackets will have a small <code>?</code> link next to it, which you click to create\n"
@@ -342,50 +404,50 @@ msgstr ""
 msgid "help_wikibody"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:147
+#: i/skins/zwiki_plone/editform.pt:141
 # Default: "This wiki also supports WikiWords as a link mechanism."
 msgid "help_wikiwords"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:158
+#: i/skins/zwiki_plone/editform.pt:152
 # Default: "Note for the page history (optional)"
 msgid "label_note"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:160
+#: i/skins/zwiki_plone/editform.pt:154
 # Default: "A short description of your changes."
 msgid "help_wikinote"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:182
+#: i/skins/zwiki_plone/editform.pt:176
 # Default: "Upload file or image (optional)"
 msgid "label_upload_contents_optional"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:184
+#: i/skins/zwiki_plone/editform.pt:178
 # Default: "Attaches a file or an image to this wiki page."
 msgid "help_wikiupload"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:202
+#: i/skins/zwiki_plone/editform.pt:196
 # Default: "Page Format"
 msgid "label_format"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:204
+#: i/skins/zwiki_plone/editform.pt:198
 # Default: ""
 # "If you are unsure of which format to use, just select Plain\n"
 # "            Text and type the document as you usually do."
 msgid "help_format"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:236
+#: i/skins/zwiki_plone/editform.pt:230
 # Default: ""
 msgid "pagetype"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:42
-#: i/skins/zwiki_plone/editform.pt:54
+#: i/skins/zwiki_plone/editform.pt:36
+#: i/skins/zwiki_plone/editform.pt:48
 # Default: ""
 # "Edit\n"
 # "        ${itemtype} \n"
@@ -394,31 +456,31 @@ msgstr ""
 msgid "heading_edit_wiki_page"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:58
+#: i/skins/zwiki_plone/editform.pt:52
 # Default: "A Wiki Page allows you to create richly interconnected pages."
 msgid "description_edit_wiki_page"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:69
+#: i/skins/zwiki_plone/editform.pt:63
 # Default: "Wiki Page Details"
 msgid "legend_wiki_page_details"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:92
+#: i/skins/zwiki_plone/editform.pt:86
 # Default: "Page name"
 msgid "label_pagename"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:94
+#: i/skins/zwiki_plone/editform.pt:88
 # Default: "(Required)"
 msgid "label_required"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:94
+#: i/skins/zwiki_plone/editform.pt:88
 msgid "Required"
 msgstr ""
 
-#: i/skins/zwiki_plone/editform.pt:98
+#: i/skins/zwiki_plone/editform.pt:92
 # Default: "Note: Renaming a page in a large wiki may be slow. Other pages will be updated if possible."
 msgid "help_shortname"
 msgstr ""
@@ -546,7 +608,7 @@ msgid "View"
 msgstr ""
 
 #: i/skins/zwiki_plone/uploaded.pt:25
-#: i/skins/zwiki_plone/editform.pt:251
+#: i/skins/zwiki_plone/editform.pt:245
 msgid "Save"
 msgstr ""
 
@@ -563,5 +625,13 @@ msgstr ""
 #: i/skins/zwiki_plone/wikinav_portlet.pt:15
 # Default: "Wiki Navigation"
 msgid "box_wiki_navigation"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikipage_footer.pt:26
+msgid "enter comments here and click add; or, click edit"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikipage_footer.pt:41
+msgid "Add a comment"
 msgstr ""
 
