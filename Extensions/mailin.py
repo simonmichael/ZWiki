@@ -37,10 +37,14 @@ Here are the delivery rules, in essence:
   CREATE AN ISSUE page.  Otherwise,
 
 - identify destination page name:
-  the first [bracketed name] in the message subject or the folder's
-  default_mailin_page property, possibly acquired
 
-- if no destination page name was found, DISCARD.
+  the first [bracketed page name] in the message subject, which may be a
+  fuzzy/partial name; or the folder's default_mailin_page property,
+  possibly acquired; or the first zwiki page in the folder - unless
+  default_mailin_page was blank.
+
+- if no destination page could be found (default_mailin_page is
+  blank/false), DISCARD.
 
 - if no wiki page by that name exists (fuzzy match allowed), CREATE it
 
@@ -318,24 +322,30 @@ class MailIn:
     def workingPage(self):
         """
         Try to get a wiki page object which we can use for further operations.
+
+        We'll try to ensure that new pages are parented somewhere sensible:
+        the default mailin page if specified, or FrontPage, or the
+        first page in the hierarchy.
         """
-        workingpage = None
-        defaultpagename = self.defaultMailinPage()
-        if defaultpagename:
-            workingpage = getattr(self.folder(),defaultpagename,None)
-        if not workingpage:
-            allpages = self.folder().objectValues(spec='ZWiki Page')
-            if allpages:
-                firstpage = allpages[0]
-                workingpage = \
-                    firstpage.pageWithName(defaultpagename) or firstpage
-        return workingpage
+        allpages = self.folder().objectValues(spec='ZWiki Page')
+        if allpages:
+            alphafirst = allpages[0]
+            outlinefirst = alphafirst.pageWithName(
+                alphafirst.wikiOutline().first())
+            frontpage = alphafirst.pageWithName('FrontPage')
+            defaultmailinpage = alphafirst.pageWithName(
+                getattr(self.folder(),'default_mailin_page',None))
+            return defaultmailinpage or frontpage or outlinefirst or alphafirst
+        else:
+            return None
         
     def defaultMailinPage(self):
         """
         The name of the wiki's default destination page for mailins, or None.
         """
-        return getattr(self.folder(),'default_mailin_page',None)
+        return getattr(self.folder(),'default_mailin_page',
+                       ((self.workingPage() and self.workingPage().pageName())
+                        or None))
         
     def decideMailinAction(self):
         """
