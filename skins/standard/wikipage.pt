@@ -110,9 +110,15 @@
           <div tal:condition="python:1">
             <input id="searchinput" class="formfield" tal:condition="showsearch"
                    name="expr" type="text" size="20" maxlength="100" value="" 
-                   title="search all pages" accesskey="s" style="width: 95%" /> 
+                   title="search all pages" accesskey="s" style="width: 95%" /><br 
+                 tal:condition="showsearch" />
             <!-- XXX hack: width 95% keeps moz from chopping off right end 
                  with 1px borders -->
+          <span id="lasteditor" 
+                tal:content="structure python:here.linkTitle(prettyprint=1)">
+            <!-- XXX move html in linkTitle to here? -->
+            last edited n days ago by by so-and-so
+          </span>
           </div>
         </td>
 
