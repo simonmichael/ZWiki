@@ -66,7 +66,7 @@
                <td align="left" nowrap>
                  <br />
                  <dtml-var "bold and '<b>' or ''">
-                 recent
+                 <dtml-translate domain=zwiki>recent</dtml-translate>
                  <dtml-var "bold and '</b>' or ''">
                </td>
              </tr>
@@ -81,7 +81,7 @@
                </td>
                <td align="left" nowrap>
                  <dtml-var "bold and '<b>' or ''">
-                 all
+                 <dtml-translate domain=zwiki>all</dtml-translate>
                  <dtml-var "bold and '</b>' or ''">
                </td>
              </tr>
