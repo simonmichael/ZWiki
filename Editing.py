@@ -450,11 +450,13 @@ class EditingSupport:
     security.declareProtected(Permissions.Rename, 'rename')
     def rename(self,pagename,
                leaveplaceholder=LEAVE_PLACEHOLDER,
-               updatebacklinks=0,sendmail=1,REQUEST=None):
+               updatebacklinks=1,
+               sendmail=1,
+               REQUEST=None):
         """
         Rename this page, if permissions allow.
 
-        Another method that does quite a lot. Options:
+        Another method that does quite a lot. Extras:
         - preserve parentage of our children
         - update links throughout the wiki. Warning, this may not be 100%
         reliable. It replaces all occurrences of the old page name
