@@ -34,7 +34,7 @@ class AdminSupport:
     security = ClassSecurityInfo()
 
     security.declarePublic('upgradeAll') # we check folder permission at runtime
-    def upgradeAll(self,render=1,partial_commits=0,rename_issues=0,REQUEST=None):
+    def upgradeAll(self,render=1,batch=0,REQUEST=None):
                    
         """
         Update, upgrade, pre-render and re-index all pages and data structures.
@@ -47,11 +47,12 @@ class AdminSupport:
         properties and have been rendered by the latest code, minimizing
         delay and possible problems later on. If you don't need to
         re-render every page, set render=0 to complete much faster on
-        large wikis. Also validates parents and rebuilds the cached wiki
-        outline.
+        large wikis. Also validates parents, re-catalogs each page, and
+        rebuilds the cached wiki outline.
 
-        Optionally commits every 100 pages or so. Possibly useful to avoid
-        memory/conflict errors preventing a complete run in large busy wikis ?
+        The optional batch argument forces a commit every N pages.
+        This may be useful to get a complete run in large/busy wikis,
+        which can be difficult due to conflict errors, memory usage etc.
         """
         if not self.checkPermission(Permissions.manage_properties,
                                      self.folder()):
@@ -66,7 +67,7 @@ class AdminSupport:
             n += 1
             try:
                 p.upgrade(REQUEST)
-                p.upgradeId(REQUEST,rename_issues)
+                p.upgradeId(REQUEST)
                 if render:
                     p.preRender(clear_cache=1)
                     msg = 'upgraded and pre-rendered page'
@@ -78,7 +79,7 @@ class AdminSupport:
             except:
                 BLATHER('failed to upgrade page %d/%d %s: %s' \
                      % (n,total,p.id(),formattedTraceback()))
-            if partial_commits and n % 100 == 0:
+            if batch and n % batch == 0:
                 BLATHER('committing')
                 get_transaction().commit()
 
@@ -87,7 +88,7 @@ class AdminSupport:
         BLATHER('upgrade complete, %d pages processed' % n)
 
     security.declareProtected(Permissions.View, 'upgradeId')
-    def upgradeId(self,REQUEST=None,rename_issues=0):
+    def upgradeId(self,REQUEST=None):
         """
         Make sure a page's id conforms with it's title (cf canonicalIdFrom).
 
@@ -97,16 +98,17 @@ class AdminSupport:
         though, so people must call this manually or more usually via
         upgradeAll.
 
-        This can also rename old IssueNoNNNN pages to the new #NNNN.style.
-        For the moment this is off by default.
+        This will also rename old IssueNoNNNN pages to the new #NNNN.style,
+        if enabled.
 
         With legacy pages (or manually renamed pages), it may happen that
         there's a clash between two similarly-named pages mapping to the
         same canonical id. In this case we just log the error and move on.
         """
         # we can just call rename, it will do what's necessary
-        # XXX maybe it should call here
-        if rename_issues and self.isIssue():
+        # XXX should we do it and have rename call us ?
+        # XXX move to tracker plugin somehow ?
+        if self.isIssue():
             name = self.pageNameFromIssueNumberAndName(self.issueNumber(),
                                                        self.issueName())
         else:
