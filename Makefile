@@ -1,6 +1,7 @@
-# Zwiki product/zwiki.org makefile
+# Zwiki/zwiki.org makefile
 
-# RELEASE SCRIPT (see also ReleaseProcess)
+
+# RELEASE SCRIPT (CVS)
 # ----------------------------------------
 # IN TRUNK
              # IN BRANCH
@@ -30,18 +31,13 @@
 # update FrontPage,KnownIssues,OldKnownIssues,ReleaseNotes,GeneralDiscussion,#zwiki
 
 # FINAL RELEASE:
-             # make zdo-release
 # mail announcement to zope-announce@zope.org, zwiki@zwiki.org
 
-# XXX junk you have to remove after a checkout:
-# content/cmf
-# default_wiki_content
-# emacs
-# import
-# locale
-# skins/{css,wiki,zpt_wiki,zwiki_cmf,zwiki_orig}
-# templates
-# wikis
+
+# NEW RELEASE SCRIPT (darcs)
+# ----------------------------------------
+
+
 
 HOST=zwiki.org
 LHOST=localhost:9673
@@ -625,3 +621,12 @@ mo msgfmt:
 	 echo $$L; msgfmt --statistics $$L.po -o $$L.mo; done
 
 
+# XXX junk you have to remove after a CVS checkout:
+# content/cmf
+# default_wiki_content
+# emacs
+# import
+# locale
+# skins/{css,wiki,zpt_wiki,zwiki_cmf,zwiki_orig}
+# templates
+# wikis
