@@ -398,7 +398,7 @@ class SubtopicsPropertyMixin:
         True when there is a true show_navlinks page or folder property
         and user is in full UI mode.
         """
-        return (getattr(self,'show_navlinks',0) and
+        return (getattr(self,'show_navlinks',1) and
                 self.REQUEST.get('zwiki_displaymode',0) == 'full')
 
     def subtopicsEnabled(self):
