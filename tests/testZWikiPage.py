@@ -204,6 +204,14 @@ class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
 #                          '<a name>WikiName<a class="new" href="/test_folder_1_/wiki/TestPage/editform?page=WikiName" title="create this page">?</a>')
                           '<a name>WikiName<a class="new" href="http://nohost/test_folder_1_/wiki/TestPage/createform?page=WikiName" title="create this page">?</a>')
 
+    def Xtest_renderLink_speed(self):
+        import time
+        for i in range(999):
+            self.p.create('TestPage%03d'%i)
+        t = time.time()
+        self.assertEquals(self.p.pageCount(),1000)
+        print time.time() - t
+        
 
 
 if __name__ == '__main__':
