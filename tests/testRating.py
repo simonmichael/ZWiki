@@ -11,7 +11,7 @@ class RatingTests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
         zwikiAfterSetUp(self)
         self.p.REQUEST.REMOTE_ADDR = '1'
-        self.p.clearVotes()
+        self.p.resetVotes()
 
     def test_rating(self):
         p = self.p

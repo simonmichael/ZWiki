@@ -19,23 +19,41 @@ class RatingSupport:
     """
     security = ClassSecurityInfo()
 
-    _votes = {}
+    _votes = None # not {}, it would be shared
 
-    def clearVotes(self):
-        self._votes = {}
-        self.reindex_object() # XXX votes field only
+    security.declarePrivate('votes')
+    def votes(self):
+        votes = self.aq_base._votes
+        if votes is None: return {}
+        else: return votes
 
+    security.declarePrivate('setVotes')
+    def setVotes(self,votes):
+        self.aq_base._votes = votes
+        # make sure persistence sees this - no longer needed ?
+        #self._p_changed = 1
+        
+    security.declarePrivate('resetVotes')
+    def resetVotes(self):
+        self.setVotes({})
+
+    # api methods
+    
     security.declareProtected(Permissions.Rate, 'rate')
     def vote(self,score=None,REQUEST=None):
         """
-        Record a user's vote for this page.
+        Record a user's vote for this page (or unrecord it).
         """
         username = self.usernameFrom(REQUEST)
         if username:
-            self._votes[username] = score
-            # make sure persistence sees this
-            self._p_changed = 1
-            self.reindex_object() # XXX votes field only
+            votes = self.votes()
+            if score is None:
+                try: del votes[username]
+                except KeyError: pass
+            else:
+                votes[username] = score
+            self.setVotes(votes)
+            self.reindex_object() # XXX only need update votes fields
             if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1']+'#ratingform')
 
     security.declareProtected(Permissions.View, 'voteCount')
@@ -43,14 +61,14 @@ class RatingSupport:
         """
         How many users have voted on this page since last reset ?
         """
-        return len(self._votes.keys())
+        return len(self.votes())
 
     security.declareProtected(Permissions.View, 'myVote')
     def myVote(self,REQUEST=None):
         """
         What is the user's current rating for this page ? May be None.
         """
-        return self._votes.get(self.usernameFrom(REQUEST),None)
+        return self.votes().get(self.usernameFrom(REQUEST),None)
 
     security.declareProtected(Permissions.View, 'rating')
     def rating(self):
@@ -58,9 +76,10 @@ class RatingSupport:
         Get this page's average rating (an integer).
         """
         total = 0
-        for score in self._votes.values(): total += score
+        for score in self.votes().values(): total += score
         return total / (self.voteCount() or 1)
         
+
 
 
 # install permissions
