@@ -350,7 +350,7 @@ class EditingSupport:
             self.setLastLog(log)
 
             # if mailout policy is all edits, do it here
-            if getattr(self.folder(),'mailout_policy','')=='edits':
+            if getattr(self,'mailout_policy',getattr(self.folder(),'mailout_policy',''))=='edits':
                 self.sendMailToSubscribers(
                     self.textDiff(a=oldtext,b=self.read()),
                     REQUEST=REQUEST,
@@ -420,7 +420,7 @@ class EditingSupport:
         # unindex (and remove from outline) and move to the recycle bin folder
         self.recycle(REQUEST)
         # notify subscribers if appropriate
-        if getattr(self.folder(),'mailout_policy','') == 'edits':
+        if getattr(self,'mailout_policy',getattr(self.folder(),'mailout_policy','')) == 'edits':
             self.sendMailToSubscribers(
                 'This page was deleted.\n',
                 REQUEST=REQUEST,
@@ -529,7 +529,7 @@ class EditingSupport:
             except BadRequestException: pass
 
         # notify subscribers if appropriate
-        if (getattr(self.folder(),'mailout_policy','') == 'edits' and
+        if (getattr(self,'mailout_policy',getattr(self.folder(),'mailout_policy','')) == 'edits' and
             sendmail and newname != oldname):
             self.sendMailToSubscribers(
                 'This page was renamed from %s to %s.\n'%(oldname,newname),
