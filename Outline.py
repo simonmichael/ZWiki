@@ -50,26 +50,24 @@ class Outline:
 
         childmap is the inverse of parentmap - except, it remembers any
         manual re-ordering of children. Unless reset is true we try to
-        preserve this information, which complicates things.
+        preserve the order of children, which complicates things badly.
         """
         nodes = self.nodes()
         # XXX still problems with things not getting updated properly
-        #if reset:
-        if 1:
-            # start afresh
+        oldchildmap = self.childmap()
+        if reset:
             childmap = {}
         else:
-            # remove any no-longer-valid childmap entries or children 
             childmap = self.childmap()
-            for p in childmap.keys():
+            # remove any no-longer-existing nodes from childmap
+            for p in childmap.keys()[:]:
                 if not p in nodes: del childmap[p]
                 else:
-                    for c in childmap[p]:
+                    for c in childmap[p][:]: # a copy
                         if not c in nodes: childmap[p].remove(c)
-        # set the childmap entry for each node
+        # make sure each existing node appears in the childmap
         for c in nodes:
-            parents = self.parents(c)
-            for p in parents:
+            for p in self.parents(c):
                 # each parent should have a childmap entry including this child
                 if not childmap.has_key(p): childmap[p] = [c]
                 elif not c in childmap[p]: childmap[p].append(c)
@@ -84,7 +82,7 @@ class Outline:
         """Regenerate everything from the parentmap."""
         self.updateChildmap()
         self.updateNesting()
-    def __init__(self,parentmap):
+    def __init__(self,parentmap={}):
         self.setParentmap(parentmap)
         self.update()
     def add(self,node,parents=[],update=1):
@@ -127,17 +125,24 @@ class Outline:
             parentmap[c].remove(node)
             parentmap[c].append(newnode)
         self.setParentmap(parentmap)
-        # tweak childmap ahead of updateChildMap to preserve node's position
+
+        # tweak childmap before updateChildMap, to preserve node's position
         childmap = self.childmap()
         for p in childmap.keys():
             if node in childmap[p]:
                 childmap[p][childmap[p].index(node)] = newnode
         self.setChildmap(childmap)
+
         if update: self.update()
     def reparent(self,node,newparents,update=1):
         """
         Change node's parents to newparents in the outline.
         """
+        # help prepare childmap for updateChildMap 
+        childmap = self.childmap()
+        for p in self.parents(node): childmap[p].remove(node)
+        self.setChildmap(childmap)
+            
         self.add(node,newparents,update)
     def reorder(self,node,child):
         """

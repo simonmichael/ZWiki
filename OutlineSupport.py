@@ -75,8 +75,7 @@ def deepappend(nesting, page):
         else: nesting[-1] = [nesting[-1],page]
     return nesting
 
-class PersistentOutline(
-    Outline.Outline, SimpleItem):
+class PersistentOutline(Outline.Outline, SimpleItem):
     """
     I am a persistent version of Outline.
 
@@ -202,14 +201,38 @@ class OutlineManagerMixin:
     def updateWikiOutline(self):
         """
         Regenerate the wiki folder's cached outline object.
+
+        The wiki's outline object (a PersistentOutline) is a
+        representation of the page hierarchy, containing the same
+        information as in the pages' parents properties but in a form
+        easier to query. This method either generates a new one from the
+        parents properties, or updates an old one trying to preserve the
+        order of subtopics. Complications.
+
+        This checks and corrects any invalid parents information.  It also
+        loads all page objects from the ZODB, which is probably ok as this
+        is not done frequently.
         """
-        BLATHER('saving outline data for wiki',self.folder().getId())
-        if hasattr(self.folder().aq_base,'outline'):
-            try:
-                self.folder()._delObject('outline')
-            except KeyError: # pre-0.39 outline attribute
-                del self.folder().outline
-        self.folder()._setObject('outline', self.wikiOutlineFromParents())
+        BLATHER('regenerating outline data for wiki',self.folder().getId())
+        oldchildmap = None
+        # backwards compatibility
+        # a pre-0.39 outline is just an attribute, delete (but save childmap)
+        if (hasattr(self.folder().aq_base,'outline') and
+            not 'outline' in self.folder().objectIds()):
+            oldchildmap = self.folder().outline.childmap()
+            del self.folder().outline
+        # if there's no outline object, make one
+        if not hasattr(self.folder().aq_base,'outline'):
+            self.folder()._setObject('outline', PersistentOutline())
+            self.folder().outline.setChildmap(oldchildmap)
+        # regenerate the parentmap
+        parentmap = {}
+        for p in self.pageObjects():
+            p.ensureValidParents() # poor caching
+            parentmap[p.pageName()] = p.getParents()
+        self.folder().outline.setParentmap(parentmap)
+        # update the childmap (without losing subtopics order) and nesting
+        self.folder().outline.update()
 
     # easier alias ?
     updatecontents = updateWikiOutline
@@ -218,14 +241,7 @@ class OutlineManagerMixin:
         """
         Generate an outline object from the pages' parents properties.
 
-        We check and correct any invalid parents as we go.  This touches
-        all page objects, which is probably ok as this is not done
-        frequently.
         """
-        parentmap = {}
-        for p in self.pageObjects():
-            p.ensureValidParents() # poor caching
-            parentmap[p.pageName()] = p.getParents()
         return PersistentOutline(parentmap)
 
     security.declareProtected(Permissions.Reparent, 'reparent')
