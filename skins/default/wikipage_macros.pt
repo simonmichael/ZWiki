@@ -137,7 +137,7 @@
    tal:condition="here/indexUrl"><span class="accesskey">i</span>ndex</a>
 <a href="" tal:attributes="href here/uploadsUrl" 
    tal:condition="here/uploadsUrl">uploads</a>
-<a tal:attributes="href here/preferencesUrl" accesskey="o">preferences</a>
+<a tal:attributes="href here/preferencesUrl" accesskey="o">prefs</a>
 <a title="go to help page" accesskey="h"
    tal:attributes="href here/helpUrl" tal:condition="here/helpUrl"
    ><span class="accesskey">h</span>elp</a>
