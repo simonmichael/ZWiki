@@ -57,27 +57,34 @@ class RatingSupport:
     # api methods
     
     security.declareProtected(Permissions.Rate, 'rate')
-    def vote(self,score=None,REQUEST=None):
+    def vote(self,vote=None,REQUEST=None):
         """
         Record a user's vote for this page (or unrecord it).
 
-        To help with image-button forms, if score is a list, use just the
-        last element.  Zope/browsers seem to marshal the score.x and
-        score.y coordinates into a list along with the value.
+        To help build robust image-button forms, if vote is None, also
+        look for form values named like vote0, vote1.. voteN and use N.
         """
         username = self.usernameFrom(REQUEST)
         if username:
             votes = self.votes()
-            if type(score) == type([]):
-                score = score[-1]
-            if score is None:
+            if vote == None:
+                # look for a form input named voteN and get N
+                # depending on browser, there will also be
+                # voteN.x and voteN.y, or only these
+                if REQUEST:
+                    votefields = [k for k in REQUEST.form.keys()
+                                  if k.startswith('vote')]
+                    if votefields:
+                        vote = votefields[0][4:]
+                        vote = re.sub(r'\.[xy]$','',vote)
+            if vote == None:
                 try:
                     del votes[username]
                     BLATHER("%s: removed %s's vote" % (self.pageName(),username))
                 except KeyError: pass
             else:
-                votes[username] = score
-                BLATHER("%s: recorded %s vote for %s" % (self.pageName(),score,username))
+                votes[username] = vote
+                BLATHER("%s: recorded %s vote for %s" % (self.pageName(),vote,username))
             self.setVotes(votes)
             self.reindex_object() # XXX only need update votes fields
             if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1']) #+'#ratingform')
