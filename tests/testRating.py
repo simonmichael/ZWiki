@@ -18,6 +18,9 @@ class RatingTests(ZopeTestCase.ZopeTestCase):
         self.assert_(p.rating() == 0)
         p.vote(2)
         self.assert_(p.rating() == 2)
+        self.p.REQUEST.REMOTE_ADDR = 'another'
+        p.vote(0)
+        self.assert_(p.rating() == 1)
 
     def test_vote(self): # and voteCount
         p = self.p

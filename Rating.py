@@ -33,13 +33,15 @@ class RatingSupport:
         username = self.usernameFrom(REQUEST)
         if username:
             self._votes[username] = score
+            # make sure persistence sees this
+            self._p_changed = 1
             self.reindex_object() # XXX votes field only
-            if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1'])
+            if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1']+'#ratingform')
 
     security.declareProtected(Permissions.View, 'voteCount')
     def voteCount(self):
         """
-        How many page rating votes have been made on this page since last reset ?
+        How many users have voted on this page since last reset ?
         """
         return len(self._votes.keys())
 
