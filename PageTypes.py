@@ -83,9 +83,18 @@ class AbstractPageType:
 
     def preRenderMessage(self,page,msg):
         t = msg.fp.read()
+        t = self.escapeEmailAddresses(page,t)
         t = self.renderCitationsIn(page,t)
         t = self.addCommentHeadingTo(page,t,msg)
         return t
+
+    def escapeEmailAddresses(self,page,text):
+        return re.sub(r'(?<!mailto:)([\w\-\+\.]+)@([\w\-\+\.]+)\.([\w\-\+\.]+)([^>]*<|$)', 
+            lambda m: '<span class="nospam1">&#' + str(ord(m.groups()[0][0])) 
+                + m.groups()[0][1:] 
+                + '<!-- foobar --></span>&#64;<span class="nospam2">' 
+                + m.groups()[1][0:-1] + '&#' + str(ord(m.groups()[1][-1])) 
+                + ';&#46;' + m.groups()[2] + '</span>' + m.groups()[3], text)
 
     def renderCitationsIn(self,page,text):
         return text
@@ -243,6 +252,7 @@ class ZwikiStxPageType(AbstractHtmlPageType):
         t = self.renderStxIn(page, t)
         if page.usingPurpleNumbers(): t = page.renderPurpleNumbersIn(t)
         t = page.markLinksIn(t)
+        t = self.escapeEmailAddresses(page,t)
         return t
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):
@@ -274,6 +284,7 @@ class ZwikiHtmlPageType(AbstractHtmlPageType):
         t = text or (page.read()+'\n'+MIDSECTIONMARKER)
         t = page.applyWikiLinkLineEscapesIn(t)
         t = page.markLinksIn(t)
+        t = self.escapeEmailAddresses(page,t)
         return t
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):
@@ -305,6 +316,7 @@ class ZwikiRstPageType(AbstractPageType):
         t = self.renderRstIn(t)
         if page.usingPurpleNumbers(): t = page.renderPurpleNumbersIn(t)
         t = page.markLinksIn(t)
+        t = self.escapeEmailAddresses(page,t)
         return t
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):
@@ -345,6 +357,7 @@ class ZwikiWwmlPageType(AbstractPageType):
         t = self.renderWwmlIn(t)
         if page.usingPurpleNumbers(): t = page.renderPurpleNumbersIn(t)
         t = page.markLinksIn(t)
+        t = self.escapeEmailAddresses(page,t)
         return t
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):
@@ -367,6 +380,7 @@ class ZwikiPlaintextPageType(AbstractPageType):
         t = text or page.read()
         t = self.renderPlaintextIn(t)
         if not text: t += '\n'+MIDSECTIONMARKER
+        t = self.escapeEmailAddresses(page,t)
         return t
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):
