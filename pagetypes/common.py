@@ -128,6 +128,34 @@ class AbstractHtmlPageType(AbstractPageType):
     supportsHtml = yes
 
     def renderCitationsIn(self, page, t):
+        """
+        Apply HTML blockquote formatting to > citations in text.
+
+        XXX needs fixing. Misses terminating /blockquote and can mess up
+        the rest of the page.
+
+        If we had doctest again.. but see testcommon.py instead.
+
+        >>> test = lambda t:self.renderCitationsIn(self,t)
+        >>> 
+        >>> test('a')                   # no citations
+        'a'
+        >>> 
+        >>> test('> a\n')               # single level of citation
+        '\n<blockquote type="cite">\n\na\n\n</blockquote>\n'
+        >>> 
+        >>> test('> a')                 # no terminating newline
+        '\n<blockquote type="cite">\n\n> a</blockquote>'
+        '\n<blockquote type="cite">\n\n> a' # ACTUAL
+        >>> 
+        >>> test('>> a\n> b\n')         # double citation followed by single
+        '\n<blockquote type="cite">\n\n\n<blockquote type="cite">\n\na\n\n</blockquote>\nb\n\n</blockquote>\n'
+        >>>         
+        >>> test('>> a\n)               # double with no following single
+        '\n<blockquote type="cite">\n\n\n<blockquote type="cite">\n\na</blockquote>\n</blockquote>\n'
+        '\n<blockquote type="cite">\n\n\n<blockquote type="cite">\n\n> a\n\n</blockquote>\n' # ACTUAL
+        
+        """
         inblock = 0
         blocklines = []
         blockend=0
@@ -135,18 +163,21 @@ class AbstractHtmlPageType(AbstractPageType):
         t = ""
         for i in range(len(lines)):
             m = re.match(r'^>\s?(.*)$', lines[i])
-            if(m):
-                if(not inblock):
+            if m:
+                if not inblock:
                     t += string.join(lines[blockend:i],'\n')
-                    t += '\n<blockquote type="cite">\n\n'
+                    t += '<blockquote type="cite">\n'
                 inblock = 1
                 blocklines.append(m.group(1))
-            elif(inblock):
+            elif inblock:
                 inblock = 0
                 blockend=i
                 t += self.renderCitationsIn(page,string.join(blocklines, '\n'))
-                t += '\n\n</blockquote>\n'
+                t += '</blockquote>\n'
                 blocklines = []
+        if inblock:
+            m = re.match(r'^>\s?(.*)$', lines[i])
+            lines[i] = m.group(1)+'</blockquote>\n'
         t += string.join(lines[blockend:], '\n')
         return t 
 
