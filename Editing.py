@@ -206,13 +206,9 @@ class EditingSupport:
         self.cookDtmlIfNeeded()
 
         # send out mail to any subscribers
-        # XXX for 'edits' policy, we have always sent a (more exact) diff
-        # rather than just the comment text. Maybe not necessary ?
-        #if self.mailoutPolicy()=='edits': text = self.textDiff(a=oldtext,b=self.read())
-        #else: text = m.get_payload()
         # hack the username in there for usernameFrom
         if REQUEST: REQUEST.cookies['zwiki_username'] = m['From']
-        self.sendMailToSubscribers(m.get_payload(), #text, 
+        self.sendMailToSubscribers(m.get_payload(),
                                    REQUEST,
                                    subject=m['Subject'],
                                    message_id=m['Message-ID'],
