@@ -1,3 +1,55 @@
+    Summary
+
+	Bugfixes, new japanese translation, chinese translation updates,
+	new search option.
+
+    Upgrade notes
+
+	This fixes a high-profile known issue in 0.39, #1062. If you
+	didn't already find the issue page and workaround, upgrade to this
+	version to fix it.
+	
+    Changes
+
+      Browsing
+
+        * add a "thorough" non-catalog search to search form, commented
+	  out (for spam hunting)
+
+      Editing
+
+        * fix the keys attribute error when creating pages in plone (#1062)
+
+        * deleting a top-level page redirects to the front page again; new
+	  upUrl method (#917, Martijn Pieters, SM)
+
+      Issue tracking
+
+        * no bogus property change. Some very aggressive search engines
+	  (spiders) seem to be following form action="xxxx" references in
+	  pages as well as the usual href links. As a result probes by
+	  such greedy theives can cause unexpected changes to wiki web
+	  pages. One such example recently has been the triggering of the
+	  Change button on the Issue pages.  The script
+	  changeIssueProperties should be more careful not to record any
+	  change if the Change action is triggered with no actually
+	  changes. (Bill Page)
+
+      General - i18n
+
+        * new japanese translation (Masaya Kato, Manabu Terada, Yoshiki
+	  Shibukawa, Takayuki Shimizukawa, Junya Ogino, Takanori Suzuki)
+
+        * chinese translation updates (T.C. Chou)
+
+        * updated all po files from latest pot
+
+      General - skins
+	
+        * the site_logo folder property didn't work in plone
+
+
+
 Zwiki 0.39.0 2005/03/01
 
     Summary
