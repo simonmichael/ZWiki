@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-30-0\n"
 "POT-Creation-Date: Wed May 26 12:08:02 2004\n"
-"PO-Revision-Date: 2004-05-27 01:59+0200\n"
+"PO-Revision-Date: 2004-05-28 00:45+0200\n"
 "Last-Translator: Lele Gaifax <lele@seldati.it>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr "Non sei autorizzato ad aggiornare tutte le pagine."
 
 #: i/Admin.py:101
 msgid "(folder -> Manage properties)"
-msgstr ""
+msgstr "(folder -> Manage properties)"
 
 # Default: ""
 # "You can subscribe to this page or to the whole wiki.\n"
@@ -29,12 +29,7 @@ msgstr ""
 # "          Or return to"
 #: i/CMFInit.py:101
 msgid "Subscribe"
-msgstr ""
-"Puoi sottoscrivere un abbonamento a questa pagina oppure a tutto il wiki.\n"
-"     Gli abbonati ricevono via email una copia delle annotazioni alle\n"
-"     modifiche (ma non alle modifiche senza annotazione, se non sono\n"
-"     state abilitate dall'amministratore del sito).\n"
-"     Oppure ritorna a"
+msgstr "Abbonati"
 
 #: i/CMFInit.py:108 i/skins/zwiki_plone/contentspage.pt:13
 msgid "Wiki contents"
@@ -62,7 +57,7 @@ msgstr "Opzioni wiki"
 
 #: i/CMFInit.py:77 i/skins/zwiki_plone/uploaded.pt:25
 msgid "View"
-msgstr "Vedi"
+msgstr "Visualizza"
 
 #: i/CMFInit.py:83
 msgid "Edit"
@@ -263,7 +258,7 @@ msgstr ""
 "        +    mostra le pagine in modalità completa\n"
 "        =    mostra le pagine in modalità semplice\n"
 "        -    mostra le pagine in modalità minimale\n"
-"        m    sottoscrizione email\n"
+"        m    sottoscrizione abbonamento email\n"
 "        b    mostra riferimenti inversi (link a questa pagina)\n"
 "        d    mostra differenze (storia delle modifiche alla pagina)\n"
 "        y    mostra la storia completa (nella ZMI)\n"
@@ -353,7 +348,7 @@ msgstr "crea questa pagina"
 
 #: i/ZWikiPage.py:661 i/ZWikiPage.py:674 i/ZWikiPage.py:677
 msgid "last edited %(interval)s ago"
-msgstr "ultima modifica %(interval)s fa"
+msgstr "modificata %(interval)s fa"
 
 #: i/ZWikiPage.py:670
 msgid "show last edit %(lastlog)s"
@@ -631,7 +626,7 @@ msgstr "minimale"
 
 #: i/skins/standard/wikipage_macros.pt:206
 msgid "configure email subscription to this page or site"
-msgstr "configura la sottoscrizione email a questa pagina o al sito"
+msgstr "configura l'abbonamento email a questa pagina o al sito"
 
 # Default: ""
 # "You can subscribe to this page or to the whole wiki.\n"
@@ -640,12 +635,7 @@ msgstr "configura la sottoscrizione email a questa pagina o al sito"
 # "          Or return to"
 #: i/skins/standard/wikipage_macros.pt:216
 msgid "subscribe"
-msgstr ""
-"Puoi sottoscrivere un abbonamento a questa pagina oppure a tutto il wiki.\n"
-"     Gli abbonati ricevono via email una copia delle annotazioni alle\n"
-"     modifiche (ma non alle modifiche senza annotazione, se non sono\n"
-"     state abilitate dall'amministratore del sito).\n"
-"     Oppure ritorna a"
+msgstr "abbonati"
 
 #: i/skins/standard/wikipage_macros.pt:225
 msgid "backlinks"
@@ -926,7 +916,7 @@ msgstr "Cerca in questo wiki"
 msgid "subscribed_wiki_ok"
 msgstr ""
 "Attualmente sei abbonato <br />\n"
-"            a tutto il wiki."
+"a tutto il wiki."
 
 # Default: ""
 # "You are currently not subscribed<br />\n"
@@ -936,7 +926,7 @@ msgstr ""
 msgid "subscribed_wiki_no"
 msgstr ""
 "Attualmente non sei abbonato <br />\n"
-"            a tutto il wiki.<"
+"a tutto il wiki."
 
 #: i/skins/zwiki_plone/subscribeform.pt:108
 #: i/skins/standard/subscribeform.pt:132
@@ -957,7 +947,7 @@ msgstr "Sei abbonato queste altre pagine"
 #: i/skins/zwiki_plone/subscribeform.pt:13
 #: i/skins/standard/subscribeform.pt:36
 msgid "Mail subscription"
-msgstr "Sottoscrizione email"
+msgstr "Sottoscrizione abbonamento email"
 
 #: i/skins/zwiki_plone/subscribeform.pt:143
 #: i/skins/standard/subscribeform.pt:167
@@ -1060,7 +1050,7 @@ msgstr "oggetto"
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:26
 msgid "enter comments here and click add; or, click edit"
-msgstr "inserisci qui il tuo commento e clicca su aggiungi; oppure clicca su modifica"
+msgstr "inserisci la tua annotazione e clicca su aggiungi commento; oppure clicca su modifica"
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:41
 #: i/skins/standard/wikipage_macros.pt:436
