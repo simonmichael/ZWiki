@@ -137,28 +137,59 @@ refresh-mailin:
 	@$(CURL) 'http://$(HOST)/mailin/manage_edit?id=mailin&module=mailin&function=mailin&title='
 
 ## testing
+# mostly fucked up, as usual
 
-test:
-	@python2.1 /usr/local/bin/testrunner.py -I /var/lib/zope -d /var/lib/zope/Products/ZWiki/tests
+# plain python
+# not working
+testa:
+	export PYTHONPATH=/zope/lib/python:/zope1; \
+	  python /zope1/Products/ZWiki/tests/testAdmin.py
 
+# zope 2 testrunner
+# not working
+testb:
+	export PYTHONPATH=/zope/lib/python:/zope1; \
+	  python /usr/local/src/Zope-2.7.0/utilities/testrunner.py -d /zope1/Products/ZWiki/tests
+
+# shh's testrunner
+# runs in emacs shell but not M-x compile
+# testCMFPlone can't import ZTUtils' make_query
+testc:
+	export PYTHONPATH=/zope/lib/python:/zope1; \
+	  python /usr/local/bin/testrunner.py -I /zope1 -d /zope1/Products/ZWiki/tests
+
+# zope 3 testrunner
+# this one works via ssh
+testd:
+	export PYTHONPATH=/zope/lib/python:/zope1; \
+	  python test.py -v --libdir $$PWD/tests
+
+# test a single module
+#test%:
+#	export PYTHONPATH=/zope/lib/python:/zope1; \
+#	  python /zope1/Products/ZWiki/test.py --libdir /zope1/Products/ZWiki/tests -f /zope1/Products/ZWiki/tests/test$*.py
+
+# test with argument(s)
 test%:
-	@python2.1 /usr/local/bin/testrunner.py -I /var/lib/zope -f /var/lib/zope/Products/ZWiki/tests/test$*.py
+	export PYTHONPATH=/zope/lib/python:/zope1; \
+	  python test.py -v --libdir $$PWD/tests $*
+
+test: testd
 
 rtest:
-	ssh $(HOST) python /usr/local/zope/software/bin/testrunner.py -v1 -d /instance/Products/ZWiki/tests
+	ssh $(HOST) 'cd zwiki; make test'
 
 rtest%:
-	scp tests/test$*.py $(HOST):zwiki/tests; \
-	ssh $(HOST) python /usr/local/zope/software/bin/testrunner.py -v1 -f /usr/local/zope/instance/Products/ZWiki/tests/test$*.py
+	ssh $(HOST) "cd zwiki; make rtest$*"
 
-functest:
-	ssh zwiki.org testrunner
+#functest:
+#	ssh zwiki.org testrunner
 
-functest2:
-	ssh zwiki.org /usr/local/zope/instance/Products/ZWiki/functionaltests/run_tests -v zwiki
+#functest2:
+#	ssh zwiki.org /usr/local/zope/instance/Products/ZWiki/functionaltests/run_tests -v zwiki
 
-analyzezodb:
-	ssh zwiki.org 'export ZOPEVERSION=2.6.1; export ZOPEHOME=/usr/local/zope/$$ZOPEVERSION; export INSTANCE_HOME=/usr/local/zope/instance; export SOFTWARE_HOME=$$ZOPEHOME/lib/python; export PYTHONPATH=$$SOFTWARE_HOME:$$ZOPEHOME:$$INSTANCE_HOME; /usr/local/bin/ZODBAnalyze.py ~simon/var/Data.fs >~simon/ZWiki/zodb_report.txt'
+#analyzezodb:
+#	ssh zwiki.org 'export ZOPEVERSION=2.6.1; export ZOPEHOME=/usr/local/zope/$$ZOPEVERSION; export INSTANCE_HOME=/usr/local/zope/instance; export SOFTWARE_HOME=$$ZOPEHOME/lib/python; export PYTHONPATH=$$SOFTWARE_HOME:$$ZOPEHOME:$$INSTANCE_HOME; /usr/local/bin/ZODBAnalyze.py ~simon/var/Data.fs >~simon/ZWiki/zodb_report.txt'
 
 
 ## branching, releasing
