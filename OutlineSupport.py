@@ -544,7 +544,7 @@ class OutlineRenderingMixin:
                     '<a href="%s/%s" name="%s" title="%s">%s</a>'\
                     % (baseurl, self.canonicalIdFrom(i), quote(i),
                        linktitle,
-                       i))
+                       self.formatWikiname(i)))
             else:
                 combos.append(i)
         here = (here and unquote(here)) or self.pageName()
@@ -772,7 +772,7 @@ class OutlineRenderingMixin:
                            '<a href="%s/backlinks" title="%s">%s</a>' % (
                                self.page_url(),
                                _("which pages link to this one ?"),
-                               self.pageName()),
+                               self.formatWikiname(self.pageName())),
                            t)
             elif SHOW_CURRENT_PAGE_IN_CONTENTS:
                 t = re.sub(r'(\[%s\])' % re.escape(here),
@@ -785,7 +785,8 @@ class OutlineRenderingMixin:
         def quicklink(match):
             page = match.group(1)
             return '<a href="%s/%s" name="%s">%s</a>' \
-                   % (wikiurl,self.canonicalIdFrom(page),quote(page),page)
+                   % (wikiurl,self.canonicalIdFrom(page),quote(page),
+                      self.formatWikiname(page))
         t = re.sub(bracketedexpr,quicklink,t)
         return t
 

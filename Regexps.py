@@ -142,7 +142,7 @@ anywikilinkexpr  = re.compile(r'(%s|%s)' % (interwikilink,wikilink))
 markedwikilinkexpr  = re.compile(r'<zwiki>(.*?)</zwiki>')
 untitledwikilinkexpr = \
           re.compile(r'<a href="([^"/]*/)*(?P<page>[^/"]*)" title="">.*?</a>')
-wikinamewords    = r'((%s(?!%s))+[0-9]*|%s%s+[0-9]*)'%(Ub,Lb,Ub,Lb)
+wikinamewords    = r'((%s(?!%s))+|%s%s+|[0-9]+)'%(Ub,Lb,Ub,Lb)
 remotewikiurl    = r'(?mi)RemoteWikiURL[:\s]+(?P<remoteurl>[^\s]*)\s*$'
 protected_line   = r'(?m)^!(.*)$'
 

@@ -475,9 +475,26 @@ class ZWikiPage(
         """
         return re.sub(wikilink, r'!\1', match.group(1))
 
+    security.declareProtected(Permissions.View, 'spacedWikinamesEnabled')
     def spacedWikinamesEnabled(self):
         """Should all wikinames be displayed with spaces in this wiki ?"""
         return getattr(self.folder(),'spaced_wikinames',0) and 1
+
+    security.declareProtected(Permissions.View, 'spacedNameFrom')
+    def spacedNameFrom(self,pagename):
+        """
+        Return pagename with spaces inserted if it's a WikiName, or unchanged.
+        """
+        #spaced = pagename[0]
+        #for c in pagename[1:]:
+        #    if c in string.uppercase: spaced += ' '
+        #    spaced += c
+        #return spaced
+        if re.match('^%s$' % wikiname, pagename):
+            words = [x[0] for x in re.findall(wikinamewords,pagename)]
+            return ' '.join(words)
+        else:
+            return pagename
 
     security.declareProtected(Permissions.View, 'formatWikiname')
     def formatWikiname(self,wikiname):
@@ -486,15 +503,9 @@ class ZWikiPage(
 
         Ie, leave it be or add ungodly spaces depending on the
         'spaced_wikinames' property.
-
-        Not used yet, probably a waste of time.
         """
         if self.spacedWikinamesEnabled():
-            spaced = wikiname[0]
-            for c in wikiname[1:]:
-                if c in string.uppercase: spaced += ' '
-                spaced += c
-            return spaced
+            return self.spacedNameFrom(wikiname)
         else: 
             return wikiname
 
@@ -575,7 +586,7 @@ class ZWikiPage(
                    % self.pageWithNameOrId(link).issueColour # all-brains
             return '<a href="%s/%s" title="%s"%s%s>%s</a>' \
                    % (self.wiki_url(),quote(link),linktitle,accesskey,
-                      style,linknobrackets)
+                      style,self.formatWikiname(linknobrackets))
 
         # subwiki support: or does a matching page exist in the parent folder ?
         # XXX this is dumber than the above; doesn't handle i18n
@@ -584,12 +595,15 @@ class ZWikiPage(
               hasattr(self.folder().aq_parent, link) and
               self.isZwikiPage(getattr(self.folder().aq_parent,link))): #XXX poor caching
             return '<a href="%s/../%s" title="%s">../%s</a>'\
-                   % (self.wiki_url(),quote(link),_("page in parent wiki"),linkorig)
+                   % (self.wiki_url(),quote(link),_("page in parent wiki"),
+                      self.formatWikiname(linkorig))
 
         # otherwise, provide a creation link
         return ('%s<a class="new" href="%s/%s/createform?page=%s" title="%s">?</a>') \
-               % (linkorig, self.wiki_url(), quote(self.id()),
-                  quote(linknobrackets), _("create this page"))
+               % (self.formatWikiname(linkorig), self.wiki_url(),
+                  quote(self.id()), quote(linknobrackets),
+                  _("create this page"))
+                  
 
     def renderInterwikiLink(self, link):
         """
@@ -724,13 +738,15 @@ class ZWikiPage(
         We use this for eg the html title tag to improve search engine relevance.
         Attempts to use the same characters and patterns as the wikiname regexp.
         """
-        pagename = self.pageName()
-        if re.match('^%s$' % wikiname, pagename):
-            words = [x[0] for x in re.findall(wikinamewords,pagename)]
-            return ' '.join(words)
-        else:
-            return pagename
+        return self.spacedNameFrom(self.pageName())
     
+    security.declareProtected(Permissions.View, 'formattedPageName')
+    def formattedPageName(self):
+        """
+        Return this page's name in the standard display format (spaced or not).
+        """
+        return self.formatWikiname(self.pageName())
+
     security.declarePublic('Title')
     def Title(self):
         """

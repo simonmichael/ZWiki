@@ -363,7 +363,7 @@ tal:attributes="href ctx/contentsUrl" tal:content="python: container.title + ' c
 tal:attributes="
  href python:here.page_url() + '/backlinks';
  title python:'show backlinks for this page ('+here.linkTitle()+')'"
-tal:content="here/title_or_id"
+tal:content="here/formattedPageName"
 href="page_url/backlinks" 
 title="show backlinks for this page (last edited n days ago by so-and-so)" 
 accesskey="b"

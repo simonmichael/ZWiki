@@ -42,14 +42,14 @@
 <p><b><dtml-translate domain=zwiki>Page names matching</dtml-translate> &dtml-wildcardexpr; (<dtml-var "_.len(titlehits)">):</b>
 <br /><br />
 <dtml-in titlehits sort=Title>
-<a href="&dtml-wikiurl;/&dtml.url_quote-id;">&dtml-Title;</a><br />
+<a href="&dtml-wikiurl;/&dtml.url_quote-id;"><dtml-var "formatWikiname(Title)"></a><br />
 </dtml-in>
 </p>
 </dtml-if>
 <p><b><dtml-translate domain=zwiki>Text matching</dtml-translate> &dtml-expr; (<dtml-var "_.len(texthits)">):</b>
 <br /><br />
 <dtml-in texthits sort=Title>
-<dl><dt><a href="&dtml-wikiurl;/&dtml.url_quote-id;">&dtml-Title;</a></dt><dd><dtml-if expr><small><em><dtml-var "pageWithName(id).excerptAt(expr,size=500)"></em></small></dtml-if></dd></dl>
+<dl><dt><a href="&dtml-wikiurl;/&dtml.url_quote-id;"><dtml-var "formatWikiname(Title)"></a></dt><dd><dtml-if expr><small><em><dtml-var "pageWithName(id).excerptAt(expr,size=500)"></em></small></dtml-if></dd></dl>
 </dtml-in>
 </p>
 </dtml-let>
@@ -60,7 +60,7 @@
 <dtml-in "aq_parent.objectValues(spec='ZWiki Page')" sort=Title>
   <dtml-unless "_.string.find(_.string.lower(_.getitem('sequence-item').raw),_.string.lower(expr)) == -1 and _.string.find(_.string.lower(id()),_.string.lower(expr)) == -1">
     <dtml-call "REQUEST.set('count',REQUEST.count + 1)">
-    <a href="&dtml-wikiurl;/&dtml.url_quote-id;">&dtml-Title;</a><br />
+    <a href="&dtml-wikiurl;/&dtml.url_quote-id;"><dtml-var "formatWikiname(Title())"></a><br />
   </dtml-unless></dtml-in>
 </p>
 <p><b><dtml-var count> <dtml-translate domain=zwiki>hits</dtml-translate></b></p>

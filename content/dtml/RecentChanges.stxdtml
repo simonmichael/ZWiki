@@ -57,7 +57,7 @@
       <a href="&dtml-wikiurl;/&dtml.url_quote-id;" 
          title=""
          style="background-color:<dtml-var issueColour>;"
-         ><dtml-var Title></a>
+         ><dtml-var "formatWikiname(Title)"></a>
       <dtml-if "creation_time and (now - _.DateTime(creation_time)) < newdays">
       <small><span style="background-color:palegreen"><dtml-translate domain=zwiki>NEW</dtml-translate></span></small>
       </dtml-if>
