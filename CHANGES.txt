@@ -1,3 +1,158 @@
+Zwiki 0.32.0rc1 2004/07/02
+
+    Summary
+
+        In progress. I18n! Tracker skin cleanups. Page types separated
+	into pluggable modules.
+
+    Upgrade notes
+    
+        
+
+    Changes
+
+      General
+
+        * don't let any kind of link-updating problem stop a rename
+
+        * Don't import hidden files or _darcs directory when importing from fs. (Bob McElrath)
+
+        * addZWikiWebFromFs: recognize python scripts (Bob McElrath)
+
+        * docstrings - Add docstrings to methods declared viewable (otherwise they don't work) (Bob McElrath)
+
+        * replace PageTypes as temporary fix for another _set_ghost_state error
+
+        * move page type upgrades to pagetypes, provide registerPageTypeUpgrade()
+
+        * page types cleanup, plugin API docs
+
+        * settle on short page type ids, finally
+
+        * split page types into individual modules
+
+        * simplify CMF rendering code and CMF/Plone page view url
+
+        * fix permissions had errors message (IssueNo0842)
+
+        * don't let an empty allowed_page_types property break page creation
+
+      Skins and content
+
+        * Case Typo on diffform.pt, full history button. (Bob McElrath)
+
+        * convert remaining <br>'s to <br />
+
+        * value title - This code doesn't do what was intended, generates
+	xhtml errors because of attributes: value;title="value;title"  (Bob McElrath)
+
+        * ignore vim swapfiles on import (Bob McElrath)
+
+        * include() convenience method for dtml
+
+        * zwiki_plone: remove unused wiki_icon.gif
+
+        * zwiki_plone: rename wikipage_view to wikipage to be at least self-consistent
+
+        * css: rename shade2 class to formfield
+
+        * add background shading to more form elements: backlinks, editform, subscribeform
+
+        * standard skin: make form inputs & selects inherit font size
+
+        * tighten up page management form layout and add a subtopic creation button
+
+        * standard editform: remove subtopics option, it's never used
+
+        * br -> br / (Bob McElrath)
+
+        * xhtmlization <br> -> <br /> (Bob McElrath)
+
+      Mail and comments
+
+        * Do not add extra space on mailin Subject lines. (Bob McElrath)
+
+        * standard subscribeform: remove duplicate you are not subscribed
+
+      Tracker
+
+        * issueNumberAndName cleanup, don't treat pages beginning with a digit as issues
+
+        * issue properties form: allow a longer optional note, up to 100 chars
+
+        * issue tracker wording change
+
+        * use consistent shaded background for issueproperties form.. I think
+
+        * use consistent shading in add issue form elements
+
+        * make issue tracker layout cleaner and more consistent in standard/plone
+
+        * fix STX formatting in add issue form
+
+        * setupTracker(pages=1): disable subtopics display on the IssueTracker page by default
+
+      I18n
+
+        * make _() return a string rather than a MessageIDFactory & document (Issueno0856)
+
+        * update chinese translations (T.C.Chou)
+
+        * Another little fix to italian messages (Lele Gaifax)
+
+        * A few fixes to italian catalog (Lele Gaifax)
+
+        * add missing i18n in recent changes
+
+        * french translation updates (Nicolas Laurent)
+
+        * FrPoUpdate140604 (Nicolas Laurent)
+
+        * Other italian messages, for Plone actions (Lele Gaifax)
+
+        * i18n quotes laquo/raquo html entity, use angle brackets instead
+
+        * try including po files in tags
+
+        * polish translation updates (Jakub Wisniowski)
+
+        * recent changes i18n (Jakub Wisniowski)
+
+        * Sync'ed the italian messages catalog (Lele Gaifax)
+
+        * rename plone po files again for maximum clarity
+
+        * split po files into zwiki and plone domains to fix action translations (IssueNo0833)
+
+        * also set content-type header in all dtml to fix character encoding
+
+        * polish translations updates, mainly in plone (Jakub Wisniowski)
+
+        * i18n fix for add wiki page form (Jakub Wisniowski)
+
+        * i18n fix for add issue form labels
+
+        * remove fuzzy markers from pl.po
+
+        * polish translation updates (Jakub Wisniowski)
+
+        * more issue tracker i18n (Jakub Wisniowski)
+
+        * new dutch translation (Jaap Noordzij)
+
+        * polish translation updates plus issue tracker and filter issues translations (Jakub Wisniowski)
+
+        * internationalise issue tracker and filter issues pages and skin templates (Jakub Wisniowski)
+
+        * french translations for options and search  (Nicolas Laurent)
+
+        * internationalise options and search pages and skin templates (Nicolas Laurent)
+
+        * new polish translation (Marek Ciesielski)
+
+        * translate cmf actions at run time, not install time; add zwiki-manual.pot for things like this
+
+	
 Zwiki 0.31.0 2004/06/01
 
     Summary
