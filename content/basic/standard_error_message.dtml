@@ -1,0 +1,52 @@
+<dtml-if "error_type=='NotFound'">
+<dtml-comment>
+A custom error handler. This handles NotFound errors (only) by
+redirecting to a similarly-named existing page if possible, 
+otherwise offering create/search buttons.
+Works with either the skin-based searchwiki form or a SearchPage page.
+Assumes at least one zwiki page exists.
+</dtml-comment>
+<dtml-let 
+ here="objectValues(spec='ZWiki Page')[0]"
+ here="here.defaultPage()"
+ pagename="'SearchPage'"
+ skinname="'searchwiki'"
+ searchpage="here.pageWithName(pagename)"
+ searchpagehasdtml="searchpage and searchpage.dtmlAllowed() and searchpage.hasDynamicContent()"
+ searchurl="(searchpagehasdtml and searchpage.pageUrl()) or here.pageUrl()+'/'+skinname"
+ path="URL[_.len(SERVER_URL):]"
+ searchexpr="_.string.split(path,'/')[-1]"
+ targetpage="here.pageWithFuzzyName(searchexpr,url_quoted=1,
+                                    allow_partial=1,ignore_case=1) or
+             here.pageWithId(searchexpr,ignore_case=1)"
+ targeturl="(targetpage and targetpage.page_url()) or None"
+ >
+<dtml-if targeturl>
+<dtml-call "RESPONSE.redirect(targeturl,lock=1)">
+<dtml-else>
+<html>
+  <head><meta name="robots" content="noindex,nofollow"></head>
+  <body>
+    <p>
+      I could not find any likely page matching 
+      "<b><dtml-var "here.urlunquote(searchexpr)"></b>"
+    </p>
+    <p>
+      Click here to 
+      <form action="<dtml-var "here.page_url()">/editform"
+            method="GET" enctype="multipart/form-data">
+        <input type="hidden" name="page" value="&dtml-searchexpr;">
+        <input type="submit" value="create this page">
+      </form>
+      <form action="&dtml-searchurl;"
+            method="GET" enctype="multipart/form-data">
+        <input type="hidden" name="expr" value="&dtml-searchexpr;">
+        <input type="submit" value="search for it">
+      </form>
+      or visit the <a href="&dtml-URL1;">front page</a>.
+    </p>
+  </body>
+</html>
+</dtml-if>
+</dtml-let>
+</dtml-if>

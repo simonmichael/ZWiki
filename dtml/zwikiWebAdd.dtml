@@ -1,0 +1,61 @@
+<HTML>  
+<HEAD>  
+<TITLE><dtml-var "gettext('Add a ZWiki web')"></TITLE>
+</HEAD>  
+<BODY BGCOLOR="#FFFFFF" LINK="#000099" VLINK="#555555">  
+<H2><dtml-var "gettext('Add a ZWiki web')"></H2>
+<FORM ACTION="manage_addZWikiWeb" METHOD="POST" ENCTYPE="multipart/form-data">
+<TABLE CELLSPACING="2">
+<TR> 
+<TH ALIGN="LEFT" VALIGN="middle"><dtml-var "gettext('Id')"></TH>
+<TD ALIGN="LEFT" VALIGN="middle">
+<INPUT TYPE="TEXT" NAME="new_id" SIZE="30">
+</TD>
+</TR>
+<TR> 
+<TH ALIGN="LEFT" VALIGN="middle"><dtml-var "gettext('Title')"></TH>
+<TD ALIGN="LEFT" VALIGN="middle">
+<INPUT TYPE="TEXT" NAME="new_title" SIZE="30">
+</TD>
+</TR>
+<TR> 
+<TH ALIGN="LEFT" VALIGN="top"><dtml-var "gettext('Type')"></TH>
+<TD ALIGN="LEFT" VALIGN="middle">
+
+<table border="0" cellspacing=3>
+<dtml-in listWikis>
+<dtml-unless "_['sequence-item'][-7:] == '_config'">
+<tr valign="middle">
+<td nowrap valign="top">
+<input type="radio" name="wiki_type" value="<dtml-var "_['sequence-item']">"
+<dtml-if "_['sequence-start']">CHECKED</dtml-if>
+> <dtml-var "_['sequence-item']"></input>
+</td>
+<td>
+<dtml-try>
+<dtml-with "PARENTS[-1].Control_Panel.Products.ZWiki">
+<dtml-var "_.string.join(_[_['sequence-item']].description)">
+</dtml-with>
+<dtml-except>
+&nbsp;
+</dtml-try>
+</td>
+</tr>
+</dtml-unless>
+</dtml-in>
+</table>
+
+</TD>
+</TR>
+<TR>
+<TD></TD>
+<TD><BR>
+<b><INPUT TYPE="SUBMIT" VALUE="<dtml-var "gettext('Create wiki')">" style="font-weight:strong"></b>
+<INPUT TYPE="checkbox" CHECKED name="enter"> <dtml-var "gettext('(and enter)')">
+</TD>
+</TR>
+</TABLE>
+</FORM>
+
+</BODY>
+</HTML>

@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal"
+       metal:use-macro="here/main_template/macros/master">
+<body>
+
+
+<div metal:fill-slot="main"
+     tal:define="revA options/revA; difftext options/difftext;">	  
+
+<span metal:use-macro="python:here.wikipage_macros().macros['quickaccesskeys']" />
+
+<h1>History for <span tal:replace="here/title_or_id">Pagename..</span></h1>
+
+<em tal:content="python:here.lastlog(revA-1)">log note..</em>
+
+<form method="GET" 
+      action="" 
+      tal:attributes="action here/page_url">
+
+    <input class="standalone"
+           type="submit" 
+           name="history_form:method"
+           value="full history" 
+	   tal:condition="python:user.has_permission('View history',here)"
+           />
+           
+    <input class="context"
+           tal:condition="python:revA < 19" 
+           type="submit" 
+           name="prevDiff:method" 
+           value="&laquo; previous edit" 
+           />
+           
+    <input class="context"
+           tal:condition="python:revA > 1" 
+           type="submit" 
+           name="nextDiff:method" 
+           value="next edit &raquo;"
+           />
+           
+    <input class="standalone"
+           type="submit" 
+           name="" 
+           value="return to page"
+           />
+           
+    <input type="hidden" 
+           name="currentRevision" 
+           tal:attributes="value revA"
+           />
+</form>
+
+<pre tal:content="structure difftext">
+diff..
+</pre>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,435 @@
+<html>
+
+<head metal:define-macro="head">
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta metal:define-slot="noindex" tal:omit-tag="" />
+  <title metal:define-slot="title">title..</title>
+  <link rel="stylesheet" type="text/css" href="" 
+        tal:attributes="
+        href python:here.defaultPageUrl()+'/stylesheet'
+        # if we use id() here instead, stylesheets will be per-page - useful
+        # for a dynamic stylesheet, but excessive loading for a static one" 
+        />
+</head>
+
+<body>
+    
+<span metal:define-macro="linkpanel" tal:omit-tag="">
+<span metal:use-macro="macros/quickaccesskeys">quick access keys</span>
+
+<!-- site links panel -->
+<div id="linkpanel"
+     tal:define="
+       displaymode python: request.get('zwiki_displaymode',0);
+       minimal     python: displaymode=='minimal';
+       macros      python: here.wikipage_macros(request).macros
+     "
+     tal:condition="not: minimal"
+     tal:attributes="id python: minimal and 'linkpanel_minimal' or 'linkpanel';"
+     ><!-- twk: no link panel if minimal (otherlinks now embedded in minimal pageheader) -->
+  <table class="shade1" width="100%" border="0" cellspacing="0"
+         tal:attributes="class python: not minimal and 'shade1' or nothing">
+    <tr>
+      <td id="quicklinks" align="left" tal:condition="not: minimal">    
+        <span metal:use-macro="macros/quicklinks"></span>
+      </td>
+      <td id="otherlinks" align="right">
+        <span metal:use-macro="macros/displaymodes"></span>
+        <span metal:use-macro="macros/editlinks"></span>
+      </td>
+    </tr>
+  </table>
+</div> 
+</span>
+
+<span metal:define-macro="navpanel" tal:omit-tag="">
+<!-- navigation panel -->
+<div id="navpanel" 
+     tal:condition="python:getattr(here.folder(),'show_navlinks',0) and full">
+  <table class="shade1" width="100%" border="0" cellspacing="0">
+    <tr>
+      <td tal:content="structure python: here.navlinks()"></td>
+      <!-- XXX here.navlinks() returns mapping for tal:repeat? -->
+    </tr>
+  </table>
+</div>
+</span>
+
+<span metal:define-macro="quickaccesskeys" tal:omit-tag="">
+<!-- always-available quick access keys -->
+<a tal:attributes="href string:${here/pageUrl}/src" accesskey="q"></a>
+<a tal:condition="nothing" tal:attributes="href string:${here/pageUrl}/clearCache" accesskey="w"></a>
+<a tal:attributes="href here/homeUrl" accesskey="f"></a>
+<a tal:attributes="href here/contentsUrl" accesskey="c"></a>
+<a tal:attributes="href here/changesUrl" accesskey="r"></a>
+<a tal:attributes="href here/discussionUrl" accesskey=""></a>
+<a tal:attributes="href here/trackerUrl" accesskey=""></a>
+<a tal:attributes="href here/indexUrl" accesskey="i"></a>
+<a tal:attributes="href here/uploadsUrl" accesskey=""></a>
+<a tal:attributes="href here/preferencesUrl" accesskey="o"></a>
+<a tal:attributes="href here/helpUrl" accesskey="h"></a>
+<a tal:attributes="href here/pageUrl" accesskey="v"></a>
+<a tal:attributes="href string:${here/pageUrl}/subscribeform" accesskey=""></a>
+<a tal:attributes="href string:${here/pageUrl}/backlinks" accesskey="b"></a>
+<a tal:attributes="href string:${here/pageUrl}/diff" accesskey="d"></a>
+<a tal:attributes="href string:${here/pageUrl}/manage_change_history_page" accesskey="y"></a>
+<a tal:attributes="href string:${here/pageUrl}/editform" accesskey="e"></a>
+<a tal:attributes="href python:here.wikiUrl() + '/externalEdit_/' +
+    modules['Products.PythonScripts.standard'].url_quote(here.id()) +
+    '?borrow_lock=1'" accesskey="x"></a>
+<a tal:condition="nothing" tal:attributes="href string:${here/pageUrl}/print" accesskey=""></a>
+<a tal:attributes="href string:#subtopics" accesskey="t"></a>
+<a tal:attributes="href string:#comments" accesskey="m"></a>
+<a tal:attributes="href here/nextPageUrl" accesskey="n"></a>
+<a tal:attributes="href here/previousPageUrl" accesskey="p"></a>
+<a tal:attributes="href here/primaryParentUrl" accesskey="u"></a>
+<a tal:attributes="href string:${here/pageUrl}/showAccessKeys" accesskey="0"></a>
+</span>
+
+<span metal:define-macro="quicklinks" tal:omit-tag="">
+<!-- quicklinks -->
+<a href="" tal:attributes="href here/homeUrl" 
+   accesskey="f"><span class="accesskey"></span>home</a>
+<a href="" tal:attributes="href here/contentsUrl"
+   accesskey="c"><span class="accesskey">c</span>ontents</a>
+<a href="" tal:attributes="href here/changesUrl" accesskey="r">changes</a>
+<a href="" tal:attributes="href here/discussionUrl" 
+   tal:condition="here/discussionUrl">discussion</a>
+<a href="" tal:attributes="href here/trackerUrl" 
+   tal:condition="here/hasIssues">issues</a>
+<a tal:attributes="href here/indexUrl" accesskey="i"
+   tal:condition="here/indexUrl"><span class="accesskey">i</span>ndex</a>
+<a href="" tal:attributes="href here/uploadsUrl" 
+   tal:condition="here/uploadsUrl">uploads</a>
+<a tal:attributes="href here/preferencesUrl" accesskey="o">preferences</a>
+<a title="go to help page" accesskey="h"
+   tal:attributes="href here/helpUrl" tal:condition="here/helpUrl"
+   ><span class="accesskey">h</span>elp</a>
+<span tal:define="bmarks request/zwiki_bookmarks|nothing"
+      tal:content="structure python:here.wikilink(bmarks)"
+      tal:condition="python:0 #request.get('zwiki_displaymode',0)!='minimal'"
+      tal:on-error="nothing">
+</span>
+&nbsp;&nbsp;
+</span>
+
+<!-- displaymodes -->
+<span metal:define-macro="displaymodes">
+
+<a href="" title="show all features" accesskey=""
+   tal:define="current python:request.get('zwiki_displaymode',0)=='full';
+               prefs string:?setcookies=1&zwiki_displaymode=full&zwiki_showhierarchy=1&redirectURL=${here/pageUrl};"
+   tal:attributes="style python:[nothing,'font-weight:bold'][current];
+                   href python:here.preferencesUrl()+prefs;"
+  ><span class="accesskey"></span>full</a
+>/<a href="" title="show basic features" accesskey=""
+   tal:define="current python:request.get('zwiki_displaymode',0)=='simple';
+               prefs string:?setcookies=1&zwiki_displaymode=simple&zwiki_showhierarchy=&redirectURL=${here/pageUrl};"
+   tal:attributes="style python:[nothing,'font-weight:bold'][current];
+                   href python:here.preferencesUrl()+prefs;"
+  >s<span class="accesskey"></span>imple</a
+>/<a href="" title="show only essential features" accesskey=""
+   tal:define="current python:request.get('zwiki_displaymode',0)=='minimal';
+               prefs string:?setcookies=1&zwiki_displaymode=minimal&zwiki_showhierarchy=&redirectURL=${here/pageUrl};"
+   tal:attributes="style python:[nothing,'font-weight:bold'][current];
+                   href python:here.preferencesUrl()+prefs;"
+  ><span class="accesskey"></span>minimal</a>
+
+</span> 
+
+<!-- editlinks -->
+<span metal:define-macro="editlinks">
+
+<a tal:condition="python:0" 
+   href="http://validator.w3.org/check/referer" accesskey="v"
+   ><span class="accesskey">v</span>alidate</a>
+<a tal:condition="python:here.isMailoutEnabled()"
+   tal:attributes="href python:here.page_url() + '/subscribeform'"
+   href="page_url/subscribeform" accesskey=""
+   title="configure email subscription to this page or site" 
+   ><span tal:condition="python:0 #show subscription status - expensive# here.allSubscriptionsFor(request.get('email',''))"
+   >(un)</span
+   ><span class="accesskey"></span>subscribe</a>
+<a tal:condition="python:1 #user.has_permission('Zwiki: Edit pages',here)"
+   tal:attributes="href python:here.pageUrl() + '/backlinks';"
+   href="" 
+   title="which pages link to this one ?" 
+   accesskey="b"
+   ><span class="accesskey">b</span>acklinks</a>
+<a tal:condition="python:1 #user.has_permission('Zwiki: Edit pages',here)"
+   tal:attributes="href python:here.pageUrl() + '/diff';"
+   href="" 
+   title="show this page's change history" 
+   accesskey="d"
+   ><span class="accesskey">d</span>iff</a>
+<a tal:condition="python:user.has_permission('Zwiki: Edit pages',here)"
+   tal:attributes="
+    href python:here.page_url() + '/editform';
+    title python:'edit this page (' + here.linkTitle() + ')'"
+   href="page_url/editform" 
+   title="edit this page (last edited n days ago by so-and-so)" 
+   accesskey="e"
+   ><span class="accesskey">e</span>dit</a>
+<a tal:condition="python:
+    user.has_permission('Zwiki: Edit pages',here) and
+    hasattr(root.misc_,'ExternalEditor') and
+    user.has_permission('Use external editor',here)"
+   tal:attributes="href python:
+    here.wiki_url() + '/externalEdit_/' +
+    modules['Products.PythonScripts.standard'].url_quote(here.id()) +
+    '?borrow_lock=1'"
+   href="wiki_url/externalEdit_/id" title="edit using external editor" 
+   accesskey="x"
+   ><img src="/misc_/ExternalEditor/edit_icon" hspace="2" align="middle" 
+   border="0" alt="(external edit)" /></a>
+
+</span>
+
+<!-- logo -->
+<span metal:define-macro="logolink" tal:omit-tag="">
+
+<a 
+tal:condition="python:request.get('zwiki_showlogo',1)"
+tal:attributes="href here/wiki_url"
+href="wiki_url" title="go to home page" accesskey="f">
+<img 
+tal:replace="structure container/site_logo|default"
+src="/misc_/ZWiki/ZWikiPage_icon.gif" height="48" width="48" border="0" alt="home" /></a>
+</span>
+
+<!-- page name & context -->
+<span metal:define-macro="pagenameand" tal:omit-tag="">
+
+<ul tal:replace="structure 
+  python:here.context(request,enlarge_current=1)">
+<li>context
+<ul><li><big><big><big>page name</big></big></big></li></ul></li>
+</ul>
+
+</span>
+
+<!-- page name & context X -->
+<span metal:define-macro="pagenameand_X">
+
+<span tal:define="ctx python: here.contextX(request)">
+<small>
+
+<a href="contentsUrl" title="show wiki contents" accesskey="c"
+tal:attributes="href ctx/contentsUrl" tal:content="python: container.title + ' contents'">contents</a>
+
+<span tal:repeat="ii ctx/hierarchy" tal:omit-tag="">
+
+  <span tal:condition="python: '+' in ii['type']"
+    tal:replace="structure string:<ul style=&quot;margin: 0;&quot;>">ul</span>
+    
+  <span tal:condition="python: '=' in ii['type']">
+    <li tal:condition="python: '!' in ii['type']">
+      <big><big><big><big><strong><a href="href" name="name"
+      tal:attributes="href python: ii['href'] + '/backlinks'; name ii/name"
+      tal:content="ii/page">page</a></strong></big></big></big></big>
+      <span tal:condition="python: '.' in ii['type']"> ...</span>
+    </li>
+    <li tal:condition="python: '!' not in ii['type']">
+      <a href="href" name="name"
+        tal:attributes="href ii/href; name ii/name"
+        tal:content="ii/page">page</a>
+        <span tal:condition="python: '.' in ii['type']"> ...</span>
+    </li>
+  </span>
+  
+  <span tal:condition="python: '-' in ii['type']"
+    tal:replace="structure string:</ul>">ultag</span>
+
+</span>
+
+</small>
+</span>
+
+</span>
+
+<!-- page name & context - linear header -->
+<span metal:define-macro="pagenameand_linear">
+
+<span tal:define="ctx python: here.contextX(request)">
+<small>
+
+<a href="contentsUrl" title="show wiki contents" accesskey="c"
+tal:attributes="href ctx/contentsUrl" tal:content="python: container.title + ' contents'">contents</a>
+
+::
+<span tal:repeat="ii ctx/hierarchy" tal:omit-tag="">
+
+  <span tal:condition="python: '=' in ii['type']">
+    <span tal:condition="python: '!' in ii['type']">
+      <br><big><big><big><big><strong>&nbsp;&nbsp;<a href="href" name="name"
+      tal:attributes="href python: ii['href'] + '/backlinks'; name ii/name"
+      tal:content="ii/page">page</a></strong></big></big></big></big>
+      <span tal:condition="python: '.' in ii['type']"> ...</span>
+    </span>
+    <span tal:condition="python: '!' not in ii['type']">
+      <a href="href" name="name"
+        tal:attributes="href ii/href; name ii/name"
+        tal:content="ii/page">page</a>&nbsp;::
+        <span tal:condition="python: '.' in ii['type']"> ...</span>
+    </span>
+  </span>
+
+</span>
+
+</small>
+</span>
+
+</span>
+
+<!-- page name (only) -->
+<span metal:define-macro="pagename">
+
+<a 
+tal:attributes="
+ href python:here.page_url() + '/backlinks';
+ title python:'show backlinks for this page ('+here.linkTitle()+')'"
+tal:content="here/title_or_id"
+href="page_url/backlinks" 
+title="show backlinks for this page (last edited n days ago by so-and-so)" 
+accesskey="b"
+>page name</a>
+
+</span>
+
+<!-- comment form -->
+<span metal:define-macro="commentform">
+  
+<form method="post" action="page_url" enctype="multipart/form-data"
+  tal:attributes="action here/page_url" style="margin-top:0;margin-bottom:0"
+  id="commentform">
+<input name="timeStamp" type="hidden" value="editTimestamp"
+  tal:attributes="value here/editTimestamp" />
+<input name="page" type="hidden" value="id" 
+  tal:attributes="value here/id" />
+<table width="100%" border="0" cellspacing="0" cellpadding="0"
+bgcolor="" class=""
+tal:condition="python:user.has_permission('Zwiki: Add comments',here)"
+>
+
+<!-- subject row -->
+<tr>
+<td align="left" valign="middle" nowrap="nowrap" colspan="2"
+tal:attributes="
+  bgcolor python:nothing# (request.get('zwiki_displaymode',0) != 'minimal' and '#dddddd') or '';
+  colspan python: vistwks and '1' or '2';
+">                                              <!-- twk: "add" position option -->
+<small>
+subject: <input type="text" name="subject_heading" value="" size="40" maxlength="100" style="font-weight:bold;" class="shade2" title="a subject helps clarify threads and RecentChanges" tal:attributes="value request/subject|nothing" /></small>
+</td>
+
+<td tal:condition="vistwks" align="right" valign="top" nowrap="nowrap"> 
+                                                <!-- twk: "add" position option -->
+<input type="hidden" name="in_reply_to" value="" tal:attributes="value request/in_reply_to|nothing" />
+<input type="hidden" name="use_heading" value="1" />
+<em><small><span tal:content="python:'('+str(here.subscriberCount() + here.wikiSubscriberCount()) + ' subscribers)'">
+N subscribers
+</span></small></em>
+<input type="submit" name="quickcomment:method" value=" add a comment " 
+style="font-weight:bold" />
+</td>
+</tr>
+
+<!-- comment row -->
+<tr>
+<td align="center" valign="bottom" bgcolor="" colspan="2">  <!-- twk: no shade1 -->
+<textarea 
+tal:attributes="cols python:request.get('zwiki_width','') or 60"
+wrap="virtual" name="text" rows="3" cols="60" 
+style="width:100%;"  class="shade2"
+title="to comment (and cc any subscribers) enter text here and click add">
+</textarea>
+</td>
+</tr>
+
+<!-- add row -->
+<tr tal:condition="python: request.get('in_reply_to',0) or not vistwks">
+                                                <!-- twk: "add" position option -->
+<td align="left" valign="middle">
+<em><small>
+<span tal:condition="request/in_reply_to|nothing">
+in reply to: <span tal:replace="request/in_reply_to"></span>
+</span>
+</small></em>
+</td>
+
+<td tal:condition="not: vistwks" align="right" valign="top" nowrap="nowrap"> 
+                                                <!-- twk: "add" position option -->
+<input type="hidden" name="in_reply_to" value="" tal:attributes="value request/in_reply_to|nothing" />
+<input type="hidden" name="use_heading" value="1" />
+<em><small><span tal:content="python:'('+str(here.subscriberCount() + here.wikiSubscriberCount()) + ' subscribers)'">
+N subscribers
+</span></small></em>
+<input type="submit" name="quickcomment:method" value=" add a comment " 
+style="font-weight:bold" />
+</td>
+
+</tr>
+</table>
+</form>
+
+</span>
+
+<!-- page management panel -->
+<span metal:define-macro="pagemanagement">
+
+<br />
+<form method="post" action="page_url" enctype="multipart/form-data"
+tal:attributes="action here/page_url" style="margin-top:0;margin-bottom:0">
+<table border="0" cellspacing="0" cellpadding="1" align="center"
+class="shade1" width="100%"
+>
+<tr>
+<td align="left" valign="top" >
+<small>
+new parent, name or replacement:
+<br tal:condition="here/inCMF" comment="hack! cmf/plone layout hint" />
+<input 
+name="pagename" type="text" size="20" maxlength="100" value="" 
+class="shade2"
+title="enter a new parent, new name, or replacement page (if any) for this one"
+/>
+<input type="submit" name="reparent:method" value="reparent" 
+style="font-weight:normal"
+title="reparent this page under the page you have entered"
+tal:condition="python:user.has_permission('Zwiki: Reparent pages',here)" 
+/>
+<input type="submit" name="rename:method" value="rename" 
+style="font-weight:normal" 
+title="rename this page to the name you have entered, updating all links"
+tal:condition="python:user.has_permission('Zwiki: Rename pages',here)" 
+/>
+<input type="hidden" name="leaveplaceholder" value="0" 
+class="shade2"
+title="when renaming, leave behind a page which points to the new location" 
+tal:condition="python:user.has_permission('Zwiki: Rename pages',here)"
+/><span tal:condition="nothing">&nbsp;placeholder</span>
+<input type="hidden" name="updatebacklinks" value="1" 
+class="shade2"
+title="when renaming, replace references to the old name throughout the wiki. Caution!" 
+tal:condition="python:user.has_permission('Zwiki: Rename pages',here)"
+/><span tal:condition="nothing">&nbsp;update all</span>
+<input type="submit" name="delete:method" value="delete!" 
+style="font-weight:normal"
+title="move this page to the recycle bin, relinking to the page you have entered if any."
+tal:condition="python:user.has_permission('Zwiki: Delete pages',here)" 
+/>
+</small>
+</td>
+</tr>
+</table>
+</form>
+
+</span>
+
+<!-- whatitis -->
+<span metal:define-macro="what">
+  
+</span>
+
+  </body>
+</html>

@@ -1,0 +1,57 @@
+<a name="bottom"></a>
+
+<div tal:condition="python:user.has_permission('Zwiki: Add comments',here)">
+  <!-- comment form -->
+  <br />
+  <span class="legend"></span>
+  <form class="group"
+        method="post" 
+        enctype="multipart/form-data"
+        action="" 
+        tal:attributes="action here/pageUrl">
+    <table border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>
+    Subject:&nbsp;<input type="text" name="subject_heading" 
+    title="a subject helps clarify threads and RecentChanges" 
+    size="40" maxlength="100" 
+    value="" tal:attributes="value request/subject|nothing" />
+    <br />
+        </td>
+      </tr>
+      <tr>
+        <td>
+    <textarea name="text" rows="3" cols="60" wrap="virtual" 
+              tal:attributes="cols python:request.get('zwiki_width','') or 60"
+              title="enter comments here and click add; or, click edit"
+    ></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td align="right">
+    <input name="page" type="hidden" tal:attributes="value here/id" />
+    <input name="timeStamp" type="hidden" value=""
+           tal:attributes="value here/editTimestamp" />
+    <input type="hidden" name="in_reply_to" value="" 
+           tal:attributes="value request/in_reply_to|nothing" />
+    <input type="hidden" name="use_heading" value="1" />
+    <input class="context"
+           type="submit" 
+           name="comment:method" 
+           value="Add a comment" 
+           style="font-weight:bold;" />
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+
+<div tal:condition="python:
+     (user.has_permission('Zwiki: Rename pages',here)
+     or user.has_permission('Zwiki: Reparent pages',here)
+     or user.has_permission('Zwiki: Delete pages',here))
+     and (user.has_role('Authenticated') or request.get('zwiki_username',''))
+     ">
+  <!-- page management panel -->
+  <span metal:use-macro="python:here.wikipage_macros().macros['pagemanagement']" />
+</div>

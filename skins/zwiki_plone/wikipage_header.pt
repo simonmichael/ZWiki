@@ -1,0 +1,7 @@
+<tal:comment>
+I thought I'd use this for "things common to all zwiki views", but
+- I'm wary of unnecessarily adding template invocations
+- it didn't work
+</tal:comment>
+
+<span metal:use-macro="python:here.wikipage_macros().macros['quickaccesskeys']" />

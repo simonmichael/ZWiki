@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal"
+       metal:use-macro="here/main_template/macros/master">
+<body>
+
+
+<div metal:fill-slot="main">
+
+<span metal:use-macro="python:here.wikipage_macros().macros['quickaccesskeys']" />
+
+<h1>Wiki contents</h1>
+
+<span tal:replace="structure options/hierarchy">page hierarchy..</span>
+
+<div tal:condition="options/singletons">
+
+<h2>Singletons</h2> 
+
+<div class="description">
+Singletons are pages that are not connected to other pages.
+</div>
+
+<ul>
+  <li tal:repeat="singleton options/singletons">
+    <span tal:replace="structure singleton">singleton..</span>
+  </li>
+</ul>
+
+</div>
+
+</div>
+
+</body>
+</html>

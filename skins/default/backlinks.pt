@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+      tal:define="
+      title   string:${container/title} ${here/Title} backlinks;
+      macros  python:here.wikipage_macros(request).macros;
+      ">
+<head metal:use-macro="macros/head">
+  <title tal:content="title" metal:fill-slot="title" ></title>
+  <meta name="robots" content="noindex,nofollow" metal:fill-slot="noindex" />
+</head>
+<body bgcolor="#ffffff">
+
+<div metal:use-macro="macros/linkpanel"></div>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="3" tal:condition="python:0">
+<tr>
+<td width="1%" valign="middle">
+<a 
+tal:condition="python:request.get('zwiki_showlogo',1)"
+tal:attributes="href here/wiki_url"
+href="wiki_url" title="go to home page" accesskey="f">
+<img 
+tal:replace="structure container/site_logo|default"
+src="/misc_/ZWiki/ZWikiPage_icon.gif" height="48" width="48" border="0" alt="home" />
+</a>
+</td>
+<td valign="middle">
+<h1>Backlinks for <span tal:replace="here/Title">Pagename..</span></h1>
+</td>
+</tr>
+</table>
+<!-- end of header -->
+
+<div id="formcontent"
+     tal:define="
+     zwiki_showhierarchy python:user.has_permission('Zwiki: Reparent pages',here)
+                                and request.get('zwiki_showhierarchy',0);
+     thispage here/Title;
+     ">
+<p>
+<a href="page_url" title="linkTitle"
+tal:attributes="href here/page_url; title here/linkTitle;" 
+tal:content="thispage"
+>thispage</a> 
+<span tal:condition="not:here/parents">is a top-level topic.</span>
+<span tal:condition="here/parents">is a subtopic of:</span>
+</p>
+<form action="reparent" tal:attributes="action string:${here/page_url}/reparent">
+<ol tal:condition="here/parents"
+tal:define="
+thisparents here/parents;
+sortedparents python:thisparents #sequence.sort(thisparents);
+">
+<li tal:repeat="parent sortedparents"> 
+<span tal:omit-tag="">
+<input type="checkbox" name="parents" value="parent" checked
+tal:attributes="value parent;"
+tal:condition="zwiki_showhierarchy" />
+<a href="" title=""
+tal:attributes="href python:here.wiki_url()+'/'+here.canonicalIdFrom(parent);
+                title nothing;"
+tal:content="parent"
+>parent</a>
+<br />
+</span>
+</li>
+</ol>
+<p>
+Here are the pages which link to it:
+</p>
+<ol tal:define="
+thisparents here/parents;
+backlinks python:here.backlinksFor(thispage);
+sorted_backlinks python:sequence.sort(backlinks, 
+                                      (('Title', 'nocase', 'asc'),));
+">
+<li tal:repeat="bl sorted_backlinks"> 
+<span tal:omit-tag="" tal:define="
+blpage bl/Title;
+blisparent python:(blpage in thisparents) #and zwiki_showhierarchy;
+">
+<input type="checkbox" name="parents" value="blpage"
+tal:attributes="checked blisparent; value blpage;"
+tal:condition="zwiki_showhierarchy" />
+<a href="blurl" title=""
+tal:define="blid bl/id"
+tal:attributes="href python:here.wiki_url()+'/'+blid;
+                title bl/linkTitle|nothing;"
+tal:content="blpage"
+>blpage</a>
+<br />
+</span>
+</li>
+</ol>
+
+<p tal:condition="zwiki_showhierarchy">
+<br />
+Other parent: <input type="text" name="parents" />
+<br /><br />
+<strong><input type="submit" value="Reparent" style="font-weight:bold" /></strong>
+<br /><br />
+You can change this page's parent(s) to place it within the overall page
+hierarchy.  Check the boxes or enter a new page name and click Reparent.
+A single parent is usually sufficient.
+</p>
+</form>
+
+</div>
+
+</body>
+</html>

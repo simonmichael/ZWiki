@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+       xmlns:metal="http://xml.zope.org/namespaces/metal"
+       metal:use-macro="here/main_template/macros/master">
+<body>
+
+<div metal:fill-slot="main">
+
+    <span metal:use-macro="python:here.wikipage_macros().macros['quickaccesskeys']" />
+
+    <small>
+    <tal:ancestors condition="here/ancestorsAsList"
+                   repeat="ancestor here/ancestorsAsList">
+        <span tal:replace="structure python:here.wikilink('['+ancestor+']')"></span>
+        &raquo;
+    </tal:ancestors>
+    </small>
+    
+    
+    <h1 tal:content="here/title_or_id">The headline</h1>
+
+    <div metal:use-macro="python:
+         (hasattr(here,'document_actions')
+          and here.document_actions.macros['document_actions']) 
+         or default
+         # degrade gracefully. By all means make this more elegant..">
+        Document actions (print, sendto etc)
+    </div>
+
+    <div id="lasteditor" 
+         class="documentByLine"
+          tal:content="structure python:here.linkTitle(prettyprint=1)">
+            <!-- XXX move html in linkTitle to here? -->
+    last edited n days ago by by so-and-so
+    </div>
+
+
+    <div tal:replace="structure python:here.render(here,request)" />
+    
+    <div tal:condition="not: wiki_footer_present|nothing">
+      <span tal:condition="nothing"> In case master has no "footer" macro. </span>
+      <div tal:replace="structure here/wikipage_footer"> </div>
+    </div>
+
+</div>
+
+</body>
+</html>

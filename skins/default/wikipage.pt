@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+ tal:define="
+   displaymode     python: request.get('zwiki_displaymode',0);
+   minimal         python: displaymode=='minimal';
+   full            python: displaymode=='full';
+   showhierarchy   python: request.get('zwiki_showhierarchy',0);
+   vistwks         python: 0;
+   linearhdr       python: 0;
+   macros          python: here.wikipage_macros(request).macros;
+   ">
+<head metal:use-macro="macros/head">
+  <title metal:fill-slot="title" 
+         tal:content="string:${container/title} ${here/title_or_id}"></title>
+</head>
+<body>
+
+<div metal:use-macro="macros/linkpanel">site links panel</div>
+
+<div metal:use-macro="macros/navpanel">hierarchy navigation panel</div>
+
+<!-- page heading -->
+<div id="pageheading">
+
+<form method="GET" 
+   tal:define="
+   methodname string:searchwiki;
+   pagename string:SearchPage; 
+   page python:here.pageWithName(pagename);
+   pagehasdtml python:page and page.dtmlAllowed() and page.hasDynamicContent();
+   url python:(pagehasdtml and page.id()) or (here.defaultPageId()+'/'+methodname);
+   "
+   tal:attributes="action python:here.wiki_url()+'/'+url;"
+   action="">
+
+<!-- page heading: not minimal cellpadding="3" -->
+<table tal:condition="not: minimal"
+        width="100%" border="0" cellspacing="0" class=""
+        tal:attributes="class python: nothing #not minimal and 'shade1' or nothing">
+<tr>
+
+<!-- ...logo -->
+<td id="logo" width="1%" valign="top"
+      tal:attributes="id python: full and 'logo_full' or 'logo_simple'">
+  <span metal:use-macro="macros/logolink"></span>
+</td>
+
+<!-- ...page name & context -->
+<td id="pagenameand" tal:condition="python: showhierarchy and not linearhdr" align="left">
+  <span metal:use-macro="macros/pagenameand"></span>
+</td>
+<td id="pagenameand_linear" tal:condition="python: showhierarchy and linearhdr" align="left">
+  <span metal:use-macro="macros/pagenameand_linear"></span>
+</td>
+
+<!-- ...only page name -->
+<td id="pagenameonly" tal:condition="not: showhierarchy"
+      align="left">
+  <span metal:use-macro="macros/pagename"></span>
+</td>
+
+<!-- ...search box -->
+  <!-- twk: combine rest of tds so no subscribe doesn't leave blank spot -->
+<td id="searchbox" width="20%" align="right"
+  tal:define="showsearch python:request.get('zwiki_showsearch',1)">
+  
+  <input id="searchinput" class="shade2" tal:condition="showsearch"
+    name="expr" type="text" size="20" maxlength="100" value="" 
+    title="search all pages" accesskey="s" />
+  <br tal:condition="showsearch" />
+
+<!-- ...last editor -->
+  <span id="lasteditor" 
+        tal:content="structure python:here.linkTitle(prettyprint=1)">
+            <!-- XXX move html in linkTitle to here? -->
+    last edited n days ago by by so-and-so
+  </span>
+
+</td>
+
+</tr>
+</table>
+
+<!-- page heading: minimal -->
+<!-- twk: use table for minimal so logo and pagename are aligned consistently in simple & minimal -->
+<table tal:condition="minimal"
+        width="100%" border="0" cellspacing="0"
+        ><tr>
+
+  <!-- ...logo -->
+  <td id="logo_minimal" width="1%" valign="middle">
+    <span metal:use-macro="macros/logolink"></span>
+  </td>
+
+  <!-- ...page name -->
+  <td id="pagenameonly" tal:condition="not: showhierarchy"
+        align="left">
+    <span metal:use-macro="macros/pagename"></span>
+  </td>
+
+  <!-- twk: put otherlinks here rather than in a table above this -->
+  <td id="searchbox" width="20%" align="right" nowrap="nowrap"
+    tal:define="showsearch python:request.get('zwiki_showsearch',1)">
+  
+    <span metal:use-macro="macros/displaymodes"></span>
+    <span metal:use-macro="macros/editlinks"></span>
+
+    <!-- twk: searchbox in minimal -->
+    <div tal:condition="vistwks">
+    <input id="searchinput" class="shade2" tal:condition="showsearch"
+      name="expr" type="text" size="20" maxlength="100" value="" 
+      title="search all pages" accesskey="s" style="width: 95%" /> 
+            <!-- XXX hack: width 95% keeps moz from chopping off right end 
+                 with 1px borders -->
+    </div>
+
+    </td>
+
+  </tr></table>
+
+<!-- page heading: minimal with hierarchy --> 
+<!-- XXX obsolete? minimal forces nohierarchy -->
+<span
+tal:condition="python:request.get('zwiki_displaymode',0) == 'minimal' and
+                      request.get('zwiki_showhierarchy',0)">
+      <span tal:replace="nothing"><br /><em>or:</em><br /></span>
+  <span metal:use-macro="macros/logolink"></span>
+  <span metal:use-macro="macros/pagename"></span>
+</span>
+
+</form>
+
+</div>
+<!-- end of header -->
+
+<div id="content">
+  <div tal:replace="structure options/body">
+    page body goes here..
+  </div>
+
+  <a name="bottom"></a><br />
+
+  <div tal:condition="python:user.has_permission('Zwiki: Add comments',here)">
+    <!-- comment form -->
+    <br />
+    <br />
+    <span metal:use-macro="macros/commentform"></span>
+  </div>
+
+  <div tal:condition="python:
+       request.get('zwiki_showpagemgmt',1)
+       and request.get('zwiki_displaymode',0)=='full'
+       and (   user.has_permission('Zwiki: Rename pages',here)
+       or user.has_permission('Zwiki: Reparent pages',here)
+       or user.has_permission('Zwiki: Delete pages',here))
+       and (user.has_role('Authenticated') or request.get('zwiki_username',''))
+       ">
+    <!-- page management panel -->
+    <div metal:use-macro="macros/pagemanagement"></div>
+  </div>
+
+</div>
+
+</body>
+</html>

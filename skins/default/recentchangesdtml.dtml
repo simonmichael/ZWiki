@@ -1,0 +1,103 @@
+<dtml-let 
+ wikiurl=wiki_url
+ summaries="REQUEST.get('summaries',0)"
+ period="REQUEST.get('period','Day')"
+ days="{
+   'Day':1,
+   'Week':7,
+   'Month':30,
+   'Year':365,
+   'Ever':999999,
+   'default':3}[period]"
+ newdays="7"
+ now=ZopeTime
+ results="pages(
+   lastEditTime=now-days,
+   lastEditTime_usage='range:min',
+   )"
+ number="_.len(results)"
+ >
+<form action="&dtml-URL;" method="GET">
+  <table border="0">
+    <tr valign="top">
+      <dtml-if hasCatalog>
+      <td align="right">Pages changed in the last </td>
+      <dtml-in "['Day','Week','Month','Year','Ever']" prefix=x>
+      <td align="center">
+        <input type=submit name=period value="&dtml-x_sequence_item;" 
+               <dtml-if "x_sequence_item==period">style="font-weight:bold"</dtml-if>
+               />
+        <dtml-if "x_sequence_item==period"><br />(&dtml-number;)</dtml-if>
+      </td>
+      </dtml-in>
+      <dtml-else>
+      <td align="right">Recently changed pages, with summaries</td>
+      </dtml-if>
+      <td>
+        <input type=checkbox name=summaries <dtml-if summaries>checked</dtml-if> />
+      </td>
+      <dtml-unless hasCatalog>
+      <td align="center"><input type=submit value="Refresh" /></td>
+      </dtml-unless>
+    </tr>
+  </table>
+</form>
+<table border="0" cellspacing="0" cellpadding="1" width="100%">
+  <tr>
+    <th align="left">Page</th>
+    <th align="left">Edited&nbsp;by&nbsp;&nbsp;&nbsp;</th>
+    <th align="left">Time</th>
+  </tr>
+  <tr><td colspan=3></td></tr>
+  <dtml-in results sort=lastEditTime reverse prefix=x>
+  <tr valign="top" <dtml-var "(x_sequence_odd and 'bgcolor=#f0f0f0') or ''">>
+    <td>
+      <a href="&dtml-wikiurl;/&dtml.url_quote-id;" 
+         title=""
+         style="background-color:<dtml-var issueColour>;"
+         ><dtml-var Title></a>
+      <dtml-if "creation_time and (now - _.DateTime(creation_time)) < newdays">
+      <small><span style="background-color:palegreen">NEW</span></small>
+      </dtml-if>
+      &nbsp;&nbsp;&nbsp;
+      <dtml-unless summaries>
+      <dtml-if last_log>
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><dtml-var last_log></b><br>&nbsp;
+      <dtml-else>
+      <br><br>
+      </dtml-if>
+      </dtml-unless>
+    </td>
+    <td align="left" nowrap="">
+      <dtml-if "last_editor and _.string.swapcase(last_editor) != last_editor">
+      <a href="&dtml-wikiurl;/&dtml.url_quote-last_editor;">&dtml-last_editor;</a>
+      <dtml-else>
+      anonymous
+      </dtml-if>
+      &nbsp;&nbsp;&nbsp;
+    </td>
+    <td nowrap="">
+      <a href="&dtml-wikiurl;/&dtml-id;/diff">
+        <dtml-try><dtml-var "lastEditTime.toZone(zwiki_timezone)" fmt="pCommon">
+        <dtml-except><dtml-var lastEditTime fmt="pCommon">
+        </dtml-try>
+      </a>
+    </td>
+  </tr>
+  <dtml-if summaries>
+  <tr <dtml-var "(x_sequence_odd and 'bgcolor=#f0f0f0') or ''">>
+    <td colspan=2>
+      <small><dtml-var summary></small>
+      <dtml-if last_log>
+      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><dtml-var last_log></b>&nbsp;
+      </dtml-if>
+      <br><br>
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+  </dtml-if>
+  </dtml-in>
+</table>
+
+Pages marked (NEW) have been created within the last week.
+</dtml-let>

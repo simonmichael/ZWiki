@@ -1,0 +1,34 @@
+<html xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      i18n:domain="zwiki">
+
+<body>
+
+<!-- Wiki navigation box -->
+
+<div metal:define-macro="wikiNavBox" 
+     tal:omit-tag="">
+
+    <div class="box"
+         tal:condition="python: here.meta_type == 'ZWiki Page'">
+
+        <h5 i18n:translate="box_wiki_navigation">Wiki Navigation</h5>
+
+        <div class="body">
+        
+            <div class="content odd">
+            
+            <tal:hierarchy tal:replace="structure python:here.context(request, with_siblings=1)" />
+   
+            </div>
+        
+        </div>
+        
+    </div>
+
+</div>
+    
+</body>
+
+</html>
+

@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+<TITLE><dtml-var "gettext('Add ZWiki Page')"></TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" LINK="#000099" VLINK="#555555">
+<H2><dtml-var "gettext('Add ZWiki Page')"></H2>
+
+<P>
+</P>
+
+<P>
+ <dtml-gettext>
+  You may create a new ZWiki Page object using the form below. 
+  You may also choose to upload an existing html file from your
+  local computer by clicking the <I>Browse</I> button.
+ </dtml-gettext>
+</P>
+
+<FORM ACTION="manage_addZWikiPage" METHOD="POST"
+      ENCTYPE="multipart/form-data">
+<TABLE CELLSPACING="2">
+<TR>
+  <TH ALIGN="LEFT" VALIGN="TOP"><dtml-var "gettext('Id')"></TH>
+  <TD ALIGN="LEFT" VALIGN="TOP"><INPUT TYPE="TEXT" NAME="id" SIZE="40"></TD>
+</TR>
+<TR>
+  <TH ALIGN="LEFT" VALIGN="TOP"><EM><dtml-var "gettext('Title')"></EM></TH>
+  <TD ALIGN="LEFT" VALIGN="TOP"><INPUT TYPE="TEXT" NAME="title" SIZE="40"></TD>
+</TR>
+<TR>
+  <TH ALIGN="LEFT" VALIGN="TOP"><EM><STRONG><dtml-var "gettext('File')"></STRONG></EM></TD>
+  <TD ALIGN="LEFT" VALIGN="TOP">
+     <INPUT TYPE="file" NAME="file:string" SIZE="25" VALUE="">
+  </TD>
+</TR>
+<TR><TH></TH>
+    <TD>
+       <INPUT TYPE="SUBMIT" VALUE=" <dtml-var "gettext('Add')"> ">
+       <INPUT TYPE="SUBMIT" VALUE=" <dtml-var "gettext('Add and Edit')"> " NAME="submit">
+    </TD>
+</TR>
+</TABLE>
+</FORM>
+</BODY></HTML>
+
