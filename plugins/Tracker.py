@@ -8,6 +8,7 @@ import DocumentTemplate
 from AccessControl import getSecurityManager, ClassSecurityInfo
 from Globals import InitializeClass, package_home
 
+from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER,formattedTraceback
 from Products.ZWiki.Defaults import ISSUE_CATEGORIES, ISSUE_SEVERITIES, ISSUE_STATUSES, \
@@ -352,7 +353,7 @@ class TrackerSupport:
         self.upgradeFolderIssueProperties()
         # dtml pages,
         if pages:
-            dir = package_home(globals())+os.sep+'content'+os.sep+'tracker'+os.sep
+            dir = package_home(globals())+os.sep+'tracker'+os.sep
             for page in ['IssueTracker','FilterIssues']:
                 if not self.pageWithName(page):
                     self.create(page,text=open(dir+page+'.stxdtml','r').read())
@@ -424,3 +425,4 @@ class TrackerSupport:
         return changed
 
 InitializeClass(TrackerSupport)
+registerPlugin(TrackerSupport)

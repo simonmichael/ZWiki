@@ -1,4 +1,4 @@
-from support import *
+from Products.ZWiki.tests.support import *
 from Products.ZWiki.plugins.PurpleNumbers import nidexpr
 
 class PurpleNumbersTests(unittest.TestCase):

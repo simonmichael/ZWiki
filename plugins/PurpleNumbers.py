@@ -11,6 +11,7 @@ import os, sys, re, string
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 
+from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Regexps import fromlineexpr, nidexpr
 
 purplestyle = """
@@ -84,6 +85,7 @@ class PurpleNumbersSupport:
                % (self.page_url(),purpleNumberString,purpleNumberString)
 
 InitializeClass(PurpleNumbersSupport)
+registerPlugin(PurpleNumbersSupport)
 
 # mike's code
 #

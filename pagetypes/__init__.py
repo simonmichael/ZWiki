@@ -88,7 +88,9 @@ def registerPageType(t,prepend=0):
     """
     Add a page type class to Zwiki's global registry, optionally at the front.
 
-    Example: registerPageType(MyPageTypeClass)
+    >>> from Products.ZWiki.pagetypes import registerPageType
+    >>> registerPageType(MyPageTypeClass)
+
     """
     if prepend: pos = 0
     else: pos = len(PAGETYPES)
@@ -100,7 +102,9 @@ def registerPageTypeUpgrade(old,new):
     """
     Add a page type transition to ZWiki's list of auto-upgrades.
 
-    Example: registerPageTypeUpgrade('oldpagetypeid','newpagetypeid')
+    >>> from Products.ZWiki.pagetypes import registerPageTypeUpgrade
+    >>> registerPageTypeUpgrade('oldpagetypeid','newpagetypeid')
+
     """
     PAGE_TYPE_UPGRADES[old] = new
 

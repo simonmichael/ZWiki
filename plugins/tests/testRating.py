@@ -2,7 +2,7 @@ import unittest
 import os, sys
 if __name__ == '__main__': execfile(os.path.join(sys.path[0], 'framework.py'))
 from Testing import ZopeTestCase
-from support import *
+from Products.ZWiki.tests.support import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 

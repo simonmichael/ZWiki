@@ -76,32 +76,39 @@ from Comments import CommentsSupport
 from Admin import AdminSupport
 from Editing import EditingSupport
 from I18nSupport import DTMLFile, _
-
 from pagetypes import MIDSECTIONMARKER, PAGETYPES, PAGE_TYPES, ZwikiStxPageType
-
-from plugins.Tracker import TrackerSupport
-from plugins.Rating import RatingSupport
-from plugins.PurpleNumbers import PurpleNumbersSupport
-from plugins.Fit import FitSupport
+from plugins import PLUGINS
 
 
 class ZWikiPage(
     EditingSupport, # use our ftp/dav methods, not DTMLDocument's
-    DTMLDocument,   # should DD really go last ?
+    DTMLDocument,   # should DD go last ?
     UI,
     OutlineSupport,
     DiffSupport,
     MailSupport,
     SubscriberManagerMixin,
     CatalogAwareness,
-    TrackerSupport,
     CMFAwareness,
-    FitSupport,
     CommentsSupport,
-    PurpleNumbersSupport,
-    RatingSupport,
     AdminSupport,
     Utils,
+    PLUGINS[0],     # runtime mixins hack, see plugins
+    PLUGINS[1],
+    PLUGINS[2],
+    PLUGINS[3],
+    PLUGINS[4],
+    PLUGINS[5],
+    PLUGINS[6],
+    PLUGINS[7],
+    PLUGINS[8],
+    PLUGINS[9],
+    PLUGINS[10],
+    PLUGINS[11],
+    PLUGINS[12],
+    PLUGINS[13],
+    PLUGINS[14],
+    PLUGINS[15],
     ):
     """
     A ZWikiPage is essentially a DTML Document which knows how to render
@@ -1146,6 +1153,7 @@ class ZWikiPage(
     wiki_base_url = Utils.wiki_url
     zwiki_username_or_ip = Utils.usernameFrom
     applyLineEscapesIn = applyWikiLinkLineEscapesIn 
+
 
 InitializeClass(ZWikiPage)
 

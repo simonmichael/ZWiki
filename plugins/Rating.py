@@ -7,6 +7,7 @@ import string, re
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 
+from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER
 from Products.ZWiki.UI import loadPageTemplate, onlyBodyFrom, DEFAULT_TEMPLATES
@@ -120,3 +121,4 @@ class RatingSupport:
         return '<span class="%s">(%s)</span>' % (self.ratingStyle(rating),rating)
 
 InitializeClass(RatingSupport) 
+registerPlugin(RatingSupport)
