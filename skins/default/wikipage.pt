@@ -6,7 +6,6 @@
    minimal         python: displaymode=='minimal';
    full            python: displaymode=='full';
    showhierarchy   python: request.get('zwiki_showhierarchy',0);
-   vistwks         python: 0;
    linearhdr       python: 0;
    macros          python: here.wikipage_macros(request).macros;
    ">
@@ -106,8 +105,8 @@
     <span metal:use-macro="macros/displaymodes"></span>
     <span metal:use-macro="macros/editlinks"></span>
 
+    <div tal:condition="python:0">
     <!-- twk: searchbox in minimal -->
-    <div tal:condition="vistwks">
     <input id="searchinput" class="shade2" tal:condition="showsearch"
       name="expr" type="text" size="20" maxlength="100" value="" 
       title="search all pages" accesskey="s" style="width: 95%" /> 

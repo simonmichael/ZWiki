@@ -316,27 +316,15 @@ tal:condition="python:user.has_permission('Zwiki: Add comments',here)"
 <td align="left" valign="middle" nowrap="nowrap" colspan="2"
 tal:attributes="
   bgcolor python:nothing# (request.get('zwiki_displaymode',0) != 'minimal' and '#dddddd') or '';
-  colspan python: vistwks and '1' or '2';
-">                                              <!-- twk: "add" position option -->
+">
 <small>
 subject: <input type="text" name="subject_heading" value="" size="40" maxlength="100" style="font-weight:bold;" class="shade2" title="a subject helps clarify threads and RecentChanges" tal:attributes="value request/subject|nothing" /></small>
-</td>
-
-<td tal:condition="vistwks" align="right" valign="top" nowrap="nowrap"> 
-                                                <!-- twk: "add" position option -->
-<input type="hidden" name="in_reply_to" value="" tal:attributes="value request/in_reply_to|nothing" />
-<input type="hidden" name="use_heading" value="1" />
-<em><small><span tal:content="python:'('+str(here.subscriberCount() + here.wikiSubscriberCount()) + ' subscribers)'">
-N subscribers
-</span></small></em>
-<input type="submit" name="quickcomment:method" value=" add a comment " 
-style="font-weight:bold" />
 </td>
 </tr>
 
 <!-- comment row -->
 <tr>
-<td align="center" valign="bottom" bgcolor="" colspan="2">  <!-- twk: no shade1 -->
+<td align="center" valign="bottom" bgcolor="" colspan="2">
 <textarea 
 tal:attributes="cols python:request.get('zwiki_width','') or 60"
 wrap="virtual" name="text" rows="3" cols="60" 
@@ -347,8 +335,7 @@ title="to comment (and cc any subscribers) enter text here and click add">
 </tr>
 
 <!-- add row -->
-<tr tal:condition="python: request.get('in_reply_to',0) or not vistwks">
-                                                <!-- twk: "add" position option -->
+<tr tal:condition="python: request.get('in_reply_to',0)">
 <td align="left" valign="middle">
 <em><small>
 <span tal:condition="request/in_reply_to|nothing">
@@ -356,9 +343,7 @@ in reply to: <span tal:replace="request/in_reply_to"></span>
 </span>
 </small></em>
 </td>
-
-<td tal:condition="not: vistwks" align="right" valign="top" nowrap="nowrap"> 
-                                                <!-- twk: "add" position option -->
+<td align="right" valign="top" nowrap="nowrap"> 
 <input type="hidden" name="in_reply_to" value="" tal:attributes="value request/in_reply_to|nothing" />
 <input type="hidden" name="use_heading" value="1" />
 <em><small><span tal:content="python:'('+str(here.subscriberCount() + here.wikiSubscriberCount()) + ' subscribers)'">
@@ -367,8 +352,8 @@ N subscribers
 <input type="submit" name="quickcomment:method" value=" add a comment " 
 style="font-weight:bold" />
 </td>
-
 </tr>
+
 </table>
 </form>
 
