@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-31-0dev\n"
 "POT-Creation-Date: Thu Sep 30 14:19:57 2004\n"
-"PO-Revision-Date: 2004-09-30 09:14+0200\n"
+"PO-Revision-Date: 2004-10-01 00:07+0200\n"
 "Last-Translator: Nicolas Laurent <foenyx[at]online{dot}fr>,Raphael Badin "
 "<raphael(dot)badin{at}sopinspace[dot]com>\n"
 "Language-Team: <zwiki(at)zwiki.org>\n"
@@ -325,7 +325,7 @@ msgstr "répondre"
 
 #: i/pagetypes/stx.py:390
 msgid "Structured Text table rendering error"
-msgstr ""
+msgstr "Erreur dans le rendu du tableau avec la syntaxe « Structured Text »"
 
 #: i/pagetypes/stx.py:400
 msgid ""
@@ -338,10 +338,20 @@ msgid ""
 "                       so that this page can be displayed.\n"
 "                       "
 msgstr ""
+"\n"
+"                       Désolé, mais le rendu d'un tableau utilisant\n"
+"                       la syntaxe « Structured Text » dans cette page a\n"
+"                       produit une erreur. Ceci peut se produire à cause\n"
+"                       d'un espacement incorrect, de l'utilisation d'un\n"
+"                       nombre erroné de séparateurs de colonnes, etc.\n"
+"                       Veuillez corriger le tableau en respectant la\n"
+"                       syntaxe « Structured Text », ou supprimez le, \n"
+"                       pour qu'ainsi la page s'affiche correctement.\n"
+"                       "
 
 #: i/pagetypes/stx.py:408
 msgid "To edit this page, click OK."
-msgstr ""
+msgstr "Pour modifier cette page, cliquez sur OK."
 
 #: i/skins/dtmlmessages.pt:100 i/skins/dtmlmessages.pt:190
 msgid "Filter issues"
@@ -844,17 +854,16 @@ msgstr "Différences pour"
 
 # Default: "Note for the page history (optional)"
 #: i/skins/standard/diffform.pt:44
-#, fuzzy
 msgid "log_note"
-msgstr "Note pour l'historique de la page (optionnel)"
+msgstr "Note de l'historique:"
 
 #: i/skins/standard/diffform.pt:58
 msgid "Revert this change and all successive changes"
 msgstr ""
-"Revenir à cette précédente version et annuler tous les changements successifs"
+"Revenir à cette précédente version et\n"
+"annuler tous les changements successifs"
 
 #: i/skins/standard/diffform.pt:61
-#, fuzzy
 msgid "Return to page"
 msgstr "Retourner à la page"
 
@@ -1130,9 +1139,8 @@ msgstr ""
 #: i/skins/standard/wikipage_macros.pt:476
 #: i/skins/standard/wikipage_macros.pt:481
 #: i/skins/standard/wikipage_macros.pt:486
-#, fuzzy
 msgid "title"
-msgstr "Titre"
+msgstr "titre"
 
 #: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:31
 msgid "Backlinks for"
