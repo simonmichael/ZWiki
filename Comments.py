@@ -24,12 +24,14 @@ class CommentsSupport:
     Everything above the first comment is considered the document part,
     the rest of the page is considered the discussion part.
 
-    Prior to 0.30 we called these Messages; you may see references to both.
+    Prior to 0.30 we called this MessageSupport. When working with
+    comments, we represent them as email.Message.Message objects.
 
     So that we can recognize comments/messages without extra markup or too
     many false positives, we require each message to begin with BAW's "strict"
     From line regexp from the python mailbox module.
 
+    See also Editing.py.
     """
     security = ClassSecurityInfo()
 

@@ -6,6 +6,7 @@ import re, string, time
 from string import split,join,find,lower,rfind,atoi,strip
 from urllib import quote, unquote
 from types import *
+from email.Message import Message
 
 import ZODB # need this for pychecker
 from AccessControl import getSecurityManager, ClassSecurityInfo
@@ -151,8 +152,7 @@ class EditingSupport:
         if not message_id: message_id = self.messageIdFromTime(dtime)
 
         # make a Message representing this comment
-        import email.Message
-        m = email.Message.Message()
+        m = Message()
         m['From'] = username
         m['Date'] = time
         m['Subject'] = subject_heading
