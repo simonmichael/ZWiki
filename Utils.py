@@ -474,6 +474,18 @@ class Utils:
             
         return s
 
+    security.declareProtected(Permissions.View,'include')
+    def include(self,page,REQUEST=None):
+        """
+        Convenience method for including the body of one page within another.
+
+        Renders without the skin, passes REQUEST in case authentication is
+        needed, fails silently if page does not exist.
+        """
+        p = self.pageWithNameOrId(page)
+        if p: return p(bare=1,REQUEST=REQUEST)
+        else: return ''
+        
 InitializeClass(Utils)
 
 
