@@ -14,6 +14,8 @@ class CatalogAwareness:
     """
     Holds most of ZWikiPage's catalog awareness code.  Similar to Zope's
     or CMF's catalog awareness with a little extra behaviour.
+
+    Confusing code duplication between zwiki/plone/cmf/zope here. 
     """
     security = ClassSecurityInfo()
 
@@ -112,7 +114,12 @@ class CatalogAwareness:
     def unindex_object(self):
         """Remove this page from the wiki's catalog, if any."""
         if self.hasCatalog():
-            self.catalog().unindexObject(self)
+            self.catalog().uncatalog_object(self.url())
+
+    def reindex_object(self):
+        """Reindex this page in wiki's catalog, if any."""
+        self.unindex_object()
+        self.index_object()
 
     #XXX backwards compatibility
     updateCatalog = reindex_object = index_object 

@@ -161,7 +161,7 @@ ZWikiPage.ZWikiPage.manage_beforeDelete = manage_beforeDelete
 #                dtpref_rows='20',REQUEST=None):
 #    """Edit object and reindex"""
 #    r = original_edit(self,data,title,SUBMIT,dtpref_cols,dtpref_rows,REQUEST)
-#    self.index_object()
+#    self.reindex_object()
 #    return r
 #ZWikiPage.ZWikiPage.manage_edit = manage_edit
 
@@ -169,7 +169,7 @@ original_addProperty = ZWikiPage.ZWikiPage.manage_addProperty
 def manage_addProperty(self, id, value, type, REQUEST=None):
     """Add property and reindex"""
     r = original_addProperty(self,id,value,type,REQUEST)
-    self.index_object()
+    self.reindex_object()
     return r
 ZWikiPage.ZWikiPage.manage_addProperty = manage_addProperty
 
@@ -177,7 +177,7 @@ original_delProperties = ZWikiPage.ZWikiPage.manage_delProperties
 def manage_delProperties(self, ids=None, REQUEST=None):
     """Delete properties and reindex"""
     r = original_delProperties(self, ids, REQUEST)
-    self.index_object()
+    self.reindex_object()
     return r
 ZWikiPage.ZWikiPage.manage_delProperties = manage_delProperties
 
@@ -186,7 +186,7 @@ def manage_changeProperties(self, REQUEST=None, **kw):
     """Update properties and reindex"""
     #r = original_changeProperties(self, REQUEST, **kw)
     r = apply(original_changeProperties,(self, REQUEST), kw)
-    self.index_object()
+    self.reindex_object()
     return r
 ZWikiPage.ZWikiPage.manage_changeProperties = manage_changeProperties
 
@@ -194,6 +194,6 @@ original_editProperties = ZWikiPage.ZWikiPage.manage_editProperties
 def manage_editProperties(self, REQUEST):
     """Edit Properties and reindex"""
     r = original_editProperties(self, REQUEST)
-    self.index_object()
+    self.reindex_object()
     return r
 ZWikiPage.ZWikiPage.manage_editProperties = manage_editProperties

@@ -938,7 +938,7 @@ class EditingSupport:
         self.title = title
         self.setText(data,REQUEST)
         self.setLastEditor(REQUEST)
-        self.index_object()
+        self.reindex_object()
         if REQUEST:
             message="Content changed."
             return self.manage_main(self,REQUEST,manage_tabs_message=message)
