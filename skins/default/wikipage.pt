@@ -6,7 +6,7 @@
    minimal         python: displaymode=='minimal';
    full            python: displaymode=='full';
    showhierarchy   python: request.get('zwiki_showhierarchy',0);
-   linearhdr       python: 0;
+   linearhdr       python: displaymode=='full';
    macros          python: here.wikipage_macros(request).macros;
    ">
 <head metal:use-macro="macros/head">
