@@ -67,14 +67,15 @@ hashnumberexpr = r'\#[0-9]+'
 # XXX isn't this limiting ? Can we allow all international characters,
 # regardless of locale ? How far should we go ? Are regexps getting slow ?
 
+# find the system's character encoding
+# don't rely on python 2.3's getpreferredencoding, which gives wrong
+# answer, and work around a python bug with some locales (zwiki #392)
 import locale
-# work around a python bug (IssueNo0392)
-# don't require python 2.3's getpreferredencoding
 try:
     lang, encoding = locale.getlocale()
 except ValueError:
     lang, encoding = None, None
-    BLATHER('Warning: getlocale() ValueError, WikiNames will not use the system locale')
+    WARN('Warning: getlocale() ValueError, wiki names will not be locale-aware (issue #392)')
 
 if encoding:
     # recognize this locale's upper and lower-case characters
