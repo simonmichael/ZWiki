@@ -564,9 +564,21 @@ class MailSupport:
 
     def mailhost(self):
         """
-        Give the MailHost that should be used for sending mail.
+        Give the MailHost that should be used for sending mail, or None.
+
+        We want to find a mailhost, any mailhost, in a robust way without
+        confusion from pages named MailHost, and to acquire it from a
+        parent folder if necessary. So: we look for the first object of
+        Mail Host meta_type in this folder, then in the parent folder, and
+        so on. Overkill ? But it needs to just work.
         """
-        return self.MailHost
+        folder = self.folder()
+        mhost = None
+        while folder and not mhost:
+            mhosts = folder.objectValues(spec='Mail Host')
+            if mhosts: mhost = mhosts[0]
+            folder = getattr(folder,'aq_parent',None)
+        return mhost
 
     def sendMailToSubscribers(self, text, REQUEST, subjectSuffix='',
                               subject='',message_id=None,in_reply_to=None,
