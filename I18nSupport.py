@@ -18,20 +18,62 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
+#problems.. due to circular import ?
+#from Utils import BLATHER
+#XXX temp
+def BLATHER(t):
+    import zLOG
+    zLOG.LOG('ZWiki',t)
+
+
 USE_PTS=1
 
 try:
     if USE_PTS:
-        from Products.PlacelessTranslationService import ZopeMessageIDFactory as _
+        from Products.PlacelessTranslationService.MessageID import MessageIDFactory
+        _ = MessageIDFactory('zwiki') 
         N_ = _
+        BLATHER('using PlacelessTranslationService for i18n')
+        # copied from below
+        # For DTML and Page Templates
+        def gettext(self, message, language=None):
+            """ """
+            return message
+        # Document Template Markup Langyage (DTML)
+        from Globals import DTMLFile
+        class LocalDTMLFile(DTMLFile):
+            def _exec(self, bound_data, args, kw):
+                # Add our gettext first
+                bound_data['gettext'] = self.gettext
+                return apply(LocalDTMLFile.inheritedAttribute('_exec'),
+                             (self, bound_data, args, kw))
+            gettext = gettext
+        # for Page Templates
+        try:
+            from Products.PageTemplates.PageTemplateFile import PageTemplateFile
+        except ImportError:
+            # If ZPT is not installed
+            class LocalPageTemplateFile:
+                pass
+        else:
+            class LocalPageTemplateFile(PageTemplateFile):
+                def _exec(self, bound_data, args, kw):
+                    # Add our gettext first
+                    bound_data['gettext'] = self.gettext
 
+                    return apply(LocalPageTemplateFile.inheritedAttribute('_exec'),
+                                 (self, bound_data, args, kw))
+                gettext = gettext
+        
     elif USE_LOCALIZER:
         from Products.Localizer import Gettext
         _ = Gettext.translation(globals())
         N_ = Gettext.dummy
         from Products.Localizer import LocalDTMLFile, LocalPageTemplateFile
+        BLATHER('using Localizer for i18n')
 
 except (ImportError, NameError):
+    BLATHER('using no i18n')
     # for Python code
     def _(s, language=None):
         return s
