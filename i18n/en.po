@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zwiki 0.9.10\n"
-"POT-Creation-Date: Sat May  8 13:44:56 2004\n"
+"POT-Creation-Date: Wed May 12 21:35:59 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -198,73 +198,73 @@ msgstr ""
 msgid "type"
 msgstr ""
 
-#: i/skins/standard/wikipage_macros.pt:137
+#: i/skins/standard/wikipage_macros.pt:141
 msgid "show all features"
 msgstr ""
 
-#: i/skins/standard/wikipage_macros.pt:144
+#: i/skins/standard/wikipage_macros.pt:148
 msgid "show basic features"
 msgstr ""
 
-#: i/skins/standard/wikipage_macros.pt:151
+#: i/skins/standard/wikipage_macros.pt:155
 msgid "show only essential features"
 msgstr ""
 
-#: i/skins/standard/wikipage_macros.pt:164
+#: i/skins/standard/wikipage_macros.pt:168
 msgid "configure email subscription to this page or site"
 msgstr ""
 
-#: i/skins/standard/wikipage_macros.pt:172
+#: i/skins/standard/wikipage_macros.pt:176
 msgid "which pages link to this one ?"
 msgstr ""
 
-#: i/skins/standard/wikipage_macros.pt:179
+#: i/skins/standard/wikipage_macros.pt:183
 msgid "show this page's change history"
 msgstr ""
 
-#: i/skins/standard/wikipage_macros.pt:195
+#: i/skins/standard/wikipage_macros.pt:199
 msgid "edit using external editor"
 msgstr ""
 
-#: i/skins/standard/wikipage_macros.pt:215
+#: i/skins/standard/wikipage_macros.pt:219
 msgid "go to home page"
 msgstr ""
 
-#: i/skins/standard/wikipage_macros.pt:244
-#: i/skins/standard/wikipage_macros.pt:283
+#: i/skins/standard/wikipage_macros.pt:248
+#: i/skins/standard/wikipage_macros.pt:287
 msgid "show wiki contents"
 msgstr ""
 
-#: i/skins/standard/wikipage_macros.pt:348
+#: i/skins/standard/wikipage_macros.pt:352
 msgid "a subject helps clarify threads and RecentChanges"
 msgstr ""
 
-#: i/skins/standard/wikipage_macros.pt:348
+#: i/skins/standard/wikipage_macros.pt:352
 msgid "subject"
 msgstr ""
 
-#: i/skins/standard/wikipage_macros.pt:355
+#: i/skins/standard/wikipage_macros.pt:361
 msgid "to comment (and cc any subscribers) enter text here and click add"
 msgstr ""
 
-#: i/skins/standard/wikipage_macros.pt:383
+#: i/skins/standard/wikipage_macros.pt:385
 msgid "add a comment"
 msgstr ""
 
 # Default: "new parent, name or replacement"
-#: i/skins/standard/wikipage_macros.pt:404
+#: i/skins/standard/wikipage_macros.pt:406
 msgid "parent_name_replace"
 msgstr ""
 
-#: i/skins/standard/wikipage_macros.pt:411
+#: i/skins/standard/wikipage_macros.pt:413
 msgid "reparent this page under the page you have entered"
 msgstr ""
 
-#: i/skins/standard/wikipage_macros.pt:417
+#: i/skins/standard/wikipage_macros.pt:419
 msgid "rename this page to the name you have entered, updating all links"
 msgstr ""
 
-#: i/skins/standard/wikipage_macros.pt:423
+#: i/skins/standard/wikipage_macros.pt:425
 msgid ""
 "move this page to the recycle bin, and relink to the name you have entered."
 msgstr ""
@@ -443,6 +443,7 @@ msgstr ""
 # "You are currently subscribed<br />\n"
 # "                to the whole wiki."
 #: i/skins/zwiki_plone/subscribeform.pt:100
+#: i/skins/standard/subscribeform.pt:124
 msgid "subscribed_wiki_ok"
 msgstr ""
 
@@ -450,31 +451,38 @@ msgstr ""
 # "You are currently not subscribed<br />\n"
 # "                to the whole wiki."
 #: i/skins/zwiki_plone/subscribeform.pt:104
+#: i/skins/standard/subscribeform.pt:128
 msgid "subscribed_wiki_no"
 msgstr ""
 
 #: i/skins/zwiki_plone/subscribeform.pt:108
+#: i/skins/standard/subscribeform.pt:132
 msgid "Unsubscribe from whole wiki"
 msgstr ""
 
 #: i/skins/zwiki_plone/subscribeform.pt:115
+#: i/skins/standard/subscribeform.pt:139
 msgid "Subscribe to whole wiki"
 msgstr ""
 
 # Default: "You are subscribed to these other pages"
 #: i/skins/zwiki_plone/subscribeform.pt:126
+#: i/skins/standard/subscribeform.pt:150
 msgid "other_page_subscribed"
 msgstr ""
 
 #: i/skins/zwiki_plone/subscribeform.pt:13
+#: i/skins/standard/subscribeform.pt:36
 msgid "Mail subscription"
 msgstr ""
 
 #: i/skins/zwiki_plone/subscribeform.pt:143
+#: i/skins/standard/subscribeform.pt:167
 msgid "Page subscribers"
 msgstr ""
 
 #: i/skins/zwiki_plone/subscribeform.pt:151
+#: i/skins/standard/subscribeform.pt:175
 msgid "Wiki subscribers"
 msgstr ""
 
@@ -484,15 +492,23 @@ msgstr ""
 # "          (but not general edits, unless enabled by the site admin).\n"
 # "          Or return to"
 #: i/skins/zwiki_plone/subscribeform.pt:35
+#: i/skins/standard/subscribeform.pt:58
 msgid "subscribe_desc"
 msgstr ""
 
 #: i/skins/zwiki_plone/subscribeform.pt:49
+#: i/skins/standard/subscribeform.pt:72
 msgid "Your email address"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:52
+#: i/skins/standard/subscribeform.pt:75
+msgid "Change"
 msgstr ""
 
 # Default: "To subscribe, please configure your email address."
 #: i/skins/zwiki_plone/subscribeform.pt:60
+#: i/skins/standard/subscribeform.pt:83
 msgid "subscribe_no_email"
 msgstr ""
 
@@ -500,6 +516,7 @@ msgstr ""
 # "You are currently subscribed<br />\n"
 # "                to this page."
 #: i/skins/zwiki_plone/subscribeform.pt:70
+#: i/skins/standard/subscribeform.pt:93
 msgid "subscribed_page_ok"
 msgstr ""
 
@@ -507,6 +524,7 @@ msgstr ""
 # "You are currently not subscribed<br />\n"
 # "                to this page."
 #: i/skins/zwiki_plone/subscribeform.pt:74
+#: i/skins/standard/subscribeform.pt:97
 msgid "subscribed_page_no"
 msgstr ""
 
@@ -535,27 +553,6 @@ msgstr ""
 # Default: "User options"
 #: i/skins/zwiki_plone/useroptions.pt:12
 msgid "heading_wiki_user_options"
-msgstr ""
-
-#: i/skins/zwiki_plone/wikifolder_edit_form.pt:15
-msgid "Edit"
-msgstr ""
-
-#: i/skins/zwiki_plone/wikifolder_edit_form.pt:25
-msgid "Title"
-msgstr ""
-
-#: i/skins/zwiki_plone/wikifolder_edit_form.pt:35
-msgid "Description"
-msgstr ""
-
-#: i/skins/zwiki_plone/wikifolder_edit_form.pt:43
-#: i/skins/zwiki_plone/subscribeform.pt:52
-msgid "Change"
-msgstr ""
-
-#: i/skins/zwiki_plone/wikifolder_edit_form.pt:50
-msgid "Change and View"
 msgstr ""
 
 # Default: "Wiki Navigation"
