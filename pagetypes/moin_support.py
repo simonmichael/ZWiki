@@ -1746,7 +1746,7 @@ function togglenumber(did,nstart,nstep){
 
         # check numbering, possibly changing the default
         if self._show_section_numbers is None:
-            self._show_section_numbers = 1 #self.cfg.show_section_numbers
+            self._show_section_numbers = 0 #self.cfg.show_section_numbers
             numbering = self.request.getPragma('section-numbers', '').lower()
             if numbering in ['0', 'off']:
                 self._show_section_numbers = 0
