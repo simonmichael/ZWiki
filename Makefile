@@ -528,7 +528,7 @@ plonetags:
 	     -o -name old     -prune -type f `
 
 clean:
-	rm -f .*~ *~ *.tgz *.bak
+	rm -f .*~ *~ *.tgz *.bak i18n/*.mo
 
 Clean: clean
 	rm -f locale/*.mo
