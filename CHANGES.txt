@@ -1,9 +1,51 @@
-Zwiki 0.37.0rc1 2004/11/30
-
     Summary
 
-        Improved rating form, chinese translation updates, bugfixes.
+        Improved rating form, a file -> wiki page import tool, chinese &
+	hungarian translation updates, bug fixes.
+
+	Last release was 0.37rc1 on 11/30; there was no december release.
 	
+    Changes
+
+      Editing
+
+	* avoid creating both pages when you rename during page creation
+	  drop the leaveplaceholder and updatebacklinks arguments from
+	  create().  Changing the page name in the create form now always
+	  updatesbacklinks, never leaves a placeholder.
+
+      Rating
+ 
+	* rating could fail when there was only one vote
+
+	* make rating's average a little more accurate
+
+      Mail
+
+	* workaround for clumsy mailhost lookup (#938)
+
+      Issue tracking
+
+	* don't match xml/html character entities as hash number issue links (Stefan Rank)
+
+      General - i18n
+
+	* hungarian translation updates (Jaroli József)
+
+	* po file typo (T.C. Chou)
+
+      General - skins
+	
+	* use canonicaIdFrom to help link user names in recent changes
+
+	* change RecentChanges ZCatalog query-style to avoid deprecation warning (Stefan Rank)
+
+      General
+
+	* add tools folder and a basic import-files-to-wiki utility
+
+Zwiki 0.37.0rc1 2004/11/30
+
     Changes
 
       Page hierarchy
