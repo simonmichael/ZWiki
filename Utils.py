@@ -62,9 +62,15 @@ class Utils:
     def summary(self,size=100):
         """
         Give a short summary of this page's content.
+
+        Take the first paragraph of the document part and cut it to size
+        characters & replace the last word with ellipsis if necessary.
         """
-        firstparagraph = split(self.text(),'\n\n')[0]
-        return html_quote(firstparagraph[:size])
+        firstparagraph = split(self.documentPart(),'\n\n')[0]
+        summary = firstparagraph[:size]
+        if len(summary) == size:
+            summary = re.sub(r'\W*\w*$',r'',summary) + '...'
+        return html_quote(summary)
 
     security.declareProtected(Permissions.View, 'excerptAt')
     def excerptAt(self, expr, size=100, highlight=1):
