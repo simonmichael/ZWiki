@@ -24,7 +24,7 @@ from I18nSupport import _
 
 # utilities
 
-def loadPageTemplate(name):
+def loadPageTemplate(name,dir='skins/standard'):
     """
     Load the named page template from the filesystem.
     """
@@ -43,25 +43,25 @@ def loadPageTemplate(name):
                  'modules': SecureModuleImporter,
                  }
             return c
-    pt = MyPTFile('skins/standard/%s.pt'%name, globals(), __name__=name)
+    pt = MyPTFile(os.path.join(dir,'%s.pt'%name), globals(), __name__=name)
     pt._cook_check() # ensure _text is there, we peek at it below    
     return pt
 
-def loadDtmlMethod(name):
+def loadDtmlMethod(name,dir='skins/standard'):
     """
     Load the named DTML method from the filesystem.
     """
-    dm = HTMLFile('skins/standard/%s'%name, globals())
+    dm = HTMLFile(os.path.join(dir,name), globals())
     # work around some (2.7 ?) glitch
     if not hasattr(dm,'meta_type'): dm.meta_type = 'DTML Method (File)'
     return dm
 
-def loadStylesheetFile(name):
+def loadStylesheetFile(name,dir='skins/standard'):
     """
     Load the stylesheet File from the filesystem. Also fix a mod. time bug.
     """
     thisdir = os.path.split(os.path.abspath(__file__))[0]
-    filepath = os.path.join(thisdir,'skins/standard',name)
+    filepath = os.path.join(thisdir,dir,name)
     data,mtime = '',0
     try:
         fp = open(filepath,'rb')
