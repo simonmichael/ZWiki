@@ -31,7 +31,16 @@ USE_PTS=1
 try:
     if USE_PTS:
         from Products.PlacelessTranslationService.MessageID import MessageIDFactory
-        _ = MessageIDFactory('zwiki') 
+        # XXX temp
+        from Products.PlacelessTranslationService.PatchStringIO import get_request
+        class MessageIDFactoryWithUtf8Fix(MessageIDFactory):
+            """
+            A hacky wrapper to ensure utf-8 encoding whenever _ is used.
+            """
+            def __call__(self, ustr, default=None):
+                get_request().RESPONSE.setHeader('Content-Type','text/html; charset=utf-8') 
+                return MessageIDFactory.__call__(self,ustr,default)
+        _ = MessageIDFactoryWithUtf8Fix('zwiki') 
         N_ = _
         BLATHER('using PlacelessTranslationService for i18n')
         # copied from below
