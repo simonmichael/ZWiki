@@ -898,7 +898,7 @@ class EditingSupport:
         self._validateProxy(REQUEST)
 
         headers, body = parseHeadersBody(body)
-        log = string.strip(headers.get('Log', headers.get('log', ''))) or None
+        log = string.strip(headers.get('Log', headers.get('log', ''))) or ''
         type = (string.strip(headers.get('Type', headers.get('type', '')))
                 or None)
         if type is not None:
