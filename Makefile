@@ -220,7 +220,7 @@ plonetags:
 	     -o -name old     -prune -type f `
 
 clean:
-	rm -f .*~ *~ *.tgz *.bak 
+	rm -f .*~ *~ *.tgz *.bak `find . -name "*.pyc"`
 
 Clean: clean
 	rm -f i18n/*.mo skins/dtmlmessages.pt
