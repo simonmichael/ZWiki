@@ -100,8 +100,8 @@ class RatingSupport:
 
         The page's rating, current user's vote etc. will be highlighted.
         """
-        return onlyBodyFrom(
-            self.getSkinTemplate('ratingform')(self,REQUEST))
+        #return onlyBodyFrom(
+        return self.getSkinTemplate('ratingform')(self,REQUEST)
 
     security.declareProtected(Permissions.View, 'ratingStyle')
     def ratingStyle(self,rating=''):
