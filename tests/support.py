@@ -53,6 +53,7 @@ def zwikiAfterSetUp(self):
     # our mock request seems a bit more useful than ZTC's
     #self.request = self.app.REQUEST
     self.request = self.page.REQUEST = MockRequest()
+    #disableI18nForUnitTesting()
 
 # can we go further and do this here:
 #import os, sys
@@ -168,18 +169,19 @@ class MockZWikiPage(ZWikiPage):
         else:
             return 0
 
-# neutralize PTS to get most tests working.. see testI18n.py
-def patchPTSForUnitTesting(): 
+
+# neutralize PTS to get most tests working.. see also testI18n.py
+def disableI18nForUnitTesting(): 
     try:
         from Products.PlacelessTranslationService.PlacelessTranslationService \
              import PlacelessTranslationService
-        save1 = PlacelessTranslationService._getContext
-        save2 = PlacelessTranslationService.negotiate_language
         PlacelessTranslationService._getContext = \
             lambda self,context: MockRequest()
         PlacelessTranslationService.negotiate_language = \
             lambda self,context,domain: 'en'
+        #from Products.ZWiki import I18nSupport
+        #I18nSupport._ = lambda s:str(s)
     except ImportError:
         pass
 
-patchPTSForUnitTesting()
+disableI18nForUnitTesting()

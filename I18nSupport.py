@@ -16,10 +16,15 @@ try:
     if USE_PTS:
         from Products.PlacelessTranslationService.MessageID import MessageIDFactory
         from Products.PlacelessTranslationService.PatchStringIO import get_request
-        # an i18n doc claimed _() should return a MessageIDFactory for
+        # an i18n doc claimed it's good for _ to return a MessageIDFactory for
         # some unicode reason, but it causes problems here and there for
         # code that expects a string. We'll convert to a string for now.
-        _ = lambda s:str(MessageIDFactory('zwiki')(s))
+        # Also we'll put an ugly try except to allow this to just work
+        # in unit tests. Performance problem ?
+        #_ = lambda s:str(MessageIDFactory('zwiki')(s))
+        def _(s):
+            try:return str(MessageIDFactory('zwiki')(s))
+            except AttributeError: return str(s)
         # this hack forced proper utf-8 header with PTS, but I seem not to
         # need it any more.. possibly since zope 2.7.2 or some other upgrade ?
         # reenable if utf-8 encoding is broken, and please report at zwiki.org
