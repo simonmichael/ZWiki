@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-35-0\n"
 "POT-Creation-Date: Sun Oct 24 21:50:56 2004\n"
-"PO-Revision-Date: 2004-10-27 11:04+0800\n"
+"PO-Revision-Date: 2005-03-02 17:09+0800\n"
 "Last-Translator: T.C. Chou <tcchou-at-tcchou-dot-org>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
 "MIME-Version: 1.0\n"
@@ -214,7 +214,7 @@ msgstr ""
 "        q    检视页面的源码 (快速检视)\n"
 "             清除并且重新产生这一页面的快取\n"
 "             跳到子主题\n"
-"             跳到响应 (讯息)\n"
+"             跳到留言 (讯息)\n"
 "             如果可能的话, 会跳到这一页面作者的首页\n"
 "        n    下一页面\n"
 "        p    上一页面\n"
@@ -294,7 +294,7 @@ msgstr "建立页面"
 
 #: i/ZWikiPage.py:707 i/ZWikiPage.py:720 i/ZWikiPage.py:723
 msgid "last edited %(interval)s ago"
-msgstr "最新变更在 %(interval)s 以前"
+msgstr "%(interval)s 前修改"
 
 #: i/ZWikiPage.py:716
 msgid "show last edit %(lastlog)s"
@@ -306,7 +306,7 @@ msgstr "作者 %(editor)s"
 
 #: i/pagetypes/common.py:224
 msgid "comments"
-msgstr "响应"
+msgstr "留言"
 
 #: i/pagetypes/moin_support.py:1922
 msgid "Expected \"=\" to follow \"%(token)s\""
@@ -392,7 +392,7 @@ msgstr "提出者"
 
 #: i/skins/dtmlmessages.pt:155
 msgid "Details & comments"
-msgstr "细节与响应"
+msgstr "细节与留言"
 
 #: i/skins/dtmlmessages.pt:16
 msgid "Add and Edit"
@@ -456,7 +456,7 @@ msgstr "储存设定"
 #: i/skins/dtmlmessages.pt:27 i/skins/dtmlmessages.pt:93
 #: i/skins/dtmlmessages.pt:166
 msgid "Forget options"
-msgstr "遗忘设定"
+msgstr "预设设定"
 
 #: i/skins/dtmlmessages.pt:28 i/skins/dtmlmessages.pt:94
 #: i/skins/dtmlmessages.pt:167
@@ -545,7 +545,7 @@ msgstr "页面"
 #: i/skins/dtmlmessages.pt:44 i/skins/dtmlmessages.pt:110
 #: i/skins/dtmlmessages.pt:183
 msgid "Edited&nbsp;by"
-msgstr "修改由"
+msgstr "修改者"
 
 #: i/skins/dtmlmessages.pt:45 i/skins/dtmlmessages.pt:111
 #: i/skins/dtmlmessages.pt:184
@@ -572,7 +572,7 @@ msgstr "标题"
 
 #: i/skins/dtmlmessages.pt:50 i/skins/dtmlmessages.pt:116
 msgid "Enter a search term, or click the numbers to the right, or"
-msgstr "输入一个搜寻的字眼, 或点选右边的数字, 或"
+msgstr "输入搜寻的字词, 或点选右边的数字, 或"
 
 #: i/skins/dtmlmessages.pt:51 i/skins/dtmlmessages.pt:117
 msgid "filter issues"
@@ -599,12 +599,12 @@ msgstr "名称"
 #: i/skins/dtmlmessages.pt:56 i/skins/dtmlmessages.pt:78
 #: i/skins/dtmlmessages.pt:122 i/skins/dtmlmessages.pt:144
 msgid "category"
-msgstr "目录索引"
+msgstr "分类"
 
 #: i/skins/dtmlmessages.pt:57 i/skins/dtmlmessages.pt:79
 #: i/skins/dtmlmessages.pt:123 i/skins/dtmlmessages.pt:145
 msgid "severity"
-msgstr "严重"
+msgstr "程度"
 
 #: i/skins/dtmlmessages.pt:58 i/skins/dtmlmessages.pt:80
 #: i/skins/dtmlmessages.pt:124 i/skins/dtmlmessages.pt:146
@@ -614,7 +614,7 @@ msgstr "状态"
 #: i/skins/dtmlmessages.pt:59 i/skins/dtmlmessages.pt:81
 #: i/skins/dtmlmessages.pt:125 i/skins/dtmlmessages.pt:147
 msgid "age"
-msgstr "寿命"
+msgstr "建立"
 
 #: i/skins/dtmlmessages.pt:6
 msgid "Type"
@@ -623,11 +623,11 @@ msgstr "型态"
 #: i/skins/dtmlmessages.pt:60 i/skins/dtmlmessages.pt:82
 #: i/skins/dtmlmessages.pt:126 i/skins/dtmlmessages.pt:148
 msgid "modified"
-msgstr "已修改"
+msgstr "变更"
 
 #: i/skins/dtmlmessages.pt:61 i/skins/dtmlmessages.pt:127
 msgid "Add a new issue:"
-msgstr "新增一个新的事例:"
+msgstr "添加新事例:"
 
 # Default: "Page name"
 #: i/skins/dtmlmessages.pt:62 i/skins/dtmlmessages.pt:128
@@ -652,7 +652,7 @@ msgstr "细节:"
 
 #: i/skins/dtmlmessages.pt:67 i/skins/dtmlmessages.pt:133
 msgid "add issue"
-msgstr "新增事例"
+msgstr "添加事例"
 
 #: i/skins/dtmlmessages.pt:68 i/skins/dtmlmessages.pt:134
 msgid "More advanced"
@@ -700,7 +700,7 @@ msgstr "并输入"
 
 #: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:10
 msgid "Add ZWiki Page"
-msgstr "新增ZWiki页面"
+msgstr "添加ZWiki页面"
 
 # Default: ""
 # "You can change this page's parent(s) to place it within the overall page\n"
@@ -773,7 +773,7 @@ msgstr "上传档案或图档"
 
 #: i/skins/standard/editform.pt:168
 msgid "upload a file and link it on this page ?"
-msgstr "在这页上传一个档案并连结它?"
+msgstr "在这页上传档案并连结它?"
 
 #: i/skins/standard/editform.pt:179
 msgid "For editing help, see"
@@ -989,7 +989,7 @@ msgstr "回复"
 
 #: i/skins/standard/wikipage_macros.pt:407
 msgid "to comment (and cc any subscribers) enter text here and click add"
-msgstr "想写响应 (并且 cc 给所有订阅者) 请在这里输入文字然后点选 新增(add) 按钮"
+msgstr "想写留言 (并且 cc 给所有订阅者) 请在这里输入文字然后点选 新增(add) 按钮"
 
 #: i/skins/standard/wikipage_macros.pt:430
 msgid "${nb} subscribers"
@@ -1040,7 +1040,7 @@ msgid "box_canreparent"
 msgstr ""
 "您可设定此页的<em>父层</em>, 也就是安排主题的阶层结构.\n"
 "点选这个项目, 或输入新的页面名称并点选变更父层. 一般而\n"
-"言, 单一个父层就足够了."
+"言, 单一父层就足够了."
 
 #: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:100
 msgid "Other parent"
@@ -1056,7 +1056,7 @@ msgstr "Wiki内容"
 
 #: i/skins/zwiki_plone/contentspage.pt:19 i/skins/standard/contentspage.pt:42
 msgid "Singletons"
-msgstr "单独存在页面"
+msgstr "独立页面"
 
 # Default: "Singletons are pages that are not connected to other pages."
 #: i/skins/zwiki_plone/contentspage.pt:21
@@ -1105,7 +1105,7 @@ msgstr "主体内容"
 msgid "help_wikibody"
 msgstr ""
 "在Wiki页面中, 您可用 [方括号] 建立连接. 当您储存页面时, 方括号里头的\n"
-"            名称将会跟随一个小小的 <code>?</code> 连接. 当您点选时, 则依\n"
+"            名称将会跟随小小的 <code>?</code> 连接. 当您点选时, 则依\n"
 "            该名称建立一新页面."
 
 # Default: ""
@@ -1116,7 +1116,7 @@ msgstr ""
 msgid "help_wikiwords"
 msgstr ""
 "在Wiki页面中, 您可用 [方括号] 建立连接. 当您储存页面时, 方括号里头的\n"
-"            名称将会跟随一个小小的 <code>?</code> 连接. 当您点选时, 则依\n"
+"            名称将会跟随小小的 <code>?</code> 连接. 当您点选时, 则依\n"
 "            该名称建立一新页面."
 
 # Default: "Note for the page history (optional)"
@@ -1137,7 +1137,7 @@ msgstr "上传档案或是图档(选择性项目)"
 # Default: "Attaches a file or an image to this wiki page."
 #: i/skins/zwiki_plone/editform.pt:188
 msgid "help_wikiupload"
-msgstr "在此页加上一个附档或是一个图档."
+msgstr "在此页添加附档或是图档."
 
 # Default: "Page Format"
 #: i/skins/zwiki_plone/editform.pt:207
@@ -1284,7 +1284,7 @@ msgstr "Wiki订阅者"
 msgid "subscribe_desc"
 msgstr ""
 "您可以订阅这一页面或是整个Wiki.\n"
-"订阅者会透过电子邮件收到一份份的使用者响应\n"
+"订阅者会透过电子邮件收到一份份的使用者留言\n"
 "(但不是一般页面修订,除非网站管理者开放). \n"
 "或回到"
 
@@ -1380,13 +1380,13 @@ msgstr "标题"
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:26
 msgid "enter comments here and click add; or, click edit"
-msgstr "在这里输入响应并且点选 新增(add) 按钮, 或点选 修改(edit) 按钮."
+msgstr "在这里输入留言并且点选 新增(add) 按钮, 或点选 修改(edit) 按钮."
 
 # Default: "Add a comment"
 #: i/skins/zwiki_plone/wikipage_footer.pt:40
 #: i/skins/standard/wikipage_macros.pt:438
 msgid "add-comment"
-msgstr "新增响应"
+msgstr "添加留言"
 
 #~ msgid "You may also click the full, simple, minimal links if provided."
 #~ msgstr "您也可以点选 完全, 简单, 极简 连结 (如果有的话)."
@@ -1448,7 +1448,7 @@ msgstr "新增响应"
 
 #~ msgid ""
 #~ "enter a new parent, new name, replacement page (if any) or subtopic name"
-#~ msgstr "输入一个新父层, 页面名称, 或替代名称(如果有的话) 或 子主题名称"
+#~ msgstr "输入新父层, 页面名称, 或替代名称(如果有的话) 或 子主题名称"
 
 # Default: ""
 # "You can also set this page's <em>parent(s)</em>, to locate it within the\n"
@@ -1461,10 +1461,10 @@ msgstr "新增响应"
 #~ "通常单一父层就够了."
 
 #~ msgid "reparent this page under the page you have entered"
-#~ msgstr "变更这一个页面的父页, 让它在已有页面之下"
+#~ msgstr "变更这个页面的父页, 让它在已有页面之下"
 
 #~ msgid "rename this page to the name you have entered, updating all links"
-#~ msgstr "变更这一页面名称为您已输入的, 更新所有连结"
+#~ msgstr "变更这页面名称为您已输入的, 更新所有连结"
 
 # Default: "Page name"
 #~ msgid "rename"
@@ -1481,7 +1481,7 @@ msgstr "新增响应"
 #~ msgstr "建立"
 
 #~ msgid "create a new subtopic of this page"
-#~ msgstr "为这页面建立一个新的子主题吗?"
+#~ msgstr "为这页面建立新的子主题吗?"
 
 #~ msgid "cancel"
 #~ msgstr "取消"
