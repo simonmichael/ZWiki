@@ -36,11 +36,12 @@ class TrackerSupport:
         #return '#%04d %s' % (number,name)
 
     security.declareProtected(Permissions.View, 'issueNumberAndName')
-    def issueNumberAndName(self):
+    def issueNumberAndName(self, pagename=None):
         """
         Return issue number and name parts from this page's name if possible.
 
-        Valid formats for issue page names are:
+        An arbitrary pagename can also be specified. Valid formats for
+        issue page names are:
 
         IssueNoNNNN ...
         NNNN ...
@@ -49,37 +50,37 @@ class TrackerSupport:
         where NNNN is one or more digits. Returns a (number:int, name:str)
         tuple or None. The name part is stripped of surrounding whitespace.
         """
-        name = self.pageName()
-        m = (re.match(r'^IssueNo([0-9]+)(.*)$',name) # IssueNoNNNN...
-             or re.match(r'^#?([0-9]+)(.*)$',name))  # NNNN... or #NNNN...
+        pagename = pagename or self.pageName()
+        m = (re.match(r'^IssueNo([0-9]+)(.*)$',pagename) # IssueNoNNNN...
+             or re.match(r'^#?([0-9]+)(.*)$',pagename))  # NNNN... or #NNNN...
         if m: return (int(m.group(1)), m.group(2).strip())
         else: return None
 
     security.declareProtected(Permissions.View, 'issueNumber')
-    def issueNumber(self):
+    def issueNumber(self, pagename=None):
         """
-        Return this page's issue number, or None.
+        Return this page's (or another's) issue number, or None.
         """
-        tuple = self.issueNumberAndName()
+        tuple = self.issueNumberAndName(pagename)
         return tuple and tuple[0]
 
     security.declareProtected(Permissions.View, 'issueName')
-    def issueName(self):
+    def issueName(self, pagename=None):
         """
         Return this page's issue name (page name without the number), or None.
         """
-        tuple = self.issueNumberAndName()
+        tuple = self.issueNumberAndName(pagename)
         return tuple and tuple[1]
 
     security.declareProtected(Permissions.View, 'isIssue')
-    def isIssue(self,client=None,REQUEST=None,RESPONSE=None,**kw):
+    def isIssue(self,pagename=None):
         """
-        Is this page a tracker issue ?
+        Does this page (or the specified page name) represent a tracker issue ?
 
         If we are able to extract an issue number and name from the page
         name, yes.
         """
-        return self.issueNumberAndName() and 1
+        return self.issueNumberAndName(pagename) and 1
 
     security.declareProtected(Permissions.View, 'issueCount')
     def issueCount(self):
@@ -149,7 +150,7 @@ class TrackerSupport:
             return l[0]['colour']
     
     security.declareProtected(Permissions.Add, 'createIssue')
-    def createIssue(self, pageid, text='', title='',
+    def createIssue(self, pageid='', text='', title=None,
                     category='', severity='', status='', REQUEST=None):
         """
         Convenience method for creating an issue page.
@@ -158,20 +159,14 @@ class TrackerSupport:
         Sets title/category/severity/status properties without requiring
         Manage properties permission.
 
-        As of 0.17, issue pages are named "IssueNoNNNN issue description".
-        The arguments above should be cleaned up to reflect that, eg title
-        should come from pageid and should be called description.  pageid
-        should be called pagename.
+        XXX only old issue tracker dtml pages call this, AFAIK.  
+        Clean up args. pageid is really pagename.  title is not used.
 
         We will try to place the issue under a suitable parent - the
         IssueTracker page if it exists, or at the top level to avoid
         having issues scattered everywhere. Better ideas ?
-
-        We should be able to do without this method.
-
-        XXX clean up
         """
-        # XXX cf trackerUrl
+        # XXX hardcoded.. cf trackerUrl
         if self.pageWithName('IssueTracker'): parents = ['IssueTracker']
         else: parents = []
         self.create(pageid,text=text,REQUEST=REQUEST,parents=parents)
@@ -179,8 +174,7 @@ class TrackerSupport:
         issue.manage_addProperty('category','issue_categories','selection')
         issue.manage_addProperty('severity','issue_severities','selection')
         issue.manage_addProperty('status','issue_statuses','selection')
-        issue.manage_changeProperties(#page_type='stxprelinkdtmlfitissuehtml',
-                                      title=title,
+        issue.manage_changeProperties(title=pageid,
                                       category=category,
                                       severity=severity,
                                       status=status
@@ -188,53 +182,23 @@ class TrackerSupport:
         self.reindex_object()
 
     security.declareProtected(Permissions.Add, 'createNextIssue')
-    def createNextIssue(self, description, text='',
-                        category='', severity='', status='',
+    def createNextIssue(self,name='',text='',category='',severity='',status='',
                         REQUEST=None):
         """
         Create a new issue page, using the next available issue number.
         """
-        # XXX just copied directly from IssueTracker
-        try:
-            lastid = self.pages(isIssue=1,sort_on='id')[-1].id
-            lastnumber = int(lastid[7:11])
-            newnumber = lastnumber+1
-            newid = 'IssueNo'+string.zfill(newnumber,4)
-        except:
-            newid = 'IssueNo0001'
-        pagename=newid+' '+description
-        return self.createIssue(pagename, text, pagename, 
+        issues = self.pages(isIssue=1,sort_on='Title')
+        if issues:
+            lastnumber = self.issueNumber(issues[-1].Title)
+            newnumber = lastnumber + 1
+        else:
+            newnumber = 1
+        pagename=self.pageNameFromIssueNumberAndName(newnumber,name)
+        return self.createIssue(pagename, text, None, 
                                 category, severity, status, REQUEST)
-
-    #def changeProperties(self, REQUEST=None, **kw):
-    #    """
-    #    Similar to manage_changeProperties, except redirects back to the
-    #    current page. Also restores the issue number which we previously
-    #    stripped from title.
-    #    
-    #    security issue: bypasses Manage properties permission
-    #    
-    #    Deprecated, useful for backwards compatibility or remove ?
-    #    """
-    #    if REQUEST is None:
-    #        props={}
-    #    else: props=REQUEST
-    #    if kw:
-    #        for name, value in kw.items():
-    #            props[name]=value
-    #    props['title'] = self.getId()[:11]+' '+props['title']
-    #    propdict=self.propdict()
-    #    for name, value in props.items():
-    #        if self.hasProperty(name):
-    #            if not 'w' in propdict[name].get('mode', 'wd'):
-    #                raise 'BadRequest', '%s cannot be changed' % name
-    #            self._updateProperty(name, value)
-    #
-    #    self.setLastEditor(REQUEST)
-    #    self.reindex_object()
-    #    if REQUEST:
-    #        REQUEST.RESPONSE.redirect(self.page_url())
+    
             
+
     security.declareProtected(Permissions.Edit, 'changeIssueProperties')
     def changeIssueProperties(self, name=None, category=None, severity=None, 
                               status=None, log=None, REQUEST=None):
