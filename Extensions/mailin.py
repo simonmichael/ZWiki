@@ -32,21 +32,17 @@ Here are the delivery rules, in essence:
   or the first one.
 
 - check sender:
-  unless called with subscribersonly=0 or the folder's mailin_policy
-  property is 'open', check that the sender is either subscribed somewhere
-  in the wiki or listed in the mail_accept_nonmembers property, and if not
-  BOUNCE the message.
+  unless the folder's mailin_policy property, possibly acquired, is
+  'open', check that the sender is either subscribed somewhere in the wiki
+  or listed in the mail_accept_nonmembers property, and if not BOUNCE the
+  message.
 
-- if called with trackerissue=1 or the recipient looks like a zwiki
-  tracker mailin alias (.*TRACKERADDREXP), CREATE AN ISSUE page.
-  Otherwise,
+- if the recipient looks like a zwiki tracker mailin alias
+  (.*TRACKERADDREXP), CREATE AN ISSUE page.  Otherwise,
 
 - identify destination page name:
-  1. if called with checkrecipient=1, a page name (PAGEINREALNAMEEXP) in
-     the recipient's real name part (XXX REMOVE ?)
-  2. or the first [bracketed name] (PAGEINSUBJECTEXP) in the message subject
-  3. or the folder's default_mailin_page property (XXX NOT IMPLEMENTED) 
-  4. or the defaultpage argument we were called with (XXX REMOVE ?)
+  the first [bracketed name] (PAGEINSUBJECTEXP) in the message subject
+  or the folder's default_mailin_page property, possibly acquired
 
 - if no destination page name was found, DISCARD.
 
@@ -84,7 +80,7 @@ TRACKERADDREXP = r'(tracker|bugs|issues)@'
 # because different things show up here - 'name', mail address, etc. -
 # we recognize only page names beginning and ending with a word character
 # and not containing @
-PAGEINREALNAMEEXP = r'(?=^[^@]*$).*?(?P<page>\w.*\w)' 
+#PAGEINREALNAMEEXP = r'(?=^[^@]*$).*?(?P<page>\w.*\w)' 
 MAX_SIGNATURE_STRIP_SIZE = 500
 
 
@@ -148,19 +144,9 @@ class MailIn:
     def __init__(self,
                  context,
                  message,
-                 defaultpage=DEFAULTMAILINPAGE,
-                 subscribersonly=1,
-                 trackerissue=0,
-                 checkrecipient=0,
-                 checksubject=1,
                  ):
         BLATHER('mailin.py: processing incoming message:\n%s' % message)
         self.context = context
-        self.defaultpage = defaultpage
-        self.subscribersonly = subscribersonly
-        self.trackerissue = trackerissue
-        self.checkrecipient = checkrecipient
-        self.checksubject = checksubject
         self.msg = email.message_from_string(message)
         self.date = self.msg['Date']
         self.subject = re.sub(r'\n',r'',self.msg.get('Subject',''))
@@ -286,11 +272,12 @@ class MailIn:
 
         # find the default mailin page if any
         # note this is now different from the default_page folder property
-        defaultpagename = getattr(self.folder(),'default_mailin_page','')
+        defaultpagename = getattr(self.folder(),'default_mailin_page',None)
 
         # find a preliminary working page
         #self.workingpage = self.workingPage()
-        self.workingpage = getattr(self.folder(),defaultpagename,None)
+        if defaultpagename:
+            self.workingpage = getattr(self.folder(),defaultpagename,None)
         if not self.workingpage:
             allpages = self.folder().objectValues(spec='ZWiki Page')
             if allpages:
@@ -301,30 +288,32 @@ class MailIn:
             BLATHER('mailin.py: could not find a working page')
             self.error = '\nSorry, I could not find an existing wiki page to work with.\n\n\n'
             return
-        # adjust defaultpagename if it was wrong
-        defaultpagename = self.workingpage.title_or_id()
 
-        # find the destination page
-        # look for a page name
-        # in the recipient's real name part if enabled..
-        if self.checkrecipient:
-            m = re.search(PAGEINREALNAMEEXP,self.recipient()[0])
-            if m:
-                self.destpagename = m.group('page')
-        # or in the subject if enabled.. (default)
-        if (not self.destpagename) and self.checksubject:
+        # are we creating a tracker issue, which doesn't need a name ?
+        if re.search(TRACKERADDREXP,self.recipient()[1]):
+            self.trackerissue = 1
+            return
+
+        # find the destination page name
+        ## in the recipient's real name part if enabled..
+        ##if self.checkrecipient:
+        ##    m = re.search(PAGEINREALNAMEEXP,self.recipient()[0])
+        ##    if m:
+        ##        self.destpagename = m.group('page')
+        # in the subject
+        if (not self.destpagename):
             matches = re.findall(PAGEINSUBJECTEXP,self.subject)
             if matches:
                 self.destpagename = matches[-1] # use rightmost
                 # strip enclosing []'s
-                self.destpagename = re.sub(bracketedexpr, r'\1',self.destpagename)
-
+                self.destpagename = re.sub(bracketedexpr, r'\1',
+                                           self.destpagename)
         # or use the default mailin page if any..
-        if (not self.destpagename) and self.defaultpage:
+        if (not self.destpagename):
             self.destpagename = defaultpagename
 
-        # now, either we have identified an existing destination page
-        # (fuzzy naming allowed)..
+        # now, either we have the name of an existing page (fuzzy match
+        # allowed)..
         page = (self.destpagename and
                 self.workingpage.pageWithFuzzyName(self.destpagename,
                                                    ignore_case=1))
@@ -332,12 +321,9 @@ class MailIn:
             # also change working page to get right parentage etc.
             self.destpage = self.workingpage = page
             self.destpagename = self.destpage.title_or_id()
-        # or we have the name of a new page to create
+        # or we have the name of a new page to create..
         elif self.destpagename:
             self.newpage = 1
-        # or we are creating a tracker issue, which doesn't need a name
-        elif (self.trackerissue or re.search(TRACKERADDREXP,self.recipient()[1])):
-            self.trackerissue = 1
         # or we discard this message
         else:
             self.error = '\nMessage had no destination page, ignored.\n\n\n'
@@ -358,8 +344,7 @@ class MailIn:
         """
         postingpolicy = getattr(self.folder(),'mailin_policy',None)
         accept = getattr(self.folder(),'mail_accept_nonmembers',[])
-        if (not self.subscribersonly or
-            postingpolicy == 'open' or
+        if (postingpolicy == 'open' or
             self.FromEmail in accept or
             self.senderEmail in accept or
             # XXX poor caching
@@ -406,35 +391,15 @@ class MailIn:
 #        return folder
 
 
-def mailin(self,
-           msg,
-           pagenameexp=None, #XXX temporary backwards compatibility
-           defaultpage=DEFAULTMAILINPAGE,
-           separator=None, #XXX temporary backwards compatibility
-           checkrecipient=0,
-           checksubject=1,
-           trackerissue=0,
-           subscribersonly=1,
-           ):
+def mailin(self, msg):
+
     context = self
-    # these come over the web as strings
-    checkrecipient  = int(checkrecipient or 0)
-    checksubject    = int(checksubject or 0)
-    trackerissue    = int(trackerissue or 0)
-    subscribersonly = int(subscribersonly or 0)
 
     # silently discard any junk before doing anything else
     if isJunk(msg): return
 
     # parse and figure out how to deliver the message
-    m = MailIn(context,
-               msg,
-               defaultpage=defaultpage,
-               subscribersonly=subscribersonly,
-               trackerissue=trackerissue,
-               checkrecipient=checkrecipient,
-               checksubject=checksubject,
-               )
+    m = MailIn(context, msg)
     m.decideDestination()
     m.checkMailinAllowed()
     if m.error: return m.error

@@ -66,127 +66,106 @@ class MailinTests(unittest.TestCase):
     def testRecipientIdentification(self):
         m = mailin.MailIn(self.p.folder(),str(TestMessage(
             to='a'
-            )),subscribersonly=0)
+            )))
         self.assertEqual(m.recipient(),('','a'))
 
         m = mailin.MailIn(self.p.folder(),str(TestMessage(
             to='a, b'
-            )),subscribersonly=0)
+            )))
         self.assertEqual(m.recipient(),('','a'))
 
         self.p.folder().mail_from = 'b'
         m = mailin.MailIn(self.p.folder(),str(TestMessage(
             to='a, b, wiki@c.c'
-            )),subscribersonly=0)
+            )))
         self.assertEqual(m.recipient(),('','b'))
         del self.p.folder().mail_from
 
         m = mailin.MailIn(self.p.folder(),str(TestMessage(
             to='a@a.a, mailin@b.b'
-            )),subscribersonly=0)
+            )))
         self.assertEqual(m.recipient(),('','mailin@b.b'))
 
         m = mailin.MailIn(self.p.folder(),str(TestMessage(
             to='a@a.a, tracker@b.b'
-            )),subscribersonly=0)
+            )))
         self.assertEqual(m.recipient(),('','tracker@b.b'))
 
         m = mailin.MailIn(self.p.folder(),str(TestMessage(
             to='a@a.a, bugs@b.b'
-            )),subscribersonly=0)
+            )))
         self.assertEqual(m.recipient(),('','bugs@b.b'))
 
         m = mailin.MailIn(self.p.folder(),str(TestMessage(
             to='a@a.a, issues@b.b'
-            )),subscribersonly=0)
+            )))
         self.assertEqual(m.recipient(),('','issues@b.b'))
 
-    #def testDestinationFromHardCodedDefaultPage(self):
-    #    testmsg = str(TestMessage())
-    #    self.p.create('APage')
-    #    self.p.create(mailin.DEFAULTMAILINPAGE)
-    #    m = mailin.MailIn(self.p.folder(),testmsg,subscribersonly=0)
-    #    m.decideDestination()
-    #    self.assertEqual(m.destpagename,mailin.DEFAULTMAILINPAGE)
-    
-    def testDontGetDestinationFromDefaultPageProperty(self):
-        testmsg = str(TestMessage())
-        self.p.create('APage')
-        self.p.create('BPage')
-        self.p.folder().default_page = 'BPage'
-        m = mailin.MailIn(self.p.folder(),testmsg,subscribersonly=0)
-        m.decideDestination()
-        self.assertNotEqual(m.destpagename,'BPage')
-    
     #def testDestinationFromFirstExistingPage(self):
     #    testmsg = str(TestMessage())
     #    self.p.create('APage')
     #    self.p.folder().default_page = 'NonExistentPage'
-    #    import pdb; pdb.set_trace() #SKWM
-    #    m = mailin.MailIn(self.p.folder(),testmsg,subscribersonly=0)
+    #    m = mailin.MailIn(self.p.folder(),testmsg)
     #    m.decideDestination()
     #    self.assertEqual(m.destpagename,THISPAGE)
     
-    def testDestinationFromRealNameWithRecognizedEmail(self):
-        testmsg = str(TestMessage(to='wiki@b.c (SomePage)'))
-        m = mailin.MailIn(self.p.folder(),testmsg,subscribersonly=0,checkrecipient=1)
-        m.decideDestination()
-        self.assertEqual(m.destpagename,'SomePage')
+    #def testDestinationFromRealNameWithRecognizedEmail(self):
+    #    testmsg = str(TestMessage(to='wiki@b.c (SomePage)'))
+    #    m = mailin.MailIn(self.p.folder(),testmsg,checkrecipient=1)
+    #    m.decideDestination()
+    #    self.assertEqual(m.destpagename,'SomePage')
     
-    def testDestinationFromRealNameWithAnyEmail(self):
-        testmsg = str(TestMessage(to='a@b.c (SomePage)'))
-        m = mailin.MailIn(self.p.folder(),testmsg,subscribersonly=0,checkrecipient=1)
-        m.decideDestination()
-        self.assertEqual(m.destpagename,'SomePage')
+    #def testDestinationFromRealNameWithAnyEmail(self):
+    #    testmsg = str(TestMessage(to='a@b.c (SomePage)'))
+    #    m = mailin.MailIn(self.p.folder(),testmsg,checkrecipient=1)
+    #    m.decideDestination()
+    #    self.assertEqual(m.destpagename,'SomePage')
     
-    def testDestinationFromRealNameWithSubject(self):
-        testmsg = str(TestMessage(
-            to='a@b.c (SomePage)',
-            subject='[AnotherPage]',
-            ))
-        m = mailin.MailIn(self.p.folder(),testmsg,subscribersonly=0,checkrecipient=1)
-        m.decideDestination()
-        self.assertEqual(m.destpagename,'SomePage')
+    #def testDestinationFromRealNameWithSubject(self):
+    #    testmsg = str(TestMessage(
+    #        to='a@b.c (SomePage)',
+    #        subject='[AnotherPage]',
+    #        ))
+    #    m = mailin.MailIn(self.p.folder(),testmsg,checkrecipient=1)
+    #    m.decideDestination()
+    #    self.assertEqual(m.destpagename,'SomePage')
     
     def testDestinationWithNoNamedPage(self):
         m = mailin.MailIn(self.p.folder(),
-            str(TestMessage(subject='test')),subscribersonly=0)
+            str(TestMessage(subject='test')))
         m.decideDestination()
         self.assertEqual(m.destpagename,None) 
 
-    def testDestinationWithNoNamedPageAndDefaultPageProperty(self):
-        self.p.folder().default_page='TestPage'
+    def testDestinationWithNoNamedPageAndDefaultMailinPageProperty(self):
+        self.p.folder().default_mailin_page='TestPage'
         m = mailin.MailIn(self.p.folder(),
-            str(TestMessage(subject='test')),subscribersonly=0)
+            str(TestMessage(subject='test')))
         m.decideDestination()
-        self.assertEqual(m.destpagename,None) 
+        self.assertEqual(m.destpagename,'TestPage') 
 
-    def testDestinationFromWikiNameInSubject(self):
-        # we don't do this any more
-        m = mailin.MailIn(self.p.folder(),
-            str(TestMessage(subject='SomePage')),subscribersonly=0)
-        m.decideDestination()
-        self.assertEqual(m.destpagename,None) 
+    #def testDestinationFromWikiNameInSubject(self):
+    #    m = mailin.MailIn(self.p.folder(),
+    #        str(TestMessage(subject='SomePage')))
+    #    m.decideDestination()
+    #    self.assertEqual(m.destpagename,None) 
 
     def testDestinationFromBracketedNameInSubject(self):
         m = mailin.MailIn(self.p.folder(),
-            str(TestMessage(subject='[Some Page]')),subscribersonly=0)
+            str(TestMessage(subject='[Some Page]')))
         m.decideDestination()
         self.assertEqual(m.destpagename,'Some Page')
 
     def testDestinationFromMultipleBracketedNamesInSubject(self):
         m = mailin.MailIn(
             self.p.folder(),
-            str(TestMessage(subject='[Fwd:][LIST][Some Page]')),
-            subscribersonly=0)
+            str(TestMessage(subject='[Fwd:][LIST][Some Page]')))
         m.decideDestination()
         self.assertEqual(m.destpagename,'Some Page')
     
     def testDestinationFromLongSubject(self):
         m = mailin.MailIn(
             self.p.folder(),
-            str(TestMessage(subject='['+' ....'*20+'Test Page'+' ....'*20+']')),
-            subscribersonly=0)
+            str(TestMessage(subject='['+' ....'*20+'Test Page'+' ....'*20+']')))
         m.decideDestination()
         self.assertEqual(m.destpage.pageName(),'TestPage')
     
@@ -195,67 +174,66 @@ class MailinTests(unittest.TestCase):
             self.p.folder(),
             str(TestMessage(subject='''\
 Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
- (test with long long long long long long subject)] property change''')),
-            subscribersonly=0)
+ (test with long long long long long long subject)] property change''')))
         m.decideDestination()
         self.assertEqual(
             m.destpagename,
             'IssueNo0547 mail (with long subject ?) may go to wrong page (test with long long long long long long subject)')
     
-    def testDestinationWithBlankRealName(self):
-        m = mailin.MailIn(self.p.folder(),str(TestMessage(
-            to='wiki@b.c (   )',
-            subject='SomePage',
-            )),subscribersonly=0,checkrecipient=1)
-        m.decideDestination()
-        self.assertEqual(m.destpagename,None)
+    #def testDestinationWithBlankRealName(self):
+    #    m = mailin.MailIn(self.p.folder(),str(TestMessage(
+    #        to='wiki@b.c (   )',
+    #        subject='SomePage',
+    #        )),checkrecipient=1)
+    #    m.decideDestination()
+    #    self.assertEqual(m.destpagename,None)
 
-    def testDestinationWithNoWordsInRealName(self):
-        m = mailin.MailIn(self.p.folder(),str(TestMessage(
-            to='wiki@b.c (...)',
-            subject='SomePage',
-            )),subscribersonly=0,checkrecipient=1)
-        m.decideDestination()
-        self.assertEqual(m.destpagename,None)
+    #def testDestinationWithNoWordsInRealName(self):
+    #    m = mailin.MailIn(self.p.folder(),str(TestMessage(
+    #        to='wiki@b.c (...)',
+    #        subject='SomePage',
+    #        )),checkrecipient=1)
+    #    m.decideDestination()
+    #    self.assertEqual(m.destpagename,None)
 
-    def testDestinationRealNameStripping(self):
-        m = mailin.MailIn(self.p.folder(),str(TestMessage(
-            to='wiki@b.c (  SomePage\t)',
-            )),subscribersonly=0,checkrecipient=1)
-        m.decideDestination()
-        self.assertEqual(m.destpagename,'SomePage')
+    #def testDestinationRealNameStripping(self):
+    #    m = mailin.MailIn(self.p.folder(),str(TestMessage(
+    #        to='wiki@b.c (  SomePage\t)',
+    #        )),checkrecipient=1)
+    #    m.decideDestination()
+    #    self.assertEqual(m.destpagename,'SomePage')
 
-    def testDestinationWithQuotesInRealName(self):
-        m = mailin.MailIn(self.p.folder(),str(TestMessage(
-            to="wiki@b.c ('SomePage')",
-            )),subscribersonly=0,checkrecipient=1)
-        m.decideDestination()
-        self.assertEqual(m.destpagename,'SomePage')
-        m = mailin.MailIn(self.p.folder(),str(TestMessage(
-            to='wiki@b.c ("SomePage")',
-            )),subscribersonly=0,checkrecipient=1)
-        m.decideDestination()
-        self.assertEqual(m.destpagename,'SomePage')
+    #def testDestinationWithQuotesInRealName(self):
+    #    m = mailin.MailIn(self.p.folder(),str(TestMessage(
+    #        to="wiki@b.c ('SomePage')",
+    #        )),checkrecipient=1)
+    #    m.decideDestination()
+    #    self.assertEqual(m.destpagename,'SomePage')
+    #    m = mailin.MailIn(self.p.folder(),str(TestMessage(
+    #        to='wiki@b.c ("SomePage")',
+    #        )),checkrecipient=1)
+    #    m.decideDestination()
+    #    self.assertEqual(m.destpagename,'SomePage')
 
-    def testDestinationWithEmailInRealName(self):
-        m = mailin.MailIn(self.p.folder(),str(TestMessage(
-            to="wiki@b.c (wiki@b.c)",
-            )),subscribersonly=0,checkrecipient=1)
-        m.decideDestination()
-        self.assertEqual(m.destpagename,None)
+    #def testDestinationWithEmailInRealName(self):
+    #    m = mailin.MailIn(self.p.folder(),str(TestMessage(
+    #        to="wiki@b.c (wiki@b.c)",
+    #        )),checkrecipient=1)
+    #    m.decideDestination()
+    #    self.assertEqual(m.destpagename,None)
 
     def testDestinationFromPageContext(self):
         m = mailin.MailIn(self.p,str(TestMessage(
             to='a@b.c (SomePage)',
             subject='[SomePage] SomePage',
-            )),subscribersonly=0)
+            )))
         m.decideDestination()
         self.assertEqual(m.destpagename,THISPAGE)
 
     def testDestinationFromTrackerAddress(self):
         m = mailin.MailIn(self.p.folder(),str(TestMessage(
             to='bugs@b.c',
-            )),subscribersonly=0)
+            )))
         m.decideDestination()
         self.assertEqual(m.trackerissue,1)
 
@@ -272,7 +250,8 @@ Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
         
     def testNonSubscriberMailinWithOpenPosting(self):
         old = self.p.text()
-        mailin.mailin(self.p,TESTMSG,subscribersonly=0)
+        self.p.folder().mailin_policy='open'
+        mailin.mailin(self.p,TESTMSG)
         self.assertEqual(1, len(re.findall(TESTBODY,self.p.text())))
         
     def testMailinMultipart(self):
@@ -291,16 +270,19 @@ Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
 
     def testMailinTrackerIssue(self):
         self.p.upgradeFolderIssueProperties()
+        self.p.folder().mailin_policy='open'
         self.assertEqual(0, self.p.issueCount())
-        mailin.mailin(self.p.folder(),TESTMSG,trackerissue=1,subscribersonly=0)
+        mailin.mailin(self.p.folder(),
+                      str(TestMessage(to='bugs@somewhere')))
         self.assertEqual(1, self.p.issueCount())
 
     # this works.. need a functional test which sends through mail
     def testMailinTrackerIssueLongSubject(self):
-        longsubjmsg = str(TestMessage(subject=LONGSUBJECT))
+        self.p.folder().mailin_policy='open'
+        longsubjmsg = str(TestMessage(to='bugs@somewhere',subject=LONGSUBJECT))
         self.p.upgradeFolderIssueProperties()
         self.assertEqual(0, self.p.issueCount())
-        mailin.mailin(self.p.folder(),longsubjmsg,trackerissue=1,subscribersonly=0)
+        mailin.mailin(self.p.folder(),longsubjmsg)
         self.assertEqual(1, self.p.issueCount())
 
     def testStripSignature(self):
