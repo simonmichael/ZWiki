@@ -84,6 +84,7 @@ TRACKERADDREXP = r'(tracker|bugs|issues)@'
 # we recognize only page names beginning and ending with a word character
 # and not containing @
 PAGEINREALNAMEEXP = r'(?=^[^@]*$).*?(?P<page>\w.*\w)' 
+MAX_SIGNATURE_STRIP_SIZE = 500
 
 
 def isJunk(msgtext):
@@ -142,6 +143,19 @@ class MailIn:
     trackerissue = 0
     creating = 0
     error = None
+
+    def stripSignature(self,body):
+        """
+        Strip a signature after -- .
+
+        Can't really do this safely; we'll strip only if it's below a
+        certain size.
+        """
+        signature = re.search(r'(?s)\n--\n.*?$',body)
+        signature = signature and signature.group()
+        if signature and len(signature) <= MAX_SIGNATURE_STRIP_SIZE:
+            body = re.sub(re.escape(signature),'',body)
+        return body
     
     def __init__(self,
                  context,
@@ -188,6 +202,8 @@ class MailIn:
             self.body = self.msg.fp.read()
         # strip trailing newlines that seem to get added in transit
         self.body = re.sub(r'(?s)\n+$',r'\n',self.body)
+        # strip Bob's signature
+        self.body = self.stripSignature(self.body)
         # strip TBC (typical bloody citations)
         #self.body = re.sub(
         #    r'(?si)----- ?message d\'origine.*',r'',self.body)

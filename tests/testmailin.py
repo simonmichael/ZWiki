@@ -249,6 +249,54 @@ class MailinTests(unittest.TestCase):
         self.assert_(hasattr(req,'submitted'))
         self.assertEqual(req.submitted, 1)
 
+    def testStripSignature(self):
+        # signatures after -- should be stripped
+        self.assertEqual(
+            mailin.MailIn(self.p.aq_parent,str(TestMessage())).stripSignature(
+            '''
+blah blah
+
+--
+my signature
+blah blah blah
+'''),
+            '''
+blah blah
+
+''')
+        # unless they are too large
+        from mailin import MAX_SIGNATURE_STRIP_SIZE
+        self.assertEqual(
+            mailin.MailIn(self.p.aq_parent,str(TestMessage())).stripSignature(
+            '''
+blah blah
+
+--
+''' + 'x'*(MAX_SIGNATURE_STRIP_SIZE+1)),
+            '''
+blah blah
+
+--
+''' + 'x'*(MAX_SIGNATURE_STRIP_SIZE+1))
+        # leave other things alone
+        self.assertEqual(
+            mailin.MailIn(self.p.aq_parent,str(TestMessage())).stripSignature(
+            '''blah
+---
+blah'''),
+            '''blah
+---
+blah''')
+        self.assertEqual(
+            mailin.MailIn(self.p.aq_parent,str(TestMessage())).stripSignature(
+            '''blah
+ --
+blah'''),
+            '''blah
+ --
+blah''')
+
+
         
 def test_suite():
     suite = unittest.TestSuite()

@@ -123,12 +123,8 @@ class ZWikiPage(
     A ZWikiPage is essentially a DTML Document which knows how to render
     itself in various wiki styles, and can function inside or outside a
     CMF site. A lot of extra methods are provided to support
-    wiki-building, email, issue tracking, etc.
-
-    Mixins are used to organize functionality into distinct modules.
-    Initialization, rendering, editing and miscellaneous methods remain in
-    the base class.
-
+    wiki-building, email, issue tracking, etc.  Mixins are used to
+    organize functionality into modules.
     """
     security = ClassSecurityInfo()
     security.declareObjectProtected('View')
@@ -226,7 +222,7 @@ class ZWikiPage(
                                   )
 
     ######################################################################
-    # rendering (see also the page type objects)
+    # generic rendering code (see also PageTypes.py)
 
     security.declareProtected(Permissions.View, '__call__')
     def __call__(self, client=None, REQUEST={}, RESPONSE=None, **kw):
@@ -326,8 +322,6 @@ class ZWikiPage(
         return doc + self.renderMidsection() + discussion
 
     def renderMidsection(self):
-        # XXX too expensive.. we calculate the wiki nesting info twice
-        # per page view, once here and once for the navlinks in the header
         if self.subtopicsEnabled(): return self.subtopics(deep=1)
         else: return ''
     
@@ -708,9 +702,7 @@ class ZWikiPage(
         - convert any non-zope-and-url-safe characters and _ to _hexvalue
         - if this results in an id that begins with _ (illegal), prepend X
         - or if we have a legal id but it's one of the delicate IDS_TO_AVOID
-          (REQUEST, epoz, etc), also prepend X.
-          XXX not so good in this case, XREQUEST is an unfriendly url.
-          Better to put it at the end, for these ? Confusing ? Try it.
+          (REQUEST, epoz, etc), append X
           Note these last break the uniqueness property. Better ideas welcome.
 
         performance-sensitive
