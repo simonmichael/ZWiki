@@ -3,7 +3,7 @@
 __doc__="""
 ZWiki product
 """
-__version__='0.36.2'
+__version__='0.37.0rc1'
 
 import os, re
 from os import path
