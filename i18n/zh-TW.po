@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-31-0rc3\n"
-"POT-Creation-Date: Fri May 28 12:08:37 2004\n"
+"POT-Creation-Date: Fri Jun  4 11:56:25 2004\n"
 "PO-Revision-Date: 2004-05-31 07:18+0800\n"
 "Last-Translator: T.C. Chou <tcchou-at-tcchou.org>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
@@ -22,50 +22,6 @@ msgstr "您沒有權力升級所有頁面."
 msgid "(folder -> Manage properties)"
 msgstr "(目錄 -> 管理屬性)"
 
-#: i/CMFInit.py:101
-msgid "Subscribe"
-msgstr "訂閱"
-
-#: i/CMFInit.py:108 i/skins/zwiki_plone/contentspage.pt:13
-msgid "Wiki contents"
-msgstr "Wiki內容"
-
-#: i/CMFInit.py:114
-msgid "Wiki changes"
-msgstr "Wiki變更"
-
-#: i/CMFInit.py:120
-msgid "Issue tracker"
-msgstr "事例追蹤"
-
-#: i/CMFInit.py:127
-msgid "Filter issues"
-msgstr "過濾事例"
-
-#: i/CMFInit.py:134
-msgid "Search this wiki"
-msgstr "搜尋Wiki"
-
-#: i/CMFInit.py:140
-msgid "Wiki options"
-msgstr "Wiki選項"
-
-#: i/CMFInit.py:77 i/skins/zwiki_plone/uploaded.pt:25
-msgid "View"
-msgstr "檢視"
-
-#: i/CMFInit.py:83
-msgid "Edit"
-msgstr "修改"
-
-#: i/CMFInit.py:89
-msgid "History"
-msgstr "歷史"
-
-#: i/CMFInit.py:95
-msgid "Backlinks"
-msgstr "回溯連結"
-
 #: i/Editing.py:289
 msgid ""
 "You are not authorized to reparent or change subtopics links on this ZWiki "
@@ -84,28 +40,28 @@ msgstr "您沒有權力修改此頁."
 msgid "You are not authorized to delete this ZWiki Page."
 msgstr "您沒有權力刪除此頁."
 
-#: i/Editing.py:477
+#: i/Editing.py:479
 msgid "You are not authorized to rename this ZWiki Page."
 msgstr "您沒有權力變更此頁的名稱."
 
-#: i/Editing.py:521
+#: i/Editing.py:523
 msgid ""
 "This page was renamed to %s. You can delete this one if no longer needed.\n"
 msgstr "這頁已被改名為 %s. 如果此頁不需要, 您可以刪除.\n"
 
-#: i/Editing.py:617
+#: i/Editing.py:619
 msgid "You are not authorized to upload files here."
 msgstr "您沒有權力在這裡上傳檔案."
 
-#: i/Editing.py:621
+#: i/Editing.py:623
 msgid "You are not authorized to add a link on this ZWiki Page."
 msgstr "您沒有權力在此頁增加連接."
 
-#: i/OutlineSupport.py:734 i/skins/standard/wikipage_macros.pt:218
+#: i/OutlineSupport.py:737 i/skins/standard/wikipage_macros.pt:218
 msgid "which pages link to this one ?"
 msgstr "那個頁面連結到這一頁?"
 
-#: i/OutlineSupport.py:739
+#: i/OutlineSupport.py:742
 msgid "You are here"
 msgstr "您現在位置"
 
@@ -149,7 +105,7 @@ msgstr "貼上您所修改的內容, 在最新變更的內容裡頭"
 msgid "Click the Change button again"
 msgstr "再按一次變更按鈕(Change)"
 
-#: i/UI.py:517 i/skins/standard/editform.pt:208
+#: i/UI.py:517 i/skins/standard/editform.pt:178
 msgid "or"
 msgstr "或"
 
@@ -271,59 +227,59 @@ msgstr ""
 "        p    前一修改\n"
 "        "
 
-#: i/Utils.py:430
+#: i/Utils.py:431
 msgid "years"
 msgstr "年"
 
-#: i/Utils.py:430
+#: i/Utils.py:431
 msgid "year"
 msgstr "年"
 
-#: i/Utils.py:432
+#: i/Utils.py:433
 msgid "month"
 msgstr "月"
 
-#: i/Utils.py:432
+#: i/Utils.py:433
 msgid "months"
 msgstr "月"
 
-#: i/Utils.py:434
+#: i/Utils.py:435
 msgid "weeks"
 msgstr "週"
 
-#: i/Utils.py:434
+#: i/Utils.py:435
 msgid "week"
 msgstr "週"
 
-#: i/Utils.py:436
+#: i/Utils.py:437
 msgid "day"
 msgstr "天"
 
-#: i/Utils.py:436
+#: i/Utils.py:437
 msgid "days"
 msgstr "天"
 
-#: i/Utils.py:438
+#: i/Utils.py:439
 msgid "hours"
 msgstr "時"
 
-#: i/Utils.py:438
+#: i/Utils.py:439
 msgid "hour"
 msgstr "時"
 
-#: i/Utils.py:440
+#: i/Utils.py:441
 msgid "minute"
 msgstr "分"
 
-#: i/Utils.py:440
+#: i/Utils.py:441
 msgid "minutes"
 msgstr "分"
 
-#: i/Utils.py:442
+#: i/Utils.py:443
 msgid "second"
 msgstr "秒"
 
-#: i/Utils.py:442
+#: i/Utils.py:443
 msgid "seconds"
 msgstr "秒"
 
@@ -502,59 +458,31 @@ msgstr "上傳檔案或圖檔"
 msgid "upload a file and link it on this page ?"
 msgstr "在這頁上傳一個檔案並連結它?"
 
-#: i/skins/standard/editform.pt:174
-msgid "Show subtopics on this page & below ?"
-msgstr "呈現子主題在這頁及其底下的頁面嗎?"
-
-#: i/skins/standard/editform.pt:175
-msgid "show subtopics in full mode, or if ancestor page has 'always'"
-msgstr "在全功能模式顯示子主題, 或是上層頁面有 '總是'(always) 設定"
-
-#: i/skins/standard/editform.pt:181
-msgid "default"
-msgstr "預設"
-
-#: i/skins/standard/editform.pt:182
-msgid "never show subtopics on this page"
-msgstr "永不顯示子主題在這頁嗎?"
-
-#: i/skins/standard/editform.pt:188
-msgid "never"
-msgstr "永不"
-
-#: i/skins/standard/editform.pt:189
-msgid "always show subtopics on this page"
-msgstr "總是顯示子主題嗎?"
-
-#: i/skins/standard/editform.pt:195
-msgid "always"
-msgstr "總是"
-
-#: i/skins/standard/editform.pt:202
+#: i/skins/standard/editform.pt:172
 msgid "For editing help, see"
 msgstr "相關編輯說明, 請參考"
 
-#: i/skins/standard/editform.pt:204
+#: i/skins/standard/editform.pt:174
 msgid "HelpPage"
 msgstr "輔助頁面"
 
-#: i/skins/standard/editform.pt:211
+#: i/skins/standard/editform.pt:181
 msgid "TextFormattingRules"
 msgstr "文字格式規則"
 
-#: i/skins/standard/editform.pt:225
+#: i/skins/standard/editform.pt:195
 msgid "Create"
 msgstr "建立"
 
-#: i/skins/standard/editform.pt:226
+#: i/skins/standard/editform.pt:196
 msgid "create this wiki page"
 msgstr "建立這Wiki頁面"
 
-#: i/skins/standard/editform.pt:228
+#: i/skins/standard/editform.pt:198
 msgid "Cancel"
 msgstr "取消"
 
-#: i/skins/standard/editform.pt:228
+#: i/skins/standard/editform.pt:198
 msgid "cancel this edit and return to the page"
 msgstr "取消這頁的編輯, 回到原先頁面"
 
@@ -829,6 +757,10 @@ msgstr "不同的父層頁面"
 msgid "Reparent"
 msgstr "變更父層"
 
+#: i/skins/zwiki_plone/contentspage.pt:13
+msgid "Wiki contents"
+msgstr "Wiki內容"
+
 #: i/skins/zwiki_plone/contentspage.pt:19 i/skins/standard/contentspage.pt:40
 msgid "Singletons"
 msgstr "單獨存在頁面"
@@ -918,6 +850,10 @@ msgid "help_format"
 msgstr ""
 "如果您不確定要使用何種格式, 就選 Plain Text\n"
 "             , 並且按照一般方式輸入您的文件."
+
+#: i/skins/zwiki_plone/editform.pt:250
+msgid "Save"
+msgstr "儲存"
 
 # Default: ""
 # "Edit\n"
@@ -1093,9 +1029,15 @@ msgstr "檔案上傳"
 msgid "uploads_desc"
 msgstr "這一頁面列出所有在這Wiki中上傳的檔案."
 
-#: i/skins/zwiki_plone/uploaded.pt:25 i/skins/zwiki_plone/editform.pt:250
-msgid "Save"
+#: i/skins/zwiki_plone/uploaded.pt:25
+#, fuzzy
+msgid "save"
 msgstr "儲存"
+
+#: i/skins/zwiki_plone/uploaded.pt:25
+#, fuzzy
+msgid "view"
+msgstr "檢視"
 
 # Default: "No files have been uploaded."
 #: i/skins/zwiki_plone/uploaded.pt:29
@@ -1131,6 +1073,57 @@ msgstr "在這裡輸入建議並且點選 新增(add) 按鈕, 或點選 修改(e
 #: i/skins/standard/wikipage_macros.pt:444
 msgid "add-comment"
 msgstr "新增一個建議"
+
+msgid "View"
+msgstr "檢視"
+
+msgid "Edit"
+msgstr "修改"
+
+msgid "History"
+msgstr "歷史"
+
+msgid "Backlinks"
+msgstr "回溯連結"
+
+msgid "Subscribe"
+msgstr "訂閱"
+
+msgid "Wiki changes"
+msgstr "Wiki變更"
+
+msgid "Issue tracker"
+msgstr "事例追蹤"
+
+msgid "Filter issues"
+msgstr "過濾事例"
+
+msgid "Search this wiki"
+msgstr "搜尋Wiki"
+
+msgid "Wiki options"
+msgstr "Wiki選項"
+
+#~ msgid "Show subtopics on this page & below ?"
+#~ msgstr "呈現子主題在這頁及其底下的頁面嗎?"
+
+#~ msgid "show subtopics in full mode, or if ancestor page has 'always'"
+#~ msgstr "在全功能模式顯示子主題, 或是上層頁面有 '總是'(always) 設定"
+
+#~ msgid "default"
+#~ msgstr "預設"
+
+#~ msgid "never show subtopics on this page"
+#~ msgstr "永不顯示子主題在這頁嗎?"
+
+#~ msgid "never"
+#~ msgstr "永不"
+
+#~ msgid "always show subtopics on this page"
+#~ msgstr "總是顯示子主題嗎?"
+
+#~ msgid "always"
+#~ msgstr "總是"
 
 #~ msgid "in reply to"
 #~ msgstr "用來回覆"

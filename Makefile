@@ -47,14 +47,16 @@ epydoc:
 
 ## i18n
 # remember: 1. merge source files 2. make pot 3. replace po files 4. make po
+# using zope 3's i18nextract.py with zopewiki/ZopeInternationalization patches
 
 LANGUAGES=en es fr-CA fr ga it zh-TW pt-BR zh-CN 
+ZOPE3SRC=/usr/local/src/Zope3/src
+EXTRACT=PYTHONPATH=$(ZOPE3SRC) python /usr/local/src/Zope3/utilities/i18nextract.py
 
-# using zope 3's i18nextract.py with zopewiki/ZopeInternationalization patches
 pot: dtmlextract
-	PYTHONPATH=/usr/local/src/Zope3/src python \
-	  /usr/local/src/Zope3/utilities/i18nextract.py -d zwiki -p . -o ./i18n \
+	$(EXTRACT) -d zwiki -p . -o ./i18n \
 	    -x _darcs -x old -x misc -x ftests 
+	tail +12 i18n/zwiki-manual.pot >>i18n/zwiki.pot
 	python \
 	-c "import re; \
 	    t = open('i18n/zwiki.pot').read(); \
