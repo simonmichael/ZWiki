@@ -19,14 +19,14 @@
 .highrated               {font-size: 80%; color: green} 
 .neutralrated            {font-size: 80%; color: gray}
 .lowrated                {font-size: 80%; color: red}
-#searchbox a:link        {color: gray;}
-#searchbox a:visited     {color: #aaaaaa;}
-#lasteditor              {color:gray;}
-#subtopicspanel          {color: gray; /*background: #dddddd;*/ }
-#commentform             {color:gray;}
-#linkpanel td, #linkpanel_minimal td {color: gray;}
-#navpanel                {color: gray;}
-  
+.searchbox a:link        {color: gray;}
+.searchbox a:visited     {color: #aaaaaa;}
+.lasteditor              {color:gray;}
+.subtopicspanel          {color: gray; /*background: #dddddd;*/ }
+.commentform             {color:gray;}
+.linkpanel td, .linkpanel_minimal td {color: gray;}
+.navpanel                {color: gray;}
+
 
 /* pink */
 /*.shade1                  {background: #ffeeee; color: #ddaaaa;}*/
@@ -34,11 +34,11 @@
 /*.shade1 a:visited        {color: #ee8888;}*/
 /*.formfield               {background: #fff0f0;}*/
 /*.dimtext                 {color: gray;}*/
-/*#searchbox a:link        {color: #ddaaaa;}*/
-/*#searchbox a:visited     {color: #ee8888;}*/
-/*#lasteditor              {color:#ddaaaa;}*/
-/*#subtopicspanel          {color:#ddaaaa; border-top:thin solid #ddaaaa;}*/
-/*#commentform             {color:#ddaaaa;}*/
+/*.searchbox a:link        {color: #ddaaaa;}*/
+/*.searchbox a:visited     {color: #ee8888;}*/
+/*.lasteditor              {color:#ddaaaa;}*/
+/*.subtopicspanel          {color:#ddaaaa; border-top:thin solid #ddaaaa;}*/
+/*.commentform             {color:#ddaaaa;}*/
 
 
 /* general styles */
@@ -74,101 +74,101 @@ pre, code {
 .eightypercent {color: green;}
 .ninetypercent {color: green;}
 .onehundredpercent {color: green;}
-#content {
+.content {
   /* adjust left margin to approx. logo width */
   margin-left:64px; margin-right:32px;
   /* margin-left:10%; margin-right:10%; */
 } 
-#formcontent {
+.formcontent {
  margin:8px;
 } 
-#logo_full, #logo_simple {
+.logo_full, .logo_simple {
  padding:4px;
 }
-#pageheading ul {
+.pageheading ul {
   margin-top:0px; margin-bottom:0px; margin-left:6px; padding-left:6px;
 }
-#subtopicspanel ul {
+.subtopicspanel ul {
   margin-top:0px; margin-bottom:0px; margin-left:12px; padding-left:12px;
 }
-#pageheading li, #subtopicspanel li {
+.pageheading li, .subtopicspanel li {
   list-style:none;
 }
-#subtopicspanel td ul {
+.subtopicspanel td ul {
   font-weight:bold;
 }
-#subtopicspanel td ul ul {
+.subtopicspanel td ul ul {
   font-weight:normal; font-size:0.9em;
 }
-#linkpanel {
+.linkpanel {
 }
-#linkpanel_minimal {
+.linkpanel_minimal {
 }
-#linkpanel td, #linkpanel_minimal td {
+.linkpanel td, .linkpanel_minimal td {
   font-size: 80%;
 }
-#pagemanagement {
+.pagemanagement { /* no class/id like this seems to be generated */
 }
-#quicklinks {
+.quicklinks {
   font-weight: normal;
   vertical-align: middle;
 }
-#otherlinks {
+.otherlinks {
   vertical-align: middle;
 }
-#otherlinks_minimal {
+.otherlinks_minimal { /* no class/id like this seems to be generated */
   vertical-align: top;
   padding: 0px;
 }
-#navpanel {
+.navpanel {
   font-size: 80%;
 }
-#logo_full { /*td*/
+.logo_full { /*td*/
   padding-top: 0.5em;
   padding-right: 4px;
 }
-#logo_simple { /*td*/
+.logo_simple { /*td*/
   padding-top: 1em;
   padding-right: 4px;
 }
-#logo_minimal {
+.logo_minimal {
   padding-top: 1em;
   padding-right: 4px;
 }
-#pagenameand { /*td*/
+.pagenameand { /*td*/
  padding: 0;
  vertical-align: middle;
 }
-#pagenameand_X { /*td*/
+.pagenameand_X { /*td*/
  padding: 1.15em 3em;
  vertical-align: middle;
 }
-#pagenameand_linear { /*td*/
+.pagenameand_linear { /*td*/
  padding: 1.15em;
  vertical-align: middle;
 }
-#pagenameonly { /*td*/
+.pagenameonly { /*td*/
   font-size: xx-large;
   font-weight: bold;
   vertical-align: bottom;
 }
-#pagename_minimal {
+.pagename_minimal {
   font-size: xx-large;
   font-weight: bold;
   vertical-align: bottom;
 }
-#searchbox {
+.searchbox {
   vertical-align: top;
   font-size: 80%;
 }
-#searchinput {
+#searchinput { /* generated tag with id=searchinput already has a class (multiple classes bad for IE<5.5 ?) */
  width:95%; 
  margin-top: 0px;
 }
-#lasteditor {
+.lasteditor {
   font-style: italic;
 }
-#commentform {
+.commentform {
 }
 
 input,select {font-size:inherit;}

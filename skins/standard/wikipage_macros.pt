@@ -23,7 +23,7 @@
 <span metal:use-macro="macros/quickaccesskeys">quick access keys</span>
 
 <!-- site links panel -->
-<div id="linkpanel"
+<div class="linkpanel"
      tal:define="
        macros      python: here.wikipage_macros(request).macros;
        displaymode python: here.displayMode();
@@ -32,15 +32,15 @@
        full        python: displaymode=='full';
      "
      tal:condition="not: minimal"
-     tal:attributes="id python: minimal and 'linkpanel_minimal' or 'linkpanel';"
+     tal:attributes="class python: minimal and 'linkpanel_minimal' or 'linkpanel';"
      ><!-- twk: no link panel if minimal (otherlinks now embedded in minimal pageheader) -->
   <table class="shade1" width="100%" border="0" cellspacing="0"
          tal:attributes="class python: not minimal and 'shade1' or nothing">
     <tr>
-      <td id="quicklinks" align="left" tal:condition="not: minimal">    
+      <td class="quicklinks" align="left" tal:condition="not: minimal">    
         <span metal:use-macro="macros/quicklinks"></span>
       </td>
-      <td id="otherlinks" align="right">
+      <td class="otherlinks" align="right">
         <span metal:use-macro="macros/displaymodes"></span>
         <span metal:use-macro="macros/editlinks"></span>
       </td>
@@ -51,7 +51,7 @@
 
 <span metal:define-macro="navpanel" tal:omit-tag="">
 <!-- navigation panel -->
-<div id="navpanel" tal:condition="full">
+<div class="navpanel" tal:condition="full">
   <table class="shade1" width="100%" border="0" cellspacing="0">
     <tr valign="top">
       <td tal:condition="nothing" tal:content="structure python: here.navlinks()"></td>
@@ -379,7 +379,7 @@ accesskey="b"
 <span metal:define-macro="commentform">
   
 <form method="post" enctype="multipart/form-data"
-      id="commentform" style="margin-top:0;margin-bottom:0"
+      class="commentform" style="margin-top:0;margin-bottom:0"
       tal:attributes="action here/pageUrl">
 <input name="timeStamp" type="hidden" value="editTimestamp"
   tal:attributes="value here/editTimestamp" />

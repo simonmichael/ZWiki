@@ -25,7 +25,7 @@
 
 <div metal:use-macro="macros/navpanel">showhierarchy navigation panel</div>
 
-<div id="pageheading">
+<div class="pageheading">
   <form method="GET" 
         tal:define="
         methodname string:searchwiki;
@@ -39,39 +39,39 @@
 
     <!-- page heading in full & simple mode -->
     <table tal:condition="not: minimal"
-           width="100%" border="0" cellspacing="0" class=""
+           width="100%" border="0" cellspacing="0"
            tal:attributes="class python: nothing #not minimal and 'shade1' or nothing">
       <tr>
 
         <!-- ...logo -->
         <td id="logo" width="1%" valign="top"
-            tal:attributes="id python: full and 'logo_full' or 'logo_simple'">
+            tal:attributes="class python: full and 'logo_full' or 'logo_simple'">
           <span metal:use-macro="macros/logolink"></span>
         </td>
 
         <!-- ...page name + maybe parent context -->
-        <td id="pagenameand_linear" align="left" width="79%"
+        <td class="pagenameand_linear" align="left" width="79%"
             tal:condition="python: showhierarchy and linearhdr">
           <span metal:use-macro="macros/pagenameand_linear"></span>
         </td>
-        <td id="pagenameand" align="left" width="79%"
+        <td class="pagenameand" align="left" width="79%"
             tal:condition="python: showhierarchy and not linearhdr">
           <span metal:use-macro="macros/pagenameand"></span>
         </td>
-        <td id="pagenameonly" align="left" width="79%"
+        <td class="pagenameonly" align="left" width="79%"
             tal:condition="not: showhierarchy">
           <span metal:use-macro="macros/pagename"></span>
         </td>
 
         <!-- ...search box + last editor -->
         <!-- twk: combine rest of tds so no subscribe doesn't leave blank spot -->
-        <td id="searchbox" width="20%" align="right"
+        <td class="searchbox" width="20%" align="right"
             tal:define="showsearch python:request.get('zwiki_showsearch',1)">
           <input id="searchinput" class="formfield" tal:condition="showsearch"
                  name="expr" type="text" size="20" maxlength="100" value="" 
                  title="search all pages" accesskey="s" i18n:attributes="title" /><br 
                  tal:condition="showsearch" />
-          <span id="lasteditor" 
+          <span class="lasteditor" 
                 tal:content="structure python:here.linkTitle(prettyprint=1)">
             <!-- XXX move html in linkTitle to here? -->
             last edited n days ago by by so-and-so
@@ -88,27 +88,27 @@
       <tr>
 
         <!-- ...logo -->
-        <td id="logo_minimal" width="1%" valign="middle">
+        <td class="logo_minimal" width="1%" valign="middle">
           <span metal:use-macro="macros/logolink"></span>
         </td>
 
         <!-- ...page name + maybe parent context -->
-        <td id="pagenameand_linear" align="left" width="79%"
+        <td class="pagenameand_linear" align="left" width="79%"
             tal:condition="python: showhierarchy and linearhdr">
           <span metal:use-macro="macros/pagenameand_linear"></span>
         </td>
-        <td id="pagenameand" align="left" width="79%"
+        <td class="pagenameand" align="left" width="79%"
             tal:condition="python: showhierarchy and not linearhdr">
           <span metal:use-macro="macros/pagenameand"></span>
         </td>
-        <td id="pagenameonly" align="left" width="79%"
+        <td class="pagenameonly" align="left" width="79%"
             tal:condition="not: showhierarchy">
           <span metal:use-macro="macros/pagename"></span>
         </td>
 
         <!-- ...edit links + search box -->
         <!-- twk: put otherlinks here rather than in a table above this -->
-        <td id="searchbox" width="20%" align="right" nowrap
+        <td class="searchbox" width="20%" align="right" nowrap
             tal:define="showsearch python:request.get('zwiki_showsearch',1)">
           <span metal:use-macro="macros/displaymodes" />
           <span metal:use-macro="macros/editlinks" />
@@ -117,7 +117,7 @@
                  name="expr" type="text" size="20" maxlength="100" value="" 
                  title="search all pages" accesskey="s" style="width: 95%" /><br 
                  tal:condition="showsearch" />
-          <span id="lasteditor" 
+          <span class="lasteditor" 
                 tal:content="structure python:here.linkTitle(prettyprint=1)+' '" />
           <!-- XXX hacks: width 95% keeps moz from chopping off right end 
                with 1px borders; trailing space to prevent text chop -->
@@ -134,7 +134,7 @@
 </div>
 <!-- end of header -->
 
-<div id="content">
+<div class="content">
   <div tal:replace="structure options/body">
     page body goes here..
   </div>

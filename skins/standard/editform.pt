@@ -58,7 +58,7 @@
     </table>
     <!-- end of header -->
 
-    <div id="formcontent">
+    <div class="formcontent">
       <form method="post" enctype="multipart/form-data" action="" 
             tal:attributes="action string:${here/page_url}">
         <input name="timeStamp" type="hidden" value="" 
