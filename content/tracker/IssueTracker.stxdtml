@@ -11,7 +11,8 @@ tracked=issueCount
 <b><input type="text" name="textortitle" value="<dtml-var textortitle missing>" size="40" maxlength="100" style="font-weight:bold" accesskey="s"></b><br>
 <!-- start of custom text -->
 This is the issue tracker. 
-The last 10 modified issues are shown by default.
+The last 30 modified issues are shown by default.
+Click description to list all issues.
 See also <a href="&dtml-filterUrl;">filter issues</a>.
 <!-- end of custom text -->
 </td>
@@ -111,7 +112,7 @@ or
 (not _.getattr(REQUEST,'textortitle','') and not QUERY_STRING and
 pages(isIssue=1,
         sort_on='lastEditTime',
-        sort_order='reverse')[:10]
+        sort_order='reverse')[:30]
 )
 ">
 <dtml-try>
