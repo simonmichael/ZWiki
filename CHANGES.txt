@@ -1,5 +1,3 @@
-Zwiki 0.34.0b1 2004/08/27
-
     Summary
 
         Beginnings of a plugin architecture; mailin simplifications and
@@ -46,6 +44,8 @@ Zwiki 0.34.0b1 2004/08/27
         * also check comment subjects and log notes for urls from the
 	banned_links list
 
+        * likely fix for false contents in new wikis (IssueNo0903)
+
       Skins and content
 
         * make hidden access-key links conditional like the visible ones
@@ -67,6 +67,8 @@ Zwiki 0.34.0b1 2004/08/27
         5) Grey out next/prev buttons on first/last diff.
 
         * html tweaks to support expandable bullet list patch
+
+        * fix double skin with wikipage() method in cmf/plone (IssueNo0888)
 
       Mail and comments
 
@@ -91,7 +93,12 @@ Zwiki 0.34.0b1 2004/08/27
 
         * make createNextIssue choose correct issue number in authenticated wikis
 
+        * fix a python 2.3ism causing issue tracker to fail with zope 2.6
+	(IssueNo0897, koegler)
+
       I18n
+
+        * add utf-8 content-type header to mail-outs
 
         * new hungarian translation (József Jároli)
 
