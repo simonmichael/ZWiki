@@ -20,6 +20,8 @@
 <head metal:use-macro="macros/head">
   <title tal:content="title" metal:fill-slot="title" ></title>
   <meta name="robots" content="noindex,nofollow" metal:fill-slot="noindex" />
+  <meta http-equiv="pragma" content="no-cache">
+  <tal:block tal:call="request.RESPONSE.setHeader('pragma','no-cache')" />
 </head>
 <body bgcolor="#ffffff">
 
