@@ -576,13 +576,13 @@ class ZWikiPage(
         if (hasattr(self.folder(),'aq_parent') and
               hasattr(self.folder().aq_parent, link) and
               self.isZwikiPage(getattr(self.folder().aq_parent,link))): #XXX poor caching
-            return '<a href="%s/../%s" title="%s">../%s</a>'\
-                   % (self.wiki_url(),quote(link),_("page in parent wiki"),linkorig)
+            return '<a href="%s/../%s" title="page in parent wiki">../%s</a>'\
+                   % (self.wiki_url(),quote(link),linkorig)
 
         # otherwise, provide a creation link
-        return ('%s<a class="new" href="%s/%s/createform?page=%s" title="%s">?</a>') \
+        return '%s<a class="new" href="%s/%s/createform?page=%s" title="create this page">?</a>' \
                % (linkorig, self.wiki_url(), quote(self.id()),
-                  quote(linknobrackets), _("create this page"))
+                  quote(linknobrackets))
 
     def renderInterwikiLink(self, link):
         """
@@ -658,33 +658,24 @@ class ZWikiPage(
         """
         interval = self.asAgeString(last_edit_time)
         if not prettyprint:
-            s = _("last edited %(interval)s ago") % {"interval":interval}
+            s = "last edited %s ago" % (interval)
         else:
             try:
                 #XXX do timezone conversion ?
                 lastlog = self.lastlog()
                 if lastlog: lastlog = ' ('+lastlog+')'
-                
-                # build the link around the interval
-                linked_interval = (' <a href="%(page_url)s/diff" title="' % (self.page_url()) +
-                                   _('show last edit%(lastlog)s') % {"lastlog":lastlog} +
-                                   ">" + interval + "</a>" )
-                
-                # use the link in a clear i18n way                                                                         
-                s =  _('last edited %(interval)s ago') % \
-                                   {"interval": linked_interval}
-
+                s = 'last edited <a href="%s/diff" title="show last edit%s">%s</a> ago' % \
+                    (self.page_url(), lastlog, interval)
             except:
-                s = 'last edited %(interval)s ago' % {"interval": interval}
-                
+                s = 'last edited %s ago' % (interval)
         if (last_editor and
             not re.match(r'^[0-9\.\s]*$',last_editor)):
             # escape some things that might cause trouble in an attribute
             editor = re.sub(r'"',r'',last_editor)
             if not prettyprint:
-                s = s + " " + _("by %(editor)s") % {"editor":editor}
+                s = s + " by %s" % (editor)
             else:
-                s = s + " " + _("by %(editor)s") % {"editor": ("<b>%s</b>" % (editor)) }                
+                s = s + " by <b>%s</b>" % (editor)
         return s
     
     def linkToAllCataloged(self):

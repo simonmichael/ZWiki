@@ -193,8 +193,7 @@ class AbstractHtmlPageType(AbstractPageType):
         # but also have it look ok by default in plone, which has it's own..
         # without preventing it being overridden - perhaps b outside the span
         # will work
-        return '\n\n<a name="comments"><br><b><span class="commentsheading">%(comments)s:</span></b></a>\n\n' \
-               % { "comments" : _("comments") }
+        return '\n\n<a name="comments"><br><b><span class="commentsheading">comments:</span></b></a>\n\n'
     
     def inlineImage(self, page, id, path):
         return '\n\n<img src="%s" />\n' % path

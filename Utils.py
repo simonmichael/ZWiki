@@ -406,7 +406,7 @@ class Utils:
         if there was a problem. Based on the dtml version in ZwikiTracker.
         """
         if not time:
-            return _('some time')
+            return 'some time'
         if type(time) is StringType:
             time = DateTime(time)
         # didn't work on a page in CMF, perhaps due to skin acquisition magic
@@ -423,36 +423,20 @@ class Utils:
         minutes=int(math.floor((elapsed-days-hourfactor*hours)/minutefactor))
         seconds=int(round((
             elapsed-days-hourfactor*hours-minutefactor*minutes)/secondsfactor))
-  
-        datepattern = _("%(nb)u %(period)s")
-
-##         timelineorder = ["year", "month", "week", "day", "hour", "minute", "second"]
-##         timelinemap = {"year": years, "month" : months, "week" : weeks,
-##                        "day" : days, "hour" : hours, "minute" : minutes,
-##                        "second" : seconds}
-
-##         for period in timelineorder:
-##             if timelinemap[period] :
-##                 s = datepattern % {"nb" : timelinemap[period] ,
-##                                    "period" : (timelinemap[period] > 1
-##                                                and _("%ss" % period) or _(period)) }
-##                 break
-        
         if years:
-            s = datepattern % {"nb": years, "period": years > 1 and _('years') or _('year')}
+            s = "%d year%s" % (years, years > 1 and 's' or '')
         elif months:
-            s = datepattern % {"nb":months, "period":months > 1 and _('months') or _('month')}
+            s = "%d month%s" % (months, months > 1 and 's' or '')
         elif weeks:
-            s = datepattern % {"nb":weeks, "period":weeks > 1 and _('weeks') or _('week')}
+            s = "%d week%s" % (weeks, weeks > 1 and 's' or '')
         elif days:
-            s = datepattern % {"nb":days, "period": days > 1 and _('days') or _('day') }
+            s = "%d day%s" % (days, days > 1 and 's' or '')
         elif hours:
-            s = datepattern % {"nb":hours, "period":hours > 1 and _('hours') or _('hour')}
+            s = "%d hour%s" % (hours, hours > 1 and 's' or '')
         elif minutes:
-            s = datepattern % {"nb":minutes, "period":minutes > 1 and _('minutes') or _('minute')}
+            s = "%d minute%s" % (minutes, minutes > 1 and 's' or '')
         else:
-            s = datepattern % {"nb":seconds, "period":seconds > 1 and _('seconds') or _('second')}
-            
+            s = "%d second%s" % (seconds, seconds > 1 and 's' or '')
         return s
 
 InitializeClass(Utils)
