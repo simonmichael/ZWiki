@@ -9,12 +9,12 @@ XXX cf ram cache manager code to check for persistence issue ?
 
 To define a new page type, add a module in this package or in a separate
 zope product which subclasses any of the *PageType classes, and call
-registerPageType at startup. Quick start:
+registerPageType. Quick start:
 
 - copy one of the existing modules (files) in this package; give your page
-  type a suitable class name, _id and _name; register it with the others
-  at the end of this file.  Or: put your module in a separate zope product
-  and call registerPageType in your __init__.py.
+  type a suitable class name, _id and _name; register it at the end.
+  Or: put your module in a separate zope product and call registerPageType
+  in your __init__.py.
 
 - restart zope or refresh zwiki; your page type should appear in the editform
 
