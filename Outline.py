@@ -89,11 +89,14 @@ class Outline:
     def replace(self,node,newnode,update=1):
         """
         Replace node with newnode in the outline.
+
+        If node wasn't there, just add newnode. This is useful for rename().
+        Should this sort of robustness check be done here or there ?
         """
         parentmap = self.parentmap()
         # replace node with newnode, preserving node's parents
         parents = self.parents(node)
-        del parentmap[node]
+        if parentmap.has_key(node): del parentmap[node]
         parentmap[newnode] = parents
         # reparent node's children under newnode
         for c in filter(lambda x:node in parentmap[x],parentmap.keys()):

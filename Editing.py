@@ -498,8 +498,8 @@ class EditingSupport:
 
         # update wiki outline
         # changeIdPreservingCreator->manage_renameObject->_delObject/_setObject
-        # has the effect of losing our place in the hierarchy, take a snapshot
-        # so we can fix it up later
+        # has the effect of losing our place in the hierarchy, take a
+        # snapshot so we can fix it up later
         savedparentmap = self.wikiOutline().parentmap().copy()
 
         # has the page id changed ?
@@ -515,7 +515,8 @@ class EditingSupport:
         self.title = newname
         # update catalog
         self.index_object() # XXX creator info may need reindexing too
-        # update wiki outline
+        # update wiki outline, using the copy we saved earlier
+        # nb that outline may not have been up to date, but replace will forgive
         self.wikiOutline().setParentmap(savedparentmap)
         self.wikiOutline().replace(oldname,newname)
 
