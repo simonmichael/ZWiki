@@ -1,14 +1,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-30-0\n"
-"POT-Creation-Date: Sat May  8 11:01:56 2004\n"
+"POT-Creation-Date: Sat May  8 13:22:44 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: zope/app/translation_files/extract.py\n"
 "Language-code: xx\n"
 "Language-name: X\n"
 "Preferred-encodings: utf-8 latin1\n"
@@ -117,20 +116,12 @@ msgstr ""
 msgid "To discard your changes and try again, click OK."
 msgstr ""
 
-#: i/skins/standard/backlinks.pt:101
-msgid "Reparent"
-msgstr ""
-
 #: i/skins/standard/backlinks.pt:103
 # Default: ""
 # "You can change this page's parent(s) to place it within the overall page\n"
 # "hierarchy.  Check the boxes or enter a new page name and click Reparent.\n"
 # "A single parent is usually sufficient."
 msgid "backlinks_reparent_help"
-msgstr ""
-
-#: i/skins/standard/backlinks.pt:29
-msgid "Backlinks for"
 msgstr ""
 
 #: i/skins/standard/backlinks.pt:46
@@ -145,10 +136,6 @@ msgstr ""
 msgid "Here are the pages which link to it:"
 msgstr ""
 
-#: i/skins/standard/backlinks.pt:99
-msgid "Other parent"
-msgstr ""
-
 #: i/skins/standard/badtemplate.pt:12
 msgid "There was a problem with one of this wiki's skin templates. There may be an object with a skin template ID that is not a Page Template or DTML Method, or the template may be missing."
 msgstr ""
@@ -157,16 +144,8 @@ msgstr ""
 msgid "Contents"
 msgstr ""
 
-#: i/skins/standard/contentspage.pt:40
-msgid "Singletons"
-msgstr ""
-
 #: i/skins/standard/diffform.pt:31
 msgid "Diffs for"
-msgstr ""
-
-#: i/skins/standard/diffform.pt:46
-msgid "full history"
 msgstr ""
 
 #: i/skins/standard/diffform.pt:48
@@ -217,18 +196,154 @@ msgstr ""
 msgid "type"
 msgstr ""
 
+#: i/skins/standard/wikipage_macros.pt:137
+msgid "show all features"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:144
+msgid "show basic features"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:151
+msgid "show only essential features"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:164
+msgid "configure email subscription to this page or site"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:172
+msgid "which pages link to this one ?"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:179
+msgid "show this page's change history"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:195
+msgid "edit using external editor"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:215
+msgid "go to home page"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:244
+#: i/skins/standard/wikipage_macros.pt:283
+msgid "show wiki contents"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:348
+msgid "a subject helps clarify threads and RecentChanges"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:348
+msgid "subject"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:355
+msgid "to comment (and cc any subscribers) enter text here and click add"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:383
+msgid "add a comment"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:404
+# Default: "new parent, name or replacement"
+msgid "parent_name_replace"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:411
+msgid "reparent this page under the page you have entered"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:417
+msgid "rename this page to the name you have entered, updating all links"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:423
+msgid "move this page to the recycle bin, and relink to the name you have entered."
+msgstr ""
+
+#: i/skins/zwiki_plone/backlinks.pt:14
+#: i/skins/standard/backlinks.pt:29
+msgid "Backlinks for"
+msgstr ""
+
+#: i/skins/zwiki_plone/backlinks.pt:21
+msgid "Here are the pages which link to"
+msgstr ""
+
+#: i/skins/zwiki_plone/backlinks.pt:30
+# Default: ""
+# "You can also set this page's <em>parent(s)</em>, to locate it within the\n"
+# "    contents hierarchy.  Check the boxes or enter a new page name and click\n"
+# "    Reparent.  A single parent is usually sufficient."
+msgid "box_zwiki_showhierarchy"
+msgstr ""
+
+#: i/skins/zwiki_plone/backlinks.pt:71
+#: i/skins/standard/backlinks.pt:99
+msgid "Other parent"
+msgstr ""
+
+#: i/skins/zwiki_plone/backlinks.pt:72
+#: i/skins/standard/backlinks.pt:101
+msgid "Reparent"
+msgstr ""
+
+#: i/skins/zwiki_plone/contentspage.pt:14
+msgid "Wiki contents"
+msgstr ""
+
+#: i/skins/zwiki_plone/contentspage.pt:20
+#: i/skins/standard/contentspage.pt:40
+msgid "Singletons"
+msgstr ""
+
+#: i/skins/zwiki_plone/contentspage.pt:22
+# Default: "Singletons are pages that are not connected to other pages."
+msgid "singleton_desc"
+msgstr ""
+
+#: i/skins/zwiki_plone/diffform.pt:15
+msgid "History for"
+msgstr ""
+
+#: i/skins/zwiki_plone/diffform.pt:23
+#: i/skins/standard/diffform.pt:46
+msgid "full history"
+msgstr ""
+
+#: i/skins/zwiki_plone/diffform.pt:31
+msgid "&laquo; previous edit"
+msgstr ""
+
+#: i/skins/zwiki_plone/diffform.pt:39
+msgid "next edit &raquo;"
+msgstr ""
+
+#: i/skins/zwiki_plone/diffform.pt:47
+msgid "return to page"
+msgstr ""
+
 #: i/skins/zwiki_plone/editform.pt:117
 # Default: "Body text"
 msgid "label_body_text"
 msgstr ""
 
 #: i/skins/zwiki_plone/editform.pt:119
-#: i/skins/zwiki_plone/editform.pt:147
 # Default: ""
 # "In a Wiki page, you use [square brackets] to create links. When you save the page, the contents\n"
 # "            of the square brackets will have a small <code>?</code> link next to it, which you click to create\n"
 # "            a new page with that name."
 msgid "help_wikibody"
+msgstr ""
+
+#: i/skins/zwiki_plone/editform.pt:147
+# Default: "This wiki also supports WikiWords as a link mechanism."
+msgid "help_wikiwords"
 msgstr ""
 
 #: i/skins/zwiki_plone/editform.pt:158
@@ -266,10 +381,6 @@ msgstr ""
 #: i/skins/zwiki_plone/editform.pt:236
 # Default: ""
 msgid "pagetype"
-msgstr ""
-
-#: i/skins/zwiki_plone/editform.pt:251
-msgid "Save"
 msgstr ""
 
 #: i/skins/zwiki_plone/editform.pt:42
@@ -331,9 +442,154 @@ msgstr ""
 msgid "heading_wiki_search_wiki"
 msgstr ""
 
+#: i/skins/zwiki_plone/subscribeform.pt:100
+# Default: ""
+# "You are currently subscribed<br />\n"
+# "                to the whole wiki."
+msgid "subscribed_wiki_ok"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:104
+# Default: ""
+# "You are currently not subscribed<br />\n"
+# "                to the whole wiki."
+msgid "subscribed_wiki_no"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:108
+msgid "Unsubscribe from whole wiki"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:115
+msgid "Subscribe to whole wiki"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:126
+# Default: "You are subscribed to these other pages"
+msgid "other_page_subscribed"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:13
+msgid "Mail subscription"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:143
+msgid "Page subscribers"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:151
+msgid "Wiki subscribers"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:35
+# Default: ""
+# "You can subscribe to this page or to the whole wiki.\n"
+# "          Subscribers receive a copy of comments via email\n"
+# "          (but not general edits, unless enabled by the site admin).\n"
+# "          Or return to"
+msgid "subscribe_desc"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:49
+msgid "Your email address"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:60
+# Default: "To subscribe, please configure your email address."
+msgid "subscribe_no_email"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:70
+# Default: ""
+# "You are currently subscribed<br />\n"
+# "                to this page."
+msgid "subscribed_page_ok"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:74
+# Default: ""
+# "You are currently not subscribed<br />\n"
+# "                to this page."
+msgid "subscribed_page_no"
+msgstr ""
+
+#: i/skins/zwiki_plone/uploaded.pt:14
+msgid "File Uploads"
+msgstr ""
+
+#: i/skins/zwiki_plone/uploaded.pt:16
+# Default: "This page lists all uploads in this Wiki."
+msgid "uploads_desc"
+msgstr ""
+
+#: i/skins/zwiki_plone/uploaded.pt:25
+msgid "View"
+msgstr ""
+
+#: i/skins/zwiki_plone/uploaded.pt:25
+#: i/skins/zwiki_plone/editform.pt:251
+msgid "Save"
+msgstr ""
+
+#: i/skins/zwiki_plone/uploaded.pt:29
+# Default: "No files have been uploaded."
+msgid "no_files_uploaded"
+msgstr ""
+
 #: i/skins/zwiki_plone/useroptions.pt:12
 # Default: "User options"
 msgid "heading_wiki_user_options"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:15
+msgid "Edit"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:25
+msgid "Title"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:35
+msgid "Description"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:43
+#: i/skins/zwiki_plone/subscribeform.pt:52
+msgid "Change"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:50
+msgid "Change and View"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikinav_portlet.pt:15
+# Default: "Wiki Navigation"
+msgid "box_wiki_navigation"
+msgstr ""
+
+efault: "User options"
+msgid "heading_wiki_user_options"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:15
+msgid "Edit"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:25
+msgid "Title"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:35
+msgid "Description"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:43
+#: i/skins/zwiki_plone/subscribeform.pt:52
+msgid "Change"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:50
+msgid "Change and View"
 msgstr ""
 
 #: i/skins/zwiki_plone/wikinav_portlet.pt:15
