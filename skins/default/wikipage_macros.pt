@@ -152,19 +152,19 @@
 <!-- displaymodes -->
 <span metal:define-macro="displaymodes">
 
-<a href="" title="show all features" accesskey=""
+<a href="" title="show all features" accesskey=","
    tal:define="current python:request.get('zwiki_displaymode',0)=='full';
                prefs string:?setcookies=1&zwiki_displaymode=full&zwiki_showhierarchy=1&redirectURL=${here/pageUrl};"
    tal:attributes="style python:[nothing,'font-weight:bold'][current];
                    href python:here.preferencesUrl()+prefs;"
   ><span class="accesskey"></span>full</a
->/<a href="" title="show basic features" accesskey=""
+>/<a href="" title="show basic features" accesskey="."
    tal:define="current python:request.get('zwiki_displaymode',0)=='simple';
                prefs string:?setcookies=1&zwiki_displaymode=simple&zwiki_showhierarchy=1&redirectURL=${here/pageUrl};"
    tal:attributes="style python:[nothing,'font-weight:bold'][current];
                    href python:here.preferencesUrl()+prefs;"
   >s<span class="accesskey"></span>imple</a
->/<a href="" title="show only essential features" accesskey=""
+>/<a href="" title="show only essential features" accesskey="/"
    tal:define="current python:request.get('zwiki_displaymode',0)=='minimal';
                prefs string:?setcookies=1&zwiki_displaymode=minimal&zwiki_showhierarchy=&redirectURL=${here/pageUrl};"
    tal:attributes="style python:[nothing,'font-weight:bold'][current];
