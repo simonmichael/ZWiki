@@ -619,6 +619,12 @@ class GeneralForms:
         Show the access keys supported by the built-in skins.
         """
         return _("""
+        Access keys can be accessed in mozilla-based browsers by pressing alt-<key>
+        IE users: must also press enter
+        Mac users: command-<key>
+        Opera users: shift-escape-<key>
+        These won't work here, back up to the previous page to try them out.
+
         0    show these access key assignments
 
         wiki functions:
