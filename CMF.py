@@ -123,7 +123,9 @@ try:
 
         security.declareProtected(Permissions.View, 'Subject')
         def Subject(self):
-            return self.spacedPageName()
+            #creates too many keywords (#1059)
+            #return self.spacedPageName()
+            return ''
 
         security.declareProtected(Permissions.View, 'Description')
         def Description(self):
