@@ -1,0 +1,1514 @@
+# translation of zwiki-ru.po to Russian
+# Denis Mishunoff <spliter@is.lg.ua>, 2004.
+msgid ""
+msgstr ""
+"Project-Id-Version: zwiki-ru\n"
+"POT-Creation-Date: Thu Sep 30 14:19:57 2004\n"
+"PO-Revision-Date: 2004-10-21 11:36+0300\n"
+"Last-Translator: Denis Mishunoff <spliter@is.lg.ua>\n"
+"Language-Team: Russian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-code: ru\n"
+"Language-name: Russian\n"
+"Preferred-encodings: latin1 utf-8\n"
+"Domain: zwiki\n"
+"X-Generator: KBabel 1.3.1\n"
+
+#: i/Admin.py:55
+msgid "You are not authorized to upgrade all pages."
+msgstr "Вы не авторизованы для обновления всех страниц."
+
+#: i/Admin.py:56
+msgid "(folder -> Manage properties)"
+msgstr "(папка -> Управление свойствами)"
+
+#: i/Editing.py:107
+msgid "new"
+msgstr ""
+
+#: i/Editing.py:292
+msgid ""
+"You are not authorized to reparent or change subtopics links on this ZWiki "
+"Page."
+msgstr ""
+"Вы не авторизованы для изменения или переназначения ссылок подтем на "
+"этойстранице Zwiki."
+
+#: i/Editing.py:314
+msgid "You are not authorized to change this ZWiki Page's type."
+msgstr "Вы не авторизованы для изменения типа этой Zwiki страницы."
+
+#: i/Editing.py:347 i/Editing.py:370
+msgid "You are not authorized to edit this ZWiki Page."
+msgstr "Вы не авторизованы для редактирования этой Zwiki страницы."
+
+#: i/Editing.py:373 i/Editing.py:414
+msgid "You are not authorized to delete this ZWiki Page."
+msgstr "Вы не авторизованы для удаления этой Zwiki страницы."
+
+#: i/Editing.py:482
+msgid "You are not authorized to rename this ZWiki Page."
+msgstr "Вы не авторизованы для переименования этой Zwiki страницы."
+
+#: i/Editing.py:526
+msgid ""
+"This page was renamed to %s. You can delete this one if no longer needed.\n"
+msgstr ""
+"Эта страница была переименована в «%s». Вы можете удалить эту, если она "
+"большене нужна.\n"
+
+#: i/Editing.py:624
+msgid "You are not authorized to upload files here."
+msgstr "Вы не авторизованы для закачивания сюда файлов."
+
+#: i/Editing.py:628
+msgid "You are not authorized to add a link on this ZWiki Page."
+msgstr "Вы не авторизованы для добавления ссылки на эту Zwiki страницу."
+
+#: i/Mail.py:472 i/skins/dtmlmessages.pt:71 i/skins/dtmlmessages.pt:161
+#: i/skins/dtmlmessages.pt:258
+msgid "anonymous"
+msgstr "анонимный пользователь"
+
+#: i/OutlineSupport.py:774 i/skins/standard/wikipage_macros.pt:220
+msgid "which pages link to this one ?"
+msgstr "какие страницы ссылаются на эту?"
+
+#: i/OutlineSupport.py:779
+msgid "You are here"
+msgstr "Вы находитесь тут"
+
+#: i/UI.py:495
+msgid "Edit conflict"
+msgstr "Конфликт редактирования"
+
+#: i/UI.py:515
+msgid "Someone else has saved this page while you were editing"
+msgstr "Кто-то другой сохранил эту страницу во время Вашего редактирования"
+
+#: i/UI.py:516
+msgid "To resolve the conflict, do this"
+msgstr "Для разрешения конфликта, сделайте следующее"
+
+#: i/UI.py:517
+msgid "Click your browser's back button"
+msgstr "Нажмите кнопку Назад в своем браузере"
+
+#: i/UI.py:518
+msgid "Copy your recent edits to the clipboard"
+msgstr "Скопируйте Ваши текущие изменения"
+
+#: i/UI.py:519
+msgid "Click your browser's refresh button"
+msgstr "Нажмите кнопку Обновить в своем браузере"
+
+#: i/UI.py:520
+msgid "Paste in your edits again, being mindful of the latest changes"
+msgstr ""
+"Вставьте скопированную ранее информацию, содержащюю последние изменения"
+
+#: i/UI.py:521
+msgid "Click the Change button again"
+msgstr "Нажмите кнопку Изменить снова"
+
+#: i/UI.py:522 i/skins/standard/editform.pt:181
+msgid "or"
+msgstr "или"
+
+#: i/UI.py:523
+msgid "To discard your changes and start again, click OK"
+msgstr "Для отмены внесенных изменений и что бы начать заново, нажмите Ok"
+
+#: i/UI.py:532
+msgid "Page is locked"
+msgstr "Страница залочена"
+
+#: i/UI.py:543
+msgid ""
+"\n"
+"            This page has a webDAV lock. Someone is probably editing it\n"
+"            with an external editor.  You'll need to wait until they've\n"
+"            finished and then try again.  If you've just made some changes,\n"
+"            you may want to back up and copy your version of the text for\n"
+"            reference.\n"
+"            "
+msgstr ""
+"\n"
+"            Эта страница залочена WebDav. Скорее всего, кто-то редактирует "
+"её\n"
+"            внешним редактором. Вам надо подождать пока они закончат и "
+"затем\n"
+"            попытаться снова. Если Вы уже внесли изменения, вы, скорее "
+"всего,\n"
+"            захотите сохранить и скопировать копию Вашей версии текста для "
+"ссылки.\n"
+"            "
+
+#: i/UI.py:550
+msgid "To discard your changes and try again, click OK."
+msgstr "Для отмены внесенных изменений и повторной попытки, нажмите OK."
+
+#: i/UI.py:559
+msgid ""
+"\n"
+"        0    show these access key assignments\n"
+"\n"
+"        wiki functions:\n"
+"        f    show front page\n"
+"        c    show wiki contents\n"
+"        r    show wiki recent changes\n"
+"             show discussion page\n"
+"        t    show issue tracker\n"
+"        i    show wiki index\n"
+"        o    show wiki options (preferences)\n"
+"        h    show help page\n"
+"        s    go to search field\n"
+"        \n"
+"        page functions:\n"
+"        v    view page\n"
+"        +    view pages in full mode\n"
+"        =    view pages in simple mode\n"
+"        -    view pages in minimal mode\n"
+"        m    mail subscription\n"
+"        b    show backlinks (links to this page)\n"
+"        d    show diffs (page edit history)\n"
+"        y    show full history (in ZMI)\n"
+"        e    edit this page                       \n"
+"        x    edit with an external editor\n"
+"             print this page (and subtopics)\n"
+"        q    view page source (quick-view)\n"
+"             wipe and regenerate this page's render cache\n"
+"             go to subtopics\n"
+"             go to comments (messages)\n"
+"             go to page author's home page, if possible\n"
+"        n    next page\n"
+"        p    previous page\n"
+"        u    up to parent page\n"
+"        \n"
+"        in edit form:\n"
+"        s    save changes\n"
+"        \n"
+"        when viewing diffs:\n"
+"        n    next edit\n"
+"        p    previous edit\n"
+"        "
+msgstr ""
+"\n"
+"        0    показать эти назначения кючей\n"
+"\n"
+"        функции Wiki:\n"
+"        f    показать главную страницу\n"
+"        c    показать содержание Wiki\n"
+"        r    показать последние изменения Wiki\n"
+"             показать страницу обсуждения\n"
+"        t    показать текущую задачу\n"
+"        i    показать индекс Wiki\n"
+"        o    показать опции Wiki (настройки)\n"
+"        h    показать страницу помощи\n"
+"        s    перейти к полю поиска\n"
+"        \n"
+"        функции страницы:\n"
+"        v    просмотреть страницу\n"
+"        +    смотреть страницы в полном режиме\n"
+"        =    смотреть страницы в нормальном режиме\n"
+"        -    смотреть страницы в минимальном режиме\n"
+"        m    отправить подписку\n"
+"        b    показать обратные ссылки (ссылки на эту страницу)\n"
+"        d    показать изменения (история редактирования страницы)\n"
+"        y    показать полную историю (в ZMI)\n"
+"        e    редактировать эту страницу\n"
+"        x    редактировать внешним редактором\n"
+"             распечатать эту страницу (и подтемы)\n"
+"        q    просмотреть код страницы (быстрый просмотр)\n"
+"             очистить и регенерировать кэш этой страницы\n"
+"             перейти к подтемам\n"
+"             перейти к комментариям (сообщениям)\n"
+"             перейти к домашней странице автора, если возможно\n"
+"        n    следующая страница\n"
+"        p    предыдущая страница\n"
+"        u    вверх на родительскую страницу\n"
+"        \n"
+"        на форме редактирования:\n"
+"        s    сохранить изменения\n"
+"        \n"
+"        при просмотре различий:\n"
+"        n    следующее редактирование\n"
+"        p    предыдущее редактирование\n"
+"        "
+
+#: i/Utils.py:462
+msgid "years"
+msgstr "года"
+
+#: i/Utils.py:462
+msgid "year"
+msgstr "год"
+
+#: i/Utils.py:464
+msgid "month"
+msgstr "месяц"
+
+#: i/Utils.py:464
+msgid "months"
+msgstr "месяцев"
+
+#: i/Utils.py:466
+msgid "weeks"
+msgstr "недель"
+
+#: i/Utils.py:466
+msgid "week"
+msgstr "неделя"
+
+#: i/Utils.py:468
+msgid "day"
+msgstr "день"
+
+#: i/Utils.py:468
+msgid "days"
+msgstr "дней"
+
+#: i/Utils.py:470
+msgid "hours"
+msgstr "часов"
+
+#: i/Utils.py:470
+msgid "hour"
+msgstr "час"
+
+#: i/Utils.py:472
+msgid "minute"
+msgstr "минута"
+
+#: i/Utils.py:472
+msgid "minutes"
+msgstr "минут"
+
+#: i/Utils.py:474
+msgid "second"
+msgstr "секунда"
+
+#: i/Utils.py:474
+msgid "seconds"
+msgstr "секунд"
+
+#: i/ZWikiPage.py:602
+msgid "page in parent wiki"
+msgstr "страница в родительской wiki"
+
+#: i/ZWikiPage.py:609
+msgid "create this page"
+msgstr ""
+
+#: i/ZWikiPage.py:686 i/ZWikiPage.py:699 i/ZWikiPage.py:702
+msgid "last edited %(interval)s ago"
+msgstr "последний раз редактрировал %(interval)s назад"
+
+#: i/ZWikiPage.py:695
+msgid "show last edit %(lastlog)s"
+msgstr "показать последнее редактирование %(lastlog)s"
+
+#: i/ZWikiPage.py:711 i/ZWikiPage.py:713
+msgid "by %(editor)s"
+msgstr "%(editor)s"
+
+#: i/pagetypes/common.py:199
+msgid "comments"
+msgstr ""
+
+#: i/pagetypes/rst.py:57
+msgid "reply"
+msgstr "ответить"
+
+#: i/pagetypes/stx.py:390
+msgid "Structured Text table rendering error"
+msgstr ""
+
+#: i/pagetypes/stx.py:400
+msgid ""
+"\n"
+"                       Sorry, but a Structured Text table in this page\n"
+"                       gave an error while rendering.  This happens due to\n"
+"                       incorrect spacing, the wrong number of column\n"
+"                       separators, etc.  Please correct the table,\n"
+"                       following the Structured Text rules, or remove it,\n"
+"                       so that this page can be displayed.\n"
+"                       "
+msgstr ""
+
+#: i/pagetypes/stx.py:408
+msgid "To edit this page, click OK."
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:100 i/skins/dtmlmessages.pt:190
+msgid "Filter issues"
+msgstr "Фильтровать задачи"
+
+#: i/skins/dtmlmessages.pt:11
+msgid ""
+"You may create a new ZWiki Page object using the form below. You may also "
+"choose to upload an existing html file from your local computer by clicking "
+"the <i>Browse</i> button."
+msgstr ""
+"Вы можете создать новый объект Zwiki Page используя форму ниже. Вы так же "
+"можете закачать существующий html файл со своего локального компьютера, "
+"нажав кнопку <i>Browse</i>."
+
+#: i/skins/dtmlmessages.pt:14
+msgid "File"
+msgstr "Файл"
+
+#: i/skins/dtmlmessages.pt:15
+msgid "Add"
+msgstr "Добавить"
+
+#: i/skins/dtmlmessages.pt:16
+msgid "Add and Edit"
+msgstr "Добавить и редактировать"
+
+#: i/skins/dtmlmessages.pt:17 i/skins/dtmlmessages.pt:107
+#: i/skins/dtmlmessages.pt:204
+msgid "Set your site preferences below."
+msgstr "Ниже установите настройки Вашего сайта."
+
+#: i/skins/dtmlmessages.pt:18 i/skins/dtmlmessages.pt:108
+#: i/skins/dtmlmessages.pt:205
+msgid "You may also click the full, simple, minimal links if provided."
+msgstr ""
+"Вы так же можете выбрать полный, нормальный или минимальный режим, если "
+"предложено."
+
+#: i/skins/dtmlmessages.pt:19 i/skins/dtmlmessages.pt:109
+#: i/skins/dtmlmessages.pt:206
+msgid "User name"
+msgstr "Имя пользователя"
+
+#: i/skins/dtmlmessages.pt:197
+msgid "Name"
+msgstr "Имя"
+
+#: i/skins/dtmlmessages.pt:198
+msgid "Category"
+msgstr "Категория"
+
+#: i/skins/dtmlmessages.pt:199
+msgid "Severity"
+msgstr "Строгость"
+
+#: i/skins/dtmlmessages.pt:2 i/skins/dtmlmessages.pt:3
+msgid "Add a ZWiki web"
+msgstr "Добавить веб ZWiki"
+
+#: i/skins/dtmlmessages.pt:20 i/skins/dtmlmessages.pt:110
+#: i/skins/dtmlmessages.pt:207
+msgid "identifies your edits"
+msgstr "идентифицирует Ваши редактирования"
+
+#: i/skins/dtmlmessages.pt:200
+msgid "Status"
+msgstr "Статус"
+
+#: i/skins/dtmlmessages.pt:201
+msgid "Optional note"
+msgstr "Возможная заметка"
+
+#: i/skins/dtmlmessages.pt:202
+msgid "Submitted by"
+msgstr "Подана на рассмотрение"
+
+#: i/skins/dtmlmessages.pt:203
+msgid "Details & comments"
+msgstr "Детали и комментарии"
+
+#: i/skins/dtmlmessages.pt:21 i/skins/dtmlmessages.pt:111
+#: i/skins/dtmlmessages.pt:208
+msgid "Email address"
+msgstr "Email адрес"
+
+#: i/skins/dtmlmessages.pt:22 i/skins/dtmlmessages.pt:112
+#: i/skins/dtmlmessages.pt:209
+msgid "for subscribing"
+msgstr "для подписи"
+
+#: i/skins/dtmlmessages.pt:23 i/skins/dtmlmessages.pt:113
+#: i/skins/dtmlmessages.pt:210
+msgid "Editform"
+msgstr "Форма редактирования"
+
+#: i/skins/dtmlmessages.pt:24 i/skins/dtmlmessages.pt:114
+#: i/skins/dtmlmessages.pt:211
+msgid "width"
+msgstr "ширина"
+
+#: i/skins/dtmlmessages.pt:25 i/skins/dtmlmessages.pt:115
+#: i/skins/dtmlmessages.pt:212
+msgid "height"
+msgstr "высота"
+
+#: i/skins/dtmlmessages.pt:26 i/skins/dtmlmessages.pt:116
+#: i/skins/dtmlmessages.pt:213
+msgid "textarea dimensions; width will be 100% if supported"
+msgstr "размерность текстового поля; если поддерживается, ширина будет 100%"
+
+#: i/skins/dtmlmessages.pt:27 i/skins/dtmlmessages.pt:117
+#: i/skins/dtmlmessages.pt:214
+msgid "Time zone"
+msgstr "Часовой пояс"
+
+#: i/skins/dtmlmessages.pt:28 i/skins/dtmlmessages.pt:118
+#: i/skins/dtmlmessages.pt:215
+msgid "Your local time is"
+msgstr "Ваше местное время:"
+
+#: i/skins/dtmlmessages.pt:29 i/skins/dtmlmessages.pt:119
+#: i/skins/dtmlmessages.pt:216
+msgid "(localizes most times)"
+msgstr "(локализует большинство часовых поясов)"
+
+#: i/skins/dtmlmessages.pt:30 i/skins/dtmlmessages.pt:120
+#: i/skins/dtmlmessages.pt:217
+msgid "Show logo ?"
+msgstr "Показать логотип?"
+
+#: i/skins/dtmlmessages.pt:31 i/skins/dtmlmessages.pt:34
+#: i/skins/dtmlmessages.pt:39 i/skins/dtmlmessages.pt:43
+#: i/skins/dtmlmessages.pt:47 i/skins/dtmlmessages.pt:121
+#: i/skins/dtmlmessages.pt:124 i/skins/dtmlmessages.pt:129
+#: i/skins/dtmlmessages.pt:133 i/skins/dtmlmessages.pt:137
+#: i/skins/dtmlmessages.pt:218 i/skins/dtmlmessages.pt:221
+#: i/skins/dtmlmessages.pt:226 i/skins/dtmlmessages.pt:230
+#: i/skins/dtmlmessages.pt:234
+msgid "No"
+msgstr "Нет"
+
+#: i/skins/dtmlmessages.pt:32 i/skins/dtmlmessages.pt:35
+#: i/skins/dtmlmessages.pt:40 i/skins/dtmlmessages.pt:44
+#: i/skins/dtmlmessages.pt:48 i/skins/dtmlmessages.pt:122
+#: i/skins/dtmlmessages.pt:125 i/skins/dtmlmessages.pt:130
+#: i/skins/dtmlmessages.pt:134 i/skins/dtmlmessages.pt:138
+#: i/skins/dtmlmessages.pt:219 i/skins/dtmlmessages.pt:222
+#: i/skins/dtmlmessages.pt:227 i/skins/dtmlmessages.pt:231
+#: i/skins/dtmlmessages.pt:235
+msgid "Yes"
+msgstr "Да"
+
+#: i/skins/dtmlmessages.pt:33 i/skins/dtmlmessages.pt:123
+#: i/skins/dtmlmessages.pt:220
+msgid "Show page hierarchy ?"
+msgstr "Показать иерархию страницы?"
+
+#: i/skins/dtmlmessages.pt:36 i/skins/dtmlmessages.pt:126
+#: i/skins/dtmlmessages.pt:223
+msgid "This wiki keeps a page hierarchy, which you can use or ignore."
+msgstr ""
+"Эта wiki содержит иерархию страницы, которую Вы можете использовать или "
+"проигнорировать."
+
+#: i/skins/dtmlmessages.pt:37 i/skins/dtmlmessages.pt:127
+#: i/skins/dtmlmessages.pt:224
+msgid "Show search field ?"
+msgstr "Показывать поле поиска?"
+
+#: i/skins/dtmlmessages.pt:38 i/skins/dtmlmessages.pt:128
+#: i/skins/dtmlmessages.pt:225
+msgid "except in minimal mode"
+msgstr "за исключением минимального режима"
+
+#: i/skins/dtmlmessages.pt:4 i/skins/dtmlmessages.pt:12
+msgid "Id"
+msgstr "Идентификатор (ID)"
+
+#: i/skins/dtmlmessages.pt:41 i/skins/dtmlmessages.pt:131
+#: i/skins/dtmlmessages.pt:228
+msgid "Show AnnoyingQuote ?"
+msgstr "Показывать цитаты?"
+
+#: i/skins/dtmlmessages.pt:42 i/skins/dtmlmessages.pt:46
+#: i/skins/dtmlmessages.pt:132 i/skins/dtmlmessages.pt:136
+#: i/skins/dtmlmessages.pt:229 i/skins/dtmlmessages.pt:233
+msgid "in full mode"
+msgstr "в полном режиме"
+
+#: i/skins/dtmlmessages.pt:45 i/skins/dtmlmessages.pt:135
+#: i/skins/dtmlmessages.pt:232
+msgid "Show page management form ?"
+msgstr "Показать форму управления страницей?"
+
+#: i/skins/dtmlmessages.pt:49 i/skins/dtmlmessages.pt:139
+#: i/skins/dtmlmessages.pt:236
+msgid "You must also configure a username or be logged in."
+msgstr ""
+"Вам так же необходимо настроить имя пользователя или быть залогиненным."
+
+#: i/skins/dtmlmessages.pt:5 i/skins/dtmlmessages.pt:13
+msgid "Title"
+msgstr "Заголовок"
+
+#: i/skins/dtmlmessages.pt:50 i/skins/dtmlmessages.pt:140
+#: i/skins/dtmlmessages.pt:237
+msgid "Save options"
+msgstr "Сохранить опции"
+
+#: i/skins/dtmlmessages.pt:51 i/skins/dtmlmessages.pt:141
+#: i/skins/dtmlmessages.pt:238
+msgid "Forget options"
+msgstr "Забыть опции"
+
+#: i/skins/dtmlmessages.pt:52 i/skins/dtmlmessages.pt:142
+#: i/skins/dtmlmessages.pt:239
+msgid "Enter a word or phrase and hit enter to search the entire wiki."
+msgstr ""
+"Введите слово или фразу и нажмите Enter для начала поиска по всей wiki."
+
+#: i/skins/dtmlmessages.pt:53 i/skins/dtmlmessages.pt:143
+#: i/skins/dtmlmessages.pt:240
+msgid "This is the same as using the search field at top right."
+msgstr "Это то же самое, что использовать поле поиска справа."
+
+#: i/skins/dtmlmessages.pt:54 i/skins/dtmlmessages.pt:144
+#: i/skins/dtmlmessages.pt:241
+msgid "Tips: A single word works best for matching page names."
+msgstr ""
+"Советы: отдельное слово лучше работает на соответствие названиям страниц."
+
+#: i/skins/dtmlmessages.pt:55 i/skins/dtmlmessages.pt:145
+#: i/skins/dtmlmessages.pt:242
+msgid ""
+"Case-insensitivity and wildcards may be supported depending on your catalog "
+"configuration."
+msgstr ""
+"Могут поддерживаться нечуствительность к регистру и специальные символы, в "
+"зависимости от конфигурации Вашего каталога."
+
+#: i/skins/dtmlmessages.pt:56 i/skins/dtmlmessages.pt:146
+#: i/skins/dtmlmessages.pt:243
+msgid "Leave it blank to list all pages."
+msgstr "Оставьте пустым, что бы получить все страницы."
+
+#: i/skins/dtmlmessages.pt:57 i/skins/dtmlmessages.pt:62
+#: i/skins/dtmlmessages.pt:147 i/skins/dtmlmessages.pt:152
+#: i/skins/dtmlmessages.pt:244 i/skins/dtmlmessages.pt:249
+msgid "Search"
+msgstr "Поиск"
+
+#: i/skins/dtmlmessages.pt:58 i/skins/dtmlmessages.pt:148
+#: i/skins/dtmlmessages.pt:245
+msgid "Page names matching"
+msgstr "Названия страниц, Соответствующие запросу"
+
+#: i/skins/dtmlmessages.pt:59 i/skins/dtmlmessages.pt:149
+#: i/skins/dtmlmessages.pt:246
+msgid "Text matching"
+msgstr "Текст, соответствующий запросу"
+
+#: i/skins/dtmlmessages.pt:6
+msgid "Type"
+msgstr "Тип"
+
+#: i/skins/dtmlmessages.pt:60 i/skins/dtmlmessages.pt:150
+#: i/skins/dtmlmessages.pt:247
+msgid "hits"
+msgstr "кликов"
+
+#: i/skins/dtmlmessages.pt:61 i/skins/dtmlmessages.pt:151
+#: i/skins/dtmlmessages.pt:248
+msgid ""
+"no catalog or the catalog search gave an error, a brute-force search was used"
+msgstr ""
+"нет каталога или поиск по каталогу выдал ошибку. Был использован "
+"принудительный поиск"
+
+#: i/skins/dtmlmessages.pt:63 i/skins/dtmlmessages.pt:153
+#: i/skins/dtmlmessages.pt:250
+msgid "Pages changed in the last"
+msgstr "В последний раз страница изменялась"
+
+#: i/skins/dtmlmessages.pt:64 i/skins/dtmlmessages.pt:154
+#: i/skins/dtmlmessages.pt:251
+msgid "Recently changed pages, with summaries"
+msgstr "Недавно измененные страницы с описаниями"
+
+#: i/skins/dtmlmessages.pt:65 i/skins/dtmlmessages.pt:155
+#: i/skins/dtmlmessages.pt:252
+msgid "Show summaries ?"
+msgstr "Показать описания?"
+
+#: i/skins/dtmlmessages.pt:66 i/skins/dtmlmessages.pt:156
+#: i/skins/dtmlmessages.pt:253
+msgid "Refresh"
+msgstr "Обновить"
+
+#: i/skins/dtmlmessages.pt:67 i/skins/dtmlmessages.pt:157
+#: i/skins/dtmlmessages.pt:254
+msgid "Page"
+msgstr "Страница"
+
+#: i/skins/dtmlmessages.pt:68 i/skins/dtmlmessages.pt:158
+#: i/skins/dtmlmessages.pt:255
+msgid "Edited&nbsp;by"
+msgstr "Отредактировано&nbsp; "
+
+#: i/skins/dtmlmessages.pt:69 i/skins/dtmlmessages.pt:159
+#: i/skins/dtmlmessages.pt:256
+msgid "Time"
+msgstr "Время"
+
+#: i/skins/dtmlmessages.pt:7
+msgid "Create wiki"
+msgstr "Создать wiki"
+
+#: i/skins/dtmlmessages.pt:70 i/skins/dtmlmessages.pt:160
+#: i/skins/dtmlmessages.pt:257
+msgid "NEW"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:72 i/skins/dtmlmessages.pt:162
+#: i/skins/dtmlmessages.pt:259
+msgid "Pages marked (NEW) have been created within the last week"
+msgstr "Отмеченные страницы (NEW) созданы за последнюю неделю"
+
+#: i/skins/dtmlmessages.pt:73 i/skins/dtmlmessages.pt:163
+msgid "Here are the wiki's issue pages."
+msgstr "Это страницы задач wiki."
+
+#: i/skins/dtmlmessages.pt:74 i/skins/dtmlmessages.pt:164
+msgid "Enter a search term, or click the numbers to the right, or"
+msgstr "Введите ключевое слово или нажмите числа справа или"
+
+#: i/skins/dtmlmessages.pt:75 i/skins/dtmlmessages.pt:165
+msgid "filter issues"
+msgstr "фильтровать задачи"
+
+#: i/skins/dtmlmessages.pt:76 i/skins/dtmlmessages.pt:166
+msgid "search issues"
+msgstr "Элементы поиска"
+
+#: i/skins/dtmlmessages.pt:77 i/skins/dtmlmessages.pt:167
+msgid "recent"
+msgstr "недавние"
+
+#: i/skins/dtmlmessages.pt:78 i/skins/dtmlmessages.pt:168
+msgid "all"
+msgstr "все"
+
+#: i/skins/dtmlmessages.pt:79 i/skins/dtmlmessages.pt:101
+#: i/skins/dtmlmessages.pt:169 i/skins/dtmlmessages.pt:191
+msgid "name"
+msgstr "имя"
+
+#: i/skins/dtmlmessages.pt:8
+msgid "and enter"
+msgstr "и Enter"
+
+#: i/skins/dtmlmessages.pt:80 i/skins/dtmlmessages.pt:102
+#: i/skins/dtmlmessages.pt:170 i/skins/dtmlmessages.pt:192
+msgid "category"
+msgstr "категория"
+
+#: i/skins/dtmlmessages.pt:81 i/skins/dtmlmessages.pt:103
+#: i/skins/dtmlmessages.pt:171 i/skins/dtmlmessages.pt:193
+msgid "severity"
+msgstr "строгость"
+
+#: i/skins/dtmlmessages.pt:82 i/skins/dtmlmessages.pt:104
+#: i/skins/dtmlmessages.pt:172 i/skins/dtmlmessages.pt:194
+msgid "status"
+msgstr "статус"
+
+#: i/skins/dtmlmessages.pt:83 i/skins/dtmlmessages.pt:105
+#: i/skins/dtmlmessages.pt:173 i/skins/dtmlmessages.pt:195
+msgid "age"
+msgstr "возраст"
+
+#: i/skins/dtmlmessages.pt:84 i/skins/dtmlmessages.pt:106
+#: i/skins/dtmlmessages.pt:174 i/skins/dtmlmessages.pt:196
+msgid "modified"
+msgstr "модифицирован"
+
+#: i/skins/dtmlmessages.pt:85 i/skins/dtmlmessages.pt:175
+msgid "Add a new issue:"
+msgstr "Добавить новую задачу:"
+
+#: i/skins/dtmlmessages.pt:86 i/skins/dtmlmessages.pt:176
+msgid "Name:"
+msgstr "Имя:"
+
+#: i/skins/dtmlmessages.pt:87 i/skins/dtmlmessages.pt:177
+msgid "Category:"
+msgstr "Категория:"
+
+#: i/skins/dtmlmessages.pt:88 i/skins/dtmlmessages.pt:178
+msgid "Severity:"
+msgstr "Строгость:"
+
+#: i/skins/dtmlmessages.pt:89 i/skins/dtmlmessages.pt:179
+msgid "Status:"
+msgstr "Статус:"
+
+#: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:10
+msgid "Add ZWiki Page"
+msgstr "Добавить страницу ZWiki"
+
+#: i/skins/dtmlmessages.pt:90 i/skins/dtmlmessages.pt:180
+msgid "Details:"
+msgstr "Детали:"
+
+#: i/skins/dtmlmessages.pt:91 i/skins/dtmlmessages.pt:181
+msgid "add issue"
+msgstr "добавить задачу"
+
+#: i/skins/dtmlmessages.pt:92 i/skins/dtmlmessages.pt:182
+msgid "More advanced"
+msgstr "Расширенный"
+
+#: i/skins/dtmlmessages.pt:93 i/skins/dtmlmessages.pt:183
+msgid "issue tracker"
+msgstr "текущая задача"
+
+#: i/skins/dtmlmessages.pt:94 i/skins/dtmlmessages.pt:184
+msgid "search options"
+msgstr "опции поиска"
+
+#: i/skins/dtmlmessages.pt:95 i/skins/dtmlmessages.pt:185
+msgid "Name contains any of:"
+msgstr "Имя содержит любое из:"
+
+#: i/skins/dtmlmessages.pt:96 i/skins/dtmlmessages.pt:186
+msgid "Page text contains any of:"
+msgstr "Текст страницы содержит любое из:"
+
+#: i/skins/dtmlmessages.pt:97 i/skins/dtmlmessages.pt:187
+msgid "Categories:"
+msgstr "Категории:"
+
+#: i/skins/dtmlmessages.pt:98 i/skins/dtmlmessages.pt:188
+msgid "Severities:"
+msgstr "Строгость:"
+
+#: i/skins/dtmlmessages.pt:99 i/skins/dtmlmessages.pt:189
+msgid "Statuses:"
+msgstr "Статус:"
+
+# Default: ""
+# "You can change this page's parent(s) to place it within the overall page\n"
+# "hierarchy.  Check the boxes or enter a new page name and click Reparent.\n"
+# "A single parent is usually sufficient."
+#: i/skins/standard/backlinks.pt:105
+msgid "backlinks_reparent_help"
+msgstr ""
+"Вы можете поменять родителя(лей) этой страницы, что бы включить ее в "
+"глобальную \n"
+"иерархию страницы. Отметьте боксы или введите имя новой страницы и нажмите "
+"Переназначить.\n"
+"Одного родителя, как правило, достаточно."
+
+#: i/skins/standard/backlinks.pt:48
+msgid "is a top-level topic."
+msgstr "тема верхнего уровня."
+
+#: i/skins/standard/backlinks.pt:49
+msgid "is a subtopic of:"
+msgstr "является подтемой:"
+
+#: i/skins/standard/backlinks.pt:71
+msgid "Here are the pages which link to it:"
+msgstr "Страницы, которые ссылаются на неё:"
+
+#: i/skins/standard/badtemplate.pt:12
+msgid ""
+"There was a problem with one of this wiki's skin templates. There may be an "
+"object with a skin template ID that is not a Page Template or DTML Method, "
+"or the template may be missing."
+msgstr ""
+"С одним из шаблонов стиля этой wiki возникли проблемы. Возможно есть объект "
+"с ID шаблона стиля, который не является Page Template или DTML методом, или "
+"шаблона может отсутствовать."
+
+#: i/skins/standard/contentspage.pt:31
+msgid "Contents"
+msgstr "Содержание"
+
+#: i/skins/standard/diffform.pt:33
+msgid "Diffs for"
+msgstr "Различия для"
+
+# Default: "Note for the page history (optional)"
+#: i/skins/standard/diffform.pt:44
+#, fuzzy
+msgid "log_note"
+msgstr "Заметка для истории страницы (необязательно)"
+
+#: i/skins/standard/diffform.pt:58
+msgid "Revert this change and all successive changes"
+msgstr ""
+
+#: i/skins/standard/diffform.pt:61
+#, fuzzy
+msgid "Return to page"
+msgstr "вернуться на страницу"
+
+#: i/skins/standard/editform.pt:133
+msgid "toggle source/WYSIWYG mode"
+msgstr "переключить режимы код/WYSIWYG"
+
+#: i/skins/standard/editform.pt:145
+msgid "Optional change note"
+msgstr "Заметка про изменения. Необязательно."
+
+#: i/skins/standard/editform.pt:146
+msgid "a note makes RecentChanges more useful"
+msgstr "заметка делает Последние Изменения более информативными"
+
+#: i/skins/standard/editform.pt:164
+msgid "Upload a file or image"
+msgstr "Загрузите файл или изображение"
+
+#: i/skins/standard/editform.pt:165
+msgid "upload a file and link it on this page ?"
+msgstr "загрузить файл и связать его с этой страницей?"
+
+#: i/skins/standard/editform.pt:175
+msgid "For editing help, see"
+msgstr "Для помощи при редактировании смотрите"
+
+#: i/skins/standard/editform.pt:177
+msgid "HelpPage"
+msgstr "Страница помощи"
+
+#: i/skins/standard/editform.pt:184
+msgid "TextFormattingRules"
+msgstr "Правила форматирования текста"
+
+#: i/skins/standard/editform.pt:198
+msgid "Create"
+msgstr "создать"
+
+#: i/skins/standard/editform.pt:199
+msgid "create this wiki page"
+msgstr "создать эту wiki страницу"
+
+#: i/skins/standard/editform.pt:201
+msgid "Cancel"
+msgstr "Отменить"
+
+#: i/skins/standard/editform.pt:201
+msgid "cancel this edit and return to the page"
+msgstr "отменить это редактирование и вернуться на страницу"
+
+# Default: "Page name"
+#: i/skins/standard/editform.pt:69
+msgid "Page name"
+msgstr "Название страницы"
+
+#: i/skins/standard/editform.pt:70
+msgid "the name of this wiki page (changing this may be slow!)"
+msgstr ""
+"название этой wiki страницы (изменение этого может происходить медленно!)"
+
+#: i/skins/standard/editform.pt:80
+msgid "type"
+msgstr "тип"
+
+#: i/skins/standard/editform.pt:81
+msgid "select the formatting and rendering style for this page"
+msgstr "выберите стиль форматирования и отображения для этой страницы"
+
+# Default: "page rating"
+#: i/skins/standard/ratingform.pt:10
+msgid "page rating"
+msgstr "рейтинг страницы"
+
+#: i/skins/standard/ratingform.pt:13
+msgid "rating_score"
+msgstr " ${score} от ${nb_votes} голосов"
+
+#: i/skins/standard/ratingform.pt:36
+msgid "click to rate"
+msgstr "нажмите для участия в рейтинге"
+
+#: i/skins/standard/ratingform.pt:36
+msgid "voting as"
+msgstr "голосовать как"
+
+#: i/skins/standard/subscribeform.pt:104
+msgid " Unsubscribe from this page "
+msgstr " Отписаться от этой страницы "
+
+#: i/skins/standard/subscribeform.pt:111
+msgid " Subscribe to this page "
+msgstr " Подписаться на эту страницу "
+
+#: i/skins/standard/wikipage.pt:69
+msgid "search all pages"
+msgstr "искать на всех страницах"
+
+#: i/skins/standard/wikipage_macros.pt:109
+msgid "show front page"
+msgstr "показать главную страницу"
+
+#: i/skins/standard/wikipage_macros.pt:113
+msgid "home"
+msgstr "главная"
+
+#: i/skins/standard/wikipage_macros.pt:115
+#: i/skins/standard/wikipage_macros.pt:292
+#: i/skins/standard/wikipage_macros.pt:331
+msgid "show wiki contents"
+msgstr "показать содержание wiki"
+
+#: i/skins/standard/wikipage_macros.pt:119
+msgid "contents"
+msgstr "содержание"
+
+#: i/skins/standard/wikipage_macros.pt:121
+msgid "show wiki recent changes"
+msgstr "показать последние изменения wiki"
+
+#: i/skins/standard/wikipage_macros.pt:125
+msgid "changes"
+msgstr "изменения"
+
+#: i/skins/standard/wikipage_macros.pt:127
+msgid "show discussion page"
+msgstr "показать страницу обсуждения"
+
+#: i/skins/standard/wikipage_macros.pt:131
+msgid "discussion"
+msgstr "обсуждение"
+
+#: i/skins/standard/wikipage_macros.pt:133
+msgid "show issue tracker"
+msgstr "показать текущую задачу"
+
+#: i/skins/standard/wikipage_macros.pt:137
+msgid "issues"
+msgstr "задачи"
+
+#: i/skins/standard/wikipage_macros.pt:139
+msgid "show wiki index"
+msgstr "показать индекс wiki"
+
+#: i/skins/standard/wikipage_macros.pt:143
+msgid "index"
+msgstr "индекс"
+
+#: i/skins/standard/wikipage_macros.pt:145
+msgid "show upload page"
+msgstr "показать страницу загрузки"
+
+#: i/skins/standard/wikipage_macros.pt:149
+msgid "uploads"
+msgstr "закачки"
+
+#: i/skins/standard/wikipage_macros.pt:151
+msgid "show wiki options"
+msgstr "показать опции wiki"
+
+#: i/skins/standard/wikipage_macros.pt:155
+msgid "options"
+msgstr "опции"
+
+#: i/skins/standard/wikipage_macros.pt:157
+msgid "show help page"
+msgstr "показать страницу помощи"
+
+#: i/skins/standard/wikipage_macros.pt:162
+msgid "help"
+msgstr "помощь"
+
+#: i/skins/standard/wikipage_macros.pt:180
+msgid "show all features"
+msgstr "показать все особенности"
+
+#: i/skins/standard/wikipage_macros.pt:186
+msgid "full"
+msgstr "полный"
+
+#: i/skins/standard/wikipage_macros.pt:187
+msgid "show basic features"
+msgstr "показать основные особенности"
+
+#: i/skins/standard/wikipage_macros.pt:193
+msgid "simple"
+msgstr "простой"
+
+#: i/skins/standard/wikipage_macros.pt:194
+msgid "show only essential features"
+msgstr "показать только отличительные особенности"
+
+#: i/skins/standard/wikipage_macros.pt:200
+msgid "minimal"
+msgstr "минимальный"
+
+#: i/skins/standard/wikipage_macros.pt:207
+msgid "configure email subscription to this page or site"
+msgstr "настроить email родписку на эту страницу или сайт"
+
+#: i/skins/standard/wikipage_macros.pt:217
+msgid "subscribe"
+msgstr "подписаться"
+
+# with a lower case
+#: i/skins/standard/wikipage_macros.pt:226
+msgid "backlinks"
+msgstr "обратные ссылки"
+
+#: i/skins/standard/wikipage_macros.pt:227
+msgid "show this page's change history"
+msgstr "показать историю изменений этой страницы"
+
+#: i/skins/standard/wikipage_macros.pt:233
+msgid "diff"
+msgstr "различия"
+
+#: i/skins/standard/wikipage_macros.pt:242
+msgid "edit"
+msgstr "редактировать"
+
+#: i/skins/standard/wikipage_macros.pt:243
+msgid "edit using external editor"
+msgstr "редактировать использую внешний редактор"
+
+#: i/skins/standard/wikipage_macros.pt:255
+msgid "(external edit)"
+msgstr "(внешнее редактирование)"
+
+#: i/skins/standard/wikipage_macros.pt:263
+#: i/skins/standard/subscribeform.pt:19 i/skins/standard/useroptions.pt:19
+#: i/skins/standard/searchwiki.pt:19 i/skins/standard/recentchanges.pt:19
+#: i/skins/standard/issuetracker.pt:19 i/skins/standard/filterissues.pt:19
+#: i/skins/standard/editform.pt:35 i/skins/standard/diffform.pt:21
+#: i/skins/standard/contentspage.pt:19 i/skins/standard/backlinks.pt:19
+msgid "go to home page"
+msgstr "на главную страницу"
+
+#: i/skins/standard/wikipage_macros.pt:398
+msgid "replying"
+msgstr "ответить"
+
+#: i/skins/standard/wikipage_macros.pt:407
+msgid "to comment (and cc any subscribers) enter text here and click add"
+msgstr ""
+"для добавления комментария (and cc any subscribers) введите тут текст и "
+"нажмите Добавить"
+
+#: i/skins/standard/wikipage_macros.pt:431
+msgid "${nb} subscribers"
+msgstr "${nb} подписчиков"
+
+#: i/skins/standard/wikipage_macros.pt:433
+msgid "1 subscriber"
+msgstr "1 подписчик"
+
+#: i/skins/standard/wikipage_macros.pt:436
+msgid "no subscribers"
+msgstr "подписчиков нет"
+
+# Default: "new parent, name or replacement"
+#: i/skins/standard/wikipage_macros.pt:463
+msgid "parent_name_replace"
+msgstr "новый родитель, название или перемещение"
+
+#: i/skins/standard/wikipage_macros.pt:465
+msgid ""
+"enter a new parent, new name, replacement page (if any) or subtopic name"
+msgstr ""
+"введите нового родителя, новое название, страницу перемещения (если это "
+"имеет место) или название подтемы"
+
+#: i/skins/standard/wikipage_macros.pt:471
+#: i/skins/standard/wikipage_macros.pt:476
+#: i/skins/standard/wikipage_macros.pt:481
+#: i/skins/standard/wikipage_macros.pt:486
+#, fuzzy
+msgid "title"
+msgstr "Заголовок"
+
+#: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:31
+msgid "Backlinks for"
+msgstr "Обратные ссылки для"
+
+#: i/skins/zwiki_plone/backlinks.pt:21
+msgid "Here are the pages which link to"
+msgstr "Страницы, которые ссылаются на"
+
+# Default: ""
+# "You can also set this page's <em>parent(s)</em>, to locate it within the\n"
+# "    contents hierarchy.  Check the boxes or enter a new page name and click\n"
+# "    Reparent.  A single parent is usually sufficient."
+#: i/skins/zwiki_plone/backlinks.pt:30
+msgid "box_zwiki_showhierarchy"
+msgstr ""
+"Вы так же можете установить <em>родителя(лей)</em> этой страницы для "
+"расположения её\n"
+"в иерархии контента. Отметьте ячейки или введите новое название страницы и "
+"нажмите\n"
+"Переназначить. Одного родителя, обычно, достаточно."
+
+#: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:101
+msgid "Other parent"
+msgstr "Другой родитель"
+
+#: i/skins/zwiki_plone/backlinks.pt:72 i/skins/standard/backlinks.pt:103
+msgid "Reparent"
+msgstr "Переназначить"
+
+#: i/skins/zwiki_plone/contentspage.pt:13
+msgid "Wiki contents"
+msgstr "Содержание Wiki"
+
+#: i/skins/zwiki_plone/contentspage.pt:19 i/skins/standard/contentspage.pt:42
+msgid "Singletons"
+msgstr "Единственные потомки"
+
+#: i/skins/zwiki_plone/contentspage.pt:21
+msgid "singleton_desc"
+msgstr ""
+"Единственные потомки - страницы, которые не имеют ссылок на другие страницы."
+
+#: i/skins/zwiki_plone/diffform.pt:15
+msgid "History for"
+msgstr "История для"
+
+#: i/skins/zwiki_plone/diffform.pt:23 i/skins/standard/diffform.pt:48
+msgid "full history"
+msgstr "полная история"
+
+#: i/skins/zwiki_plone/diffform.pt:31 i/skins/standard/diffform.pt:50
+#: i/skins/standard/diffform.pt:52
+msgid "<< previous edit"
+msgstr "<< предыдущее редактирование"
+
+#: i/skins/zwiki_plone/diffform.pt:40 i/skins/standard/diffform.pt:54
+#: i/skins/standard/diffform.pt:56
+msgid "next edit >>"
+msgstr "следующее редактирование >>"
+
+#: i/skins/zwiki_plone/diffform.pt:49
+msgid "return to page"
+msgstr "вернуться на страницу"
+
+# Default: "Body text"
+#: i/skins/zwiki_plone/editform.pt:111
+msgid "label_body_text"
+msgstr "Текст"
+
+# Default: ""
+# "In a Wiki page, you use [square brackets] to create links. When you save the page, the contents\n"
+# "            of the square brackets will have a small <code>?</code> link next to it, which you click to create\n"
+# "            a new page with that name."
+#: i/skins/zwiki_plone/editform.pt:113
+msgid "help_wikibody"
+msgstr ""
+"На Wiki странице Вы используете [квадратные скобки] для создания ссылок. "
+"Когда Вы сохраняете страницу,\n"
+"содержимое квадратных скобок будет содержать маленькую ссылку в виде <code>?"
+"</code> после себя, которую\n"
+"Вы нажимаете для создания новой страницы с этим именем (введенное в "
+"квадратные скобки)."
+
+# Default: ""
+# "This wiki also supports WikiWords as a link mechanism."
+#: i/skins/zwiki_plone/editform.pt:141
+msgid "help_wikiwords"
+msgstr "Эта Wiki так же поддерживает WikiWords, в качестве механизма ссылок."
+
+# Default: "Note for the page history (optional)"
+#: i/skins/zwiki_plone/editform.pt:152
+msgid "label_note"
+msgstr "Заметка для истории страницы (необязательно)"
+
+# Default: "A short description of your changes."
+#: i/skins/zwiki_plone/editform.pt:154
+msgid "help_wikinote"
+msgstr "Короткое описание внесенных изменений."
+
+# Default: "Upload file or image (optional)"
+#: i/skins/zwiki_plone/editform.pt:176
+msgid "label_upload_contents_optional"
+msgstr "Загрузить файл или изображение (необязательно)"
+
+# Default: "Attaches a file or an image to this wiki page."
+#: i/skins/zwiki_plone/editform.pt:178
+msgid "help_wikiupload"
+msgstr "Прикрепляет файл или изображение к этой wiki странице."
+
+# Default: "Page Format"
+#: i/skins/zwiki_plone/editform.pt:196
+msgid "label_format"
+msgstr "Формат страницы"
+
+# Default: ""
+# "If you are unsure of which format to use, just select Plain\n"
+# "            Text and type the document as you usually do."
+#: i/skins/zwiki_plone/editform.pt:198
+msgid "help_format"
+msgstr ""
+"Если Вы неуверены какой формат использовать, выберите Plain\n"
+"Text и набирайте документ как обычно."
+
+#: i/skins/zwiki_plone/editform.pt:253
+msgid "Save"
+msgstr "Сохранить"
+
+# Default: ""
+# "Edit\n"
+# "        ${itemtype} \n"
+# "\n"
+# "        \"${pagename}\""
+#: i/skins/zwiki_plone/editform.pt:36 i/skins/zwiki_plone/editform.pt:48
+msgid "heading_edit_wiki_page"
+msgstr ""
+"Редактировать\n"
+"        ${itemtype} \n"
+"\n"
+"        \"${pagename}\""
+
+# Default: "A Wiki Page allows you to create richly interconnected pages."
+#: i/skins/zwiki_plone/editform.pt:52
+msgid "description_edit_wiki_page"
+msgstr "Wiki страница позволяет Вам создавать сложно соединенные страницы."
+
+# Default: "Wiki Page Details"
+#: i/skins/zwiki_plone/editform.pt:63
+msgid "legend_wiki_page_details"
+msgstr "Детали Wiki страницы"
+
+# Default: "Page name"
+#: i/skins/zwiki_plone/editform.pt:86
+msgid "label_pagename"
+msgstr "Название страницы"
+
+# Default: "(Required)"
+#: i/skins/zwiki_plone/editform.pt:88
+msgid "label_required"
+msgstr "(Обязательно)"
+
+#: i/skins/zwiki_plone/editform.pt:88
+msgid "Required"
+msgstr "Обязательно"
+
+# Default: "Note: Renaming a page in a large wiki may be slow. Other pages will be updated if possible."
+#: i/skins/zwiki_plone/editform.pt:92
+msgid "help_shortname"
+msgstr ""
+"Внимание: Переименование страницы в большой wiki может быть медленным. "
+"Остальные страницы будут обновлены\n"
+"при возможности."
+
+# Default: "Filter issues"
+#: i/skins/zwiki_plone/filterissues.pt:12
+msgid "heading_wiki_filter_issues"
+msgstr "Фильтровать задачи"
+
+# Default: "Issue tracker"
+#: i/skins/zwiki_plone/issuetracker.pt:12
+msgid "heading_wiki_issue_tracker"
+msgstr "Текущая задача"
+
+# Default: "Recent changes"
+#: i/skins/zwiki_plone/recentchanges.pt:12
+msgid "heading_wiki_recent_changes"
+msgstr "Последние элементы"
+
+# Default: "Search this wiki"
+#: i/skins/zwiki_plone/searchwiki.pt:12
+msgid "heading_wiki_search_wiki"
+msgstr "Искать в этой wiki"
+
+# Default: ""
+# "You are currently not subscribed<br />\n"
+# "                to the whole wiki."
+#: i/skins/zwiki_plone/subscribeform.pt:103
+#: i/skins/standard/subscribeform.pt:128
+msgid "subscribed_wiki_no"
+msgstr ""
+"Сейчас Вы не подписаны<br />\n"
+"                  на всю wiki."
+
+#: i/skins/zwiki_plone/subscribeform.pt:107
+#: i/skins/standard/subscribeform.pt:132
+msgid "Unsubscribe from whole wiki"
+msgstr "Отписаться от всей wiki"
+
+#: i/skins/zwiki_plone/subscribeform.pt:114
+#: i/skins/standard/subscribeform.pt:139
+msgid "Subscribe to whole wiki"
+msgstr "Подписаться на всю wiki"
+
+# Default: "You are subscribed to these other pages"
+#: i/skins/zwiki_plone/subscribeform.pt:125
+#: i/skins/standard/subscribeform.pt:150
+msgid "other_page_subscribed"
+msgstr "Вы подписаны на следующие страницы"
+
+#: i/skins/zwiki_plone/subscribeform.pt:13
+#: i/skins/standard/subscribeform.pt:38
+msgid "Mail subscription"
+msgstr "Подписка по почте"
+
+#: i/skins/zwiki_plone/subscribeform.pt:142
+#: i/skins/standard/subscribeform.pt:167
+msgid "Page subscribers"
+msgstr "Подписчики страницы"
+
+#: i/skins/zwiki_plone/subscribeform.pt:150
+#: i/skins/standard/subscribeform.pt:175
+msgid "Wiki subscribers"
+msgstr "Подписчики Wiki"
+
+# Default: ""
+# "You can subscribe to this page or to the whole wiki.\n"
+# "          Subscribers receive a copy of comments via email\n"
+# "          (but not general edits, unless enabled by the site admin).\n"
+# "          Or return to"
+#: i/skins/zwiki_plone/subscribeform.pt:35
+#: i/skins/standard/subscribeform.pt:60
+msgid "subscribe_desc"
+msgstr ""
+"Вы можете подписаться на эту страницу или wiki вцелом.\n"
+" Подписчики получают копию комментариев по почте\n"
+" (но не общие редактирования, до тех пор, пока это не будет активировано "
+"администратором).\n"
+" Или вернитесь на"
+
+#: i/skins/zwiki_plone/subscribeform.pt:49
+#: i/skins/standard/subscribeform.pt:74
+msgid "Your email address"
+msgstr "Ваш email адрес"
+
+#: i/skins/zwiki_plone/subscribeform.pt:53
+#: i/skins/standard/subscribeform.pt:78
+msgid "Change"
+msgstr "Изменить"
+
+# Default: "To subscribe, please configure your email address."
+#: i/skins/zwiki_plone/subscribeform.pt:61
+#: i/skins/standard/subscribeform.pt:86
+msgid "subscribe_no_email"
+msgstr "Для того, что бы подписаться, исправьте Ваш email адрес"
+
+# Default: ""
+# "You are currently subscribed<br />\n"
+# "                to this page."
+#: i/skins/zwiki_plone/subscribeform.pt:71
+#: i/skins/standard/subscribeform.pt:96
+msgid "subscribed_page_ok"
+msgstr ""
+"Сейчас Вы подписаны<br />\n"
+" на эту страницу."
+
+# Default: ""
+# "You are currently not subscribed<br />\n"
+# "                to this page."
+#: i/skins/zwiki_plone/subscribeform.pt:75
+#: i/skins/standard/subscribeform.pt:100
+msgid "subscribed_page_no"
+msgstr ""
+"Сейчас Вы не подписаны<br />\n"
+" на эту страницу."
+
+#: i/skins/zwiki_plone/subscribeform.pt:79
+msgid "Unsubscribe from this page"
+msgstr "Отписаться от этой страницы"
+
+#: i/skins/zwiki_plone/subscribeform.pt:86
+msgid "Subscribe to this page"
+msgstr "Подписаться на эту страницу"
+
+# Default: ""
+# "You are currently subscribed<br />\n"
+# "                to the whole wiki."
+#: i/skins/zwiki_plone/subscribeform.pt:99
+#: i/skins/standard/subscribeform.pt:124
+msgid "subscribed_wiki_ok"
+msgstr ""
+"Сейчас Вы подписаны<br />\n"
+" на всю wiki."
+
+#: i/skins/zwiki_plone/uploaded.pt:14
+msgid "File Uploads"
+msgstr "Загрузки файлов"
+
+# Default: "This page lists all uploads in this Wiki."
+#: i/skins/zwiki_plone/uploaded.pt:16
+msgid "uploads_desc"
+msgstr "Эта страница содержит все загрузки в эту wiki."
+
+#: i/skins/zwiki_plone/uploaded.pt:25
+msgid "save"
+msgstr "Сохранить"
+
+#: i/skins/zwiki_plone/uploaded.pt:25
+msgid "view"
+msgstr "Просмотр"
+
+# Default: "No files have been uploaded."
+#: i/skins/zwiki_plone/uploaded.pt:29
+msgid "no_files_uploaded"
+msgstr "Ни одного загруженного файла."
+
+# Default: "User options"
+#: i/skins/zwiki_plone/useroptions.pt:12
+msgid "heading_wiki_user_options"
+msgstr "Опции пользователя"
+
+# Default: "Wiki Navigation"
+#: i/skins/zwiki_plone/wikinav_portlet.pt:15
+msgid "box_wiki_navigation"
+msgstr "Навигация Wiki"
+
+#: i/skins/zwiki_plone/wikipage_footer.pt:16
+#: i/skins/standard/wikipage_macros.pt:396
+msgid "a subject helps clarify threads and RecentChanges"
+msgstr ""
+"тема помогает сделать более понятными поток комментариев и Последние "
+"Изменения"
+
+#: i/skins/zwiki_plone/wikipage_footer.pt:16
+#: i/skins/standard/wikipage_macros.pt:396
+msgid "subject"
+msgstr "тема"
+
+#: i/skins/zwiki_plone/wikipage_footer.pt:26
+msgid "enter comments here and click add; or, click edit"
+msgstr "Введите тут комментарий и нажмите Добавить; или нажмите Редактировать"
+
+#: i/skins/zwiki_plone/wikipage_footer.pt:41
+#: i/skins/standard/wikipage_macros.pt:442
+msgid "add-comment"
+msgstr "Добавить"
+
+#~ msgid "cancel"
+#~ msgstr "отменить"
+
+#~ msgid "reparent"
+#~ msgstr "переназначить"
+
+#~ msgid "reparent this page under the page you have entered"
+#~ msgstr "переназначить эту страницу странице, которую Вы ввели"
+
+#~ msgid "rename this page to the name you have entered, updating all links"
+#~ msgstr ""
+#~ "переименовать эту страницу в название, которое Вы ввели, обновив все "
+#~ "ссылки "
+
+#~ msgid "rename"
+#~ msgstr "переименовать"
+
+#~ msgid "delete!"
+#~ msgstr "удалить!"
+
+#~ msgid ""
+#~ "move this page to the recycle bin, and relink to the name you have entered"
+#~ msgstr ""
+#~ "переместить эту страницу в мусорную корзину и поменять ссылку на имя, "
+#~ "которое Вы ввели"
+
+#~ msgid "create"
+#~ msgstr "создать"
+
+#~ msgid "create a new subtopic of this page"
+#~ msgstr "создать новую подтему этой страницы"
