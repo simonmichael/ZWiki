@@ -4,8 +4,6 @@ import string, re, sys
 from string import split,join,find,lower,rfind,atoi,strip,lstrip
 from types import *
 
-from Products.CMFCore.utils import getToolByName
-
 from TextFormatter import TextFormatter
 from Utils import html_unquote,BLATHER,formattedTraceback,stripList
 from Defaults import AUTO_UPGRADE, PAGE_METATYPE
@@ -384,6 +382,7 @@ class SubscriberManagerMixin:
         if self.isEmailAddress(subscriber):
             return subscriber
         elif self.inCMF():
+            from Products.CMFCore.utils import getToolByName
             mtool = getToolByName(self, 'portal_membership')
             member = mtool.getMemberById(subscriber)
             if not member:
