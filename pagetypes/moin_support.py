@@ -17,13 +17,13 @@ class MoinConfig:
     pass
 
 class MoinRequest:
-    output = ''
+    output = u''
     form = None
     getText = None
     cfg = MoinConfig()
     _page_headings = {}
     def write(self, text): self.output += text
-    def __str__(self): return self.output
+    def __unicode__(self): return self.output
     def getPragma(self,a,b): return b
 
 class Parser:
@@ -903,8 +903,7 @@ class Parser:
                 self.formatter.in_p) and lastpos<len(line):
             result.append(self.formatter.paragraph(1))
         result.append(self.formatter.text(line[lastpos:]))
-        #return u''.join(result)
-        return u''.join(unicode(result))
+        return u''.join(result)
 
     def replace(self, match):
         #hit = filter(lambda g: g[1], match.groupdict().items())
@@ -1975,6 +1974,6 @@ def render_moin_markup(text):
     formatter = Formatter(req)
     formatter.setPage(MoinPage())
     Parser(text,req).format(formatter)
-    return str(req)
+    return unicode(req)
 
 #print render_moin_markup("'''strong'''")

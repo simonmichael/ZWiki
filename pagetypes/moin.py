@@ -37,6 +37,6 @@ class ZwikiMoinPageType(AbstractPageType):
         return t
 
     def renderMoinIn(self,t):
-        return render_moin_markup(t)
+        return render_moin_markup(unicode(t,'utf-8'))
 
 registerPageType(ZwikiMoinPageType)
