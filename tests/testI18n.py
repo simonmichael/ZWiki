@@ -52,15 +52,9 @@ class Tests(ZopeTestCase.ZopeTestCase):
 
     #def test_pt_i18n(self):
 
-    #def test_dtml_gettext_tag(self):
-    #    form = loadDtmlMethod('zwikiWebAdd','dtml')
-    #    try: form(REQUEST=MockRequest())
-    #    except NameError: self.fail()
-    #    except (KeyError,ParseError): pass
-
     def test_dtml_translate_tag(self):
         from DocumentTemplate.DT_Util import ParseError
-        form = loadDtmlMethod('zwikiPageAdd','dtml')
+        form = loadDtmlMethod('addwikipageform','skins/zmi')
         try: form(REQUEST=MockRequest())
         except NameError: self.fail()
         except KeyError: pass
@@ -68,7 +62,7 @@ class Tests(ZopeTestCase.ZopeTestCase):
     #def test_zmi_dtml_messages_extracted(self):
 
     def test_zmi_dtml_i18n(self):
-        form = loadDtmlMethod('zwikiPageAdd','dtml')
+        form = loadDtmlMethod('addwikipageform','skins/zmi')
         self.assert_(re.search('Add ZWiki Page',
                                form(REQUEST=MockRequest())))
         self.assert_(re.search('Add ZWiki Page IT',

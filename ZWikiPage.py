@@ -1192,7 +1192,7 @@ def sgmlAndDtmlSpansIn(text):
 
 
 # ZMI page creation form
-manage_addZWikiPageForm = DTMLFile('dtml/zwikiPageAdd', globals())
+manage_addZWikiPageForm = DTMLFile('skins/zmi/addwikipageform', globals())
 
 def manage_addZWikiPage(self, id, title='', file='', REQUEST=None,
                         submit=None):

@@ -16,7 +16,7 @@ from I18nSupport import DTMLFile
 
 
 # ZMI wiki creation form
-manage_addZWikiWebForm = DTMLFile('dtml/zwikiWebAdd', globals())
+manage_addZWikiWebForm = DTMLFile('skins/zmi/addwikiform', globals())
 
 ######################################################################
 # FUNCTION CATEGORY: wikiweb creation
