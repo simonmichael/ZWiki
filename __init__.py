@@ -3,7 +3,7 @@
 __doc__="""
 ZWiki product
 """
-__version__='0.30.0'
+__version__='0.31.0rc1'
 
 import os, re
 import Globals, OFS.Folder
