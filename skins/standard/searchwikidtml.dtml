@@ -1,12 +1,11 @@
 <p>
-  <dtml-translate domain=zwiki>Enter a word</dtml-translate>
-  or phrase and hit enter to search the entire wiki. 
-  This is the same as using the search field at top right.
+  <dtml-translate domain=zwiki>Enter a word or phrase and hit enter to search the entire wiki.</dtml-translate>
+  <dtml-translate domain=zwiki>This is the same as using the search field at top right.</dtml-translate>  
 </p>
 <p>
-  Tips: A single word works best for matching page names. 
-  Case-insensitivity and wildcards may be supported depending on your catalog configuration.
-  Leave it blank to list all pages. 
+  <dtml-translate domain=zwiki>Tips: A single word works best for matching page names.</dtml-translate>  
+  <dtml-translate domain=zwiki>Case-insensitivity and wildcards may be supported depending on your catalog configuration.</dtml-translate>  
+  <dtml-translate domain=zwiki>Leave it blank to list all pages.</dtml-translate>  
 </p>
 <dtml-comment>
   this code needs an update
@@ -16,7 +15,7 @@
   <input type="hidden" name="source" value="search">
   <div align="center">
     <input name="expr" type="text" size="30" value="<dtml-var expr>" accesskey="s">
-    <input type="submit" name="submit" value="Search">
+    <input type="submit" name="submit" value="<dtml-translate domain=zwiki>Search</dtml-translate>">
   </div>
   <p>
 <dtml-let wikiurl=wiki_url>
@@ -39,14 +38,14 @@
  titlehits="pages(Title=wildcardexpr)" 
  >
 <dtml-if titlehits>
-<p><b>Page names matching &dtml-wildcardexpr; (<dtml-var "_.len(titlehits)">):</b>
+<p><b><dtml-translate domain=zwiki>Page names matching</dtml-translate> &dtml-wildcardexpr; (<dtml-var "_.len(titlehits)">):</b>
 <br /><br />
 <dtml-in titlehits sort=Title>
 <a href="&dtml-wikiurl;/&dtml.url_quote-id;">&dtml-Title;</a><br />
 </dtml-in>
 </p>
 </dtml-if>
-<p><b>Text matching &dtml-expr; (<dtml-var "_.len(texthits)">):</b>
+<p><b><dtml-translate domain=zwiki>Text matching</dtml-translate> &dtml-expr; (<dtml-var "_.len(texthits)">):</b>
 <br /><br />
 <dtml-in texthits sort=Title>
 <dl><dt><a href="&dtml-wikiurl;/&dtml.url_quote-id;">&dtml-Title;</a></dt><dd><dtml-if expr><small><em><dtml-var "pageWithName(id).excerptAt(expr,size=500)"></em></small></dtml-if></dd></dl>
@@ -63,8 +62,8 @@
     <a href="&dtml-wikiurl;/&dtml.url_quote-id;">&dtml-Title;</a><br />
   </dtml-unless></dtml-in>
 </p>
-<p><b><dtml-var count> hits</b></p>
-<p>(no catalog or the catalog search gave an error, a brute-force search was used)</p>
+<p><b><dtml-var count> <dtml-translate domain=zwiki>hits</dtml-translate></b></p>
+<p>(<dtml-translate domain=zwiki>no catalog or the catalog search gave an error, a brute-force search was used</dtml-translate>)</p>
 </dtml-try>
 </dtml-let>
 </form>
@@ -74,7 +73,7 @@
 <form method="GET" action="&dtml-URL;">
   <div align="center">
     <input name="expr" type="text" size="30">
-    <input type="submit" name="submit" value="Search">
+    <input type="submit" name="submit" value="<dtml-translate domain=zwiki>Search</dtml-translate>">
   </div>
 </form>
 
