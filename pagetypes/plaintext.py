@@ -17,6 +17,8 @@ class ZwikiPlaintextPageType(AbstractPageType):
         return t
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):
+        if RESPONSE:
+            RESPONSE.setHeader('Content-Type', 'text/plain')
         t = page.preRendered()
         t = page.renderMidsectionIn(t,**kw)
         t = page.addSkinTo(t,**kw)

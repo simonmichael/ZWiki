@@ -17,6 +17,9 @@ class ZwikiHtmlPageType(AbstractHtmlPageType):
         return t
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):
+        if RESPONSE:
+            RESPONSE.setHeader('Content-Type', 'text/html')
+
         if page.dtmlAllowed() and page.hasDynamicContent():
             t = page.evaluatePreRenderedAsDtml(page,REQUEST,RESPONSE,**kw)
         else:

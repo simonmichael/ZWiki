@@ -84,6 +84,8 @@ class ZwikiStxPageType(AbstractHtmlPageType):
         tables, add an issue properties form if this is an issue page,
         add a subtopics listing if enabled, and add the wiki page skin.
         """
+        if RESPONSE:
+            RESPONSE.setHeader('Content-Type', 'text/html')
         if page.dtmlAllowed():
             t = page.evaluatePreRenderedAsDtml(page,REQUEST,RESPONSE,**kw)
         else:

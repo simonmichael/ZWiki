@@ -8,6 +8,7 @@ def BLATHER(t):
     import zLOG
     zLOG.LOG('ZWiki',zLOG.BLATHER,t)
 
+import re
 
 USE_PTS=1
 
@@ -33,8 +34,12 @@ try:
             def __call__(self, ustr, default=None):
                 REQUEST = get_request()
                 if REQUEST:
-                    REQUEST.RESPONSE.setHeader( 
-                        'Content-Type','text/html; charset=utf-8')
+                    mycontent = REQUEST.RESPONSE.getHeader('content-type')
+                    if mycontent == None:
+                        mycontent = 'text/html'
+                    if not re.search(r'charset', mycontent):
+                        REQUEST.RESPONSE.setHeader( 
+                            'Content-Type',  mycontent + '; charset=utf-8')
                     return MessageIDFactory.__call__(self,ustr,default)
                 else:
                     return ustr

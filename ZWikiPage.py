@@ -225,15 +225,6 @@ class ZWikiPage(
         Render this zwiki page, also upgrading it on the fly if needed.
         """
         if AUTO_UPGRADE: self.upgrade(REQUEST)
-        # why do we need this ?
-        #if self.supportsCMF() and self.inCMF():
-        #    return CMFAwareness.__call__(self,client,REQUEST,RESPONSE,**kw)
-        #else:
-        if RESPONSE:
-            #XXX problem ? this is set by all templates
-            RESPONSE.setHeader('Content-Type', 'text/html') 
-            #RESPONSE.setHeader('Last-Modified', rfc1123_date(self._p_mtime)) 
-            #causes browser caching problems ? 
         rendered = self.render(client,REQUEST,RESPONSE,**kw)
         return rendered
 
@@ -242,7 +233,10 @@ class ZWikiPage(
         Render this zwiki page according to it's page_type.
         """
         if not self.preRendered(): self.preRender()
-        return self.pageType().render(self, REQUEST, RESPONSE, **kw)
+        retval=self.pageType().render(self, REQUEST, RESPONSE, **kw)
+        if(hasattr(self, 'zwiki_content_type') and RESPONSE):
+            RESPONSE.setHeader('Content-Type', getattr(self, 'zwiki_content_type'))
+        return retval
 
     def preRender(self,clear_cache=0):
         """

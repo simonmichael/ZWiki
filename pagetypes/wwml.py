@@ -25,6 +25,8 @@ class ZwikiWwmlPageType(AbstractPageType):
         return t
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):
+        if RESPONSE:
+            RESPONSE.setHeader('Content-Type', 'text/html')
         t = page.preRendered()
         t = page.renderMarkedLinksIn(t)
         if page.hasFitTests(): t = page.runFitTestsIn(t)
