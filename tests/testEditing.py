@@ -48,12 +48,10 @@ class EditingTests(ZopeTestCase.ZopeTestCase):
 
     def test_manage_addZWikiPage(self):
         from Products.ZWiki.ZWikiPage import manage_addZWikiPage
-        from OFS.Folder import Folder
-        f = Folder()
-        manage_addZWikiPage(f,'ZmiTestPage')
-        assert hasattr(f,'ZmiTestPage')
+        manage_addZWikiPage(self.folder,'ZmiTestPage')
+        assert hasattr(self.folder,'ZmiTestPage')
         # the wiki outline object is also updated
-        self.assert_(f.ZmiTestPage.wikiOutline().hasNode('ZmiTestPage'))
+        self.assert_(self.folder.ZmiTestPage.wikiOutline().hasNode('ZmiTestPage'))
 
     def test_edit(self):
         p = self.page
