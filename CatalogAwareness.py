@@ -1,7 +1,5 @@
 # catalog awareness for zwiki pages
-# based on Casey Duncan's DTMLDocumentExt 0.1
-#
-# todo: may want to make these all safe against Catalog errors
+# originally based on Casey Duncan's DTMLDocumentExt 0.1
 
 import string
 
@@ -9,14 +7,13 @@ from AccessControl import getSecurityManager, ClassSecurityInfo
 from Globals import InitializeClass
 
 import Permissions
-from Utils import BLATHER
+from Utils import BLATHER,formattedTraceback
 
 
 class CatalogAwareness:
     """
-    Holds most of ZWikiPage's catalog awareness code.
-    Zope's CatalogAwareness didn't work for me and this one
-    is a little more flexible or at least familiar.
+    Holds most of ZWikiPage's catalog awareness code.  Similar to Zope's
+    or CMF's catalog awareness with a little extra behaviour.
     """
     security = ClassSecurityInfo()
 
@@ -92,21 +89,6 @@ class CatalogAwareness:
         if self.hasCatalog(): return self.catalog()(**kw)
         else: return None
 
-    def updateCatalog(self):
-        """
-        Update this page's catalog entry if needed, and log problems.
-
-        XXX todo: also, make it easy to update individual indexes
-        """
-        try: self.index_object()
-        except:
-            # XXX should show a traceback 
-            BLATHER('failed to index '+self.id())
-            #what is this retry cruft
-            #BLATHER('failed to index '+p.id()+', trying reindex')
-            #try: p.reindex_object()
-            #except: BLATHER('failed to reindex '+p.id()+', giving up')
-
     def url(self):
         """Return the absolute object path"""
         return string.join(self.getPhysicalPath(),'/')
@@ -114,30 +96,30 @@ class CatalogAwareness:
     getPath = url
 
     security.declareProtected(Permissions.View, 'index_object')
-    def index_object(self,log=1):
-        """A common method to allow Findables to index themselves."""
-        if (self.hasCatalog() and self.isCatalogable()):
-            if log: BLATHER('indexing',self.url(),'in',self.catalog().getId())
-            #BLATHER(self.id(),"'s last_edit_time is",self.last_edit_time)
-            self.catalog().catalog_object(self, self.url())
-            self.is_indexed_ = 1
-            #BLATHER('indexing '+self.id()+'done')
+    def index_object(self,idxs=[],log=1):
+        """Index this page in the wiki's catalog, if any, and log problems.
+
+        Updates only certain indexes, if specified. 
+        """
+        if self.hasCatalog() and self.isCatalogable():
+            if log:
+                BLATHER('indexing',self.url(),'in',self.catalog().getId())
+            try:
+                self.catalog().catalog_object(self,self.url(),idxs,update_metadata=1)
+            except:
+                BLATHER('failed to index',self.id(),'\n',formattedTraceback())
 
     def unindex_object(self):
-        """A common method to allow Findables to unindex themselves."""
-        #BLATHER('unindexing '+self.id())
+        """Remove this page from the wiki's catalog, if any."""
         if self.hasCatalog():
-            self.catalog().uncatalog_object(self.url())
-            self.is_indexed_ = 0
+            self.catalog().unindexObject(self)
 
-    def reindex_object(self):
-        """Reindex the object in the Catalog"""
-        if getattr(self, 'is_indexed_', 0):
-            self.unindex_object()
-        self.index_object()
+    #XXX backwards compatibility
+    updateCatalog = reindex_object = index_object 
+
 
 InitializeClass(CatalogAwareness)
 
 
-# enable catalog awareness for common ZMI operations -
-# had to do this in __init__ because of an import loop ?
+# enable catalog awareness for common ZMI operations - had to be done in
+# __init__ because of an import loop

@@ -186,7 +186,7 @@ class EditingSupport:
         self.setLastEditor(REQUEST)
         self.setLastLog(subject_heading)
         if self.autoSubscriptionEnabled(): self.subscribeThisUser(REQUEST)
-        self.updateCatalog()
+        self.index_object()
 
         # send out mail to any subscribers
         # hack the username in there for usernameFrom
@@ -274,7 +274,7 @@ class EditingSupport:
         p.handleRename(title,leaveplaceholder,updatebacklinks,REQUEST,log)
         #if self.usingRegulations(): p.handleSetRegulations(REQUEST)
 
-        p.updateCatalog()
+        p.index_object()
 
         # tell browser to reload the page (or redirect elsewhere)
         if REQUEST:
@@ -938,7 +938,7 @@ class EditingSupport:
         self.title = title
         self.setText(data,REQUEST)
         self.setLastEditor(REQUEST)
-        self.reindex_object()
+        self.index_object()
         if REQUEST:
             message="Content changed."
             return self.manage_main(self,REQUEST,manage_tabs_message=message)

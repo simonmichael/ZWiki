@@ -86,7 +86,7 @@ class RatingSupport:
                 votes[username] = vote
                 BLATHER("%s: recorded %s vote for %s" % (self.pageName(),vote,username))
             self.setVotes(votes)
-            self.reindex_object() # XXX only need update votes fields
+            self.index_object() # XXX only need update votes fields
             if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1']) #+'#ratingform')
 
     security.declareProtected(Permissions.Rate, 'rate')

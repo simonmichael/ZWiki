@@ -224,7 +224,7 @@ class TrackerSupport:
                                       severity=severity,
                                       status=status
                                       )
-        self.reindex_object()
+        self.index_object()
 
     security.declareProtected(Permissions.Add, 'createNextIssue')
     def createNextIssue(self,name='',text='',category='',severity='',status='',
@@ -299,7 +299,7 @@ class TrackerSupport:
         log = log or 'property change'
         self.comment(text=comment, subject_heading=log, REQUEST=REQUEST)
         self.setLastEditor(REQUEST)
-        self.reindex_object()
+        self.index_object()
         if REQUEST: REQUEST.RESPONSE.redirect(self.page_url())
 
     def category_index(self):
