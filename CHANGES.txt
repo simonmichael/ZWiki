@@ -18,22 +18,20 @@ Zwiki 0.32.0 2004/07/05
 
       General
 
-        * don't let any failure to update links stop a rename
-
-        * allow python scripts in wiki templates (Bob McElrath)
-
-        * move page type upgrades to pagetypes, provide registerPageTypeUpgrade()
-
-        * page types cleanup - moved to separate modules in pagetypes/,
+        * page types refactoring - moved to separate modules in pagetypes/,
 	new short ids, pluggable API docs
 
-        * simplify CMF/Plone page view url
+        * simplify CMF/Plone rendering and page view url
 
         * fix "some permissions had errors" message (IssueNo0842)
+
+        * don't let any failure to update links stop a rename
 
         * don't let an empty allowed_page_types property break page creation
 
       Skins and content
+
+        * allow python scripts in wiki templates (Bob McElrath)
 
         * tighten up page management form layout and add a subtopic creation button
 
