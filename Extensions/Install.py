@@ -101,6 +101,20 @@ def install(self):
         skinstool.addSkinSelection(skin, path)
         out.write("Added 'zwiki_plone' to %s skin\n" % skin)
 
+    # And, we'll add an optional new skin, 'Zwiki', which offers Zwiki's
+    # standard templates within CMF/Plone
+    def hasSkin(s): return skinstool.getSkinPath(s) != s
+    if not hasSkin('Zwiki'):
+        path = (
+            hasSkin('Plone Default') and skinstool.getSkinPath('Plone Default')
+            or hasSkin('CMF Default') and skinstool.getSkinPath('CMF Default')
+            or None)
+        if path: # just in case
+            path = map(string.strip, string.split(path,','))
+            path.insert(path.index('zwiki_plone'),'standard')
+            path = string.join(path, ', ')
+            skinstool.addSkinSelection('Zwiki',path)
+
     # remove workflow from Wiki pages
     cbt = workflowtool._chains_by_type
     if cbt is None:

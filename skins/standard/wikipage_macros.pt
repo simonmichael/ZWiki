@@ -87,10 +87,10 @@
 <a tal:attributes="href here/uploadsUrl" accesskey="" tal:condition="python:0 #here/uploadsUrl"></a>
 <a tal:attributes="href here/preferencesUrl" accesskey="o"></a>
 <a tal:attributes="href here/helpUrl" accesskey="h" tal:condition="here/helpUrl"></a>
-<a tal:attributes="href python:here.firstPageUrl()+'/setskin?skin=plone'" accesskey="+" tal:condition="here/inCMF"></a>
-<a tal:attributes="href python:here.firstPageUrl()+'/setskin?skin=full'" accesskey="="></a>
-<a tal:attributes="href python:here.firstPageUrl()+'/setskin?skin=simple'" accesskey="_"></a>
-<a tal:attributes="href python:here.firstPageUrl()+'/setskin?skin=minimal'" accesskey="-"></a>
+<a tal:attributes="href python:here.pageUrl()+'/setskin?skin=plone'" accesskey="+" tal:condition="here/inCMF"></a>
+<a tal:attributes="href python:here.pageUrl()+'/setskin?skin=full'" accesskey="="></a>
+<a tal:attributes="href python:here.pageUrl()+'/setskin?skin=simple'" accesskey="_"></a>
+<a tal:attributes="href python:here.pageUrl()+'/setskin?skin=minimal'" accesskey="-"></a>
 <a tal:attributes="href here/pageUrl" accesskey="v"></a>
 <a tal:attributes="href string:${here/pageUrl}/subscribeform" accesskey="m"></a>
 <a tal:attributes="href string:${here/pageUrl}/backlinks" accesskey="b"></a>

@@ -273,7 +273,8 @@ class UIUtils:
         if not self.inCMF(): return
         portal_skins = self.portal_url.getPortalObject().portal_skins
         portal_membership = self.portal_url.getPortalObject().portal_membership
-        if not portal_skins.getSkinPath(skin): return
+        def hasSkin(s): return portal_skins.getSkinPath(s) != s
+        if not hasSkin(skin): return
         REQUEST.form['portal_skin'] = skin
         portal_membership.getAuthenticatedMember().setProperties(REQUEST)
         portal_skins.updateSkinCookie()
