@@ -158,7 +158,8 @@ class TrackerSupport:
     
     security.declareProtected(Permissions.Add, 'createIssue')
     def createIssue(self, pageid='', text='', title=None,
-                    category='', severity='', status='', REQUEST=None):
+                    category='', severity='', status='', REQUEST=None,
+                    sendmail=1):
         """
         Convenience method for creating an issue page.
 
@@ -176,7 +177,8 @@ class TrackerSupport:
         # XXX hardcoded.. cf trackerUrl
         if self.pageWithName('IssueTracker'): parents = ['IssueTracker']
         else: parents = []
-        self.create(pageid,text=text,REQUEST=REQUEST,parents=parents)
+        self.create(pageid,text=text,REQUEST=REQUEST,parents=parents,
+                    sendmail=sendmail)
         issue = self.pageWithName(pageid)
         issue.manage_addProperty('category','issue_categories','selection')
         issue.manage_addProperty('severity','issue_severities','selection')
@@ -190,9 +192,11 @@ class TrackerSupport:
 
     security.declareProtected(Permissions.Add, 'createNextIssue')
     def createNextIssue(self,name='',text='',category='',severity='',status='',
-                        REQUEST=None):
+                        REQUEST=None,sendmail=1):
         """
         Create a new issue page, using the next available issue number.
+
+        Returns the page name that was used.
         """
         issues = self.pages(isIssue=1,sort_on='id')
         if issues:
@@ -201,10 +205,9 @@ class TrackerSupport:
         else:
             newnumber = 1
         pagename=self.pageNameFromIssueNumberAndName(newnumber,name)
-        return self.createIssue(pagename, text, None, 
-                                category, severity, status, REQUEST)
-    
-            
+        self.createIssue(pagename, text, None, 
+                         category, severity, status, REQUEST,sendmail)
+        return pagename
 
     security.declareProtected(Permissions.Edit, 'changeIssueProperties')
     def changeIssueProperties(self, name=None, category=None, severity=None, 
