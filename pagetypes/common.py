@@ -129,32 +129,7 @@ class AbstractHtmlPageType(AbstractPageType):
 
     def renderCitationsIn(self, page, t):
         """
-        Apply HTML blockquote formatting to > citations in text.
-
-        XXX needs fixing. Misses terminating /blockquote and can mess up
-        the rest of the page.
-
-        If we had doctest again.. but see testcommon.py instead.
-
-        >>> test = lambda t:self.renderCitationsIn(self,t)
-        >>> 
-        >>> test('a')                   # no citations
-        'a'
-        >>> 
-        >>> test('> a\n')               # single level of citation
-        '\n<blockquote type="cite">\n\na\n\n</blockquote>\n'
-        >>> 
-        >>> test('> a')                 # no terminating newline
-        '\n<blockquote type="cite">\n\n> a</blockquote>'
-        '\n<blockquote type="cite">\n\n> a' # ACTUAL
-        >>> 
-        >>> test('>> a\n> b\n')         # double citation followed by single
-        '\n<blockquote type="cite">\n\n\n<blockquote type="cite">\n\na\n\n</blockquote>\nb\n\n</blockquote>\n'
-        >>>         
-        >>> test('>> a\n)               # double with no following single
-        '\n<blockquote type="cite">\n\n\n<blockquote type="cite">\n\na</blockquote>\n</blockquote>\n'
-        '\n<blockquote type="cite">\n\n\n<blockquote type="cite">\n\n> a\n\n</blockquote>\n' # ACTUAL
-        
+        Apply HTML blockquote formatting to lines beginning with > in text.
         """
         inblock = 0
         blocklines = []
