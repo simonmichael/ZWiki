@@ -1,0 +1,370 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ZWiki-0-30-0\n"
+"POT-Creation-Date: Sun Apr 25 15:53:19 2004\n"
+"PO-Revision-Date: 2004-05-01 01:19+0800\n"
+"Last-Translator: T.C. Chou <tcchou-at-tcchou.org>\n"
+"Language-Team: <zwiki@zwiki.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/translation_files/extract.py\n"
+"Language-code: zh_TW\n"
+"Language-name: 繁體中文\n"
+"Preferred-encodings: utf-8 big5\n"
+"Domain: zwiki\n"
+
+#: i/Admin.py:102
+msgid "You are not authorized to upgrade all pages."
+msgstr "您沒有權力升級所有頁面."
+
+#: i/Admin.py:103
+msgid "(folder -> Manage properties)"
+msgstr "(目錄 -> 管理屬性)"
+
+#: i/Editing.py:290
+msgid ""
+"You are not authorized to reparent or change subtopics links on this ZWiki "
+"Page."
+msgstr "您沒有權力在這頁更動父頁或子項連接."
+
+#: i/Editing.py:312
+msgid "You are not authorized to change this ZWiki Page's type."
+msgstr "您沒有權力在這頁變更型態."
+
+#: i/Editing.py:345 i/Editing.py:368
+msgid "You are not authorized to edit this ZWiki Page."
+msgstr "您沒有權力修改此頁."
+
+#: i/Editing.py:371 i/Editing.py:412
+msgid "You are not authorized to delete this ZWiki Page."
+msgstr "您沒有權力刪除此頁."
+
+#: i/Editing.py:478
+msgid "You are not authorized to rename this ZWiki Page."
+msgstr "您沒有權力變更此頁的名稱."
+
+#: i/Editing.py:522
+msgid ""
+"This page was renamed to %s. You can delete this one if no longer needed.\n"
+msgstr "這頁已被改名為 %s. 如果此頁不需要, 您可以刪除."
+
+#: i/Editing.py:618
+msgid "You are not authorized to upload files here."
+msgstr "您沒有權力在這裡上傳檔案."
+
+#: i/Editing.py:622
+msgid "You are not authorized to add a link on this ZWiki Page."
+msgstr "您沒有權力在此頁增加連接."
+
+#: i/UI.py:488
+msgid "Edit conflict"
+msgstr "修改衝突"
+
+#: i/UI.py:508
+msgid "Someone else has saved this page while you were editing"
+msgstr "當您修改時, 已經有人存入新的頁面"
+
+#: i/UI.py:509
+msgid "To resolve the conflict, do this"
+msgstr "要解決衝突問題, 請按以下步驟"
+
+#: i/UI.py:510
+msgid "Click your browser's back button"
+msgstr "點選您瀏覽器的上ㄧ頁按鈕(Back)"
+
+#: i/UI.py:511
+msgid "Copy your recent edits to the clipboard"
+msgstr "複製您最近修改的內容到剪貼簿"
+
+#: i/UI.py:512
+msgid "Click your browser's refresh button"
+msgstr "點選您瀏覽器更新頁面按鈕(Refresh)"
+
+#: i/UI.py:513
+msgid "Paste in your edits again, being mindful of the latest changes"
+msgstr "貼上您所修改的內容, 在最新變更的內容裡頭"
+
+#: i/UI.py:514
+msgid "Click the Change button again"
+msgstr "再按一次變更按鈕(Change)"
+
+#: i/UI.py:515 i/skins/standard/editform.pt:197
+msgid "or"
+msgstr "或"
+
+#: i/UI.py:516
+msgid "To discard your changes and start again, click OK"
+msgstr "放棄所有您變更的內容, 並重新再讀一次, 點選確認按鈕(OK)"
+
+#: i/UI.py:525
+msgid "Page is locked"
+msgstr "頁面被鎖"
+
+#: i/UI.py:536
+msgid ""
+"\n"
+"            This page has a webDAV lock. Someone is probably editing it\n"
+"            with an external editor.  You'll need to wait until they've\n"
+"            finished and then try again.  If you've just made some changes,\n"
+"            you may want to back up and copy your version of the text for\n"
+"            reference.\n"
+"            "
+msgstr ""
+"\n"
+"            此頁已被 webDAV 鎖住. 某人或許正在用外部編輯器\n"
+"            修改這一頁  您必須等到他們完成修改工作, 之後再\n"
+"            試試看.  如果您已經修改一些內容, 您或許得備份下\n"
+"            來, 以文字的方式拷貝, 好做為重新修改的參考.\n"
+"            \n"
+"            "
+
+#: i/UI.py:543
+msgid "To discard your changes and try again, click OK."
+msgstr "放棄您變更的內容, 並且再試一次, 點選確認按鈕(OK)."
+
+#: i/skins/standard/backlinks.pt:101
+msgid "Reparent"
+msgstr "變更父頁面"
+
+# Default: ""
+# "You can change this page's parent(s) to place it within the overall page\n"
+# "hierarchy.  Check the boxes or enter a new page name and click Reparent.\n"
+# "A single parent is usually sufficient."
+#: i/skins/standard/backlinks.pt:103
+msgid "backlinks_reparent_help"
+msgstr ""
+"您可變更這頁往上的連結, 安排在所有頁面階層裡頭.\\n\n"
+"做好檢查或輸入一頁面名稱, 並且按下『變更父頁面』.\\n\n"
+"只要一個父頁面通常就夠了."
+
+#: i/skins/standard/backlinks.pt:29
+msgid "Backlinks for"
+msgstr "追溯連結為"
+
+#: i/skins/standard/backlinks.pt:46
+msgid "is a top-level topic."
+msgstr "是最頂層的主題."
+
+#: i/skins/standard/backlinks.pt:47
+msgid "is a subtopic of:"
+msgstr "子主題上層為:"
+
+#: i/skins/standard/backlinks.pt:69
+msgid "Here are the pages which link to it:"
+msgstr "底下是相關連結到的頁面:"
+
+#: i/skins/standard/backlinks.pt:99
+msgid "Other parent"
+msgstr "其它父頁面"
+
+#: i/skins/standard/badtemplate.pt:12
+msgid ""
+"There was a problem with one of this wiki's skin templates. There may be an "
+"object with a skin template ID that is not a Page Template or DTML Method, "
+"or the template may be missing."
+msgstr "這 Wiki 的風格 (skin) 樣板有些問題. 也許對映到的風格樣板, 並不是 ZPT 或是 DTML Method, 或者樣版根本不存在. 請檢查看看. "
+
+#: i/skins/standard/contentspage.pt:29
+msgid "Contents"
+msgstr "內容"
+
+#: i/skins/standard/contentspage.pt:40
+msgid "Singletons"
+msgstr "單獨存在頁面"
+
+#: i/skins/standard/diffform.pt:31
+msgid "Diffs for"
+msgstr "不同於"
+
+#: i/skins/standard/diffform.pt:46
+msgid "full history"
+msgstr "完整歷史"
+
+#: i/skins/standard/diffform.pt:48
+msgid "<< previous edit"
+msgstr "<< 上一版"
+
+#: i/skins/standard/diffform.pt:50
+msgid "next edit >>"
+msgstr "下一版 >>"
+
+#: i/skins/standard/diffform.pt:52
+msgid "cancel"
+msgstr "取消"
+
+#: i/skins/standard/editform.pt:139
+msgid "Optional change note"
+msgstr "變更註記(選項)"
+
+#: i/skins/standard/editform.pt:157
+msgid "Upload a file or image"
+msgstr "上傳檔案或圖檔"
+
+#: i/skins/standard/editform.pt:168
+msgid "Show subtopics on this page & below ?"
+msgstr "呈現子主題在這頁及其底下的頁面嗎?"
+
+#: i/skins/standard/editform.pt:174
+msgid "default"
+msgstr "預設"
+
+#: i/skins/standard/editform.pt:179
+msgid "never"
+msgstr "永不"
+
+#: i/skins/standard/editform.pt:184
+msgid "always"
+msgstr "總是"
+
+#: i/skins/standard/editform.pt:191
+msgid "For editing help, see"
+msgstr "相關編輯說明, 請參考"
+
+# Default: "Page name"
+#: i/skins/standard/editform.pt:69
+msgid "Page name"
+msgstr "頁面名稱"
+
+#: i/skins/standard/editform.pt:79
+msgid "type"
+msgstr "型態"
+
+# Default: "Body text"
+#: i/skins/zwiki_plone/editform.pt:117
+msgid "label_body_text"
+msgstr "主體內容"
+
+# Default: ""
+# "In a Wiki page, you use [square brackets] to create links. When you save the page, the contents\n"
+# "            of the square brackets will have a small <code>?</code> link next to it, which you click to create\n"
+# "            a new page with that name."
+#: i/skins/zwiki_plone/editform.pt:119 i/skins/zwiki_plone/editform.pt:147
+msgid "help_wikibody"
+msgstr ""
+"在快紀頁面中, 您可用 [方括號] 建立連接. 當您儲存頁面時, 方括號裡頭的\n"
+"            名稱將會跟隨一個小小的 <code>?</code> 連接. 當您點選時, 則依\n"
+"            該名稱建立一新頁面."
+
+# Default: "Note for the page history (optional)"
+#: i/skins/zwiki_plone/editform.pt:158
+msgid "label_note"
+msgstr "頁面歷史的註釋說明(選擇性項目)"
+
+# Default: "A short description of your changes."
+#: i/skins/zwiki_plone/editform.pt:160
+msgid "help_wikinote"
+msgstr "簡短描述您的變更."
+
+# Default: "Upload file or image (optional)"
+#: i/skins/zwiki_plone/editform.pt:182
+msgid "label_upload_contents_optional"
+msgstr "上傳檔案或是圖檔(選擇性項目)"
+
+# Default: "Attaches a file or an image to this wiki page."
+#: i/skins/zwiki_plone/editform.pt:184
+msgid "help_wikiupload"
+msgstr "在此頁加上一個附檔或是一個圖檔."
+
+# Default: "Page Format"
+#: i/skins/zwiki_plone/editform.pt:202
+msgid "label_format"
+msgstr "頁面格式"
+
+# Default: ""
+# "If you are unsure of which format to use, just select Plain\n"
+# "            Text and type the document as you usually do."
+#: i/skins/zwiki_plone/editform.pt:204
+msgid "help_format"
+msgstr ""
+"如果您不確定要使用何種格式, 就選 Plain Text\n"
+"             , 並且按照一般方式輸入您的文件."
+
+# Default: ""
+#: i/skins/zwiki_plone/editform.pt:236
+msgid "pagetype"
+msgstr ""
+
+#: i/skins/zwiki_plone/editform.pt:251
+msgid "Save"
+msgstr "儲存"
+
+# Default: ""
+# "Edit\n"
+# "        ${itemtype} \n"
+# "\n"
+# "        \"${pagename}\""
+#: i/skins/zwiki_plone/editform.pt:42 i/skins/zwiki_plone/editform.pt:54
+msgid "heading_edit_wiki_page"
+msgstr ""
+"修改\n"
+"        ${itemtype} \n"
+"\n"
+"        \"${pagename}\""
+
+# Default: "A Wiki Page allows you to create richly interconnected pages."
+#: i/skins/zwiki_plone/editform.pt:58
+msgid "description_edit_wiki_page"
+msgstr "一快紀頁面准許您建立許多的互連頁面."
+
+# Default: "Wiki Page Details"
+#: i/skins/zwiki_plone/editform.pt:69
+msgid "legend_wiki_page_details"
+msgstr "快紀頁面細項"
+
+# Default: "Page name"
+#: i/skins/zwiki_plone/editform.pt:92
+msgid "label_pagename"
+msgstr "頁面名稱"
+
+# Default: "(Required)"
+#: i/skins/zwiki_plone/editform.pt:94
+msgid "label_required"
+msgstr "(必須)"
+
+#: i/skins/zwiki_plone/editform.pt:94
+msgid "Required"
+msgstr "必須"
+
+# Default: "Note: Renaming a page in a large wiki may be slow. Other pages will be updated if possible."
+#: i/skins/zwiki_plone/editform.pt:98
+msgid "help_shortname"
+msgstr ""
+"注意: 在一個有很多內容的快紀, 變更名稱將會非常慢. 因為其他頁面有可能都需要更"
+"新."
+
+# Default: "Filter issues"
+#: i/skins/zwiki_plone/filterissues.pt:12
+msgid "heading_wiki_filter_issues"
+msgstr "過濾事例"
+
+# Default: "Issue tracker"
+#: i/skins/zwiki_plone/issuetracker.pt:12
+msgid "heading_wiki_issue_tracker"
+msgstr "事例追蹤"
+
+# Default: "Recent changes"
+#: i/skins/zwiki_plone/recentchanges.pt:12
+msgid "heading_wiki_recent_changes"
+msgstr "最近變更"
+
+# Default: "Search this wiki"
+#: i/skins/zwiki_plone/searchwiki.pt:12
+msgid "heading_wiki_search_wiki"
+msgstr "搜尋快紀"
+
+# Default: "User options"
+#: i/skins/zwiki_plone/useroptions.pt:12
+msgid "heading_wiki_user_options"
+msgstr "用戶選項"
+
+# Default: "Wiki Navigation"
+#: i/skins/zwiki_plone/wikinav_portlet.pt:15
+msgid "box_wiki_navigation"
+msgstr "快紀瀏覽"
+
+#~ msgid "You are not authorized to comment on this ZWiki Page."
+#~ msgstr "您沒有權力在這頁加上建議."
+
+#~ msgid "You are not authorized to add ZWiki Pages here."
+#~ msgstr "您沒有權力在這頁增加新的 ZWiki 頁面."
