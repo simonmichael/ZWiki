@@ -411,8 +411,8 @@ class SubtopicsPropertyMixin:
         - REQUEST
         - the current page
         - our primary ancestor pages, all the way to the top,
-          returning the first one we find.
-        and default to true if it's not found in any of those places.
+        and return the first one we find,
+        or default to true if it's not found in any of those places.
         """
         prop = 'show_subtopics'
         if getattr(self.folder(),prop,0):
