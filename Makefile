@@ -58,7 +58,7 @@ epydoc2:
 # remember: 1. merge source files 2. make pot 3. replace po files 4. make po
 # using zope 3's i18nextract.py with zopewiki/ZopeInternationalization patches
 
-LANGUAGES=en es fr-CA fr ga it zh-TW pt-BR zh-CN pl nl de hu fi
+LANGUAGES=en es fr-CA fr ga it zh-TW pt-BR zh-CN pl nl de hu fi he
 ZOPE3SRC=/usr/local/src/Zope3/src
 EXTRACT=PYTHONPATH=$(ZOPE3SRC) python /usr/local/src/Zope3/utilities/i18nextract.py
 
@@ -113,11 +113,11 @@ gtest:
 	  python /zope/test.py -m --libdir .
 
 # a single test module in one of the tests directories
-test%plugin:
+testpl%:
 	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope1 \
 	  python plugins/tests/test$*.py
 
-test%pagetype:
+testpt%:
 	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope1 \
 	  python pagetypes/tests/test$*.py
 
@@ -163,6 +163,9 @@ pull-lele:
 
 pull-bob: 
 	darcs pull --interactive -v http://bob.mcelrath.org/darcs/zwiki
+
+pull-bobtest: 
+	darcs pull --interactive -v http://bob.mcelrath.org/darcs/zwiki-testing
 
 pull-bill: 
 	darcs pull --interactive -v http://page.axiom-developer.org/repository/ZWiki
