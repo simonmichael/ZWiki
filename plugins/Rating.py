@@ -128,8 +128,9 @@ class RatingSupport:
         """
         if self.hasVotes():
             #return sum(self.votes().values())/self.voteCount() # what was wrong here
-            return reduce(lambda a,b:int(a)+int(b),
-                          self.votes().values())/self.voteCount()
+            return int(round(
+                float(reduce(lambda a,b:int(a)+int(b), self.votes().values()))\
+                / self.voteCount()))
         else:
             return 1
 
