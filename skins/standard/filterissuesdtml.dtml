@@ -12,10 +12,8 @@
  single_category="((_.len(category)==1) and category[0]) or ''"
  single_status="((_.len(status)==1) and status[0]) or ''"
  >
-<dtml-translate domain=zwiki>More advanced</dtml-translate> 
-<a href="&dtml-trackerUrl;"><dtml-translate domain=zwiki>issue tracker</dtml-translate></a> 
-<dtml-translate domain=zwiki>search options</dtml-translate>.
-<p>
+<dtml-translate domain=zwiki>More advanced</dtml-translate> <a href="&dtml-trackerUrl;"><dtml-translate domain=zwiki>issue tracker</dtml-translate></a><dtml-translate domain=zwiki>search options</dtml-translate>.
+
 <table border="0" cellpadding="0" cellspacing="0">
 <tr valign="top">
 <td>
@@ -38,7 +36,7 @@
 <dtml-let bold="cat_sequence_item in category and stat_sequence_item in status">
 <dtml-if bold><b></dtml-if>
 <a href="&dtml-URL;?category:list=&dtml.url_quote-cat_sequence_item;&status:list=&dtml.url_quote-stat_sequence_item;&sort_on=severity_index"
-><dtml-var "_.len(pages(isIssue=1,category=cat_sequence_item,status=stat_sequence_item))"
+><dtml-var "_.len(pages(isIssue=1,category=cat_sequence_item,status=stat_sequence_item,severity=severity or ''))"
 ></a>
 <dtml-if bold></b></dtml-if>
 </dtml-let>
@@ -48,7 +46,7 @@
 <dtml-let bold="category and (cat_sequence_item in category) and not status">
 <dtml-if bold><b></dtml-if>
 <a href="&dtml-URL;?category:list=&dtml.url_quote-cat_sequence_item;&sort_on=severity_index"
-><dtml-var "_.len(pages(isIssue=1,category=cat_sequence_item))"
+><dtml-var "_.len(pages(isIssue=1,category=cat_sequence_item,severity=severity or ''))"
 ></a>
 <dtml-if bold></b></dtml-if>
 </dtml-let>
@@ -62,7 +60,7 @@
 <dtml-let bold="status and (stat_sequence_item in status) and not category">
 <dtml-if bold><b></dtml-if>
 <a href="&dtml-URL;?status:list=&dtml.url_quote-stat_sequence_item;&sort_on=severity_index"
-><dtml-var "_.len(pages(isIssue=1,status=stat_sequence_item))"
+><dtml-var "_.len(pages(isIssue=1,status=stat_sequence_item,severity=severity or ''))"
 ></a>
 <dtml-if bold></b></dtml-if>
 </dtml-let>
@@ -76,7 +74,7 @@
            _.len(status)==_.len(issue_statuses))">
 <dtml-if bold><b></dtml-if>
 <a href="&dtml-URL;?titlesearch=&sort_on=severity_index"
-><dtml-var "_.len(pages(isIssue=1))"
+><dtml-var "_.len(pages(isIssue=1,severity=severity or ''))"
 ></a>
 <dtml-if bold></b></dtml-if>
 </dtml-let>
@@ -148,7 +146,7 @@
 </td>
 </tr>
 </table>
-<p>
+
  <!-- issue search results ------------------------- -->
  <a name="issues" />
  <dtml-comment>dtml madness</dtml-comment>
