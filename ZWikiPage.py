@@ -356,16 +356,19 @@ class ZWikiPage(
 
     security.declareProtected(Permissions.View, 'dtmlAllowed')
     def dtmlAllowed(self): return (
+        """Is embedded DTML permitted on this page ?"""
         getattr(self,'allow_dtml',0) and
         not hasattr(self,'no_dtml')
         )
 
     security.declareProtected(Permissions.View, 'supportsEpoz')
     def supportsEpoz(self):
+        """Is Epoz editing available for this page ?"""
         return self.epozInstalled() and self.pageType().supportsEpoz()
 
     security.declareProtected(Permissions.View, 'epozInstalled')
     def epozInstalled(self):
+        """Is Epoz installed ?"""
         return hasattr(self,'Epoz')
 
     ######################################################################
