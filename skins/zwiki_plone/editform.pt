@@ -256,6 +256,13 @@ UI.py:editform() calls us with these options:
 
         <div class="formControls" tal:define="process_creation request/process_creation|nothing;">
           <input class="context" 
+                 type="submit" 
+                 value="Cancel" 
+                 title="cancel this edit and return to the page"
+                 i18n:attributes="title;value"
+                 tabindex=""
+                 />
+          <input class="context" 
                  tabindex=""
                  type="submit" 
                  name="editform:method" 
