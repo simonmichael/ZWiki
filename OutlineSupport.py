@@ -751,10 +751,10 @@ class OutlineRenderingMixin:
                             got.append('%s <li>[%s]</li>' % (indent,i))
                     if not (n[0]==here and suppress_current): #XXX temp
                         got.append("</ul>")
-                    if not (n[0]==here and suppress_current):
-                        got.append('%s </li>' % indent)
                 else:
                     got[-1] += ' ...' # a parent whose children were omitted
+                if not (n[0]==here and suppress_current):
+                    got.append('%s </li>' % indent)
             else:
                 got.append('%s <li>[%s]</li>' % (indent,n))
         if recursing: return got
