@@ -428,8 +428,8 @@ i18n:attributes="title">
 <input type="hidden" name="use_heading" value="1" />
 <span tal:condition="python:here.isMailoutEnabled()" >
 <small>(
-<span i18n:translate=''><span tal:content="python: str(here.subscriberCount() + 
-			 here.wikiSubscriberCount())" i18n:name='nb' /> subscribers
+<span i18n:translate=""><span tal:content="python: str(here.subscriberCount() + 
+			 here.wikiSubscriberCount())" i18n:name="nb" /> subscribers
 </span>
 )</small>
 </span>
