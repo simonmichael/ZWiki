@@ -8,6 +8,7 @@
  category="REQUEST.get('category',[])"
  status="REQUEST.get('status',[])"
  severity="REQUEST.get('severity',[])"
+ recentlisting="'?sort_on=lastEditTime&sort_order=reverse&num=30'"
  >
 <!-- issue search form ------------------------- -->
 <a name="tracker" />
@@ -58,7 +59,7 @@
                  <br />
                  <small>
                  <dtml-var "bold and '<b>' or ''">
-                   <a href="&dtml-URL;?sort_on=lastEditTime&sort_order=reverse&num=30&dtml-scrollto;"
+                   <a href="&dtml-URL;&dtml-recentlisting;&dtml-scrollto;"
                    >30</a>
                  <dtml-var "bold and '</b>' or ''">
                  </small>
@@ -123,8 +124,8 @@
          </big></big></big></big>
          <small>open/total issues</small>
        </td>
-       </dtml-comment>
-     </tr>
+       </dtml-comment> 
+    </tr>
    </table>
  </form>
 
@@ -397,43 +398,17 @@
  
  <!-- add issue form handler ------------------------- -->
  <dtml-if "REQUEST.get('submitted',0) and REQUEST.get('newtitle',0)">
-   <dtml-try>
-     <dtml-let
-      lastid="pages(isIssue=1,sort_on='id')[-1].id"
-      lastnumber="_.int(lastid[7:11])"
-      newnumber="lastnumber+1"
-      newid="'IssueNo'+_.string.zfill(newnumber,4)"
-      >
-       <dtml-call "REQUEST.set('newid',newid)">
-     </dtml-let>
-   <dtml-except>
-     <dtml-call "REQUEST.set('newid','IssueNo0001')">
-   </dtml-try>
    <dtml-let
+    newtitle="getattr(REQUEST,'newtitle','')"
+    newtext="_.getattr(REQUEST,'newtext','')"
     newcategory="_.getattr(REQUEST,'newcategory','zwiki: general')"
     newseverity="_.getattr(REQUEST,'newseverity','normal')"
     newstatus="_.getattr(REQUEST,'newstatus','open')"
-    newtext="_.getattr(REQUEST,'newtext','')"
-    newtitle="newid+' '+_.getattr(REQUEST,'newtitle','')"
-    newid="canonicalIdFrom(newtitle)"
     >
-     <dtml-comment>
-       some problem here - properties don't get set
-       stick with createIssue for the moment
-       <dtml-call "create(newtitle,text=newtext,REQUEST=REQUEST)">
-       <dtml-call "pageWithName(newtitle).changeProperties(
-                   REQUEST=_.None,
-                   title=newtitle,
-                   category=newcategory,
-                   severity=newseverity,
-                   status=newstatus
-                   )">
-     </dtml-comment>
-     <dtml-call "createIssue(newtitle,newtext,newtitle,
-                             newcategory,newseverity,newstatus,
-                             REQUEST=REQUEST)">
+     <dtml-call "createNextIssue(
+       newtitle,newtext,newcategory,newseverity,newstatus,REQUEST=REQUEST)">
+     <dtml-call "RESPONSE.redirect(URL+recentlisting+scrollto)">
    </dtml-let>
-   <dtml-call "RESPONSE.redirect(URL)">
  </dtml-if>
  
 </dtml-let>
