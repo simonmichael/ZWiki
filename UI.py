@@ -569,7 +569,7 @@ class UI:
         c    show wiki contents
         r    show wiki recent changes
              show discussion page
-             show issues page
+        t    show issue tracker
         i    show wiki index
         o    show wiki options (preferences)
         h    show help page
@@ -577,9 +577,9 @@ class UI:
         
         page functions:
         v    view page
-        ,    view pages in full mode
-        .    view pages in simple mode
-        /    view pages in minimal mode
+        +    view pages in full mode
+        =    view pages in simple mode
+        -    view pages in minimal mode
         m    mail subscription
         b    show backlinks (links to this page)
         d    show diffs (page edit history)
@@ -589,7 +589,7 @@ class UI:
              print this page (and subtopics)
         q    view page source (quick-view)
              wipe and regenerate this page's render cache
-        t    go to subtopics
+             go to subtopics
              go to comments (messages)
              go to page author's home page, if possible
         n    next page

@@ -102,7 +102,7 @@
 <a tal:attributes="href here/contentsUrl" accesskey="c"></a>
 <a tal:attributes="href here/changesUrl" accesskey="r"></a>
 <a tal:attributes="href here/discussionUrl" accesskey=""></a>
-<a tal:attributes="href here/trackerUrl" accesskey=""></a>
+<a tal:attributes="href here/trackerUrl" accesskey="t"></a>
 <a tal:attributes="href here/indexUrl" accesskey="i"></a>
 <a tal:condition="python:0" tal:attributes="href here/uploadsUrl" accesskey=""></a>
 <a tal:attributes="href here/preferencesUrl" accesskey="o"></a>
@@ -117,7 +117,7 @@
     modules['Products.PythonScripts.standard'].url_quote(here.id()) +
     '?borrow_lock=1'" accesskey="x"></a>
 <a tal:condition="nothing" tal:attributes="href string:${here/pageUrl}/print" accesskey=""></a>
-<a tal:attributes="href string:#subtopics" accesskey="t"></a>
+<a tal:attributes="href string:#subtopics" accesskey=""></a>
 <a tal:attributes="href here/nextPageUrl" accesskey="n"></a>
 <a tal:attributes="href here/previousPageUrl" accesskey="p"></a>
 <a tal:attributes="href here/primaryParentUrl" accesskey="u"></a>
