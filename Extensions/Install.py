@@ -37,6 +37,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.ZWiki.CMFInit import wiki_globals, factory_type_information
 from Products.ZWiki.ZWikiPage import ZWikiPage
 from Products.ZWiki.Defaults import PAGE_PORTALTYPE#,ALLOWED_PAGE_TYPES_IN_PLONE
+from Products.CMFCore import CMFCorePermissions
 
 def install(self):
     """
@@ -47,6 +48,7 @@ def install(self):
     skinstool = getToolByName(self, 'portal_skins')
     workflowtool = getToolByName(self, 'portal_workflow')
     propertiestool = getToolByName(self, 'portal_properties')
+    migrationtool = getToolByName(self, 'portal_migration')
     
     # Borrowed from CMFDefault.Portal.PortalGenerator.setupTypes()
     # We loop through anything defined in the factory type information
@@ -121,6 +123,31 @@ def install(self):
     #    out.write("Added a restricted 'allowed_page_types' site property\n")
     #else:
     #    out.write("An 'allowed_page_types' site property already exists\n")
+
+    if(getattr(self.Control_Panel.Products, 'ExternalEditor', None) is not None):
+        for ctype in typestool.objectValues():
+            if ctype.getId() == 'Wiki Page':
+                # We must detect plone 1 or plone 2 here because addAction has a 
+                # different number of arguments
+                if(migrationtool.getInstanceVersion().strip().startswith('1')):
+                    ctype.addAction( 'external_edit'
+                                   , name='External Edit'
+                                   , action='external_edit'
+                                   , permission=CMFCorePermissions.ModifyPortalContent
+                                   , category='object'
+                                   , visible=0 )
+                elif(migrationtool.getInstanceVersion().strip().startswith('2')):
+                    ctype.addAction( 'external_edit'
+                                   , name='External Edit'
+                                   , action='string:$object_url/external_edit'
+                                   , condition=''
+                                   , permission=CMFCorePermissions.ModifyPortalContent
+                                   , category='object'
+                                   , visible=0 )
+                else:
+                    out.write("Unkown Plone version!  External Editor not installed!")
+                    return out.getvalue()
+        out.write("External Editor is installed, added action for Wiki Page")
 
     return out.getvalue()
 
