@@ -577,8 +577,7 @@ class ZWikiPage(
         # is it a hash number (#123) ?
         if re.match(hashnumberexpr,link):
             # yes - convert to the id of the issue page with that number
-            # and continue, if possible; if not, don't bother adding a
-            # creation link
+            # and continue; if we can't, don't bother linking
             p = self.issuePageWithNumber(self.issueNumberFrom(link))
             if p:
                 try: link = p.getId() # XXX poor caching

@@ -3,6 +3,7 @@
 from __future__ import nested_scopes
 import os, string, re
 from string import join, split, strip
+from types import *
 
 import DocumentTemplate
 from AccessControl import getSecurityManager, ClassSecurityInfo
@@ -167,20 +168,16 @@ class TrackerSupport:
         else:
             return self.longIssueNameFrom(number,name)
 
-    def shortIssueNameFrom(self, number, name=''):
-        return '#%d %s' % (number,name)
-
-    def longIssueNameFrom(self, number, name=''):
-        return 'IssueNo%04d %s' % (number,name)
-
     security.declareProtected(Permissions.View, 'issuePageWithNumber')
     def issuePageWithNumber(self, number):
         """
         Return the issue page with the specified issue number, or None.
 
-        Tries both the short and long issue page name formats.
-        Should match issueNumberAndNameFrom.
+        Tries both the short and long issue page name formats;
+        should match issueNumberAndNameFrom.
+        It's harmless to call this with a non-number.
         """
+        if type(number) != IntType: return None
         return (
             self.pageWithFuzzyName(self.shortIssueNameFrom(number),
                                    allow_partial=1,
@@ -188,6 +185,12 @@ class TrackerSupport:
             self.pageWithFuzzyName(self.longIssueNameFrom(number),
                                    allow_partial=1,
                                    numeric_match=1))
+
+    def shortIssueNameFrom(self, number, name=''):
+        return '#%d %s' % (number,name)
+
+    def longIssueNameFrom(self, number, name=''):
+        return 'IssueNo%04d %s' % (number,name)
 
     security.declareProtected(Permissions.Add, 'createIssue')
     def createIssue(self, pageid='', text='', title=None,
