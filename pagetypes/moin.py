@@ -54,6 +54,8 @@ class MoinMoinMLTranslator(WWMLTranslator):
     header4Line   = re.compile( '^==== (.*) ====$' )
     header5Line   = re.compile( '^===== (.*) =====$' )
     header6Line   = re.compile( '^====== (.*) ======$' )
+    inlineBraces  = re.compile( '{{{(.*?)}}}')
+    inlineBackticks = re.compile( '`(.*?)`')
 
     def replaceHeader1(self, matchObj): return self.replaceHeader( matchObj, 1 )
     def replaceHeader2(self, matchObj): return self.replaceHeader( matchObj, 2 )
@@ -85,6 +87,8 @@ class MoinMoinMLTranslator(WWMLTranslator):
         line        = self.header4Line.sub( self.replaceHeader4, line )
         line        = self.header5Line.sub( self.replaceHeader5, line )
         line        = self.header6Line.sub( self.replaceHeader6, line )
+        line        = self.inlineBraces.sub( r'<code>\1</code>', line )
+        line        = self.inlineBackticks.sub( r'<code>\1</code>', line )
         return line
 
 
