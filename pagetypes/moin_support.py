@@ -12,6 +12,15 @@
 
 import os, re, string
 
+# find the system's character encoding, which we need for a regexp
+# below though utf-8 is hard-coded everywhere else (#963).
+# don't rely on python 2.3's getpreferredencoding, which gives wrong
+# answer, and work around a python bug with some locales (zwiki #392).
+# replicated from Regexps.py to avoid needless dependency.
+import locale
+try: lang, encoding = locale.getlocale()
+except ValueError: lang, encoding = None, None
+
 
 class MoinConfig:
     pass
@@ -51,8 +60,8 @@ class Parser:
 
     # some common rules
     word_rule = ur'(?:(?<![%(l)s])|^)%(parent)s(?:%(subpages)s(?:[%(u)s][%(l)s]+){2,})+(?![%(u)s%(l)s]+)' % {
-        'u': string.uppercase, #config.chars_upper,
-        'l': string.lowercase, #config.chars_lower,
+        'u': unicode(string.uppercase,encoding),
+        'l': unicode(string.lowercase,encoding),
         'subpages':'', #config.allow_subpages and (wikiutil.CHILD_PREFIX + '?') or '',
         'parent':'', #config.allow_subpages and (ur'(?:%s)?' % re.escape(PARENT_PREFIX)) or '',
     }

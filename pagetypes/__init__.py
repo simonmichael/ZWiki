@@ -27,6 +27,7 @@ registerPageType. Quick start:
 from Products.ZWiki.Utils import BLATHER
 
 # global page type registry
+#XXX print "__init__.py: setting PAGETYPES to []"
 PAGETYPES = []
 
 # ids-to-names mapping used by legacy skin templates
@@ -92,11 +93,13 @@ def registerPageType(t,prepend=0):
     >>> registerPageType(MyPageTypeClass)
 
     """
+    #XXX print "CALLING registerPageType"""  # XXX
     if prepend: pos = 0
     else: pos = len(PAGETYPES)
     PAGETYPES.insert(pos,t)
     PAGE_TYPES[t._id] = t._name
     BLATHER('registered page type: %s (%s)'%(t._id,t._name))
+    #XXX print "PAGETYPES:",PAGETYPES        # XXX
 
 def registerPageTypeUpgrade(old,new):
     """

@@ -37,6 +37,8 @@ class ZwikiMoinPageType(AbstractPageType):
         return t
 
     def renderMoinIn(self,t):
+        # moin assumes utf-8 everwhere, like zwiki (except where we can't,
+        # see moin_support)
         return render_moin_markup(unicode(t,'utf-8')).encode('utf-8')
 
 registerPageType(ZwikiMoinPageType)
