@@ -333,13 +333,20 @@ class ZwikiRstPageType(AbstractPageType):
                            message_id=None,in_reply_to=None):
         heading = '\n\n'
         heading += '**%s** --' % (subject or '...')
-        if username: heading = heading + '%s, ' % (username)
+        if username: heading = heading + '`%s`, ' % (username)
         heading += time
-        heading += '\n\n'
+        heading += ' `%s`__\n\n' % _('reply')
+        if message_id:
+            inreplytobit = '&in_reply_to='+quote(message_id)
+        else:
+            in_reply_to = ''
+        heading += '__ %s?subject=%s%s#bottom\n\n' % (page.page_url(),
+                                                      quote(subject or ''),
+                                                      inreplytobit)
         return heading
 
     def discussionSeparator(self,page):
-        return '\n\n------------------------------------------------------------\n\n'
+        return '\n\n-----\n\n'
 
 class ZwikiWwmlPageType(AbstractPageType):
     _id = 'msgwwmlprelinkfitissue'
