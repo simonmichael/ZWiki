@@ -75,9 +75,9 @@ issue categories sized and coloured according to open issues
   </tr>
 </table>
 </dtml-let>
-
-<a name="issues" />
 <dtml-if "REQUEST.get('category','')">
+<a name="issues" />
+<hr class="issuebrowser" style="border:1px black solid" />
 <dtml-let 
     category="REQUEST.get('category')"
     barearg="'bare' in QUERY_STRING and '&bare=%s'%REQUEST.get('bare') or ''"
@@ -87,10 +87,10 @@ issue categories sized and coloured according to open issues
     href="lambda x:'&dtml-URL;?category=&dtml.url_quote-%s;&sort_on=status_index'%x"
     num="_.len(items)"
     cols="_.max(2,_.min(_.int(_.math.sqrt(num)),8))"
-    rows="num/cols"
+    rows="num/cols + ((num%cols) and 1)"
     >
 <table width="100%" border=0>  
-  <dtml-in "_.range(rows+1)" prefix=row>
+  <dtml-in "_.range(rows)" prefix=row>
     <tr height="<dtml-var "'%s%%'%(100/(rows+1))">">
       <dtml-in "_.range(cols)" prefix=col>
         <dtml-let 
@@ -121,15 +121,12 @@ issue categories sized and coloured according to open issues
 </table>
 </dtml-let>
 </dtml-if>
-
-
-<a name="issue" />
 <dtml-if "REQUEST.get('issue','')">
+<a name="issue" />
+<hr class="issuebrowser" style="border:1px black solid" />
 <dtml-var "include(REQUEST.get('issue'))">
 
 <dtml-with "pageWithId(issue)">
 (<a href="&dtml-id;/editform">edit</a>, <a href="&dtml-id;#bottom">comment</a> this issue)
 </dtml-with>
 </dtml-if>
-
-
