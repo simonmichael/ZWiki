@@ -1,11 +1,12 @@
+# translation of zwiki-nl.po to Nederlands
 # translation of nl.po to Nederlands
 # translation of zwiki.po to Nederlands
 # Jaap Noordzij <jaap@jaapnoordzij.nl>, 2004.
 msgid ""
 msgstr ""
-"Project-Id-Version: nl\n"
+"Project-Id-Version: zwiki-nl\n"
 "POT-Creation-Date: Wed Jun 16 15:02:46 2004\n"
-"PO-Revision-Date: 2004-06-09 15:05+0200\n"
+"PO-Revision-Date: 2004-07-03 13:40+0200\n"
 "Last-Translator: Jaap Noordzij <jaap@jaapnoordzij.nl>\n"
 "Language-Team: Nederlands <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -52,8 +53,7 @@ msgid "You are not authorized to rename this ZWiki Page."
 msgstr "U bent niet gemachtigd om deze Wiki pagina een andere naam te geven"
 
 #: i/Editing.py:523
-msgid ""
-"This page was renamed to %s. You can delete this one if no longer needed.\n"
+msgid "This page was renamed to %s. You can delete this one if no longer needed.\n"
 msgstr ""
 "Deze pagina is hernoemd naar %s. U kunt deze pagina verwijderen als hij niet "
 "meer nodig is \n"
@@ -193,7 +193,7 @@ msgstr ""
 "\n"
 "        0    toon deze sneltoets koppelingen\n"
 "\n"
-"        wiki functions:\n"
+"        wiki functies:\n"
 "        f    show front page\n"
 "        c    show wiki contents\n"
 "        r    show wiki recent changes\n"
@@ -291,7 +291,7 @@ msgstr "seconden"
 
 #: i/ZWikiPage.py:574
 msgid "page in parent wiki"
-msgstr "pagina in ouder wiki"
+msgstr "pagina in ouder-wiki"
 
 #: i/ZWikiPage.py:579
 msgid "create this page"
@@ -347,18 +347,17 @@ msgstr "Toevoegen en bewerken"
 #: i/skins/dtmlmessages.pt:17 i/skins/dtmlmessages.pt:107
 #: i/skins/dtmlmessages.pt:204
 msgid "Set your site preferences below."
-msgstr ""
+msgstr "Geef hier uw voorkeurinstellingen aan."
 
 #: i/skins/dtmlmessages.pt:18 i/skins/dtmlmessages.pt:108
 #: i/skins/dtmlmessages.pt:205
 msgid "You may also click the full, simple, minimal links if provided."
-msgstr ""
+msgstr "U kunt ook op de links \"volledig\", \"eenvoudig\" of \"minimaal\" klikken als ze zichtbaar zijn."
 
 #: i/skins/dtmlmessages.pt:19 i/skins/dtmlmessages.pt:109
 #: i/skins/dtmlmessages.pt:206
-#, fuzzy
 msgid "User name"
-msgstr "hernoemen"
+msgstr "Gebruikersnaam"
 
 #: i/skins/dtmlmessages.pt:197
 msgid "Name"
@@ -379,7 +378,7 @@ msgstr "Voeg een ZWiki web toe"
 #: i/skins/dtmlmessages.pt:20 i/skins/dtmlmessages.pt:110
 #: i/skins/dtmlmessages.pt:207
 msgid "identifies your edits"
-msgstr ""
+msgstr "identificatie van uw wijzigingen"
 
 #: i/skins/dtmlmessages.pt:200
 msgid "Status"
@@ -399,57 +398,53 @@ msgstr "Details & commentaar"
 
 #: i/skins/dtmlmessages.pt:21 i/skins/dtmlmessages.pt:111
 #: i/skins/dtmlmessages.pt:208
-#, fuzzy
 msgid "Email address"
 msgstr "Uw e-mail adres"
 
 #: i/skins/dtmlmessages.pt:22 i/skins/dtmlmessages.pt:112
 #: i/skins/dtmlmessages.pt:209
-#, fuzzy
 msgid "for subscribing"
-msgstr "geen abonnees"
+msgstr "om een fabonnement te nemen"
 
 #: i/skins/dtmlmessages.pt:23 i/skins/dtmlmessages.pt:113
 #: i/skins/dtmlmessages.pt:210
-#, fuzzy
 msgid "Editform"
 msgstr "Bewerken"
 
 #: i/skins/dtmlmessages.pt:24 i/skins/dtmlmessages.pt:114
 #: i/skins/dtmlmessages.pt:211
 msgid "width"
-msgstr ""
+msgstr "breedte"
 
 #: i/skins/dtmlmessages.pt:25 i/skins/dtmlmessages.pt:115
 #: i/skins/dtmlmessages.pt:212
-#, fuzzy
 msgid "height"
-msgstr "bewerken"
+msgstr "hoogte"
 
 #: i/skins/dtmlmessages.pt:26 i/skins/dtmlmessages.pt:116
 #: i/skins/dtmlmessages.pt:213
 msgid "textarea dimensions; width will be 100% if supported"
-msgstr ""
+msgstr "afmetingen van het tekstgebied; de breedte wordt zo mogelijk ingesteld op 100%"
 
 #: i/skins/dtmlmessages.pt:27 i/skins/dtmlmessages.pt:117
 #: i/skins/dtmlmessages.pt:214
 msgid "Time zone"
-msgstr ""
+msgstr "Tijdzone"
 
 #: i/skins/dtmlmessages.pt:28 i/skins/dtmlmessages.pt:118
 #: i/skins/dtmlmessages.pt:215
 msgid "Your local time is"
-msgstr ""
+msgstr "Uw lokale tijd is"
 
 #: i/skins/dtmlmessages.pt:29 i/skins/dtmlmessages.pt:119
 #: i/skins/dtmlmessages.pt:216
 msgid "(localizes most times)"
-msgstr ""
+msgstr "(maakt de meeste tijden lokaal)"
 
 #: i/skins/dtmlmessages.pt:30 i/skins/dtmlmessages.pt:120
 #: i/skins/dtmlmessages.pt:217
 msgid "Show logo ?"
-msgstr ""
+msgstr "Toon het logo ?"
 
 #: i/skins/dtmlmessages.pt:31 i/skins/dtmlmessages.pt:34
 #: i/skins/dtmlmessages.pt:39 i/skins/dtmlmessages.pt:43
@@ -460,7 +455,7 @@ msgstr ""
 #: i/skins/dtmlmessages.pt:226 i/skins/dtmlmessages.pt:230
 #: i/skins/dtmlmessages.pt:234
 msgid "No"
-msgstr ""
+msgstr "Nee"
 
 #: i/skins/dtmlmessages.pt:32 i/skins/dtmlmessages.pt:35
 #: i/skins/dtmlmessages.pt:40 i/skins/dtmlmessages.pt:44
@@ -471,27 +466,27 @@ msgstr ""
 #: i/skins/dtmlmessages.pt:227 i/skins/dtmlmessages.pt:231
 #: i/skins/dtmlmessages.pt:235
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: i/skins/dtmlmessages.pt:33 i/skins/dtmlmessages.pt:123
 #: i/skins/dtmlmessages.pt:220
 msgid "Show page hierarchy ?"
-msgstr ""
+msgstr "Toon de pagina hierarchie ?"
 
 #: i/skins/dtmlmessages.pt:36 i/skins/dtmlmessages.pt:126
 #: i/skins/dtmlmessages.pt:223
 msgid "This wiki keeps a page hierarchy, which you can use or ignore."
-msgstr ""
+msgstr "Deze wiki bevat een pagina hierarchie die u kunt gebruiken of negeren"
 
 #: i/skins/dtmlmessages.pt:37 i/skins/dtmlmessages.pt:127
 #: i/skins/dtmlmessages.pt:224
 msgid "Show search field ?"
-msgstr ""
+msgstr "Toon het zoekveld ?"
 
 #: i/skins/dtmlmessages.pt:38 i/skins/dtmlmessages.pt:128
 #: i/skins/dtmlmessages.pt:225
 msgid "except in minimal mode"
-msgstr ""
+msgstr "behalve in de minimale schermtoestand"
 
 #: i/skins/dtmlmessages.pt:4 i/skins/dtmlmessages.pt:12
 msgid "Id"
@@ -500,23 +495,23 @@ msgstr "Id"
 #: i/skins/dtmlmessages.pt:41 i/skins/dtmlmessages.pt:131
 #: i/skins/dtmlmessages.pt:228
 msgid "Show AnnoyingQuote ?"
-msgstr ""
+msgstr "Toon de \"Annoying Quote\" ?"
 
 #: i/skins/dtmlmessages.pt:42 i/skins/dtmlmessages.pt:46
 #: i/skins/dtmlmessages.pt:132 i/skins/dtmlmessages.pt:136
 #: i/skins/dtmlmessages.pt:229 i/skins/dtmlmessages.pt:233
 msgid "in full mode"
-msgstr ""
+msgstr "in de volledige schermtoestand"
 
 #: i/skins/dtmlmessages.pt:45 i/skins/dtmlmessages.pt:135
 #: i/skins/dtmlmessages.pt:232
 msgid "Show page management form ?"
-msgstr ""
+msgstr "Toon het management formulier voor deze pagina ?"
 
 #: i/skins/dtmlmessages.pt:49 i/skins/dtmlmessages.pt:139
 #: i/skins/dtmlmessages.pt:236
 msgid "You must also configure a username or be logged in."
-msgstr ""
+msgstr "U moet ook een gebruikersnaam opgeven of ingelogd zijn"
 
 #: i/skins/dtmlmessages.pt:5 i/skins/dtmlmessages.pt:13
 msgid "Title"
@@ -524,61 +519,56 @@ msgstr "Titel"
 
 #: i/skins/dtmlmessages.pt:50 i/skins/dtmlmessages.pt:140
 #: i/skins/dtmlmessages.pt:237
-#, fuzzy
 msgid "Save options"
-msgstr "opties"
+msgstr "Bewaar deze opties"
 
 #: i/skins/dtmlmessages.pt:51 i/skins/dtmlmessages.pt:141
 #: i/skins/dtmlmessages.pt:238
-#, fuzzy
 msgid "Forget options"
-msgstr "opties"
+msgstr "Negeer deze opties"
 
 #: i/skins/dtmlmessages.pt:52 i/skins/dtmlmessages.pt:142
 #: i/skins/dtmlmessages.pt:239
 msgid "Enter a word or phrase and hit enter to search the entire wiki."
-msgstr ""
+msgstr "Geef een  woord of een zin en toets Enter om de wiki te doorzoeken"
 
 #: i/skins/dtmlmessages.pt:53 i/skins/dtmlmessages.pt:143
 #: i/skins/dtmlmessages.pt:240
 msgid "This is the same as using the search field at top right."
-msgstr ""
+msgstr "Dit werkt hetzelfde als het gebruik van het zoekveld rechtsboven."
 
 #: i/skins/dtmlmessages.pt:54 i/skins/dtmlmessages.pt:144
 #: i/skins/dtmlmessages.pt:241
 msgid "Tips: A single word works best for matching page names."
-msgstr ""
+msgstr "Een enkel woord werkt het best voor het zoeken naar pagina namen."
 
 #: i/skins/dtmlmessages.pt:55 i/skins/dtmlmessages.pt:145
 #: i/skins/dtmlmessages.pt:242
 msgid ""
 "Case-insensitivity and wildcards may be supported depending on your catalog "
 "configuration."
-msgstr ""
+msgstr "Case-onafhankelijkheid of wildcards kunnen ondersteund zijn, afhanekelijk van de Catalog instellingen."
 
 #: i/skins/dtmlmessages.pt:56 i/skins/dtmlmessages.pt:146
 #: i/skins/dtmlmessages.pt:243
 msgid "Leave it blank to list all pages."
-msgstr ""
+msgstr "Leeglaten om alle pagina's te tonen"
 
 #: i/skins/dtmlmessages.pt:57 i/skins/dtmlmessages.pt:62
 #: i/skins/dtmlmessages.pt:147 i/skins/dtmlmessages.pt:152
 #: i/skins/dtmlmessages.pt:244 i/skins/dtmlmessages.pt:249
-#, fuzzy
 msgid "Search"
-msgstr "jaar"
+msgstr "Zoeken"
 
 #: i/skins/dtmlmessages.pt:58 i/skins/dtmlmessages.pt:148
 #: i/skins/dtmlmessages.pt:245
-#, fuzzy
 msgid "Page names matching"
-msgstr "Paginanaam"
+msgstr "Paginanamen die overeenkomen"
 
 #: i/skins/dtmlmessages.pt:59 i/skins/dtmlmessages.pt:149
 #: i/skins/dtmlmessages.pt:246
-#, fuzzy
 msgid "Text matching"
-msgstr "TextFormattingRules"
+msgstr "Tekst overeenkomsten"
 
 #: i/skins/dtmlmessages.pt:6
 msgid "Type"
@@ -587,50 +577,47 @@ msgstr "Type"
 #: i/skins/dtmlmessages.pt:60 i/skins/dtmlmessages.pt:150
 #: i/skins/dtmlmessages.pt:247
 msgid "hits"
-msgstr ""
+msgstr "hits"
 
 #: i/skins/dtmlmessages.pt:61 i/skins/dtmlmessages.pt:151
 #: i/skins/dtmlmessages.pt:248
-msgid ""
-"no catalog or the catalog search gave an error, a brute-force search was used"
-msgstr ""
+msgid "no catalog or the catalog search gave an error, a brute-force search was used"
+msgstr "er is geen Catalog of de Catalog-zoekactie gaf een fout. Er is een rechttoe-rechtaan zoekactie uitgevoerd"
 
 #: i/skins/dtmlmessages.pt:63 i/skins/dtmlmessages.pt:153
 #: i/skins/dtmlmessages.pt:250
 msgid "Pages changed in the last"
-msgstr ""
+msgstr "Pagina's die zijn gewijzigd in de laatste"
 
 #: i/skins/dtmlmessages.pt:64 i/skins/dtmlmessages.pt:154
 #: i/skins/dtmlmessages.pt:251
 msgid "Recently changed pages, with summaries"
-msgstr ""
+msgstr "Recent gewijzigde pagina's met samenvattingen"
 
 #: i/skins/dtmlmessages.pt:65 i/skins/dtmlmessages.pt:155
 #: i/skins/dtmlmessages.pt:252
 msgid "Show summaries ?"
-msgstr ""
+msgstr "Toon samenvattingen ?"
 
 #: i/skins/dtmlmessages.pt:66 i/skins/dtmlmessages.pt:156
 #: i/skins/dtmlmessages.pt:253
 msgid "Refresh"
-msgstr ""
+msgstr "Verversen"
 
 #: i/skins/dtmlmessages.pt:67 i/skins/dtmlmessages.pt:157
 #: i/skins/dtmlmessages.pt:254
-#, fuzzy
 msgid "Page"
-msgstr "Wijzig"
+msgstr "Pagina"
 
 #: i/skins/dtmlmessages.pt:68 i/skins/dtmlmessages.pt:158
 #: i/skins/dtmlmessages.pt:255
 msgid "Edited&nbsp;by"
-msgstr ""
+msgstr "Gewijzigd&nbsp;door"
 
 #: i/skins/dtmlmessages.pt:69 i/skins/dtmlmessages.pt:159
 #: i/skins/dtmlmessages.pt:256
-#, fuzzy
 msgid "Time"
-msgstr "Titel"
+msgstr "Tijd"
 
 #: i/skins/dtmlmessages.pt:7
 msgid "Create wiki"
@@ -639,58 +626,53 @@ msgstr "Creëer een wiki"
 #: i/skins/dtmlmessages.pt:70 i/skins/dtmlmessages.pt:160
 #: i/skins/dtmlmessages.pt:257
 msgid "NEW"
-msgstr ""
+msgstr "NIEUW"
 
 #: i/skins/dtmlmessages.pt:71 i/skins/dtmlmessages.pt:161
 #: i/skins/dtmlmessages.pt:258
 msgid "anonymous"
-msgstr ""
+msgstr "anoniem"
 
 #: i/skins/dtmlmessages.pt:72 i/skins/dtmlmessages.pt:162
 #: i/skins/dtmlmessages.pt:259
 msgid "Pages marked (NEW) have been created within the last week"
-msgstr ""
+msgstr "Pagina's die zijn gemarkeerd als (NIEUW) zijn in de afgelopen week gemaakt"
 
 #: i/skins/dtmlmessages.pt:73 i/skins/dtmlmessages.pt:163
 #: i/skins/dtmlmessages.pt:260
-#, fuzzy
 msgid "Here are the wiki's issue pages."
-msgstr "toon het issue logboek"
+msgstr "Dit zijn de issue pagina's van de wiki."
 
 #: i/skins/dtmlmessages.pt:74 i/skins/dtmlmessages.pt:164
 #: i/skins/dtmlmessages.pt:261
 msgid "Enter a search term, or click the numbers to the right, or"
-msgstr ""
+msgstr "Geef een zoekterm op,  klik op een getal rechts of "
 
 #: i/skins/dtmlmessages.pt:75 i/skins/dtmlmessages.pt:165
 #: i/skins/dtmlmessages.pt:262
-#, fuzzy
 msgid "filter issues"
-msgstr "Filter Issues"
+msgstr "Filter issues"
 
 #: i/skins/dtmlmessages.pt:76 i/skins/dtmlmessages.pt:166
 #: i/skins/dtmlmessages.pt:263
-#, fuzzy
 msgid "search issues"
-msgstr "Filter Issues"
+msgstr "zoek issues"
 
 #: i/skins/dtmlmessages.pt:77 i/skins/dtmlmessages.pt:167
 #: i/skins/dtmlmessages.pt:264
-#, fuzzy
 msgid "recent"
-msgstr "nieuwe ouder toekennen"
+msgstr "recente wijzigingen"
 
 #: i/skins/dtmlmessages.pt:78 i/skins/dtmlmessages.pt:168
 #: i/skins/dtmlmessages.pt:265
 msgid "all"
-msgstr ""
+msgstr "alles"
 
 #: i/skins/dtmlmessages.pt:79 i/skins/dtmlmessages.pt:101
 #: i/skins/dtmlmessages.pt:169 i/skins/dtmlmessages.pt:191
 #: i/skins/dtmlmessages.pt:266 i/skins/dtmlmessages.pt:288
-#, fuzzy
 msgid "name"
-msgstr "hernoemen"
+msgstr "naam"
 
 #: i/skins/dtmlmessages.pt:8
 msgid "and enter"
@@ -699,66 +681,57 @@ msgstr "en voeg toe"
 #: i/skins/dtmlmessages.pt:80 i/skins/dtmlmessages.pt:102
 #: i/skins/dtmlmessages.pt:170 i/skins/dtmlmessages.pt:192
 #: i/skins/dtmlmessages.pt:267 i/skins/dtmlmessages.pt:289
-#, fuzzy
 msgid "category"
-msgstr "Categorie"
+msgstr "categorie"
 
 #: i/skins/dtmlmessages.pt:81 i/skins/dtmlmessages.pt:103
 #: i/skins/dtmlmessages.pt:171 i/skins/dtmlmessages.pt:193
 #: i/skins/dtmlmessages.pt:268 i/skins/dtmlmessages.pt:290
-#, fuzzy
 msgid "severity"
-msgstr "Ernst"
+msgstr "ernst"
 
 #: i/skins/dtmlmessages.pt:82 i/skins/dtmlmessages.pt:104
 #: i/skins/dtmlmessages.pt:172 i/skins/dtmlmessages.pt:194
 #: i/skins/dtmlmessages.pt:269 i/skins/dtmlmessages.pt:291
-#, fuzzy
 msgid "status"
-msgstr "Status"
+msgstr "status"
 
 #: i/skins/dtmlmessages.pt:83 i/skins/dtmlmessages.pt:105
 #: i/skins/dtmlmessages.pt:173 i/skins/dtmlmessages.pt:195
 #: i/skins/dtmlmessages.pt:270 i/skins/dtmlmessages.pt:292
-#, fuzzy
 msgid "age"
-msgstr "Wijzig"
+msgstr "leeftijd"
 
 #: i/skins/dtmlmessages.pt:84 i/skins/dtmlmessages.pt:106
 #: i/skins/dtmlmessages.pt:174 i/skins/dtmlmessages.pt:196
 #: i/skins/dtmlmessages.pt:271 i/skins/dtmlmessages.pt:293
 msgid "modified"
-msgstr ""
+msgstr "gewijzigd"
 
 #: i/skins/dtmlmessages.pt:85 i/skins/dtmlmessages.pt:175
 #: i/skins/dtmlmessages.pt:272
-#, fuzzy
 msgid "Add a new issue:"
-msgstr "Toevoegen en bewerken"
+msgstr "Voeg een nieuw issue toe:"
 
 #: i/skins/dtmlmessages.pt:86 i/skins/dtmlmessages.pt:176
 #: i/skins/dtmlmessages.pt:273
-#, fuzzy
 msgid "Name:"
-msgstr "Naam"
+msgstr "Naam:"
 
 #: i/skins/dtmlmessages.pt:87 i/skins/dtmlmessages.pt:177
 #: i/skins/dtmlmessages.pt:274
-#, fuzzy
 msgid "Category:"
-msgstr "Categorie"
+msgstr "Categorie:"
 
 #: i/skins/dtmlmessages.pt:88 i/skins/dtmlmessages.pt:178
 #: i/skins/dtmlmessages.pt:275
-#, fuzzy
 msgid "Severity:"
-msgstr "Ernst"
+msgstr "Ernst:"
 
 #: i/skins/dtmlmessages.pt:89 i/skins/dtmlmessages.pt:179
 #: i/skins/dtmlmessages.pt:276
-#, fuzzy
 msgid "Status:"
-msgstr "Status"
+msgstr "Status:"
 
 #: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:10
 msgid "Add ZWiki Page"
@@ -767,58 +740,52 @@ msgstr "Voeg ZWiki pagina toe"
 #: i/skins/dtmlmessages.pt:90 i/skins/dtmlmessages.pt:180
 #: i/skins/dtmlmessages.pt:277
 msgid "Details:"
-msgstr ""
+msgstr "Details:"
 
 #: i/skins/dtmlmessages.pt:91 i/skins/dtmlmessages.pt:181
 #: i/skins/dtmlmessages.pt:278
-#, fuzzy
 msgid "add issue"
-msgstr "issues"
+msgstr "issue toevoegen"
 
 #: i/skins/dtmlmessages.pt:92 i/skins/dtmlmessages.pt:182
 #: i/skins/dtmlmessages.pt:279
 msgid "More advanced"
-msgstr ""
+msgstr "Geavanceerd"
 
 #: i/skins/dtmlmessages.pt:93 i/skins/dtmlmessages.pt:183
 #: i/skins/dtmlmessages.pt:280
-#, fuzzy
 msgid "issue tracker"
 msgstr "Issue logboek"
 
 #: i/skins/dtmlmessages.pt:94 i/skins/dtmlmessages.pt:184
 #: i/skins/dtmlmessages.pt:281
-#, fuzzy
 msgid "search options"
-msgstr "opties"
+msgstr "zoekopties"
 
 #: i/skins/dtmlmessages.pt:95 i/skins/dtmlmessages.pt:185
 #: i/skins/dtmlmessages.pt:282
 msgid "Name contains any of:"
-msgstr ""
+msgstr "Naam bevat:"
 
 #: i/skins/dtmlmessages.pt:96 i/skins/dtmlmessages.pt:186
 #: i/skins/dtmlmessages.pt:283
 msgid "Page text contains any of:"
-msgstr ""
+msgstr "Pagina tekst bevat:"
 
 #: i/skins/dtmlmessages.pt:97 i/skins/dtmlmessages.pt:187
 #: i/skins/dtmlmessages.pt:284
-#, fuzzy
 msgid "Categories:"
-msgstr "Categorie"
+msgstr "Categorieën"
 
 #: i/skins/dtmlmessages.pt:98 i/skins/dtmlmessages.pt:188
 #: i/skins/dtmlmessages.pt:285
-#, fuzzy
 msgid "Severities:"
 msgstr "Ernst"
 
 #: i/skins/dtmlmessages.pt:99 i/skins/dtmlmessages.pt:189
 #: i/skins/dtmlmessages.pt:286
-#, fuzzy
 msgid "Statuses:"
-msgstr "Status"
+msgstr "Status:"
 
 # Default: ""
 # "You can change this page's parent(s) to place it within the overall page\n"
@@ -826,7 +793,7 @@ msgstr "Status"
 # "A single parent is usually sufficient."
 #: i/skins/standard/backlinks.pt:103
 msgid "backlinks_reparent_help"
-msgstr "backlinks_reparent_help"
+msgstr "help voor backlinks"
 
 #: i/skins/standard/backlinks.pt:46
 msgid "is a top-level topic."
@@ -834,7 +801,7 @@ msgstr "is een top-niveau onderwerp"
 
 #: i/skins/standard/backlinks.pt:47
 msgid "is a subtopic of:"
-msgstr "is een sub-ondewerp van: "
+msgstr "is een sub-onderwerp van: "
 
 #: i/skins/standard/backlinks.pt:69
 msgid "Here are the pages which link to it:"
@@ -868,7 +835,7 @@ msgstr "schakel bron/WYSIWYG toestand"
 
 #: i/skins/standard/editform.pt:145
 msgid "Optional change note"
-msgstr "Optionele aantekening mbt deze wijziging"
+msgstr "Optionele aantekening over deze wijziging"
 
 #: i/skins/standard/editform.pt:146
 msgid "a note makes RecentChanges more useful"
@@ -1099,8 +1066,7 @@ msgstr "antwoorden"
 
 #: i/skins/standard/wikipage_macros.pt:405
 msgid "to comment (and cc any subscribers) enter text here and click add"
-msgstr ""
-"geef commentaar (met cc aan abonnees): voer de tekst in en klik op toevoegen"
+msgstr "geef commentaar (met cc aan abonnees): voer de tekst in en klik op toevoegen"
 
 #: i/skins/standard/wikipage_macros.pt:429
 msgid "${nb} subscribers"
@@ -1120,20 +1086,15 @@ msgid "parent_name_replace"
 msgstr "nieuwe ouder, naam of vervanging"
 
 #: i/skins/standard/wikipage_macros.pt:463
-#, fuzzy
-msgid ""
-"enter a new parent, new name, replacement page (if any) or subtopic name"
-msgstr ""
-"geef een pagina als ouder, nieuwe naam of vervanging (indien nodig) voor "
-"deze pagina"
+msgid "enter a new parent, new name, replacement page (if any) or subtopic name"
+msgstr "geef een pagina als ouder, nieuwe naam of vervanging (indien nodig) of een onderwerpnaam"
 
 #: i/skins/standard/wikipage_macros.pt:469
 #: i/skins/standard/wikipage_macros.pt:474
 #: i/skins/standard/wikipage_macros.pt:479
 #: i/skins/standard/wikipage_macros.pt:484
-#, fuzzy
 msgid "title"
-msgstr "Titel"
+msgstr "titel"
 
 #: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
 msgid "Backlinks for"
@@ -1170,14 +1131,14 @@ msgstr "Wiki inhoud"
 
 #: i/skins/zwiki_plone/contentspage.pt:19 i/skins/standard/contentspage.pt:40
 msgid "Singletons"
-msgstr "Singeltons (wezen)"
+msgstr "Wezen (Singeltons)"
 
 # Default: "Singletons are pages that are not connected to other pages."
 #: i/skins/zwiki_plone/contentspage.pt:21
 msgid "singleton_desc"
 msgstr ""
-"SIngletons (wezen) zijn pagina's die niet zijn verbonden via verwijzingen "
-"met andere paginaś "
+"Wezen zijn pagina's die niet zijn verbonden via verwijzingen "
+"met andere pagina's."
 
 #: i/skins/zwiki_plone/diffform.pt:15
 msgid "History for"
@@ -1276,7 +1237,7 @@ msgstr ""
 #: i/skins/zwiki_plone/editform.pt:52
 msgid "description_edit_wiki_page"
 msgstr ""
-"Een Wiki Pagina maakt het mogelijk om pagina's te maken die op verschillende "
+"Een Wikipagina maakt het mogelijk om pagina's te maken die op verschillende "
 "manieren in verbinding staan met elkaar."
 
 # Default: "Wiki Page Details"
@@ -1445,14 +1406,12 @@ msgid "uploads_desc"
 msgstr "Deze pagina geeft alle geladen bestanden in deze Wiki"
 
 #: i/skins/zwiki_plone/uploaded.pt:25
-#, fuzzy
 msgid "save"
-msgstr "Opslaan"
+msgstr "opslaan"
 
 #: i/skins/zwiki_plone/uploaded.pt:25
-#, fuzzy
 msgid "view"
-msgstr "Bekijken"
+msgstr "bekijken"
 
 # Default: "No files have been uploaded."
 #: i/skins/zwiki_plone/uploaded.pt:29
@@ -1492,65 +1451,3 @@ msgstr "geef hier commentaar en klik op toevoegen of klik op wijzigen"
 msgid "add-comment"
 msgstr "voeg commentaar toe"
 
-#~ msgid "reparent"
-#~ msgstr "nieuwe ouder toekennen"
-
-#~ msgid "reparent this page under the page you have entered"
-#~ msgstr "Geef deze pagina als nieuwe ouder de pagina die u hebt opgegeven"
-
-#~ msgid "rename this page to the name you have entered, updating all links"
-#~ msgstr ""
-#~ "hernoem deze pagina naar de naam die u hebt opgegeven. Alle verwijzingen  "
-#~ "worden bijgewerkt."
-
-#~ msgid "rename"
-#~ msgstr "hernoemen"
-
-#~ msgid "delete!"
-#~ msgstr "verwijder!"
-
-#, fuzzy
-#~ msgid ""
-#~ "move this page to the recycle bin, and relink to the name you have entered"
-#~ msgstr ""
-#~ "Verwijder deze pagina naar de prullenbak en maak een nieuwe verwijzing "
-#~ "naar de naam die u hebt opgegeven."
-
-#, fuzzy
-#~ msgid "create"
-#~ msgstr "Maken"
-
-#, fuzzy
-#~ msgid "create a new subtopic of this page"
-#~ msgstr "toon nooit sub-onderwerpen op deze pagina"
-
-# Default: "edit this page"
-#~ msgid "edit-page"
-#~ msgstr "bewerk deze pagina"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "Mail abonnement"
-
-#~ msgid "Enter a word"
-#~ msgstr "Voeg een woord toe"
-
-#~ msgid "Show subtopics on this page & below ?"
-#~ msgstr "Toon subonderwerpen op deze pagina & lager ?"
-
-#~ msgid "show subtopics in full mode, or if ancestor page has 'always'"
-#~ msgstr ""
-#~ "toon sub-onderwerpen in volledige mode of wanneer een ouder pagina "
-#~ "'altijd' aangeeft"
-
-#~ msgid "default"
-#~ msgstr "standaard"
-
-#~ msgid "never"
-#~ msgstr "nooit"
-
-#~ msgid "always show subtopics on this page"
-#~ msgstr "toon altijd sub-onderwerpen op deze pagina"
-
-#~ msgid "always"
-#~ msgstr "altijd"
