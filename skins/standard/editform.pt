@@ -193,7 +193,7 @@
                 title python:creating and ('create this wiki page') or default;"
 		i18n:attributes="title;value"
 		/></strong>
-		<span tal:condition="python: False">
+		<span tal:condition="nothing">
 			<!-- force i18n extraction -->
 			<span title="Create" i18n:attributes="title"></span>
 			<span title="create this wiki page" i18n:attributes="title"></span>

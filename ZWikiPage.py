@@ -1105,7 +1105,7 @@ class ZWikiPage(
 
         dont forget to force i18n extraction with something like
         
-        <span tal:condition='python: False'>
+        <span tal:condition='nothing'>
             <!-- force i18n extraction -->
             <span title='Sentence' i18n:attributes='title'></span>            
         </span>
