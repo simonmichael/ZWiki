@@ -63,6 +63,18 @@ try:
         def CreationDate(self):
             return self.creationTime().ISO()
 
+        security.declarePublic( 'getPageTitle' )
+        def getPageTitle(self, template=None, portal_title=None):
+            """
+            Return the proper name of this page for use by Plone.
+
+            A quick fix for plone's script, which doesn't like using
+            our page's title when it's the same as the id.
+            XXX file a bug
+            """
+            return self.pageName()
+        
+
     InitializeClass(ZwikiDublinCoreImpl)
 
     class CMFAwareness(PortalContent, ZwikiDublinCoreImpl):
