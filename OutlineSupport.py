@@ -113,7 +113,9 @@ class ParentsPropertyMixin:
 
     def addParent(self,parent):
         if parent:
-            parent = string.strip(parent)
+            # we sometimes start page names with space as a subtopic
+            # ordering hack.. 
+            #parent = string.strip(parent)
             if parent and not parent in self.parents:
                 self.parents.append(parent)
 
