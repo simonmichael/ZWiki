@@ -233,6 +233,20 @@ class TrackerSupport:
                                       )
         self.reindex_object()
 
+    security.declareProtected(Permissions.View, 'nextIssueNumber')
+    def nextIssueNumber(self, REQUEST=None):
+        """
+        Get the next available issue number.
+
+        Does a catalog search, so REQUEST may be required to authenticate
+        and get the proper results.
+        """
+        issues = self.pages(isIssue=1,sort_on='id',REQUEST=REQUEST)
+        if issues:
+            return self.issueNumber(issues[-1].Title) + 1
+        else:
+            return 1
+
     security.declareProtected(Permissions.Add, 'createNextIssue')
     def createNextIssue(self,name='',text='',category='',severity='',status='',
                         REQUEST=None,sendmail=1):
@@ -241,12 +255,7 @@ class TrackerSupport:
 
         Returns the page name that was used.
         """
-        issues = self.pages(isIssue=1,sort_on='id')
-        if issues:
-            lastnumber = self.issueNumber(issues[-1].Title)
-            newnumber = lastnumber + 1
-        else:
-            newnumber = 1
+        newnumber = self.nextIssueNumber(REQUEST=REQUEST)
         pagename=self.pageNameFromIssueNumberAndName(newnumber,name)
         self.createIssue(pagename, text, None, 
                          category, severity, status, REQUEST,sendmail)
