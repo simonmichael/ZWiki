@@ -8,7 +8,7 @@
    simple      python: displaymode=='simple';
    full        python: displaymode=='full';
    hierarchy   python: request.get('zwiki_showhierarchy',0);
-   linearhdr   python: displaymode=='full';
+   linearhdr   python: 0 #displaymode=='full';
    ">
 <head metal:use-macro="macros/head">
   <title metal:fill-slot="title" 
