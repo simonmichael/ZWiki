@@ -44,7 +44,7 @@ ISSUE_COLOURS = [
     ',open,wishlist ,#e0e0e0',
     ',open,         ,#ffe0e0',
     ',pending,      ,#ffcc77',
-    ',closed,       ,#e0f0e0',
+    ',closed,       ,#bbeebb',
     ',,             ,',
     ]
 
