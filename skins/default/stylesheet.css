@@ -1,19 +1,22 @@
 /* colours */
+
 /* default gray */
-.shade1                  {background: #dddddd; color: gray;}
-.shade1 a:link           {color: gray;}
-.shade1 a:visited        {color: #aaaaaa;}
+.shade1                  {color:gray; background: #dddddd;}
+.shade1 a:link           {color:gray;}
+.shade1 a:visited        {color:#aaaaaa;}
 .shade2                  {background: #f0f0f0;}
 .dimtext                 {color: gray;}
-.commentsheading         {color:gray;font-weight:bold;}
+.commentsheading         {color:gray; font-weight:bold;}
 .subscribed              {} /* for subscribeform */
 .notsubscribed           {}
-
 #searchbox a:link        {color: gray;}
 #searchbox a:visited     {color: #aaaaaa;}
 #lasteditor              {color:gray;}
-#subtopicspanel          {/*background: #dddddd;*/ color: gray;}
+#subtopicspanel          {color: gray; /*background: #dddddd;*/ }
 #commentform             {color:gray;}
+#linkpanel td, #linkpanel_minimal td {color: gray;}
+#navpanel                {color: gray;}
+  
 
 /* pink */
 /*.shade1                  {background: #ffeeee; color: #ddaaaa;}*/
@@ -27,44 +30,63 @@
 /*#subtopicspanel          {color:#ddaaaa; border-top:thin solid #ddaaaa;}*/
 /*#commentform             {color:#ddaaaa;}*/
 
-/* padding */
-body                     {margin:0; padding:0;}
-/*#content                 {margin-left:10%; margin-right:10%;} */
-#content                 {margin-left:64px; margin-right:32px;} 
-  /* (adjust left margin to approx. logo width) */
-#formcontent             {margin:8px;} 
-#logo_full, #logo_simple {padding:4px;}
-#searchinput             {margin-top:0px;}
-#pageheading ul    {margin-top:0px; margin-bottom:0px; margin-left:6px; padding-left:6px;}
-#subtopicspanel ul {margin-top:0px; margin-bottom:0px; margin-left:12px; padding-left:12px;}
-#pageheading li, #subtopicspanel li {list-style:none;}
 
-/* fonts */
-body                     {font-family:sans, verdana, arial, helvetica, sans-serif; font-size:80%;}
-#subtopicspanel td ul    {font-weight:bold;}
-#subtopicspanel td ul ul {font-weight:normal; font-size:0.9em;}
+/* general styles */
 
+body {
+  margin:0; padding:0;
+  font-family:sans, verdana, arial, helvetica, sans-serif; 
+  font-size:90%;
+}
+#content {
+  /* adjust left margin to approx. logo width */
+  margin-left:64px; margin-right:32px;
+  /* margin-left:10%; margin-right:10%; */
+} 
+#formcontent {
+ margin:8px;
+} 
+#logo_full, #logo_simple {
+ padding:4px;
+}
+#searchinput {
+  margin-top:0px;
+}
+#pageheading ul {
+  margin-top:0px; margin-bottom:0px; margin-left:6px; padding-left:6px;
+}
+#subtopicspanel ul {
+  margin-top:0px; margin-bottom:0px; margin-left:12px; padding-left:12px;
+}
+#pageheading li, #subtopicspanel li {
+  list-style:none;
+}
+#subtopicspanel td ul {
+  font-weight:bold;
+}
+#subtopicspanel td ul ul {
+  font-weight:normal; font-size:0.9em;
+}
 #linkpanel {
-  }
+}
 #linkpanel_minimal {
-  }
+}
 #linkpanel td, #linkpanel_minimal td {
   font-size: 80%;
 }
 #pagemanagement {
-  }
+}
 #quicklinks {
   font-weight: normal;
   vertical-align: middle;
-  }
+}
 #otherlinks {
   vertical-align: middle;
-  }
+}
 #otherlinks_minimal {
   vertical-align: top;
   padding: 0px;
-  }
-
+}
 #navpanel {
   font-size: 80%;
 }
@@ -80,41 +102,40 @@ body                     {font-family:sans, verdana, arial, helvetica, sans-seri
   padding-top: 1em;
   padding-right: 4px;
 }
-
 #pagenameand { /*td*/
-  padding: 0;
-  vertical-align: middle;
-  }
+ padding: 0;
+ vertical-align: middle;
+}
 #pagenameand_X { /*td*/
-  padding: 1.15em 3em;
-  vertical-align: middle;
-  }
+ padding: 1.15em 3em;
+ vertical-align: middle;
+}
 #pagenameand_linear { /*td*/
-  padding: 1.15em;
-  vertical-align: middle;
-  }
+ padding: 1.15em;
+ vertical-align: middle;
+}
 #pagenameonly { /*td*/
   font-size: xx-large;
   font-weight: bold;
-  vertical-align: bottom
-  }
+  vertical-align: bottom;
+}
 #pagename_minimal {
   font-size: xx-large;
   font-weight: bold;
-  vertical-align: bottom
-  }
+  vertical-align: bottom;
+}
 #searchbox {
   vertical-align: top;
   font-size: 80%;
 }
 #searchinput {
-  width:100%; 
-  margin-top: 3px;
-  }
+ width:100%; 
+ margin-top: 3px;
+}
 #lasteditor {
   font-size: small;
   font-style: italic;
-  }
+}
 #commentform {
   /*font-size: small;*/
-  }
+}
