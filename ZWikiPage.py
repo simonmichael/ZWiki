@@ -1,7 +1,7 @@
 """
 The main Zwiki module. See README.txt.
 
-(c) 1999-2003 Simon Michael <simon@joyful.com> for the zwiki community.
+(c) 1999-2004 Simon Michael <simon@joyful.com> for the zwiki community.
 Wikiwikiweb formatting by Tres Seaver <tseaver@zope.com>
 Parenting code and regulations by Ken Manheimer <klm@zope.com>
 Initial Zope CMF integration by Chris McDonough <chrism@zope.com>
