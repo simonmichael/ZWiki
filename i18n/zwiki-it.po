@@ -1,6 +1,7 @@
+# Italian message catalog for ZWiki
 msgid ""
 msgstr ""
-"Project-Id-Version: ZWiki-0-30-0\n"
+"Project-Id-Version: ZWiki-0-32-0\n"
 "POT-Creation-Date: Sat Jul  3 09:18:06 2004\n"
 "PO-Revision-Date: 2004-06-19 17:49+0200\n"
 "Last-Translator: Lele Gaifax <lele@seldati.it>\n"
@@ -63,7 +64,7 @@ msgstr "Non sei autorizzato ad aggiungere collegamenti a questa pagina ZWiki."
 
 #: i/OutlineSupport.py:737 i/skins/standard/wikipage_macros.pt:218
 msgid "which pages link to this one ?"
-msgstr "quali pagine referenziano questa?"
+msgstr "quali pagine referenziano questa ?"
 
 #: i/OutlineSupport.py:742
 msgid "You are here"
@@ -856,7 +857,7 @@ msgstr "Carica un file o un'immagine"
 
 #: i/skins/standard/editform.pt:165
 msgid "upload a file and link it on this page ?"
-msgstr "allegare un file e inserne un collegamento su questa pagina?"
+msgstr "allegare un file e inserne un collegamento su questa pagina ?"
 
 #: i/skins/standard/editform.pt:175
 msgid "For editing help, see"
@@ -1117,41 +1118,37 @@ msgstr ""
 "(eventualmente) sostituita da questa oppure il nome del sotto argomento"
 
 #: i/skins/standard/wikipage_macros.pt:469
-#, fuzzy
 msgid "reparent"
-msgstr "Aggiorna gerarchia"
+msgstr "riposiziona"
 
 #: i/skins/standard/wikipage_macros.pt:469
 msgid "reparent this page under the page you have entered"
-msgstr ""
+msgstr "riposiziona questa pagina sotto quella che hai inserito"
 
 #: i/skins/standard/wikipage_macros.pt:474
 msgid "rename this page to the name you have entered, updating all links"
-msgstr ""
+msgstr "cambia il nome di questa pagina con quello che hai inserito, aggiornando tutti i riferimenti"
 
 #: i/skins/standard/wikipage_macros.pt:474
-#, fuzzy
 msgid "rename"
-msgstr "nome"
+msgstr "rinomina"
 
 #: i/skins/standard/wikipage_macros.pt:479
 msgid "delete!"
-msgstr ""
+msgstr "cancella!"
 
 #: i/skins/standard/wikipage_macros.pt:479
 msgid ""
 "move this page to the recycle bin, and relink to the name you have entered"
-msgstr ""
+msgstr "sposta questa pagina nel cestino, e ricollega i riferimenti a quella che hai inserito"
 
 #: i/skins/standard/wikipage_macros.pt:484
-#, fuzzy
 msgid "create"
-msgstr "Crea"
+msgstr "crea"
 
 #: i/skins/standard/wikipage_macros.pt:484
-#, fuzzy
 msgid "create a new subtopic of this page"
-msgstr "crea questa pagina"
+msgstr "crea un nuovo sotto argomento di questa pagina"
 
 #: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
 msgid "Backlinks for"
@@ -1504,10 +1501,3 @@ msgstr ""
 #: i/skins/standard/wikipage_macros.pt:440
 msgid "add-comment"
 msgstr "aggiungi un commento"
-
-#, fuzzy
-#~ msgid "add a comment"
-#~ msgstr "aggiungi un commento"
-
-#~ msgid "title"
-#~ msgstr "titolo"
