@@ -266,6 +266,9 @@ class GeneralForms:
         """
         return self.getSkinTemplate('wikipage')(self,REQUEST,
                                                 body=self.render())
+
+    # backwards compatibility
+    wikipage_view = wikipage
            
     security.declareProtected(Permissions.View, 'wikipage_macros')
     def wikipage_macros(self, REQUEST=None):

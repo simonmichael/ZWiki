@@ -65,7 +65,7 @@ factory_type_information = (
      'meta_type': PAGE_METATYPE,
      'product': 'ZWiki',
      'factory': 'addWikiPage',
-     'immediate_view': 'wikipage_view',
+     'immediate_view': 'wikipage',
 
      # Following latest cmf/plone practice, some of these are "views",
      # some are "actions".. I must say I find the distinction rather murky
@@ -75,7 +75,7 @@ factory_type_information = (
      # site, you probably want to put them in the portal_tabs category.
      'actions': ({'id': 'view',
                   'name': 'View',
-                  'action': 'wikipage_view',
+                  'action': 'wikipage',
                   'permissions': (Permissions.View,),
                   'category': 'object',
                   },
