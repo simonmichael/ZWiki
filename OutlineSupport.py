@@ -54,6 +54,7 @@ import Acquisition
 from App.Common import absattr
 from Globals import InitializeClass
 import Persistence
+from OFS.SimpleItem import SimpleItem
 
 import Permissions
 from Utils import flatten, BLATHER
@@ -75,7 +76,7 @@ def deepappend(nesting, page):
     return nesting
 
 class PersistentOutline(
-    Outline.Outline, Acquisition.Implicit, Persistence.Persistent):
+    Outline.Outline, SimpleItem):
     """
     I am a persistent version of Outline.
 
@@ -203,9 +204,14 @@ class OutlineManagerMixin:
         Regenerate the wiki folder's cached outline object.
         """
         BLATHER('saving outline data for wiki',self.folder().getId())
-        self.folder().outline = self.wikiOutlineFromParents()
+        if hasattr(self.folder().aq_base,'outline'):
+            try:
+                self.folder()._delObject('outline')
+            except KeyError: # pre-0.39 outline attribute
+                del self.folder().outline
+        self.folder()._setObject('outline', self.wikiOutlineFromParents())
 
-    # easier alias
+    # easier alias ?
     updatecontents = updateWikiOutline
         
     def wikiOutlineFromParents(self):
