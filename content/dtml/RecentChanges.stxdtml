@@ -13,8 +13,8 @@
  newdays="7"
  now=ZopeTime
  results="pages(
-   lastEditTime=now-days,
-   lastEditTime_usage='range:min',
+   lastEditTime={'query': now-days,
+   'range':'min'}
    )"
  number="_.len(results)"
  >
