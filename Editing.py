@@ -951,8 +951,6 @@ class EditingSupport:
         allowed_page_types property.
         """
         all = map(lambda x:x._id, PAGETYPES)
-        # special case for limi, don't offer WWML in plone - just hard code
-        if self.inCMF(): all.remove('wwml')
         return (filter(lambda x:strip(x),
                        getattr(self,'allowed_page_types',[]))
                 or all)
