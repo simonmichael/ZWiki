@@ -38,7 +38,7 @@
 <dtml-let bold="cat_sequence_item in category and sev_item in severity">
 <dtml-if bold><b></dtml-if>
 <a href="&dtml-URL;?category:list=&dtml.url_quote-cat_sequence_item;&severity:list=&dtml.url_quote-sev_item;&sort_on=status_index"
-><dtml-var "_.len(pages(isIssue=1,category=cat_sequence_item,severity=sev_item,status=status or ''))"
+><dtml-var "_.len(pages(isIssue=1,category=cat_sequence_item,severity=sev_item,status=status or '')) or '&nbsp;'"
 ></a>
 <dtml-if bold></b></dtml-if>
 </dtml-let>
