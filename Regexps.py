@@ -144,8 +144,8 @@ wikiname4        = r'(?:(?<!&)%s(?![%s])|(?<=&)%s(?![%s;]))' \
                    % (wikiname3, U+L, wikiname3, U+L)
 wikiname         = r'!?(%s)' %(wikiname4)
 # tracker support (+ character reference lookbehind/-ahead to avoid &#123;)
-hashnumberexpr   = r'(?:(?<!&)%s|(?<=&)%s(?![%s;]))' \
-                   % (simplehashnumberexpr, simplehashnumberexpr, U+L)
+hashnumberexpr   = r'(?:(?<!&)%s|(?<=&)%s(?![0-9;]))' \
+                   % (simplehashnumberexpr, simplehashnumberexpr)
 wikilink         = r'!?(%s|%s|%s|%s)' % (wikiname4,bracketedexpr,url,hashnumberexpr)
 localwikilink1   = r'(?:%s|%s|%s)' % (wikiname4,bracketedexpr,hashnumberexpr)
 localwikilink    = r'!?(%s)' % (localwikilink1)
