@@ -13,6 +13,10 @@
 	
 	index_object's arguments have changed and the reindex_object and
 	updateCatalog methods are deprecated.
+
+	As noted below, free form links no longer try so hard to find
+	old-style IssueNo issue pages, so if you have broken links of this
+	kind, upgrade your issue page names (/upgradeAll).
 	
     Changes
 
@@ -26,6 +30,9 @@
       Browsing
 
         * preliminary built-in RSS support - FRONTPAGE/pages_rss, /changes_rss
+
+        * freeform links no longer look for both old and new-style issues;
+	  a slight (20%) speedup for rendering freeform links
 
       Issue tracking
 
