@@ -6,7 +6,7 @@
 # check tests pass
 # check for late tracker issues
 # check showAccessKeys,README,content/,skins/,zwiki.org HelpPage,QuickReference
-# update CHANGES.txt from darcs changes
+# update CHANGES.txt from darcs changes (XXX automate brief changes listing)
 # update version.txt
 # make Release
 # update FrontPage,KnownIssues,OldKnownIssues,ReleaseNotes,discussion,#zwiki
