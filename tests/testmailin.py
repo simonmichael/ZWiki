@@ -7,7 +7,6 @@ sys.path.append(Extensions_dir)
 import mailin
 
 THISPAGE    = 'TestPage'
-assert(THISPAGE != mailin.DEFAULTMAILINPAGE) # avoid confusion
 
 TESTSENDER  = 'sender'
 TESTTO      = 'recipient'

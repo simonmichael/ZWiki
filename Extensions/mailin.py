@@ -63,9 +63,6 @@ from Products.ZWiki.Regexps import wikiname1,wikiname2,bracketedexpr
 from Products.ZWiki.Utils import BLATHER
 
 # which page should be used when there is no bracketed page name in the subject
-DEFAULTMAILINPAGE = None 
-#PAGEINSUBJECTEXP = r'(%s|%s)' % (wikiname1,wikiname2)
-#PAGEINSUBJECTEXP = r'(%s|%s|%s)' % (wikiname1,wikiname2,bracketedexpr)
 PAGEINSUBJECTEXP = bracketedexpr
 MAILINADDREXP = r'(wiki|mailin|tracker|bugs|issues)@'
 TRACKERADDREXP = r'(tracker|bugs|issues)@'
@@ -250,9 +247,9 @@ class MailIn:
         
     def defaultMailinPage(self):
         """
-        The default wiki page for receiving mailins. May be None.
+        The name of the wiki's default destination page for mailins, or None.
         """
-        pass
+        return getattr(self.folder(),'default_mailin_page',None)
         
     def decideMailinAction(self):
         """
@@ -276,7 +273,7 @@ class MailIn:
 
         # posting in wiki folder context (the normal case)
 
-        defaultpagename = getattr(self.folder(),'default_mailin_page',None)
+        defaultpagename = self.defaultMailinPage()
 
         # find a page to work from
         #self.workingpage = self.workingPage()
