@@ -231,11 +231,19 @@ class ZWikiPage(
     def render(self, client=None, REQUEST={}, RESPONSE=None, **kw):
         """
         Render this zwiki page according to it's page_type.
+
+        Tries to ensure the HTTP content-type (and charset) have an
+        appropriate value. These may be set by the page type, or
+        overridden by a zwiki_content_type property (LatexWiki support).
+        NB this can also get set in I18nSupport.py.
         """
         if not self.preRendered(): self.preRender()
         retval=self.pageType().render(self, REQUEST, RESPONSE, **kw)
-        if(hasattr(self, 'zwiki_content_type') and RESPONSE):
-            RESPONSE.setHeader('Content-Type', getattr(self, 'zwiki_content_type'))
+        if RESPONSE:
+            if hasattr(self,'zwiki_content_type'):
+                RESPONSE.setHeader('content-type',getattr(self,'zwiki_content_type'))
+            elif not RESPONSE.getHeader('content-type'):
+                RESPONSE.setHeader('content-type','text/html')
         return retval
 
     def preRender(self,clear_cache=0):

@@ -59,8 +59,6 @@ class AbstractPageType:
         """
         Do any final (view-time) rendering for page.
         """
-        if RESPONSE:
-            RESPONSE.setHeader('Content-Type', 'text/html')
         return page.preRendered()
 
     def preRenderMessages(self,page):
