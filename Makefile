@@ -226,8 +226,7 @@ revert:
 
 restart:
 	@echo restarting zope on $(HOST)
-	ssh $(HOST) '/instance/zope_stop;sleep 1;/instance/zope_start'
-#	curl -n -sS -o.curllog 'http://$(HOST)/Control_Panel/manage_restart'
+	ssh $(HOST) 'zopectl restart'
 
 refresh-%.po:
 	@echo refreshing $(PRODUCT) $*.po file on $(HOST)
