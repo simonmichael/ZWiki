@@ -21,9 +21,9 @@ class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
         self.assertEquals(self.page.excerptAt('this*',size=21,highlight=1),
                           '<span class="hit" style="background-color:yellow;font-weight:bold;">This</span> is a tes')
         self.assertEquals(self.page.excerptAt('br',size=4),
-                          'e&lt;<span class="hit" style="background-color:yellow;font-weight:bold;">br</span>&gt;\n')
+                          'e&lt;<span class="hit" style="background-color:yellow;font-weight:bold;">br</span> /')
         self.assertEquals(self.page.excerptAt('<br />',size=4,highlight=0),
-                          'e&lt;br&gt;\n')
+                          '&lt;br /&gt;')
         self.assertEquals(self.page.excerptAt('nomatch'),'')
         self.assertEquals(self.page.excerptAt(''),'')
 
