@@ -692,7 +692,7 @@ List-Help: <%s>
             admin = getattr(self.folder(),'mail_admin',None)
             if admin:
                 try:
-                    self.sendMailTo(
+                    self.sendMailTo( #XXX possible infinite recursion ?
                         [],text,REQUEST,
                         subjectSuffix='ERROR, subscriber mailout failed',
                         to=admin)
