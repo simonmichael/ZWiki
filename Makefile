@@ -214,6 +214,10 @@ Clean: clean
 
 # server control
 
+revert: 
+	@echo reverting $(HOST) $(PRODUCT) to standard darcs version
+	@ssh $(HOST) 'cd zwiki;darcs revert -a'
+
 restart:
 	@echo restarting zope on $(HOST)
 	ssh $(HOST) '/instance/zope_stop;sleep 1;/instance/zope_start'
