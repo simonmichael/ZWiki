@@ -60,7 +60,7 @@ class Utils:
         strings = filter(lambda x:type(x)==type(''), strings)
         return len(join(strings,''))
 
-    def summary(self,size=100,paragraphs=1):
+    def summary(self,size=200,paragraphs=1):
         """
         Give a short summary of this page's content.
 
