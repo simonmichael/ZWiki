@@ -242,7 +242,11 @@ class Utils:
         authenticated_name = None
         user = REQUEST.get('AUTHENTICATED_USER')
         if user:
+            #if self.inCMF():
+            #  authenticated_name = self.folder().portal_membership.getMemberById(user.getUserName()).fullname or ''
+            #else:
             authenticated_name = user.getUserName()
+            
             if authenticated_name == str(user.acl_users._nobody):
                 authenticated_name = None
         cookie_name = REQUEST.cookies.get('zwiki_username',None)
