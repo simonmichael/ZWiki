@@ -72,7 +72,7 @@
     </td>
     <td align="left" nowrap="">
       <dtml-if "last_editor and _.string.swapcase(last_editor) != last_editor">
-      <a href="&dtml-wikiurl;/&dtml.url_quote-last_editor;">&dtml-last_editor;</a>
+      <a href="&dtml-wikiurl;/<dtml-var "canonicalIdFrom(last_editor)">">&dtml-last_editor;</a>
       <dtml-else>
       <dtml-translate domain=zwiki>anonymous</dtml-translate>
       </dtml-if>
