@@ -1,7 +1,23 @@
-The Zwiki unit tests. These currently rely on ZopeTestCase; some older
-mock classes in support.py; CMF (permissions used in support.py); and in
-the case of testCMFPlone.py, PloneTestCase, Plone 2, and all it's
-dependencies. They may not pass with zope versions other than 2.6.x.
+The Zwiki unit tests. 
+
+These have not been tested with versions other than Zope 2.7 recently.
+See http://zopewiki.org/TestingZope for help with running these.
+They require
+- the ZopeTestCase package, installed under SOFTWARE_HOME/lib/python/Testing
+- the CMF product(s) (permissions used in support.py)
+- the Plone product(s) (for testCMFPlone.py)
+- two fixes to CMFPlone/tests/PloneTestcase.py::
+
+  default_user = 'testuser' #SKWM ZopeTestCase.user_name no longer exists
+
+ and::
+
+  #SKWM "AttributeError: 'module' object has no attribute 'Functional'"
+  #class FunctionalTestCase(ZopeTestCase.Functional, PloneTestCase):
+  #    '''Convenience class for functional unit testing'''
+
+- TextIndexNG2 installation (?). Do 'python setup.py install' in
+  Products/TextIndexNG2 to install some required c modules.
 
 This test suite has mostly grown opportunistically: tests are added as
 needed, eg when writing a new piece of code, when fixing a bug, or when
