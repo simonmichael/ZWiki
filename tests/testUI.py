@@ -14,7 +14,7 @@ class UITests(ZopeTestCase.ZopeTestCase):
     def test_DEFAULT_TEMPLATES(self):
         DEFAULT_TEMPLATES = ZWiki.UI.DEFAULT_TEMPLATES
         # do we have the usual complement of default templates ?
-        self.assertEqual(len(DEFAULT_TEMPLATES),20)
+        self.assertEqual(len(DEFAULT_TEMPLATES),21)
         # do all default templates have meta_types ? this has been fragile
         self.failIf(filter(lambda x:not hasattr(x,'meta_type'),DEFAULT_TEMPLATES.values()))
 

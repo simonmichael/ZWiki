@@ -12,98 +12,10 @@ from Globals import package_home
 from Utils import BLATHER,formattedTraceback
 from Defaults import ISSUE_CATEGORIES, ISSUE_SEVERITIES, ISSUE_STATUSES, \
      ISSUE_COLOURS
+from UI import DEFAULT_TEMPLATES, loadDtmlMethod, loadPageTemplate#, onlyBodyFrom
 
-ISSUE_FORM = DocumentTemplate.HTML ('''
-<!-- start of issue property form -->
-<form action="&dtml-page_url;/changeIssueProperties" method="post">
-<table border="0" cellspacing="0" cellpadding="5"
-bgcolor="&dtml-issueColour;">
-<tr><td>
-**Description:**
-<b><input type="text" name="title" value="<dtml-var "title[12:]" missing html_quote>" size="50" maxlength="200" style="font-weight:bold"></b>
-<dtml-let
-  highnumber="0#_.int(Catalog(isIssue=1,sort_on='id')[-2].id[7:11])"
-  thisnumber="_.int(id()[7:11])"
-  previous="'IssueNo'+_.string.zfill(thisnumber-1,4)"
-  next="'IssueNo'+_.string.zfill(thisnumber+1,4)"
-  issue_categories="_.getattr(this(),'issue_categories','') or \
-                    ['general']"
-  issue_severities="_.getattr(this(),'issue_severities','') or \
-                    ['serious','normal','wishlist']"
-  issue_statuses="_.getattr(this(),'issue_statuses','') or \
-                    ['open','closed']"
->
-<dtml-comment>
-<a href="&dtml-previous;">&lt;&lt;</a>&nbsp;<a <dtml-try>
-href="<dtml-var "pageWithName(parents[0]).getId()">?&dtml-QUERY_STRING;">^^</a>&nbsp;<a 
-<dtml-except></dtml-try>href="&dtml-next;">&gt;&gt;</a>
-</dtml-comment>
-<br>
-**Category:**
-<select name="category">
-<dtml-in issue_categories prefix=x>
-<option <dtml-if "category==x_sequence_item">selected</dtml-if>>
-&dtml-x_sequence_item;</option>
-</dtml-in>
-</select> 
-**Severity:**
-<select name="severity">
-<dtml-in issue_severities prefix=x>
-<option <dtml-if "severity==x_sequence_item">selected</dtml-if>>
-&dtml-x_sequence_item;</option>
-</dtml-in>
-</select> 
-**Status:**
-<select name="status">
-<dtml-in issue_statuses prefix=x>
-<option <dtml-if "status==x_sequence_item">selected</dtml-if>>
-&dtml-x_sequence_item;</option>
-</dtml-in>
-</select>
-</dtml-let>
-<br><b>Optional note:</b> <input type="text" name="log" value="" size="55" maxlength="55">&nbsp;
-<input name="submit" type="submit" value="Change">
-<br>
-**Submitted by:**
-<dtml-var "_.getattr(this(),'creator','') or '(unknown)'">
-**at:**
-<dtml-var creation_time missing=""><dtml-let
-creation_time="_.getattr(this(),'creation_time','')"
-creation="_.DateTime(_.getattr(this(),'creation_time','') or 1007105000)"
-current="_.DateTime(ZopeTime().strftime('%Y/%m/%d %H:%M:%S'))"
-elapsed="current-creation"
-hourfactor="0.041666666666666664"
-minutefactor="0.00069444444444444447"
-secondsfactor="1.1574074074074073e-05"
-days="_.int(_.math.floor(elapsed))"
-weeks="days / 7"
-months="days / 30"
-years="days / 365"
-hours="_.int(_.math.floor((elapsed-days)/hourfactor))"
-minutes="_.int(_.math.floor((elapsed-days-hourfactor*hours)/minutefactor))"
-seconds="_.int(_.round((elapsed-days-hourfactor*hours-minutefactor*minutes)/secondsfactor))"
->(<dtml-unless creation_time>unknown, ></dtml-unless><dtml-if years>
-<dtml-var years> year<dtml-var "years > 1 and 's' or ''">
-<dtml-elif months>
-<dtml-var months> month<dtml-var "months > 1 and 's' or ''">
-<dtml-elif weeks>
-<dtml-var weeks> week<dtml-var "weeks > 1 and 's' or ''">
-<dtml-elif days>
-<dtml-var days> day<dtml-var "days > 1 and 's' or ''">
-<dtml-elif hours>
-<dtml-var hours> hour<dtml-var "hours > 1 and 's' or ''">
-<dtml-elif minutes>
-<dtml-var minutes> minute<dtml-var "minutes > 1 and 's' or ''">
-<dtml-else>
-<dtml-var seconds> second<dtml-var "seconds > 1 and 's' or ''">
-</dtml-if> ago)
-</dtml-let>
-<br>
-**Details & comments:**
-</td></tr></table>
-</form>
-<!-- end of issue property form -->
-''')
+DEFAULT_TEMPLATES['issuepropertiesform'] = loadDtmlMethod('issuepropertiesformdtml')
+
 
 class TrackerSupport:
     """
@@ -125,7 +37,7 @@ class TrackerSupport:
         with a DTML method (XXX or python script).
         """
         if hasattr(self.folder(), 'isIssue'):
-            return self.folder().isIssue(self,REQUEST)
+            return self.folder().isIssue(self)
         else:
             if (re.match(r'^IssueNo',self.title_or_id())
                 or self.pageTypeId() == 'issuedtml'): # backwards compatibility
@@ -147,7 +59,7 @@ class TrackerSupport:
         Add an issue property form above the rendered page text.
         """
         REQUEST = getattr(self,'REQUEST',None)
-        return self.stxToHtml(ISSUE_FORM.__call__(self, REQUEST)) + body
+        return self.stxToHtml(self.issuepropertiesform(REQUEST=REQUEST)) + body
             
     security.declareProtected(Permissions.View, 'issueColour')
     def issueColour(self):
@@ -349,6 +261,16 @@ class TrackerSupport:
             return 1 + list(self.issue_statuses).index(self.status)
         except (AttributeError,ValueError):
             return 0
+
+    # UI methods
+
+    security.declareProtected(Permissions.View, 'issuepropertiesform')
+    def issuepropertiesform(self, REQUEST=None):
+        """
+        Render the issue properties form as a (customizable) HTML fragment.
+        """
+        #return onlyBodyFrom(
+        return self.getSkinTemplate('issuepropertiesform')(self,REQUEST)
 
     # setup methods
 
