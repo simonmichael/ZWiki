@@ -94,7 +94,7 @@ def addZWikiWebFromFs(self, new_id, title='', wiki_type='zwikidotorg',
     filenames = os.listdir(dir)
     # hmm auto-cataloging is really slowing this down!
     for filename in filenames:
-        if re.match(r'(?:\.(?:svn|cvs)|CVS)', filename): continue
+        if re.match(r'(?:\.(?:svn|cvs|.*\.swp$)|CVS)', filename): continue
         m = re.search(r'(.+)\.(.+)',filename)
         id, type = filename, ''
         if m: id, type = m.groups()
