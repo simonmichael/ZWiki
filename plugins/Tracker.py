@@ -239,7 +239,7 @@ class TrackerSupport:
         Get the next available issue number.
 
         Does a catalog search, so REQUEST may be required to authenticate
-        and get the proper results.
+        and get the proper results. I think.
         """
         issues = self.pages(isIssue=1,sort_on='id',REQUEST=REQUEST)
         if issues:

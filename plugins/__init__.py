@@ -10,8 +10,6 @@
 # moved here and pluginised. Some of them still have dependencies in other
 # parts of the code, eg
 #
-# - plugin-provided fields are named in Defaults.PAGE_METADATA
-#
 # - Editing calls purple numbers when setting text
 # 
 # - some page types call purple numbers during rendering
