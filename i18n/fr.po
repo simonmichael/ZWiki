@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: ZWiki-0-30-0dev\n"
 "POT-Creation-Date: Fri May 28 12:08:37 2004\n"
 "PO-Revision-Date: 2004-05-27 14:09-0700\n"
-"Last-Translator: Nicolas Laurent <foenyx(at)online(dot)fr>, Raphael Badin "
-"<raphael(dot)badin(at)sopinspace(dot)com>\n"
+"Last-Translator: Nicolas Laurent <foenyx(at)online(dot)fr>,"
+"Raphael Badin <raphael(dot)badin(at)sopinspace(dot)com>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -141,7 +141,7 @@ msgstr "Cliquez sur le boutton «Page Précédente» de votre navigateur"
 
 #: i/UI.py:513
 msgid "Copy your recent edits to the clipboard"
-msgstr "Copiez vos modifications dans le presse-papier"
+msgstr "Copiez vos modifications dans le presse-papiers"
 
 #: i/UI.py:514
 msgid "Click your browser's refresh button"
@@ -167,7 +167,7 @@ msgstr "Pour abandonner vos changements et recommencer, cliquez sur OK"
 
 #: i/UI.py:527
 msgid "Page is locked"
-msgstr "La page est vérouillée"
+msgstr "La page est verouillée"
 
 #: i/UI.py:538
 msgid ""
@@ -180,12 +180,12 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"            Un vérrou webDAV est posé sur cette page.\n"
+"            Un verrou webDAV est posé sur cette page.\n"
 "            Quelqu'un est probablement en train de la modifier avec un\n"
 "            éditeur externe. Attendez qu'il ait fini, puis réessayer. \n"
 "            Si vous avez fait des changements,\n"
 "            vous devriez copier et enregistrer votre version du texte pour\n"
-"            vous y réferer ultérieurement.\n"
+"            vous y référer ultérieurement.\n"
 "            "
 
 #: i/UI.py:545
@@ -255,8 +255,7 @@ msgstr ""
 "        v    voir la page\n"
 "        +    afficher toutes les caractéristiques (mode «complet»)\n"
 "        =    afficher les caractéristiques de base (mode «simple»)\n"
-"        -    afficher seulement caractéristiques essentielles (mode "
-"«minimal»)\n"
+"        -    afficher seulement caractéristiques essentielles (mode «minimal»)\n"
 "        m    abonnement par courriel\n"
 "        b    afficher les rétroliens (liens vers cette page)\n"
 "        d    afficher les différences (historique des dernières éditions)\n"
@@ -364,24 +363,26 @@ msgid ""
 "choose to upload an existing html file from your local computer by clicking "
 "the <i>Browse</i> button."
 msgstr ""
+"Vous pouvez créer un nouvel object de page ZWiki en utilisant le formulaire "
+"ci-dessous. Vous pouvez aussi choisir de transférer un fichier html existant, "
+"depuis votre ordinateur vers le Wiki, en cliquant sur le boutton <i>Parcourir</i>."
 
 #: i/skins/dtmlmessages.pt:14
-#, fuzzy
 msgid "File"
-msgstr "simple"
+msgstr "Fichier"
 
 #: i/skins/dtmlmessages.pt:15
 msgid "Add"
-msgstr ""
+msgstr "Ajouter"
 
 #: i/skins/dtmlmessages.pt:16
 msgid "Add and Edit"
-msgstr ""
+msgstr "Ajouter et Modifier"
 
 #: i/skins/dtmlmessages.pt:17 i/skins/dtmlmessages.pt:18
 #: i/skins/dtmlmessages.pt:26
 msgid "Enter a word"
-msgstr ""
+msgstr "Entrer un mot"
 
 #: i/skins/dtmlmessages.pt:19
 msgid "Name"
@@ -389,7 +390,7 @@ msgstr "Nom"
 
 #: i/skins/dtmlmessages.pt:2 i/skins/dtmlmessages.pt:3
 msgid "Add a ZWiki web"
-msgstr ""
+msgstr "Ajouter une toile ZWiki"
 
 #: i/skins/dtmlmessages.pt:20
 msgid "Category"
@@ -417,30 +418,27 @@ msgstr "Détails & commentaires"
 
 #: i/skins/dtmlmessages.pt:4 i/skins/dtmlmessages.pt:12
 msgid "Id"
-msgstr ""
+msgstr "Identifiant"
 
 #: i/skins/dtmlmessages.pt:5 i/skins/dtmlmessages.pt:13
 msgid "Title"
-msgstr ""
+msgstr "Titre"
 
 #: i/skins/dtmlmessages.pt:6
-#, fuzzy
 msgid "Type"
 msgstr "type"
 
 #: i/skins/dtmlmessages.pt:7
-#, fuzzy
 msgid "Create wiki"
-msgstr "Créer"
+msgstr "Créer le wiki"
 
 #: i/skins/dtmlmessages.pt:8
 msgid "and enter"
-msgstr ""
+msgstr "et entrer"
 
 #: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:10
-#, fuzzy
 msgid "Add ZWiki Page"
-msgstr "Changements récents du Wiki"
+msgstr "Ajouter une page ZWiki"
 
 # Default: ""
 # "You can change this page's parent(s) to place it within the overall page\n"
@@ -506,7 +504,7 @@ msgstr "Commentaire optionnel sur ce changement"
 
 #: i/skins/standard/editform.pt:143
 msgid "a note makes RecentChanges more useful"
-msgstr "un commentaire rend la page RecentChanges plus utile"
+msgstr "un commentaire rend la page des changements récents plus utile"
 
 #: i/skins/standard/editform.pt:161
 msgid "Upload a file or image"
@@ -609,14 +607,12 @@ msgid "voting as"
 msgstr "Voter en tant que"
 
 #: i/skins/standard/subscribeform.pt:102
-#, fuzzy
 msgid " Unsubscribe from this page "
-msgstr "Désabonnez-vous du wiki dans sa totalité"
+msgstr " Désabonnez-vous de cette page "
 
 #: i/skins/standard/subscribeform.pt:109
-#, fuzzy
 msgid " Subscribe to this page "
-msgstr "créer cette page"
+msgstr " Abonnez-vous à cette page "
 
 #: i/skins/standard/wikipage.pt:65
 msgid "search all pages"
@@ -763,7 +759,6 @@ msgid "go to home page"
 msgstr "Aller sur la page d'accueil"
 
 #: i/skins/standard/wikipage_macros.pt:400
-#, fuzzy
 msgid "replying"
 msgstr "répondre"
 
@@ -782,7 +777,6 @@ msgid "1 subscriber"
 msgstr "1 abonné"
 
 #: i/skins/standard/wikipage_macros.pt:438
-#, fuzzy
 msgid "no subscribers"
 msgstr "aucun abonné"
 
@@ -1057,10 +1051,10 @@ msgstr "Abonnés au Wiki"
 msgid "subscribe_desc"
 msgstr ""
 "Vous pouvez vous abonner à cette page ou au Wiki dans sa totalité.\n"
-"          Les abonnés reçoivent une copie des commentaires par "
-"courriel           (mais pas les modifications générales, à moins que cette "
-"fonctionnalité\n"
-"          n'ai été activée pas l'administrateur du site).\n"
+"          Les abonnés reçoivent une copie des commentaires par\n"
+"          courriel (mais pas les modifications générales, à moins\n"
+"          que cette fonctionnalité n'ai été activée par\n"
+"          l'administrateur du site).\n"
 "          Ou retourner à"
 
 #: i/skins/zwiki_plone/subscribeform.pt:49
@@ -1100,14 +1094,13 @@ msgstr ""
 "                à cette page"
 
 #: i/skins/zwiki_plone/subscribeform.pt:78
-#, fuzzy
 msgid "Unsubscribe from this page"
-msgstr "Désabonnez-vous du wiki dans sa totalité"
+msgstr "Désabonnez-vous de cette page"
 
 #: i/skins/zwiki_plone/subscribeform.pt:85
 #, fuzzy
 msgid "Subscribe to this page"
-msgstr "créer cette page"
+msgstr "Abonnez-vous à cette page"
 
 # Default: ""
 # "You are currently subscribed<br />\n"
