@@ -215,7 +215,7 @@ class MailIn:
         
         """
         # update the banned links property
-        if hasattr(folder,'banned_links'):
+        if hasattr(self.folder(),'banned_links'):
             banned_links = list(self.folder().banned_links)
             spam_links = re.findall(
                 r'((?:http|https|ftp|mailto|file):/*%s)' % urlchars,
