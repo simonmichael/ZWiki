@@ -208,8 +208,11 @@ class UIUtils:
             return body
 
         folder = self.folder()
-        if hasattr(folder,'wikipage') and isPageTemplate(folder.wikipage):
-            return folder.wikipage.__of__(self)(self,REQUEST,body=body,**kw)
+        skintemplate = kw.get('skin','wikipage')
+        if (hasattr(folder,skintemplate) and
+            isPageTemplate(getattr(folder,skintemplate))):
+            return getattr(folder,skintemplate).__of__(self)(
+                self,REQUEST,body=body,**kw)
         elif (hasattr(folder,'standard_wiki_header') and
               hasattr(folder,'standard_wiki_footer')):
             return self.getSkinTemplate('standard_wiki_header')(self,REQUEST)+\
