@@ -460,18 +460,16 @@ class SubtopicsPropertyMixin:
         """
         Decide in a complicated way if this page should display it's subtopics.
 
-        First, the folder must have a true show_subtopics property (can
-        acquire). Then, we look for another true or false show_subtopics
-        property in:
-        - a keyword argument
-        - REQUEST
-        - the current page
-        - our primary ancestor pages, all the way to the top,
-        and return the first one we find,
-        or default to true if it's not found in any of those places.
+        First, if the folder has a show_subtopics property (can acquire)
+        and it's false, we will never show subtopics.  Otherwise look for
+        a show_subtopics property
+        - in REQUEST
+        - on the current page
+        - on our primary ancestor pages, all the way to the top,
+        and return the first one we find. Otherwise return true.
         """
         prop = 'show_subtopics'
-        if getattr(self.folder(),prop,0):
+        if getattr(self.folder(),prop,1):
             if kw.has_key(prop):
                 return kw[prop] and 1
             elif hasattr(self,'REQUEST') and hasattr(self.REQUEST,prop):
