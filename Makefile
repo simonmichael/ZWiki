@@ -161,14 +161,14 @@ testd:
 	  python test.py -v --libdir $$PWD/tests
 
 # test a single module
-#test%:
-#	export PYTHONPATH=/zope/lib/python:/zope1; \
-#	  python /zope1/Products/ZWiki/test.py --libdir /zope1/Products/ZWiki/tests -f /zope1/Products/ZWiki/tests/test$*.py
+test%:
+	SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope1 PYTHONPATH=/zope/lib/python \
+	  python tests/test$*.py
 
 # test with argument(s)
-test%:
-	export PYTHONPATH=/zope/lib/python:/zope1; \
-	  python test.py -v --libdir $$PWD/tests $*
+#test%:
+#	export PYTHONPATH=/zope/lib/python:/zope1; \
+#	  python test.py -v --libdir $$PWD/tests $*
 
 test: testd
 
