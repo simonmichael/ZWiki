@@ -470,6 +470,29 @@ class ZWikiPage(
         """
         return re.sub(wikilink, r'!\1', match.group(1))
 
+    def spacedWikinamesEnabled(self):
+        """Should all wikinames be displayed with spaces in this wiki ?"""
+        return getattr(self.folder(),'spaced_wikinames',0) and 1
+
+    security.declareProtected(Permissions.View, 'canonicalNameFrom')
+    def formatWikiname(self,wikiname):
+        """
+        Convert a wikiname to this wiki's standard display format.
+
+        Ie, leave it be or add ungodly spaces depending on the
+        'spaced_wikinames' property.
+
+        Not used yet, probably a waste of time.
+        """
+        if self.spacedWikinamesEnabled():
+            spaced = wikiname[0]
+            for c in wikiname[1:]:
+                if c in string.uppercase: spaced += ' '
+                spaced += c
+            return spaced
+        else: 
+            return wikiname
+
     def renderLink(self,link,allowed=0,state=None,text='',
                    link_title=None,access_key=None):
         """
@@ -532,7 +555,7 @@ class ZWikiPage(
                 re.match(bracketedexpr,linkorig)): #was processed above
             return link
 
-        # we have a wikiname - does a matching page exist in this wiki ?
+        # we have a wiki link! Does a matching page exist in this wiki ?
         if self.pageWithNameOrId(link):
             # the wikiname might not be the page id if international
             # characters have been enabled in wiki names but not page ids
@@ -674,7 +697,7 @@ class ZWikiPage(
         Return the name of this wiki page.
 
         This is normally in the title attribute, but use title_or_id
-        to handle eg pages created in the ZMI.
+        to handle eg pages created via the ZMI.
         """
         return self.title_or_id()
     
