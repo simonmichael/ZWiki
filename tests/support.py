@@ -161,13 +161,6 @@ class MockZWikiPage(ZWikiPage):
     def cb_isMoveable(self):
         return 1
 
-    # MZP confuses the real isIssue
-    def isIssue(self,client=None,REQUEST=None,RESPONSE=None,**kw):
-        if (self.pageTypeId() == 'issuedtml' or 
-            re.match(r'^IssueNo[0-9]+',self.title_or_id())):
-            return 1
-        else:
-            return 0
 
 
 # neutralize PTS to get most tests working.. see also testI18n.py
