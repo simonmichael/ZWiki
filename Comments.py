@@ -126,6 +126,16 @@ class CommentsSupport:
         except (DateTimeSyntaxError,AttributeError,IndexError):
             return 'From %s\n' % email
 
+    def messageIdFromTime(self,time):
+        """
+        Generate a somewhat unique email message-id based on a DateTime
+        """
+        msgid = time.strftime('%Y%m%d%H%M%S')+time.rfc822()[-5:]+'@'
+        if hasattr(self,'REQUEST'):
+            msgid += re.sub(r'http://','',self.REQUEST.get('SERVER_URL',''))
+        msgid = '<%s>' % msgid
+        return msgid
+
     security.declareProtected(Permissions.View, 'upgradeComments')
     def upgradeComments(self,REQUEST=None):
         """

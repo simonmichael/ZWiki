@@ -8,13 +8,13 @@ from TextFormatter import TextFormatter
 from Utils import html_unquote,BLATHER,formattedTraceback,stripList
 from Defaults import AUTO_UPGRADE, PAGE_METATYPE
 
-class MailSupport:                 
+
+class SubscriberManagerMixin:
     """
-    This mixin class provides subscription and wikimail support.
+    This mixin class adds subscriber management to a wiki page (and folder).
 
     Responsibilities: manage a list of subscribers for both this page and
-    it's folder, and expose these in the ZMI; also provide wikimail
-    utilities and auto-upgrade support.
+    it's folder, and expose these in the ZMI; also do auto-upgrading.
 
     A "subscriber" is a string which may be either an email address or a
     CMF member username. A list of these is kept in the page's and/or
@@ -339,30 +339,13 @@ class MailSupport:
         if 'whole_wiki' in subs: subs.remove('whole_wiki')
         return subs
 
-    ## utilities ################################################
-
-    def isMailoutEnabled(self):
-        """
-        True if mailout has been configured
-        """
-        if (hasattr(self,'MailHost') and
-            (getattr(self.folder(),'mail_from',None) or
-             getattr(self.folder(),'mail_replyto',None))):
-            return 1
-        else:
-            return 0
-
-    def mailoutPolicy(self):
-        """
-        Get my mail-out policy - comments or edits ?
-        """
-        return getattr(self,'mailout_policy','comments')
-
     def autoSubscriptionEnabled(self):
         if getattr(self,'auto_subscribe',0):
             return 1
         else:
             return 0
+
+    # utilities
 
     def isEmailAddress(self,s):
         """
@@ -436,15 +419,79 @@ class MailSupport:
                 pass
             return usernames
 
-    def messageIdFromTime(self,time):
+        
+
+class MailSupport:
+    """
+    This mixin class provides mail-out support and general mail utilities.
+    """
+
+    def isMailoutEnabled(self):
         """
-        Generate a somewhat unique email message-id based on a DateTime
+        Has mailout been configured ?
         """
-        msgid = time.strftime('%Y%m%d%H%M%S')+time.rfc822()[-5:]+'@'
-        if hasattr(self,'REQUEST'):
-            msgid += re.sub(r'http://','',self.REQUEST.get('SERVER_URL',''))
-        msgid = '<%s>' % msgid
-        return msgid
+        if (hasattr(self,'MailHost') and
+            (getattr(self.folder(),'mail_from',None) or
+             getattr(self.folder(),'mail_replyto',None))):
+            return 1
+        else:
+            return 0
+
+    def mailoutPolicy(self):
+        """
+        Get my mail-out policy - comments or edits ?
+        """
+        return getattr(self,'mailout_policy','comments')
+
+    def formatMailout(self, text):
+        """
+        Format some text (usually a page diff) for email delivery.
+
+        This is supposed to present a diff, but in the most human-readable
+        and clutter-free way possible, since people may be receiving many
+        of these. In the case of a simple comment, it should look as if
+        the comment was just forwarded out.  See
+        test_formatMailout/testEndToEndCommentFormatting for examples.
+
+        """
+        if not text: return ''
+        
+        # try to do some useful formatting
+        # wrap and fill each paragraph, except indented ones,
+        # and preserve citation prefixes
+        paragraphs = stripList(split(text,'\n\n'))
+        for i in range(len(paragraphs)):
+            p = paragraphs[i]
+            indent = len(p) - len(lstrip(p))
+            #if indent or p[0] == '>': continue
+            if indent: continue
+            m = re.match(r'^[>\s]+',p)
+            if m:
+                prefix = m.group()
+                p = re.sub(r'(?m)^'+prefix,'',p)
+            else:
+                prefix = ''
+            # TextFormatter loses a trailing newline
+            # (and a single leading newline, but that shouldn't apply)
+            if p[-1] == '\n': nl = '\n'
+            else: nl = ''
+            p = TextFormatter([{'width':70-len(prefix),
+                                'margin':0,
+                                'fill':1,
+                                'pad':0}]).compose([p])
+            p = re.sub(r'(?m)^',prefix,p)
+            p += nl
+            paragraphs[i] = p
+            
+        text = join(paragraphs,'\n\n')
+
+        # strip leading newlines
+        text = re.sub(r'(?s)^\n+',r'',text)
+        # strip trailing newlines
+        text = re.sub(r'(?s)\n+$',r'\n',text)
+        # lose any html quoting
+        text = html_unquote(text)
+        return text
 
     def sendMailToSubscribers(self, text, REQUEST, subjectSuffix='',
                               subject='',message_id=None,in_reply_to=None,
@@ -630,9 +677,11 @@ List-Help: <%s>
             #             msg)
             #BLATHER('sending mailout:\n%s' % msg)
             #mhost.send(msg)
+
         else:
             BLATHER('sending mailout:\n%s' % msg)
             mhost.send(msg)
+
         # cc comments to an IRC channel via ciabot (or similar)
         # sent separately so we can provide the special subject 
         mail_irc_address = getattr(self.folder(),'mail_irc_address',None)
@@ -669,55 +718,6 @@ Subject: %s
                signature,
                ))
 
-    def formatMailout(self, text):
-        """
-        Format some text (usually a page diff) for email delivery.
-
-        This is supposed to present a diff, but in the most human-readable
-        and clutter-free way possible, since people may be receiving many
-        of these. In the case of a simple comment, it should look as if
-        the comment was just forwarded out.  See
-        test_formatMailout/testEndToEndCommentFormatting for examples.
-
-        """
-        if not text: return ''
-        
-        # try to do some useful formatting
-        # wrap and fill each paragraph, except indented ones,
-        # and preserve citation prefixes
-        paragraphs = stripList(split(text,'\n\n'))
-        for i in range(len(paragraphs)):
-            p = paragraphs[i]
-            indent = len(p) - len(lstrip(p))
-            #if indent or p[0] == '>': continue
-            if indent: continue
-            m = re.match(r'^[>\s]+',p)
-            if m:
-                prefix = m.group()
-                p = re.sub(r'(?m)^'+prefix,'',p)
-            else:
-                prefix = ''
-            # TextFormatter loses a trailing newline
-            # (and a single leading newline, but that shouldn't apply)
-            if p[-1] == '\n': nl = '\n'
-            else: nl = ''
-            p = TextFormatter([{'width':70-len(prefix),
-                                'margin':0,
-                                'fill':1,
-                                'pad':0}]).compose([p])
-            p = re.sub(r'(?m)^',prefix,p)
-            p += nl
-            paragraphs[i] = p
-            
-        text = join(paragraphs,'\n\n')
-
-        # strip leading newlines
-        text = re.sub(r'(?s)^\n+',r'',text)
-        # strip trailing newlines
-        text = re.sub(r'(?s)\n+$',r'\n',text)
-        # lose any html quoting
-        text = html_unquote(text)
-        return text
 
 #if __name__ == '__main__':
 #    import contract, doctest, Mail

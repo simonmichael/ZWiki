@@ -69,7 +69,7 @@ from Utils import Utils, BLATHER
 from UI import UI
 from OutlineSupport import OutlineSupport
 from Diff import DiffSupport
-from Mail import MailSupport
+from Mail import SubscriberManagerMixin, MailSupport
 from CatalogAwareness import CatalogAwareness
 from Tracker import TrackerSupport
 from CMF import CMFAwareness
@@ -110,6 +110,7 @@ class ZWikiPage(
     OutlineSupport,
     DiffSupport,
     MailSupport,
+    SubscriberManagerMixin,
     CatalogAwareness,
     TrackerSupport,
     CMFAwareness,
@@ -159,7 +160,7 @@ class ZWikiPage(
         {'id':'last_log', 'type': 'string', 'mode': 'r'},
         ) \
         + OutlineSupport._properties \
-        + MailSupport._properties \
+        + SubscriberManagerMixin._properties \
         + CatalogAwareness._properties
 
     meta_type = PAGE_METATYPE
