@@ -11,11 +11,40 @@ from Globals import InitializeClass, package_home
 from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER,formattedTraceback
-from Products.ZWiki.Defaults import ISSUE_CATEGORIES, ISSUE_SEVERITIES, ISSUE_STATUSES, \
-     ISSUE_COLOURS
 from Products.ZWiki.UI import DEFAULT_TEMPLATES, loadDtmlMethod, loadPageTemplate#, onlyBodyFrom
 
 DEFAULT_TEMPLATES['issuepropertiesform'] = loadDtmlMethod('issuepropertiesformdtml')
+
+# issue tracker defaults, will be installed as folder properties
+ISSUE_CATEGORIES = [
+    'general',
+    ]
+ISSUE_SEVERITIES = [
+    'critical',
+    'serious',
+    'normal',
+    'minor',
+    'wishlist',
+    ]
+ISSUE_STATUSES = [
+    'open',
+    'pending',
+    'closed',
+    ]
+# this is a list of strings like 'category,status,severity,colour' any of
+# which may be empty (a wildcard). The first entry matching the issue
+# will be used.
+ISSUE_COLOURS = [
+    ',open,critical ,#ff2222',
+    ',open,serious  ,#ff6060',
+    ',open,normal   ,#ffbbbb',
+    ',open,minor    ,#ffdddd',
+    ',open,wishlist ,#e0e0e0',
+    ',open,         ,#ffe0e0',
+    ',pending,      ,#ffcc77',
+    ',closed,       ,#e0f0e0',
+    ',,             ,',
+    ]
 
 
 class TrackerSupport:

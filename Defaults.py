@@ -1,5 +1,6 @@
 ######################################################################
 # global flags and constants for ZWiki
+# see also plugins/*
 
 DISABLE_JAVASCRIPT = 1       # disable javascript, etc. in edits ?
 PREFER_USERNAME_COOKIE = 0   # prefer cookie to authenticated name ?
@@ -18,36 +19,6 @@ PAGE_PORTALTYPE =    'Wiki Page'  # content type used in CMF/Plone
 WIKI_ADD_MENU_NAME = 'ZWiki'      # items in ZMI add menu.. 
 PAGE_ADD_MENU_NAME = 'ZWiki Page' # (this one must match PAGE_METATYPE)
 
-# issue tracker defaults, will be installed as folder properties
-ISSUE_CATEGORIES = [
-    'general',
-    ]
-ISSUE_SEVERITIES = [
-    'critical',
-    'serious',
-    'normal',
-    'minor',
-    'wishlist',
-    ]
-ISSUE_STATUSES = [
-    'open',
-    'pending',
-    'closed',
-    ]
-# this is a list of strings like 'category,status,severity,colour' any of
-# which may be empty (a wildcard). The first entry matching the issue
-# will be used.
-ISSUE_COLOURS = [
-    ',open,critical ,#ff2222',
-    ',open,serious  ,#ff6060',
-    ',open,normal   ,#ffbbbb',
-    ',open,minor    ,#ffdddd',
-    ',open,wishlist ,#e0e0e0',
-    ',open,         ,#ffe0e0',
-    ',pending,      ,#ffcc77',
-    ',closed,       ,#e0f0e0',
-    ',,             ,',
-    ]
 
 # standard metadata fields Zwiki expects to be in page brain objects
 # for best large-wiki performance, ensure these are in catalog metadata
