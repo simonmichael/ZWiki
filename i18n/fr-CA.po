@@ -1,0 +1,271 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Zwiki 0.9.10\n"
+"POT-Creation-Date: Fri Mar 19 22:50:31 2004\n"
+"PO-Revision-Date: 2002-06-18 18:08+0000\n"
+"Last-Translator: Joanne Plouffe <pjoanne@sympatico.ca>\n"
+"Language-Team: French-canadian <fr-CA@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-code: fr-CA\n"
+"Language-name: French (Canadian)\n"
+"Preferred-encodings: utf-8 latin1\n"
+"Domain: zwiki\n"
+
+#: i/Admin.py:102
+#, fuzzy
+msgid "You are not authorized to upgrade all pages."
+msgstr "Vous n'êtes pas autorisé à télécharger ici des fichiers."
+
+#: i/Admin.py:103
+msgid "(folder -> Manage properties)"
+msgstr ""
+
+#: i/Editing.py:156
+#, fuzzy
+msgid "You are not authorized to comment on this ZWiki Page."
+msgstr "Vous n'êtes pas autorisé à éditer cette page ZWiki."
+
+#: i/Editing.py:462
+#, fuzzy
+msgid ""
+"You are not authorized to reparent or change subtopics links on this ZWiki "
+"Page."
+msgstr "Vous n'êtes pas autorisé à ajouter un lien sur cette page ZWiki."
+
+#: i/Editing.py:484
+msgid "You are not authorized to change this ZWiki Page's type."
+msgstr "Vous n'êtes pas autorisé à changer ce type de page ZWiki."
+
+#: i/Editing.py:517 i/Editing.py:540
+msgid "You are not authorized to edit this ZWiki Page."
+msgstr "Vous n'êtes pas autorisé à éditer cette page ZWiki."
+
+#: i/Editing.py:543 i/Editing.py:584
+msgid "You are not authorized to delete this ZWiki Page."
+msgstr "Vous n'êtes pas autorisé à supprimer cette page ZWiki."
+
+#: i/Editing.py:59
+msgid "You are not authorized to add ZWiki Pages here."
+msgstr "Vous n'êtes pas autorisé à ajouter ici des pages ZWiki."
+
+#: i/Editing.py:650
+#, fuzzy
+msgid "You are not authorized to rename this ZWiki Page."
+msgstr "Vous n'êtes pas autorisé à renommer cette page ZWiki. "
+
+#: i/Editing.py:696
+msgid ""
+"This page was renamed to %s. You can delete this one if no longer needed.\n"
+msgstr ""
+
+#: i/Editing.py:792
+msgid "You are not authorized to upload files here."
+msgstr "Vous n'êtes pas autorisé à télécharger ici des fichiers."
+
+#: i/Editing.py:796
+msgid "You are not authorized to add a link on this ZWiki Page."
+msgstr "Vous n'êtes pas autorisé à ajouter un lien sur cette page ZWiki."
+
+#: i/UI.py:487
+#, fuzzy
+msgid "Edit conflict"
+msgstr "Éditez le conflit!"
+
+#: i/UI.py:507
+msgid "Someone else has saved this page while you were editing"
+msgstr "Quelqu'un d'autre a sauvegardé cette page pendant que vous éditiez"
+
+#: i/UI.py:508
+msgid "To resolve the conflict, do this"
+msgstr "Pour résoudre le conflit, faites ceci"
+
+#: i/UI.py:509
+msgid "Click your browser's back button"
+msgstr "Cliquez le bouton Précédent de votre navigateur"
+
+#: i/UI.py:510
+msgid "Copy your recent edits to the clipboard"
+msgstr "Copiez vos modifications dans le presse-papiers"
+
+#: i/UI.py:511
+msgid "Click your browser's refresh button"
+msgstr "Cliquez le bouton Rafraîchir de votre navigateur"
+
+#: i/UI.py:512
+msgid "Paste in your edits again, being mindful of the latest changes"
+msgstr ""
+"Collez encore vos modifications, demeurant attentif aux plus récents "
+"changements"
+
+#: i/UI.py:513
+msgid "Click the Change button again"
+msgstr "Cliquez encore le bouton Changer"
+
+#: i/UI.py:514
+msgid "or"
+msgstr "ou"
+
+#: i/UI.py:515
+#, fuzzy
+msgid "To discard your changes and start again, click OK"
+msgstr "Pour supprimer vos changements récents et recommencer, cliquez OK"
+
+#: i/UI.py:524
+msgid "Page is locked"
+msgstr ""
+
+#: i/UI.py:535
+msgid ""
+"\n"
+"            This page has a webDAV lock. Someone is probably editing it\n"
+"            with an external editor.  You'll need to wait until they've\n"
+"            finished and then try again.  If you've just made some changes,\n"
+"            you may want to back up and copy your version of the text for\n"
+"            reference.\n"
+"            "
+msgstr ""
+
+#: i/UI.py:542
+#, fuzzy
+msgid "To discard your changes and try again, click OK."
+msgstr "Pour supprimer vos changements récents et recommencer, cliquez OK"
+
+# Default: "Note: Renaming a page in a large wiki may be slow. Other pages will be updated if possible."
+#: i/skins/zwiki_plone/editform.pt:100
+msgid "help_shortname"
+msgstr ""
+
+# Default: "Body text"
+#: i/skins/zwiki_plone/editform.pt:119
+msgid "label_body_text"
+msgstr ""
+
+# Default: ""
+# "In a Wiki page, you use [square brackets] to create links. When you save the page, the contents\n"
+# "            of the square brackets will have a small <code>?</code> link next to it, which you click to create\n"
+# "            a new page with that name."
+#: i/skins/zwiki_plone/editform.pt:121 i/skins/zwiki_plone/editform.pt:148
+msgid "help_wikibody"
+msgstr ""
+
+# Default: "Note for the page history (optional)"
+#: i/skins/zwiki_plone/editform.pt:159
+msgid "label_note"
+msgstr ""
+
+# Default: "A short description of your changes."
+#: i/skins/zwiki_plone/editform.pt:161
+msgid "help_wikinote"
+msgstr ""
+
+# Default: "Upload file or image (optional)"
+#: i/skins/zwiki_plone/editform.pt:183
+msgid "label_upload_contents_optional"
+msgstr ""
+
+# Default: "Attaches a file or an image to this wiki page."
+#: i/skins/zwiki_plone/editform.pt:185
+msgid "help_wikiupload"
+msgstr ""
+
+# Default: "Page Format"
+#: i/skins/zwiki_plone/editform.pt:203
+msgid "label_format"
+msgstr ""
+
+# Default: ""
+# "If you are unsure of which format to use, just select Plain\n"
+# "            Text and type the document as you usually do."
+#: i/skins/zwiki_plone/editform.pt:205
+msgid "help_format"
+msgstr ""
+
+# Default: ""
+#: i/skins/zwiki_plone/editform.pt:237
+msgid "pagetype"
+msgstr ""
+
+#: i/skins/zwiki_plone/editform.pt:252
+msgid "Save"
+msgstr ""
+
+# Default: ""
+# "Edit\n"
+# "        ${itemtype} \n"
+# "\n"
+# "        \"${pagename}\""
+#: i/skins/zwiki_plone/editform.pt:42 i/skins/zwiki_plone/editform.pt:54
+msgid "heading_edit_wiki_page"
+msgstr ""
+
+# Default: "A Wiki Page allows you to create richly interconnected pages."
+#: i/skins/zwiki_plone/editform.pt:58
+msgid "description_edit_wiki_page"
+msgstr ""
+
+# Default: "Wiki Page Details"
+#: i/skins/zwiki_plone/editform.pt:69
+msgid "legend_wiki_page_details"
+msgstr ""
+
+# Default: "Page name"
+#: i/skins/zwiki_plone/editform.pt:94
+msgid "label_pagename"
+msgstr ""
+
+# Default: "(Required)"
+#: i/skins/zwiki_plone/editform.pt:96
+msgid "label_required"
+msgstr ""
+
+#: i/skins/zwiki_plone/editform.pt:96
+msgid "Required"
+msgstr ""
+
+# Default: "Filter issues"
+#: i/skins/zwiki_plone/filterissues.pt:12
+msgid "heading_wiki_filter_issues"
+msgstr ""
+
+# Default: "Issue tracker"
+#: i/skins/zwiki_plone/issuetracker.pt:12
+msgid "heading_wiki_issue_tracker"
+msgstr ""
+
+# Default: "Recent changes"
+#: i/skins/zwiki_plone/recentchanges.pt:12
+msgid "heading_wiki_recent_changes"
+msgstr ""
+
+# Default: "Search this wiki"
+#: i/skins/zwiki_plone/searchwiki.pt:12
+msgid "heading_wiki_search_wiki"
+msgstr ""
+
+# Default: "User options"
+#: i/skins/zwiki_plone/useroptions.pt:12
+msgid "heading_wiki_user_options"
+msgstr ""
+
+# Default: "Wiki Navigation"
+#: i/skins/zwiki_plone/wikinav_portlet.pt:15
+msgid "box_wiki_navigation"
+msgstr ""
+
+#~ msgid " permission is required."
+#~ msgstr "Votre permission est requise."
+
+#~ msgid "This page was renamed to"
+#~ msgstr "Cette page fut renommée"
+
+#~ msgid "You are not authorized to add files larger than"
+#~ msgstr "Vous n'êtes pas autorisé à ajouter des fichiers plus grands que"
+
+#~ msgid "You are not authorized to set this ZWiki Page's regulations."
+#~ msgstr ""
+#~ "Vous n'êtes pas autorisé à établir les règlements de cette page ZWiki."
+
+#~ msgid "here"
+#~ msgstr "ici"
