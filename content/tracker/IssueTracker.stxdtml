@@ -370,16 +370,16 @@
            </option>
            </dtml-in>
          </select> 
-         &nbsp;<dtml-translate domain=zwiki>Severity:</dtml-translate
-         ><select name="newseverity" class="formfield">
+         &nbsp;<dtml-translate domain=zwiki>Severity:</dtml-translate><select 
+           name="newseverity" class="formfield">
            <dtml-in issue_severities>
            <option <dtml-var "_['sequence-item'] == 'normal' and 'SELECTED' or ''">>
              &dtml-sequence-item;
            </option>
            </dtml-in>
          </select> 
-         &nbsp;<dtml-translate domain=zwiki>Status:</dtml-translate
-         ><select name="newstatus" class="formfield">
+         &nbsp;<dtml-translate domain=zwiki>Status:</dtml-translate><select
+           name="newstatus" class="formfield">
            <dtml-in issue_statuses>
            <option <dtml-var "_['sequence-item'] == 'open' and 'SELECTED' or ''">>
              &dtml-sequence-item;
