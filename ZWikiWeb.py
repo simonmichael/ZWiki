@@ -86,11 +86,16 @@ def addZWikiWebFromFs(self, new_id, title='', wiki_type='zwikidotorg',
     Create a new zwiki web from the specified template on the filesystem
 
     """
-    ob = Folder()
-    ob.id=str(new_id)
-    ob.title=str(title)
-    id = self._setObject(ob.id, ob)
-    ob = getattr(self, id)
+    try:
+        from BTreeFolder2.BTreeFolder2 import manage_addBTreeFolder
+        self.manage_addBTreeFolder(str(new_id),str(title))
+        ob = self[new_id]
+    except:
+        ob = Folder()
+        ob.id=str(new_id)
+        ob.title=str(title)
+        id = self._setObject(ob.id, ob)
+        ob = getattr(self, id)
     dir = package_home(globals()) + os.sep + 'content' + os.sep + wiki_type
     filenames = os.listdir(dir)
     # hmm auto-cataloging is really slowing this down!
