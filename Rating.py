@@ -13,29 +13,52 @@ import Permissions
 class RatingSupport:
     """
     I manage a rating (score) for a wiki page, based on user votes.
+
+    User votes are stored as a dictionary keyed by username/ip address.
+    A user can change their vote by re-voting.
     """
     security = ClassSecurityInfo()
 
-    _rating = 0
+    _votes = {}
 
-    def setRating(self,score): self._rating = score
+    def clearVotes(self):
+        self._votes = {}
+        self.reindex_object() # XXX votes field only
 
-    def resetRating(self): self.setRating(0)
+    security.declareProtected(Permissions.View, 'rate')
+    def vote(self,score,REQUEST=None):
+        """
+        Record a user's vote for this page.
+        """
+        username = self.usernameFrom(REQUEST)
+        if username:
+            self._votes[username] = score
+            self.reindex_object() # XXX votes field only
+            if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1'])
+
+    security.declareProtected(Permissions.View, 'voteCount')
+    def voteCount(self):
+        """
+        How many page rating votes have been made on this page since last reset ?
+        """
+        return len(self._votes.keys())
+
+    security.declareProtected(Permissions.View, 'myVote')
+    def myVote(self,REQUEST=None):
+        """
+        What is the user's current rating for this page ? May be None.
+        """
+        return self._votes.get(self.usernameFrom(REQUEST),None)
 
     security.declareProtected(Permissions.View, 'rating')
     def rating(self):
         """
-        Get this page's rating (an integer).
+        Get this page's average rating (an integer).
         """
-        return self._rating
-
-    security.declareProtected(Permissions.View, 'rate')
-    def rate(self,score,REQUEST=None):
-        """
-        Update this page's rating based on a user's vote.
-        """
-        self.setRating(score)
-        if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1'])
+        total = 0
+        for score in self._votes.values(): total += score
+        return total / (self.voteCount() or 1)
+        
 
 
 # install permissions
