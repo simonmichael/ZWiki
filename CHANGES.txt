@@ -1,5 +1,54 @@
-Zwiki 0.32.0 2004/07/05
+    Summary
 
+        Minor fixes, mail code cleanups, translation updates.
+
+    Upgrade notes
+    
+        No special upgrade issues.
+        
+    Changes
+
+      General
+
+        * allow page types to change the HTTP content-type header (Bob McElrath)
+
+        * make _ work during unit tests again
+
+      Skins and content
+
+        * fix unnecessary python 2.3-ism in editform
+
+        * zope 2.6 compatibility fix for full/simple/minimal getattr error
+	(IssueNo0875)
+
+      Mail and comments
+
+        * refactor mailin, sendMailTo and other mail code
+
+        * mailin policy change: messages with no page name in subject are
+	now discarded by default
+
+        * fixes for mailin of new page/new issue (IssueNo0879)
+
+        * use "anonymous" as real name for anonymous mailouts
+
+      Tracker
+
+        * createNextIssue updates: return the page name, support
+	sendmail=0 argument
+
+        * support pages(isIssue=1) when there is no catalog
+
+      I18n
+
+        * updated the italian message catalog for 0.32.0 (Lele Gaifax)
+
+        * polish translation updates (Jakub Wisniowski)
+
+        * chinese transation updates (T.C.Chou)
+
+
+Zwiki 0.32.0 2004/07/05
 
     Summary
 
