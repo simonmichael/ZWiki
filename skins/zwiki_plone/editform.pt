@@ -229,13 +229,17 @@ UI.py:editform() calls us with these options:
                                        tabindex tabindex|nothing;" 
                        />
                 <label for="pagetype" 
-                       i18n:translate="pagetype"
-                       tal:define="dtmlallowed python:type.find('dtml')!=-1 and here.dtmlAllowed();
-                                   extrasuffix python:dtmlallowed and ' (+ DTML)' or ''; "
-                       tal:content="python:
-                                      here.PAGE_TYPES.get(type,type) + extrasuffix"
-                       tal:attributes="for python:type;
-                                       i18n:translate python:type #XXX;"
+                       tal:define="
+                         dtmlallowed python:
+                           type.find('dtml')!=-1 and here.dtmlAllowed();
+                         extrasuffix python:
+                           dtmlallowed and ' (+ DTML)' or ''; "
+                       tal:content="
+                         python:here.PAGE_TYPES.get(type,type) + extrasuffix"
+                       tal:attributes="for python:type
+                       # there might be some way to set an i18n tag for each 
+                       # page type, forget for now as we don't really need it
+                       "
                 >Page type</label> <br />
             </tal:formats>
                         
