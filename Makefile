@@ -37,7 +37,9 @@ dtml:
 	  >skins/standard/issuetrackerdtml.dtml
 	$(CLEAN) plugins/tracker/FilterIssues.stxdtml \
 	  >skins/standard/filterissuesdtml.dtml
-	cp skins/standard/{recentchanges,searchwiki,useroptions,issuetracker,filterissues}dtml.dtml skins/zwiki_plone
+	$(CLEAN) plugins/tracker/IssueBrowser.stxdtml \
+	  >skins/standard/issuebrowserdtml.dtml
+	cp skins/standard/{recentchanges,searchwiki,useroptions,issuetracker,filterissues,issuebrowser}dtml.dtml skins/zwiki_plone
 
 epydoc:
 	PYTHONPATH=/zope/lib/python \

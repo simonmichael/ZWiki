@@ -364,6 +364,10 @@ class Utils:
     def filterUrl(self):
         return self.urlForDtmlPageOrMethod('FilterIssues','filterissues')
 
+    security.declareProtected(Permissions.View, 'filterUrl')
+    def issueBrowserUrl(self):
+        return self.urlForDtmlPageOrMethod('IssueBrowser','issuebrowser')
+
     security.declareProtected(Permissions.View, 'indexUrl')
     def indexUrl(self):
         return self.urlForDtmlPageOrMethod('AllPages','') #'allpages')

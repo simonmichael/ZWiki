@@ -135,6 +135,8 @@ DEFAULT_TEMPLATES = {
     'issuetrackerdtml'   : loadDtmlMethod('issuetrackerdtml'),
     'filterissues'       : loadPageTemplate('filterissues'),
     'filterissuesdtml'   : loadDtmlMethod('filterissuesdtml'),
+    'issuebrowser'       : loadPageTemplate('issuebrowser'),
+    'issuebrowserdtml'   : loadDtmlMethod('issuebrowserdtml'),
     'stylesheet'         : loadStylesheetFile('stylesheet.css'),
     }
 
@@ -547,6 +549,22 @@ class GeneralForms:
         """
         form = self.getSkinTemplate('filterissues')
         dtmlpart = self.getSkinTemplate('filterissuesdtml')
+        # XXX kludge - a customized template may not require our dtml part
+        if re.search(r'"structure options/body',form.read()):
+            return form(self,REQUEST,body=dtmlpart(self,REQUEST))
+        else:
+            return form(self,REQUEST)
+
+    security.declareProtected(Permissions.View, 'issuebrowser')
+    def issuebrowser(self, REQUEST=None):
+        """
+        Render the issuebrowser form (template-customizable).
+
+        The default page template calls a DTML helper template,
+        for ease of syncing with the evolving wiki-page-based version.
+        """
+        form = self.getSkinTemplate('issuebrowser')
+        dtmlpart = self.getSkinTemplate('issuebrowserdtml')
         # XXX kludge - a customized template may not require our dtml part
         if re.search(r'"structure options/body',form.read()):
             return form(self,REQUEST,body=dtmlpart(self,REQUEST))
