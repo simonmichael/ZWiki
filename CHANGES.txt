@@ -1,3 +1,59 @@
+    Summary
+
+	Search improvements, subtopics ordering, style tweaks, bugfixes.
+
+    Upgrade notes
+
+	To remove excess search keywords from existing zwiki-containing
+	plone sites, reindex and replace the Subject index and metadata in
+	portal_catalog in the ZMI.
+
+	For best search functionality, you may need to /setupCatalog
+	and/or upgrade or reconfigure your text indexes. See
+	http://zwiki.org/1036 for more info.
+	
+    Changes
+
+      Browsing
+
+	* SearchPage/searchpage form cleanups, robustness fixes, better
+	results, google search (#1036)
+
+        * don't create so many search keywords in plone (#1059)
+
+      Editing
+
+	* set RST error reporting level to 2 by default (#992, Stefan Rank)
+
+      Page hierarchy
+
+	* support subtopics reordering with a backlinks UI and new reorder
+	method (#1044)
+
+	* preserve page hierarchy through folder renames; the 'outline'
+	information object is now visible in the ZMI and permanent (#728)
+
+	* don't redirect after /updateWikiOutline, because it confuses
+	first page creation in plone (#1028, huron)
+	
+      General - skins
+	
+	* don't add left & right whitespace margins in default skin any
+	more
+
+	* avoid ids for css-usage where possible (Stefan Rank)
+
+	* little typo in css eliminated formfield(s) background color
+	setting (Stefan Rank)
+
+	* underline h2s, gnome-style, shrink them a bit, and add slight
+	whitespace above
+
+	* don't reduce default font size in stylesheet
+
+	* tweak access key help
+
+
 Zwiki 0.38.0 2005/02/01
 
     Summary
