@@ -159,7 +159,7 @@ class EditingSupport:
         m['Subject'] = subject_heading
         m['Message-ID'] = message_id
         if in_reply_to: m['In-Reply-To'] = in_reply_to
-        m.set_payload(self._cleanupText(text))
+        m.set_payload(self.cleanupText(text))
         m.set_unixfrom(self.fromLineFrom(m['From'],m['Date'])[:-1])
         
         # discard junk comments
@@ -335,12 +335,12 @@ class EditingSupport:
     def handleEditText(self,text,REQUEST=None, subjectSuffix='', log=''):
         # is the new text valid and different ?
         if (text is not None and
-            self._cleanupText(text) != self.read()):
+            self.cleanupText(text) != self.read()):
             # do we have permission ?
             if (not
                 (self.checkPermission(Permissions.Edit, self) or
                  (self.checkPermission(Permissions.Append, self)
-                  and find(self._cleanupText(text),self.read()) == 0))):
+                  and find(self.cleanupText(text),self.read()) == 0))):
                 raise 'Unauthorized', (
                     _('You are not authorized to edit this ZWiki Page.'))
 
@@ -363,7 +363,7 @@ class EditingSupport:
         if (not
             (self.checkPermission(Permissions.Edit, self) or
              (self.checkPermission(Permissions.Append, self)
-              and find(self._cleanupText(text),self.read()) == 0))):
+              and find(self.cleanupText(text),self.read()) == 0))):
             raise 'Unauthorized', (
                 _('You are not authorized to edit this ZWiki Page.'))
         if not self.checkPermission(Permissions.Delete, self):
@@ -742,7 +742,7 @@ class EditingSupport:
         Does cleanups and triggers pre-rendering and DTML re-parsing.
         Also inserts purple number NIDs if appropriate.
         """
-        self.raw = self._cleanupText(text)
+        self.raw = self.cleanupText(text)
         if self.usingPurpleNumbers(): 
             self.raw = self.addPurpleNumbersTo(self.raw,self)
         self.preRender(clear_cache=1)
@@ -755,9 +755,15 @@ class EditingSupport:
         #    #get_transaction().commit()
         #    DTMLDocument.__call__(self,self,REQUEST,REQUEST.RESPONSE)
 
-    def _cleanupText(self, t):
-        """do some cleanup of a page's new text
+    def cleanupText(self, t):
         """
+        Do some cleanup of incoming text, also block spam links.
+        """
+        # block spammer links - for now, just give an unexplained site error
+        for pat in getattr(self.folder(),'banned_links',[]):
+            pat = strip(pat)
+            if pat and re.search(pat,t): raise
+        
         # strip any browser-appended ^M's
         t = re.sub('\r\n', '\n', t)
 
