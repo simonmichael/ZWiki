@@ -14,7 +14,7 @@
     <tal:ancestors condition="here/ancestorsAsList"
                    repeat="ancestor here/ancestorsAsList">
         <span tal:replace="structure python:here.wikilink('['+ancestor+']')"></span>
-        &raquo;
+        >>
     </tal:ancestors>
     </small>
     

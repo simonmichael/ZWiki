@@ -32,7 +32,7 @@
            tal:condition="python:revA < 19" 
            type="submit" 
            name="prevDiff:method" 
-           value="&laquo; previous edit" 
+           value="<< previous edit" 
 	   i18n:attributes="value"
            />
            
@@ -40,7 +40,7 @@
            tal:condition="python:revA > 1" 
            type="submit" 
            name="nextDiff:method" 
-           value="next edit &raquo;"
+           value="next edit >>"
 	   i18n:attributes="value"
            />
            
