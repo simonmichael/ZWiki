@@ -204,7 +204,7 @@ class ZWikiPage(
                                   )
 
     ######################################################################
-    # generic rendering code (see also PageTypes.py)
+    # generic rendering code (see also pagetypes/*)
 
     security.declareProtected(Permissions.View, '__call__')
     def __call__(self, client=None, REQUEST={}, RESPONSE=None, **kw):

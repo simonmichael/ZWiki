@@ -93,7 +93,8 @@ class ZwikiStxPageType(AbstractHtmlPageType):
         t = page.addSkinTo(t,**kw)
         return t
 
-# more structured text customizations
+
+# structured text customizations
 class MyDocumentWithImages(DocumentWithImages):
 
     # 1. leave dtml alone (ignore '' within SGML tags)

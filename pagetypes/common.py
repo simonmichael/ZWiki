@@ -1,4 +1,4 @@
-import string, re
+import string, re, urllib
 from string import split,join,find,lower,rfind,atoi,strip,lstrip
 from urllib import quote, unquote
 
@@ -8,27 +8,34 @@ from Products.ZWiki.PurpleNumbers import add_purple_numbers_to
 from Products.ZWiki.Regexps import dtmlorsgmlexpr, footnoteexpr
 from Products.ZWiki.I18nSupport import _
 
-
 # XXX temporary hack, used for placing subtopics in the page. Supposed to
 # be secret, invisible, and never encountered by users. Ha!
 MIDSECTIONMARKER = 'ZWIKIMIDSECTION'
 
+#from AccessControl import getSecurityManager
+#getSecurityManager().declarePublic('yes')
+#getSecurityManager().declarePublic('no')
 def yes(self): return 1
 def no(self): return 0
 
-from AccessControl import getSecurityManager, ClassSecurityInfo
-from Globals import InitializeClass
 
 class AbstractPageType:
+    """
+    I encapsulate behaviour which is specific to different zwiki page types.
+
+    I'm an abstract class providing a number of methods which are
+    page-type-specific, with default implementations. Override me and
+    define _id and _name to make a usable page type object. See
+    __init__.py for more.
+    """
+
     _id = None
     _name = None
-    security = ClassSecurityInfo()
     supportsStx = no
     supportsRst = no
     supportsWwml = no
     supportsWikiLinks = no
     supportsHtml = no
-    security.declarePublic('supportsDtml')
     supportsDtml = no
     supportsEpoz = no
 
@@ -109,9 +116,15 @@ class AbstractPageType:
     def linkFile(self, page, id, path):
         return '\n\nfile: %s/%s\n' % (page.pageUrl(),path)
 
-InitializeClass(AbstractPageType)
 
 class AbstractHtmlPageType(AbstractPageType):
+    """
+    I am an abstract base class for zwiki page types which support HTML.
+
+    Override me and define _id and _name to make a usable page type
+    object. See __init__.py for more.
+    """
+    
     supportsHtml = yes
 
     def renderCitationsIn(self, page, t):

@@ -1,10 +1,6 @@
 # WikiWikiWeb-style markup
 # contributed by Tres Seaver <tseaver@palladion.com>
 
-import re
-import string
-import urllib
-
 from common import *
 
 class ZwikiWwmlPageType(AbstractPageType):
@@ -37,7 +33,7 @@ class ZwikiWwmlPageType(AbstractPageType):
 
 
 # WWML formatter
-    
+
 name_pattern_1        = r'[A-Z]+[a-z]+[A-Z][A-Za-z]'
 name_pattern_2        = r'[A-Z][A-Z]+[a-z][A-Za-z]'
 bracket_pattern       = r'\[[\\\w.:_ ]+\]'
