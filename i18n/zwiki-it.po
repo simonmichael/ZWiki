@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-32-0\n"
 "POT-Creation-Date: Sun Oct 24 21:50:56 2004\n"
-"PO-Revision-Date: 2004-06-19 17:49+0200\n"
+"PO-Revision-Date: 2004-10-25 15:09+0200\n"
 "Last-Translator: Lele Gaifax <lele@seldati.it>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr "(folder -> Manage properties)"
 
 #: i/Editing.py:107 i/skins/standard/wikipage_macros.pt:459
 msgid "new"
-msgstr ""
+msgstr "nuovo"
 
 #: i/Editing.py:292
 msgid ""
@@ -317,39 +317,39 @@ msgstr "commenti"
 
 #: i/pagetypes/moin_support.py:1922
 msgid "Expected \"=\" to follow \"%(token)s\""
-msgstr ""
+msgstr "\"%(token)s\" deve essere seguito da \"=\""
 
 #: i/pagetypes/moin_support.py:1931
 msgid "Expected a value for key \"%(token)s\""
-msgstr ""
+msgstr "Deve essere specificato un valore per la chiave \"%(token)s\""
 
 #: i/pagetypes/moin_support.py:237
 msgid "Create new drawing \"%(filename)s\""
-msgstr ""
+msgstr "Crea un nuovo disegno \"%(filename)s\""
 
 #: i/pagetypes/moin_support.py:239
 msgid "Upload new attachment \"%(filename)s\""
-msgstr ""
+msgstr "Carica un nuovo allegato \"%(filename)s\""
 
 #: i/pagetypes/moin_support.py:270 i/pagetypes/moin_support.py:280
 msgid "Edit drawing %(filename)s"
-msgstr ""
+msgstr "Modifica il disegno %(filename)s"
 
 #: i/pagetypes/moin_support.py:665
 msgid "Expected \"%(wanted)s\" after \"%(key)s\", got \"%(token)s\""
-msgstr ""
+msgstr "Richiesto \"%(wanted)s\" dopo \"%(key)s\", invece di \"%(token)s\""
 
 #: i/pagetypes/moin_support.py:671
 msgid "Expected an integer \"%(key)s\" before \"%(token)s\""
-msgstr ""
+msgstr "Richiesto un numero intero \"%(key)s\" prima di \"%(token)s\""
 
 #: i/pagetypes/moin_support.py:680 i/pagetypes/moin_support.py:689
 msgid "Expected an integer \"%(arg)s\" after \"%(key)s\""
-msgstr ""
+msgstr "Richiesto un numero intero per \"%(arg)s\" dopo di \"%(key)s\""
 
 #: i/pagetypes/moin_support.py:709
 msgid "Expected a color value \"%(arg)s\" after \"%(key)s\""
-msgstr ""
+msgstr "Richiesto il nome di un colore per \"%(arg)s\" dopo \"%(key)s\""
 
 #: i/pagetypes/rst.py:58
 msgid "reply"
@@ -407,21 +407,18 @@ msgstr "Aggiungi e modifica"
 
 #: i/skins/dtmlmessages.pt:17 i/skins/dtmlmessages.pt:83
 #: i/skins/dtmlmessages.pt:156
-#, fuzzy
 msgid "Set your preferences for this wiki:"
-msgstr "Imposta le tue preferenze globali."
+msgstr "Imposta le tue preferenze per questo wiki:"
 
 #: i/skins/dtmlmessages.pt:18 i/skins/dtmlmessages.pt:84
 #: i/skins/dtmlmessages.pt:157
-#, fuzzy
 msgid "User name:"
-msgstr "Nome utente"
+msgstr "Nome utente:"
 
 #: i/skins/dtmlmessages.pt:19 i/skins/dtmlmessages.pt:85
 #: i/skins/dtmlmessages.pt:158
-#, fuzzy
 msgid "(identifies your edits)"
-msgstr "firma le tue modifiche"
+msgstr "(firma le tue modifiche)"
 
 #: i/skins/dtmlmessages.pt:2 i/skins/dtmlmessages.pt:3
 msgid "Add a ZWiki web"
@@ -429,21 +426,18 @@ msgstr "Aggiungi un sito ZWiki"
 
 #: i/skins/dtmlmessages.pt:20 i/skins/dtmlmessages.pt:86
 #: i/skins/dtmlmessages.pt:159
-#, fuzzy
 msgid "Email address:"
-msgstr "Indirizzo email"
+msgstr "Indirizzo email:"
 
 #: i/skins/dtmlmessages.pt:21 i/skins/dtmlmessages.pt:87
 #: i/skins/dtmlmessages.pt:160
-#, fuzzy
 msgid "(allows mail subscription)"
-msgstr "Sottoscrizione abbonamento email"
+msgstr "(consenti sottoscrizione abbonamento email)"
 
 #: i/skins/dtmlmessages.pt:22 i/skins/dtmlmessages.pt:88
 #: i/skins/dtmlmessages.pt:161
-#, fuzzy
 msgid "Your time zone:"
-msgstr "Fuso orario"
+msgstr "Il tuo fuso orario:"
 
 #: i/skins/dtmlmessages.pt:23 i/skins/dtmlmessages.pt:89
 #: i/skins/dtmlmessages.pt:162
@@ -452,14 +446,13 @@ msgstr "(per mostrare l'ora locale)"
 
 #: i/skins/dtmlmessages.pt:24 i/skins/dtmlmessages.pt:90
 #: i/skins/dtmlmessages.pt:163
-#, fuzzy
 msgid "Edit form height:"
-msgstr "Modulo di modifica"
+msgstr "Cambia l'altezza del modulo di modifica:"
 
 #: i/skins/dtmlmessages.pt:25 i/skins/dtmlmessages.pt:91
 #: i/skins/dtmlmessages.pt:164
 msgid "(adjusts form size)"
-msgstr ""
+msgstr "(aggiusta le dimensioni del modulo)"
 
 #: i/skins/dtmlmessages.pt:26 i/skins/dtmlmessages.pt:92
 #: i/skins/dtmlmessages.pt:165
@@ -765,18 +758,16 @@ msgstr "Differenze tra"
 
 # Default: "Note for the page history (optional)"
 #: i/skins/standard/diffform.pt:44
-#, fuzzy
 msgid "log_note"
-msgstr "Annotazione per lo storico della pagina (opzionale)"
+msgstr "Note:"
 
 #: i/skins/standard/diffform.pt:58
 msgid "Revert this change and all successive changes"
-msgstr ""
+msgstr "Ripristina questa e tutte le successive modifiche"
 
 #: i/skins/standard/diffform.pt:61
-#, fuzzy
 msgid "Return to page"
-msgstr "torna alla pagina"
+msgstr "Torna alla pagina"
 
 #: i/skins/standard/editform.pt:139
 msgid "toggle source/WYSIWYG mode"
@@ -1038,36 +1029,31 @@ msgid "1 subscriber"
 msgstr "1 abbonato"
 
 #: i/skins/standard/wikipage_macros.pt:460
-#, fuzzy
 msgid "parent,"
-msgstr "Aggiorna gerarchia"
+msgstr "sovrastante,"
 
 #: i/skins/standard/wikipage_macros.pt:463
-#, fuzzy
 msgid "name,"
-msgstr "nome"
+msgstr "nome,"
 
 #: i/skins/standard/wikipage_macros.pt:466
-#, fuzzy
 msgid "replacement,"
-msgstr "riposiziona"
+msgstr "sostituzione,"
 
 #: i/skins/standard/wikipage_macros.pt:469
-#, fuzzy
 msgid "subtopic"
-msgstr "è un sotto argomento di:"
+msgstr "sotto argomento"
 
 #: i/skins/standard/wikipage_macros.pt:473
 msgid "enter a page name and click buttons to the right (mouse over for help)"
-msgstr ""
+msgstr "inserisci il nome della pagina e clicca i pulsanti sulla destra (spostaci sopra il mouse per un aiuto)"
 
 #: i/skins/standard/wikipage_macros.pt:479
 #: i/skins/standard/wikipage_macros.pt:484
 #: i/skins/standard/wikipage_macros.pt:489
 #: i/skins/standard/wikipage_macros.pt:494
-#, fuzzy
 msgid "title"
-msgstr "Titolo"
+msgstr "titolo"
 
 #: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:31
 msgid "Backlinks for"
@@ -1078,9 +1064,12 @@ msgid "Here are the pages which link to"
 msgstr "Queste sono le pagine che si riferiscono a"
 
 #: i/skins/zwiki_plone/backlinks.pt:30
-#, fuzzy
 msgid "box_canreparent"
-msgstr "riposiziona"
+msgstr ""
+"Puoi anche riposizionare questa pagina nella gerarchia dei contenuti\n"
+"impostandone la pagina <em>sovrastante</em>.  Attiva l'opzione o\n"
+"inserisci il nuovo nome della pagina e clicca su Riposiziona.\n"
+"Generalmente è sufficiente avere una sola pagina sovrastante."
 
 #: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:100
 msgid "Other parent"
@@ -1195,14 +1184,12 @@ msgid "Save"
 msgstr "Conferma"
 
 #: i/skins/zwiki_plone/editform.pt:273 i/skins/standard/editform.pt:200
-#, fuzzy
 msgid "preview this edit"
-msgstr "<< modifica precedente"
+msgstr "anteprima delle modifiche"
 
 #: i/skins/zwiki_plone/editform.pt:273 i/skins/standard/editform.pt:200
-#, fuzzy
 msgid "Preview"
-msgstr "visualizza"
+msgstr "Anteprima"
 
 #: i/skins/zwiki_plone/editform.pt:282 i/skins/standard/editform.pt:205
 msgid "Cancel"
@@ -1215,7 +1202,7 @@ msgstr "annulla queste modifiche e torna alla pagina"
 #: i/skins/zwiki_plone/editform.pt:42 i/skins/zwiki_plone/editform.pt:54
 #: i/skins/standard/editform.pt:192
 msgid "XXX"
-msgstr ""
+msgstr "XXX"
 
 # Default: ""
 # "Edit\n"
@@ -1438,114 +1425,3 @@ msgstr ""
 #: i/skins/standard/wikipage_macros.pt:438
 msgid "add-comment"
 msgstr "aggiungi un commento"
-
-#~ msgid "You may also click the full, simple, minimal links if provided."
-#~ msgstr ""
-#~ "Puoi anche cliccare sui link completo, semplice, minimale, se presenti."
-
-#~ msgid "for subscribing"
-#~ msgstr "per abbonarsi"
-
-#~ msgid "width"
-#~ msgstr "larghezza"
-
-#~ msgid "height"
-#~ msgstr "altezza"
-
-#~ msgid "textarea dimensions; width will be 100% if supported"
-#~ msgstr ""
-#~ "dimensioni della textarea; verrà usata una larghezza del 100% se possibile"
-
-#~ msgid "Your local time is"
-#~ msgstr "L'ora locale è"
-
-#~ msgid "Show logo ?"
-#~ msgstr "Mostrare il logo ?"
-
-#~ msgid "No"
-#~ msgstr "No"
-
-#~ msgid "Yes"
-#~ msgstr "Sì"
-
-#~ msgid "Show page hierarchy ?"
-#~ msgstr "Mostrare la gerarchia delle pagine ?"
-
-#~ msgid "This wiki keeps a page hierarchy, which you can use or ignore."
-#~ msgstr ""
-#~ "Questo wiki utilizza una gerarchia delle pagine, che puoi usare o "
-#~ "ignorare."
-
-#~ msgid "Show search field ?"
-#~ msgstr "Mostrare il campo di ricerca ?"
-
-#~ msgid "except in minimal mode"
-#~ msgstr "tranne che nella modalità minimale"
-
-#~ msgid "Show AnnoyingQuote ?"
-#~ msgstr "Mostrare l'AnnoyingQuote ?"
-
-#~ msgid "in full mode"
-#~ msgstr "in modalità completa"
-
-#~ msgid "Show page management form ?"
-#~ msgstr "Mostra la parte di gestione ?"
-
-#~ msgid "You must also configure a username or be logged in."
-#~ msgstr "Devi anche configurare un nome utente o essere loggato."
-
-#~ msgid "no subscribers"
-#~ msgstr "nessun abbonato"
-
-# Default: "new parent, name or replacement"
-#~ msgid "parent_name_replace"
-#~ msgstr "nuova pagina sovrastante, nome o sostituzione"
-
-#~ msgid ""
-#~ "enter a new parent, new name, replacement page (if any) or subtopic name"
-#~ msgstr ""
-#~ "inserisci il nome della nuova pagina sovrastante, il nuovo nome o la "
-#~ "pagina (eventualmente) sostituita da questa oppure il nome del sotto "
-#~ "argomento"
-
-# Default: ""
-# "You can also set this page's <em>parent(s)</em>, to locate it within the\n"
-# "    contents hierarchy.  Check the boxes or enter a new page name and click\n"
-# "    Reparent.  A single parent is usually sufficient."
-#~ msgid "box_zwiki_showhierarchy"
-#~ msgstr ""
-#~ "Puoi anche impostare la pagina <em>sovrastante</em> a questa, per "
-#~ "poterla\n"
-#~ "     collocare nella gerarchia esistente.  Attiva l'opzione o inserisci "
-#~ "il\n"
-#~ "     nuovo nome della pagina e clicca su \"Aggiorna gerarchia\".  Una\n"
-#~ "     singola pagina sovrastante è in genere più che sufficiente."
-
-#~ msgid "reparent this page under the page you have entered"
-#~ msgstr "riposiziona questa pagina sotto quella che hai inserito"
-
-#~ msgid "rename this page to the name you have entered, updating all links"
-#~ msgstr ""
-#~ "cambia il nome di questa pagina con quello che hai inserito, aggiornando "
-#~ "tutti i riferimenti"
-
-#~ msgid "rename"
-#~ msgstr "rinomina"
-
-#~ msgid "delete!"
-#~ msgstr "cancella!"
-
-#~ msgid ""
-#~ "move this page to the recycle bin, and relink to the name you have entered"
-#~ msgstr ""
-#~ "sposta questa pagina nel cestino, e ricollega i riferimenti a quella che "
-#~ "hai inserito"
-
-#~ msgid "create"
-#~ msgstr "crea"
-
-#~ msgid "create a new subtopic of this page"
-#~ msgstr "crea un nuovo sotto argomento di questa pagina"
-
-#~ msgid "cancel"
-#~ msgstr "annulla"
