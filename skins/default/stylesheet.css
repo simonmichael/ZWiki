@@ -29,9 +29,10 @@
 
 /* padding */
 body                     {margin:0; padding:0;}
-/* (adjust left margin to approx. logo width) */
+/*#content                 {margin-left:10%; margin-right:10%;} */
 #content                 {margin-left:64px; margin-right:32px;} 
-#formcontent                 {margin:8px;} 
+  /* (adjust left margin to approx. logo width) */
+#formcontent             {margin:8px;} 
 #logo_full, #logo_simple {padding:4px;}
 #searchinput             {margin-top:0px;}
 #pageheading ul    {margin-top:0px; margin-bottom:0px; margin-left:6px; padding-left:6px;}
@@ -66,7 +67,6 @@ body                     {font-family:verdana, arial, helvetica, sans-serif;}
   }
 
 #navpanel {
-  margin-top: 1px;
   color: gray;
   font-size: small;
   }
