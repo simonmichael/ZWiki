@@ -42,7 +42,8 @@ class ZwikiRstPageType(AbstractPageType):
         t = page.preRendered()
         t = page.renderMarkedLinksIn(t)
         if page.hasFitTests(): t = page.runFitTestsIn(t)
-        if page.isIssue(): t = page.addIssueFormTo(t)
+        if page.isIssue() and kw.get('show_issueproperties',1):
+            t = page.addIssueFormTo(t)
         t = page.renderMidsectionIn(t,**kw)
         t = page.addSkinTo(t,**kw)
         return t

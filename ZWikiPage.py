@@ -230,21 +230,21 @@ class ZWikiPage(
 
     def render(self, client=None, REQUEST={}, RESPONSE=None, **kw):
         """
-        Render this zwiki page according to it's page_type.
+        Render this page according to it's page_type.
 
-        Tries to ensure the HTTP content-type (and charset) have an
+        Also tries to ensure the HTTP content-type (and charset) have an
         appropriate value. These may be set by the page type, or
         overridden by a zwiki_content_type property (LatexWiki support).
         NB this can also get set in I18nSupport.py.
         """
         if not self.preRendered(): self.preRender()
-        retval=self.pageType().render(self, REQUEST, RESPONSE, **kw)
+        r = self.pageType().render(self, REQUEST, RESPONSE, **kw)
         if RESPONSE:
             if hasattr(self,'zwiki_content_type'):
                 RESPONSE.setHeader('content-type',getattr(self,'zwiki_content_type'))
             elif not RESPONSE.getHeader('content-type'):
                 RESPONSE.setHeader('content-type','text/html')
-        return retval
+        return r
 
     def preRender(self,clear_cache=0):
         """
@@ -257,6 +257,17 @@ class ZWikiPage(
         get_transaction().note('prerender')
         self.setPreRendered(self.pageType().preRender(self))
 
+    def renderText(self, text, REQUEST={}, RESPONSE=None, **kw):
+        """
+        Render some source text according to this page's page type.
+
+        This is a helper for edit preview. Some source text is hard to
+        preview accurately or even rendered at all without being situated
+        in a page object (DTML, permissions etc). We hand off to the page
+        type and let it do its best.
+        """
+        return self.pageType().renderText(self,text,REQUEST,RESPONSE,**kw)
+            
     security.declareProtected(Permissions.View, 'clearCache')
     def clearCache(self,REQUEST=None):
         """

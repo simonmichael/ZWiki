@@ -2,9 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
       i18n:domain="zwiki"
       tal:define="
-      action    options/action;
-      page      options/page;
-      text      options/text;
+      action    request/form/action|options/action;
+      page      request/form/page|options/page;
+      text      request/form/text|options/text;
+      timestamp request/form/timeStamp|here/timeStamp;
       wiki_url  here/wiki_url;
       rows      python:request.get('zwiki_height',20);
       cols      python:request.get('zwiki_width',60);
@@ -15,6 +16,7 @@
       editing   python:not creating;
       title   string:${container/title} ${actioning} ${page};
       macros  python:here.wikipage_macros(request).macros;
+      previewing python:request.form.get('editform',None);
       "
       onload="document.forms[0].text.focus();"
       >
@@ -51,9 +53,9 @@
 
     <div id="formcontent">
       <form method="post" enctype="multipart/form-data" action="" 
-            tal:attributes="action string:${here/page_url}/">
-        <input name="timeStamp" type="hidden" value="editTimestamp"
-               tal:attributes="value here/editTimestamp" />
+            tal:attributes="action string:${here/page_url}">
+        <input name="timeStamp" type="hidden" value="" 
+               tal:attributes="value timestamp" />
         <input name="page" type=hidden value="page"
                tal:attributes="value page" />
         <input name="leaveplaceholder" value="" type="hidden"
@@ -185,6 +187,16 @@
                   </span>.
               </td>
               <td valign="top" align="right" bgcolor="#dddddd" colspan="1">
+                <input type="submit" value="Cancel" 
+                       title="cancel this edit and return to the page"
+                       tabindex="" 
+		       i18n:attributes="title;value"
+		/>
+                <input type="submit" name="editform:method" 
+                value="Preview" title="preview this edit"
+                tabindex="" accesskey="p"
+		i18n:attributes="title;value"
+		/>
                 <strong><input type="submit" name="edit:method" 
                 value="Save" title="change this wiki page"
                 tabindex="" style="font-weight:bold" accesskey="s"
@@ -193,22 +205,42 @@
                 title python:creating and ('create this wiki page') or default;"
 		i18n:attributes="title;value"
 		/></strong>
-		<span tal:condition="nothing">
+		<span tal:condition="python: False">
 			<!-- force i18n extraction -->
 			<span title="Create" i18n:attributes="title"></span>
 			<span title="create this wiki page" i18n:attributes="title"></span>
 		</span>
-                <input type="submit" value="Cancel" 
-                       title="cancel this edit and return to the page"
-                       tabindex="" 
-		       i18n:attributes="title;value"
-		/>		
               </td>
             </tr>
 
           </table>
         </div>
       </form>
+
+      <div tal:condition="previewing">
+        <table border="0" width="100%"><tr>
+        <td align="center"><b>PREVIEW</b></td>
+        <td align="center"><b>PREVIEW</b></td>
+        <td align="center"><b>PREVIEW</b></td>
+        <td align="center"><b>PREVIEW</b></td>
+        <td align="center"><b>PREVIEW</b></td>
+        </tr></table>
+        <table border="4" width="100%" cellpadding="10" class="preview">
+          <tr>
+            <td tal:content="structure python:here.renderText(
+              request.form.get('text',''),request,request.RESPONSE)"></td>
+          </tr>
+        </table>
+        <table border="0" width="100%"><tr>
+        <td align="center"><b>PREVIEW</b></td>
+        <td align="center"><b>PREVIEW</b></td>
+        <td align="center"><b>PREVIEW</b></td>
+        <td align="center"><b>PREVIEW</b></td>
+        <td align="center"><b>PREVIEW</b></td>
+        </tr></table>
+      </div>
+
     </div>
+
   </body>
 </html>

@@ -6,12 +6,14 @@ UI.py:editform() calls us with these options:
  text   - initial contents of text area
  action - 'Create' or 'Edit'
 </tal:comment>
-<tal:block define="global page options/page;
-                   global action options/action; 
-		   global text options/text; 
+<tal:block define="global action request/form/action|options/action; 
+		   global page request/form/page|options/page;
+                   global text request/form/text|options/text; 
+                   global timestamp request/form/timeStamp|here/timeStamp;
 		   global pagetypes here/allowedPageTypes;
 		   global creating python:action=='Create';
 		   global editing  python:not creating;
+                   global previewing python:request.form.get('editform',None);
 		   " />
 
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
@@ -57,7 +59,7 @@ UI.py:editform() calls us with these options:
           method="post" 
           enctype="multipart/form-data"
           action="" 
-          tal:attributes="action string:${here/page_url}/edit">
+          tal:attributes="action string:${here/page_url}">
 
         <fieldset>
             <legend i18n:translate="legend_wiki_page_details">Wiki Page Details</legend>    
@@ -250,10 +252,19 @@ UI.py:editform() calls us with these options:
 
 
         <div class="formControls" tal:define="process_creation request/process_creation|nothing;">
+          <input class="context" 
+                 tabindex=""
+                 type="submit" 
+                 name="editform:method" 
+                 value="Preview" 
+                 title="preview this edit"
+                 accesskey="p"
+                 i18n:attributes="title;value"
+                 />
             <input class="context" 
                    tabindex=""
                    type="submit" 
-                   name="Change" 
+                   name="edit:method" 
                    value="Save" 
                    accesskey="s"
                    i18n:attributes="value"
@@ -261,6 +272,29 @@ UI.py:editform() calls us with these options:
         </div>
 
     </form>
+
+    <div tal:condition="previewing">
+      <table border="0" width="100%"><tr>
+      <td align="center"><b>PREVIEW</b></td>
+      <td align="center"><b>PREVIEW</b></td>
+      <td align="center"><b>PREVIEW</b></td>
+      <td align="center"><b>PREVIEW</b></td>
+      <td align="center"><b>PREVIEW</b></td>
+      </tr></table>
+      <table border="4" width="100%" cellpadding="10" class="preview">
+        <tr>
+          <td tal:content="structure python:here.renderText(
+          request.form.get('text',''),request,request.RESPONSE)"></td>
+        </tr>
+      </table>
+      <table border="0" width="100%"><tr>
+      <td align="center"><b>PREVIEW</b></td>
+      <td align="center"><b>PREVIEW</b></td>
+      <td align="center"><b>PREVIEW</b></td>
+      <td align="center"><b>PREVIEW</b></td>
+      <td align="center"><b>PREVIEW</b></td>
+      </tr></table>
+    </div>
 
   </div>
 

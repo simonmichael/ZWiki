@@ -61,6 +61,29 @@ class AbstractPageType:
         """
         return page.preRendered()
 
+    def renderText(self, page, text, REQUEST={}, RESPONSE=None, **kw):
+        """
+        Render some source text as if it were in page, as far as possible.
+
+        We make a dummy page similar to the real page, set the text and
+        render it.  This is a bit heavy-handed, but it gives us a fairly
+        accurate preview. We disable a few things which are unnecessary or
+        problematic.
+        """
+        # make a new page object, like in create
+        p = page.__class__(source_string='', __name__=page.getId())
+        p.title = page.pageName()
+        p = p.__of__(page.aq_parent)
+        p.setPageType(page.pageType())
+        p.setText(text)
+        return p.render(
+            page,
+            REQUEST,
+            RESPONSE,
+            bare=1,
+            show_subtopics=0,
+            show_issueproperties=0)
+    
     def preRenderMessages(self,page):
         t = ''
         for m in page.messages(): t += self.preRenderMessage(page,m)
