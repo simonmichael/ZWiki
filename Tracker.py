@@ -59,16 +59,16 @@ class TrackerSupport:
     security.declareProtected(Permissions.View, 'issueNumberAndName')
     def issueNumberAndName(self, pagename=None):
         """
-        Return the issue number and name parts from this page's name if possible.
+        Get issue number and name from this or another page's name if possible.
         """
-        return self.issueNumberAndNameFrom(self.pageName())
+        return self.issueNumberAndNameFrom(pagename or self.pageName())
 
     security.declareProtected(Permissions.View, 'issueNumber')
     def issueNumber(self, pagename=None):
         """
-        Return this page's (or another's) issue number, or None.
+        Return this or another page's issue number, or None.
         """
-        tuple = self.issueNumberAndName(pagename or self.pageName())
+        tuple = self.issueNumberAndNameFrom(pagename or self.pageName())
         return tuple and tuple[0]
 
     security.declareProtected(Permissions.View, 'issueName')
