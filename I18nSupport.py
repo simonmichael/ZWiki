@@ -23,7 +23,7 @@
 #XXX temp
 def BLATHER(t):
     import zLOG
-    zLOG.LOG('ZWiki',t)
+    zLOG.LOG('ZWiki',zLOG.BLATHER,t)
 
 
 USE_PTS=1
