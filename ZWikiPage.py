@@ -251,6 +251,7 @@ class ZWikiPage(
         Make sure any applicable pre-rendering for this page has been done.
         
         If clear_cache is true, blow away any cached data.
+        XXX I think this happens anyway.
         """
         if clear_cache: self.clearCache()
         get_transaction().note('prerender')

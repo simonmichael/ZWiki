@@ -137,22 +137,21 @@ class CommentsSupport:
         # (non-rfc2822) zwiki comments to the new style
         pass
 
-        # add proper From delimiters
-        # XXX that's a bit aggressive and is no longer needed I think
-        if re.search(r'\n\nFrom: ',self.text()):
-            msgs = ''
-            mailbox = PortableUnixMailbox(StringIO(
-                re.sub(r'\n\nFrom: ',r'\n\nFrom \nFrom: ',self.text())))
-            m = mailbox.next()
-            while m is not None:
-                msgs += self.fromLineFrom(m.get('from'),m.get('date'))
-                msgs += string.join(m.headers,'')
-                msgs += '\n'
-                msgs += m.fp.read()
-                m = mailbox.next()
-            new = re.split('\n\nFrom: ',self.text(),1)[0]+'\n\n'+msgs
-            self.edit(text=new, REQUEST=REQUEST,log='upgraded comments')
-            BLATHER('upgraded comments on',self.id())
+        # convert From: to proper From delimiters, no longer needed
+        #if re.search(r'\n\nFrom: ',self.text()):
+        #    msgs = ''
+        #    mailbox = PortableUnixMailbox(StringIO(
+        #        re.sub(r'\n\nFrom: ',r'\n\nFrom \nFrom: ',self.text())))
+        #    m = mailbox.next()
+        #    while m is not None:
+        #        msgs += self.fromLineFrom(m.get('from'),m.get('date'))
+        #        msgs += string.join(m.headers,'')
+        #        msgs += '\n'
+        #        msgs += m.fp.read()
+        #        m = mailbox.next()
+        #    new = re.split('\n\nFrom: ',self.text(),1)[0]+'\n\n'+msgs
+        #    self.edit(text=new, REQUEST=REQUEST,log='upgraded comments')
+        #    BLATHER('upgraded comments on',self.id())
 
     # backwards compatibility
     supportsMessages = supportsComments

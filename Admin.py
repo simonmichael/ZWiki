@@ -33,56 +33,55 @@ class AdminSupport:
     """
     security = ClassSecurityInfo()
 
-    security.declarePublic('upgradeAll') # check folder permission at runtime
-    def upgradeAll(self,pre_render=1,upgrade_messages=0,check_parents=1,
-                   REQUEST=None):
+    security.declarePublic('upgradeAll') # we check folder permission at runtime
+    def upgradeAll(self,render=1,partial_commits=0,REQUEST=None):
+                   
         """
-        Clear cache, upgrade and pre-render all pages
-
-        Normally pages are upgraded/pre-rendered as needed.  An
-        administrator may want to call this, particularly after a zwiki
-        upgrade, to minimize later delays and to ensure all pages have
-        been rendered by the latest code.
+        Upgrade, tone and pre-render all pages, rebuild the wiki outline, etc.
 
         Requires 'Manage properties' permission on the folder.
-        Commit every so often an attempt to avoid memory/conflict errors.
-        Has problems doing a complete run in large wikis, or when other
-        page accesses are going on ?
+        Normally pages are upgraded/pre-rendered as needed when viewed.
+
+        An administrator may want to call this ahead of time, particularly
+        after a zwiki upgrade, to ensure all pages have the latest
+        properties and have been rendered by the latest code, minimizing
+        delay and possible problems later on. If you don't need to
+        re-render every page, set render=0 to complete much faster on
+        large wikis. Also validates parents and rebuilds the cached wiki
+        outline.
+
+        Optionally commits every 100 pages or so. Possibly useful to avoid
+        memory/conflict errors preventing a complete run in large busy wikis ?
         """
         if not self.checkPermission(Permissions.manage_properties,
                                      self.folder()):
             raise 'Unauthorized', (
              _('You are not authorized to upgrade all pages.') + \
              _('(folder -> Manage properties)'))
-        try: pre_render = int(pre_render)
-        except: pre_render = 0
-        if pre_render:
-            BLATHER('upgrading and prerendering all pages:')
-        else:
-            BLATHER('upgrading all pages:')
-        n = 0
-        total = self.pageCount()
-        # poor caching (ok in this case)
-        for p in self.pageObjects():
-            n = n + 1
+        
+        if render: BLATHER('upgrading and pre-rendering all pages:')
+        else: BLATHER('upgrading all pages:')
+        n, total = 0, self.pageCount()
+        for p in self.pageObjects(): # poor caching (not a problem here)
+            n += 1
             try:
                 p.upgrade(REQUEST)
                 p.upgradeId(REQUEST)
-                if pre_render: p.preRender(clear_cache=1)
-                if upgrade_messages: p.upgradeMessages(REQUEST)
-                if check_parents: p.checkParents(update_outline=0)
-                BLATHER('upgraded page %d/%d %s'%(n,total,p.id()))
+                if render:
+                    p.preRender(clear_cache=1)
+                    msg = 'upgraded and pre-rendered page'
+                else:
+                    msg = 'upgraded page'
+                BLATHER('%s %d/%d %s'%(msg,n,total,p.id()))
             except:
                 BLATHER('failed to upgrade page %d/%d %s: %s' \
                      % (n,total,p.id(),formattedTraceback()))
-            if n % 100 == 0:
+            if partial_commits and n % 100 == 0:
                 BLATHER('committing')
-                # do this at each commit just in case
-                if check_parents: self.updateWikiOutline()
                 get_transaction().commit()
-        # last pages will get committed as this request ends
-        # but finish this.. probably good to do in any case
+
         self.updateWikiOutline()
+
         BLATHER('upgrade complete, %d pages processed' % n)
 
     #security.declarePublic('upgradeId')
@@ -92,8 +91,8 @@ class AdminSupport:
         Make sure a page's id conforms with it's title, renaming as needed.
 
         Does not leave a placeholder, so may break incoming links.
-        Presently too slow for auto-upgrade, so people must call this
-        manually or via upgradeAll.
+        Too slow for auto-upgrade, so people must call this manually or
+        via upgradeAll.
 
         updatebacklinks=1 is used even though it's slow, because it's less
         work than fixing up links by hand afterward.
@@ -149,16 +148,10 @@ class AdminSupport:
         # changed = self.upgradeId()
 
         # fix up attributes first, then properties
-        # don't acquire while doing this
-        realself = self
-        self = self.aq_base
-        # XXXXXXXXXXXXXXXXX WATCH OUT! XXXXXXXXXXXXXXXXXX
-        # use realself below if you want normal behaviour
-        # this will bite you and cause you to waste time
-        # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        # NB be a bit careful about  acquisition while doing this
 
         # migrate a WikiForNow _st_data attribute
-        if hasattr(self, '_st_data'):
+        if hasattr(self.aq_base, '_st_data'):
             self.raw = self._st_data
             del self._st_data
             changed = 1
@@ -210,8 +203,7 @@ class AdminSupport:
             '_links',
             '_prelinked',
             ):
-            #if hasattr(self.aq_base,a): #XXX why doesn't this work
-            if hasattr(self,a):
+            if hasattr(self.aq_base,a): 
                 delattr(self,a)
                 self.clearCache()
                 changed = 1 
@@ -249,26 +241,25 @@ class AdminSupport:
                 self._properties = self._properties + (newprops[p],)
                 changed = 1
 
+        # ensure parents property is a list
+        changed = self.ensureParentsPropertyIsList()
+
         # install issue properties if needed, ie if this page is being
         # viewed as an issue for the first time
-        if realself.isIssue(): changed = realself.upgradeIssueProperties()
+        if self.isIssue(): changed = self.upgradeIssueProperties()
 
         if changed:
-            # bobobase_modification_time changed - put in a dummy user so
-            # it's clear this was not an edit
-            # no - you should be looking at last_edit_times, in which case
-            # you don't want to see last_editor change for this.
-            #self.last_editor_ip = ''
-            #self.last_editor = 'UpGrade'
-            # do a commit now so the current render will have the
-            # correct bobobase_modification_time for display (many
-            # headers/footers still show it)
-            get_transaction().commit()
-            # and log it
+            # do a commit now so the current render will have the correct
+            # bobobase_modification_time for display (many headers/footers
+            # still show it)
+            # XXX I don't think we need to dick around with commits any more
+            #get_transaction().commit()
             BLATHER('upgraded '+self.id())
 
+        self.upgradeComments(REQUEST)
+                
         # finally, MailSupport does a bit more (merge here ?)
-        realself._upgradeSubscribers()
+        self._upgradeSubscribers()
 
     security.declareProtected('Manage properties', 'setupPages')
     def setupPages(self,REQUEST=None):
