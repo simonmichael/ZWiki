@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+      i18n:domain="zwiki"
       tal:define="
       title   string:${container/title} ${here/Title} backlinks;
       macros  python:here.wikipage_macros(request).macros;
@@ -25,7 +26,7 @@ src="/misc_/ZWiki/ZWikiPage_icon.gif" height="48" width="48" border="0" alt="hom
 </a>
 </td>
 <td valign="middle">
-<h1>Backlinks for <span tal:replace="here/Title">Pagename..</span></h1>
+<h1><span i18n:translate="">Backlinks for</span> <span tal:replace="here/Title">Pagename..</span></h1>
 </td>
 </tr>
 </table>
@@ -42,8 +43,8 @@ src="/misc_/ZWiki/ZWikiPage_icon.gif" height="48" width="48" border="0" alt="hom
 tal:attributes="href here/page_url; title here/linkTitle;" 
 tal:content="thispage"
 >thispage</a> 
-<span tal:condition="not:here/parents">is a top-level topic.</span>
-<span tal:condition="here/parents">is a subtopic of:</span>
+<span tal:condition="not:here/parents" i18n:translate="">is a top-level topic.</span>
+<span tal:condition="here/parents" i18n:translate="">is a subtopic of:</span>
 </p>
 <form action="reparent" tal:attributes="action string:${here/page_url}/reparent">
 <ol tal:condition="here/parents"
@@ -65,7 +66,7 @@ tal:content="parent"
 </span>
 </li>
 </ol>
-<p>
+<p i18n:translate="">
 Here are the pages which link to it:
 </p>
 <ol tal:define="
@@ -95,13 +96,15 @@ tal:content="blpage"
 
 <p tal:condition="zwiki_showhierarchy">
 <br />
-Other parent: <input type="text" name="parents" />
+<span i18n:translate="">Other parent</span>: <input type="text" name="parents" />
 <br /><br />
-<strong><input type="submit" value="Reparent" style="font-weight:bold" /></strong>
+<strong><input type="submit" value="Reparent" style="font-weight:bold" i18n:attributes="value" /></strong>
 <br /><br />
+<span i18n:translate="backlinks_reparent_help">
 You can change this page's parent(s) to place it within the overall page
 hierarchy.  Check the boxes or enter a new page name and click Reparent.
 A single parent is usually sufficient.
+</span>
 </p>
 </form>
 
