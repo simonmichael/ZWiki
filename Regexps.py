@@ -138,7 +138,7 @@ anywikilinkexpr  = re.compile(r'(%s|%s)' % (interwikilink,wikilink))
 markedwikilinkexpr  = re.compile(r'<zwiki>(.*?)</zwiki>')
 untitledwikilinkexpr = \
           re.compile(r'<a href="([^"/]*/)*(?P<page>[^/"]*)" title="">.*?</a>')
-remotewikiurl    = r'(?mi)RemoteWikiURL[:\s]*(?P<remoteurl>[^\s]+)\s*$'
+remotewikiurl    = r'(?mi)RemoteWikiURL[:\s]+(?P<remoteurl>[^\s]*)\s*$'
 protected_line   = r'(?m)^!(.*)$'
 
 # stx footnotes 
