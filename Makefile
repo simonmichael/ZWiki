@@ -78,12 +78,17 @@ dtmlextract:
 po:
 	cd i18n; \
 	for L in $(LANGUAGES); do \
-	 echo $$L; msgmerge -U $$L.po zwiki.pot; done
+	 msgmerge -U zwiki-$$L.po zwiki.pot; \
+	 msgmerge -U plone-$$L.po plone.pot; \
+	 done
 
 mo:
 	cd i18n; \
 	for L in $(LANGUAGES); do \
-	 echo $$L; msgfmt --statistics $$L.po -o $$L.mo; done
+	 echo $$L; \
+	 msgfmt --statistics zwiki-$$L.po -o zwiki-$$L.mo; \
+	 msgfmt --statistics plone-$$L.po -o plone-$$L.mo; \
+	 done
 
 ## testing
 
@@ -223,15 +228,15 @@ restart:
 	ssh $(HOST) '/instance/zope_stop;sleep 1;/instance/zope_start'
 #	curl -n -sS -o.curllog 'http://$(HOST)/Control_Panel/manage_restart'
 
+refresh-%.po:
+	@echo refreshing $(PRODUCT) $*.po file on $(HOST)
+	@$(CURL) 'http://$(HOST)/Control_Panel/TranslationService/ZWiki.i18n-$*.po/reload'
+
 refresh: refresh-$(PRODUCT)
 
 refresh-%:
 	@echo refreshing $* product on $(HOST)
 	@$(CURL) 'http://$(HOST)/Control_Panel/Products/$*/manage_performRefresh'
-
-refresh-%.po:
-	@echo refreshing $(PRODUCT) $*.po file on $(HOST)
-	@echo $(CURL) 'http://$(HOST)/Control_Panel/TranslationService/ZWiki.i18n-$*.po/reload'
 
 refresh-mailin:
 	@echo refreshing mailin.py external method on $(HOST)

@@ -1,47 +1,50 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Zwiki 0.9.10\n"
-"POT-Creation-Date: Fri Jun 11 09:11:35 2004\n"
-"PO-Revision-Date: 2002-05-28 18:20-0700\n"
-"Last-Translator: Simon Michael <simon@joyful.com>\n"
-"Language-Team: Irish <LL@li.org>\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: Sat Jun 12 00:34:26 2004\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Juan David Ibáñez Palomar <j-david@noos.fr>\n"
+"Language-Team: spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language-code: ga\n"
-"Language-name: Irish\n"
+"Language-code: es\n"
+"Language-name: Spanish\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: zwiki\n"
 
 #: i/Admin.py:100
+#, fuzzy
 msgid "You are not authorized to upgrade all pages."
-msgstr ""
+msgstr "No estás autorizado a cargar ficheros aquí."
 
 #: i/Admin.py:101
 msgid "(folder -> Manage properties)"
 msgstr ""
 
 #: i/Editing.py:289
+#, fuzzy
 msgid ""
 "You are not authorized to reparent or change subtopics links on this ZWiki "
 "Page."
-msgstr ""
+msgstr "No estás autorizado a añadir un enlace en esta página ZWiki."
 
 #: i/Editing.py:311
 msgid "You are not authorized to change this ZWiki Page's type."
-msgstr ""
+msgstr "No estás autorizado a cambiar este tipo de página ZWiki."
 
 #: i/Editing.py:344 i/Editing.py:367
 msgid "You are not authorized to edit this ZWiki Page."
-msgstr ""
+msgstr "No estás autorizado a editar esta página ZWiki."
 
 #: i/Editing.py:370 i/Editing.py:411
 msgid "You are not authorized to delete this ZWiki Page."
-msgstr ""
+msgstr "No estás autorizado a borrar esta página ZWiki."
 
 #: i/Editing.py:479
+#, fuzzy
 msgid "You are not authorized to rename this ZWiki Page."
-msgstr ""
+msgstr "No estas autorizado a renombrar esta página Zwiki. "
 
 #: i/Editing.py:523
 msgid ""
@@ -50,11 +53,11 @@ msgstr ""
 
 #: i/Editing.py:619
 msgid "You are not authorized to upload files here."
-msgstr ""
+msgstr "No estás autorizado a cargar ficheros aquí."
 
 #: i/Editing.py:623
 msgid "You are not authorized to add a link on this ZWiki Page."
-msgstr ""
+msgstr "No estás autorizado a añadir un enlace en esta página ZWiki."
 
 #: i/OutlineSupport.py:737 i/skins/standard/wikipage_macros.pt:218
 msgid "which pages link to this one ?"
@@ -75,43 +78,44 @@ msgstr ""
 #: i/UI.py:493
 #, fuzzy
 msgid "Edit conflict"
-msgstr "Eagarthoireacht i dtreis!"
+msgstr "¡Conflicto de edición!"
 
 #: i/UI.py:513
 msgid "Someone else has saved this page while you were editing"
-msgstr ""
+msgstr "Otra persona guardo esta página mientras tú estabas editando"
 
 #: i/UI.py:514
 msgid "To resolve the conflict, do this"
-msgstr ""
+msgstr "Para resolver el conflicto haz esto"
 
 #: i/UI.py:515
 msgid "Click your browser's back button"
-msgstr ""
+msgstr "Pulsa el botón de ir atrás de tu navegador"
 
 #: i/UI.py:516
 msgid "Copy your recent edits to the clipboard"
-msgstr ""
+msgstr "Copia tus cambios recientes en el portapapeles"
 
 #: i/UI.py:517
 msgid "Click your browser's refresh button"
-msgstr ""
+msgstr "Pulsa el botón de refresco de tu navegador"
 
 #: i/UI.py:518
 msgid "Paste in your edits again, being mindful of the latest changes"
-msgstr ""
+msgstr "Pega en tus ediciones otra vez, presta atención a los últimos cambios"
 
 #: i/UI.py:519
 msgid "Click the Change button again"
-msgstr ""
+msgstr "Pulsa el botón Cambiar otra vez"
 
 #: i/UI.py:520 i/skins/standard/editform.pt:178
 msgid "or"
-msgstr ""
+msgstr "o"
 
 #: i/UI.py:521
+#, fuzzy
 msgid "To discard your changes and start again, click OK"
-msgstr ""
+msgstr "Para descartar tus cambios recientes y volver a empezar, pulsa en Ok"
 
 #: i/UI.py:530
 msgid "Page is locked"
@@ -129,8 +133,9 @@ msgid ""
 msgstr ""
 
 #: i/UI.py:548
+#, fuzzy
 msgid "To discard your changes and try again, click OK."
-msgstr ""
+msgstr "Para descartar tus cambios recientes y volver a empezar, pulsa en Ok"
 
 #: i/UI.py:557
 msgid ""
@@ -215,8 +220,9 @@ msgid "hours"
 msgstr ""
 
 #: i/Utils.py:439
+#, fuzzy
 msgid "hour"
-msgstr ""
+msgstr "o"
 
 #: i/Utils.py:441
 msgid "minute"
@@ -255,23 +261,28 @@ msgid "by %(editor)s"
 msgstr ""
 
 #: i/skins/dtmlmessages.pt:11
+#, fuzzy
 msgid ""
 "You may create a new ZWiki Page object using the form below. You may also "
 "choose to upload an existing html file from your local computer by clicking "
 "the <i>Browse</i> button."
 msgstr ""
+"Puedes crear una nueva página ZWiki utilizando este formulario. También "
+"puedes cargar un fichero html desde tu máquina local pulsando el botón "
+"<i>Browse</i>."
 
 #: i/skins/dtmlmessages.pt:14
+#, fuzzy
 msgid "File"
-msgstr ""
+msgstr "Título"
 
 #: i/skins/dtmlmessages.pt:15
 msgid "Add"
-msgstr ""
+msgstr "Añadir"
 
 #: i/skins/dtmlmessages.pt:16
 msgid "Add and Edit"
-msgstr ""
+msgstr "Añadir y editar"
 
 #: i/skins/dtmlmessages.pt:17 i/skins/dtmlmessages.pt:97
 #: i/skins/dtmlmessages.pt:184
@@ -318,7 +329,7 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:2 i/skins/dtmlmessages.pt:3
 msgid "Add a ZWiki web"
-msgstr ""
+msgstr "Añadir una web ZWiki"
 
 #: i/skins/dtmlmessages.pt:20 i/skins/dtmlmessages.pt:100
 #: i/skins/dtmlmessages.pt:187
@@ -419,7 +430,7 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:4 i/skins/dtmlmessages.pt:12
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: i/skins/dtmlmessages.pt:41 i/skins/dtmlmessages.pt:121
 #: i/skins/dtmlmessages.pt:208
@@ -444,7 +455,7 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:5 i/skins/dtmlmessages.pt:13
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: i/skins/dtmlmessages.pt:50 i/skins/dtmlmessages.pt:130
 #: i/skins/dtmlmessages.pt:217
@@ -500,8 +511,9 @@ msgid "Text matching"
 msgstr ""
 
 #: i/skins/dtmlmessages.pt:6
+#, fuzzy
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: i/skins/dtmlmessages.pt:60 i/skins/dtmlmessages.pt:140
 #: i/skins/dtmlmessages.pt:227
@@ -516,8 +528,9 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:63 i/skins/dtmlmessages.pt:143
 #: i/skins/dtmlmessages.pt:230
+#, fuzzy
 msgid "Here are the wiki's issue pages."
-msgstr ""
+msgstr "Crear wiki"
 
 #: i/skins/dtmlmessages.pt:64 i/skins/dtmlmessages.pt:144
 #: i/skins/dtmlmessages.pt:231
@@ -551,8 +564,9 @@ msgid "name"
 msgstr ""
 
 #: i/skins/dtmlmessages.pt:7
+#, fuzzy
 msgid "Create wiki"
-msgstr ""
+msgstr "Crear wiki"
 
 #: i/skins/dtmlmessages.pt:70 i/skins/dtmlmessages.pt:92
 #: i/skins/dtmlmessages.pt:150 i/skins/dtmlmessages.pt:172
@@ -586,8 +600,9 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:75 i/skins/dtmlmessages.pt:155
 #: i/skins/dtmlmessages.pt:242
+#, fuzzy
 msgid "Add a new issue:"
-msgstr ""
+msgstr "Añadir y editar"
 
 #: i/skins/dtmlmessages.pt:76 i/skins/dtmlmessages.pt:156
 #: i/skins/dtmlmessages.pt:243
@@ -610,8 +625,9 @@ msgid "Status:"
 msgstr ""
 
 #: i/skins/dtmlmessages.pt:8
+#, fuzzy
 msgid "and enter"
-msgstr ""
+msgstr "(y pulsa el retorno de carro)"
 
 #: i/skins/dtmlmessages.pt:80 i/skins/dtmlmessages.pt:160
 #: i/skins/dtmlmessages.pt:247
@@ -664,8 +680,9 @@ msgid "Statuses:"
 msgstr ""
 
 #: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:10
+#, fuzzy
 msgid "Add ZWiki Page"
-msgstr ""
+msgstr "Añadir una web ZWiki"
 
 #: i/skins/dtmlmessages.pt:90 i/skins/dtmlmessages.pt:170
 #: i/skins/dtmlmessages.pt:257
@@ -752,12 +769,14 @@ msgid "TextFormattingRules"
 msgstr ""
 
 #: i/skins/standard/editform.pt:195
+#, fuzzy
 msgid "Create"
-msgstr ""
+msgstr "Crear wiki"
 
 #: i/skins/standard/editform.pt:196
+#, fuzzy
 msgid "create this wiki page"
-msgstr ""
+msgstr "Crear wiki"
 
 #: i/skins/standard/editform.pt:198
 msgid "Cancel"
@@ -776,8 +795,9 @@ msgid "the name of this wiki page (changing this may be slow!)"
 msgstr ""
 
 #: i/skins/standard/editform.pt:80
+#, fuzzy
 msgid "type"
-msgstr ""
+msgstr "Tipo"
 
 #: i/skins/standard/editform.pt:81
 msgid "select the formatting and rendering style for this page"
@@ -807,8 +827,9 @@ msgid " Unsubscribe from this page "
 msgstr ""
 
 #: i/skins/standard/subscribeform.pt:109
+#, fuzzy
 msgid " Subscribe to this page "
-msgstr ""
+msgstr "Crear wiki"
 
 #: i/skins/standard/wikipage.pt:65
 msgid "search all pages"
@@ -901,8 +922,9 @@ msgid "show basic features"
 msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:191
+#, fuzzy
 msgid "simple"
-msgstr ""
+msgstr "Fichero"
 
 #: i/skins/standard/wikipage_macros.pt:192
 msgid "show only essential features"
@@ -1009,8 +1031,9 @@ msgid ""
 msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:488
+#, fuzzy
 msgid "create"
-msgstr ""
+msgstr "Crear wiki"
 
 #: i/skins/standard/wikipage_macros.pt:488
 msgid "create a new subtopic of this page"
@@ -1271,8 +1294,9 @@ msgid "Unsubscribe from this page"
 msgstr ""
 
 #: i/skins/zwiki_plone/subscribeform.pt:86
+#, fuzzy
 msgid "Subscribe to this page"
-msgstr ""
+msgstr "Crear wiki"
 
 # Default: ""
 # "You are currently subscribed<br />\n"
@@ -1296,8 +1320,9 @@ msgid "save"
 msgstr ""
 
 #: i/skins/zwiki_plone/uploaded.pt:25
+#, fuzzy
 msgid "view"
-msgstr ""
+msgstr "Fichero"
 
 # Default: "No files have been uploaded."
 #: i/skins/zwiki_plone/uploaded.pt:29
@@ -1334,29 +1359,29 @@ msgstr ""
 msgid "add-comment"
 msgstr ""
 
-msgid "View"
-msgstr ""
+#, fuzzy
+#~ msgid "You are not authorized to comment on this ZWiki Page."
+#~ msgstr "No estás autorizado a editar esta página ZWiki."
 
-msgid "Edit"
-msgstr ""
+#~ msgid "You are not authorized to add ZWiki Pages here."
+#~ msgstr "No estás autorizado a añadir páginas ZWiki aquí."
 
-msgid "History"
-msgstr ""
+#~ msgid "You are not authorized to set this ZWiki Page's regulations."
+#~ msgstr ""
+#~ "No estás autorizado a cambiar las regulaciones de esta página Zwiki."
 
-msgid "Backlinks"
-msgstr ""
+#, fuzzy
+#~ msgid "This page was renamed to %s.\n"
+#~ msgstr "Esta página ha sido renombrada a"
 
-msgid "Subscribe"
-msgstr ""
+#~ msgid "Add a ZWiki web.."
+#~ msgstr "Añadir una web ZWiki.."
 
-msgid "Wiki changes"
-msgstr ""
+#~ msgid " permission is required."
+#~ msgstr " permiso requerido."
 
-msgid "Issue tracker"
-msgstr ""
+#~ msgid "You are not authorized to add files larger than"
+#~ msgstr "No estás autorizado a añadir ficheros más largos que"
 
-msgid "Search this wiki"
-msgstr ""
-
-msgid "Wiki options"
-msgstr ""
+#~ msgid "here"
+#~ msgstr "aquí"

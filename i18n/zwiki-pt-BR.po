@@ -1,121 +1,128 @@
+# Brazilian Portuguese translation for ZWiki
+# Jean Rodrigo Ferri <jeanrodrigoferri@yahoo.com.br>, 2004
 msgid ""
 msgstr ""
-"Project-Id-Version: ZWiki-0-31-0rc3\n"
-"POT-Creation-Date: Fri Jun 11 09:11:35 2004\n"
-"PO-Revision-Date: 2004-05-31 07:18+0800\n"
-"Last-Translator: T.C. Chou <tcchou-at-tcchou.org>\n"
-"Language-Team: <zwiki@zwiki.org>\n"
+"Project-Id-Version: ZWiki 0.30.0\n"
+"POT-Creation-Date: Sat Jun 12 00:34:26 2004\n"
+"PO-Revision-Date: 2004-05-11 17:00-0200E\n"
+"Last-Translator: Jean Rodrigo Ferri <jeanrodrigoferri@yahoo.com.br>\n"
+"Language-Team: TcheZope.org <tchezope@yahoogrupos.com.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: zope/app/translation_files/extract.py\n"
-"Language-code: zh-tw\n"
-"Language-name: 简体中文\n"
+"Language-code: pt_BR\n"
+"Language-name: Português do Brasil\n"
 "Preferred-encodings: utf-8\n"
 "Domain: zwiki\n"
 
 #: i/Admin.py:100
 msgid "You are not authorized to upgrade all pages."
-msgstr "您没有权力升级所有页面."
+msgstr "Você não está autorizado a atualizar todas as páginas."
 
 #: i/Admin.py:101
 msgid "(folder -> Manage properties)"
-msgstr "(目录 -> 管理属性)"
+msgstr "(pasta -> Gerenciar propriedades)"
 
 #: i/Editing.py:289
 msgid ""
 "You are not authorized to reparent or change subtopics links on this ZWiki "
 "Page."
-msgstr "您没有权力在这页更动父页或子主题连结."
+msgstr ""
+"Você não está autorizado a reparentar ou alterar subtópicos linkados nesta "
+"página ZWiki."
 
 #: i/Editing.py:311
 msgid "You are not authorized to change this ZWiki Page's type."
-msgstr "您没有权力在这页变更型态."
+msgstr "Você não está autorizado a alterar o tipo desta página ZWiki."
 
 #: i/Editing.py:344 i/Editing.py:367
 msgid "You are not authorized to edit this ZWiki Page."
-msgstr "您没有权力修改此页."
+msgstr "Você não está autorizado a editar esta página ZWiki."
 
 #: i/Editing.py:370 i/Editing.py:411
 msgid "You are not authorized to delete this ZWiki Page."
-msgstr "您没有权力删除此页."
+msgstr "Você não está autorizado a deletar esta página ZWiki."
 
 #: i/Editing.py:479
 msgid "You are not authorized to rename this ZWiki Page."
-msgstr "您没有权力变更此页的名称."
+msgstr "Você não está autorizado a renomear esta página ZWiki."
 
 #: i/Editing.py:523
 msgid ""
 "This page was renamed to %s. You can delete this one if no longer needed.\n"
-msgstr "这页已被改名为 %s. 如果此页不需要, 您可以删除.\n"
+msgstr ""
+"Esta página foi renomeada para %s. Você pode deletá-la não precisar por "
+"muito tempo.\n"
 
 #: i/Editing.py:619
 msgid "You are not authorized to upload files here."
-msgstr "您没有权力在这里上传档案."
+msgstr "Você não está autorizado a carregar arquivos aqui."
 
 #: i/Editing.py:623
 msgid "You are not authorized to add a link on this ZWiki Page."
-msgstr "您没有权力在此页增加连接."
+msgstr "Você não está autorizado a adicionar um link nesta Página ZWiki."
 
 #: i/OutlineSupport.py:737 i/skins/standard/wikipage_macros.pt:218
 msgid "which pages link to this one ?"
-msgstr "那个页面连结到这一页?"
+msgstr ""
 
 #: i/OutlineSupport.py:742
 msgid "You are here"
-msgstr "您现在位置"
+msgstr ""
 
 #: i/PageTypes.py:203
+#, fuzzy
 msgid "comments"
-msgstr "建议"
+msgstr "Conteúdos"
 
 #: i/PageTypes.py:361
 msgid "reply"
-msgstr "回复"
+msgstr ""
 
 #: i/UI.py:493
 msgid "Edit conflict"
-msgstr "修改冲突"
+msgstr "Editar conflito"
 
 #: i/UI.py:513
 msgid "Someone else has saved this page while you were editing"
-msgstr "当您修改时, 已经有人存入新的页面"
+msgstr "Alguém salvou esta página enquanto você estava editando"
 
 #: i/UI.py:514
 msgid "To resolve the conflict, do this"
-msgstr "要解决冲突问题, 请按以下步骤"
+msgstr "Para resolver o conflito, faça isto"
 
 #: i/UI.py:515
 msgid "Click your browser's back button"
-msgstr "点选您浏览器的上ㄧ页按钮(Back)"
+msgstr "Clique no botão voltar do seu navegador"
 
 #: i/UI.py:516
 msgid "Copy your recent edits to the clipboard"
-msgstr "复制您最近修改的内容到剪贴簿"
+msgstr "Copiar suas edições recentes para o clipboard"
 
 #: i/UI.py:517
 msgid "Click your browser's refresh button"
-msgstr "点选您浏览器更新页面按钮(Refresh)"
+msgstr "Clique no botão atualizar do seu navegador"
 
 #: i/UI.py:518
 msgid "Paste in your edits again, being mindful of the latest changes"
-msgstr "贴上您所修改的内容, 在最新变更的内容里头"
+msgstr ""
+"Colar novamente nas suas edições, sendo lembradas as últimas alterações"
 
 #: i/UI.py:519
 msgid "Click the Change button again"
-msgstr "再按一次变更按钮(Change)"
+msgstr "Clique novamente no botão Alterar"
 
 #: i/UI.py:520 i/skins/standard/editform.pt:178
 msgid "or"
-msgstr "或"
+msgstr "ou"
 
 #: i/UI.py:521
 msgid "To discard your changes and start again, click OK"
-msgstr "放弃所有您变更的内容, 并重新再读一次, 点选确认按钮(OK)"
+msgstr "Para descartar suas alterações e iniciar novamente, clique em OK"
 
 #: i/UI.py:530
 msgid "Page is locked"
-msgstr "页面被锁"
+msgstr "A página está bloqueada"
 
 #: i/UI.py:541
 msgid ""
@@ -128,16 +135,18 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"            此页已被 webDAV 锁住. 某人或许正在用外部编辑器\n"
-"            修改这一页  您必须等到他们完成修改工作, 之后再\n"
-"            试试看.  如果您已经修改一些内容, 您或许得备份下\n"
-"            来, 以文字的方式拷贝, 好做为重新修改的参考.\n"
-"            \n"
+"            Esta página tem um bloqueio webDAV. Provavelmente alguém está "
+"editando-a\n"
+"            com um editor externo. Você precisa aguardar até isto ser\n"
+"            finalizado e então tentar novamente. Se você tiver feito alguma "
+"alteração,\n"
+"            você deve voltar e copiar a sua versão do texto como\n"
+"            referência.\n"
 "            "
 
 #: i/UI.py:548
 msgid "To discard your changes and try again, click OK."
-msgstr "放弃您变更的内容, 并且再试一次, 点选确认按钮(OK)."
+msgstr "Para descartar suas alterações e tentar novamente, clique em OK."
 
 #: i/UI.py:557
 msgid ""
@@ -184,124 +193,84 @@ msgid ""
 "        p    previous edit\n"
 "        "
 msgstr ""
-"\n"
-"        0    显示快速键的配置\n"
-"\n"
-"        Wiki 功能:\n"
-"        f    显示首页\n"
-"        c    显示 Wiki 的所有内容 (contents)\n"
-"        r    显示 Wiki 最近的变更\n"
-"             显示讨论页面\n"
-"        t    显示事例追踪功能\n"
-"        i    显示 Wiki 的索引\n"
-"        o    显示 Wiki 的选项 (偏好设定)\n"
-"        h    显示辅助页面\n"
-"        s    跳到搜寻字段\n"
-"        \n"
-"        页面功能:\n"
-"        v    检视页面\n"
-"        +    全功能模式检视页面\n"
-"        =    简单模式检视页面\n"
-"        -    极简模式检视页面\n"
-"        m    邮件订阅\n"
-"        b    显示回溯连结 (连结到此页面)\n"
-"        d    显示不同比较 (页面修改历史)\n"
-"        y    显示完整历史 (在 ZMI 中)\n"
-"        e    修改这一页面\n"
-"        x    用外部编辑器修改\n"
-"             打印这一页面 (以及子主题)\n"
-"        q    检视页面的源码 (快速检视)\n"
-"             清除并且重新产生这一页面的快取\n"
-"             跳到子主题\n"
-"             跳到建议 (讯息)\n"
-"             如果可能的话, 会跳到这一页面作者的首页\n"
-"        n    下一页面\n"
-"        p    上一页面\n"
-"        u    上到父层页面\n"
-"        \n"
-"        在修改表单:\n"
-"        s    储存变更\n"
-"        \n"
-"        当显示不同比较:\n"
-"        n    下一修改\n"
-"        p    前一修改\n"
-"        "
 
 #: i/Utils.py:431
 msgid "years"
-msgstr "年"
+msgstr ""
 
 #: i/Utils.py:431
 msgid "year"
-msgstr "年"
+msgstr ""
 
 #: i/Utils.py:433
 msgid "month"
-msgstr "月"
+msgstr ""
 
 #: i/Utils.py:433
 msgid "months"
-msgstr "月"
+msgstr ""
 
 #: i/Utils.py:435
 msgid "weeks"
-msgstr "周"
+msgstr ""
 
 #: i/Utils.py:435
 msgid "week"
-msgstr "周"
+msgstr ""
 
 #: i/Utils.py:437
 msgid "day"
-msgstr "天"
+msgstr ""
 
 #: i/Utils.py:437
+#, fuzzy
 msgid "days"
-msgstr "天"
+msgstr "sempre"
 
 #: i/Utils.py:439
 msgid "hours"
-msgstr "时"
+msgstr ""
 
 #: i/Utils.py:439
+#, fuzzy
 msgid "hour"
-msgstr "时"
+msgstr "ou"
 
 #: i/Utils.py:441
 msgid "minute"
-msgstr "分"
+msgstr ""
 
 #: i/Utils.py:441
 msgid "minutes"
-msgstr "分"
+msgstr ""
 
 #: i/Utils.py:443
 msgid "second"
-msgstr "秒"
+msgstr ""
 
 #: i/Utils.py:443
 msgid "seconds"
-msgstr "秒"
+msgstr ""
 
 #: i/ZWikiPage.py:580
 msgid "page in parent wiki"
-msgstr "同在父层的页面"
+msgstr ""
 
 #: i/ZWikiPage.py:585
 msgid "create this page"
-msgstr "建立页面"
+msgstr ""
 
 #: i/ZWikiPage.py:661 i/ZWikiPage.py:674 i/ZWikiPage.py:677
 msgid "last edited %(interval)s ago"
-msgstr "最新变更在 %(interval)s 以前"
+msgstr ""
 
 #: i/ZWikiPage.py:670
 msgid "show last edit %(lastlog)s"
-msgstr "显示最新修改 %(lastlog)s"
+msgstr ""
 
 #: i/ZWikiPage.py:685 i/ZWikiPage.py:687
 msgid "by %(editor)s"
-msgstr "作者 %(editor)s"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:11
 msgid ""
@@ -309,38 +278,37 @@ msgid ""
 "choose to upload an existing html file from your local computer by clicking "
 "the <i>Browse</i> button."
 msgstr ""
-"您可以用下面的表单建立新的ZWiki页面. 您也可以点选 <i>浏览</i> 按钮\n"
-"上传您计算机中已经存在的 HTML 档案."
 
 #: i/skins/dtmlmessages.pt:14
 msgid "File"
-msgstr "档案"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:15
 msgid "Add"
-msgstr "新增"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:16
 msgid "Add and Edit"
-msgstr "新增并编辑"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:17 i/skins/dtmlmessages.pt:97
 #: i/skins/dtmlmessages.pt:184
 msgid "Set your site preferences below."
 msgstr ""
 
-# Default: "Page name"
 #: i/skins/dtmlmessages.pt:177
+#, fuzzy
 msgid "Name"
-msgstr "页面名称"
+msgstr "Nome da página"
 
 #: i/skins/dtmlmessages.pt:178
 msgid "Category"
-msgstr "分类"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:179
+#, fuzzy
 msgid "Severity"
-msgstr "严重"
+msgstr "nunca"
 
 #: i/skins/dtmlmessages.pt:18 i/skins/dtmlmessages.pt:98
 #: i/skins/dtmlmessages.pt:185
@@ -349,30 +317,31 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:180
 msgid "Status"
-msgstr "状态"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:181
+#, fuzzy
 msgid "Optional note"
-msgstr "变更注记(选项)"
+msgstr "Nota de lteração opcional"
 
 #: i/skins/dtmlmessages.pt:182
 msgid "Submitted by"
-msgstr "提出者"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:183
+#, fuzzy
 msgid "Details & comments"
-msgstr "细节与建议"
+msgstr "Conteúdos"
 
-# Default: "Page name"
 #: i/skins/dtmlmessages.pt:19 i/skins/dtmlmessages.pt:99
 #: i/skins/dtmlmessages.pt:186
 #, fuzzy
 msgid "User name"
-msgstr "变更名称"
+msgstr "Nome da página"
 
 #: i/skins/dtmlmessages.pt:2 i/skins/dtmlmessages.pt:3
 msgid "Add a ZWiki web"
-msgstr "新增一个ZWiki网站"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:20 i/skins/dtmlmessages.pt:100
 #: i/skins/dtmlmessages.pt:187
@@ -381,21 +350,18 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:21 i/skins/dtmlmessages.pt:101
 #: i/skins/dtmlmessages.pt:188
-#, fuzzy
 msgid "Email address"
-msgstr "您的电子邮件"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:22 i/skins/dtmlmessages.pt:102
 #: i/skins/dtmlmessages.pt:189
-#, fuzzy
 msgid "for subscribing"
-msgstr "没有人订阅"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:23 i/skins/dtmlmessages.pt:103
 #: i/skins/dtmlmessages.pt:190
-#, fuzzy
 msgid "Editform"
-msgstr "修改"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:24 i/skins/dtmlmessages.pt:104
 #: i/skins/dtmlmessages.pt:191
@@ -404,9 +370,8 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:25 i/skins/dtmlmessages.pt:105
 #: i/skins/dtmlmessages.pt:192
-#, fuzzy
 msgid "height"
-msgstr "修改"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:26 i/skins/dtmlmessages.pt:106
 #: i/skins/dtmlmessages.pt:193
@@ -477,7 +442,7 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:4 i/skins/dtmlmessages.pt:12
 msgid "Id"
-msgstr "名称"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:41 i/skins/dtmlmessages.pt:121
 #: i/skins/dtmlmessages.pt:208
@@ -502,19 +467,19 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:5 i/skins/dtmlmessages.pt:13
 msgid "Title"
-msgstr "标题"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:50 i/skins/dtmlmessages.pt:130
 #: i/skins/dtmlmessages.pt:217
 #, fuzzy
 msgid "Save options"
-msgstr "选项"
+msgstr "Conteúdos"
 
 #: i/skins/dtmlmessages.pt:51 i/skins/dtmlmessages.pt:131
 #: i/skins/dtmlmessages.pt:218
 #, fuzzy
 msgid "Forget options"
-msgstr "选项"
+msgstr "Conteúdos"
 
 #: i/skins/dtmlmessages.pt:52 i/skins/dtmlmessages.pt:132
 #: i/skins/dtmlmessages.pt:219
@@ -546,26 +511,24 @@ msgstr ""
 #: i/skins/dtmlmessages.pt:57 i/skins/dtmlmessages.pt:62
 #: i/skins/dtmlmessages.pt:137 i/skins/dtmlmessages.pt:142
 #: i/skins/dtmlmessages.pt:224 i/skins/dtmlmessages.pt:229
-#, fuzzy
 msgid "Search"
-msgstr "年"
+msgstr ""
 
-# Default: "Page name"
 #: i/skins/dtmlmessages.pt:58 i/skins/dtmlmessages.pt:138
 #: i/skins/dtmlmessages.pt:225
 #, fuzzy
 msgid "Page names matching"
-msgstr "页面名称"
+msgstr "Nome da página"
 
 #: i/skins/dtmlmessages.pt:59 i/skins/dtmlmessages.pt:139
 #: i/skins/dtmlmessages.pt:226
-#, fuzzy
 msgid "Text matching"
-msgstr "文字格式规则"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:6
+#, fuzzy
 msgid "Type"
-msgstr "型态"
+msgstr "tipo"
 
 #: i/skins/dtmlmessages.pt:60 i/skins/dtmlmessages.pt:140
 #: i/skins/dtmlmessages.pt:227
@@ -578,79 +541,77 @@ msgid ""
 "no catalog or the catalog search gave an error, a brute-force search was used"
 msgstr ""
 
+# Default: "Issue tracker"
 #: i/skins/dtmlmessages.pt:63 i/skins/dtmlmessages.pt:143
 #: i/skins/dtmlmessages.pt:230
 #, fuzzy
 msgid "Here are the wiki's issue pages."
-msgstr "显示事例追踪"
+msgstr "Trilhador de edições"
 
 #: i/skins/dtmlmessages.pt:64 i/skins/dtmlmessages.pt:144
 #: i/skins/dtmlmessages.pt:231
 msgid "Enter a search term, or click the numbers to the right, or"
 msgstr ""
 
+# Default: "Filter issues"
 #: i/skins/dtmlmessages.pt:65 i/skins/dtmlmessages.pt:145
 #: i/skins/dtmlmessages.pt:232
 #, fuzzy
 msgid "filter issues"
-msgstr "过滤事例"
+msgstr "Filtro de edições"
 
 #: i/skins/dtmlmessages.pt:66 i/skins/dtmlmessages.pt:146
 #: i/skins/dtmlmessages.pt:233
-#, fuzzy
 msgid "search issues"
-msgstr "过滤事例"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:67 i/skins/dtmlmessages.pt:147
 #: i/skins/dtmlmessages.pt:234
 #, fuzzy
 msgid "recent"
-msgstr "变更父层"
+msgstr "Reparentar"
 
 #: i/skins/dtmlmessages.pt:68 i/skins/dtmlmessages.pt:148
 #: i/skins/dtmlmessages.pt:235
 msgid "all"
 msgstr ""
 
-# Default: "Page name"
 #: i/skins/dtmlmessages.pt:69 i/skins/dtmlmessages.pt:91
 #: i/skins/dtmlmessages.pt:149 i/skins/dtmlmessages.pt:171
 #: i/skins/dtmlmessages.pt:236 i/skins/dtmlmessages.pt:258
 #, fuzzy
 msgid "name"
-msgstr "变更名称"
+msgstr "Nome da página"
 
 #: i/skins/dtmlmessages.pt:7
 msgid "Create wiki"
-msgstr "建立wiki"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:70 i/skins/dtmlmessages.pt:92
 #: i/skins/dtmlmessages.pt:150 i/skins/dtmlmessages.pt:172
 #: i/skins/dtmlmessages.pt:237 i/skins/dtmlmessages.pt:259
-#, fuzzy
 msgid "category"
-msgstr "分类"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:71 i/skins/dtmlmessages.pt:93
 #: i/skins/dtmlmessages.pt:151 i/skins/dtmlmessages.pt:173
 #: i/skins/dtmlmessages.pt:238 i/skins/dtmlmessages.pt:260
 #, fuzzy
 msgid "severity"
-msgstr "严重"
+msgstr "nunca"
 
 #: i/skins/dtmlmessages.pt:72 i/skins/dtmlmessages.pt:94
 #: i/skins/dtmlmessages.pt:152 i/skins/dtmlmessages.pt:174
 #: i/skins/dtmlmessages.pt:239 i/skins/dtmlmessages.pt:261
-#, fuzzy
 msgid "status"
-msgstr "状态"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:73 i/skins/dtmlmessages.pt:95
 #: i/skins/dtmlmessages.pt:153 i/skins/dtmlmessages.pt:175
 #: i/skins/dtmlmessages.pt:240 i/skins/dtmlmessages.pt:262
 #, fuzzy
 msgid "age"
-msgstr "变更"
+msgstr "cancelar"
 
 #: i/skins/dtmlmessages.pt:74 i/skins/dtmlmessages.pt:96
 #: i/skins/dtmlmessages.pt:154 i/skins/dtmlmessages.pt:176
@@ -660,38 +621,34 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:75 i/skins/dtmlmessages.pt:155
 #: i/skins/dtmlmessages.pt:242
-#, fuzzy
 msgid "Add a new issue:"
-msgstr "新增并编辑"
+msgstr ""
 
-# Default: "Page name"
 #: i/skins/dtmlmessages.pt:76 i/skins/dtmlmessages.pt:156
 #: i/skins/dtmlmessages.pt:243
 #, fuzzy
 msgid "Name:"
-msgstr "页面名称"
+msgstr "Nome da página"
 
 #: i/skins/dtmlmessages.pt:77 i/skins/dtmlmessages.pt:157
 #: i/skins/dtmlmessages.pt:244
-#, fuzzy
 msgid "Category:"
-msgstr "分类"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:78 i/skins/dtmlmessages.pt:158
 #: i/skins/dtmlmessages.pt:245
 #, fuzzy
 msgid "Severity:"
-msgstr "严重"
+msgstr "nunca"
 
 #: i/skins/dtmlmessages.pt:79 i/skins/dtmlmessages.pt:159
 #: i/skins/dtmlmessages.pt:246
-#, fuzzy
 msgid "Status:"
-msgstr "状态"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:8
 msgid "and enter"
-msgstr "并输入"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:80 i/skins/dtmlmessages.pt:160
 #: i/skins/dtmlmessages.pt:247
@@ -700,26 +657,26 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:81 i/skins/dtmlmessages.pt:161
 #: i/skins/dtmlmessages.pt:248
-#, fuzzy
 msgid "add issue"
-msgstr "事例"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:82 i/skins/dtmlmessages.pt:162
 #: i/skins/dtmlmessages.pt:249
 msgid "More advanced"
 msgstr ""
 
+# Default: "Issue tracker"
 #: i/skins/dtmlmessages.pt:83 i/skins/dtmlmessages.pt:163
 #: i/skins/dtmlmessages.pt:250
 #, fuzzy
 msgid "issue tracker"
-msgstr "事例追踪"
+msgstr "Trilhador de edições"
 
 #: i/skins/dtmlmessages.pt:84 i/skins/dtmlmessages.pt:164
 #: i/skins/dtmlmessages.pt:251
 #, fuzzy
 msgid "search options"
-msgstr "选项"
+msgstr "Conteúdos"
 
 #: i/skins/dtmlmessages.pt:85 i/skins/dtmlmessages.pt:165
 #: i/skins/dtmlmessages.pt:252
@@ -733,30 +690,29 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:87 i/skins/dtmlmessages.pt:167
 #: i/skins/dtmlmessages.pt:254
-#, fuzzy
 msgid "Categories:"
-msgstr "分类"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:88 i/skins/dtmlmessages.pt:168
 #: i/skins/dtmlmessages.pt:255
 #, fuzzy
 msgid "Severities:"
-msgstr "严重"
+msgstr "nunca"
 
 #: i/skins/dtmlmessages.pt:89 i/skins/dtmlmessages.pt:169
 #: i/skins/dtmlmessages.pt:256
-#, fuzzy
 msgid "Statuses:"
-msgstr "状态"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:10
+#, fuzzy
 msgid "Add ZWiki Page"
-msgstr "新增ZWiki页面"
+msgstr "Conteúdos"
 
 #: i/skins/dtmlmessages.pt:90 i/skins/dtmlmessages.pt:170
 #: i/skins/dtmlmessages.pt:257
 msgid "Filter issues"
-msgstr "过滤事例"
+msgstr ""
 
 # Default: ""
 # "You can change this page's parent(s) to place it within the overall page\n"
@@ -765,21 +721,23 @@ msgstr "过滤事例"
 #: i/skins/standard/backlinks.pt:103
 msgid "backlinks_reparent_help"
 msgstr ""
-"您可变更这页往上的连结, 安排在所有页面阶层里头.\\n\n"
-"做好检查或输入一页面名称, 并且按下『变更父页面』.\\n\n"
-"只要一个父页面通常就够了."
+"Você pode alterar o(s) pai(s) desta(s) página(s) para colocá-la(s) com todas "
+"as páginas\n"
+"da hierarquia. Selecione a caixa ou insira um novo nome de página e clique "
+"em Reparentar.\n"
+"Um pai simples é geralmente suficiente."
 
 #: i/skins/standard/backlinks.pt:46
 msgid "is a top-level topic."
-msgstr "是最顶层的主题."
+msgstr "é um tópico principal."
 
 #: i/skins/standard/backlinks.pt:47
 msgid "is a subtopic of:"
-msgstr "子主题上层为:"
+msgstr "é um subtópico de:"
 
 #: i/skins/standard/backlinks.pt:69
 msgid "Here are the pages which link to it:"
-msgstr "底下是相关连结到的页面:"
+msgstr "Aqui estão as páginas que apontam para esta:"
 
 #: i/skins/standard/badtemplate.pt:12
 msgid ""
@@ -787,341 +745,348 @@ msgid ""
 "object with a skin template ID that is not a Page Template or DTML Method, "
 "or the template may be missing."
 msgstr ""
-"这 Wiki 的风格 (skin) 样板有些问题. 也许对映到的风格样板, 并不是 ZPT 或是 "
-"DTML Method, 或者样版根本不存在. 请检查看看. "
+"Existe um problema com um destes templates de pele do wiki. Talvez exista um "
+"objeto com um ID de um template de pele que não é uma Page Template ou DTML "
+"Method, ou o template pode estar danificado."
 
 #: i/skins/standard/contentspage.pt:29
 msgid "Contents"
-msgstr "内容"
+msgstr "Conteúdos"
 
 #: i/skins/standard/diffform.pt:31
 msgid "Diffs for"
-msgstr "不同于"
+msgstr "Diferenças para"
 
 #: i/skins/standard/diffform.pt:48
 msgid "<< previous edit"
-msgstr "<< 上一版"
+msgstr "<< edição anterior"
 
 #: i/skins/standard/diffform.pt:50
 msgid "next edit >>"
-msgstr "下一版 >>"
+msgstr "próxima edição >>"
 
 #: i/skins/standard/diffform.pt:52
 msgid "cancel"
-msgstr "取消"
+msgstr "cancelar"
 
 #: i/skins/standard/editform.pt:130
 msgid "toggle source/WYSIWYG mode"
-msgstr "切换 源码/所见及所得 模式"
+msgstr ""
 
 #: i/skins/standard/editform.pt:142
 msgid "Optional change note"
-msgstr "变更注记(选项)"
+msgstr "Nota de lteração opcional"
 
 #: i/skins/standard/editform.pt:143
 msgid "a note makes RecentChanges more useful"
-msgstr "写个注记对浏览 RecentChanges 很有帮助"
+msgstr ""
 
 #: i/skins/standard/editform.pt:161
 msgid "Upload a file or image"
-msgstr "上传档案或图档"
+msgstr "Carregar um arquivo ou imagem"
 
 #: i/skins/standard/editform.pt:162
+#, fuzzy
 msgid "upload a file and link it on this page ?"
-msgstr "在这页上传一个档案并连结它?"
+msgstr "Carregar um arquivo ou imagem"
 
 #: i/skins/standard/editform.pt:172
 msgid "For editing help, see"
-msgstr "相关编辑说明, 请参考"
+msgstr "Para ajuda na edição, veja"
 
 #: i/skins/standard/editform.pt:174
 msgid "HelpPage"
-msgstr "辅助页面"
+msgstr ""
 
 #: i/skins/standard/editform.pt:181
 msgid "TextFormattingRules"
-msgstr "文字格式规则"
+msgstr ""
 
 #: i/skins/standard/editform.pt:195
 msgid "Create"
-msgstr "建立"
+msgstr ""
 
 #: i/skins/standard/editform.pt:196
 msgid "create this wiki page"
-msgstr "建立这Wiki页面"
+msgstr ""
 
 #: i/skins/standard/editform.pt:198
+#, fuzzy
 msgid "Cancel"
-msgstr "取消"
+msgstr "cancelar"
 
 #: i/skins/standard/editform.pt:198
 msgid "cancel this edit and return to the page"
-msgstr "取消这页的编辑, 回到原先页面"
+msgstr ""
 
-# Default: "Page name"
 #: i/skins/standard/editform.pt:69
 msgid "Page name"
-msgstr "页面名称"
+msgstr "Nome da página"
 
 #: i/skins/standard/editform.pt:70
 msgid "the name of this wiki page (changing this may be slow!)"
-msgstr "这页Wiki的名称 (进行变更也许很慢!)"
+msgstr ""
 
 #: i/skins/standard/editform.pt:80
 msgid "type"
-msgstr "型态"
+msgstr "tipo"
 
 #: i/skins/standard/editform.pt:81
 msgid "select the formatting and rendering style for this page"
-msgstr "选择这页的格式与表现方式"
+msgstr ""
 
 #: i/skins/standard/ratingform.pt:10
 msgid "page rating"
-msgstr "页面评价"
+msgstr ""
 
 # Default: ""
 # "${score} from\n"
 # "  ${nb_votes} votes"
 #: i/skins/standard/ratingform.pt:13
 msgid "rating_score"
-msgstr "${score} 共 ${nb_votes} 人次投票"
+msgstr ""
 
 #: i/skins/standard/ratingform.pt:36
 msgid "click to rate"
-msgstr "点选评价"
+msgstr ""
 
 #: i/skins/standard/ratingform.pt:36
 msgid "voting as"
-msgstr "来自"
+msgstr ""
 
 #: i/skins/standard/subscribeform.pt:102
 msgid " Unsubscribe from this page "
-msgstr " 取消订阅这个Wiki页面 "
+msgstr ""
 
 #: i/skins/standard/subscribeform.pt:109
 msgid " Subscribe to this page "
-msgstr " 订阅这个页面 "
+msgstr ""
 
 #: i/skins/standard/wikipage.pt:65
 msgid "search all pages"
-msgstr "搜寻所有页面"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:107
 msgid "show front page"
-msgstr "显示首页"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:111
 msgid "home"
-msgstr "首页"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:113
 #: i/skins/standard/wikipage_macros.pt:294
 #: i/skins/standard/wikipage_macros.pt:333
 msgid "show wiki contents"
-msgstr "显示Wiki内容"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:117
+#, fuzzy
 msgid "contents"
-msgstr "内容"
+msgstr "Conteúdos"
 
+# Default: "Recent changes"
 #: i/skins/standard/wikipage_macros.pt:119
+#, fuzzy
 msgid "show wiki recent changes"
-msgstr "显示Wiki最近变更"
+msgstr "Alterações recentes"
 
 #: i/skins/standard/wikipage_macros.pt:123
+#, fuzzy
 msgid "changes"
-msgstr "变更"
+msgstr "cancelar"
 
 #: i/skins/standard/wikipage_macros.pt:125
 msgid "show discussion page"
-msgstr "显示讨论页面"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:129
 msgid "discussion"
-msgstr "讨论"
+msgstr ""
 
+# Default: "Issue tracker"
 #: i/skins/standard/wikipage_macros.pt:131
+#, fuzzy
 msgid "show issue tracker"
-msgstr "显示事例追踪"
+msgstr "Trilhador de edições"
 
 #: i/skins/standard/wikipage_macros.pt:135
 msgid "issues"
-msgstr "事例"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:137
 msgid "show wiki index"
-msgstr "显示Wiki索引"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:141
 msgid "index"
-msgstr "索引"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:143
 msgid "show upload page"
-msgstr "显示上传页面"
+msgstr ""
 
-# Default: "This page lists all uploads in this Wiki."
 #: i/skins/standard/wikipage_macros.pt:147
 msgid "uploads"
-msgstr "这一页面列出所有在这Wiki中上传的档案."
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:149
 msgid "show wiki options"
-msgstr "显示Wiki选项"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:153
 msgid "options"
-msgstr "选项"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:155
 msgid "show help page"
-msgstr "跳到辅助页面"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:160
 msgid "help"
-msgstr "辅助"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:178
 msgid "show all features"
-msgstr "显示所有功能"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:184
 msgid "full"
-msgstr "完全"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:185
 msgid "show basic features"
-msgstr "显示基本功能"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:191
 msgid "simple"
-msgstr "简单"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:192
 msgid "show only essential features"
-msgstr "只显示必要功能"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:198
 msgid "minimal"
-msgstr "极简"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:205
 msgid "configure email subscription to this page or site"
-msgstr "设定邮件订阅在这一页面或是整个站台"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:215
 msgid "subscribe"
-msgstr "订阅"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:224
+#, fuzzy
 msgid "backlinks"
-msgstr "回溯连结"
+msgstr "Links para"
 
 #: i/skins/standard/wikipage_macros.pt:225
 msgid "show this page's change history"
-msgstr "显示这一页的变更历史"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:231
 msgid "diff"
-msgstr "比较"
+msgstr ""
 
 # Default: "edit this page"
 #: i/skins/standard/wikipage_macros.pt:242
 msgid "edit-page"
-msgstr "修改这一页面"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:244
 msgid "edit"
-msgstr "修改"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:245
 msgid "edit using external editor"
-msgstr "使用外部编辑器修改"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:257
 msgid "(external edit)"
-msgstr "(外部编辑器修改)"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:265 i/skins/standard/editform.pt:35
 msgid "go to home page"
-msgstr "跳到首页"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:400
 msgid "replying"
-msgstr "回复"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:409
 msgid "to comment (and cc any subscribers) enter text here and click add"
 msgstr ""
-"想要建议 (并且 cc 给所有订阅者) 请在这里输入文字然后点选 新增(add) 按钮"
 
 #: i/skins/standard/wikipage_macros.pt:433
 msgid "${nb} subscribers"
-msgstr "${nb} 订阅者"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:435
 msgid "1 subscriber"
-msgstr "1 位订阅者"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:438
 msgid "no subscribers"
-msgstr "没有人订阅"
+msgstr ""
 
 # Default: "new parent, name or replacement"
 #: i/skins/standard/wikipage_macros.pt:465
 msgid "parent_name_replace"
-msgstr "新父层, 页面或替代名称"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:467
-#, fuzzy
 msgid ""
 "enter a new parent, new name, replacement page (if any) or subtopic name"
-msgstr "新父层, 页面或替代名称"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:473
+#, fuzzy
 msgid "reparent"
-msgstr "变更父层"
+msgstr "Reparentar"
 
 #: i/skins/standard/wikipage_macros.pt:473
 msgid "reparent this page under the page you have entered"
-msgstr "变更这一个页面的父页, 让它在已有页面之下"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:478
 msgid "rename this page to the name you have entered, updating all links"
-msgstr "变更这一页面名称为您已输入的, 更新所有连结"
+msgstr ""
 
-# Default: "Page name"
 #: i/skins/standard/wikipage_macros.pt:478
+#, fuzzy
 msgid "rename"
-msgstr "变更名称"
+msgstr "Nome da página"
 
 #: i/skins/standard/wikipage_macros.pt:483
 msgid "delete!"
-msgstr "删除!"
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:483
-#, fuzzy
 msgid ""
 "move this page to the recycle bin, and relink to the name you have entered"
-msgstr "把这一页面搬移到垃圾桶, 并且重新连结到您已输入的名称."
+msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:488
 #, fuzzy
 msgid "create"
-msgstr "建立"
+msgstr "Nome da página"
 
 #: i/skins/standard/wikipage_macros.pt:488
 #, fuzzy
 msgid "create a new subtopic of this page"
-msgstr "永不显示子主题在这页吗?"
+msgstr "Mostrar subtópicos na página abaixo?"
 
 #: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
 msgid "Backlinks for"
-msgstr "回溯连结"
+msgstr "Links para"
 
 #: i/skins/zwiki_plone/backlinks.pt:21
+#, fuzzy
 msgid "Here are the pages which link to"
-msgstr "有相关连结的页面"
+msgstr "Aqui estão as páginas que apontam para esta:"
 
 # Default: ""
 # "You can also set this page's <em>parent(s)</em>, to locate it within the\n"
@@ -1130,55 +1095,56 @@ msgstr "有相关连结的页面"
 #: i/skins/zwiki_plone/backlinks.pt:30
 msgid "box_zwiki_showhierarchy"
 msgstr ""
-"您可设定页面的 <em>父层</em>, 安排Wiki内容的阶层关系. \n"
-"点取选项或输入名称并且点选 变更父层 按钮. \n"
-"通常单一父层就够了."
 
 #: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:99
 msgid "Other parent"
-msgstr "不同的父层页面"
+msgstr "Outro pai"
 
 #: i/skins/zwiki_plone/backlinks.pt:72 i/skins/standard/backlinks.pt:101
 msgid "Reparent"
-msgstr "变更父层"
+msgstr "Reparentar"
 
 #: i/skins/zwiki_plone/contentspage.pt:13
+#, fuzzy
 msgid "Wiki contents"
-msgstr "Wiki内容"
+msgstr "Conteúdos"
 
 #: i/skins/zwiki_plone/contentspage.pt:19 i/skins/standard/contentspage.pt:40
 msgid "Singletons"
-msgstr "单独存在页面"
+msgstr "Simples"
 
-# Default: "Singletons are pages that are not connected to other pages."
 #: i/skins/zwiki_plone/contentspage.pt:21
+#, fuzzy
 msgid "singleton_desc"
-msgstr "单独存在页面是没有和其它页面相连的页面."
+msgstr "Simples"
 
 #: i/skins/zwiki_plone/diffform.pt:15
+#, fuzzy
 msgid "History for"
-msgstr "变更历程"
+msgstr "Diferenças para"
 
 #: i/skins/zwiki_plone/diffform.pt:23 i/skins/standard/diffform.pt:46
 msgid "full history"
-msgstr "完整历史"
+msgstr "toda a história"
 
 #: i/skins/zwiki_plone/diffform.pt:31
+#, fuzzy
 msgid "&laquo; previous edit"
-msgstr "<< 上一版"
+msgstr "<< edição anterior"
 
 #: i/skins/zwiki_plone/diffform.pt:39
+#, fuzzy
 msgid "next edit &raquo;"
-msgstr "下一版 >>"
+msgstr "próxima edição >>"
 
 #: i/skins/zwiki_plone/diffform.pt:47
 msgid "return to page"
-msgstr "回到页面"
+msgstr ""
 
 # Default: "Body text"
 #: i/skins/zwiki_plone/editform.pt:111
 msgid "label_body_text"
-msgstr "主体内容"
+msgstr "Corpo do texto"
 
 # Default: ""
 # "In a Wiki page, you use [square brackets] to create links. When you save the page, the contents\n"
@@ -1187,45 +1153,50 @@ msgstr "主体内容"
 #: i/skins/zwiki_plone/editform.pt:113
 msgid "help_wikibody"
 msgstr ""
-"在Wiki页面中, 您可用 [方括号] 建立连接. 当您储存页面时, 方括号里头的\n"
-"            名称将会跟随一个小小的 <code>?</code> 连接. 当您点选时, 则依\n"
-"            该名称建立一新页面."
+"Em uma página Wiki, você usa [paravras emendadas] para criar links. Quando "
+"você salva a página, os conteúdos\n"
+"            das palavras emendadas terão um pequeno link <code>?</code> "
+"posteriormente, que você clica para criar\n"
+"            uma nova página com esse nome."
 
 # Default: ""
 # "In a Wiki page, you use [square brackets] to create links. When you save the page, the contents\n"
 # "            of the square brackets will have a small <code>?</code> link next to it, which you click to create\n"
 # "            a new page with that name."
 #: i/skins/zwiki_plone/editform.pt:141
+#, fuzzy
 msgid "help_wikiwords"
 msgstr ""
-"在快纪页面中, 您可用 [方括号] 建立连接. 当您储存页面时, 方括号里头的\n"
-"            名称将会跟随一个小小的 <code>?</code> 连接. 当您点选时, 则依\n"
-"            该名称建立一新页面."
+"Em uma página Wiki, você usa [paravras emendadas] para criar links. Quando "
+"você salva a página, os conteúdos\n"
+"            das palavras emendadas terão um pequeno link <code>?</code> "
+"posteriormente, que você clica para criar\n"
+"            uma nova página com esse nome."
 
 # Default: "Note for the page history (optional)"
 #: i/skins/zwiki_plone/editform.pt:152
 msgid "label_note"
-msgstr "页面历史的注释说明(选择性项目)"
+msgstr "Nota para a história da página (opcional)"
 
 # Default: "A short description of your changes."
 #: i/skins/zwiki_plone/editform.pt:154
 msgid "help_wikinote"
-msgstr "简短描述您的变更."
+msgstr "Uma curta descrição de suas alterações."
 
 # Default: "Upload file or image (optional)"
 #: i/skins/zwiki_plone/editform.pt:176
 msgid "label_upload_contents_optional"
-msgstr "上传档案或是图档(选择性项目)"
+msgstr "Carregar um arquivo ou imagem (opcional)"
 
 # Default: "Attaches a file or an image to this wiki page."
 #: i/skins/zwiki_plone/editform.pt:178
 msgid "help_wikiupload"
-msgstr "在此页加上一个附档或是一个图档."
+msgstr "Anexar um arquivo ou uma imagem para esta página wiki."
 
 # Default: "Page Format"
 #: i/skins/zwiki_plone/editform.pt:196
 msgid "label_format"
-msgstr "页面格式"
+msgstr "Formato da página"
 
 # Default: ""
 # "If you are unsure of which format to use, just select Plain\n"
@@ -1233,12 +1204,12 @@ msgstr "页面格式"
 #: i/skins/zwiki_plone/editform.pt:198
 msgid "help_format"
 msgstr ""
-"如果您不确定要使用何种格式, 就选 Plain Text\n"
-"             , 并且按照一般方式输入您的文件."
+"Se você está incerto de que formato usar, simplesmente selecione Texto\n"
+"            Plano e Text e digite o documento como você geralmente faz."
 
 #: i/skins/zwiki_plone/editform.pt:250
 msgid "Save"
-msgstr "储存"
+msgstr "Salvar"
 
 # Default: ""
 # "Edit\n"
@@ -1248,7 +1219,7 @@ msgstr "储存"
 #: i/skins/zwiki_plone/editform.pt:36 i/skins/zwiki_plone/editform.pt:48
 msgid "heading_edit_wiki_page"
 msgstr ""
-"修改\n"
+"Editar\n"
 "        ${itemtype} \n"
 "\n"
 "        \"${pagename}\""
@@ -1256,53 +1227,52 @@ msgstr ""
 # Default: "A Wiki Page allows you to create richly interconnected pages."
 #: i/skins/zwiki_plone/editform.pt:52
 msgid "description_edit_wiki_page"
-msgstr "一快纪页面准许您建立许多的互连页面."
+msgstr ""
+"Uma página do Wiki permite a você criar páginas ricamente interconectadas."
 
 # Default: "Wiki Page Details"
 #: i/skins/zwiki_plone/editform.pt:63
 msgid "legend_wiki_page_details"
-msgstr "快纪页面细项"
+msgstr "Detalhes da Página Wiki"
 
 # Default: "Page name"
 #: i/skins/zwiki_plone/editform.pt:86
 msgid "label_pagename"
-msgstr "页面名称"
+msgstr "Nome da página"
 
 # Default: "(Required)"
 #: i/skins/zwiki_plone/editform.pt:88
 msgid "label_required"
-msgstr "(必须)"
+msgstr "(Requerido)"
 
 #: i/skins/zwiki_plone/editform.pt:88
 msgid "Required"
-msgstr "必须"
+msgstr "Requerido"
 
 # Default: "Note: Renaming a page in a large wiki may be slow. Other pages will be updated if possible."
 #: i/skins/zwiki_plone/editform.pt:92
 msgid "help_shortname"
-msgstr ""
-"注意: 在一个有很多内容的快纪, 变更名称将会非常慢. 因为其它页面有可能都需要更"
-"新."
+msgstr "Nota: Renomear uma página em um wiki grande pode ser lento"
 
 # Default: "Filter issues"
 #: i/skins/zwiki_plone/filterissues.pt:12
 msgid "heading_wiki_filter_issues"
-msgstr "过滤事例"
+msgstr "Filtro de edições"
 
 # Default: "Issue tracker"
 #: i/skins/zwiki_plone/issuetracker.pt:12
 msgid "heading_wiki_issue_tracker"
-msgstr "事例追踪"
+msgstr "Trilhador de edições"
 
 # Default: "Recent changes"
 #: i/skins/zwiki_plone/recentchanges.pt:12
 msgid "heading_wiki_recent_changes"
-msgstr "最近变更"
+msgstr "Alterações recentes"
 
 # Default: "Search this wiki"
 #: i/skins/zwiki_plone/searchwiki.pt:12
 msgid "heading_wiki_search_wiki"
-msgstr "搜寻快纪"
+msgstr "Buscar neste wiki"
 
 # Default: ""
 # "You are currently not subscribed<br />\n"
@@ -1310,38 +1280,38 @@ msgstr "搜寻快纪"
 #: i/skins/zwiki_plone/subscribeform.pt:103
 #: i/skins/standard/subscribeform.pt:126
 msgid "subscribed_wiki_no"
-msgstr "您现在没有订阅整个Wiki."
+msgstr ""
 
 #: i/skins/zwiki_plone/subscribeform.pt:107
 #: i/skins/standard/subscribeform.pt:130
 msgid "Unsubscribe from whole wiki"
-msgstr "取消订阅整个Wiki."
+msgstr ""
 
 #: i/skins/zwiki_plone/subscribeform.pt:114
 #: i/skins/standard/subscribeform.pt:137
 msgid "Subscribe to whole wiki"
-msgstr "订阅整个Wiki."
+msgstr ""
 
 # Default: "You are subscribed to these other pages"
 #: i/skins/zwiki_plone/subscribeform.pt:125
 #: i/skins/standard/subscribeform.pt:148
 msgid "other_page_subscribed"
-msgstr "您已经订阅的页面"
+msgstr ""
 
 #: i/skins/zwiki_plone/subscribeform.pt:13
 #: i/skins/standard/subscribeform.pt:36
 msgid "Mail subscription"
-msgstr "邮件订阅"
+msgstr ""
 
 #: i/skins/zwiki_plone/subscribeform.pt:142
 #: i/skins/standard/subscribeform.pt:165
 msgid "Page subscribers"
-msgstr "页面订阅者"
+msgstr ""
 
 #: i/skins/zwiki_plone/subscribeform.pt:150
 #: i/skins/standard/subscribeform.pt:173
 msgid "Wiki subscribers"
-msgstr "Wiki订阅者"
+msgstr ""
 
 # Default: ""
 # "You can subscribe to this page or to the whole wiki.\n"
@@ -1352,26 +1322,22 @@ msgstr "Wiki订阅者"
 #: i/skins/standard/subscribeform.pt:58
 msgid "subscribe_desc"
 msgstr ""
-"您可以订阅这一页面或是整个Wiki.\n"
-"订阅者会透过电子邮件收到一份份的使用者意见\n"
-"(但不是一般页面修订,除非网站管理者开放). \n"
-"或回到"
 
 #: i/skins/zwiki_plone/subscribeform.pt:49
 #: i/skins/standard/subscribeform.pt:72
 msgid "Your email address"
-msgstr "您的电子邮件"
+msgstr ""
 
 #: i/skins/zwiki_plone/subscribeform.pt:53
 #: i/skins/standard/subscribeform.pt:76
 msgid "Change"
-msgstr "变更"
+msgstr ""
 
 # Default: "To subscribe, please configure your email address."
 #: i/skins/zwiki_plone/subscribeform.pt:61
 #: i/skins/standard/subscribeform.pt:84
 msgid "subscribe_no_email"
-msgstr "如果要订阅, 请设定您的电子邮件信箱."
+msgstr ""
 
 # Default: ""
 # "You are currently subscribed<br />\n"
@@ -1379,7 +1345,7 @@ msgstr "如果要订阅, 请设定您的电子邮件信箱."
 #: i/skins/zwiki_plone/subscribeform.pt:71
 #: i/skins/standard/subscribeform.pt:94
 msgid "subscribed_page_ok"
-msgstr "您目前订阅这一页面."
+msgstr ""
 
 # Default: ""
 # "You are currently not subscribed<br />\n"
@@ -1387,15 +1353,15 @@ msgstr "您目前订阅这一页面."
 #: i/skins/zwiki_plone/subscribeform.pt:75
 #: i/skins/standard/subscribeform.pt:98
 msgid "subscribed_page_no"
-msgstr "您目前没有订阅这一页面."
+msgstr ""
 
 #: i/skins/zwiki_plone/subscribeform.pt:79
 msgid "Unsubscribe from this page"
-msgstr "取消订阅这个Wiki页面"
+msgstr ""
 
 #: i/skins/zwiki_plone/subscribeform.pt:86
 msgid "Subscribe to this page"
-msgstr "订阅这个页面"
+msgstr ""
 
 # Default: ""
 # "You are currently subscribed<br />\n"
@@ -1403,113 +1369,81 @@ msgstr "订阅这个页面"
 #: i/skins/zwiki_plone/subscribeform.pt:99
 #: i/skins/standard/subscribeform.pt:122
 msgid "subscribed_wiki_ok"
-msgstr "您现在已经订阅整个Wiki."
+msgstr ""
 
 #: i/skins/zwiki_plone/uploaded.pt:14
 msgid "File Uploads"
-msgstr "档案上传"
+msgstr ""
 
 # Default: "This page lists all uploads in this Wiki."
 #: i/skins/zwiki_plone/uploaded.pt:16
 msgid "uploads_desc"
-msgstr "这一页面列出所有在这Wiki中上传的档案."
+msgstr ""
 
 #: i/skins/zwiki_plone/uploaded.pt:25
 #, fuzzy
 msgid "save"
-msgstr "储存"
+msgstr "Salvar"
 
 #: i/skins/zwiki_plone/uploaded.pt:25
-#, fuzzy
 msgid "view"
-msgstr "检视"
+msgstr ""
 
 # Default: "No files have been uploaded."
 #: i/skins/zwiki_plone/uploaded.pt:29
 msgid "no_files_uploaded"
-msgstr "没有任何档案被上传."
+msgstr ""
 
 # Default: "User options"
 #: i/skins/zwiki_plone/useroptions.pt:12
 msgid "heading_wiki_user_options"
-msgstr "用户选项"
+msgstr "Opções do usuário"
 
 # Default: "Wiki Navigation"
 #: i/skins/zwiki_plone/wikinav_portlet.pt:15
 msgid "box_wiki_navigation"
-msgstr "快纪浏览"
+msgstr "Navegação do Wiki"
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:16
 #: i/skins/standard/wikipage_macros.pt:398
 msgid "a subject helps clarify threads and RecentChanges"
-msgstr "个标题可以协助厘清相关讨论串以及了解最近变更"
+msgstr ""
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:16
 #: i/skins/standard/wikipage_macros.pt:398
 msgid "subject"
-msgstr "标题"
+msgstr ""
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:26
 msgid "enter comments here and click add; or, click edit"
-msgstr "在这里输入建议并且点选 新增(add) 按钮, 或点选 修改(edit) 按钮."
+msgstr ""
 
 # Default: "Add a comment"
 #: i/skins/zwiki_plone/wikipage_footer.pt:41
 #: i/skins/standard/wikipage_macros.pt:444
 msgid "add-comment"
-msgstr "新增一个建议"
-
-msgid "View"
-msgstr "检视"
-
-msgid "Edit"
-msgstr "修改"
-
-msgid "History"
-msgstr "历史"
-
-msgid "Backlinks"
-msgstr "回溯连结"
-
-msgid "Subscribe"
-msgstr "订阅"
-
-msgid "Wiki changes"
-msgstr "Wiki变更"
-
-msgid "Issue tracker"
-msgstr "事例追踪"
-
-msgid "Search this wiki"
-msgstr "搜寻Wiki"
-
-msgid "Wiki options"
-msgstr "Wiki选项"
-
-#, fuzzy
-#~ msgid "Description:"
-#~ msgstr "邮件订阅"
-
-#~ msgid "Enter a word"
-#~ msgstr "输入一个字"
+msgstr ""
 
 #~ msgid "Show subtopics on this page & below ?"
-#~ msgstr "呈现子主题在这页及其底下的页面吗?"
-
-#~ msgid "show subtopics in full mode, or if ancestor page has 'always'"
-#~ msgstr "在全功能模式显示子主题, 或是上层页面有 '总是'(always) 设定"
+#~ msgstr "Mostrar subtópicos na página abaixo?"
 
 #~ msgid "default"
-#~ msgstr "预设"
+#~ msgstr "padrão"
 
 #~ msgid "never"
-#~ msgstr "永不"
+#~ msgstr "nunca"
 
+#, fuzzy
 #~ msgid "always show subtopics on this page"
-#~ msgstr "总是显示子主题吗?"
+#~ msgstr "Mostrar subtópicos na página abaixo?"
 
 #~ msgid "always"
-#~ msgstr "总是"
+#~ msgstr "sempre"
 
-#~ msgid "in reply to"
-#~ msgstr "用来回复"
+# Default: ""
+#~ msgid "pagetype"
+#~ msgstr "Tipo da página"
+
+#, fuzzy
+#~ msgid "votes"
+#~ msgstr "Conteúdos"
