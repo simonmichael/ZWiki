@@ -48,6 +48,7 @@ XXX see the latest CHANGES.txt for some updates to these.
    1. a non-empty page name in the recipient real name (PAGEINREALNAMEEXP)
    2. or the first WikiName or [bracketed name] in the subject
    3. or the folder's default_page property (possibly acquired)
+       (XXX no longer, support default_mailin_page instead ?)
    4. or the defaultpage argument we were called with (XXX remove ?)
    5. or the DEFAULTPAGE defined below
    6. or the first zwiki page in the folder (as returned by objectValues)
