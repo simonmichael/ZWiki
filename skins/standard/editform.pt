@@ -18,180 +18,205 @@
       "
       onload="document.forms[0].text.focus();"
       >
-<head metal:use-macro="macros/head">
-  <title tal:content="title" metal:fill-slot="title" ></title>
-  <meta name="robots" content="noindex,nofollow" metal:fill-slot="noindex" />
-  <meta http-equiv="pragma" content="no-cache">
-  <dummy tal:attributes="dummy python:request.RESPONSE.setHeader('pragma','no-cache')" />
-</head>
-<body bgcolor="#ffffff">
+  <head metal:use-macro="macros/head">
+    <title tal:content="title" metal:fill-slot="title" ></title>
+    <meta name="robots" content="noindex,nofollow" metal:fill-slot="noindex" />
+    <meta http-equiv="pragma" content="no-cache">
+    <dummy tal:attributes="dummy python:
+           request.RESPONSE.setHeader('pragma','no-cache')" />
+  </head>
+  <body bgcolor="#ffffff">
+    <div metal:use-macro="macros/linkpanel"></div>
 
-<div metal:use-macro="macros/linkpanel"></div>
+    <table tal:condition="python:0" 
+           width="100%" border="0" cellspacing="0" cellpadding="3" >
+      <tr>
+        <td width="1%" valign="middle">
+          <a tal:condition="python:request.get('zwiki_showlogo',1)"
+             tal:attributes="href here/wiki_url"
+             href="wiki_url" title="go to home page" accesskey="f">
+            <img tal:replace="structure container/site_logo|default"
+                 src="/misc_/ZWiki/ZWikiPage_icon.gif" height="48" width="48" 
+                 border="0" alt="home" />
+          </a>
+        </td>
+        <td valign="middle">
+          <h1 tal:content="string:${actioning} ${page}">
+            Creating/Editing Pagename
+          </h1>
+        </td>
+      </tr>
+    </table>
+    <!-- end of header -->
 
-<table tal:condition="python:0" width="100%" border="0" cellspacing="0" cellpadding="3" >
-<tr>
-<td width="1%" valign="middle">
-<a 
-tal:condition="python:request.get('zwiki_showlogo',1)"
-tal:attributes="href here/wiki_url"
-href="wiki_url" title="go to home page" accesskey="f">
-<img 
-tal:replace="structure container/site_logo|default"
-src="/misc_/ZWiki/ZWikiPage_icon.gif" height="48" width="48" border="0" alt="home" />
-</a>
-</td>
-<td valign="middle">
-<h1 tal:content="string:${actioning} ${page}">Creating/Editing Pagename</h1>
-</td>
-</tr>
-</table>
-<!-- end of header -->
+    <div id="formcontent">
+      <form method="post" enctype="multipart/form-data" action="" 
+            tal:attributes="action string:${here/page_url}/">
+        <input name="timeStamp" type="hidden" value="editTimestamp"
+               tal:attributes="value here/editTimestamp" />
+        <input name="page" type=hidden value="page" 
+               tal:attributes="value page" />
+        <input name="leaveplaceholder" value="" type="hidden"
+               tal:condition="python:creating #no placeholder when creating" />
+        <div align="center">
+          <table width="100%" border="0" cellspacing="0" cellpadding="3">
+            
+            <!-- page name & type -->
+            <tr>
+              <td valign="middle" align="left" bgcolor="#dddddd">
+                <span tal:condition="python:
+                      user.has_permission('Zwiki: Rename pages',here)">
+                  <span i18n:translate="">Page name</span>: 
+                  <input name="title" size="30" maxlength="100" value="" 
+                         title="the name of this wiki page (changing this may be slow!)"                          
+                         tabindex="" style="font-weight:bold;"
+                         tal:attributes="value python:page;" />
+                </span>
+              </td>
+              <td valign="middle" align="right" bgcolor="#dddddd">
+                <span tal:condition="python:
+                      user.has_permission('Zwiki: Change page types',here)">
+                  <span i18n:translate="">type</span>:
+                  <select name="type" tabindex="" 
+                          title="select the formatting and rendering style for this page">
+                    <tal:options tal:repeat="type pagetypes">
+                      <option value="type"
+                              tal:define="
+                              dtmlallowed python:type.find('dtml')!=-1 and 
+                                                 here.dtmlAllowed();
+                              extrasuffix python:
+                              dtmlallowed and ' (+ DTML)' or ''; "
+                              tal:attributes="
+                              value python:type; 
+                              selected python:
+                              type==((creating and here.defaultPageType()) or 
+                                     here.pageTypeId());"
+                              tal:content="python:
+                              here.PAGE_TYPES.get(type,type) + extrasuffix">
+                        type
+                      </option>
+                    </tal:options>
+                  </select>
+                </span>
+              </td>
+            </tr>
+            
+            <!-- edit area -->
+            <tr>
+              <td colspan="2" align="center" bgcolor="#dddddd">
+                <textarea tal:condition="not:here/supportsEpoz"
+                          wrap="virtual" name="text" rows="20" cols="60"
+                          style="width:100%; background-color:#f0f0f0" 
+                          tabindex=""
+                          tal:attributes="rows rows; cols cols"
+                          tal:content="text">text...</textarea>
+                <span tal:condition="here/supportsEpoz"
+                      tal:replace="structure python:
+                      here.Epoz(
+                      'text',
+                      data=text,
+                      style='background:white;border:thin solid black;
+                             width:100%;height:'+str(rows)+'em;',
+                             css=here.defaultPageUrl()+'/stylesheet',
+                          )"></span>
+              </td>
+            </tr>
 
-<div id="formcontent">
-<form method="post" enctype="multipart/form-data" action="" 
-  tal:attributes="action string:${here/page_url}/">
-<input name="timeStamp" type="hidden" value="editTimestamp"
-  tal:attributes="value here/editTimestamp" />
-<input name="page" type=hidden value="page"  tal:attributes="value page" />
-<input name="leaveplaceholder" value="" type="hidden"
-  tal:condition="python:creating #never leave a placeholder when creating" />
+            <!-- better-positioned epoz source-mode checkbox -->
+            <tr tal:condition="python:0 #here/supportsEpoz">
+              <td valign="top" align="right" bgcolor="#dddddd" colspan="2"
+                  ><input id="EpozViewMode" type="checkbox" 
+                  onclick="SwitchViewMode(this.checked)" 
+                  title="toggle source/WYSIWYG mode" 
+                  tabindex=""
+              /></td>
+            </tr>
 
-<div align="center">
-<table width="100%" border="0" cellspacing="0" cellpadding="3">
+            <!-- optional note -->
+            <tr>
+              <td valign="middle" align="left" bgcolor="#dddddd" colspan="2" 
+                  nowrap="nowrap">
+                <span i18n:translate="">Optional change note</span>: 
+                <input name="log" size="50" maxlength="100" value="" 
+                       tabindex=""
+                       title="a note makes RecentChanges more useful" 
+                       tal:attributes="value python:
+                       (editing and 
+                       here.usernameFrom(request) == here.last_editor and
+                       here.ZopeTime() - here.lastEditTime() < 1) and 
+                       here.last_log or '';" />
+              </td>
+            </tr>
 
-<!-- page name & type -->
-<tr>
-<td valign="middle" align="left" bgcolor="#dddddd">
-<span tal:condition="python:user.has_permission('Zwiki: Rename pages',here)">
-Page name: 
-<input name="title" size="30" maxlength="100" value="" tabindex=""
-title="the name of this wiki page (changing this may be slow!)" 
-style="font-weight:bold;"
-tal:attributes="value python:page;" />
-</span>
-</td>
-<td valign="middle" align="right" bgcolor="#dddddd">
-<span tal:condition="python:user.has_permission(
-                          'Zwiki: Change page types',here)">
-type:
-<select name="type" tabindex="" 
-title="select the formatting and rendering style for this page">
-<tal:options tal:repeat="type pagetypes">
-<option value="type"
-tal:define="
-  dtmlallowed python:type.find('dtml')!=-1 and here.dtmlAllowed();
-  extrasuffix python:dtmlallowed and ' (+ DTML)' or ''; "
-tal:attributes="value python:type; selected python:type==((creating and here.defaultPageType()) or here.pageTypeId());"
-tal:content="python: here.PAGE_TYPES.get(type,type) + extrasuffix">
-type
-</option>
-</tal:options>
-</select>
-</span>
-</td>
-</tr>
+            <!-- file upload -->
+            <tr tal:condition="python:
+                user.has_permission('Add Documents, Images, and Files',
+                                    uploaddir)">
+              <td valign="middle" align="left" colspan="2" bgcolor="#dddddd" 
+                  nowrap="nowrap">
+                <span i18n:translate="">Upload a file or image</span>: 
+                <input type="file" name="file" size="30" value="" tabindex=""
+                       title="upload a file and link it on this page ?" />
+              </td>
+            </tr>
 
-<!-- edit area -->
-<tr>
-<td colspan="2" align="center" bgcolor="#dddddd">
-<textarea tal:condition="not:here/supportsEpoz"
-          wrap="virtual" name="text" rows="20" cols="60"
-          style="width:100%; background-color:#f0f0f0" tabindex=""
-          tal:attributes="rows rows; cols cols"
-          tal:content="text">text...</textarea>
-<span tal:condition="here/supportsEpoz"
-      tal:replace="structure python:
-      here.Epoz(
-      'text',
-      data=text,
-      style='background:white;border:thin solid black;width:100%;height:'+str(rows)+'em;',
-      css=here.defaultPageUrl()+'/stylesheet',
-      )
-      #toolbox='/toolbox',
-      #lang='en',
-"></span>
-</td>
-</tr>
+            <!-- subtopics option -->
+            <tr tal:condition="python:
+                getattr(here.folder(),'show_subtopics',0) and
+                user.has_permission('Zwiki: Reparent pages',here)">
+              <td valign="middle" align="left" colspan="2" bgcolor="#dddddd">
+                <span i18n:translate="">Show subtopics on this page & below ?
+                </span>
+                <input name="subtopics" value="-1" type="radio" tabindex=""
+                       tal:attributes="
+                       checked python:here.subtopicsPropertyStatus()==-1;"
+                       title="show subtopics in full mode, or if ancestor page has 'always'" />
+                <span i18n:translate="">default</span>
+                <input name="subtopics" value="0" type="radio" tabindex=""
+                       tal:attributes="
+                       checked python:here.subtopicsPropertyStatus()==0;"
+                       title="never show subtopics on this page" />
+                <span i18n:translate="">never</span>
+                <input name="subtopics" value="1" type="radio" tabindex=""
+                       tal:attributes="
+                       checked python:here.subtopicsPropertyStatus()==1;"
+                       title="always show subtopics on this page" />
+                <span i18n:translate="">always</span>
+              </td>
+            </tr>
+            
+            <!-- help links, save and cancel buttons -->
+            <tr>
+              <td valign="" align="left" bgcolor="#dddddd" colspan="1">
+                <span i18n:translate="">For editing help, see</span> 
+                <a tal:attributes="href string:${wiki_url}/HelpPage#editing"
+                >HelpPage</a> 
+                <span tal:omit-tag="" 
+                      tal:condition="python:
+                      here.pageWithId('TextFormattingRules')">
+                  <span i18n:translate="">or</span> 
+                  <a 
+                   tal:attributes="href string:${wiki_url}/TextFormattingRules"
+                  >TextFormattingRules</a> 
+                  </span>.
+              </td>
+              <td valign="top" align="right" bgcolor="#dddddd" colspan="1">
+                <strong><input type="submit" name="edit:method" 
+                value=" Save " title="change this wiki page"
+                tabindex="" style="font-weight:bold" accesskey="s"
+                tal:attributes="
+                value python:creating and ' Create ' or default;
+                title python:creating and 'create this wiki page' or default;
+                " /></strong>
+                <input type="submit" value=" Cancel " 
+                       title="cancel this edit and return to the page"
+                       tabindex="" />
+              </td>
+            </tr>
 
-<!-- better-positioned epoz source-mode checkbox -->
-<tr tal:condition="python:0 #here/supportsEpoz">
-<td valign="top" align="right" bgcolor="#dddddd" colspan="2"
-><input id="EpozViewMode" type="checkbox" 
-       onclick="SwitchViewMode(this.checked)" 
-       title="toggle source/WYSIWYG mode" 
-       tabindex=""
-/></td>
-</tr>
-
-<!-- optional note -->
-<tr>
-<td valign="middle" align="left" bgcolor="#dddddd" colspan="2" nowrap="nowrap">
-Optional change note: 
-<input name="log" size="50" maxlength="100" value="" tabindex=""
-title="a note makes RecentChanges more useful" 
-tal:attributes="value python:(editing and here.usernameFrom(request) == here.last_editor and here.ZopeTime() - here.lastEditTime() < 1) and here.last_log or '';" />
-</td>
-</tr>
-
-<!-- file upload -->
-<tr tal:condition="python:user.has_permission(
-                          'Add Documents, Images, and Files',uploaddir)">
-<td valign="middle" align="left" colspan="2" bgcolor="#dddddd" nowrap="nowrap">
-Upload a file or image: 
-<input type="file" name="file" size="30" value="" tabindex=""
-title="upload a file and link it on this page ?" />
-</td>
-</tr>
-
-<!-- subtopics option -->
-<tr tal:condition="python:getattr(here.folder(),'show_subtopics',0) and
-                          user.has_permission('Zwiki: Reparent pages',here)">
-<td valign="middle" align="left" colspan="2" bgcolor="#dddddd">
-Show subtopics on this page & below ?
-<input name="subtopics" value="-1" type="radio" tabindex=""
-tal:attributes="checked python:here.subtopicsPropertyStatus()==-1;"
-title="show subtopics in full mode, or if ancestor page has 'always'">default
-<input name="subtopics" value="0" type="radio" tabindex=""
-tal:attributes="checked python:here.subtopicsPropertyStatus()==0;"
-title="never show subtopics on this page">never
-<input name="subtopics" value="1" type="radio" tabindex=""
-tal:attributes="checked python:here.subtopicsPropertyStatus()==1;"
-title="always show subtopics on this page">always
-</td>
-</tr>
-
-<!-- help links, save and cancel buttons -->
-<tr>
-<td valign="" align="left" bgcolor="#dddddd" colspan="1">
-For editing help, see 
-<a href="" tal:attributes="href string:${wiki_url}/HelpPage#editing"
->HelpPage</a> 
-<span tal:omit-tag="" 
-      tal:condition="python:here.pageWithId('TextFormattingRules')">
-or 
-<a href="" tal:attributes="href string:${wiki_url}/TextFormattingRules"
->TextFormattingRules</a> 
-</span>.
-</td>
-<td valign="top" align="right" bgcolor="#dddddd" colspan="1">
-<strong><input type="submit" name="edit:method" 
-value=" Save " title="change this wiki page"
-tabindex="" style="font-weight:bold" accesskey="s"
-tal:attributes="
-value python:creating and ' Create ' or default;
-title python:creating and 'create this wiki page' or default;
-" /></strong>
-<input type="submit" 
-       value=" Cancel " title="cancel this edit and return to the page"
-       tabindex="" />
-</td>
-</tr>
-
-</table>
-</div>
-
-</form>
-</div>
-
-</body>
+          </table>
+        </div>
+      </form>
+    </div>
+  </body>
 </html>

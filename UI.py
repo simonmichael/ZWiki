@@ -141,9 +141,8 @@ class UIUtils:
 
     Zwiki has a set of known "skin methods" (views) built in, which may be
     overridden by "skin templates" (page templates, dtml methods, or
-    occasionally a File). The main point of all this is to provide
-    defaults for these views when they don't exist in the ZODB
-    (non-CMF wikis).
+    occasionally a File) of the same name. The main point of all this is 
+    to provide defaults for these views when they don't exist in the ZODB.
     
     """
     security = ClassSecurityInfo()
@@ -259,8 +258,8 @@ class GeneralForms:
 
         The wikipage template is usually applied by addSkinTo;
         this is provided so you can configure it as the "view" method
-        in portal_types -> Wiki Page -> actions to Zwiki's standard skin
-        inside a CMF/Plone site.
+        in portal_types -> Wiki Page -> actions to use Zwiki's standard 
+        skin inside a CMF/Plone site.
         """
         return self.getSkinTemplate('wikipage')(self,REQUEST,
                                                 body=self.render())
