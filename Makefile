@@ -554,41 +554,12 @@ Clean: clean
 # i18n
 
 LANGUAGES=en es fr-CA fr ga
-I18NEXCLUDE=old misc functionaltests
 
-# ugly.. hide stuff from the all-consuming i18nextract
-moveaway:
-	for i in $(I18NEXCLUDE); do mv $$i ../zwiki_$$i; done
-
-moveback:
-	for i in $(I18NEXCLUDE); do mv ../zwiki_$$i $$i; done
-
-# using zope 3's i18nextract.py
-# This tool will extract all findable message strings from all
-# internationalizable files in your Zope 3 product. It only extracts
-# message ids of the specified domain. It defaults to the 'zope' domain
-# and the zope.app package.
-# 
-# Note: The Python Code extraction tool does not support domain
-#       registration, so that all message strings are returned for
-#       Python code.
-# 
-# Usage: i18nextract.py [options]
-# Options:
-#     -h / --help
-#         Print this message and exit.
-#     -d / --domain <domain>
-#         Specifies the domain that is supposed to be extracted (i.e. 'zope')
-#     -p / --path <path>
-#         Specifies the package that is supposed to be searched
-#         (i.e. 'zope/app')
-#     -o dir
-#         Specifies a directory, relative to the package in which to put the
-#         output translation template.
-pot i18nextract:
-	@make moveaway
-	PYTHONPATH=/usr/local/src/Zope3/src python /usr/local/src/Zope3/utilities/i18nextract.py -d zwiki -p . -o ./locale
-	@make moveback
+# using zope 3's i18nextract.py with my patches (-x option, multiline defaults fix)
+pot:
+	PYTHONPATH=/usr/local/src/Zope3/src python \
+	  /usr/local/src/Zope3/utilities/i18nextract.py -d zwiki -p . -o ./i18n \
+	    -x _darcs -x old -x misc -x ftests 
 	# ----------------------------------
 	# now do fixups to zwiki.pot:
 	# 1. remove license
@@ -598,21 +569,20 @@ pot i18nextract:
 	#    "Language-name: X\n"
 	#    "Preferred-encodings: utf-8 latin1\n"
 	#    "Domain: zwiki\n"
-	# 4. prepend # to multi-line Defaults
 	# ----------------------------------
 
-po msgmerge:
-	cd locale; \
+po:
+	cd i18n; \
 	for L in $(LANGUAGES); do \
 	 echo $$L; msgmerge -U $$L.po zwiki.pot; done
 
-mo msgfmt:
-	cd locale; \
+mo:
+	cd i18n; \
 	for L in $(LANGUAGES); do \
 	 echo $$L; msgfmt --statistics $$L.po -o $$L.mo; done
 
 
-# XXX junk you have to remove after a CVS checkout:
+# old: junk you have to remove after a CVS checkout:
 # content/cmf
 # default_wiki_content
 # emacs
