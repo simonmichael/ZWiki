@@ -140,7 +140,9 @@ def manage_afterClone(self, item):
 ZWikiPage.ZWikiPage.manage_afterClone = manage_afterClone
 
 def manage_beforeDelete(self, item, container):
-    self.wikiOutline().delete(self.pageName()) # update the wiki outline
+    # update the wiki outline, but if it's out of date just ignore
+    try: self.wikiOutline().delete(self.pageName())
+    except KeyError: pass
     self.unindex_object()
 ZWikiPage.ZWikiPage.manage_beforeDelete = manage_beforeDelete
 
