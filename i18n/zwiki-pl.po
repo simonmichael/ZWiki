@@ -228,7 +228,7 @@ msgstr ""
 
 #: i/Utils.py:461
 msgid "years"
-msgstr "lata"
+msgstr "lat temu"
 
 #: i/Utils.py:461
 msgid "year"
@@ -240,7 +240,7 @@ msgstr "miesiąc"
 
 #: i/Utils.py:463
 msgid "months"
-msgstr "miesiące"
+msgstr "miesięcy temu"
 
 #: i/Utils.py:465
 msgid "weeks"
@@ -248,15 +248,15 @@ msgstr "tygodnie"
 
 #: i/Utils.py:465
 msgid "week"
-msgstr "tydzień"
+msgstr "tydzień temu"
 
 #: i/Utils.py:467
 msgid "day"
-msgstr "dzień"
+msgstr "dzień temu"
 
 #: i/Utils.py:467
 msgid "days"
-msgstr "dni"
+msgstr "dni temu"
 
 #: i/Utils.py:469
 msgid "hours"
@@ -264,11 +264,11 @@ msgstr "godzin temu"
 
 #: i/Utils.py:469
 msgid "hour"
-msgstr "godzin"
+msgstr "godzinę temu"
 
 #: i/Utils.py:471
 msgid "minute"
-msgstr "minuta"
+msgstr "minutę temu"
 
 #: i/Utils.py:471
 msgid "minutes"
@@ -276,7 +276,7 @@ msgstr "minut temu"
 
 #: i/Utils.py:473
 msgid "second"
-msgstr "sekund"
+msgstr "sekundę temu"
 
 #: i/Utils.py:473
 msgid "seconds"
@@ -583,12 +583,13 @@ msgstr ""
 #: i/skins/dtmlmessages.pt:248
 msgid ""
 "no catalog or the catalog search gave an error, a brute-force search was used"
-msgstr ""
+msgstr "brak katalogu lub przeszukiwanie katalogu spowodowało błąd, "
+"użyta została metoda wyszukiwania brute-force"
 
 #: i/skins/dtmlmessages.pt:63 i/skins/dtmlmessages.pt:153
 #: i/skins/dtmlmessages.pt:250
 msgid "Pages changed in the last"
-msgstr ""
+msgstr "Strony zmienione w trakcie ostatnich"
 
 #: i/skins/dtmlmessages.pt:64 i/skins/dtmlmessages.pt:154
 #: i/skins/dtmlmessages.pt:251
@@ -905,6 +906,8 @@ msgstr "ranking strony"
 #: i/skins/standard/ratingform.pt:13
 msgid "rating_score"
 msgstr ""
+"${score} na\n"
+"  ${nb_votes} głosów"
 
 #: i/skins/standard/ratingform.pt:36
 msgid "click to rate"
@@ -932,7 +935,7 @@ msgstr "pokaż stronę główną"
 
 #: i/skins/standard/wikipage_macros.pt:111
 msgid "home"
-msgstr "dom"
+msgstr "główna"
 
 #: i/skins/standard/wikipage_macros.pt:113
 #: i/skins/standard/wikipage_macros.pt:290
@@ -966,7 +969,7 @@ msgstr "pokaż rejestr spraw"
 
 #: i/skins/standard/wikipage_macros.pt:135
 msgid "issues"
-msgstr "wyniki"
+msgstr "sprawy"
 
 #: i/skins/standard/wikipage_macros.pt:137
 msgid "show wiki index"
@@ -1123,7 +1126,7 @@ msgstr "umieść stronę w koszu i zaktualizuj odnośniki"
 
 #: i/skins/standard/wikipage_macros.pt:484
 msgid "create"
-msgstr "twórz"
+msgstr "utwórz"
 
 #: i/skins/standard/wikipage_macros.pt:484
 msgid "create a new subtopic of this page"
@@ -1144,10 +1147,13 @@ msgstr "Strony odnoszące się do"
 #: i/skins/zwiki_plone/backlinks.pt:30
 msgid "box_zwiki_showhierarchy"
 msgstr ""
+"Możesz zmienić <em>rodzica (ów)</em> tej strony, aby umiejscowić ją\n"
+"    w hierarchii wiki.  Zaznacz ptaszki lub wpisz nową nazwę strony i kliknij\n"
+"    Zmień rodzica. Pojedynczy rodzic jest zazwyczaj wystarczający."
 
 #: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:99
 msgid "Other parent"
-msgstr "Inne główne"
+msgstr "Inny rodzic"
 
 #: i/skins/zwiki_plone/backlinks.pt:72 i/skins/standard/backlinks.pt:101
 msgid "Reparent"
@@ -1164,7 +1170,7 @@ msgstr "Pojedyncze strony"
 # Default: "Singletons are pages that are not connected to other pages."
 #: i/skins/zwiki_plone/contentspage.pt:21
 msgid "singleton_desc"
-msgstr ""
+msgstr "Pojedyncze strony to strony, które nie są połączone z innymi stronami."
 
 #: i/skins/zwiki_plone/diffform.pt:15
 msgid "History for"
@@ -1242,7 +1248,7 @@ msgstr "Format strony"
 msgid "help_format"
 msgstr ""
 "Jeśli nie masz pewności jakiego formatu użyć wybierz Plain\n"
-"Text i po prostu wpisz tekst."
+"Text i po prostu wpisz treść."
 
 #: i/skins/zwiki_plone/editform.pt:253
 msgid "Save"
@@ -1256,6 +1262,10 @@ msgstr "Zapisz"
 #: i/skins/zwiki_plone/editform.pt:36 i/skins/zwiki_plone/editform.pt:48
 msgid "heading_edit_wiki_page"
 msgstr ""
+"Edytuj\n"
+"        ${itemtype} \n"
+"\n"
+"        \"${pagename}\""
 
 # Default: "A Wiki Page allows you to create richly interconnected pages."
 #: i/skins/zwiki_plone/editform.pt:52
@@ -1471,25 +1481,3 @@ msgstr "wprowadź komentarz i naciśnij przycisk dodaj"
 #: i/skins/standard/wikipage_macros.pt:440
 msgid "add-comment"
 msgstr "Dodaj komentarz"
-
-# Default: "Add a comment"
-#, fuzzy
-#~ msgid "add a comment"
-#~ msgstr "Dodaj komentarz"
-
-#, fuzzy
-#~ msgid "title"
-#~ msgstr "Tytuł"
-
-# Default: "edit this page"
-#~ msgid "edit-page"
-#~ msgstr "edycja strony"
-
-#~ msgid "Add an issue:"
-#~ msgstr "Dodaj sprawę:"
-
-#~ msgid "Description:"
-#~ msgstr "Opis:"
-
-#~ msgid "total"
-#~ msgstr "łącznie"
