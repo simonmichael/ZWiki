@@ -27,17 +27,18 @@ Notes/stories:
 -relative links and image paths are adjusted
 -allow ignoring/replacing/deleting old pages (as long wiki is anon-writable)
 
-html tidy may be applied
-text patterns may be removed from the pages
 an id collision creates a page with modified name
 a front page may be selected from the imported pages
+
+text patterns may be removed from the pages
 file(s) may be specified on the command line
 use cmf or plone image/files when appropriate
 images and files have safe ids assigned if needed
 suffixes influence the page type: .html, .stx, .rst, .txt etc.
 use visitor pattern
 smarter dry run
-get around zwiki api authentication requirement
+get around anon-writable requirement of zwiki web api
+apply html tidy automatically ?
 
 """
 
@@ -90,7 +91,9 @@ def bodyFromHtml(t):
     else: return None
 
 def fixLinksIn(t):
-    """Fix up relative hyperlinks and image paths for the wiki."""
+    """Fix up relative hyperlinks and image paths for the wiki.
+
+    NB doesn't work after html tidy."""
     # strip path components from relative links
     t = re.sub(r'(?i)( (href|src)=")(?!http:)([^"/]+/)+?(?P<last>[^"/]+)"',
                r'\1\g<last>"',
