@@ -112,7 +112,7 @@ mo:
 
 # all tests, test.py
 test:
-	/zope1/bin/zopectl test -v --libdir .
+	zopectl test -v --libdir .
 
 # old:
 
