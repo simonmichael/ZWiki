@@ -1,5 +1,4 @@
 # CommentsSupport mixin
-# related to Mail.py
 
 import sys, os, string, re, email, email.Errors
 from mailbox import UnixMailbox, PortableUnixMailbox
@@ -18,12 +17,12 @@ from Regexps import fromlineexpr
 
 class CommentsSupport:
     """
-    This mix-in class handles comments stored as rfc2822 messages in the page.
+    I manage comments stored as rfc2822 messages in a wiki page.
 
-    This class looks for comments in mbox/RFC2822 format in the page text,
-    and provides services for parsing and displaying them.  Everything
-    above the first comment is considered the document part, the rest of
-    the page is considered the discussion part.
+    This mixin class looks for comments in mbox/RFC2822 format in the page
+    text, and provides services for parsing and displaying them.
+    Everything above the first comment is considered the document part,
+    the rest of the page is considered the discussion part.
 
     Prior to 0.30 we called these Messages; you may see references to both.
 
@@ -72,10 +71,10 @@ class CommentsSupport:
     security.declareProtected(Permissions.View, 'mailbox')
     def mailbox(self):
         """
-        Return the messages on this page as an iterator of Message objects.
+        Return the messages on this page as a Mailbox (iterator of Message)
         """
-        # UnixMailbox(/rfc822 ?) doesn't like unicode.. work around for now.
-        # NB at present unicode may get added:
+        # we used to have a problem handling unicode.. perhaps no longer
+        # unicode may get added to the page:
         # - via user edit
         # - when a comment is posted and the local timezone contains unicode
         # - when rename writes a placeholder page (because of the use of _() !)
@@ -83,12 +82,11 @@ class CommentsSupport:
         #    return UnixMailbox(StringIO(self.text()))
         #except TypeError:
         #    BLATHER(self.id(),'contains unicode, could not parse comments')
-        #    #BLATHER(repr(self.text()))
         #    return UnixMailbox(StringIO(''))
 
-        # mailbox docs: this is defensive against ill-formed MIME messages
-        # in the mailbox, but you have to be prepared to receive the empty
-        # string from the mailbox's `next()' method
+        # from mailbox docs: this is defensive against ill-formed MIME
+        # messages in the mailbox, but you have to be prepared to receive
+        # the empty string from the mailbox's `next()' method
         def msgfactory(fp):
             try:
                 return email.message_from_file(fp)
@@ -133,7 +131,8 @@ class CommentsSupport:
         """
         Update the format of any comments on this page.
         """
-        # XXX upgrade old-style zwiki comments to mbox-style messages ?
+        # XXX it would be good if this could upgrade old-style
+        # (non-rfc2822) zwiki comments to the new style
         pass
 
         # add proper From delimiters
