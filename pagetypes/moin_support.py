@@ -1836,6 +1836,9 @@ function togglenumber(did,nstart,nstep){
         return '%s\n' % result
 
     def table_cell(self, on, attrs={}):
+        # ensure table cells have a class so we can style them separate
+        # from skin layout tables
+        if not attrs.get('class',''): attrs['class'] = 'content'
         if on:
             result = '<td%s>' % self._checkTableAttr(attrs, '')
         else:
