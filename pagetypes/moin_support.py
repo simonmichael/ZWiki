@@ -12,14 +12,16 @@
 
 import os, re, string
 
-# find the system's character encoding, which we need for a regexp
-# below though utf-8 is hard-coded everywhere else (#963).
+# moin hard-codes utf-8 everywhere like zwiki, but we need the system's
+# actual configured encoding to encode string.uppercase etc. below (#963)
+# similar to Regexps.py
 # don't rely on python 2.3's getpreferredencoding, which gives wrong
 # answer, and work around a python bug with some locales (zwiki #392).
-# replicated from Regexps.py to avoid needless dependency.
 import locale
-try: lang, encoding = locale.getlocale()
-except ValueError: lang, encoding = None, None
+try:
+    encoding = locale.getlocale()[1] or 'utf-8'
+except ValueError:
+    encoding = 'utf-8'
 
 
 class MoinConfig:
