@@ -134,6 +134,11 @@ else:
 # don't match things like &RightArrow;
 # could also do this in markLinksIn and make it per-pagetype ?
 wikiname3        = r'(?:%s|%s)' % (wikiname1, wikiname2)
+# is there a reason for the following re ?
+# I think requiring no ampersand before or an ampersand and no char/; behind
+# cautiously commented  --StefanRank
+#wikiname4        = r'(?:(?<!&)%s|(?<=&)%s(?![%s;]))' \
+#                   % (wikiname3, wikiname3, U+L)
 wikiname4        = r'(?:(?<!&)%s(?![%s])|(?<=&)%s(?![%s;]))' \
                    % (wikiname3, U+L, wikiname3, U+L)
 wikiname         = r'!?(%s)' %(wikiname4)
