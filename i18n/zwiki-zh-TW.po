@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-31-0rc3\n"
-"POT-Creation-Date: Tue Jun 15 11:46:22 2004\n"
+"POT-Creation-Date: Wed Jun 16 15:02:46 2004\n"
 "PO-Revision-Date: 2004-06-22 07:35+0800\n"
 "Last-Translator: T.C. Chou <tcchou-at-tcchou-dot-org>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
@@ -275,23 +275,23 @@ msgstr "秒"
 msgid "seconds"
 msgstr "秒"
 
-#: i/ZWikiPage.py:561
+#: i/ZWikiPage.py:574
 msgid "page in parent wiki"
 msgstr "同在父層的頁面"
 
-#: i/ZWikiPage.py:566
+#: i/ZWikiPage.py:579
 msgid "create this page"
 msgstr "建立頁面"
 
-#: i/ZWikiPage.py:642 i/ZWikiPage.py:655 i/ZWikiPage.py:658
+#: i/ZWikiPage.py:655 i/ZWikiPage.py:668 i/ZWikiPage.py:671
 msgid "last edited %(interval)s ago"
 msgstr "最新變更在 %(interval)s 以前"
 
-#: i/ZWikiPage.py:651
+#: i/ZWikiPage.py:664
 msgid "show last edit %(lastlog)s"
 msgstr "顯示最新修改 %(lastlog)s"
 
-#: i/ZWikiPage.py:666 i/ZWikiPage.py:668
+#: i/ZWikiPage.py:679 i/ZWikiPage.py:681
 msgid "by %(editor)s"
 msgstr "作者 %(editor)s"
 
@@ -302,6 +302,11 @@ msgstr "建議"
 #: i/pagetypes/rst.py:55
 msgid "reply"
 msgstr "回覆"
+
+#: i/skins/dtmlmessages.pt:100 i/skins/dtmlmessages.pt:190
+#: i/skins/dtmlmessages.pt:287
+msgid "Filter issues"
+msgstr "過濾事例"
 
 #: i/skins/dtmlmessages.pt:11
 msgid ""
@@ -324,149 +329,149 @@ msgstr "新增"
 msgid "Add and Edit"
 msgstr "新增並編輯"
 
-#: i/skins/dtmlmessages.pt:17 i/skins/dtmlmessages.pt:106
-#: i/skins/dtmlmessages.pt:202
+#: i/skins/dtmlmessages.pt:17 i/skins/dtmlmessages.pt:107
+#: i/skins/dtmlmessages.pt:204
 msgid "Set your site preferences below."
 msgstr "設定在下面您個人的站台相關偏好."
 
-#: i/skins/dtmlmessages.pt:18 i/skins/dtmlmessages.pt:107
-#: i/skins/dtmlmessages.pt:203
+#: i/skins/dtmlmessages.pt:18 i/skins/dtmlmessages.pt:108
+#: i/skins/dtmlmessages.pt:205
 msgid "You may also click the full, simple, minimal links if provided."
 msgstr "您也可以點選 完全, 簡單, 極簡 連結 (如果有的話)."
 
 # Default: "Page name"
-#: i/skins/dtmlmessages.pt:19 i/skins/dtmlmessages.pt:108
-#: i/skins/dtmlmessages.pt:204
+#: i/skins/dtmlmessages.pt:19 i/skins/dtmlmessages.pt:109
+#: i/skins/dtmlmessages.pt:206
 msgid "User name"
 msgstr "使用者名稱"
 
 # Default: "Page name"
-#: i/skins/dtmlmessages.pt:195
+#: i/skins/dtmlmessages.pt:197
 msgid "Name"
 msgstr "頁面名稱"
 
-#: i/skins/dtmlmessages.pt:196
+#: i/skins/dtmlmessages.pt:198
 msgid "Category"
 msgstr "分類"
 
-#: i/skins/dtmlmessages.pt:197
+#: i/skins/dtmlmessages.pt:199
 msgid "Severity"
 msgstr "嚴重"
-
-#: i/skins/dtmlmessages.pt:198
-msgid "Status"
-msgstr "狀態"
-
-#: i/skins/dtmlmessages.pt:199
-msgid "Optional note"
-msgstr "變更註記(選項)"
 
 #: i/skins/dtmlmessages.pt:2 i/skins/dtmlmessages.pt:3
 msgid "Add a ZWiki web"
 msgstr "新增一個ZWiki網站"
 
-#: i/skins/dtmlmessages.pt:20 i/skins/dtmlmessages.pt:109
-#: i/skins/dtmlmessages.pt:205
+#: i/skins/dtmlmessages.pt:20 i/skins/dtmlmessages.pt:110
+#: i/skins/dtmlmessages.pt:207
 msgid "identifies your edits"
 msgstr "您編輯文章時的名稱"
 
 #: i/skins/dtmlmessages.pt:200
+msgid "Status"
+msgstr "狀態"
+
+#: i/skins/dtmlmessages.pt:201
+msgid "Optional note"
+msgstr "變更註記(選項)"
+
+#: i/skins/dtmlmessages.pt:202
 msgid "Submitted by"
 msgstr "提出者"
 
-#: i/skins/dtmlmessages.pt:201
+#: i/skins/dtmlmessages.pt:203
 msgid "Details & comments"
 msgstr "細節與建議"
 
-#: i/skins/dtmlmessages.pt:21 i/skins/dtmlmessages.pt:110
-#: i/skins/dtmlmessages.pt:206
+#: i/skins/dtmlmessages.pt:21 i/skins/dtmlmessages.pt:111
+#: i/skins/dtmlmessages.pt:208
 msgid "Email address"
 msgstr "電子郵件"
 
-#: i/skins/dtmlmessages.pt:22 i/skins/dtmlmessages.pt:111
-#: i/skins/dtmlmessages.pt:207
+#: i/skins/dtmlmessages.pt:22 i/skins/dtmlmessages.pt:112
+#: i/skins/dtmlmessages.pt:209
 msgid "for subscribing"
 msgstr "使用在訂閱頁面"
 
-#: i/skins/dtmlmessages.pt:23 i/skins/dtmlmessages.pt:112
-#: i/skins/dtmlmessages.pt:208
+#: i/skins/dtmlmessages.pt:23 i/skins/dtmlmessages.pt:113
+#: i/skins/dtmlmessages.pt:210
 msgid "Editform"
 msgstr "修改欄位"
 
-#: i/skins/dtmlmessages.pt:24 i/skins/dtmlmessages.pt:113
-#: i/skins/dtmlmessages.pt:209
+#: i/skins/dtmlmessages.pt:24 i/skins/dtmlmessages.pt:114
+#: i/skins/dtmlmessages.pt:211
 msgid "width"
 msgstr "寬"
 
-#: i/skins/dtmlmessages.pt:25 i/skins/dtmlmessages.pt:114
-#: i/skins/dtmlmessages.pt:210
+#: i/skins/dtmlmessages.pt:25 i/skins/dtmlmessages.pt:115
+#: i/skins/dtmlmessages.pt:212
 msgid "height"
 msgstr "高"
 
-#: i/skins/dtmlmessages.pt:26 i/skins/dtmlmessages.pt:115
-#: i/skins/dtmlmessages.pt:211
+#: i/skins/dtmlmessages.pt:26 i/skins/dtmlmessages.pt:116
+#: i/skins/dtmlmessages.pt:213
 msgid "textarea dimensions; width will be 100% if supported"
 msgstr "文字編輯區範圍; 寬 將會是 100% (如果可能的話)"
 
-#: i/skins/dtmlmessages.pt:27 i/skins/dtmlmessages.pt:116
-#: i/skins/dtmlmessages.pt:212
+#: i/skins/dtmlmessages.pt:27 i/skins/dtmlmessages.pt:117
+#: i/skins/dtmlmessages.pt:214
 msgid "Time zone"
 msgstr "時區"
 
-#: i/skins/dtmlmessages.pt:28 i/skins/dtmlmessages.pt:117
-#: i/skins/dtmlmessages.pt:213
+#: i/skins/dtmlmessages.pt:28 i/skins/dtmlmessages.pt:118
+#: i/skins/dtmlmessages.pt:215
 msgid "Your local time is"
 msgstr "您當地時間是"
 
-#: i/skins/dtmlmessages.pt:29 i/skins/dtmlmessages.pt:118
-#: i/skins/dtmlmessages.pt:214
+#: i/skins/dtmlmessages.pt:29 i/skins/dtmlmessages.pt:119
+#: i/skins/dtmlmessages.pt:216
 msgid "(localizes most times)"
 msgstr "(選擇接近的時間)"
 
-#: i/skins/dtmlmessages.pt:30 i/skins/dtmlmessages.pt:119
-#: i/skins/dtmlmessages.pt:215
+#: i/skins/dtmlmessages.pt:30 i/skins/dtmlmessages.pt:120
+#: i/skins/dtmlmessages.pt:217
 msgid "Show logo ?"
 msgstr "呈現標誌圖案?"
 
 #: i/skins/dtmlmessages.pt:31 i/skins/dtmlmessages.pt:34
 #: i/skins/dtmlmessages.pt:39 i/skins/dtmlmessages.pt:43
-#: i/skins/dtmlmessages.pt:47 i/skins/dtmlmessages.pt:120
-#: i/skins/dtmlmessages.pt:123 i/skins/dtmlmessages.pt:128
-#: i/skins/dtmlmessages.pt:132 i/skins/dtmlmessages.pt:136
-#: i/skins/dtmlmessages.pt:216 i/skins/dtmlmessages.pt:219
-#: i/skins/dtmlmessages.pt:224 i/skins/dtmlmessages.pt:228
-#: i/skins/dtmlmessages.pt:232
+#: i/skins/dtmlmessages.pt:47 i/skins/dtmlmessages.pt:121
+#: i/skins/dtmlmessages.pt:124 i/skins/dtmlmessages.pt:129
+#: i/skins/dtmlmessages.pt:133 i/skins/dtmlmessages.pt:137
+#: i/skins/dtmlmessages.pt:218 i/skins/dtmlmessages.pt:221
+#: i/skins/dtmlmessages.pt:226 i/skins/dtmlmessages.pt:230
+#: i/skins/dtmlmessages.pt:234
 msgid "No"
 msgstr "否"
 
 #: i/skins/dtmlmessages.pt:32 i/skins/dtmlmessages.pt:35
 #: i/skins/dtmlmessages.pt:40 i/skins/dtmlmessages.pt:44
-#: i/skins/dtmlmessages.pt:48 i/skins/dtmlmessages.pt:121
-#: i/skins/dtmlmessages.pt:124 i/skins/dtmlmessages.pt:129
-#: i/skins/dtmlmessages.pt:133 i/skins/dtmlmessages.pt:137
-#: i/skins/dtmlmessages.pt:217 i/skins/dtmlmessages.pt:220
-#: i/skins/dtmlmessages.pt:225 i/skins/dtmlmessages.pt:229
-#: i/skins/dtmlmessages.pt:233
+#: i/skins/dtmlmessages.pt:48 i/skins/dtmlmessages.pt:122
+#: i/skins/dtmlmessages.pt:125 i/skins/dtmlmessages.pt:130
+#: i/skins/dtmlmessages.pt:134 i/skins/dtmlmessages.pt:138
+#: i/skins/dtmlmessages.pt:219 i/skins/dtmlmessages.pt:222
+#: i/skins/dtmlmessages.pt:227 i/skins/dtmlmessages.pt:231
+#: i/skins/dtmlmessages.pt:235
 msgid "Yes"
 msgstr "是"
 
-#: i/skins/dtmlmessages.pt:33 i/skins/dtmlmessages.pt:122
-#: i/skins/dtmlmessages.pt:218
+#: i/skins/dtmlmessages.pt:33 i/skins/dtmlmessages.pt:123
+#: i/skins/dtmlmessages.pt:220
 msgid "Show page hierarchy ?"
 msgstr "顯示頁面階層?"
 
-#: i/skins/dtmlmessages.pt:36 i/skins/dtmlmessages.pt:125
-#: i/skins/dtmlmessages.pt:221
+#: i/skins/dtmlmessages.pt:36 i/skins/dtmlmessages.pt:126
+#: i/skins/dtmlmessages.pt:223
 msgid "This wiki keeps a page hierarchy, which you can use or ignore."
 msgstr "這 Wiki 系統有頁面階層關係, 您可選擇使用或忽略."
 
-#: i/skins/dtmlmessages.pt:37 i/skins/dtmlmessages.pt:126
-#: i/skins/dtmlmessages.pt:222
+#: i/skins/dtmlmessages.pt:37 i/skins/dtmlmessages.pt:127
+#: i/skins/dtmlmessages.pt:224
 msgid "Show search field ?"
 msgstr "顯示搜尋欄位?"
 
-#: i/skins/dtmlmessages.pt:38 i/skins/dtmlmessages.pt:127
-#: i/skins/dtmlmessages.pt:223
+#: i/skins/dtmlmessages.pt:38 i/skins/dtmlmessages.pt:128
+#: i/skins/dtmlmessages.pt:225
 msgid "except in minimal mode"
 msgstr "除了在極簡模式外"
 
@@ -474,24 +479,24 @@ msgstr "除了在極簡模式外"
 msgid "Id"
 msgstr "名稱"
 
-#: i/skins/dtmlmessages.pt:41 i/skins/dtmlmessages.pt:130
-#: i/skins/dtmlmessages.pt:226
+#: i/skins/dtmlmessages.pt:41 i/skins/dtmlmessages.pt:131
+#: i/skins/dtmlmessages.pt:228
 msgid "Show AnnoyingQuote ?"
 msgstr "顯示 AnnoyingQuote 嗎?"
 
 #: i/skins/dtmlmessages.pt:42 i/skins/dtmlmessages.pt:46
-#: i/skins/dtmlmessages.pt:131 i/skins/dtmlmessages.pt:135
-#: i/skins/dtmlmessages.pt:227 i/skins/dtmlmessages.pt:231
+#: i/skins/dtmlmessages.pt:132 i/skins/dtmlmessages.pt:136
+#: i/skins/dtmlmessages.pt:229 i/skins/dtmlmessages.pt:233
 msgid "in full mode"
 msgstr "在完全模式"
 
-#: i/skins/dtmlmessages.pt:45 i/skins/dtmlmessages.pt:134
-#: i/skins/dtmlmessages.pt:230
+#: i/skins/dtmlmessages.pt:45 i/skins/dtmlmessages.pt:135
+#: i/skins/dtmlmessages.pt:232
 msgid "Show page management form ?"
 msgstr "顯示頁面的管理表單?"
 
-#: i/skins/dtmlmessages.pt:49 i/skins/dtmlmessages.pt:138
-#: i/skins/dtmlmessages.pt:234
+#: i/skins/dtmlmessages.pt:49 i/skins/dtmlmessages.pt:139
+#: i/skins/dtmlmessages.pt:236
 msgid "You must also configure a username or be logged in."
 msgstr "您必須設定 個人名稱(上面) 或 登入系統."
 
@@ -499,57 +504,57 @@ msgstr "您必須設定 個人名稱(上面) 或 登入系統."
 msgid "Title"
 msgstr "標題"
 
-#: i/skins/dtmlmessages.pt:50 i/skins/dtmlmessages.pt:139
-#: i/skins/dtmlmessages.pt:235
+#: i/skins/dtmlmessages.pt:50 i/skins/dtmlmessages.pt:140
+#: i/skins/dtmlmessages.pt:237
 msgid "Save options"
 msgstr "儲存設定"
 
-#: i/skins/dtmlmessages.pt:51 i/skins/dtmlmessages.pt:140
-#: i/skins/dtmlmessages.pt:236
+#: i/skins/dtmlmessages.pt:51 i/skins/dtmlmessages.pt:141
+#: i/skins/dtmlmessages.pt:238
 msgid "Forget options"
 msgstr "遺忘設定"
 
-#: i/skins/dtmlmessages.pt:52 i/skins/dtmlmessages.pt:141
-#: i/skins/dtmlmessages.pt:237
+#: i/skins/dtmlmessages.pt:52 i/skins/dtmlmessages.pt:142
+#: i/skins/dtmlmessages.pt:239
 msgid "Enter a word or phrase and hit enter to search the entire wiki."
 msgstr "輸入一個字或一段話, 並且點選 輸入 開始搜尋整個wiki."
 
-#: i/skins/dtmlmessages.pt:53 i/skins/dtmlmessages.pt:142
-#: i/skins/dtmlmessages.pt:238
+#: i/skins/dtmlmessages.pt:53 i/skins/dtmlmessages.pt:143
+#: i/skins/dtmlmessages.pt:240
 msgid "This is the same as using the search field at top right."
 msgstr "這和在右上角搜尋欄位的作用是一樣的."
 
-#: i/skins/dtmlmessages.pt:54 i/skins/dtmlmessages.pt:143
-#: i/skins/dtmlmessages.pt:239
+#: i/skins/dtmlmessages.pt:54 i/skins/dtmlmessages.pt:144
+#: i/skins/dtmlmessages.pt:241
 msgid "Tips: A single word works best for matching page names."
 msgstr "技巧: 使用單獨的字, 對與按頁面名稱搜尋來說最好."
 
-#: i/skins/dtmlmessages.pt:55 i/skins/dtmlmessages.pt:144
-#: i/skins/dtmlmessages.pt:240
+#: i/skins/dtmlmessages.pt:55 i/skins/dtmlmessages.pt:145
+#: i/skins/dtmlmessages.pt:242
 msgid ""
 "Case-insensitivity and wildcards may be supported depending on your catalog "
 "configuration."
 msgstr "大小寫無關與萬用字元, 按您的目錄索引設定, 也許會被支援."
 
-#: i/skins/dtmlmessages.pt:56 i/skins/dtmlmessages.pt:145
-#: i/skins/dtmlmessages.pt:241
+#: i/skins/dtmlmessages.pt:56 i/skins/dtmlmessages.pt:146
+#: i/skins/dtmlmessages.pt:243
 msgid "Leave it blank to list all pages."
 msgstr "如果讓它空白的話, 可列出所有頁面."
 
 #: i/skins/dtmlmessages.pt:57 i/skins/dtmlmessages.pt:62
-#: i/skins/dtmlmessages.pt:146 i/skins/dtmlmessages.pt:151
-#: i/skins/dtmlmessages.pt:242 i/skins/dtmlmessages.pt:247
+#: i/skins/dtmlmessages.pt:147 i/skins/dtmlmessages.pt:152
+#: i/skins/dtmlmessages.pt:244 i/skins/dtmlmessages.pt:249
 msgid "Search"
 msgstr "搜尋"
 
 # Default: "Page name"
-#: i/skins/dtmlmessages.pt:58 i/skins/dtmlmessages.pt:147
-#: i/skins/dtmlmessages.pt:243
+#: i/skins/dtmlmessages.pt:58 i/skins/dtmlmessages.pt:148
+#: i/skins/dtmlmessages.pt:245
 msgid "Page names matching"
 msgstr "頁面名稱相符"
 
-#: i/skins/dtmlmessages.pt:59 i/skins/dtmlmessages.pt:148
-#: i/skins/dtmlmessages.pt:244
+#: i/skins/dtmlmessages.pt:59 i/skins/dtmlmessages.pt:149
+#: i/skins/dtmlmessages.pt:246
 msgid "Text matching"
 msgstr "文字相符"
 
@@ -557,221 +562,221 @@ msgstr "文字相符"
 msgid "Type"
 msgstr "型態"
 
-#: i/skins/dtmlmessages.pt:60 i/skins/dtmlmessages.pt:149
-#: i/skins/dtmlmessages.pt:245
+#: i/skins/dtmlmessages.pt:60 i/skins/dtmlmessages.pt:150
+#: i/skins/dtmlmessages.pt:247
 msgid "hits"
 msgstr "點擊"
 
-#: i/skins/dtmlmessages.pt:61 i/skins/dtmlmessages.pt:150
-#: i/skins/dtmlmessages.pt:246
+#: i/skins/dtmlmessages.pt:61 i/skins/dtmlmessages.pt:151
+#: i/skins/dtmlmessages.pt:248
 msgid ""
 "no catalog or the catalog search gave an error, a brute-force search was used"
 msgstr "沒有目錄索引 或 目錄索引搜尋發生問題, 使用暴力搜尋方式"
 
-#: i/skins/dtmlmessages.pt:63 i/skins/dtmlmessages.pt:152
-#: i/skins/dtmlmessages.pt:248
+#: i/skins/dtmlmessages.pt:63 i/skins/dtmlmessages.pt:153
+#: i/skins/dtmlmessages.pt:250
+msgid "Pages changed in the last"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:64 i/skins/dtmlmessages.pt:154
+#: i/skins/dtmlmessages.pt:251
 msgid "Recently changed pages, with summaries"
 msgstr "最近變更的頁面, 包含概略的摘要"
 
-#: i/skins/dtmlmessages.pt:64 i/skins/dtmlmessages.pt:153
-#: i/skins/dtmlmessages.pt:249
+#: i/skins/dtmlmessages.pt:65 i/skins/dtmlmessages.pt:155
+#: i/skins/dtmlmessages.pt:252
 msgid "Show summaries ?"
 msgstr "顯示摘要?"
 
-#: i/skins/dtmlmessages.pt:65 i/skins/dtmlmessages.pt:154
-#: i/skins/dtmlmessages.pt:250
+#: i/skins/dtmlmessages.pt:66 i/skins/dtmlmessages.pt:156
+#: i/skins/dtmlmessages.pt:253
 msgid "Refresh"
 msgstr "更新"
 
-#: i/skins/dtmlmessages.pt:66 i/skins/dtmlmessages.pt:155
-#: i/skins/dtmlmessages.pt:251
+#: i/skins/dtmlmessages.pt:67 i/skins/dtmlmessages.pt:157
+#: i/skins/dtmlmessages.pt:254
 msgid "Page"
 msgstr "頁面"
 
-#: i/skins/dtmlmessages.pt:67 i/skins/dtmlmessages.pt:156
-#: i/skins/dtmlmessages.pt:252
+#: i/skins/dtmlmessages.pt:68 i/skins/dtmlmessages.pt:158
+#: i/skins/dtmlmessages.pt:255
 msgid "Edited&nbsp;by"
 msgstr "修改由"
 
-#: i/skins/dtmlmessages.pt:68 i/skins/dtmlmessages.pt:157
-#: i/skins/dtmlmessages.pt:253
+#: i/skins/dtmlmessages.pt:69 i/skins/dtmlmessages.pt:159
+#: i/skins/dtmlmessages.pt:256
 msgid "Time"
 msgstr "時間"
-
-#: i/skins/dtmlmessages.pt:69 i/skins/dtmlmessages.pt:158
-#: i/skins/dtmlmessages.pt:254
-msgid "NEW"
-msgstr "新的"
 
 #: i/skins/dtmlmessages.pt:7
 msgid "Create wiki"
 msgstr "建立wiki"
 
-#: i/skins/dtmlmessages.pt:70 i/skins/dtmlmessages.pt:159
-#: i/skins/dtmlmessages.pt:255
+#: i/skins/dtmlmessages.pt:70 i/skins/dtmlmessages.pt:160
+#: i/skins/dtmlmessages.pt:257
+msgid "NEW"
+msgstr "新的"
+
+#: i/skins/dtmlmessages.pt:71 i/skins/dtmlmessages.pt:161
+#: i/skins/dtmlmessages.pt:258
 msgid "anonymous"
 msgstr "路人"
 
-#: i/skins/dtmlmessages.pt:71 i/skins/dtmlmessages.pt:160
-#: i/skins/dtmlmessages.pt:256
+#: i/skins/dtmlmessages.pt:72 i/skins/dtmlmessages.pt:162
+#: i/skins/dtmlmessages.pt:259
 msgid "Pages marked (NEW) have been created within the last week"
 msgstr "頁面註記(新的)表示是在最近一週內所建立的"
 
-#: i/skins/dtmlmessages.pt:72 i/skins/dtmlmessages.pt:161
-#: i/skins/dtmlmessages.pt:257
+#: i/skins/dtmlmessages.pt:73 i/skins/dtmlmessages.pt:163
+#: i/skins/dtmlmessages.pt:260
 msgid "Here are the wiki's issue pages."
 msgstr "這裡是Wiki事例追蹤頁面."
 
-#: i/skins/dtmlmessages.pt:73 i/skins/dtmlmessages.pt:162
-#: i/skins/dtmlmessages.pt:258
+#: i/skins/dtmlmessages.pt:74 i/skins/dtmlmessages.pt:164
+#: i/skins/dtmlmessages.pt:261
 msgid "Enter a search term, or click the numbers to the right, or"
 msgstr "輸入一個搜尋的字眼, 或點選右邊的數字, 或"
 
-#: i/skins/dtmlmessages.pt:74 i/skins/dtmlmessages.pt:163
-#: i/skins/dtmlmessages.pt:259
+#: i/skins/dtmlmessages.pt:75 i/skins/dtmlmessages.pt:165
+#: i/skins/dtmlmessages.pt:262
 msgid "filter issues"
 msgstr "過濾事例"
 
-#: i/skins/dtmlmessages.pt:75 i/skins/dtmlmessages.pt:164
-#: i/skins/dtmlmessages.pt:260
+#: i/skins/dtmlmessages.pt:76 i/skins/dtmlmessages.pt:166
+#: i/skins/dtmlmessages.pt:263
 msgid "search issues"
 msgstr "搜尋事例"
 
-#: i/skins/dtmlmessages.pt:76 i/skins/dtmlmessages.pt:165
-#: i/skins/dtmlmessages.pt:261
+#: i/skins/dtmlmessages.pt:77 i/skins/dtmlmessages.pt:167
+#: i/skins/dtmlmessages.pt:264
 msgid "recent"
 msgstr "最近的"
 
-#: i/skins/dtmlmessages.pt:77 i/skins/dtmlmessages.pt:166
-#: i/skins/dtmlmessages.pt:262
+#: i/skins/dtmlmessages.pt:78 i/skins/dtmlmessages.pt:168
+#: i/skins/dtmlmessages.pt:265
 msgid "all"
 msgstr "全部"
 
 # Default: "Page name"
-#: i/skins/dtmlmessages.pt:78 i/skins/dtmlmessages.pt:100
-#: i/skins/dtmlmessages.pt:167 i/skins/dtmlmessages.pt:189
-#: i/skins/dtmlmessages.pt:263 i/skins/dtmlmessages.pt:285
+#: i/skins/dtmlmessages.pt:79 i/skins/dtmlmessages.pt:101
+#: i/skins/dtmlmessages.pt:169 i/skins/dtmlmessages.pt:191
+#: i/skins/dtmlmessages.pt:266 i/skins/dtmlmessages.pt:288
 msgid "name"
 msgstr "名稱"
-
-#: i/skins/dtmlmessages.pt:79 i/skins/dtmlmessages.pt:101
-#: i/skins/dtmlmessages.pt:168 i/skins/dtmlmessages.pt:190
-#: i/skins/dtmlmessages.pt:264 i/skins/dtmlmessages.pt:286
-msgid "category"
-msgstr "目錄索引"
 
 #: i/skins/dtmlmessages.pt:8
 msgid "and enter"
 msgstr "並輸入"
 
 #: i/skins/dtmlmessages.pt:80 i/skins/dtmlmessages.pt:102
-#: i/skins/dtmlmessages.pt:169 i/skins/dtmlmessages.pt:191
-#: i/skins/dtmlmessages.pt:265 i/skins/dtmlmessages.pt:287
+#: i/skins/dtmlmessages.pt:170 i/skins/dtmlmessages.pt:192
+#: i/skins/dtmlmessages.pt:267 i/skins/dtmlmessages.pt:289
+msgid "category"
+msgstr "目錄索引"
+
+#: i/skins/dtmlmessages.pt:81 i/skins/dtmlmessages.pt:103
+#: i/skins/dtmlmessages.pt:171 i/skins/dtmlmessages.pt:193
+#: i/skins/dtmlmessages.pt:268 i/skins/dtmlmessages.pt:290
 msgid "severity"
 msgstr "嚴重"
 
-#: i/skins/dtmlmessages.pt:81 i/skins/dtmlmessages.pt:103
-#: i/skins/dtmlmessages.pt:170 i/skins/dtmlmessages.pt:192
-#: i/skins/dtmlmessages.pt:266 i/skins/dtmlmessages.pt:288
+#: i/skins/dtmlmessages.pt:82 i/skins/dtmlmessages.pt:104
+#: i/skins/dtmlmessages.pt:172 i/skins/dtmlmessages.pt:194
+#: i/skins/dtmlmessages.pt:269 i/skins/dtmlmessages.pt:291
 msgid "status"
 msgstr "狀態"
 
-#: i/skins/dtmlmessages.pt:82 i/skins/dtmlmessages.pt:104
-#: i/skins/dtmlmessages.pt:171 i/skins/dtmlmessages.pt:193
-#: i/skins/dtmlmessages.pt:267 i/skins/dtmlmessages.pt:289
+#: i/skins/dtmlmessages.pt:83 i/skins/dtmlmessages.pt:105
+#: i/skins/dtmlmessages.pt:173 i/skins/dtmlmessages.pt:195
+#: i/skins/dtmlmessages.pt:270 i/skins/dtmlmessages.pt:292
 msgid "age"
 msgstr "壽命"
 
-#: i/skins/dtmlmessages.pt:83 i/skins/dtmlmessages.pt:105
-#: i/skins/dtmlmessages.pt:172 i/skins/dtmlmessages.pt:194
-#: i/skins/dtmlmessages.pt:268 i/skins/dtmlmessages.pt:290
+#: i/skins/dtmlmessages.pt:84 i/skins/dtmlmessages.pt:106
+#: i/skins/dtmlmessages.pt:174 i/skins/dtmlmessages.pt:196
+#: i/skins/dtmlmessages.pt:271 i/skins/dtmlmessages.pt:293
 msgid "modified"
 msgstr "已修改"
 
-#: i/skins/dtmlmessages.pt:84 i/skins/dtmlmessages.pt:173
-#: i/skins/dtmlmessages.pt:269
+#: i/skins/dtmlmessages.pt:85 i/skins/dtmlmessages.pt:175
+#: i/skins/dtmlmessages.pt:272
 msgid "Add a new issue:"
 msgstr "新增一個新的事例:"
 
 # Default: "Page name"
-#: i/skins/dtmlmessages.pt:85 i/skins/dtmlmessages.pt:174
-#: i/skins/dtmlmessages.pt:270
+#: i/skins/dtmlmessages.pt:86 i/skins/dtmlmessages.pt:176
+#: i/skins/dtmlmessages.pt:273
 msgid "Name:"
 msgstr "名稱:"
 
-#: i/skins/dtmlmessages.pt:86 i/skins/dtmlmessages.pt:175
-#: i/skins/dtmlmessages.pt:271
+#: i/skins/dtmlmessages.pt:87 i/skins/dtmlmessages.pt:177
+#: i/skins/dtmlmessages.pt:274
 msgid "Category:"
 msgstr "分類:"
 
-#: i/skins/dtmlmessages.pt:87 i/skins/dtmlmessages.pt:176
-#: i/skins/dtmlmessages.pt:272
+#: i/skins/dtmlmessages.pt:88 i/skins/dtmlmessages.pt:178
+#: i/skins/dtmlmessages.pt:275
 msgid "Severity:"
 msgstr "嚴重:"
 
-#: i/skins/dtmlmessages.pt:88 i/skins/dtmlmessages.pt:177
-#: i/skins/dtmlmessages.pt:273
+#: i/skins/dtmlmessages.pt:89 i/skins/dtmlmessages.pt:179
+#: i/skins/dtmlmessages.pt:276
 msgid "Status:"
 msgstr "狀態:"
-
-#: i/skins/dtmlmessages.pt:89 i/skins/dtmlmessages.pt:178
-#: i/skins/dtmlmessages.pt:274
-msgid "Details:"
-msgstr "細節:"
 
 #: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:10
 msgid "Add ZWiki Page"
 msgstr "新增ZWiki頁面"
 
-#: i/skins/dtmlmessages.pt:90 i/skins/dtmlmessages.pt:179
-#: i/skins/dtmlmessages.pt:275
+#: i/skins/dtmlmessages.pt:90 i/skins/dtmlmessages.pt:180
+#: i/skins/dtmlmessages.pt:277
+msgid "Details:"
+msgstr "細節:"
+
+#: i/skins/dtmlmessages.pt:91 i/skins/dtmlmessages.pt:181
+#: i/skins/dtmlmessages.pt:278
 msgid "add issue"
 msgstr "新增事例"
 
-#: i/skins/dtmlmessages.pt:91 i/skins/dtmlmessages.pt:180
-#: i/skins/dtmlmessages.pt:276
+#: i/skins/dtmlmessages.pt:92 i/skins/dtmlmessages.pt:182
+#: i/skins/dtmlmessages.pt:279
 msgid "More advanced"
 msgstr "更多進階的"
 
-#: i/skins/dtmlmessages.pt:92 i/skins/dtmlmessages.pt:181
-#: i/skins/dtmlmessages.pt:277
+#: i/skins/dtmlmessages.pt:93 i/skins/dtmlmessages.pt:183
+#: i/skins/dtmlmessages.pt:280
 msgid "issue tracker"
 msgstr "事例追蹤"
 
-#: i/skins/dtmlmessages.pt:93 i/skins/dtmlmessages.pt:182
-#: i/skins/dtmlmessages.pt:278
+#: i/skins/dtmlmessages.pt:94 i/skins/dtmlmessages.pt:184
+#: i/skins/dtmlmessages.pt:281
 msgid "search options"
 msgstr "搜尋選項"
 
-#: i/skins/dtmlmessages.pt:94 i/skins/dtmlmessages.pt:183
-#: i/skins/dtmlmessages.pt:279
+#: i/skins/dtmlmessages.pt:95 i/skins/dtmlmessages.pt:185
+#: i/skins/dtmlmessages.pt:282
 msgid "Name contains any of:"
 msgstr "頁面名稱包含任意的:"
 
-#: i/skins/dtmlmessages.pt:95 i/skins/dtmlmessages.pt:184
-#: i/skins/dtmlmessages.pt:280
+#: i/skins/dtmlmessages.pt:96 i/skins/dtmlmessages.pt:186
+#: i/skins/dtmlmessages.pt:283
 msgid "Page text contains any of:"
 msgstr "頁面文字包含任意的:"
 
-#: i/skins/dtmlmessages.pt:96 i/skins/dtmlmessages.pt:185
-#: i/skins/dtmlmessages.pt:281
+#: i/skins/dtmlmessages.pt:97 i/skins/dtmlmessages.pt:187
+#: i/skins/dtmlmessages.pt:284
 msgid "Categories:"
 msgstr "分類:"
 
-#: i/skins/dtmlmessages.pt:97 i/skins/dtmlmessages.pt:186
-#: i/skins/dtmlmessages.pt:282
+#: i/skins/dtmlmessages.pt:98 i/skins/dtmlmessages.pt:188
+#: i/skins/dtmlmessages.pt:285
 msgid "Severities:"
 msgstr "嚴重:"
 
-#: i/skins/dtmlmessages.pt:98 i/skins/dtmlmessages.pt:187
-#: i/skins/dtmlmessages.pt:283
+#: i/skins/dtmlmessages.pt:99 i/skins/dtmlmessages.pt:189
+#: i/skins/dtmlmessages.pt:286
 msgid "Statuses:"
 msgstr "狀態:"
-
-#: i/skins/dtmlmessages.pt:99 i/skins/dtmlmessages.pt:188
-#: i/skins/dtmlmessages.pt:284
-msgid "Filter issues"
-msgstr "過濾事例"
 
 # Default: ""
 # "You can change this page's parent(s) to place it within the overall page\n"
@@ -1080,38 +1085,12 @@ msgid ""
 msgstr "輸入一個新父層, 頁面名稱, 或替代名稱(如果有的話) 或 子主題名稱"
 
 #: i/skins/standard/wikipage_macros.pt:469
-msgid "reparent"
-msgstr "變更父層"
-
-#: i/skins/standard/wikipage_macros.pt:469
-msgid "reparent this page under the page you have entered"
-msgstr "變更這一個頁面的父頁, 讓它在已有頁面之下"
-
 #: i/skins/standard/wikipage_macros.pt:474
-msgid "rename this page to the name you have entered, updating all links"
-msgstr "變更這一頁面名稱為您已輸入的, 更新所有連結"
-
-# Default: "Page name"
-#: i/skins/standard/wikipage_macros.pt:474
-msgid "rename"
-msgstr "變更名稱"
-
 #: i/skins/standard/wikipage_macros.pt:479
-msgid "delete!"
-msgstr "刪除!"
-
-#: i/skins/standard/wikipage_macros.pt:479
-msgid ""
-"move this page to the recycle bin, and relink to the name you have entered"
-msgstr "把這一頁面搬移到垃圾桶, 並且重新連結到您已輸入的名稱."
-
 #: i/skins/standard/wikipage_macros.pt:484
-msgid "create"
-msgstr "建立"
-
-#: i/skins/standard/wikipage_macros.pt:484
-msgid "create a new subtopic of this page"
-msgstr "為這頁面建立一個新的子主題嗎?"
+#, fuzzy
+msgid "title"
+msgstr "標題"
 
 #: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
 msgid "Backlinks for"
@@ -1454,6 +1433,32 @@ msgstr "在這裡輸入建議並且點選 新增(add) 按鈕, 或點選 修改(e
 #: i/skins/standard/wikipage_macros.pt:440
 msgid "add-comment"
 msgstr "新增一個建議"
+
+#~ msgid "reparent"
+#~ msgstr "變更父層"
+
+#~ msgid "reparent this page under the page you have entered"
+#~ msgstr "變更這一個頁面的父頁, 讓它在已有頁面之下"
+
+#~ msgid "rename this page to the name you have entered, updating all links"
+#~ msgstr "變更這一頁面名稱為您已輸入的, 更新所有連結"
+
+# Default: "Page name"
+#~ msgid "rename"
+#~ msgstr "變更名稱"
+
+#~ msgid "delete!"
+#~ msgstr "刪除!"
+
+#~ msgid ""
+#~ "move this page to the recycle bin, and relink to the name you have entered"
+#~ msgstr "把這一頁面搬移到垃圾桶, 並且重新連結到您已輸入的名稱."
+
+#~ msgid "create"
+#~ msgstr "建立"
+
+#~ msgid "create a new subtopic of this page"
+#~ msgstr "為這頁面建立一個新的子主題嗎?"
 
 # Default: "edit this page"
 #~ msgid "edit-page"
