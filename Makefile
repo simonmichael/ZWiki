@@ -133,36 +133,20 @@ refresh-mailin:
 	@$(CURL) 'http://$(HOST)/mailin/manage_edit?id=mailin&module=mailin&function=mailin&title='
 
 ## testing
-# mostly fucked up, as usual
 
-# plain python
-# not working
-testa:
-	export PYTHONPATH=/zope/lib/python:/zope1; \
-	  python /zope1/Products/ZWiki/tests/testAdmin.py
+# all tests, test.py
+test:
+	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope1 \
+	  python /zope/test.py --libdir .
 
-# zope 2 testrunner
-# not working
-testb:
-	export PYTHONPATH=/zope/lib/python:/zope1; \
-	  python /usr/local/src/Zope-2.7.0/utilities/testrunner.py -d /zope1/Products/ZWiki/tests
+# all tests, gui
+gtest:
+	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope1 \
+	  python /zope/test.py -m --libdir .
 
-# shh's testrunner
-# runs in emacs shell but not M-x compile
-# testCMFPlone can't import ZTUtils' make_query
-testc:
-	export PYTHONPATH=/zope/lib/python:/zope1; \
-	  python /usr/local/bin/testrunner.py -I /zope1 -d /zope1/Products/ZWiki/tests
-
-# zope 3 testrunner
-# this one works via ssh
-testd:
-	export PYTHONPATH=/zope/lib/python:/zope1; \
-	  python test.py -v --libdir $$PWD/tests
-
-# test a single module
+# a single test module
 test%:
-	SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope1 PYTHONPATH=/zope/lib/python \
+	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope1 \
 	  python tests/test$*.py
 
 # test with argument(s)
@@ -170,18 +154,14 @@ test%:
 #	export PYTHONPATH=/zope/lib/python:/zope1; \
 #	  python test.py -v --libdir $$PWD/tests $*
 
-test: testd
-
+#XXX currently broken
 rtest:
 	ssh $(HOST) 'cd zwiki; make test'
 
 rtest%:
 	ssh $(HOST) "cd zwiki; make rtest$*"
 
-#functest:
-#	ssh zwiki.org testrunner
-
-#functest2:
+#ftest:
 #	ssh zwiki.org /usr/local/zope/instance/Products/ZWiki/functionaltests/run_tests -v zwiki
 
 #analyzezodb:
