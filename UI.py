@@ -354,6 +354,19 @@ class UI:
         else:
             return "<html><body>This wiki's custom editform is not a Page Template or DTML Method. Suggestion: remove it.</body></html>"
 
+    security.declareProtected(Permissions.Add, 'createform')
+    def createform(self, REQUEST=None, page=None, text=None, action='Create'):
+        """
+        Display the default or a custom form to create a page.
+
+        For new pages, initial text may be specified.  May be overridden
+        by a page template or DTML method of the same name.
+
+        This is editform protected by a different permission.
+        """
+        return self.editform(REQUEST,page,text,action)
+    
+
 #    security.declareProtected(Permissions.Edit,'xedit')
 #    def xedit(self, page=None, text=None, type=None, title='', 
 #              timeStamp=None, REQUEST=None, 

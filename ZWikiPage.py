@@ -555,7 +555,7 @@ class ZWikiPage(
                    % (self.wiki_url(),quote(link),linkorig)
 
         # otherwise, provide a creation link
-        return '%s<a class="new" href="%s/%s/editform?page=%s" title="create this page">?</a>' \
+        return '%s<a class="new" href="%s/%s/createform?page=%s" title="create this page">?</a>' \
                % (linkorig, self.wiki_url(), quote(self.id()),
                   quote(linknobrackets))
 
