@@ -396,11 +396,15 @@ class SubscriberManagerMixin:
     def emailAddressesFrom(self,subscribers):
         """
         Convert a list of subscribers to a list of email addresses.
+
+        Any of these which are usernames for which we can't find an
+        address are converted to an obvious bogus address (rather than
+        just quietly dropping recipients).
         """
         emails = []
         for s in subscribers:
             e = self.emailAddressFrom(s)
-            if e: emails.append(e)
+            emails.append(e or 'NO_ADDRESS_FOR_%s' % s)
         return emails
 
     def usernamesFrom(self,subscriber):
@@ -524,7 +528,6 @@ class MailSupport:
 	# mailin may tell us to exclude a mailing list address to prevent a loop
         try: recipients.remove(exclude_address)
         except ValueError: pass
-
 	# some lists (ezmlm) require the list address in To, and if it also 
 	# appears in subscriber_list will deliver two copies. Just remove
 	# duplicates to be safe.
