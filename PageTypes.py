@@ -138,7 +138,7 @@ class AbstractHtmlPageType(AbstractPageType):
             if(m):
                 if(not inblock):
                     t += string.join(lines[blockend:i],'\n')
-                    t += '\n<blockquote type="cite">\n'
+                    t += '\n<blockquote type="cite">\n\n'
                 inblock = 1
                 blocklines.append(m.group(1))
             elif(inblock):
