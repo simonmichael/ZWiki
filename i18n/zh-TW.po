@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-30-0\n"
-"POT-Creation-Date: Sun Apr 25 15:53:19 2004\n"
+"POT-Creation-Date: Sat May  8 13:44:56 2004\n"
 "PO-Revision-Date: 2004-05-01 01:19+0800\n"
 "Last-Translator: T.C. Chou <tcchou-at-tcchou.org>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
@@ -123,10 +123,6 @@ msgstr ""
 msgid "To discard your changes and try again, click OK."
 msgstr "放棄您變更的內容, 並且再試一次, 點選確認按鈕(OK)."
 
-#: i/skins/standard/backlinks.pt:101
-msgid "Reparent"
-msgstr "變更父頁面"
-
 # Default: ""
 # "You can change this page's parent(s) to place it within the overall page\n"
 # "hierarchy.  Check the boxes or enter a new page name and click Reparent.\n"
@@ -137,10 +133,6 @@ msgstr ""
 "您可變更這頁往上的連結, 安排在所有頁面階層裡頭.\\n\n"
 "做好檢查或輸入一頁面名稱, 並且按下『變更父頁面』.\\n\n"
 "只要一個父頁面通常就夠了."
-
-#: i/skins/standard/backlinks.pt:29
-msgid "Backlinks for"
-msgstr "追溯連結為"
 
 #: i/skins/standard/backlinks.pt:46
 msgid "is a top-level topic."
@@ -154,32 +146,22 @@ msgstr "子主題上層為:"
 msgid "Here are the pages which link to it:"
 msgstr "底下是相關連結到的頁面:"
 
-#: i/skins/standard/backlinks.pt:99
-msgid "Other parent"
-msgstr "其它父頁面"
-
 #: i/skins/standard/badtemplate.pt:12
 msgid ""
 "There was a problem with one of this wiki's skin templates. There may be an "
 "object with a skin template ID that is not a Page Template or DTML Method, "
 "or the template may be missing."
-msgstr "這 Wiki 的風格 (skin) 樣板有些問題. 也許對映到的風格樣板, 並不是 ZPT 或是 DTML Method, 或者樣版根本不存在. 請檢查看看. "
+msgstr ""
+"這 Wiki 的風格 (skin) 樣板有些問題. 也許對映到的風格樣板, 並不是 ZPT 或是 "
+"DTML Method, 或者樣版根本不存在. 請檢查看看. "
 
 #: i/skins/standard/contentspage.pt:29
 msgid "Contents"
 msgstr "內容"
 
-#: i/skins/standard/contentspage.pt:40
-msgid "Singletons"
-msgstr "單獨存在頁面"
-
 #: i/skins/standard/diffform.pt:31
 msgid "Diffs for"
 msgstr "不同於"
-
-#: i/skins/standard/diffform.pt:46
-msgid "full history"
-msgstr "完整歷史"
 
 #: i/skins/standard/diffform.pt:48
 msgid "<< previous edit"
@@ -230,6 +212,139 @@ msgstr "頁面名稱"
 msgid "type"
 msgstr "型態"
 
+#: i/skins/standard/wikipage_macros.pt:137
+msgid "show all features"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:144
+msgid "show basic features"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:151
+msgid "show only essential features"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:164
+msgid "configure email subscription to this page or site"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:172
+msgid "which pages link to this one ?"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:179
+msgid "show this page's change history"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:195
+msgid "edit using external editor"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:215
+msgid "go to home page"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:244
+#: i/skins/standard/wikipage_macros.pt:283
+msgid "show wiki contents"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:348
+msgid "a subject helps clarify threads and RecentChanges"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:348
+msgid "subject"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:355
+msgid "to comment (and cc any subscribers) enter text here and click add"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:383
+msgid "add a comment"
+msgstr ""
+
+# Default: "new parent, name or replacement"
+#: i/skins/standard/wikipage_macros.pt:404
+msgid "parent_name_replace"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:411
+msgid "reparent this page under the page you have entered"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:417
+msgid "rename this page to the name you have entered, updating all links"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:423
+msgid ""
+"move this page to the recycle bin, and relink to the name you have entered."
+msgstr ""
+
+#: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
+msgid "Backlinks for"
+msgstr "追溯連結為"
+
+#: i/skins/zwiki_plone/backlinks.pt:21
+#, fuzzy
+msgid "Here are the pages which link to"
+msgstr "底下是相關連結到的頁面:"
+
+# Default: ""
+# "You can also set this page's <em>parent(s)</em>, to locate it within the\n"
+# "    contents hierarchy.  Check the boxes or enter a new page name and click\n"
+# "    Reparent.  A single parent is usually sufficient."
+#: i/skins/zwiki_plone/backlinks.pt:30
+msgid "box_zwiki_showhierarchy"
+msgstr ""
+
+#: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:99
+msgid "Other parent"
+msgstr "其它父頁面"
+
+#: i/skins/zwiki_plone/backlinks.pt:72 i/skins/standard/backlinks.pt:101
+msgid "Reparent"
+msgstr "變更父頁面"
+
+#: i/skins/zwiki_plone/contentspage.pt:14
+#, fuzzy
+msgid "Wiki contents"
+msgstr "內容"
+
+#: i/skins/zwiki_plone/contentspage.pt:20 i/skins/standard/contentspage.pt:40
+msgid "Singletons"
+msgstr "單獨存在頁面"
+
+#: i/skins/zwiki_plone/contentspage.pt:22
+#, fuzzy
+msgid "singleton_desc"
+msgstr "單獨存在頁面"
+
+#: i/skins/zwiki_plone/diffform.pt:15
+#, fuzzy
+msgid "History for"
+msgstr "不同於"
+
+#: i/skins/zwiki_plone/diffform.pt:23 i/skins/standard/diffform.pt:46
+msgid "full history"
+msgstr "完整歷史"
+
+#: i/skins/zwiki_plone/diffform.pt:31
+#, fuzzy
+msgid "&laquo; previous edit"
+msgstr "<< 上一版"
+
+#: i/skins/zwiki_plone/diffform.pt:39
+#, fuzzy
+msgid "next edit &raquo;"
+msgstr "下一版 >>"
+
+#: i/skins/zwiki_plone/diffform.pt:47
+msgid "return to page"
+msgstr ""
+
 # Default: "Body text"
 #: i/skins/zwiki_plone/editform.pt:117
 msgid "label_body_text"
@@ -239,8 +354,20 @@ msgstr "主體內容"
 # "In a Wiki page, you use [square brackets] to create links. When you save the page, the contents\n"
 # "            of the square brackets will have a small <code>?</code> link next to it, which you click to create\n"
 # "            a new page with that name."
-#: i/skins/zwiki_plone/editform.pt:119 i/skins/zwiki_plone/editform.pt:147
+#: i/skins/zwiki_plone/editform.pt:119
 msgid "help_wikibody"
+msgstr ""
+"在快紀頁面中, 您可用 [方括號] 建立連接. 當您儲存頁面時, 方括號裡頭的\n"
+"            名稱將會跟隨一個小小的 <code>?</code> 連接. 當您點選時, 則依\n"
+"            該名稱建立一新頁面."
+
+# Default: ""
+# "In a Wiki page, you use [square brackets] to create links. When you save the page, the contents\n"
+# "            of the square brackets will have a small <code>?</code> link next to it, which you click to create\n"
+# "            a new page with that name."
+#: i/skins/zwiki_plone/editform.pt:147
+#, fuzzy
+msgid "help_wikiwords"
 msgstr ""
 "在快紀頁面中, 您可用 [方括號] 建立連接. 當您儲存頁面時, 方括號裡頭的\n"
 "            名稱將會跟隨一個小小的 <code>?</code> 連接. 當您點選時, 則依\n"
@@ -284,10 +411,6 @@ msgstr ""
 #: i/skins/zwiki_plone/editform.pt:236
 msgid "pagetype"
 msgstr ""
-
-#: i/skins/zwiki_plone/editform.pt:251
-msgid "Save"
-msgstr "儲存"
 
 # Default: ""
 # "Edit\n"
@@ -353,10 +476,124 @@ msgstr "最近變更"
 msgid "heading_wiki_search_wiki"
 msgstr "搜尋快紀"
 
+# Default: ""
+# "You are currently subscribed<br />\n"
+# "                to the whole wiki."
+#: i/skins/zwiki_plone/subscribeform.pt:100
+msgid "subscribed_wiki_ok"
+msgstr ""
+
+# Default: ""
+# "You are currently not subscribed<br />\n"
+# "                to the whole wiki."
+#: i/skins/zwiki_plone/subscribeform.pt:104
+msgid "subscribed_wiki_no"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:108
+msgid "Unsubscribe from whole wiki"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:115
+msgid "Subscribe to whole wiki"
+msgstr ""
+
+# Default: "You are subscribed to these other pages"
+#: i/skins/zwiki_plone/subscribeform.pt:126
+msgid "other_page_subscribed"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:13
+msgid "Mail subscription"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:143
+msgid "Page subscribers"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:151
+msgid "Wiki subscribers"
+msgstr ""
+
+# Default: ""
+# "You can subscribe to this page or to the whole wiki.\n"
+# "          Subscribers receive a copy of comments via email\n"
+# "          (but not general edits, unless enabled by the site admin).\n"
+# "          Or return to"
+#: i/skins/zwiki_plone/subscribeform.pt:35
+msgid "subscribe_desc"
+msgstr ""
+
+#: i/skins/zwiki_plone/subscribeform.pt:49
+msgid "Your email address"
+msgstr ""
+
+# Default: "To subscribe, please configure your email address."
+#: i/skins/zwiki_plone/subscribeform.pt:60
+msgid "subscribe_no_email"
+msgstr ""
+
+# Default: ""
+# "You are currently subscribed<br />\n"
+# "                to this page."
+#: i/skins/zwiki_plone/subscribeform.pt:70
+msgid "subscribed_page_ok"
+msgstr ""
+
+# Default: ""
+# "You are currently not subscribed<br />\n"
+# "                to this page."
+#: i/skins/zwiki_plone/subscribeform.pt:74
+msgid "subscribed_page_no"
+msgstr ""
+
+#: i/skins/zwiki_plone/uploaded.pt:14
+msgid "File Uploads"
+msgstr ""
+
+# Default: "This page lists all uploads in this Wiki."
+#: i/skins/zwiki_plone/uploaded.pt:16
+msgid "uploads_desc"
+msgstr ""
+
+#: i/skins/zwiki_plone/uploaded.pt:25
+msgid "View"
+msgstr ""
+
+#: i/skins/zwiki_plone/uploaded.pt:25 i/skins/zwiki_plone/editform.pt:251
+msgid "Save"
+msgstr "儲存"
+
+# Default: "No files have been uploaded."
+#: i/skins/zwiki_plone/uploaded.pt:29
+msgid "no_files_uploaded"
+msgstr ""
+
 # Default: "User options"
 #: i/skins/zwiki_plone/useroptions.pt:12
 msgid "heading_wiki_user_options"
 msgstr "用戶選項"
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:15
+msgid "Edit"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:25
+msgid "Title"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:35
+msgid "Description"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:43
+#: i/skins/zwiki_plone/subscribeform.pt:52
+msgid "Change"
+msgstr ""
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:50
+msgid "Change and View"
+msgstr ""
 
 # Default: "Wiki Navigation"
 #: i/skins/zwiki_plone/wikinav_portlet.pt:15
