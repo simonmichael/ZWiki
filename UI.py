@@ -663,11 +663,11 @@ class GeneralForms:
         s    go to search field
         
         page functions:
-        v    view page
-        +    view pages in cmf/plone skin (in a cmf/plone site)
+        +    view pages in plone/cmf skin (in a plone/cmf site)
         =    view pages in standard skin, full mode
         _    view pages in standard skin, simple mode
         -    view pages in standard skin, minimal mode
+        v    view page without changing display mode
         m    mail subscription
         b    show backlinks (links to this page)
         d    show diffs (page edit history)
