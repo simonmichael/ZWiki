@@ -1041,13 +1041,15 @@ class ZWikiPage(
     ######################################################################
     # backwards compatibility
 
-    security.declareProtected(Permissions.View, 'stxToHtml')
-    # this must always be available, for the issue properties form
-    def stxToHtml(self,t): return ZwikiStxPageType().renderStxIn(self,t)
     # CMF compatibility
     view = __call__
     SearchableText = EditingSupport.text
-    # old API methods to help keep legacy DTML working
+    # old API methods for skin templates
+    # are security declarations necessary here ?
+    security.declareProtected(Permissions.View, 'quickcomment')
+    quickcomment = slowcomment = EditingSupport.comment
+    security.declareProtected(Permissions.View, 'stxToHtml')
+    def stxToHtml(self,t): return ZwikiStxPageType().renderStxIn(self,t)
     src = EditingSupport.text
     editTimestamp = EditingSupport.timeStamp
     checkEditTimeStamp = EditingSupport.checkEditConflict
