@@ -162,7 +162,7 @@ version:
 releasetag:
 	@echo tagging release-$(VERSION)
 	@darcs tag -m release-$(VERSION) \
-	  `echo $(VERSION)|perl -ne '!/rc/ and print "--checkpoint"'` \
+	  `echo $(VERSION)|perl -ne '!/rc/ and print "--checkpoint"'`
 
 # always puts tarball in mainbranch/releases
 # look at darcs dist
