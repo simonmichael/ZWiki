@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: ZWiki-0-30-0dev\n"
 "POT-Creation-Date: Wed May 26 10:07:20 2004\n"
 "PO-Revision-Date: 2004-05-27 14:09-0700\n"
-"Last-Translator: Nicolas Laurent <foenyx(at)online(dot)fr>\n"
+"Last-Translator: Nicolas Laurent <foenyx(at)online(dot)fr>, Raphael Badin <raphael(dot)badin(at)sopinspace(dot)com>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +20,7 @@ msgstr "Vous n'êtes pas autorisé à mettre à niveau l'ensemble des pages"
 
 #: i/Admin.py:101
 msgid "(folder -> Manage properties)"
-msgstr "(Dossier -> Gestion propriétés)"
+msgstr "(dossier -> Gestion propriétés)"
 
 #: i/CMFInit.py:101
 msgid "Subscribe"
@@ -35,19 +35,16 @@ msgid "Wiki changes"
 msgstr "Changements récents du Wiki"
 
 #: i/CMFInit.py:120
-#, fuzzy
 msgid "Issue tracker"
-msgstr "afficher la page de surveillance des controverses"
+msgstr "Suivi de controverses"
 
 #: i/CMFInit.py:127
-#, fuzzy
 msgid "Filter issues"
-msgstr "controverses"
+msgstr "Filtrer les controverses"
 
 #: i/CMFInit.py:134
-#, fuzzy
 msgid "Search this wiki"
-msgstr "changer cette page wiki"
+msgstr "Chercher dans ce Wiki"
 
 #: i/CMFInit.py:140
 msgid "Wiki options"
@@ -103,7 +100,7 @@ msgstr ""
 #: i/Editing.py:617
 msgid "You are not authorized to upload files here."
 msgstr ""
-"Vous n'êtes pas autorisé à télécharger de fichiers vers cette destination."
+"Vous n'êtes pas autorisé à transférer de fichiers vers cette destination."
 
 #: i/Editing.py:621
 msgid "You are not authorized to add a link on this ZWiki Page."
@@ -111,7 +108,7 @@ msgstr "Vous n'êtes pas autorisé à ajouter de lien sur cette page ZWiki."
 
 #: i/OutlineSupport.py:734 i/skins/standard/wikipage_macros.pt:219
 msgid "which pages link to this one ?"
-msgstr "Quelles sont les pages liées à celle-ci ?"
+msgstr "quelles sont les pages liées à celle-ci ?"
 
 #: i/OutlineSupport.py:739
 msgid "You are here"
@@ -255,11 +252,11 @@ msgstr ""
 "        \n"
 "        fonctions des pages:\n"
 "        v    voir la page\n"
-"        +    voir les pages en mode «complet»\n"
-"        =    voir les pages en mode «simple»\n"
-"        -    voir les pages en mode «minimal»\n"
-"        m    abonnement par courrier électronique\n"
-"        b    afficher les rétro-liens (liens vers cette page)\n"
+"        +    afficher toutes les caractéristiques (mode «complet»)\n"
+"        =    afficher les caractéristiques de base (mode «simple»)\n"
+"        -    afficher seulement caractéristiques essentielles (mode «minimal»)\n"
+"        m    abonnement par courriel\n"
+"        b    afficher les rétroliens (liens vers cette page)\n"
 "        d    afficher les différences (historique des dernières éditions)\n"
 "        y    afficher l'historique complet dans l'interface de gestion de "
 "Zope (ZMI)\n"
@@ -349,11 +346,11 @@ msgstr "créer cette page"
 
 #: i/ZWikiPage.py:661 i/ZWikiPage.py:674 i/ZWikiPage.py:677
 msgid "last edited %(interval)s ago"
-msgstr "Dernière édition il y a %(interval)s"
+msgstr "dernière édition il y a %(interval)s"
 
 #: i/ZWikiPage.py:670
 msgid "show last edit %(lastlog)s"
-msgstr "Afficher la dernière modification %(lastlog)s"
+msgstr "afficher la dernière modification %(lastlog)s"
 
 #: i/ZWikiPage.py:685 i/ZWikiPage.py:687
 msgid "by %(editor)s"
@@ -368,7 +365,7 @@ msgid "backlinks_reparent_help"
 msgstr ""
 "Vous pouvez changer l'ascendance de cette page pour la placer dans\n"
 "la hiérarchie globale des pages. Cochez les cases ou entrez un nouveau\n"
-"nom de pages et cliquez sur Ré-hiérarchiser.\n"
+"nom de page et cliquez sur Ré-hiérarchiser.\n"
 "Une seul page parente est généralement suffisante."
 
 #: i/skins/standard/backlinks.pt:46
@@ -389,8 +386,8 @@ msgid ""
 "object with a skin template ID that is not a Page Template or DTML Method, "
 "or the template may be missing."
 msgstr ""
-"Il y avait un problème avec un des modèle d'apparences du wiki.Il se "
-"pourrait qu'un objet avec un identifiant de modèle d'apparence ne soit pas "
+"Il y avait un problème avec un des modèles d'apparence du wiki. Il est "
+"possible qu'un objet avec un identifiant de modèle d'apparence ne soit pas "
 "un modèle de page ou une méthode DTML, ou que le modèle soit manquant."
 
 #: i/skins/standard/contentspage.pt:29
@@ -403,11 +400,11 @@ msgstr "Différences pour"
 
 #: i/skins/standard/diffform.pt:48
 msgid "<< previous edit"
-msgstr "<< précédente édition"
+msgstr "<< édition précédente"
 
 #: i/skins/standard/diffform.pt:50
 msgid "next edit >>"
-msgstr "prochaine édition >>"
+msgstr "édition suivante >>"
 
 #: i/skins/standard/diffform.pt:52
 msgid "cancel"
@@ -427,11 +424,11 @@ msgstr "un commentaire rend la page RecentChanges plus utile"
 
 #: i/skins/standard/editform.pt:161
 msgid "Upload a file or image"
-msgstr "Télécharger une image ou un fichier vers le Wiki"
+msgstr "Transférer une image ou un fichier vers le Wiki"
 
 #: i/skins/standard/editform.pt:162
 msgid "upload a file and link it on this page ?"
-msgstr "télécharger un fichier vers le Wiki et le lier à cette page ?"
+msgstr "transférer un fichier vers le Wiki et le lier à cette page ?"
 
 #: i/skins/standard/editform.pt:174
 msgid "Show subtopics on this page & below ?"
@@ -489,7 +486,7 @@ msgstr "Annuler"
 
 #: i/skins/standard/editform.pt:228
 msgid "cancel this edit and return to the page"
-msgstr "Annuler cette édition et retourner à la page"
+msgstr "annuler cette édition et retourner à la page"
 
 # Default: "Page name"
 #: i/skins/standard/editform.pt:69
@@ -577,11 +574,11 @@ msgstr "index"
 
 #: i/skins/standard/wikipage_macros.pt:144
 msgid "show upload page"
-msgstr "afficher la page de téléchargements vers le serveur"
+msgstr "afficher la page de transfert vers le serveur"
 
 #: i/skins/standard/wikipage_macros.pt:148
 msgid "uploads"
-msgstr "téléchargements"
+msgstr "transferts"
 
 #: i/skins/standard/wikipage_macros.pt:150
 msgid "show wiki options"
@@ -626,7 +623,7 @@ msgstr "minimal"
 #: i/skins/standard/wikipage_macros.pt:206
 msgid "configure email subscription to this page or site"
 msgstr ""
-"Paramétrer votre abonnement de messagerie électronique pour cette page ou ce "
+"Paramétrer votre abonnement par courriel à cette page ou ce "
 "site"
 
 #: i/skins/standard/wikipage_macros.pt:216
@@ -640,7 +637,7 @@ msgstr "rétroliens"
 
 #: i/skins/standard/wikipage_macros.pt:226
 msgid "show this page's change history"
-msgstr "Afficher l'historique des changements de cette page"
+msgstr "afficher l'historique des changements de cette page"
 
 #: i/skins/standard/wikipage_macros.pt:232
 msgid "diff"
@@ -657,7 +654,7 @@ msgstr "éditer"
 
 #: i/skins/standard/wikipage_macros.pt:246
 msgid "edit using external editor"
-msgstr "Modifier avec un éditeur externe"
+msgstr "modifier avec un éditeur externe"
 
 #: i/skins/standard/wikipage_macros.pt:258
 msgid "(external edit)"
@@ -674,8 +671,8 @@ msgstr "en réponse à"
 #: i/skins/standard/wikipage_macros.pt:410
 msgid "to comment (and cc any subscribers) enter text here and click add"
 msgstr ""
-"Pour ajouter un commentaire (et le faire parvenir aux abonnés) entrez votre "
-"texte ici et cliquez sur ajouter"
+"Pour ajouter un commentaire (et le faire parvenir aux abonnés par courriel) "
+"entrez votre texte ici et cliquez sur ajouter"
 
 #: i/skins/standard/wikipage_macros.pt:431
 msgid "${nb} subscribers"
@@ -699,7 +696,7 @@ msgstr "ré-hiérarchiser"
 #: i/skins/standard/wikipage_macros.pt:473
 msgid "reparent this page under the page you have entered"
 msgstr ""
-"Placer la page courrante sous la hiérarchie de la page dont vous avez entré "
+"Placer la page courante sous la hiérarchie de la page dont vous avez entré "
 "le nom"
 
 #: i/skins/standard/wikipage_macros.pt:481
@@ -725,7 +722,7 @@ msgstr "supprimer"
 
 #: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
 msgid "Backlinks for"
-msgstr "Rétro-liens pour"
+msgstr "Rétroliens pour"
 
 #: i/skins/zwiki_plone/backlinks.pt:21
 msgid "Here are the pages which link to"
@@ -814,7 +811,7 @@ msgstr "Une courte description de vos changements"
 # Default: "Upload file or image (optional)"
 #: i/skins/zwiki_plone/editform.pt:176
 msgid "label_upload_contents_optional"
-msgstr "Télécharger vers le Wiki un fichier ou une image (optionnel)"
+msgstr "Transférer un fichier ou une image vers le Wiki (optionnel)"
 
 # Default: "Attaches a file or an image to this wiki page."
 #: i/skins/zwiki_plone/editform.pt:178
@@ -832,7 +829,7 @@ msgstr "Format de la page"
 #: i/skins/zwiki_plone/editform.pt:198
 msgid "help_format"
 msgstr ""
-"Si vous n'êtes pas sure du format à utiliser, sélectionnez\n"
+"Si vous n'êtes pas sûr du format à utiliser, sélectionnez\n"
 "            Plain Text (texte non formaté) et tapez le document\n"
 "            comme vous le faîtes d'habitude."
 
@@ -945,7 +942,7 @@ msgstr "Vous êtes abonné à ces autres pages"
 #: i/skins/zwiki_plone/subscribeform.pt:13
 #: i/skins/standard/subscribeform.pt:36
 msgid "Mail subscription"
-msgstr "Abonnement pas messagerie électronique"
+msgstr "Abonnement par courriel"
 
 #: i/skins/zwiki_plone/subscribeform.pt:143
 #: i/skins/standard/subscribeform.pt:167
@@ -967,8 +964,7 @@ msgstr "Abonnés au Wiki"
 msgid "subscribe_desc"
 msgstr ""
 "Vous pouvez vous abonner à cette page ou au Wiki dans sa totalité.\n"
-"          Les abonnés reçoivent une copie des commentaires par courrier "
-"électronique\n"
+"          Les abonnés reçoivent une copie des commentaires par courriel "
 "          (mais pas les modifications générales, à moins que cette "
 "fonctionnalité\n"
 "          n'ai été activée pas l'administrateur du site).\n"
@@ -977,20 +973,20 @@ msgstr ""
 #: i/skins/zwiki_plone/subscribeform.pt:49
 #: i/skins/standard/subscribeform.pt:72
 msgid "Your email address"
-msgstr "Votre adresse de messagerie électronique"
+msgstr "Votre adresse de courriel"
 
 #: i/skins/zwiki_plone/subscribeform.pt:52
 #: i/skins/standard/subscribeform.pt:75
 msgid "Change"
-msgstr ""
+msgstr "Modifier"
 
 # Default: "To subscribe, please configure your email address."
 #: i/skins/zwiki_plone/subscribeform.pt:60
 #: i/skins/standard/subscribeform.pt:83
 msgid "subscribe_no_email"
 msgstr ""
-"Pour vous abonner, veuillez configurer votre adresse de messagerie "
-"électronique"
+"Pour vous abonner, veuillez configurer votre adresse de "
+"courriel"
 
 # Default: ""
 # "You are currently subscribed<br />\n"
@@ -1014,12 +1010,12 @@ msgstr ""
 
 #: i/skins/zwiki_plone/uploaded.pt:14
 msgid "File Uploads"
-msgstr "Téléchargements de fichiers vers le serveur"
+msgstr "Transferts de fichiers vers le serveur"
 
 # Default: "This page lists all uploads in this Wiki."
 #: i/skins/zwiki_plone/uploaded.pt:16
 msgid "uploads_desc"
-msgstr "Cette page liste tous les téléchargements effectués vers ce Wiki"
+msgstr "Cette page liste tous les transferts effectués vers ce Wiki"
 
 #: i/skins/zwiki_plone/uploaded.pt:25 i/skins/zwiki_plone/editform.pt:245
 msgid "Save"
@@ -1028,7 +1024,7 @@ msgstr "Sauvegarder"
 # Default: "No files have been uploaded."
 #: i/skins/zwiki_plone/uploaded.pt:29
 msgid "no_files_uploaded"
-msgstr "Aucun fichier n'a été téléchargé sur ce Wiki."
+msgstr "Aucun fichier n'a été transféré vers ce Wiki."
 
 # Default: "User options"
 #: i/skins/zwiki_plone/useroptions.pt:12
@@ -1055,7 +1051,7 @@ msgstr "Sujet"
 #: i/skins/zwiki_plone/wikipage_footer.pt:26
 msgid "enter comments here and click add; or, click edit"
 msgstr ""
-"Entrez vos commentaires ici et cliquez sur ajouter; ou, cliquez sur éditer"
+"Entrez vos commentaires ici et cliquez sur ajouter; ou cliquez sur éditer"
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:41
 #: i/skins/standard/wikipage_macros.pt:436
