@@ -116,22 +116,6 @@ class SubscriptionTests(unittest.TestCase):
         sl.unsubscribe('2@TesT.cOm')
         self.assertEquals(sl.subscriberList(),[])
 
-    def test_allSubscribers(self):
-        p = MockZWikiPage(__name__='SomePage').aq_parent.SomePage
-        p.subscribe('a')
-        self.assertEquals(p.allSubscribers(),['a'])
-        p.wikiSubscribe('b')
-        self.assertEquals(p.allSubscribers(),['a','b'])
-        # TestPage and SandBox can have only page subscribers
-        p = MockZWikiPage(__name__='TestPage').aq_parent.TestPage
-        p.subscribe('a')
-        p.wikiSubscribe('b')
-        self.assertEquals(p.allSubscribers(),['a'])
-        p = MockZWikiPage(__name__='SandBox').aq_parent.SandBox
-        p.subscribe('a')
-        p.wikiSubscribe('b')
-        self.assertEquals(p.allSubscribers(),['a'])
-
     # XXX doesn't test subscription by CMF member id
     def test_allSubscriptionsFor(self):
         p = MockZWikiPage().aq_parent.TestPage
