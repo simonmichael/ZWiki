@@ -63,7 +63,7 @@ class TrackerSupport:
         """
         Return this page's (or another's) issue number, or None.
         """
-        tuple = self.issueNumberAndName(pagename)
+        tuple = self.issueNumberAndName(pagename or self.pageName())
         return tuple and tuple[0]
 
     security.declareProtected(Permissions.View, 'issueName')
@@ -71,7 +71,7 @@ class TrackerSupport:
         """
         Return this page's issue name (page name without the number), or None.
         """
-        tuple = self.issueNumberAndName(pagename)
+        tuple = self.issueNumberAndName(pagename or self.pageName())
         return tuple and tuple[1]
 
     security.declareProtected(Permissions.View, 'isIssue')
@@ -82,7 +82,7 @@ class TrackerSupport:
         If we are able to extract an issue number and name from the page
         name, yes.
         """
-        return self.issueNumberAndName(pagename) and 1
+        return self.issueNumberAndName(pagename or self.pageName()) and 1
 
     security.declareProtected(Permissions.View, 'issueCount')
     def issueCount(self):
