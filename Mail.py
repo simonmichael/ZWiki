@@ -421,7 +421,7 @@ class MailSupport:
         """
         Has mailout been configured ?
         """
-        if (hasattr(self,'MailHost') and
+        if (self.mailhost() and
             (self.fromProperty() or self.replyToProperty())):
             return 1
         else:
