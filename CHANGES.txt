@@ -1,6 +1,8 @@
     Summary
 
-        ...
+        Beginnings of a plugin architecture; mailin simplifications and
+	enhancements; new hungarian translation; miscellaneous skin
+	enhancements and bugfixes.
 
     Upgrade notes
     
@@ -8,29 +10,95 @@
 	use mailin_policy instead.
 
 	The mailin method no longer supports arguments other than the
-	message; use folder properties and a suitable email alias instead.
+	message itself; control it with folder properties and choice of
+	mail alias instead.
         
     Changes
 
       General
 
-        * 
-	
+        * add firstPageUrl & lastPageUrl methods
+
+        * include() dtml utility now supports show_subtopics keyword argument
+
+        * fix bug preventing use of show_subtopics keyword in urls
+
+        * add URL to the list of ids to avoid.. it breaks standard_error_message at least
+
+        * code refactoring to support a more modular architecture;
+	PurpleNumbers, Fit, Rating, Regulations and Tracker support are
+	now (somewhat) in plugins subdirectory
+
+        * link uploaded files properly on RST pages (Marius Gedminas, IssueNo0814)
+
+        * do away with the unnecessary ALLOWED_PAGE_TYPES list as Bob suggested
+
+        * Allow empty RemoteWikiURL name (Bill Page)
+        It is sometimes useful to allow the remoteURLname to be
+        empty. That is we give a WikiName that looks like it is
+        remote but really it is not (at least not yet ... :).
+        The old code caused a : to be inserted.
+
+        * comment out unused code breaking mailout (IssueNo0890)
+
+        * also check comment subjects and log notes for urls from the
+	banned_links list
+
       Skins and content
 
-        * 
-	
+        * make hidden access-key links conditional like the visible ones
+        avoids errors in the logs due to spiders viewing non-existent tracker, eg
+
+        * let next/prev access keys wrap around when on last/first page
+
+        * show "last edited by" in minimal mode
+
+        * make the discussion link look for UserDiscussion before GeneralDiscussion
+
+        * plone diffform: use n & p access keys for next/previous
+
+        * diff form revert button (Bob McElrath)
+        Updated revert patch:
+        2) Add "Changes in revision N" to header
+        3) Add "Log note:"
+        4) Add "Return to page" button.
+        5) Grey out next/prev buttons on first/last diff.
+
+        * html tweaks to support expandable bullet list patch
+
       Mail and comments
 
-        * 
-	
+        * mailin: more code cleanup, add experimental spam url reporting.
+	Sending mail to a mailin address of the form spam@... will add all
+	urls found in the message to the banned_links folder property, if
+	there is one.
+
+        * mailin: drop support for configuration via arguments
+
+        * mailin: support default_mailin_page folder property
+
+        * mailin: update doc, drop support for old posting_policy property
+
+        * mailin: don't require an initial word boundary when matching mailin aliases
+
+        * mailin: allow partial bracketed page names in subjects
+
+        * don't send out mail-outs which have an empty body
+
       Tracker
 
-        * 
-	
+        * make createNextIssue choose correct issue number in authenticated wikis
+
       I18n
 
-        * 
+        * new hungarian translation (JÛzsef J·roli)
+
+        * german translation updates (Andreas Mayer)
+
+        * dutch translation updates (Jaap Noordzij)
+
+        * brazilian translation updates (Jean Rodrigo Ferri)
+
 	
 Zwiki 0.33.0 2004/08/02
 
@@ -2727,7 +2795,7 @@ Zwiki 0.10.0rc1 2002-08-25
         * fix ZMI add zwiki page (IssueNo0187), make it equivalent to wiki
         page creation
 
-        * spanish translation of initial i18n strings (J. David Ib·Òez)
+        * spanish translation of initial i18n strings (J. David Ib√°√±ez)
 
         * canadian french translation of initial i18n strings (JoannePlouffe)
 
