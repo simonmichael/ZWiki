@@ -18,7 +18,7 @@
              #  make sure all branch fixes checked in and merged to trunk, including CHANGES.txt
              #  selectively tag and merge trunk changes, including CHANGES.txt: 
              #   how to get a list of trunk changes ?
-             #   cvs tag -cF -r HEAD merge-0-VV-0rcB
+             #   cvs tag -cF -r HEAD merge-0-VV-0rcB ... (in trunk)
              #   RC2:  cvs update -j release-0-VV-fork -j merge-0-VV-0rcB ...
              #   RC3+: cvs update -j merge-0-VV-0rcA -j merge-0-VV-0rcB ...
              # bump version.txt, make version
@@ -206,8 +206,8 @@ version:
 	  content/basic/HelpPage.stx
 
 releasebranch: mergetag
-	cvs tag -cF release-$(MAJORVERSION)-fork
-	cvs tag -cFb release-$(MAJORVERSION)-branch
+	cvs tag -F release-$(MAJORVERSION)-fork
+	cvs tag -Fb release-$(MAJORVERSION)-branch
 	cd ~; cvs -d:ext:simon@cvs.zwiki.sourceforge.net:/cvsroot/zwiki \
 	 checkout -r release-$(MAJORVERSION)-branch -d zwiki-$(VERSIONNO) zwiki
 	cd ~/zwiki-$(VERSIONNO); \
