@@ -3,14 +3,12 @@
 # RELEASE SCRIPT (darcs)
 # simple single-threaded release process
 # ----------------------------------------
-# check all recorded, make summary
-# make test
 # check tracker
 # check docs (showAccessKeys,README,dtml/*,content/*, zwiki.org HelpPage,QuickReference)
-# update CHANGES.txt from darcs changes, add release date/version
-# update version.txt, make version
-# record all
+# make summary
 # make test
+# update CHANGES.txt from darcs changes, add release date/version, record
+# update version.txt, make version, record
 # make rctag or releasetag
 # make push
 # make release
