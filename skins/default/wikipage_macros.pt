@@ -368,7 +368,7 @@ title="to comment (and cc any subscribers) enter text here and click add">
 </tr>
 
 <!-- add row -->
-<tr tal:condition="python: request.get('in_reply_to',0)">
+<tr>
 <td align="left" valign="middle">
 <em><small>
 <span tal:condition="request/in_reply_to|nothing">
