@@ -5,7 +5,8 @@ from string import split,join,find,lower,rfind,atoi,strip,lstrip
 from types import *
 
 from TextFormatter import TextFormatter
-from Utils import html_unquote,BLATHER,formattedTraceback,stripList
+from Utils import html_unquote,BLATHER,formattedTraceback,stripList, \
+     isIpAddress,isEmailAddress,isUsername
 from Defaults import AUTO_UPGRADE, PAGE_METATYPE
 
 
@@ -347,19 +348,6 @@ class SubscriberManagerMixin:
 
     # utilities
 
-    def isEmailAddress(self,s):
-        """
-        True if s looks like an email address.
-        """
-        if s and '@' in s: return 1
-        else: return 0
-    
-    def isUsername(self,s):
-        """
-        True if s looks like a username.
-        """
-        return not self.isEmailAddress(s)
-    
     def emailAddressFrom(self,subscriber):
         """
         Convert an email address or CMF member id to an email address.
@@ -379,7 +367,7 @@ class SubscriberManagerMixin:
         If we can't get an email address, return None.
 
         """
-        if self.isEmailAddress(subscriber):
+        if isEmailAddress(subscriber):
             return subscriber
         elif self.inCMF():
             from Products.CMFCore.utils import getToolByName
@@ -418,7 +406,7 @@ class SubscriberManagerMixin:
         cpu for 10 minutes.
         
         """
-        if self.isUsername(subscriber):
+        if isUsername(subscriber):
             return [subscriber]
         else:
             return []
@@ -448,8 +436,7 @@ class MailSupport:
         Has mailout been configured ?
         """
         if (hasattr(self,'MailHost') and
-            (getattr(self.folder(),'mail_from',None) or
-             getattr(self.folder(),'mail_replyto',None))):
+            (self.fromProperty() or self.replyToProperty())):
             return 1
         else:
             return 0
@@ -514,113 +501,210 @@ class MailSupport:
                               subject='',message_id=None,in_reply_to=None,
                               exclude_address=None):
         """
-        Send mail to page subscribers.
+        Send mail to any page subscribers, and log any errors.
         
         If a mailhost and mail_from property have been configured and
         there are subscribers to this page, email text to them.  So as not
         to prevent page edits, catch any mail-sending errors (and log and
         try to forward them to an admin).
         """
-
         recipients = self.emailAddressesFrom(self.allSubscribers())
-	# mailin may tell us to exclude a mailing list address to prevent a loop
+	# mailin.py may need to exclude an address to avoid a loop
         try: recipients.remove(exclude_address)
         except ValueError: pass
-	# some lists (ezmlm) require the list address in To, and if it also 
-	# appears in subscriber_list will deliver two copies. Just remove
-	# duplicates to be safe.
-	def uniq(list):
-            u = []
-            for i in list:
-                if not i in u: u.append(i)
-	    return u
-        recipients = uniq(recipients)
 
         if not recipients: return
-	
+        
+	# some lists will deliver duplicated addresses twice ? try to avoid
+        unique = []
+        for r in recipients:
+            if not r in unique:
+                unique.append(r)
+        if self.toProperty() in unique: unique.remove(self.toProperty())
+        
+        # send the mail
         try:
-            self.sendMailTo(recipients,text,REQUEST,
+            self.sendMailTo(unique,text,REQUEST,
                             subjectSuffix=subjectSuffix,
                             subject=subject,
                             message_id=message_id,
                             in_reply_to=in_reply_to)
+        # if there is any failure, notify admin or log
         except:
             BLATHER('failed to send mail to %s: %s' % (recipients,
-                                                    formattedTraceback()))
+                                                       formattedTraceback()))
             admin = getattr(self.folder(),'mail_admin',None)
             if admin:
-                try: self.sendMailTo(
-                    [admin],text or '(no text)',REQUEST,
-                    subjectSuffix='ERROR, subscriber mailout failed')
+                try:
+                    self.sendMailTo(
+                        [],text,REQUEST,
+                        subjectSuffix='ERROR, subscriber mailout failed',
+                        to=admin)
                 except:
                     BLATHER('failed to send error report to admin: %s' % \
-                         formattedTraceback())
+                            formattedTraceback())
 
-    # XXX refactor
-    # todo: use an authenticated CMF member's email property when appropriate
-    def sendMailTo(self, recipients, text, REQUEST, subjectSuffix='',
-                   subject='',message_id=None,in_reply_to=None):
+    def fromProperty(self):
         """
-        Send mail to the specified recipients.
-
-        If a mailhost and mail_from property have been configured,
-        attempt to email text to recipients.
-
-        Does all kinds of careful stuff with properties
-        and other info to provide the best possible headers.
-        Refactor.
+        Give the mail_from property for this page.
         """
-        if not self.isMailoutEnabled(): return
+        return getattr(self.folder(),'mail_from','')
+    
+    def replyToProperty(self):
+        """
+        Give the mail_replyto property for this page.
+        """
+        return getattr(self.folder(),'mail_replyto','')
+    
+    def toProperty(self):
+        """
+        Give the mail_to property for this page.
+        """
+        return getattr(self.folder(),'mail_to','')
+    
+    def fromHeader(self,REQUEST=None):
+        """
+        Give the appropriate From: header for mail-outs from this page.
 
-        # XXX try unformatted mailouts again (IssueNo0696)
-        #mailouttext = self.formatMailout(text)
-        mailouttext = text
+        Tries to make use of the current user's username and email address
+        if available.
 
-        # gather bits and pieces
-        mhost=self.MailHost
+        XXX todo: use an authenticated CMF member's email property
+        """
         username = self.usernameFrom(REQUEST)
-        if not message_id:
-            message_id = self.messageIdFromTime(self.ZopeTime())
-        mail_from = getattr(self.folder(),'mail_from','')
-        mail_replyto = getattr(self.folder(),'mail_replyto','')
-        replytohdr = mail_replyto or mail_from
-        listid = mail_from or mail_replyto
-        # primary recipient, alternatives:
-        # 1. "To: ;" causes messy cc header in replies, while
-        # 2. "To: replytohdr" sends a copy back to the wiki which
-        # may be the cause of intermittent slow comments
-        # XXX for now use 2 & allow it to be overridden 
-        tohdr = getattr(self.folder(),'mail_to','') or replytohdr
-        if mail_from:
-            if (not re.match(r'[0-9\.\s]*$',username) and
-                not self.isEmailAddress(username)):
-                fromhdr = '%s (%s)' % (mail_from,username)
-            else:
-                fromhdr = mail_from
+        # use the wiki's hard-coded from address if configured;
+        # add the username if it helps identification
+        if self.fromProperty():
+            fromhdr = self.fromProperty()
+            if not (isIpAddress(username) or isEmailAddress(username)):
+                fromhdr += ' (%s)' % username
+        # or use the user's address if we know it
+        elif isEmailAddress(username):
+            fromhdr = username
+        # or use the wiki's reply-to address, adding the username if it helps
         else:
-            if self.isEmailAddress(username):
-                fromhdr = username
-            elif re.match(r'[0-9\.\s]*$',username):
-                fromhdr = mail_replyto
-            else:
-                fromhdr = '%s (%s)' % (mail_replyto,username)
-        # link to message - copied from makeCommentHeading
-        pageurl = self.page_url()
-        pageurl += '#msg'+re.sub(r'^<(.*)>$',r'\1',message_id) 
+            fromhdr = self.replyToProperty()
+            if not isIpAddress(username):
+                fromhdr += ' (%s)' % username
+        return fromhdr
+
+    def replyToHeader(self):
+        """
+        Give the appropriate Reply-to: header for mail-outs from this page.
+        """
+        return self.replyToProperty() or self.fromProperty()
+    
+    def listId(self):
+        """
+        Give the "list id" for mail-outs from this page.
+        """
+        return self.fromProperty() or self.replyToProperty()
+    
+    def listPostHeader(self):
+        """
+        Give the appropriate List-Post: header for mail-outs from this page.
+        """
+        return '<mailto:%s>' % (self.listId())
+
+    def listIdHeader(self):
+        """
+        Give the appropriate List-ID: header for mail-outs from this page.
+        """
+        return '%s <%s>' % (self.folder().title,self.listId())
+
+    def xBeenThereHeader(self):
+        """
+        Give the appropriate X-Been-There: header for mail-outs from this page.
+        """
+        return self.listId()
+
+    def bccHeader(self,recipients):
+        """
+        Give the appropriate Bcc: header for mail-outs from this page.
+
+        Expects a list of recipient addresses.
+        """
+        return join(stripList(recipients), ', ')
+
+    def subjectHeader(self,subject='',subjectSuffix=''):
+        """
+        Give the appropriate Subject: header for mail-outs from this page.
+
+        - adds a prefix if configured in mail_subject_prefix;
+        - includes page name in brackets unless disabled with mail_page_name
+        - appends subjectSuffix if provided
+        """
         if getattr(self.folder(),'mail_page_name',1):
             pagename = '[%s] ' % self.title_or_id()
         else:
             pagename = ''
-        signature = getattr(self.folder(),
-                            'mail_signature',
-                            '--\nforwarded from %s' % pageurl)
-                           
-        # send message - XXX templatize this
-        # XXX - ezmlm won't deliver bulk, but that's what these are, what to do
-        #Precedence: bulk
-	# XXX - also, it's not catching duplicate message ids/message contents
-	# or not delivering to sender like mailman can.. oh what to do
-        #Delivered-To: %s
+        return (
+            strip(getattr(self.folder(),'mail_subject_prefix','')) +
+            pagename +
+            subject +
+            strip(subjectSuffix))
+
+    def toHeader(self):
+        """
+        Give the appropriate To: header for mail-outs from this page.
+
+        When sending a mail-out, we put the subscribers in Bcc for privacy.
+        Something is needed in To, what should we use ?
+        1. if there is a mail_to property, use that
+        2. if there is a mail_replyto or mail_from property, use that;
+           sends a copy back to the wiki which may be the cause of
+           conflict-related intermittent slow comments
+        3. or use ";" which is a legal "nowhere" but causes messy cc header
+           in replies
+        """
+        return (self.toProperty() or
+                self.replyToProperty() or
+                self.fromProperty() or
+                ';')
+
+    def signature(self, message_id=None):
+        """
+        Give the appropriate signature to add to mail-outs from this page.
+
+        That is:
+        - the contents of the mail_signature property
+        - or a semi-permalink to a comment if its message id is provided
+        - or a link to this page
+        """
+        url = self.pageUrl()
+        if message_id:
+            # sync with makeCommentHeading
+            url += '#msg%s' % re.sub(r'^<(.*)>$',r'\1',message_id) 
+        return getattr(self.folder(),'mail_signature',
+                       '--\nforwarded from %s' % url) # XXX i18n
+
+    def mailhost(self):
+        """
+        Give the MailHost that should be used for sending mail.
+        """
+        return self.MailHost
+
+    def sendMailTo(self, recipients, text, REQUEST,
+                   subjectSuffix='',
+                   subject='',
+                   message_id=None,
+                   in_reply_to=None,
+                   to=None,
+                   ):
+        """
+        Send a mail-out to recipients, if mail properties are configured.
+
+        Tries to provide the best possible headers based on available
+        information in arguments, zodb, username cookie etc.
+
+        XXX templatize ?
+        XXX mailing list integration issues
+        - ezmlm won't deliver precedence: bulk, which these are, what to do
+	- ezmlm was delivering duplicates due to duplicate addresses at one point..
+          we seem ok now
+        """
+        if not self.isMailoutEnabled(): return
+        msgid = message_id or self.messageIdFromTime(self.ZopeTime())
         msg = """\
 From: %s
 Reply-To: %s
@@ -628,10 +712,10 @@ To: %s
 Bcc: %s
 Subject: %s
 Message-ID: %s%s
-X-BeenThere: %s
 X-Zwiki-Version: %s
-List-Id: %s <%s>
-List-Post: <mailto:%s>
+X-BeenThere: %s
+List-Id: %s
+List-Post: %s
 List-Subscribe: <%s/subscribeform>
 List-Unsubscribe: <%s/subscribeform>
 List-Archive: <%s>
@@ -640,96 +724,89 @@ List-Help: <%s>
 %s
 %s
 """ \
-        % (fromhdr,
-           replytohdr,
-           tohdr,
-           join(stripList(recipients), ', '),
-           join([strip(getattr(self.folder(),'mail_subject_prefix',
-                               '')), #getattr(self.folder(),'title'))),
-                 #strip(self.id()),
-                 pagename,
-                 subject,
-                 strip(subjectSuffix)],''),
-           message_id,
+        % (self.fromHeader(REQUEST),
+           self.replyToHeader(),
+           to or self.toHeader(),
+           self.bccHeader(recipients),
+           self.subjectHeader(subject,subjectSuffix),
+           msgid,
            (in_reply_to and '\nIn-reply-to: %s' % in_reply_to) or '',
-           listid,
            self.zwiki_version(),
-           self.folder().title, listid,
-           listid,
-           pageurl,
-           pageurl,
-           pageurl,
-           self.wiki_url(),
-           mailouttext,
-           signature,
+           self.xBeenThereHeader(),
+           self.listIdHeader(),
+           self.listPostHeader(),
+           self.pageUrl(),
+           self.pageUrl(),
+           self.pageUrl(),
+           self.wikiUrl(),
+           text, #self.formatMailout(text) # IssueNo0696
+           self.signature(msgid),
            )
 
-        # testing support
         if subject == '[test]':
+            # for testing:
             BLATHER('discarding test mailout:\n%s' % msg)
-            # I tried redirecting to a test SMTP server but it blocked
-            #BLATHER('diverting test mailout to test server:\n%s' % msg)
-            #try:
-            #    self.TestMailHost.send(msg)
-            #    BLATHER('sent mailout to test server')
-            #    BLATHER('TestMailHost info:',
-            #         self.TestMailHost.smtp_host,
-            #         self.TestMailHost.smtp_port)
-            #except:
-            #    type, val, tb = sys.exc_info()
-            #    err = string.join(
-            #        traceback.format_exception(type,val,tb),'')
-            #    BLATHER('failed to send mailout to test server:',
-            #         err,
-            #         self.TestMailHost.smtp_host,
-            #         self.TestMailHost.smtp_port)
-            # instead, I sent as usual and hacked mailman to drop it
-            # do add a X-No-Archive header
-            #msg = re.sub(r'(?m)(List-Help:.*$)',
-            #             r'\1\nX-No-Archive: yes',
-            #             msg)
-            #BLATHER('sending mailout:\n%s' % msg)
-            #mhost.send(msg)
+            #self.sendTestMail()
         else:
             BLATHER('sending mailout:\n%s' % msg)
-            mhost.send(msg)
+            self.mailhost().send(msg)
+        # XXX experimental
+        #self.sendCiaBotMail
 
-        # cc comments to an IRC channel via ciabot (or similar)
-        # sent separately so we can provide the special subject 
-        mail_irc_address = getattr(self.folder(),'mail_irc_address',None)
-        mail_irc_subject = getattr(self.folder(),'mail_irc_subject','')
-        if mail_irc_address:
-            mhost.send("""\
-From: %s
-To: %s
-Subject: %s
 
-%s: %s
-%s
-""" \
-            % (fromhdr,
-               mail_irc_address,
-               mail_irc_subject,
-               username,
-               mailouttext,
-               signature,
-               ))
-            BLATHER("""sending mailout to IRC:
-From: %s
-To: %s
-Subject: %s
+#    def sendCiaBotMail(self):
+#        """
+#        Send mail to an IRC channel via ciabot (or similar).
+#
+#        This is sent separately so we can provide the special headers.
+#        """
+#        mail_irc_address = getattr(self.folder(),'mail_irc_address',None)
+#        if mail_irc_address:
+#            msg = """\
+#From: %s
+#To: %s
+#Subject: %s
+#
+#%s: %s
+#%s
+#""" \
+#            % (fromhdr,
+#               mail_irc_address,
+#               getattr(self.folder(),'mail_irc_subject',''),
+#               username,
+#               body,
+#               signature,
+#               )
+#            self.mailhost().send(msg)
+#            BLATHER('sending mailout to IRC:',msg)
 
-%s: %s
-%s
-""" \
-            % (fromhdr,
-               mail_irc_address,
-               mail_irc_subject,
-               username,
-               mailouttext,
-               signature,
-               ))
-
+#    def sendTestMail(self):
+#        """
+#        Send a mail which users won't see, but we can monitor in tests
+#        """
+#        BLATHER('diverting test mailout to test server:\n%s' % msg)
+#        # I tried sending to a test SMTP server, but it blocked
+#        #try:
+#        #    self.TestMailHost.send(msg)
+#        #    BLATHER('sent mailout to test server')
+#        #    BLATHER('TestMailHost info:',
+#        #         self.TestMailHost.smtp_host,
+#        #         self.TestMailHost.smtp_port)
+#        #except:
+#        #    type, val, tb = sys.exc_info()
+#        #    err = string.join(
+#        #        traceback.format_exception(type,val,tb),'')
+#        #    BLATHER('failed to send mailout to test server:',
+#        #         err,
+#        #         self.TestMailHost.smtp_host,
+#        #         self.TestMailHost.smtp_port)
+#        # instead, I sent as usual and hacked mailman to drop it
+#        # do add a X-No-Archive header
+#        msg = re.sub(r'(?m)(List-Help:.*$)',
+#                     r'\1\nX-No-Archive: yes',
+#                     msg)
+#        BLATHER('sending mailout:\n%s' % msg)
+#        self.mailhost().send(msg)
 
 #if __name__ == '__main__':
 #    import contract, doctest, Mail

@@ -695,3 +695,23 @@ def stripList(lines):
     Accept a list or tuple, return a list. (Zope 2.7 props are tuples.)
     """
     return filter(lambda x:x.strip(),list(lines))
+
+def isIpAddress(s):
+    """
+    True if s looks like an IP address.
+    """
+    return re.match(r'[0-9\.\s]*$',s) and 1
+
+def isEmailAddress(s):
+    """
+    True if s looks like an email address.
+    """
+    if s and '@' in s: return 1
+    else: return 0
+
+def isUsername(s):
+    """
+    True if s looks like a username.
+    """
+    return not isEmailAddress(s)
+
