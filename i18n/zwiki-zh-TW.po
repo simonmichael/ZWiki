@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-32-0rc1\n"
-"POT-Creation-Date: Mon Sep 27 20:20:36 2004\n"
+"POT-Creation-Date: Thu Sep 30 11:45:27 2004\n"
 "PO-Revision-Date: 2004-07-06 00:02+0800\n"
 "Last-Translator: T.C. Chou <tcchou-at-tcchou-dot-org>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
@@ -284,23 +284,23 @@ msgstr "秒"
 msgid "seconds"
 msgstr "秒"
 
-#: i/ZWikiPage.py:600
+#: i/ZWikiPage.py:602
 msgid "page in parent wiki"
 msgstr "同在父層的頁面"
 
-#: i/ZWikiPage.py:607
+#: i/ZWikiPage.py:609
 msgid "create this page"
 msgstr "建立頁面"
 
-#: i/ZWikiPage.py:684 i/ZWikiPage.py:697 i/ZWikiPage.py:700
+#: i/ZWikiPage.py:686 i/ZWikiPage.py:699 i/ZWikiPage.py:702
 msgid "last edited %(interval)s ago"
 msgstr "最新變更在 %(interval)s 以前"
 
-#: i/ZWikiPage.py:693
+#: i/ZWikiPage.py:695
 msgid "show last edit %(lastlog)s"
 msgstr "顯示最新修改 %(lastlog)s"
 
-#: i/ZWikiPage.py:709 i/ZWikiPage.py:711
+#: i/ZWikiPage.py:711 i/ZWikiPage.py:713
 msgid "by %(editor)s"
 msgstr "作者 %(editor)s"
 
@@ -311,6 +311,27 @@ msgstr "建議"
 #: i/pagetypes/rst.py:57
 msgid "reply"
 msgstr "回覆"
+
+#: i/pagetypes/stx.py:389
+msgid "Structed Text table rendering error"
+msgstr ""
+
+#: i/pagetypes/stx.py:400
+msgid ""
+"\n"
+"                Sorry, but a Structured Text table in this page gave an "
+"error while rendering.\n"
+"                This happens due to incorrect spacing, the wrong number of "
+"column separators, etc.\n"
+"                Please correct the table, following the Structured Text "
+"rules, or remove it,\n"
+"                so that this page can be displayed.\n"
+"                "
+msgstr ""
+
+#: i/pagetypes/stx.py:406
+msgid "To edit this page, click OK."
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:100 i/skins/dtmlmessages.pt:190
 msgid "Filter issues"
@@ -758,22 +779,22 @@ msgstr "狀態:"
 # "You can change this page's parent(s) to place it within the overall page\n"
 # "hierarchy.  Check the boxes or enter a new page name and click Reparent.\n"
 # "A single parent is usually sufficient."
-#: i/skins/standard/backlinks.pt:103
+#: i/skins/standard/backlinks.pt:105
 msgid "backlinks_reparent_help"
 msgstr ""
 "您可變更這頁往上的連結, 安排在所有頁面階層裡頭.\\n\n"
 "做好檢查或輸入一頁面名稱, 並且按下『變更父頁面』.\\n\n"
 "通常只要一個父頁面就夠了."
 
-#: i/skins/standard/backlinks.pt:46
+#: i/skins/standard/backlinks.pt:48
 msgid "is a top-level topic."
 msgstr "是最頂層的主題."
 
-#: i/skins/standard/backlinks.pt:47
+#: i/skins/standard/backlinks.pt:49
 msgid "is a subtopic of:"
 msgstr "子主題上層為:"
 
-#: i/skins/standard/backlinks.pt:69
+#: i/skins/standard/backlinks.pt:71
 msgid "Here are the pages which link to it:"
 msgstr "底下是相關連結到的頁面:"
 
@@ -786,17 +807,28 @@ msgstr ""
 "這 Wiki 的風格 (skin) 樣板有些問題. 也許對映到的風格樣板, 並不是 ZPT 或是 "
 "DTML Method, 或者樣版根本不存在. 請檢查看看. "
 
-#: i/skins/standard/contentspage.pt:29
+#: i/skins/standard/contentspage.pt:31
 msgid "Contents"
 msgstr "內容"
 
-#: i/skins/standard/diffform.pt:31
+#: i/skins/standard/diffform.pt:33
 msgid "Diffs for"
 msgstr "不同於"
 
-#: i/skins/standard/diffform.pt:56
+# Default: "Note for the page history (optional)"
+#: i/skins/standard/diffform.pt:44
+#, fuzzy
+msgid "log_note"
+msgstr "頁面歷史的註釋說明(選擇性項目)"
+
+#: i/skins/standard/diffform.pt:58
 msgid "Revert this change and all successive changes"
 msgstr ""
+
+#: i/skins/standard/diffform.pt:61
+#, fuzzy
+msgid "Return to page"
+msgstr "回到頁面"
 
 #: i/skins/standard/editform.pt:133
 msgid "toggle source/WYSIWYG mode"
@@ -882,11 +914,11 @@ msgstr "點選評價"
 msgid "voting as"
 msgstr "來自"
 
-#: i/skins/standard/subscribeform.pt:102
+#: i/skins/standard/subscribeform.pt:104
 msgid " Unsubscribe from this page "
 msgstr " 取消訂閱這個Wiki頁面 "
 
-#: i/skins/standard/subscribeform.pt:109
+#: i/skins/standard/subscribeform.pt:111
 msgid " Subscribe to this page "
 msgstr " 訂閱這個頁面 "
 
@@ -1025,7 +1057,12 @@ msgstr "使用外部編輯器修改"
 msgid "(external edit)"
 msgstr "(外部編輯器修改)"
 
-#: i/skins/standard/wikipage_macros.pt:263 i/skins/standard/editform.pt:35
+#: i/skins/standard/wikipage_macros.pt:263
+#: i/skins/standard/subscribeform.pt:19 i/skins/standard/useroptions.pt:19
+#: i/skins/standard/searchwiki.pt:19 i/skins/standard/recentchanges.pt:19
+#: i/skins/standard/issuetracker.pt:19 i/skins/standard/filterissues.pt:19
+#: i/skins/standard/editform.pt:35 i/skins/standard/diffform.pt:21
+#: i/skins/standard/contentspage.pt:19 i/skins/standard/backlinks.pt:19
 msgid "go to home page"
 msgstr "跳到首頁"
 
@@ -1061,40 +1098,14 @@ msgid ""
 msgstr "輸入一個新父層, 頁面名稱, 或替代名稱(如果有的話) 或 子主題名稱"
 
 #: i/skins/standard/wikipage_macros.pt:471
-msgid "reparent"
-msgstr "變更父層"
-
-#: i/skins/standard/wikipage_macros.pt:471
-msgid "reparent this page under the page you have entered"
-msgstr "變更這一個頁面的父頁, 讓它在已有頁面之下"
-
 #: i/skins/standard/wikipage_macros.pt:476
-msgid "rename this page to the name you have entered, updating all links"
-msgstr "變更這一頁面名稱為您已輸入的, 更新所有連結"
-
-# Default: "Page name"
-#: i/skins/standard/wikipage_macros.pt:476
-msgid "rename"
-msgstr "變更名稱"
-
 #: i/skins/standard/wikipage_macros.pt:481
-msgid "delete!"
-msgstr "刪除!"
-
-#: i/skins/standard/wikipage_macros.pt:481
-msgid ""
-"move this page to the recycle bin, and relink to the name you have entered"
-msgstr "把這一頁面搬移到垃圾桶, 並且重新連結到您已輸入的名稱."
-
 #: i/skins/standard/wikipage_macros.pt:486
-msgid "create"
-msgstr "建立"
+#, fuzzy
+msgid "title"
+msgstr "標題"
 
-#: i/skins/standard/wikipage_macros.pt:486
-msgid "create a new subtopic of this page"
-msgstr "為這頁面建立一個新的子主題嗎?"
-
-#: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
+#: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:31
 msgid "Backlinks for"
 msgstr "回溯連結"
 
@@ -1113,11 +1124,11 @@ msgstr ""
 "點取選項或輸入名稱並且點選 變更父層 按鈕. \n"
 "通常單一父層就夠了."
 
-#: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:99
+#: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:101
 msgid "Other parent"
 msgstr "不同的父層頁面"
 
-#: i/skins/zwiki_plone/backlinks.pt:72 i/skins/standard/backlinks.pt:101
+#: i/skins/zwiki_plone/backlinks.pt:72 i/skins/standard/backlinks.pt:103
 msgid "Reparent"
 msgstr "變更父層"
 
@@ -1125,7 +1136,7 @@ msgstr "變更父層"
 msgid "Wiki contents"
 msgstr "Wiki內容"
 
-#: i/skins/zwiki_plone/contentspage.pt:19 i/skins/standard/contentspage.pt:40
+#: i/skins/zwiki_plone/contentspage.pt:19 i/skins/standard/contentspage.pt:42
 msgid "Singletons"
 msgstr "單獨存在頁面"
 
@@ -1138,17 +1149,17 @@ msgstr "單獨存在頁面是沒有和其他頁面相連的頁面."
 msgid "History for"
 msgstr "變更歷程"
 
-#: i/skins/zwiki_plone/diffform.pt:23 i/skins/standard/diffform.pt:46
+#: i/skins/zwiki_plone/diffform.pt:23 i/skins/standard/diffform.pt:48
 msgid "full history"
 msgstr "完整歷史"
 
-#: i/skins/zwiki_plone/diffform.pt:31 i/skins/standard/diffform.pt:48
-#: i/skins/standard/diffform.pt:50
+#: i/skins/zwiki_plone/diffform.pt:31 i/skins/standard/diffform.pt:50
+#: i/skins/standard/diffform.pt:52
 msgid "<< previous edit"
 msgstr "<< 上一版"
 
-#: i/skins/zwiki_plone/diffform.pt:40 i/skins/standard/diffform.pt:52
-#: i/skins/standard/diffform.pt:54
+#: i/skins/zwiki_plone/diffform.pt:40 i/skins/standard/diffform.pt:54
+#: i/skins/standard/diffform.pt:56
 msgid "next edit >>"
 msgstr "下一版 >>"
 
@@ -1289,38 +1300,38 @@ msgstr "搜尋Wiki"
 # "You are currently not subscribed<br />\n"
 # "                to the whole wiki."
 #: i/skins/zwiki_plone/subscribeform.pt:103
-#: i/skins/standard/subscribeform.pt:126
+#: i/skins/standard/subscribeform.pt:128
 msgid "subscribed_wiki_no"
 msgstr "您現在沒有訂閱整個Wiki."
 
 #: i/skins/zwiki_plone/subscribeform.pt:107
-#: i/skins/standard/subscribeform.pt:130
+#: i/skins/standard/subscribeform.pt:132
 msgid "Unsubscribe from whole wiki"
 msgstr "取消訂閱整個Wiki."
 
 #: i/skins/zwiki_plone/subscribeform.pt:114
-#: i/skins/standard/subscribeform.pt:137
+#: i/skins/standard/subscribeform.pt:139
 msgid "Subscribe to whole wiki"
 msgstr "訂閱整個Wiki."
 
 # Default: "You are subscribed to these other pages"
 #: i/skins/zwiki_plone/subscribeform.pt:125
-#: i/skins/standard/subscribeform.pt:148
+#: i/skins/standard/subscribeform.pt:150
 msgid "other_page_subscribed"
 msgstr "您已經訂閱的頁面"
 
 #: i/skins/zwiki_plone/subscribeform.pt:13
-#: i/skins/standard/subscribeform.pt:36
+#: i/skins/standard/subscribeform.pt:38
 msgid "Mail subscription"
 msgstr "郵件訂閱"
 
 #: i/skins/zwiki_plone/subscribeform.pt:142
-#: i/skins/standard/subscribeform.pt:165
+#: i/skins/standard/subscribeform.pt:167
 msgid "Page subscribers"
 msgstr "頁面訂閱者"
 
 #: i/skins/zwiki_plone/subscribeform.pt:150
-#: i/skins/standard/subscribeform.pt:173
+#: i/skins/standard/subscribeform.pt:175
 msgid "Wiki subscribers"
 msgstr "Wiki訂閱者"
 
@@ -1330,7 +1341,7 @@ msgstr "Wiki訂閱者"
 # "          (but not general edits, unless enabled by the site admin).\n"
 # "          Or return to"
 #: i/skins/zwiki_plone/subscribeform.pt:35
-#: i/skins/standard/subscribeform.pt:58
+#: i/skins/standard/subscribeform.pt:60
 msgid "subscribe_desc"
 msgstr ""
 "您可以訂閱這一頁面或是整個Wiki.\n"
@@ -1339,18 +1350,18 @@ msgstr ""
 "或回到"
 
 #: i/skins/zwiki_plone/subscribeform.pt:49
-#: i/skins/standard/subscribeform.pt:72
+#: i/skins/standard/subscribeform.pt:74
 msgid "Your email address"
 msgstr "您的電子郵件"
 
 #: i/skins/zwiki_plone/subscribeform.pt:53
-#: i/skins/standard/subscribeform.pt:76
+#: i/skins/standard/subscribeform.pt:78
 msgid "Change"
 msgstr "變更"
 
 # Default: "To subscribe, please configure your email address."
 #: i/skins/zwiki_plone/subscribeform.pt:61
-#: i/skins/standard/subscribeform.pt:84
+#: i/skins/standard/subscribeform.pt:86
 msgid "subscribe_no_email"
 msgstr "如果要訂閱, 請設定您的電子郵件信箱."
 
@@ -1358,7 +1369,7 @@ msgstr "如果要訂閱, 請設定您的電子郵件信箱."
 # "You are currently subscribed<br />\n"
 # "                to this page."
 #: i/skins/zwiki_plone/subscribeform.pt:71
-#: i/skins/standard/subscribeform.pt:94
+#: i/skins/standard/subscribeform.pt:96
 msgid "subscribed_page_ok"
 msgstr "您目前訂閱這一頁面."
 
@@ -1366,7 +1377,7 @@ msgstr "您目前訂閱這一頁面."
 # "You are currently not subscribed<br />\n"
 # "                to this page."
 #: i/skins/zwiki_plone/subscribeform.pt:75
-#: i/skins/standard/subscribeform.pt:98
+#: i/skins/standard/subscribeform.pt:100
 msgid "subscribed_page_no"
 msgstr "您目前沒有訂閱這一頁面."
 
@@ -1382,7 +1393,7 @@ msgstr "訂閱這個頁面"
 # "You are currently subscribed<br />\n"
 # "                to the whole wiki."
 #: i/skins/zwiki_plone/subscribeform.pt:99
-#: i/skins/standard/subscribeform.pt:122
+#: i/skins/standard/subscribeform.pt:124
 msgid "subscribed_wiki_ok"
 msgstr "您現在已經訂閱整個Wiki."
 
@@ -1437,6 +1448,32 @@ msgstr "在這裡輸入建議並且點選 新增(add) 按鈕, 或點選 修改(e
 #: i/skins/standard/wikipage_macros.pt:442
 msgid "add-comment"
 msgstr "新增一個建議"
+
+#~ msgid "reparent"
+#~ msgstr "變更父層"
+
+#~ msgid "reparent this page under the page you have entered"
+#~ msgstr "變更這一個頁面的父頁, 讓它在已有頁面之下"
+
+#~ msgid "rename this page to the name you have entered, updating all links"
+#~ msgstr "變更這一頁面名稱為您已輸入的, 更新所有連結"
+
+# Default: "Page name"
+#~ msgid "rename"
+#~ msgstr "變更名稱"
+
+#~ msgid "delete!"
+#~ msgstr "刪除!"
+
+#~ msgid ""
+#~ "move this page to the recycle bin, and relink to the name you have entered"
+#~ msgstr "把這一頁面搬移到垃圾桶, 並且重新連結到您已輸入的名稱."
+
+#~ msgid "create"
+#~ msgstr "建立"
+
+#~ msgid "create a new subtopic of this page"
+#~ msgstr "為這頁面建立一個新的子主題嗎?"
 
 #~ msgid "cancel"
 #~ msgstr "取消"

@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-32-0\n"
-"POT-Creation-Date: Mon Sep 27 20:20:36 2004\n"
+"POT-Creation-Date: Thu Sep 30 11:45:27 2004\n"
 "PO-Revision-Date: 2004-06-19 17:49+0200\n"
 "Last-Translator: Lele Gaifax <lele@seldati.it>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
@@ -291,23 +291,23 @@ msgstr "secondo"
 msgid "seconds"
 msgstr "secondi"
 
-#: i/ZWikiPage.py:600
+#: i/ZWikiPage.py:602
 msgid "page in parent wiki"
 msgstr "pagina nel wiki sovrastante"
 
-#: i/ZWikiPage.py:607
+#: i/ZWikiPage.py:609
 msgid "create this page"
 msgstr "crea questa pagina"
 
-#: i/ZWikiPage.py:684 i/ZWikiPage.py:697 i/ZWikiPage.py:700
+#: i/ZWikiPage.py:686 i/ZWikiPage.py:699 i/ZWikiPage.py:702
 msgid "last edited %(interval)s ago"
 msgstr "modificata %(interval)s fa"
 
-#: i/ZWikiPage.py:693
+#: i/ZWikiPage.py:695
 msgid "show last edit %(lastlog)s"
 msgstr "mostra l'ultima modifica %(lastlog)s"
 
-#: i/ZWikiPage.py:709 i/ZWikiPage.py:711
+#: i/ZWikiPage.py:711 i/ZWikiPage.py:713
 msgid "by %(editor)s"
 msgstr "da %(editor)s"
 
@@ -318,6 +318,27 @@ msgstr "commenti"
 #: i/pagetypes/rst.py:57
 msgid "reply"
 msgstr "replica"
+
+#: i/pagetypes/stx.py:389
+msgid "Structed Text table rendering error"
+msgstr ""
+
+#: i/pagetypes/stx.py:400
+msgid ""
+"\n"
+"                Sorry, but a Structured Text table in this page gave an "
+"error while rendering.\n"
+"                This happens due to incorrect spacing, the wrong number of "
+"column separators, etc.\n"
+"                Please correct the table, following the Structured Text "
+"rules, or remove it,\n"
+"                so that this page can be displayed.\n"
+"                "
+msgstr ""
+
+#: i/pagetypes/stx.py:406
+msgid "To edit this page, click OK."
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:100 i/skins/dtmlmessages.pt:190
 msgid "Filter issues"
@@ -773,7 +794,7 @@ msgstr "Stati:"
 # "You can change this page's parent(s) to place it within the overall page\n"
 # "hierarchy.  Check the boxes or enter a new page name and click Reparent.\n"
 # "A single parent is usually sufficient."
-#: i/skins/standard/backlinks.pt:103
+#: i/skins/standard/backlinks.pt:105
 msgid "backlinks_reparent_help"
 msgstr ""
 "Puoi modificare le pagine superiori a questa nella gerarchia per\n"
@@ -781,15 +802,15 @@ msgstr ""
 "inserisci il nuovo nome della pagina e clicca su Reparent.\n"
 "Di solito è sufficiente una singola pagina superiore."
 
-#: i/skins/standard/backlinks.pt:46
+#: i/skins/standard/backlinks.pt:48
 msgid "is a top-level topic."
 msgstr "è un argomento principale."
 
-#: i/skins/standard/backlinks.pt:47
+#: i/skins/standard/backlinks.pt:49
 msgid "is a subtopic of:"
 msgstr "è un sotto argomento di:"
 
-#: i/skins/standard/backlinks.pt:69
+#: i/skins/standard/backlinks.pt:71
 msgid "Here are the pages which link to it:"
 msgstr "Queste sono le pagine che la referenziano:"
 
@@ -803,17 +824,28 @@ msgstr ""
 "esserci un oggetto con lo stesso nome dello skin che non è un Page Template "
 "o un metodo DTML, oppure potrebbe mancare il template."
 
-#: i/skins/standard/contentspage.pt:29
+#: i/skins/standard/contentspage.pt:31
 msgid "Contents"
 msgstr "Contenuti"
 
-#: i/skins/standard/diffform.pt:31
+#: i/skins/standard/diffform.pt:33
 msgid "Diffs for"
 msgstr "Differenze tra"
 
-#: i/skins/standard/diffform.pt:56
+# Default: "Note for the page history (optional)"
+#: i/skins/standard/diffform.pt:44
+#, fuzzy
+msgid "log_note"
+msgstr "Annotazione per lo storico della pagina (opzionale)"
+
+#: i/skins/standard/diffform.pt:58
 msgid "Revert this change and all successive changes"
 msgstr ""
+
+#: i/skins/standard/diffform.pt:61
+#, fuzzy
+msgid "Return to page"
+msgstr "torna alla pagina"
 
 #: i/skins/standard/editform.pt:133
 msgid "toggle source/WYSIWYG mode"
@@ -902,11 +934,11 @@ msgstr "clicca per dare un voto"
 msgid "voting as"
 msgstr "da parte di"
 
-#: i/skins/standard/subscribeform.pt:102
+#: i/skins/standard/subscribeform.pt:104
 msgid " Unsubscribe from this page "
 msgstr " Annulla l'abbonamento a questa pagina "
 
-#: i/skins/standard/subscribeform.pt:109
+#: i/skins/standard/subscribeform.pt:111
 msgid " Subscribe to this page "
 msgstr " Abbonati a questa pagina "
 
@@ -1050,7 +1082,12 @@ msgstr "modifica con un editor esterno"
 msgid "(external edit)"
 msgstr "(editor esterno)"
 
-#: i/skins/standard/wikipage_macros.pt:263 i/skins/standard/editform.pt:35
+#: i/skins/standard/wikipage_macros.pt:263
+#: i/skins/standard/subscribeform.pt:19 i/skins/standard/useroptions.pt:19
+#: i/skins/standard/searchwiki.pt:19 i/skins/standard/recentchanges.pt:19
+#: i/skins/standard/issuetracker.pt:19 i/skins/standard/filterissues.pt:19
+#: i/skins/standard/editform.pt:35 i/skins/standard/diffform.pt:21
+#: i/skins/standard/contentspage.pt:19 i/skins/standard/backlinks.pt:19
 msgid "go to home page"
 msgstr "vai alla pagina principale"
 
@@ -1094,43 +1131,14 @@ msgstr ""
 "(eventualmente) sostituita da questa oppure il nome del sotto argomento"
 
 #: i/skins/standard/wikipage_macros.pt:471
-msgid "reparent"
-msgstr "riposiziona"
-
-#: i/skins/standard/wikipage_macros.pt:471
-msgid "reparent this page under the page you have entered"
-msgstr "riposiziona questa pagina sotto quella che hai inserito"
-
 #: i/skins/standard/wikipage_macros.pt:476
-msgid "rename this page to the name you have entered, updating all links"
-msgstr ""
-"cambia il nome di questa pagina con quello che hai inserito, aggiornando "
-"tutti i riferimenti"
-
-#: i/skins/standard/wikipage_macros.pt:476
-msgid "rename"
-msgstr "rinomina"
-
 #: i/skins/standard/wikipage_macros.pt:481
-msgid "delete!"
-msgstr "cancella!"
-
-#: i/skins/standard/wikipage_macros.pt:481
-msgid ""
-"move this page to the recycle bin, and relink to the name you have entered"
-msgstr ""
-"sposta questa pagina nel cestino, e ricollega i riferimenti a quella che hai "
-"inserito"
-
 #: i/skins/standard/wikipage_macros.pt:486
-msgid "create"
-msgstr "crea"
+#, fuzzy
+msgid "title"
+msgstr "Titolo"
 
-#: i/skins/standard/wikipage_macros.pt:486
-msgid "create a new subtopic of this page"
-msgstr "crea un nuovo sotto argomento di questa pagina"
-
-#: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
+#: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:31
 msgid "Backlinks for"
 msgstr "Riferimenti inversi a"
 
@@ -1150,11 +1158,11 @@ msgstr ""
 "     nuovo nome della pagina e clicca su \"Aggiorna gerarchia\".  Una\n"
 "     singola pagina sovrastante è in genere più che sufficiente."
 
-#: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:99
+#: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:101
 msgid "Other parent"
 msgstr "Altre pagine sovrastanti"
 
-#: i/skins/zwiki_plone/backlinks.pt:72 i/skins/standard/backlinks.pt:101
+#: i/skins/zwiki_plone/backlinks.pt:72 i/skins/standard/backlinks.pt:103
 msgid "Reparent"
 msgstr "Aggiorna gerarchia"
 
@@ -1162,7 +1170,7 @@ msgstr "Aggiorna gerarchia"
 msgid "Wiki contents"
 msgstr "Contenuto del wiki"
 
-#: i/skins/zwiki_plone/contentspage.pt:19 i/skins/standard/contentspage.pt:40
+#: i/skins/zwiki_plone/contentspage.pt:19 i/skins/standard/contentspage.pt:42
 msgid "Singletons"
 msgstr "Pagine singole"
 
@@ -1176,17 +1184,17 @@ msgstr ""
 msgid "History for"
 msgstr "Storia di"
 
-#: i/skins/zwiki_plone/diffform.pt:23 i/skins/standard/diffform.pt:46
+#: i/skins/zwiki_plone/diffform.pt:23 i/skins/standard/diffform.pt:48
 msgid "full history"
 msgstr "storia completa"
 
-#: i/skins/zwiki_plone/diffform.pt:31 i/skins/standard/diffform.pt:48
-#: i/skins/standard/diffform.pt:50
+#: i/skins/zwiki_plone/diffform.pt:31 i/skins/standard/diffform.pt:50
+#: i/skins/standard/diffform.pt:52
 msgid "<< previous edit"
 msgstr "<< modifica precedente"
 
-#: i/skins/zwiki_plone/diffform.pt:40 i/skins/standard/diffform.pt:52
-#: i/skins/standard/diffform.pt:54
+#: i/skins/zwiki_plone/diffform.pt:40 i/skins/standard/diffform.pt:54
+#: i/skins/standard/diffform.pt:56
 msgid "next edit >>"
 msgstr "modifica successiva >>"
 
@@ -1325,40 +1333,40 @@ msgstr "Cerca in questo wiki"
 # "You are currently not subscribed<br />\n"
 # "                to the whole wiki."
 #: i/skins/zwiki_plone/subscribeform.pt:103
-#: i/skins/standard/subscribeform.pt:126
+#: i/skins/standard/subscribeform.pt:128
 msgid "subscribed_wiki_no"
 msgstr ""
 "Attualmente non sei abbonato <br />\n"
 "a tutto il wiki."
 
 #: i/skins/zwiki_plone/subscribeform.pt:107
-#: i/skins/standard/subscribeform.pt:130
+#: i/skins/standard/subscribeform.pt:132
 msgid "Unsubscribe from whole wiki"
 msgstr "Annulla l'abbonamento a tutto il wiki"
 
 #: i/skins/zwiki_plone/subscribeform.pt:114
-#: i/skins/standard/subscribeform.pt:137
+#: i/skins/standard/subscribeform.pt:139
 msgid "Subscribe to whole wiki"
 msgstr "Sottoscrivi l'abbonamento a tutto il wiki"
 
 # Default: "You are subscribed to these other pages"
 #: i/skins/zwiki_plone/subscribeform.pt:125
-#: i/skins/standard/subscribeform.pt:148
+#: i/skins/standard/subscribeform.pt:150
 msgid "other_page_subscribed"
 msgstr "Sei abbonato queste altre pagine"
 
 #: i/skins/zwiki_plone/subscribeform.pt:13
-#: i/skins/standard/subscribeform.pt:36
+#: i/skins/standard/subscribeform.pt:38
 msgid "Mail subscription"
 msgstr "Sottoscrizione abbonamento email"
 
 #: i/skins/zwiki_plone/subscribeform.pt:142
-#: i/skins/standard/subscribeform.pt:165
+#: i/skins/standard/subscribeform.pt:167
 msgid "Page subscribers"
 msgstr "Abbonati alla pagina"
 
 #: i/skins/zwiki_plone/subscribeform.pt:150
-#: i/skins/standard/subscribeform.pt:173
+#: i/skins/standard/subscribeform.pt:175
 msgid "Wiki subscribers"
 msgstr "Abbonati al wiki"
 
@@ -1368,7 +1376,7 @@ msgstr "Abbonati al wiki"
 # "          (but not general edits, unless enabled by the site admin).\n"
 # "          Or return to"
 #: i/skins/zwiki_plone/subscribeform.pt:35
-#: i/skins/standard/subscribeform.pt:58
+#: i/skins/standard/subscribeform.pt:60
 msgid "subscribe_desc"
 msgstr ""
 "Puoi sottoscrivere un abbonamento a questa pagina oppure a tutto il wiki.\n"
@@ -1378,18 +1386,18 @@ msgstr ""
 "     Oppure ritorna a"
 
 #: i/skins/zwiki_plone/subscribeform.pt:49
-#: i/skins/standard/subscribeform.pt:72
+#: i/skins/standard/subscribeform.pt:74
 msgid "Your email address"
 msgstr "Il tuo indirizzo email"
 
 #: i/skins/zwiki_plone/subscribeform.pt:53
-#: i/skins/standard/subscribeform.pt:76
+#: i/skins/standard/subscribeform.pt:78
 msgid "Change"
 msgstr "Cambia"
 
 # Default: "To subscribe, please configure your email address."
 #: i/skins/zwiki_plone/subscribeform.pt:61
-#: i/skins/standard/subscribeform.pt:84
+#: i/skins/standard/subscribeform.pt:86
 msgid "subscribe_no_email"
 msgstr "Per abbonarti, inserisci il tuo indirizzo email."
 
@@ -1397,7 +1405,7 @@ msgstr "Per abbonarti, inserisci il tuo indirizzo email."
 # "You are currently subscribed<br />\n"
 # "                to this page."
 #: i/skins/zwiki_plone/subscribeform.pt:71
-#: i/skins/standard/subscribeform.pt:94
+#: i/skins/standard/subscribeform.pt:96
 msgid "subscribed_page_ok"
 msgstr ""
 "Sei attualmente abbonato<br />\n"
@@ -1407,7 +1415,7 @@ msgstr ""
 # "You are currently not subscribed<br />\n"
 # "                to this page."
 #: i/skins/zwiki_plone/subscribeform.pt:75
-#: i/skins/standard/subscribeform.pt:98
+#: i/skins/standard/subscribeform.pt:100
 msgid "subscribed_page_no"
 msgstr ""
 "Non sei attualmente abbonato<br />\n"
@@ -1425,7 +1433,7 @@ msgstr "Abbonati a questa pagina"
 # "You are currently subscribed<br />\n"
 # "                to the whole wiki."
 #: i/skins/zwiki_plone/subscribeform.pt:99
-#: i/skins/standard/subscribeform.pt:122
+#: i/skins/standard/subscribeform.pt:124
 msgid "subscribed_wiki_ok"
 msgstr ""
 "Attualmente sei abbonato <br />\n"
@@ -1483,6 +1491,35 @@ msgstr ""
 #: i/skins/standard/wikipage_macros.pt:442
 msgid "add-comment"
 msgstr "aggiungi un commento"
+
+#~ msgid "reparent"
+#~ msgstr "riposiziona"
+
+#~ msgid "reparent this page under the page you have entered"
+#~ msgstr "riposiziona questa pagina sotto quella che hai inserito"
+
+#~ msgid "rename this page to the name you have entered, updating all links"
+#~ msgstr ""
+#~ "cambia il nome di questa pagina con quello che hai inserito, aggiornando "
+#~ "tutti i riferimenti"
+
+#~ msgid "rename"
+#~ msgstr "rinomina"
+
+#~ msgid "delete!"
+#~ msgstr "cancella!"
+
+#~ msgid ""
+#~ "move this page to the recycle bin, and relink to the name you have entered"
+#~ msgstr ""
+#~ "sposta questa pagina nel cestino, e ricollega i riferimenti a quella che "
+#~ "hai inserito"
+
+#~ msgid "create"
+#~ msgstr "crea"
+
+#~ msgid "create a new subtopic of this page"
+#~ msgstr "crea un nuovo sotto argomento di questa pagina"
 
 #~ msgid "cancel"
 #~ msgstr "annulla"

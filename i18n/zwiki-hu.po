@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: zwiki-hu\n"
-"POT-Creation-Date: Mon Sep 27 20:20:36 2004\n"
+"POT-Creation-Date: Thu Sep 30 11:45:27 2004\n"
 "PO-Revision-Date: 2004-07-18 14:30+0200\n"
 "Last-Translator: József Jároli (kaixo) <yo@jaroli.de>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -298,23 +298,23 @@ msgstr "másodperc"
 msgid "seconds"
 msgstr "másodperc"
 
-#: i/ZWikiPage.py:600
+#: i/ZWikiPage.py:602
 msgid "page in parent wiki"
 msgstr "Lap a szülő wikiben"
 
-#: i/ZWikiPage.py:607
+#: i/ZWikiPage.py:609
 msgid "create this page"
 msgstr "Hozd létre az oldalt"
 
-#: i/ZWikiPage.py:684 i/ZWikiPage.py:697 i/ZWikiPage.py:700
+#: i/ZWikiPage.py:686 i/ZWikiPage.py:699 i/ZWikiPage.py:702
 msgid "last edited %(interval)s ago"
 msgstr "Utoljára módosítva: %(interval)s"
 
-#: i/ZWikiPage.py:693
+#: i/ZWikiPage.py:695
 msgid "show last edit %(lastlog)s"
 msgstr "Utolsó szerkesztés megjelenítése %(lastlog)s"
 
-#: i/ZWikiPage.py:709 i/ZWikiPage.py:711
+#: i/ZWikiPage.py:711 i/ZWikiPage.py:713
 msgid "by %(editor)s"
 msgstr "%(editor)s által"
 
@@ -325,6 +325,27 @@ msgstr "Hozzászólások"
 #: i/pagetypes/rst.py:57
 msgid "reply"
 msgstr "Válasz"
+
+#: i/pagetypes/stx.py:389
+msgid "Structed Text table rendering error"
+msgstr ""
+
+#: i/pagetypes/stx.py:400
+msgid ""
+"\n"
+"                Sorry, but a Structured Text table in this page gave an "
+"error while rendering.\n"
+"                This happens due to incorrect spacing, the wrong number of "
+"column separators, etc.\n"
+"                Please correct the table, following the Structured Text "
+"rules, or remove it,\n"
+"                so that this page can be displayed.\n"
+"                "
+msgstr ""
+
+#: i/pagetypes/stx.py:406
+msgid "To edit this page, click OK."
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:100 i/skins/dtmlmessages.pt:190
 msgid "Filter issues"
@@ -782,7 +803,7 @@ msgstr "Állapotok:"
 # "You can change this page's parent(s) to place it within the overall page\n"
 # "hierarchy.  Check the boxes or enter a new page name and click Reparent.\n"
 # "A single parent is usually sufficient."
-#: i/skins/standard/backlinks.pt:103
+#: i/skins/standard/backlinks.pt:105
 msgid "backlinks_reparent_help"
 msgstr ""
 "Megváltoztathatja a lap szülőoldalát, ezzel megváltoztatja a lap helyét \n"
@@ -790,15 +811,15 @@ msgstr ""
 "egy új oldalnevet, majd klikkeljen az \"Újraszármaztat\"gombra.\n"
 "Általában egy lapnak elég egy szülőoldal."
 
-#: i/skins/standard/backlinks.pt:46
+#: i/skins/standard/backlinks.pt:48
 msgid "is a top-level topic."
 msgstr "a hierarchia legfelső szintjén található."
 
-#: i/skins/standard/backlinks.pt:47
+#: i/skins/standard/backlinks.pt:49
 msgid "is a subtopic of:"
 msgstr "alfejezete a következő lapnak:"
 
-#: i/skins/standard/backlinks.pt:69
+#: i/skins/standard/backlinks.pt:71
 msgid "Here are the pages which link to it:"
 msgstr "Idemutató oldalak:"
 
@@ -812,17 +833,28 @@ msgstr ""
 "létezik egy elem, melynek azonosítója egyezik egy sablonéval, de nem Page "
 "Template vagy DTML Method elem, vagy a kérdéses sablon nem található ."
 
-#: i/skins/standard/contentspage.pt:29
+#: i/skins/standard/contentspage.pt:31
 msgid "Contents"
 msgstr "Tartalom"
 
-#: i/skins/standard/diffform.pt:31
+#: i/skins/standard/diffform.pt:33
 msgid "Diffs for"
 msgstr "Összevetés: "
 
-#: i/skins/standard/diffform.pt:56
+# Default: "Note for the page history (optional)"
+#: i/skins/standard/diffform.pt:44
+#, fuzzy
+msgid "log_note"
+msgstr "Az oldal előzményeinek megjelenítésekor látható kiegészítő megjegyzés "
+
+#: i/skins/standard/diffform.pt:58
 msgid "Revert this change and all successive changes"
 msgstr ""
+
+#: i/skins/standard/diffform.pt:61
+#, fuzzy
+msgid "Return to page"
+msgstr "visszatérés az aktuális laphoz"
 
 #: i/skins/standard/editform.pt:133
 msgid "toggle source/WYSIWYG mode"
@@ -910,11 +942,11 @@ msgstr "Kattintson a számokra a lap értékeléséhez!<br />"
 msgid "voting as"
 msgstr "Szavazás az alábbi felhasználói néven:"
 
-#: i/skins/standard/subscribeform.pt:102
+#: i/skins/standard/subscribeform.pt:104
 msgid " Unsubscribe from this page "
 msgstr "Előfizetés törlése erről az oldalról"
 
-#: i/skins/standard/subscribeform.pt:109
+#: i/skins/standard/subscribeform.pt:111
 msgid " Subscribe to this page "
 msgstr "Előfizetés erre az oldalra"
 
@@ -1053,7 +1085,12 @@ msgstr "szerkesztés külső szerkesztővel"
 msgid "(external edit)"
 msgstr "(külső szerkesztés)"
 
-#: i/skins/standard/wikipage_macros.pt:263 i/skins/standard/editform.pt:35
+#: i/skins/standard/wikipage_macros.pt:263
+#: i/skins/standard/subscribeform.pt:19 i/skins/standard/useroptions.pt:19
+#: i/skins/standard/searchwiki.pt:19 i/skins/standard/recentchanges.pt:19
+#: i/skins/standard/issuetracker.pt:19 i/skins/standard/filterissues.pt:19
+#: i/skins/standard/editform.pt:35 i/skins/standard/diffform.pt:21
+#: i/skins/standard/contentspage.pt:19 i/skins/standard/backlinks.pt:19
 msgid "go to home page"
 msgstr "vissza a nyitólapra"
 
@@ -1092,41 +1129,14 @@ msgstr ""
 "alfejezet neve (ha létezik)"
 
 #: i/skins/standard/wikipage_macros.pt:471
-msgid "reparent"
-msgstr "újraszármaztat"
-
-#: i/skins/standard/wikipage_macros.pt:471
-msgid "reparent this page under the page you have entered"
-msgstr "Újraszármaztatja az oldal az Ön által megadott szülőoldalhoz."
-
 #: i/skins/standard/wikipage_macros.pt:476
-msgid "rename this page to the name you have entered, updating all links"
-msgstr ""
-"Megváltoztatja a lap nevét az ide beírt névre, a lapra mutató össze link "
-"aktualizálásával."
-
-#: i/skins/standard/wikipage_macros.pt:476
-msgid "rename"
-msgstr "átnevez"
-
 #: i/skins/standard/wikipage_macros.pt:481
-msgid "delete!"
-msgstr "töröl!"
-
-#: i/skins/standard/wikipage_macros.pt:481
-msgid ""
-"move this page to the recycle bin, and relink to the name you have entered"
-msgstr "Szemeteskosárba dobja a lapot, és újrahivatkoz a beírtak szerint."
-
 #: i/skins/standard/wikipage_macros.pt:486
-msgid "create"
-msgstr "létrehoz"
+#, fuzzy
+msgid "title"
+msgstr "Cím"
 
-#: i/skins/standard/wikipage_macros.pt:486
-msgid "create a new subtopic of this page"
-msgstr "új alfejezet létrehozása"
-
-#: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
+#: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:31
 msgid "Backlinks for"
 msgstr "Idemutató hivatkozások: "
 
@@ -1147,11 +1157,11 @@ msgstr ""
 "egy új oldalnevet, majd klikkeljen az \"Újraszármaztat\"gombra.\n"
 "Általában egy lapnak elég egy szülőoldal."
 
-#: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:99
+#: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:101
 msgid "Other parent"
 msgstr "További szülőoldal"
 
-#: i/skins/zwiki_plone/backlinks.pt:72 i/skins/standard/backlinks.pt:101
+#: i/skins/zwiki_plone/backlinks.pt:72 i/skins/standard/backlinks.pt:103
 msgid "Reparent"
 msgstr "Újraszármaztat"
 
@@ -1159,7 +1169,7 @@ msgstr "Újraszármaztat"
 msgid "Wiki contents"
 msgstr "A wiki tartalma"
 
-#: i/skins/zwiki_plone/contentspage.pt:19 i/skins/standard/contentspage.pt:40
+#: i/skins/zwiki_plone/contentspage.pt:19 i/skins/standard/contentspage.pt:42
 msgid "Singletons"
 msgstr "Árva lapok"
 
@@ -1174,17 +1184,17 @@ msgstr ""
 msgid "History for"
 msgstr "A következő oldal változtatásainak előzményei:"
 
-#: i/skins/zwiki_plone/diffform.pt:23 i/skins/standard/diffform.pt:46
+#: i/skins/zwiki_plone/diffform.pt:23 i/skins/standard/diffform.pt:48
 msgid "full history"
 msgstr "Az összes változtatás listája"
 
-#: i/skins/zwiki_plone/diffform.pt:31 i/skins/standard/diffform.pt:48
-#: i/skins/standard/diffform.pt:50
+#: i/skins/zwiki_plone/diffform.pt:31 i/skins/standard/diffform.pt:50
+#: i/skins/standard/diffform.pt:52
 msgid "<< previous edit"
 msgstr "<< előző változás"
 
-#: i/skins/zwiki_plone/diffform.pt:40 i/skins/standard/diffform.pt:52
-#: i/skins/standard/diffform.pt:54
+#: i/skins/zwiki_plone/diffform.pt:40 i/skins/standard/diffform.pt:54
+#: i/skins/standard/diffform.pt:56
 msgid "next edit >>"
 msgstr "következő változás >>"
 
@@ -1324,38 +1334,38 @@ msgstr "Keresés a wikiben"
 # "You are currently not subscribed<br />\n"
 # "                to the whole wiki."
 #: i/skins/zwiki_plone/subscribeform.pt:103
-#: i/skins/standard/subscribeform.pt:126
+#: i/skins/standard/subscribeform.pt:128
 msgid "subscribed_wiki_no"
 msgstr "Jelenleg nincs előfizetve az egész wikire."
 
 #: i/skins/zwiki_plone/subscribeform.pt:107
-#: i/skins/standard/subscribeform.pt:130
+#: i/skins/standard/subscribeform.pt:132
 msgid "Unsubscribe from whole wiki"
 msgstr "Előfizetés törlése az egész wikiről."
 
 #: i/skins/zwiki_plone/subscribeform.pt:114
-#: i/skins/standard/subscribeform.pt:137
+#: i/skins/standard/subscribeform.pt:139
 msgid "Subscribe to whole wiki"
 msgstr "Előfizetés az egész wikire"
 
 # Default: "You are subscribed to these other pages"
 #: i/skins/zwiki_plone/subscribeform.pt:125
-#: i/skins/standard/subscribeform.pt:148
+#: i/skins/standard/subscribeform.pt:150
 msgid "other_page_subscribed"
 msgstr "A következő lapokra van még előfizetve:"
 
 #: i/skins/zwiki_plone/subscribeform.pt:13
-#: i/skins/standard/subscribeform.pt:36
+#: i/skins/standard/subscribeform.pt:38
 msgid "Mail subscription"
 msgstr "Előfizetés e-mail címmel"
 
 #: i/skins/zwiki_plone/subscribeform.pt:142
-#: i/skins/standard/subscribeform.pt:165
+#: i/skins/standard/subscribeform.pt:167
 msgid "Page subscribers"
 msgstr "A lap előfizetői"
 
 #: i/skins/zwiki_plone/subscribeform.pt:150
-#: i/skins/standard/subscribeform.pt:173
+#: i/skins/standard/subscribeform.pt:175
 msgid "Wiki subscribers"
 msgstr "A wiki előfizetői"
 
@@ -1365,7 +1375,7 @@ msgstr "A wiki előfizetői"
 # "          (but not general edits, unless enabled by the site admin).\n"
 # "          Or return to"
 #: i/skins/zwiki_plone/subscribeform.pt:35
-#: i/skins/standard/subscribeform.pt:58
+#: i/skins/standard/subscribeform.pt:60
 msgid "subscribe_desc"
 msgstr ""
 "Előfizethet csak erre az oldalra, vagy az egész wikire.\n"
@@ -1375,18 +1385,18 @@ msgstr ""
 "          Vagy visszatérhet a következő lapra:"
 
 #: i/skins/zwiki_plone/subscribeform.pt:49
-#: i/skins/standard/subscribeform.pt:72
+#: i/skins/standard/subscribeform.pt:74
 msgid "Your email address"
 msgstr "Az Ön e-mail címe"
 
 #: i/skins/zwiki_plone/subscribeform.pt:53
-#: i/skins/standard/subscribeform.pt:76
+#: i/skins/standard/subscribeform.pt:78
 msgid "Change"
 msgstr "Változtat"
 
 # Default: "To subscribe, please configure your email address."
 #: i/skins/zwiki_plone/subscribeform.pt:61
-#: i/skins/standard/subscribeform.pt:84
+#: i/skins/standard/subscribeform.pt:86
 msgid "subscribe_no_email"
 msgstr "A sikeres előfizetéshez szükséges az e-mail cím megadása."
 
@@ -1394,7 +1404,7 @@ msgstr "A sikeres előfizetéshez szükséges az e-mail cím megadása."
 # "You are currently subscribed<br />\n"
 # "                to this page."
 #: i/skins/zwiki_plone/subscribeform.pt:71
-#: i/skins/standard/subscribeform.pt:94
+#: i/skins/standard/subscribeform.pt:96
 msgid "subscribed_page_ok"
 msgstr "Előfizetése van erre az oldalra."
 
@@ -1402,7 +1412,7 @@ msgstr "Előfizetése van erre az oldalra."
 # "You are currently not subscribed<br />\n"
 # "                to this page."
 #: i/skins/zwiki_plone/subscribeform.pt:75
-#: i/skins/standard/subscribeform.pt:98
+#: i/skins/standard/subscribeform.pt:100
 msgid "subscribed_page_no"
 msgstr "Nincs előfizetése erre az oldalra."
 
@@ -1418,7 +1428,7 @@ msgstr "Előfizetés az oldalra"
 # "You are currently subscribed<br />\n"
 # "                to the whole wiki."
 #: i/skins/zwiki_plone/subscribeform.pt:99
-#: i/skins/standard/subscribeform.pt:122
+#: i/skins/standard/subscribeform.pt:124
 msgid "subscribed_wiki_ok"
 msgstr "Előfizetése van az egész wikire."
 
@@ -1476,6 +1486,33 @@ msgstr ""
 #: i/skins/standard/wikipage_macros.pt:442
 msgid "add-comment"
 msgstr "Hozzászól"
+
+#~ msgid "reparent"
+#~ msgstr "újraszármaztat"
+
+#~ msgid "reparent this page under the page you have entered"
+#~ msgstr "Újraszármaztatja az oldal az Ön által megadott szülőoldalhoz."
+
+#~ msgid "rename this page to the name you have entered, updating all links"
+#~ msgstr ""
+#~ "Megváltoztatja a lap nevét az ide beírt névre, a lapra mutató össze link "
+#~ "aktualizálásával."
+
+#~ msgid "rename"
+#~ msgstr "átnevez"
+
+#~ msgid "delete!"
+#~ msgstr "töröl!"
+
+#~ msgid ""
+#~ "move this page to the recycle bin, and relink to the name you have entered"
+#~ msgstr "Szemeteskosárba dobja a lapot, és újrahivatkoz a beírtak szerint."
+
+#~ msgid "create"
+#~ msgstr "létrehoz"
+
+#~ msgid "create a new subtopic of this page"
+#~ msgstr "új alfejezet létrehozása"
 
 #~ msgid "cancel"
 #~ msgstr "Elvet"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-31-0\n"
-"POT-Creation-Date: Mon Sep 27 20:20:36 2004\n"
+"POT-Creation-Date: Thu Sep 30 11:45:27 2004\n"
 "PO-Revision-Date: 2004-06-10 10:38+0100\n"
 "Last-Translator: Jakub Wiśniowski <klippe@pf.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -291,23 +291,23 @@ msgstr "sekundę temu"
 msgid "seconds"
 msgstr "sekund temu"
 
-#: i/ZWikiPage.py:600
+#: i/ZWikiPage.py:602
 msgid "page in parent wiki"
 msgstr "strona w nadrzędnym wiki"
 
-#: i/ZWikiPage.py:607
+#: i/ZWikiPage.py:609
 msgid "create this page"
 msgstr "utwórz tą stronę"
 
-#: i/ZWikiPage.py:684 i/ZWikiPage.py:697 i/ZWikiPage.py:700
+#: i/ZWikiPage.py:686 i/ZWikiPage.py:699 i/ZWikiPage.py:702
 msgid "last edited %(interval)s ago"
 msgstr "ostatnia modyfikacja: %(interval)s"
 
-#: i/ZWikiPage.py:693
+#: i/ZWikiPage.py:695
 msgid "show last edit %(lastlog)s"
 msgstr "ostatnia edycja: %(lastlog)s"
 
-#: i/ZWikiPage.py:709 i/ZWikiPage.py:711
+#: i/ZWikiPage.py:711 i/ZWikiPage.py:713
 msgid "by %(editor)s"
 msgstr "przez %(editor)s"
 
@@ -318,6 +318,27 @@ msgstr "komentarze"
 #: i/pagetypes/rst.py:57
 msgid "reply"
 msgstr "odpowiedź"
+
+#: i/pagetypes/stx.py:389
+msgid "Structed Text table rendering error"
+msgstr ""
+
+#: i/pagetypes/stx.py:400
+msgid ""
+"\n"
+"                Sorry, but a Structured Text table in this page gave an "
+"error while rendering.\n"
+"                This happens due to incorrect spacing, the wrong number of "
+"column separators, etc.\n"
+"                Please correct the table, following the Structured Text "
+"rules, or remove it,\n"
+"                so that this page can be displayed.\n"
+"                "
+msgstr ""
+
+#: i/pagetypes/stx.py:406
+msgid "To edit this page, click OK."
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:100 i/skins/dtmlmessages.pt:190
 msgid "Filter issues"
@@ -772,19 +793,19 @@ msgstr "Statusy:"
 # "You can change this page's parent(s) to place it within the overall page\n"
 # "hierarchy.  Check the boxes or enter a new page name and click Reparent.\n"
 # "A single parent is usually sufficient."
-#: i/skins/standard/backlinks.pt:103
+#: i/skins/standard/backlinks.pt:105
 msgid "backlinks_reparent_help"
 msgstr ""
 
-#: i/skins/standard/backlinks.pt:46
+#: i/skins/standard/backlinks.pt:48
 msgid "is a top-level topic."
 msgstr "to jest temat główny."
 
-#: i/skins/standard/backlinks.pt:47
+#: i/skins/standard/backlinks.pt:49
 msgid "is a subtopic of:"
 msgstr "to jest drugi temat z:"
 
-#: i/skins/standard/backlinks.pt:69
+#: i/skins/standard/backlinks.pt:71
 msgid "Here are the pages which link to it:"
 msgstr "Strony, które odnoszą się do tej strony:"
 
@@ -797,17 +818,28 @@ msgstr ""
 "Wystąpił problem z szablonami skórki wiki. Być może ID obiektu skórki nie "
 "jest szablonem lub stroną DTML lub szablon został skasowany."
 
-#: i/skins/standard/contentspage.pt:29
+#: i/skins/standard/contentspage.pt:31
 msgid "Contents"
 msgstr "Zawartość"
 
-#: i/skins/standard/diffform.pt:31
+#: i/skins/standard/diffform.pt:33
 msgid "Diffs for"
 msgstr "różnice dla"
 
-#: i/skins/standard/diffform.pt:56
+# Default: "Note for the page history (optional)"
+#: i/skins/standard/diffform.pt:44
+#, fuzzy
+msgid "log_note"
+msgstr "Notatka do historii zmian strony (opcjonalna)"
+
+#: i/skins/standard/diffform.pt:58
 msgid "Revert this change and all successive changes"
 msgstr ""
+
+#: i/skins/standard/diffform.pt:61
+#, fuzzy
+msgid "Return to page"
+msgstr "powrót do strony"
 
 #: i/skins/standard/editform.pt:133
 msgid "toggle source/WYSIWYG mode"
@@ -894,11 +926,11 @@ msgstr "kliknij aby zwiększyć ranking"
 msgid "voting as"
 msgstr "głosujesz jako"
 
-#: i/skins/standard/subscribeform.pt:102
+#: i/skins/standard/subscribeform.pt:104
 msgid " Unsubscribe from this page "
 msgstr " Skasuj prenumeratę tej strony "
 
-#: i/skins/standard/subscribeform.pt:109
+#: i/skins/standard/subscribeform.pt:111
 msgid " Subscribe to this page "
 msgstr " Zaprenumeruj tę stronę"
 
@@ -1037,7 +1069,12 @@ msgstr "edycja za pomocą zewnętrznego edytora"
 msgid "(external edit)"
 msgstr "(zewnętrzny edytor)"
 
-#: i/skins/standard/wikipage_macros.pt:263 i/skins/standard/editform.pt:35
+#: i/skins/standard/wikipage_macros.pt:263
+#: i/skins/standard/subscribeform.pt:19 i/skins/standard/useroptions.pt:19
+#: i/skins/standard/searchwiki.pt:19 i/skins/standard/recentchanges.pt:19
+#: i/skins/standard/issuetracker.pt:19 i/skins/standard/filterissues.pt:19
+#: i/skins/standard/editform.pt:35 i/skins/standard/diffform.pt:21
+#: i/skins/standard/contentspage.pt:19 i/skins/standard/backlinks.pt:19
 msgid "go to home page"
 msgstr "przejdź do strony domowej"
 
@@ -1075,41 +1112,14 @@ msgstr ""
 "istnieje)"
 
 #: i/skins/standard/wikipage_macros.pt:471
-msgid "reparent"
-msgstr "zmień rodzica"
-
-#: i/skins/standard/wikipage_macros.pt:471
-msgid "reparent this page under the page you have entered"
-msgstr "Uczyń stronę której nazwę wpisałeś rodzicem bieżącej strony"
-
 #: i/skins/standard/wikipage_macros.pt:476
-msgid "rename this page to the name you have entered, updating all links"
-msgstr ""
-"Zmień nazwę strony na taką jaką wpisałeś (wszystkie odnośniki zostaną "
-"zaktualizowane)"
-
-#: i/skins/standard/wikipage_macros.pt:476
-msgid "rename"
-msgstr "zmień nazwę"
-
 #: i/skins/standard/wikipage_macros.pt:481
-msgid "delete!"
-msgstr "skasuj!"
-
-#: i/skins/standard/wikipage_macros.pt:481
-msgid ""
-"move this page to the recycle bin, and relink to the name you have entered"
-msgstr "umieść stronę w koszu i zaktualizuj odnośniki"
-
 #: i/skins/standard/wikipage_macros.pt:486
-msgid "create"
-msgstr "utwórz"
+#, fuzzy
+msgid "title"
+msgstr "Tytuł"
 
-#: i/skins/standard/wikipage_macros.pt:486
-msgid "create a new subtopic of this page"
-msgstr "utwórz nowy podtemat na tej stronie"
-
-#: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
+#: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:31
 msgid "Backlinks for"
 msgstr "Odnośniki powrotne dla"
 
@@ -1129,11 +1139,11 @@ msgstr ""
 "kliknij\n"
 "    Zmień rodzica. Pojedynczy rodzic jest zazwyczaj wystarczający."
 
-#: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:99
+#: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:101
 msgid "Other parent"
 msgstr "Inny rodzic"
 
-#: i/skins/zwiki_plone/backlinks.pt:72 i/skins/standard/backlinks.pt:101
+#: i/skins/zwiki_plone/backlinks.pt:72 i/skins/standard/backlinks.pt:103
 msgid "Reparent"
 msgstr "Zmień rodzica"
 
@@ -1141,7 +1151,7 @@ msgstr "Zmień rodzica"
 msgid "Wiki contents"
 msgstr "Zawartość wiki"
 
-#: i/skins/zwiki_plone/contentspage.pt:19 i/skins/standard/contentspage.pt:40
+#: i/skins/zwiki_plone/contentspage.pt:19 i/skins/standard/contentspage.pt:42
 msgid "Singletons"
 msgstr "Pojedyncze strony"
 
@@ -1154,17 +1164,17 @@ msgstr "Pojedyncze strony to strony, które nie są połączone z innymi stronam
 msgid "History for"
 msgstr "Historia dla"
 
-#: i/skins/zwiki_plone/diffform.pt:23 i/skins/standard/diffform.pt:46
+#: i/skins/zwiki_plone/diffform.pt:23 i/skins/standard/diffform.pt:48
 msgid "full history"
 msgstr "Pełna historia"
 
-#: i/skins/zwiki_plone/diffform.pt:31 i/skins/standard/diffform.pt:48
-#: i/skins/standard/diffform.pt:50
+#: i/skins/zwiki_plone/diffform.pt:31 i/skins/standard/diffform.pt:50
+#: i/skins/standard/diffform.pt:52
 msgid "<< previous edit"
 msgstr "<< poprzednia edycja"
 
-#: i/skins/zwiki_plone/diffform.pt:40 i/skins/standard/diffform.pt:52
-#: i/skins/standard/diffform.pt:54
+#: i/skins/zwiki_plone/diffform.pt:40 i/skins/standard/diffform.pt:54
+#: i/skins/standard/diffform.pt:56
 msgid "next edit >>"
 msgstr "następna edycja >>"
 
@@ -1304,40 +1314,40 @@ msgstr "Przeszukaj wiki"
 # "You are currently not subscribed<br />\n"
 # "                to the whole wiki."
 #: i/skins/zwiki_plone/subscribeform.pt:103
-#: i/skins/standard/subscribeform.pt:126
+#: i/skins/standard/subscribeform.pt:128
 msgid "subscribed_wiki_no"
 msgstr ""
 "Nie jesteś obecnie prenumeratorem<br />\n"
 "całego wiki."
 
 #: i/skins/zwiki_plone/subscribeform.pt:107
-#: i/skins/standard/subscribeform.pt:130
+#: i/skins/standard/subscribeform.pt:132
 msgid "Unsubscribe from whole wiki"
 msgstr "Odwołanie prenumeraty całego wiki"
 
 #: i/skins/zwiki_plone/subscribeform.pt:114
-#: i/skins/standard/subscribeform.pt:137
+#: i/skins/standard/subscribeform.pt:139
 msgid "Subscribe to whole wiki"
 msgstr "Prenumeruj całe wiki"
 
 # Default: "You are subscribed to these other pages"
 #: i/skins/zwiki_plone/subscribeform.pt:125
-#: i/skins/standard/subscribeform.pt:148
+#: i/skins/standard/subscribeform.pt:150
 msgid "other_page_subscribed"
 msgstr "Prenumerujesz te strony"
 
 #: i/skins/zwiki_plone/subscribeform.pt:13
-#: i/skins/standard/subscribeform.pt:36
+#: i/skins/standard/subscribeform.pt:38
 msgid "Mail subscription"
 msgstr "Prenumerata e-mail"
 
 #: i/skins/zwiki_plone/subscribeform.pt:142
-#: i/skins/standard/subscribeform.pt:165
+#: i/skins/standard/subscribeform.pt:167
 msgid "Page subscribers"
 msgstr "Prenumeratorzy strony"
 
 #: i/skins/zwiki_plone/subscribeform.pt:150
-#: i/skins/standard/subscribeform.pt:173
+#: i/skins/standard/subscribeform.pt:175
 msgid "Wiki subscribers"
 msgstr "Prenumeratorzy wiki"
 
@@ -1347,7 +1357,7 @@ msgstr "Prenumeratorzy wiki"
 # "          (but not general edits, unless enabled by the site admin).\n"
 # "          Or return to"
 #: i/skins/zwiki_plone/subscribeform.pt:35
-#: i/skins/standard/subscribeform.pt:58
+#: i/skins/standard/subscribeform.pt:60
 msgid "subscribe_desc"
 msgstr ""
 "Możesz tu włączyć prenumeratę tej strony lub całego wiki.\n"
@@ -1357,18 +1367,18 @@ msgstr ""
 "Możesz też wrócić do"
 
 #: i/skins/zwiki_plone/subscribeform.pt:49
-#: i/skins/standard/subscribeform.pt:72
+#: i/skins/standard/subscribeform.pt:74
 msgid "Your email address"
 msgstr "Twój adres e-mail"
 
 #: i/skins/zwiki_plone/subscribeform.pt:53
-#: i/skins/standard/subscribeform.pt:76
+#: i/skins/standard/subscribeform.pt:78
 msgid "Change"
 msgstr "Zmień"
 
 # Default: "To subscribe, please configure your email address."
 #: i/skins/zwiki_plone/subscribeform.pt:61
-#: i/skins/standard/subscribeform.pt:84
+#: i/skins/standard/subscribeform.pt:86
 msgid "subscribe_no_email"
 msgstr "Aby zostać prenumeratorem podaj swój adres e-mail."
 
@@ -1376,7 +1386,7 @@ msgstr "Aby zostać prenumeratorem podaj swój adres e-mail."
 # "You are currently subscribed<br />\n"
 # "                to this page."
 #: i/skins/zwiki_plone/subscribeform.pt:71
-#: i/skins/standard/subscribeform.pt:94
+#: i/skins/standard/subscribeform.pt:96
 msgid "subscribed_page_ok"
 msgstr ""
 "Jesteś obecnie prenumeratorem<br />\n"
@@ -1386,7 +1396,7 @@ msgstr ""
 # "You are currently not subscribed<br />\n"
 # "                to this page."
 #: i/skins/zwiki_plone/subscribeform.pt:75
-#: i/skins/standard/subscribeform.pt:98
+#: i/skins/standard/subscribeform.pt:100
 msgid "subscribed_page_no"
 msgstr ""
 "Obecnie nie jesteś prenumeratorem<br />\n"
@@ -1404,7 +1414,7 @@ msgstr "Prenumeruj tą stronę"
 # "You are currently subscribed<br />\n"
 # "                to the whole wiki."
 #: i/skins/zwiki_plone/subscribeform.pt:99
-#: i/skins/standard/subscribeform.pt:122
+#: i/skins/standard/subscribeform.pt:124
 msgid "subscribed_wiki_ok"
 msgstr ""
 "Jesteś obecnie prenumeratorem<br />\n"
@@ -1461,6 +1471,33 @@ msgstr "wprowadź komentarz i naciśnij przycisk dodaj"
 #: i/skins/standard/wikipage_macros.pt:442
 msgid "add-comment"
 msgstr "Dodaj komentarz"
+
+#~ msgid "reparent"
+#~ msgstr "zmień rodzica"
+
+#~ msgid "reparent this page under the page you have entered"
+#~ msgstr "Uczyń stronę której nazwę wpisałeś rodzicem bieżącej strony"
+
+#~ msgid "rename this page to the name you have entered, updating all links"
+#~ msgstr ""
+#~ "Zmień nazwę strony na taką jaką wpisałeś (wszystkie odnośniki zostaną "
+#~ "zaktualizowane)"
+
+#~ msgid "rename"
+#~ msgstr "zmień nazwę"
+
+#~ msgid "delete!"
+#~ msgstr "skasuj!"
+
+#~ msgid ""
+#~ "move this page to the recycle bin, and relink to the name you have entered"
+#~ msgstr "umieść stronę w koszu i zaktualizuj odnośniki"
+
+#~ msgid "create"
+#~ msgstr "utwórz"
+
+#~ msgid "create a new subtopic of this page"
+#~ msgstr "utwórz nowy podtemat na tej stronie"
 
 #~ msgid "cancel"
 #~ msgstr "anuluj"
