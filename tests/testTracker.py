@@ -5,6 +5,7 @@ from Testing import ZopeTestCase
 from support import *
 
 ZopeTestCase.installProduct('ZWiki')
+ZopeTestCase.installProduct('ZCatalog')
 
 
 class Tests(ZopeTestCase.ZopeTestCase):
@@ -27,18 +28,20 @@ class Tests(ZopeTestCase.ZopeTestCase):
         self.assert_(hasattr(p.folder(),'issue_severities'))
 
     def test_issueParentageWithSkinBasedTracker(self):
-        self.p.setupTracker()
         f = self.p.folder()
-        self.assertEqual(f.IssueNo0001FirstIssue.parents,
-                         ['TestPage'])
-        f.IssueNo0001FirstIssue.createNextIssue('')
-        self.assertEqual(f.IssueNo0002.parents,
-                         ['IssueNo0001 first issue'])
+        self.p.setupTracker()
+        # without a tracker page, issues are parented under the creating page
+        self.assertEqual(f.IssueNo0001FirstIssue.parents,[])
+        f.IssueNo0001FirstIssue.createNextIssue('test')
+        self.assertEqual(f.IssueNo0002Test.parents,[])
         
     def test_issueParentageWithPageBasedTracker(self):
-        self.p.setupTracker()
+        # with a tracker page, issues are parented under that
         f = self.p.folder()
         self.p.setupTracker(pages=1)
+        self.assertEqual(f.IssueNo0001FirstIssue.parents,['IssueTracker'])
+        f.IssueNo0001FirstIssue.createNextIssue('test')
+        self.assertEqual(f.IssueNo0002Test.parents,['IssueTracker'])
 
 if __name__ == '__main__':
     framework(descriptions=1, verbosity=2)

@@ -211,15 +211,22 @@ class TrackerSupport:
         Manage properties permission.
 
         As of 0.17, issue pages are named "IssueNoNNNN issue description".
-        These arguments should be cleaned up to reflect that, eg title
+        The arguments above should be cleaned up to reflect that, eg title
         should come from pageid and should be called description.  pageid
         should be called pagename.
+
+        We will try to place the issue under a suitable parent - the
+        IssueTracker page if it exists, or at the top level to avoid
+        having issues scattered everywhere. Better ideas ?
 
         We should be able to do without this method.
 
         XXX clean up
         """
-        self.create(pageid,text=text,REQUEST=REQUEST)
+        # XXX cf trackerUrl
+        if self.pageWithName('IssueTracker'): parents = ['IssueTracker']
+        else: parents = []
+        self.create(pageid,text=text,REQUEST=REQUEST,parents=parents)
         issue = self.pageWithName(pageid)
         issue.manage_addProperty('category','issue_categories','selection')
         issue.manage_addProperty('severity','issue_severities','selection')
