@@ -225,16 +225,13 @@ class EditingSupport:
     security.declareProtected(Permissions.Comment, 'append')
     def append(self, text='', separator='\n\n', REQUEST=None, log=''):
         """
-        Appends some text to an existing zwiki page by calling edit;
-        may result in mail notifications to subscribers.
+        Appends some text to an existing wiki page and scrolls to the bottom.
+
+        Calls edit, may result in mail notifications to subscribers.
         """
-        oldtext = self.read()
-        text = str(text)
         if text:
-            # usability hack: scroll to bottom after adding a comment
-            if REQUEST:
-                REQUEST.set('redirectURL',REQUEST['URL1']+'#bottom')
-            self.edit(text=oldtext+separator+text, REQUEST=REQUEST,log=log)
+            if REQUEST: REQUEST.set('redirectURL',REQUEST['URL1']+'#bottom')
+            self.edit(text=self.read()+separator+str(text), REQUEST=REQUEST,log=log)
 
     security.declarePublic('edit')      # check permissions at runtime
     def edit(self, page=None, text=None, type=None, title='', 
@@ -244,6 +241,7 @@ class EditingSupport:
              subtopics=None): 
         """
         General-purpose method for editing & creating zwiki pages.
+
         Changes the text and/or markup type of this (or the specified)
         page, or creates the specified page (name or id allowed) if it
         does not exist.
