@@ -241,18 +241,18 @@ class Utils:
 
     def defaultPageUrl(self):
         p = self.defaultPage()
-        return (p and p.pageUrl()) or None
+        return (p and p.pageUrl()) or ''
 
     def urlForDtmlPageOrMethod(self,pagename,methodname):
         """
-        Return the url of an existing dtml page, or of a method, or None.
+        Return the url of an existing dtml page, or of a method, or ''.
         """
         p = self.pageWithName(pagename)
         if p and p.dtmlAllowed() and p.hasDynamicContent(): return p.pageUrl()
         elif methodname: return self.defaultPage().pageUrl()+'/'+methodname
-        else: return None
+        else: return ''
 
-    def urlForPageOrDefault(self,pagename,default=None):
+    def urlForPageOrDefault(self,pagename,default=''):
         """
         Return the url of an existing page, or the default.
         """
@@ -299,7 +299,7 @@ class Utils:
     security.declareProtected(Permissions.View, 'discussionUrl')
     def discussionUrl(self):
         p = self.pageWithName('GeneralDiscussion')
-        return (p and p.pageUrl()) or None
+        return (p and p.pageUrl()) or ''
 
     security.declareProtected(Permissions.View, 'trackerUrl')
     def trackerUrl(self):
@@ -311,11 +311,11 @@ class Utils:
 
     security.declareProtected(Permissions.View, 'indexUrl')
     def indexUrl(self):
-        return self.urlForDtmlPageOrMethod('AllPages',None) #'allpages')
+        return self.urlForDtmlPageOrMethod('AllPages','') #'allpages')
 
     security.declareProtected(Permissions.View, 'uploadsUrl')
     def uploadsUrl(self):
-        return None #self.urlForDtmlPageOrMethod('UploadsPage','uploads')
+        return '' #self.urlForDtmlPageOrMethod('UploadsPage','uploads')
 
     security.declareProtected(Permissions.View, 'preferencesUrl')
     def preferencesUrl(self):
@@ -323,7 +323,7 @@ class Utils:
 
     security.declareProtected(Permissions.View, 'helpUrl')
     def helpUrl(self):
-        return self.urlForPageOrDefault('HelpPage',None)
+        return self.urlForPageOrDefault('HelpPage','')
 
     security.declareProtected(Permissions.View, 'searchUrl')
     def searchUrl(self):
