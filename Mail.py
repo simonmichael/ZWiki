@@ -579,10 +579,10 @@ class MailSupport:
         to prevent page edits, catch any mail-sending errors (and log and
         try to forward them to an admin).
 
-        In some cases we will skip some or all subscribers, eg if this
-        has been designated one of the "quiet" pages, but we do this
-        filtering down in sendMailTo. XXX that is, we would if we knew how.
+        As a special case, if text is empty we'll do nothing, to help
+        wikimail signal-to-noise ratio.
         """
+        if not text: return
         to = None
         recipients = self.subscriberList()
         if not self.title_or_id() in self.quietPages():
