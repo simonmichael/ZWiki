@@ -524,7 +524,6 @@ class MailSupport:
         """
 
         recipients = self.emailAddressesFrom(self.allSubscribers())
-
 	# mailin may tell us to exclude a mailing list address to prevent a loop
         try: recipients.remove(exclude_address)
         except ValueError: pass
@@ -666,10 +665,8 @@ List-Help: <%s>
            signature,
            )
 
-        # testing support: messages with subject [test] or originating
-        # from TestPage are not mailed out to subscribers
-        if (subject == '[test]' or self.title_or_id() == 'TestPage'):
-            # log and drop it
+        # testing support
+        if subject == '[test]':
             BLATHER('discarding test mailout:\n%s' % msg)
             # I tried redirecting to a test SMTP server but it blocked
             #BLATHER('diverting test mailout to test server:\n%s' % msg)
@@ -694,7 +691,6 @@ List-Help: <%s>
             #             msg)
             #BLATHER('sending mailout:\n%s' % msg)
             #mhost.send(msg)
-
         else:
             BLATHER('sending mailout:\n%s' % msg)
             mhost.send(msg)
