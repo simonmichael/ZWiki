@@ -76,6 +76,21 @@ class TrackerTests(ZopeTestCase.ZopeTestCase):
         self.p.createNextIssue('c')
         self.assert_(self.p.pageWithName('#3 c'))
         self.assertEqual(self.p.issueCount(),3)
+
+    def test_short_issue_links(self):
+        self.p.folder().short_issue_names = 1
+        self.p.createNextIssue('b')
+        self.assertEquals(self.p.renderLinksIn('[#2]')[-6:],
+                          '#2</a>')
+        self.p.createIssue('#987 test')
+        self.assertEquals(self.p.renderLinksIn('[#9]')[-6:],
+                          '>?</a>')
+        self.assertEquals(self.p.renderLinksIn('[#987]')[-8:],
+                          '#987</a>')
+        self.assertEquals(self.p.renderLinksIn('#9')[-6:],
+                          '>?</a>')
+        self.assertEquals(self.p.renderLinksIn('#987')[-8:],
+                          '#987</a>')
         
 
 if __name__ == '__main__':

@@ -64,7 +64,7 @@ from Regexps import url, bracketedexpr, doublebracketedexpr, \
      wikiname, wikilink, interwikilink, remotewikiurl, \
      protected_line, zwikiidcharsexpr, anywikilinkexpr, \
      markedwikilinkexpr, localwikilink, spaceandlowerexpr, \
-     dtmlorsgmlexpr, wikinamewords
+     dtmlorsgmlexpr, wikinamewords, hashnumberexpr
 from Utils import Utils, BLATHER
 from UI import UI
 from OutlineSupport import OutlineSupport
@@ -561,8 +561,13 @@ class ZWikiPage(
                  self.doublebracketLinksAllowed()) or
                 (not re.match(doublebracketedexpr,link) and
                  self.bracketLinksAllowed())):
-                # convert to a page id if possible, and continue
-                p = self.pageWithFuzzyName(linknobrackets)
+                # yes - convert to the id of an existing page if possible,
+                # using fuzzy matching, and continue. Allow partial fuzzy
+                # matching if it looks like an issue number.
+                p = self.pageWithFuzzyName(
+                    linknobrackets,
+                    allow_partial=self.issueNumberFrom(linknobrackets) != None,
+                    numeric_match=1)
                 if p:
                     try: link = p.getId() # XXX poor caching
                     except: link = p.id # all-brains
@@ -570,6 +575,18 @@ class ZWikiPage(
         # is it a bare URL ?
         if re.match(url,link):
             return '<a href="%s">%s</a>' % (link, link)
+
+        # is it a hash number (#123) ?
+        if re.match(hashnumberexpr,link):
+            # yes - convert to the id of the issue (any page whose name
+            # begins with that number, really) and continue if possible;
+            p = self.pageWithFuzzyName(link,allow_partial=1,numeric_match=1)
+            if p:
+                try: link = p.getId() # XXX poor caching
+                except: link = p.id # all-brains
+            # if no such page exists, don't bother adding a creation link
+            else:
+                return link
 
         # it must be a wikiname - are wikiname links allowed in this wiki ?
         if not (self.wikinameLinksAllowed() or
@@ -1082,8 +1099,9 @@ class ZWikiPage(
                 self.pageWithName(name,url_quoted))
         
     security.declareProtected(Permissions.View, 'pageWithFuzzyName')
-    def pageWithFuzzyName(self,name,url_quoted=0,
-                          allow_partial=0,ignore_case=1):
+    def pageWithFuzzyName(self,name,url_quoted=0,allow_partial=0,
+                          ignore_case=1, numeric_match=0):
+                          
         """
         Return the page in this folder for which name is a fuzzy link, or None.
 
@@ -1091,7 +1109,8 @@ class ZWikiPage(
         are multiple fuzzy matches, return the page whose name is
         alphabetically first.  The allow_partial flag allows even fuzzier
         matching. As of 0.17 ignore_case is not used and kept only for
-        backward compatibility.
+        backward compatibility. numeric_match modifies partial matching so
+        that [1] does not match a page "12...".
 
         performance-sensitive
         """
@@ -1112,7 +1131,9 @@ class ZWikiPage(
         for i in ids:
             ilower = string.lower(i)
             if (ilower == idlower or 
-                (allow_partial and ilower[:len(idlower)] == idlower)):
+                ((allow_partial and ilower[:len(idlower)] == idlower) and not
+                 (numeric_match and re.match(r'[0-9]',ilower[len(idlower):])))
+                ):
                 return self.pageWithId(i)
         return None
         

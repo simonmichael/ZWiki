@@ -54,6 +54,9 @@ spaceandlowerexpr = re.compile(r'\s+([%s])'%(string.lowercase))
 bracketedexpr    = r'\[\[?([^\n\]]+)\]\]?'
 doublebracketedexpr = r'\[\[([^\n\]]+)\]\]'
 
+# tracker support
+hashnumberexpr = r'\#[0-9]+'
+
 # bare wiki links
 #
 # Zwiki's bare wiki links are standard CamelCase, but also allow words of
@@ -133,8 +136,8 @@ wikiname3        = r'(?:%s|%s)' % (wikiname1, wikiname2)
 wikiname4        = r'(?:(?<!&)%s(?![%s])|(?<=&)%s(?![%s;]))' \
                    % (wikiname3, U+L, wikiname3, U+L)
 wikiname         = r'!?(%s)' %(wikiname4)
-wikilink         = r'!?(%s|%s|%s)' % (wikiname4,bracketedexpr,url)
-localwikilink1   = r'(?:%s|%s)' % (wikiname4,bracketedexpr)
+wikilink         = r'!?(%s|%s|%s|%s)' % (wikiname4,bracketedexpr,url,hashnumberexpr)
+localwikilink1   = r'(?:%s|%s|%s)' % (wikiname4,bracketedexpr,hashnumberexpr)
 localwikilink    = r'!?(%s)' % (localwikilink1)
 interwikilink    = r'!?((?P<local>%s):(?P<remote>%s))' \
                    % (localwikilink1, urlchars)
