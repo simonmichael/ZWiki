@@ -65,8 +65,10 @@ class AbstractPageType:
         """
         Render some source text as if it were in page, as far as possible.
 
-        We make a dummy page similar to the real page, set the text and
-        render it.  This is a bit heavy-handed, but it gives us a fairly
+        This is a helper for edit preview. Some source text is hard to
+        render without being situated in a page object (DTML, permissions
+        etc). We make a dummy page similar to the real page, set the text
+        and render it.  This is a bit heavy-handed, but it gives a pretty
         accurate preview. We disable a few things which are unnecessary or
         problematic.
         """
