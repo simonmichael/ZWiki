@@ -472,7 +472,8 @@ class="shade1" width="100%" style="font-size:90%;"
       >replacement, </span>
 <span i18n:translate=""
       tal:condition="python:user.has_permission('Zwiki: Add pages',container)"
-      >subtopic</span>:
+      >subtopic</span>
+for this page:
 <br tal:condition="here/inCMF" comment="hack! cmf/plone layout hint" />
 <input 
 name="pagename" type="text" size="25" maxlength="100" value="" 
