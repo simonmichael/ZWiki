@@ -1,3 +1,127 @@
+    Summary
+
+        Skin switching in CMF/Plone, better MoinMoin markup support,
+	edit preview, easier issue page names and links, russian & hebrew
+	trsnslations, bugfixes.
+	
+    Upgrade notes
+
+	Skin switching hotkeys have changed slightly
+
+        Issue pages have a new #N naming scheme. Your old IssueNo pages
+	will still work; upgradeAll will rename them all.
+
+	We now add an optional Zwiki skin in CMF/Plone sites at install
+	time; if you want to enable skin switching within CMF/Plone,
+	re-install Zwiki in plone setup -> add/remove products 
+	
+    Changes
+
+      Installing/upgrading
+
+        * fix startup problem due to path separator on windows (Stefan Rank)
+
+        * upgradeAll: log elapsed time (Bob McElrath)
+
+        * upgradeAll: upgrade issue pages to new short names by default
+
+        * upgradeAll: replace partial_commit flag with a numeric batch argument
+
+        * upgradeAll: reindex every page, as well; slower but more thorough
+
+        * upgradeAll: log total number of pages
+
+        * simplify upgradeAll & upgrade, do less committing
+
+      Creating/configuring
+
+        * show subtopics is on by default; use a false show_subtopics boolean property to disable
+
+        * make add zwiki web use a BTreeFolder2 when possible (untested)
+
+        * don't send mail when setupTracker creates dtml pages
+
+      Browsing
+
+        * adjust skin switching keys, allow switching between
+	  (uncustomized) plone and standard skin in CMF/Plone sites
+	  (re-install zwiki and try alt -)
+
+        * fix the diff link in "last edited by"
+
+        * user options: remove unnecessary options; don't show
+          logo/heading, consistent with other forms
+
+      Editing
+
+        * don't require a username to show page management form
+
+        * page management form permission-sensitivity and text improvements
+
+        * plone editform: call page format "page type" like everywhere
+          else, list WWML page type along with the rest, add a cancel
+          button as in standard skin
+
+        * don't display the page name twice when you cancel an edit
+
+        * improved moin markup support: replace the old moin markup code
+          with actual MoinMoin code (bounty from Canonical)
+
+        * add preview button in editform (#933) (bounty from Canonical)
+
+        * fix a case where renaming could fail due to out of date wiki outline
+
+      Page hierarchy
+
+        * more skin cleanups; allow reparenting via backlinks in plone and in minimal mode
+
+        * reparenting fixes: prevent the first page appearing as an extra
+          parent, handle old tuple parents properties better (#952)
+
+      Mail
+
+        * mailin: once again post messages without a page name to a
+          default page, unless default_mailin_page property is blank
+
+        * be smarter about finding a MailHost; a page of that
+          id will no longer break mail-out
+
+      Issue tracking
+
+        * use short #N names for new issue pages; old IssueNo pages still
+          supported but deprecated; upgradeAll will rename them
+
+        * issuetracker: layout tweaks, also list severity counts
+
+        * filterissues: show category-severity matrix, instead of
+          category-status; I think this may be a more useful default
+
+        * filterissues: alter issue counts in totals matrix based on severity selection
+
+        * filterissues: fix this old chestnut again.. a FilterIssues
+        page's action should point to itself, not to the template
+
+      Fit tests
+
+        * fit: display a nice warning at the top of the page when there are fit tables and we can't import fit
+
+      General - i18n
+
+        * update italian translation (Lele Gaifax)
+
+        * new russian translation (Denis Mishunoff)
+
+        * new hebrew translation (Ofer Weisglass)
+
+        * hack i18n for unit tests, possible slowdown ?
+
+      General
+	
+        * new method: wikiPath()
+
+        * rename protectEmailAddresses
+
+
 Zwiki 0.35.0 2004/10/01
 
     Summary
