@@ -203,15 +203,16 @@ UI.py:editform() calls us with these options:
             <!-- XXX Fix me: 
                  We may want to map this attribute to the 'text_format'
                  attribute of CMF objects, so they know what to do
-                 with the object when it is rendered in other contexts.
-                    (Even though the Wiki links will not work, it will
-                                   know an approximately correct rendering mode)
-                                   Another interesting thing will be the Transform
-                                   tool of Archetypes - if somebody wrote a Wiki
-                                   transform tool, you could use wiki notation in 
-                                   any object. I'll leave that as an exercise for
-                                   the reader for now, though ;)   (limi, june 2003)
-                                   -->
+                 with the object when it is rendered in other
+                 contexts.
+                 
+                 (Even though the Wiki links will not work, it will
+                 know an approximately correct rendering mode) Another
+                 interesting thing will be the Transform tool of
+                 Archetypes - if somebody wrote a Wiki transform tool,
+                 you could use wiki notation in any object. I'll leave
+                 that as an exercise for the reader for now, though ;)
+                 (limi, june 2003) -->
 
             <tal:formats repeat="type pagetypes"
                          define="tabindex tabindex/next|nothing;
