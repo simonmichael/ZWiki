@@ -134,7 +134,7 @@ class AbstractHtmlPageType(AbstractPageType):
         lines = string.split(t, '\n')
         t = ""
         for i in range(len(lines)):
-            m = re.match(r'^\s*>\s?(.*)$', lines[i])
+            m = re.match(r'^>\s?(.*)$', lines[i])
             if(m):
                 if(not inblock):
                     t += string.join(lines[blockend:i],'\n')
