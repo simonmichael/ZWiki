@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ZWiki-0-30-0dev\n"
-"POT-Creation-Date: Fri Jun  4 11:56:25 2004\n"
-"PO-Revision-Date: 2004-05-27 14:09-0700\n"
+"Project-Id-Version: ZWiki-0-31-0dev\n"
+"POT-Creation-Date: Mon Jun  7 15:02:21 2004\n"
+"PO-Revision-Date: 2004-06-05 14:00+0200\n"
 "Last-Translator: Nicolas Laurent <foenyx(at)online(dot)fr>,Raphael Badin "
 "<raphael(dot)badin(at)sopinspace(dot)com>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
@@ -338,7 +338,6 @@ msgid "Add and Edit"
 msgstr "Ajouter et Modifier"
 
 #: i/skins/dtmlmessages.pt:17 i/skins/dtmlmessages.pt:18
-#: i/skins/dtmlmessages.pt:26
 msgid "Enter a word"
 msgstr "Entrer un mot"
 
@@ -374,21 +373,188 @@ msgstr "Soumis par"
 msgid "Details & comments"
 msgstr "Détails & commentaires"
 
+#: i/skins/dtmlmessages.pt:26
+msgid "Set your site preferences below."
+msgstr "Veuillez définir vos préférences pour ce site ci-dessous."
+
+#: i/skins/dtmlmessages.pt:27
+msgid "You may also click the full, simple, minimal links if provided."
+msgstr ""
+"Vous pouvez aussi cliquer sur les liens «complet», «simple», «minimal» s'ils "
+"sont disponibles"
+
+#: i/skins/dtmlmessages.pt:28
+msgid "User name"
+msgstr "Nom d'utilisateur"
+
+#: i/skins/dtmlmessages.pt:29
+msgid "identifies your edits"
+msgstr "pour pouvoir identifier vos modifications"
+
+#: i/skins/dtmlmessages.pt:30
+msgid "Email address"
+msgstr "Adresse électronique (courriel)"
+
+#: i/skins/dtmlmessages.pt:31
+msgid "for subscribing"
+msgstr "pour pouvoir vous abonner"
+
+#: i/skins/dtmlmessages.pt:32
+msgid "Editform"
+msgstr "Formulaire d'édition"
+
+#: i/skins/dtmlmessages.pt:33
+msgid "width"
+msgstr "nombre de colonnes"
+
+#: i/skins/dtmlmessages.pt:34
+msgid "height"
+msgstr "nombre de lignes"
+
+#: i/skins/dtmlmessages.pt:35
+msgid "textarea dimensions; width will be 100% if supported"
+msgstr ""
+"Si votre navigateur le permet, la zone d'édition occupera toute la largeur"
+
+#: i/skins/dtmlmessages.pt:36
+msgid "Time zone"
+msgstr "Fuseau horaire"
+
+#: i/skins/dtmlmessages.pt:37
+msgid "Your local time is"
+msgstr "Il est actuellement"
+
+#: i/skins/dtmlmessages.pt:38
+msgid "(localizes most times)"
+msgstr "(permet la localisation de la plupart des dates)"
+
+#: i/skins/dtmlmessages.pt:39
+msgid "Show logo ?"
+msgstr "Afficher le logotype ?"
+
 #: i/skins/dtmlmessages.pt:4 i/skins/dtmlmessages.pt:12
 msgid "Id"
 msgstr "Identifiant"
+
+#: i/skins/dtmlmessages.pt:40 i/skins/dtmlmessages.pt:43
+#: i/skins/dtmlmessages.pt:48 i/skins/dtmlmessages.pt:52
+#: i/skins/dtmlmessages.pt:56
+msgid "No"
+msgstr "Non"
+
+#: i/skins/dtmlmessages.pt:41 i/skins/dtmlmessages.pt:44
+#: i/skins/dtmlmessages.pt:49 i/skins/dtmlmessages.pt:53
+#: i/skins/dtmlmessages.pt:57
+msgid "Yes"
+msgstr "Oui"
+
+#: i/skins/dtmlmessages.pt:42
+msgid "Show page hierarchy ?"
+msgstr "Afficher la hiérarchie des pages visitées ?"
+
+#: i/skins/dtmlmessages.pt:45
+msgid "This wiki keeps a page hierarchy, which you can use or ignore."
+msgstr ""
+"Ce Wiki maintient une hiérarchie des pages, qui peut être utilisée ou ignorée"
+
+#: i/skins/dtmlmessages.pt:46
+msgid "Show search field ?"
+msgstr "Afficher la zone de recherche ?"
+
+#: i/skins/dtmlmessages.pt:47
+msgid "except in minimal mode"
+msgstr "excepté dans le mode minimal"
 
 #: i/skins/dtmlmessages.pt:5 i/skins/dtmlmessages.pt:13
 msgid "Title"
 msgstr "Titre"
 
+#: i/skins/dtmlmessages.pt:50
+msgid "Show AnnoyingQuote ?"
+msgstr "Afficher la citation dérangeante ?"
+
+#: i/skins/dtmlmessages.pt:51 i/skins/dtmlmessages.pt:55
+msgid "in full mode"
+msgstr "uniquement dans le mode complet"
+
+#: i/skins/dtmlmessages.pt:54
+msgid "Show page management form ?"
+msgstr "Afficher le formulaire de gestion des pages ?"
+
+#: i/skins/dtmlmessages.pt:58
+msgid "You must also configure a username or be logged in."
+msgstr ""
+"Vous devez configurer un nom d'utilisateur ou être identifier sur ce site"
+
+#: i/skins/dtmlmessages.pt:59
+msgid "Save options"
+msgstr "Enregistrer ces options"
+
 #: i/skins/dtmlmessages.pt:6
 msgid "Type"
 msgstr "type"
 
+#: i/skins/dtmlmessages.pt:60
+msgid "Forget options"
+msgstr "Ignorer ces options"
+
+#: i/skins/dtmlmessages.pt:61
+msgid "Enter a word or phrase and hit enter to search the entire wiki."
+msgstr ""
+"Entrez un mot ou une phrase and pressez sur la touche Entrée pour lancer la "
+"recherche dans l'ensemble du Wiki."
+
+#: i/skins/dtmlmessages.pt:62
+msgid "This is the same as using the search field at top right."
+msgstr ""
+"Cette recherche est identique à celle effectuée par le champs de recherche "
+"dans le coin supérieur droit."
+
+#: i/skins/dtmlmessages.pt:63
+msgid "Tips: A single word works best for matching page names."
+msgstr ""
+"Conseil: Pour trouver les noms de pages, une recherche sur un seul mot est "
+"souvent plus fructueuse."
+
+#: i/skins/dtmlmessages.pt:64
+msgid ""
+"Case-insensitivity and wildcards may be supported depending on your catalog "
+"configuration."
+msgstr ""
+"L'insensibilité à la casse et les caractères de recherches approximatives "
+"peuvent être supportés selon la configuration du «catalogue» (contacter "
+"l'administrateur pour plus de renseignements)."
+
+#: i/skins/dtmlmessages.pt:65
+msgid "Leave it blank to list all pages."
+msgstr "Laissez ce champs vide pour lister toutes les pages"
+
+#: i/skins/dtmlmessages.pt:66 i/skins/dtmlmessages.pt:71
+msgid "Search"
+msgstr "Rechercher"
+
+#: i/skins/dtmlmessages.pt:67
+msgid "Page names matching"
+msgstr "Noms de pages concordant"
+
+#: i/skins/dtmlmessages.pt:68
+msgid "Text matching"
+msgstr "Concordances dans le texte"
+
+#: i/skins/dtmlmessages.pt:69
+msgid "hits"
+msgstr "résultats"
+
 #: i/skins/dtmlmessages.pt:7
 msgid "Create wiki"
 msgstr "Créer le wiki"
+
+#: i/skins/dtmlmessages.pt:70
+msgid ""
+"no catalog or the catalog search gave an error, a brute-force search was used"
+msgstr ""
+"La recherche par catalogue à échoué, ou est impossible. Une recherche "
+"exhaustive a été utilisée."
 
 #: i/skins/dtmlmessages.pt:8
 msgid "and enter"
