@@ -16,7 +16,7 @@ DEFAULT_TEMPLATES['ratingform'] = loadPageTemplate('ratingform')
 
 class RatingSupport:
     """
-    I manage a numeric rating based on user votes.
+    I am a mixin that manages a numeric rating based on user votes.
 
     Votes are stored as a dictionary keyed by username/ip address.
     A user can change their vote by re-voting, or cancel their vote.
@@ -26,13 +26,19 @@ class RatingSupport:
     _votes = None # not {}, it would be shared
 
     security.declarePrivate('votes')
-    def votes(self): return self.aq_base._votes or {}
+    def votes(self):
+        """Private accessor."""
+        return self.aq_base._votes or {}
 
     security.declarePrivate('setVotes')
-    def setVotes(self,votes): self.aq_base._votes = votes
+    def setVotes(self,votes):
+        """Private accessor."""
+        self.aq_base._votes = votes
         
     security.declarePrivate('resetVotes')
-    def resetVotes(self): self.setVotes({})
+    def resetVotes(self):
+        """Private accessor."""
+        self.setVotes({})
 
     # api methods
     
