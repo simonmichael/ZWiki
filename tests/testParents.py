@@ -58,10 +58,10 @@ class OutlineSupportTests(ZopeTestCase.ZopeTestCase):
         self.assertEquals(self.wiki.RootPage.context(),
                           '&nbsp;') # XXX should be as below I think
         self.assertEquals(self.wiki.RootPage.context(with_siblings=1),
-                          '<small><ul>\n <li><a href="http://nohost/test_folder_1_/wiki/RootPage" name="RootPage">RootPage</a> <b><-- You are here.</b> ...\n</ul>\n</small>'
+                          '<small><ul>\n <li><a href="http://nohost/test_folder_1_/wiki/RootPage" name="RootPage">RootPage</a> <b><-- You are here.</b></li> ...\n</ul>\n</small>'
                           )
         self.assertEquals(self.wiki.ChildPage.context(),
-                          '<small><ul>\n <li><a href="http://nohost/test_folder_1_/wiki/RootPage" name="RootPage">RootPage</a>\n<ul>\n <li><a href="http://nohost/test_folder_1_/wiki/ChildPage" name="ChildPage">ChildPage</a> <b><-- You are here.</b>\n</ul>\n</ul>\n</small>'
+                          '<small><ul>\n <li><a href="http://nohost/test_folder_1_/wiki/RootPage" name="RootPage">RootPage</a></li>\n<ul>\n <li><a href="http://nohost/test_folder_1_/wiki/ChildPage" name="ChildPage">ChildPage</a> <b><-- You are here.</b></li>\n</ul>\n</ul>\n</small>'
                           )
         
     def test_reparent(self):
