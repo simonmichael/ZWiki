@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-31-0\n"
-"POT-Creation-Date: Sat Jun 12 14:15:35 2004\n"
+"POT-Creation-Date: Tue Jun 15 11:46:22 2004\n"
 "PO-Revision-Date: 2004-06-10 10:38+0100\n"
 "Last-Translator: Jakub Wiśniowski <klippe@pf.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Domain: zwiki\n"
 "X-Generator: Pajączek 5.2.0 Pro - testowy :(\n"
 
-#: i/Admin.py:100
+#: i/Admin.py:55
 msgid "You are not authorized to upgrade all pages."
 msgstr "Nie masz autoryzacji do zmian wszystkich stron"
 
-#: i/Admin.py:101
+#: i/Admin.py:56
 msgid "(folder -> Manage properties)"
 msgstr "(katalog -> zarządzanie właściwościami"
 
@@ -72,14 +72,6 @@ msgstr "które strony odnoszą się do tej strony?"
 msgid "You are here"
 msgstr "Jesteś tutaj"
 
-#: i/PageTypes.py:203
-msgid "comments"
-msgstr "komentarze"
-
-#: i/PageTypes.py:361
-msgid "reply"
-msgstr "odpowiedź"
-
 #: i/UI.py:495
 msgid "Edit conflict"
 msgstr "Konflikt edycji"
@@ -112,7 +104,7 @@ msgstr "Wklej swoje zmiany uważając na dokonane przez kogoś innego modyfikacj
 msgid "Click the Change button again"
 msgstr "Ponownie naciśnij przycisk Zmień"
 
-#: i/UI.py:522 i/skins/standard/editform.pt:178
+#: i/UI.py:522 i/skins/standard/editform.pt:181
 msgid "or"
 msgstr "lub"
 
@@ -234,81 +226,89 @@ msgstr ""
 "        p    Poprzednia edycja\n"
 "        "
 
-#: i/Utils.py:431
+#: i/Utils.py:461
 msgid "years"
 msgstr "lata"
 
-#: i/Utils.py:431
+#: i/Utils.py:461
 msgid "year"
 msgstr "rok"
 
-#: i/Utils.py:433
+#: i/Utils.py:463
 msgid "month"
 msgstr "miesiąc"
 
-#: i/Utils.py:433
+#: i/Utils.py:463
 msgid "months"
 msgstr "miesiące"
 
-#: i/Utils.py:435
+#: i/Utils.py:465
 msgid "weeks"
 msgstr "tygodnie"
 
-#: i/Utils.py:435
+#: i/Utils.py:465
 msgid "week"
 msgstr "tydzień"
 
-#: i/Utils.py:437
+#: i/Utils.py:467
 msgid "day"
 msgstr "dzień"
 
-#: i/Utils.py:437
+#: i/Utils.py:467
 msgid "days"
 msgstr "dni"
 
-#: i/Utils.py:439
+#: i/Utils.py:469
 msgid "hours"
 msgstr "godzin temu"
 
-#: i/Utils.py:439
+#: i/Utils.py:469
 msgid "hour"
 msgstr "godzin"
 
-#: i/Utils.py:441
+#: i/Utils.py:471
 msgid "minute"
 msgstr "minuta"
 
-#: i/Utils.py:441
+#: i/Utils.py:471
 msgid "minutes"
 msgstr "minut temu"
 
-#: i/Utils.py:443
+#: i/Utils.py:473
 msgid "second"
 msgstr "sekund"
 
-#: i/Utils.py:443
+#: i/Utils.py:473
 msgid "seconds"
 msgstr "sekund temu"
 
-#: i/ZWikiPage.py:580
+#: i/ZWikiPage.py:561
 msgid "page in parent wiki"
 msgstr "strona w nadrzędnym wiki"
 
-#: i/ZWikiPage.py:585
+#: i/ZWikiPage.py:566
 msgid "create this page"
 msgstr "utwórz tą stronę"
 
-#: i/ZWikiPage.py:661 i/ZWikiPage.py:674 i/ZWikiPage.py:677
+#: i/ZWikiPage.py:642 i/ZWikiPage.py:655 i/ZWikiPage.py:658
 msgid "last edited %(interval)s ago"
 msgstr "ostatnia modyfikacja: %(interval)s"
 
-#: i/ZWikiPage.py:670
+#: i/ZWikiPage.py:651
 msgid "show last edit %(lastlog)s"
 msgstr "ostatnia edycja: %(lastlog)s"
 
-#: i/ZWikiPage.py:685 i/ZWikiPage.py:687
+#: i/ZWikiPage.py:666 i/ZWikiPage.py:668
 msgid "by %(editor)s"
 msgstr "przez %(editor)s"
+
+#: i/pagetypes/common.py:193
+msgid "comments"
+msgstr "komentarze"
+
+#: i/pagetypes/rst.py:55
+msgid "reply"
+msgstr "odpowiedź"
 
 #: i/skins/dtmlmessages.pt:11
 msgid ""
@@ -827,51 +827,51 @@ msgstr "różnice dla"
 msgid "cancel"
 msgstr "anuluj"
 
-#: i/skins/standard/editform.pt:130
+#: i/skins/standard/editform.pt:133
 msgid "toggle source/WYSIWYG mode"
 msgstr "przełączenie źródło/WYSIWYG mode"
 
-#: i/skins/standard/editform.pt:142
+#: i/skins/standard/editform.pt:145
 msgid "Optional change note"
 msgstr "Opcjonalna zmiana notatki"
 
-#: i/skins/standard/editform.pt:143
+#: i/skins/standard/editform.pt:146
 msgid "a note makes RecentChanges more useful"
 msgstr "notatka uczyni listę ostatnich zmian bardziej użyteczną"
 
-#: i/skins/standard/editform.pt:161
+#: i/skins/standard/editform.pt:164
 msgid "Upload a file or image"
 msgstr "Wczytanie pliku lub obrazka"
 
-#: i/skins/standard/editform.pt:162
+#: i/skins/standard/editform.pt:165
 msgid "upload a file and link it on this page ?"
 msgstr "wczytać plik i utworzyć odnośnik do niego na tej stronie?"
 
-#: i/skins/standard/editform.pt:172
+#: i/skins/standard/editform.pt:175
 msgid "For editing help, see"
 msgstr "Aby wywołać pomoc dla edycji zobacz"
 
-#: i/skins/standard/editform.pt:174
+#: i/skins/standard/editform.pt:177
 msgid "HelpPage"
 msgstr "Strona z pomocą"
 
-#: i/skins/standard/editform.pt:181
+#: i/skins/standard/editform.pt:184
 msgid "TextFormattingRules"
 msgstr ""
 
-#: i/skins/standard/editform.pt:195
+#: i/skins/standard/editform.pt:198
 msgid "Create"
 msgstr "Utwórz"
 
-#: i/skins/standard/editform.pt:196
+#: i/skins/standard/editform.pt:199
 msgid "create this wiki page"
 msgstr "Stwórz stronę wiki"
 
-#: i/skins/standard/editform.pt:198
+#: i/skins/standard/editform.pt:201
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: i/skins/standard/editform.pt:198
+#: i/skins/standard/editform.pt:201
 msgid "cancel this edit and return to the page"
 msgstr "anuluj zmiany i wróć na stronę"
 
@@ -1240,7 +1240,7 @@ msgstr ""
 "Jeśli nie masz pewności jakiego formatu użyć wybierz Plain\n"
 "Text i po prostu wpisz tekst."
 
-#: i/skins/zwiki_plone/editform.pt:250
+#: i/skins/zwiki_plone/editform.pt:253
 msgid "Save"
 msgstr "Zapisz"
 

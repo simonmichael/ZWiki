@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
-"POT-Creation-Date: Sat Jun 12 14:15:35 2004\n"
+"POT-Creation-Date: Tue Jun 15 11:46:22 2004\n"
 "PO-Revision-Date: 2004-06-09 15:05+0200\n"
 "Last-Translator: Jaap Noordzij <jaap@jaapnoordzij.nl>\n"
 "Language-Team: Nederlands <nl@li.org>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "X-Generator: KBabel 1.3.1\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
-#: i/Admin.py:100
+#: i/Admin.py:55
 msgid "You are not authorized to upgrade all pages."
 msgstr "U bent niet gemachtigd om alle pagina's te vernieuwen"
 
-#: i/Admin.py:101
+#: i/Admin.py:56
 msgid "(folder -> Manage properties)"
 msgstr "Eigenschappen"
 
@@ -74,14 +74,6 @@ msgstr "Welke pagina's linken naar deze ?"
 msgid "You are here"
 msgstr "U bent hier"
 
-#: i/PageTypes.py:203
-msgid "comments"
-msgstr "Commentaar"
-
-#: i/PageTypes.py:361
-msgid "reply"
-msgstr "antwoord"
-
 #: i/UI.py:495
 msgid "Edit conflict"
 msgstr "Conflict bij bewerken"
@@ -114,7 +106,7 @@ msgstr "Plak uw wijzigingen opnieuw in, let op de laatste wijzigingen"
 msgid "Click the Change button again"
 msgstr "Klik opnieuw op de wijzigen-knop"
 
-#: i/UI.py:522 i/skins/standard/editform.pt:178
+#: i/UI.py:522 i/skins/standard/editform.pt:181
 msgid "or"
 msgstr "of"
 
@@ -241,81 +233,89 @@ msgstr ""
 "        p    previous edit\n"
 "        "
 
-#: i/Utils.py:431
+#: i/Utils.py:461
 msgid "years"
 msgstr "jaren"
 
-#: i/Utils.py:431
+#: i/Utils.py:461
 msgid "year"
 msgstr "jaar"
 
-#: i/Utils.py:433
+#: i/Utils.py:463
 msgid "month"
 msgstr "maand"
 
-#: i/Utils.py:433
+#: i/Utils.py:463
 msgid "months"
 msgstr "maanden"
 
-#: i/Utils.py:435
+#: i/Utils.py:465
 msgid "weeks"
 msgstr "weken"
 
-#: i/Utils.py:435
+#: i/Utils.py:465
 msgid "week"
 msgstr "week"
 
-#: i/Utils.py:437
+#: i/Utils.py:467
 msgid "day"
 msgstr "dag"
 
-#: i/Utils.py:437
+#: i/Utils.py:467
 msgid "days"
 msgstr "dagen"
 
-#: i/Utils.py:439
+#: i/Utils.py:469
 msgid "hours"
 msgstr "uren"
 
-#: i/Utils.py:439
+#: i/Utils.py:469
 msgid "hour"
 msgstr "uur"
 
-#: i/Utils.py:441
+#: i/Utils.py:471
 msgid "minute"
 msgstr "minuut"
 
-#: i/Utils.py:441
+#: i/Utils.py:471
 msgid "minutes"
 msgstr "minuten"
 
-#: i/Utils.py:443
+#: i/Utils.py:473
 msgid "second"
 msgstr "seconde"
 
-#: i/Utils.py:443
+#: i/Utils.py:473
 msgid "seconds"
 msgstr "seconden"
 
-#: i/ZWikiPage.py:580
+#: i/ZWikiPage.py:561
 msgid "page in parent wiki"
 msgstr "pagina in ouder wiki"
 
-#: i/ZWikiPage.py:585
+#: i/ZWikiPage.py:566
 msgid "create this page"
 msgstr "maak deze pagina"
 
-#: i/ZWikiPage.py:661 i/ZWikiPage.py:674 i/ZWikiPage.py:677
+#: i/ZWikiPage.py:642 i/ZWikiPage.py:655 i/ZWikiPage.py:658
 msgid "last edited %(interval)s ago"
 msgstr "laatst gewijzigd %(interval)s geleden"
 
-#: i/ZWikiPage.py:670
+#: i/ZWikiPage.py:651
 msgid "show last edit %(lastlog)s"
 msgstr "toon laatste wijziging %(lastlog)s"
 
-#: i/ZWikiPage.py:685 i/ZWikiPage.py:687
+#: i/ZWikiPage.py:666 i/ZWikiPage.py:668
 msgid "by %(editor)s"
 msgstr "door %(editor)s"
+
+#: i/pagetypes/common.py:193
+msgid "comments"
+msgstr "Commentaar"
+
+#: i/pagetypes/rst.py:55
+msgid "reply"
+msgstr "antwoord"
 
 #: i/skins/dtmlmessages.pt:11
 msgid ""
@@ -857,51 +857,51 @@ msgstr "Verschillen voor"
 msgid "cancel"
 msgstr "opheffen"
 
-#: i/skins/standard/editform.pt:130
+#: i/skins/standard/editform.pt:133
 msgid "toggle source/WYSIWYG mode"
 msgstr "schakel bron/WYSIWYG toestand"
 
-#: i/skins/standard/editform.pt:142
+#: i/skins/standard/editform.pt:145
 msgid "Optional change note"
 msgstr "Optionele aantekening mbt deze wijziging"
 
-#: i/skins/standard/editform.pt:143
+#: i/skins/standard/editform.pt:146
 msgid "a note makes RecentChanges more useful"
 msgstr "een aantekening maakt de Recente Wijzigingen beter bruikbaar"
 
-#: i/skins/standard/editform.pt:161
+#: i/skins/standard/editform.pt:164
 msgid "Upload a file or image"
 msgstr "Laad een bestand of een afbeelding"
 
-#: i/skins/standard/editform.pt:162
+#: i/skins/standard/editform.pt:165
 msgid "upload a file and link it on this page ?"
 msgstr "laad een bestand en verwijs ernaar op deze pagina ?"
 
-#: i/skins/standard/editform.pt:172
+#: i/skins/standard/editform.pt:175
 msgid "For editing help, see"
 msgstr "Voor hulp met bewerken zie"
 
-#: i/skins/standard/editform.pt:174
+#: i/skins/standard/editform.pt:177
 msgid "HelpPage"
 msgstr "HelpPage"
 
-#: i/skins/standard/editform.pt:181
+#: i/skins/standard/editform.pt:184
 msgid "TextFormattingRules"
 msgstr "TextFormattingRules"
 
-#: i/skins/standard/editform.pt:195
+#: i/skins/standard/editform.pt:198
 msgid "Create"
 msgstr "Maken"
 
-#: i/skins/standard/editform.pt:196
+#: i/skins/standard/editform.pt:199
 msgid "create this wiki page"
 msgstr "maak deze wiki pagina"
 
-#: i/skins/standard/editform.pt:198
+#: i/skins/standard/editform.pt:201
 msgid "Cancel"
 msgstr "Opheffen"
 
-#: i/skins/standard/editform.pt:198
+#: i/skins/standard/editform.pt:201
 msgid "cancel this edit and return to the page"
 msgstr "verlaat deze wijziging en keer terug naar de pagina"
 
@@ -1283,7 +1283,7 @@ msgstr ""
 "Wanneer u niet zeker bent welk formaat u moet gebruiken, kies dan \n"
 "Plain Text en typ het document zoal u normaal gewend bent."
 
-#: i/skins/zwiki_plone/editform.pt:250
+#: i/skins/zwiki_plone/editform.pt:253
 msgid "Save"
 msgstr "Opslaan"
 

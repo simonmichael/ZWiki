@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-31-0rc3\n"
-"POT-Creation-Date: Sat Jun 12 14:15:35 2004\n"
+"POT-Creation-Date: Tue Jun 15 11:46:22 2004\n"
 "PO-Revision-Date: 2004-05-31 07:18+0800\n"
 "Last-Translator: T.C. Chou <tcchou-at-tcchou.org>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
@@ -14,11 +14,11 @@ msgstr ""
 "Preferred-encodings: utf-8\n"
 "Domain: zwiki\n"
 
-#: i/Admin.py:100
+#: i/Admin.py:55
 msgid "You are not authorized to upgrade all pages."
 msgstr "您沒有權力升級所有頁面."
 
-#: i/Admin.py:101
+#: i/Admin.py:56
 msgid "(folder -> Manage properties)"
 msgstr "(目錄 -> 管理屬性)"
 
@@ -65,14 +65,6 @@ msgstr "那個頁面連結到這一頁?"
 msgid "You are here"
 msgstr "您現在位置"
 
-#: i/PageTypes.py:203
-msgid "comments"
-msgstr "建議"
-
-#: i/PageTypes.py:361
-msgid "reply"
-msgstr "回覆"
-
 #: i/UI.py:495
 msgid "Edit conflict"
 msgstr "修改衝突"
@@ -105,7 +97,7 @@ msgstr "貼上您所修改的內容, 在最新變更的內容裡頭"
 msgid "Click the Change button again"
 msgstr "再按一次變更按鈕(Change)"
 
-#: i/UI.py:522 i/skins/standard/editform.pt:178
+#: i/UI.py:522 i/skins/standard/editform.pt:181
 msgid "or"
 msgstr "或"
 
@@ -227,81 +219,89 @@ msgstr ""
 "        p    前一修改\n"
 "        "
 
-#: i/Utils.py:431
+#: i/Utils.py:461
 msgid "years"
 msgstr "年"
 
-#: i/Utils.py:431
+#: i/Utils.py:461
 msgid "year"
 msgstr "年"
 
-#: i/Utils.py:433
+#: i/Utils.py:463
 msgid "month"
 msgstr "月"
 
-#: i/Utils.py:433
+#: i/Utils.py:463
 msgid "months"
 msgstr "月"
 
-#: i/Utils.py:435
+#: i/Utils.py:465
 msgid "weeks"
 msgstr "週"
 
-#: i/Utils.py:435
+#: i/Utils.py:465
 msgid "week"
 msgstr "週"
 
-#: i/Utils.py:437
+#: i/Utils.py:467
 msgid "day"
 msgstr "天"
 
-#: i/Utils.py:437
+#: i/Utils.py:467
 msgid "days"
 msgstr "天"
 
-#: i/Utils.py:439
+#: i/Utils.py:469
 msgid "hours"
 msgstr "時"
 
-#: i/Utils.py:439
+#: i/Utils.py:469
 msgid "hour"
 msgstr "時"
 
-#: i/Utils.py:441
+#: i/Utils.py:471
 msgid "minute"
 msgstr "分"
 
-#: i/Utils.py:441
+#: i/Utils.py:471
 msgid "minutes"
 msgstr "分"
 
-#: i/Utils.py:443
+#: i/Utils.py:473
 msgid "second"
 msgstr "秒"
 
-#: i/Utils.py:443
+#: i/Utils.py:473
 msgid "seconds"
 msgstr "秒"
 
-#: i/ZWikiPage.py:580
+#: i/ZWikiPage.py:561
 msgid "page in parent wiki"
 msgstr "同在父層的頁面"
 
-#: i/ZWikiPage.py:585
+#: i/ZWikiPage.py:566
 msgid "create this page"
 msgstr "建立頁面"
 
-#: i/ZWikiPage.py:661 i/ZWikiPage.py:674 i/ZWikiPage.py:677
+#: i/ZWikiPage.py:642 i/ZWikiPage.py:655 i/ZWikiPage.py:658
 msgid "last edited %(interval)s ago"
 msgstr "最新變更在 %(interval)s 以前"
 
-#: i/ZWikiPage.py:670
+#: i/ZWikiPage.py:651
 msgid "show last edit %(lastlog)s"
 msgstr "顯示最新修改 %(lastlog)s"
 
-#: i/ZWikiPage.py:685 i/ZWikiPage.py:687
+#: i/ZWikiPage.py:666 i/ZWikiPage.py:668
 msgid "by %(editor)s"
 msgstr "作者 %(editor)s"
+
+#: i/pagetypes/common.py:193
+msgid "comments"
+msgstr "建議"
+
+#: i/pagetypes/rst.py:55
+msgid "reply"
+msgstr "回覆"
 
 #: i/skins/dtmlmessages.pt:11
 msgid ""
@@ -849,51 +849,51 @@ msgstr "不同於"
 msgid "cancel"
 msgstr "取消"
 
-#: i/skins/standard/editform.pt:130
+#: i/skins/standard/editform.pt:133
 msgid "toggle source/WYSIWYG mode"
 msgstr "切換 源碼/所見及所得 模式"
 
-#: i/skins/standard/editform.pt:142
+#: i/skins/standard/editform.pt:145
 msgid "Optional change note"
 msgstr "變更註記(選項)"
 
-#: i/skins/standard/editform.pt:143
+#: i/skins/standard/editform.pt:146
 msgid "a note makes RecentChanges more useful"
 msgstr "寫個註記對瀏覽 RecentChanges 很有幫助"
 
-#: i/skins/standard/editform.pt:161
+#: i/skins/standard/editform.pt:164
 msgid "Upload a file or image"
 msgstr "上傳檔案或圖檔"
 
-#: i/skins/standard/editform.pt:162
+#: i/skins/standard/editform.pt:165
 msgid "upload a file and link it on this page ?"
 msgstr "在這頁上傳一個檔案並連結它?"
 
-#: i/skins/standard/editform.pt:172
+#: i/skins/standard/editform.pt:175
 msgid "For editing help, see"
 msgstr "相關編輯說明, 請參考"
 
-#: i/skins/standard/editform.pt:174
+#: i/skins/standard/editform.pt:177
 msgid "HelpPage"
 msgstr "輔助頁面"
 
-#: i/skins/standard/editform.pt:181
+#: i/skins/standard/editform.pt:184
 msgid "TextFormattingRules"
 msgstr "文字格式規則"
 
-#: i/skins/standard/editform.pt:195
+#: i/skins/standard/editform.pt:198
 msgid "Create"
 msgstr "建立"
 
-#: i/skins/standard/editform.pt:196
+#: i/skins/standard/editform.pt:199
 msgid "create this wiki page"
 msgstr "建立這Wiki頁面"
 
-#: i/skins/standard/editform.pt:198
+#: i/skins/standard/editform.pt:201
 msgid "Cancel"
 msgstr "取消"
 
-#: i/skins/standard/editform.pt:198
+#: i/skins/standard/editform.pt:201
 msgid "cancel this edit and return to the page"
 msgstr "取消這頁的編輯, 回到原先頁面"
 
@@ -1270,7 +1270,7 @@ msgstr ""
 "如果您不確定要使用何種格式, 就選 Plain Text\n"
 "             , 並且按照一般方式輸入您的文件."
 
-#: i/skins/zwiki_plone/editform.pt:250
+#: i/skins/zwiki_plone/editform.pt:253
 msgid "Save"
 msgstr "儲存"
 
