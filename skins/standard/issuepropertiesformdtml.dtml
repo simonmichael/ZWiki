@@ -3,7 +3,7 @@
 <table border="0" cellspacing="0" cellpadding="5"
 bgcolor="&dtml-issueColour;">
 <tr><td>
-**Name:**
+**<dtml-translate domain="zwiki">Name</dtml-translate>:**
 <b><input type="text" name="name" value="<dtml-var issueName html_quote>" size="50" maxlength="200" style="font-weight:bold"></b>
 <dtml-let
   issue_categories="_.getattr(this(),'issue_categories','') or ['general']"
@@ -11,21 +11,21 @@ bgcolor="&dtml-issueColour;">
   issue_statuses="_.getattr(this(),'issue_statuses','') or ['open','closed']"
   >
 <br>
-**Category:**
+**<dtml-translate domain="zwiki">Category</dtml-translate>:**
 <select name="category">
 <dtml-in issue_categories prefix=x>
 <option <dtml-if "category==x_sequence_item">selected</dtml-if>>
 &dtml-x_sequence_item;</option>
 </dtml-in>
 </select> 
-**Severity:**
+**<dtml-translate domain="zwiki">Severity</dtml-translate>:**
 <select name="severity">
 <dtml-in issue_severities prefix=x>
 <option <dtml-if "severity==x_sequence_item">selected</dtml-if>>
 &dtml-x_sequence_item;</option>
 </dtml-in>
 </select> 
-**Status:**
+**<dtml-translate domain="zwiki">Status</dtml-translate>:**
 <select name="status">
 <dtml-in issue_statuses prefix=x>
 <option <dtml-if "status==x_sequence_item">selected</dtml-if>>
@@ -33,10 +33,10 @@ bgcolor="&dtml-issueColour;">
 </dtml-in>
 </select>
 </dtml-let>
-<br><b>Optional note:</b> <input type="text" name="log" value="" size="55" maxlength="55">&nbsp;
+<br><b><dtml-translate domain="zwiki">Optional note</dtml-translate>:</b> <input type="text" name="log" value="" size="55" maxlength="55">&nbsp;
 <input name="submit" type="submit" value="Change">
 <br>
-**Submitted by:**
+**<dtml-translate domain="zwiki">Submitted by</dtml-translate>:**
 <dtml-var "_.getattr(this(),'creator','') or '(unknown)'">
 **at:**
 <dtml-var creation_time missing=""><dtml-let
@@ -71,7 +71,7 @@ seconds="_.int(_.round((elapsed-days-hourfactor*hours-minutefactor*minutes)/seco
 </dtml-if> ago)
 </dtml-let>
 <br>
-**Details & comments:**
+**<dtml-translate domain="zwiki">Details & comments</dtml-translate>:**
 </td></tr></table>
 </form>
 <!-- end of issue properties form -->
