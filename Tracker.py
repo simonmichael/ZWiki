@@ -36,14 +36,14 @@ class TrackerSupport:
         Flexibility will be useful here so this method may be overridden
         with a DTML method (XXX or python script).
         """
-        if hasattr(self.folder(), 'isIssue'):
-            return self.folder().isIssue(self)
+        if (
+            re.match(r'^IssueNo[0-9]',self.pageName()) # name is IssueNoNNNN... ?
+            or self.getId()[0].isdigit()               # id begins with a digit ?
+            or self.pageTypeId() == 'issuedtml'        # backwards compatibility
+            ):
+            return 1
         else:
-            if (re.match(r'^IssueNo',self.title_or_id())
-                or self.pageTypeId() == 'issuedtml'): # backwards compatibility
-                return 1
-            else:
-                return 0
+            return 0
 
     security.declareProtected(Permissions.View, 'issueCount')
     def issueCount(self):

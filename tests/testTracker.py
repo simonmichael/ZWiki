@@ -12,6 +12,17 @@ class Tests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
         zwikiAfterSetUp(self)
 
+    def test_isIssue(self):
+        def isIssue(name):
+            self.p.create(page=name)
+            return self.p.pageWithName(name).isIssue()
+        self.failIf(isIssue('blah'))
+        self.failIf(isIssue('IssueNo'))
+        self.assert_(isIssue('IssueNo1'))
+        self.assert_(isIssue('IssueNo1 blah'))
+        self.assert_(isIssue('1'))
+        self.assert_(isIssue('#1 blah'))
+
     def test_upgradeIssueProperties(self):
         self.p.create('IssueNo0001')
         p = self.p.pageWithName('IssueNo0001')
