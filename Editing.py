@@ -7,6 +7,7 @@ from string import split,join,find,lower,rfind,atoi,strip
 from urllib import quote, unquote
 from types import *
 from email.Message import Message
+from copy import deepcopy
 
 import ZODB # need this for pychecker
 from AccessControl import getSecurityManager, ClassSecurityInfo
@@ -498,9 +499,10 @@ class EditingSupport:
 
         # update wiki outline
         # changeIdPreservingCreator->manage_renameObject->_delObject/_setObject
-        # has the effect of losing our place in the hierarchy, take a
-        # snapshot so we can fix it up later
-        savedparentmap = self.wikiOutline().parentmap().copy()
+        # -> manage_after* has the effect of losing our place in the
+        # hierarchy, take a snapshot so we can fix it up later
+        savedparentmap = deepcopy(self.wikiOutline().parentmap())
+        savedchildmap = deepcopy(self.wikiOutline().childmap())
 
         # has the page id changed ?
         if newid != oldid:
@@ -518,6 +520,7 @@ class EditingSupport:
         # update wiki outline, using the copy we saved earlier
         # nb that outline may not have been up to date, but replace will forgive
         self.wikiOutline().setParentmap(savedparentmap)
+        self.wikiOutline().setChildmap(savedchildmap)
         self.wikiOutline().replace(oldname,newname)
 
         # do this after the above so it will have correct parent

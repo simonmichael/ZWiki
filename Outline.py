@@ -7,6 +7,7 @@ class Outline:
     I represent and answer questions about a multi-root, multi-parent
     hierarchy of objects, usually strings, efficiently.
 
+    This is based on Ken Manheimer's WikiNesting enhancement.
     For the moment, an Outline has
       _parentmap = {'Root':[],'Child':['Root'],'GrandChild':['Child'],'Single':[]}
       _childmap =  {'Root':['Child'],'Child':['GrandChild'],'GrandChild':[],'Single':[]}
@@ -15,9 +16,8 @@ class Outline:
       Leaves: the string name of the page
       Nodes with children: a list beginning with the parent node's name
       Nodes with omitted children (for brevity): list with one string.
-    This is based on Ken Manheimer's WikiNesting implementation for Zwiki.
+    _childmap and _nesting are derived from _parentmap.
     Outlines and nestings should perhaps be the same thing.
-    childmap is the inverse of parentmap.
 
     """
     _parentmap = {}
@@ -45,15 +45,34 @@ class Outline:
     def leaves(self):
         """Return a sorted list of the leaf nodes."""
         return filter(lambda x:not self.children(x), self.nodes())
-    def updateChildmap(self):
-        """Regenerate childmap from parentmap."""
-        childmap = {}
-        for c in self.nodes():
+    def updateChildmap(self,reset=0):
+        """Regenerate childmap from parentmap.
+
+        childmap is the inverse of parentmap - except, it remembers any
+        manual re-ordering of children. Unless reset is true we try to
+        preserve this information, which complicates things.
+        """
+        nodes = self.nodes()
+        if reset:
+            # start afresh
+            childmap = {}
+        else:
+            # remove any no-longer-valid childmap entries or children 
+            childmap = self.childmap()
+            for p in childmap.keys():
+                if not p in nodes: del childmap[p]
+                else:
+                    for c in childmap[p]:
+                        if not c in nodes: childmap[p].remove(c)
+        # set the childmap entry for each node
+        for c in nodes:
             parents = self.parents(c)
             for p in parents:
+                # each parent should have a childmap entry including this child
                 if not childmap.has_key(p): childmap[p] = [c]
-                else: childmap[p].append(c)
-        for l in filter(lambda x:x not in childmap.keys(),self.nodes()):
+                elif not c in childmap[p]: childmap[p].append(c)
+        # add a childmap entry for any nodes we missed (non-parents)
+        for l in filter(lambda x:x not in childmap.keys(),nodes):
             childmap[l] = []
         self.setChildmap(childmap)
     def updateNesting(self):
@@ -92,6 +111,9 @@ class Outline:
 
         If node wasn't there, just add newnode. This is useful for rename().
         Should this sort of robustness check be done here or there ?
+
+        Tries to preserve node's ordering among it's siblings, as in
+        updateChildMap.
         """
         parentmap = self.parentmap()
         # replace node with newnode, preserving node's parents
@@ -103,12 +125,33 @@ class Outline:
             parentmap[c].remove(node)
             parentmap[c].append(newnode)
         self.setParentmap(parentmap)
+        # tweak childmap ahead of updateChildMap to preserve node's position
+        childmap = self.childmap()
+        for p in childmap.keys():
+            if node in childmap[p]:
+                childmap[p][childmap[p].index(node)] = newnode
+        self.setChildmap(childmap)
         if update: self.update()
     def reparent(self,node,newparents,update=1):
         """
         Change node's parents to newparents in the outline.
         """
         self.add(node,newparents,update)
+    def reorder(self,node,child):
+        """
+        Moves child one place to the left among node's children (in _childmap).
+        """
+        childmap = self.childmap()
+        #we do no error checking in this class IIRC
+        #if not childmap.has_key(node): return
+        children = childmap[node]
+        #if not child in children: return
+        i = children.index(child)
+        #if not i: return
+        children[i-1], children[i] = children[i], children[i-1]
+        childmap[node] = children
+        self.setChildmap(childmap)
+        self.updateNesting()
     def first(self):
         """
         Get the first node in the outline.
