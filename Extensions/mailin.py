@@ -66,9 +66,9 @@ from Products.ZWiki.Regexps import wikiname1,wikiname2,bracketedexpr,urlchars
 from Products.ZWiki.Utils import BLATHER
 
 # use email aliases like these to influence delivery
-WIKIADDREXP =    r'\b(wiki|mailin)@'         # comments and new pages
-TRACKERADDREXP = r'\b(tracker|bugs|issues)@' # new tracker issues
-SPAMADDREXP =    r'\b(spam)@'                # spam reports
+WIKIADDREXP =    r'(wiki|mailin)@'         # comments and new pages
+TRACKERADDREXP = r'(tracker|bugs|issues)@' # new tracker issues
+SPAMADDREXP =    r'(spam)@'                # spam reports
 MAILINADDREXP = r'(%s|%s|%s)' % (
     WIKIADDREXP,
     TRACKERADDREXP,
