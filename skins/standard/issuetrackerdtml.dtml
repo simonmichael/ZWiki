@@ -18,7 +18,7 @@
      <tr>
        <td valign="top">
          <!-- CUSTOM TEXT -->
-         <dtml-translate domain=zwiki>Here are the wiki's issue pages.</dtml-translate>
+         <dtml-translate domain=zwiki>Here is the wiki's issue tracker.</dtml-translate>
          <!-- END OF CUSTOM TEXT -->
          <dtml-translate domain=zwiki>Enter a search term, or click the numbers to the right, or</dtml-translate>
           <a href="&dtml-filterUrl;"><dtml-translate domain=zwiki>filter issues</dtml-translate></a>.
@@ -354,7 +354,7 @@
          <b>
            <input 
             type="text" name="newtitle" 
-            value="<dtml-var newtitle missing html_quote>" 
+            value="<dtml-var newtitle missing html_quote>" class="shade2"
             size="40" maxlength="200" style="font-weight:bold;width:100%;" />
          </b>
        </td>
@@ -363,7 +363,7 @@
          <dtml-translate domain=zwiki>Category:</dtml-translate>
        </td>
        <td nowrap>
-         <select name="newcategory">
+         <select name="newcategory" class="shade2">
            <dtml-in issue_categories>
            <option <dtml-var "_['sequence-item'] == 'zwiki: general' and 'SELECTED' or ''">>
              &dtml-sequence-item;
@@ -371,7 +371,7 @@
            </dtml-in>
          </select> 
          &nbsp;<dtml-translate domain=zwiki>Severity:</dtml-translate
-         ><select name="newseverity">
+         ><select name="newseverity" class="shade2">
            <dtml-in issue_severities>
            <option <dtml-var "_['sequence-item'] == 'normal' and 'SELECTED' or ''">>
              &dtml-sequence-item;
@@ -379,7 +379,7 @@
            </dtml-in>
          </select> 
          &nbsp;<dtml-translate domain=zwiki>Status:</dtml-translate
-         ><select name="newstatus">
+         ><select name="newstatus" class="shade2">
            <dtml-in issue_statuses>
            <option <dtml-var "_['sequence-item'] == 'open' and 'SELECTED' or ''">>
              &dtml-sequence-item;
@@ -393,7 +393,8 @@
          <dtml-translate domain=zwiki>Details:</dtml-translate>
        </td>
        <td>
-         <textarea name="newtext" wrap="virtual" rows="5" cols="40" style="width:100%"></textarea>
+         <textarea name="newtext" wrap="virtual" rows="5" cols="40" 
+                   class="shade2" style="width:100%"></textarea>
        </td>
      </tr>
      <tr>
