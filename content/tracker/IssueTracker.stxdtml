@@ -2,13 +2,14 @@
  scrollto="'' #'#tracker'"
  issueCount=issueCount 
  sort_order="REQUEST.get('sort_order','')"
- sort_on="REQUEST.get('sort_on','severity_index')"
- num="_.int(REQUEST.get('num',99999))"
+ sort_on="REQUEST.get('sort_on','lastEditTime')"
  searchexpr="REQUEST.get('textortitle','')"
  category="REQUEST.get('category',[])"
  status="REQUEST.get('status',[])"
  severity="REQUEST.get('severity',[])"
- recentlisting="'?sort_on=lastEditTime&sort_order=reverse&num=30'"
+ num="_.int(REQUEST.get('num',99999))"
+ recentnum="30"
+ recentlisting="'?sort_on=lastEditTime&sort_order=reverse&num=%s'%recentnum"
  >
 <!-- issue search form ------------------------- -->
 <a name="tracker" />
@@ -34,7 +35,7 @@
        <td valign="top" class="">
          <table border="0" cellspacing="2" cellpadding="0" 
            <dtml-in issue_statuses prefix=x>
-             <dtml-let bold="x_sequence_item in REQUEST.get('status','') or (x_sequence_item in ['open','pending'] and not QUERY_STRING)">
+             <dtml-let bold="x_sequence_item in REQUEST.get('status','')">
                <tr>
                  <td align="right">
                    <small>
@@ -53,14 +54,14 @@
                </tr>
              </dtml-let>
            </dtml-in>
-           <dtml-let bold="num==30">
+           <dtml-let bold="num==recentnum or not QUERY_STRING">
              <tr>
                <td align="right">
                  <br />
                  <small>
                  <dtml-var "bold and '<b>' or ''">
                    <a href="&dtml-URL;&dtml-recentlisting;&dtml-scrollto;"
-                   >30</a>
+                   >&dtml-recentnum;</a>
                  <dtml-var "bold and '</b>' or ''">
                  </small>
                </td>
@@ -72,7 +73,7 @@
                </td>
              </tr>
            </dtml-let>
-           <dtml-let bold="QUERY_STRING and not (status or severity or category or searchexpr or (num==30))">
+           <dtml-let bold="QUERY_STRING and not (status or severity or category or searchexpr or (num==recentnum))">
              <tr>
                <td align="right">
                  <dtml-var "bold and '<b>' or ''">
@@ -171,7 +172,7 @@
          status=    REQUEST.get('status',''))[:num])
   or
   (not searchexpr and not QUERY_STRING and
-   pages(isIssue=1, status=['open','pending'], sort_on='severity_index', sort_limit=num))
+   pages(isIssue=1, sort_on='lastEditTime', sort_order='reverse', sort_limit=num)[:recentnum])
   "
   >
    <table border=0 width="100%">
@@ -346,7 +347,7 @@
  <!-- add issue form ------------------------- -->
  <a name="addissue" />
  <form action="&dtml-URL;" method="POST">
-   <b>Add an issue: </b>
+   **Add an issue: **
    <table border="0" cellspacing="0" cellpadding="5" width="60%">
      <tr bgcolor="<dtml-var "'#ffffff' #issueColourFor(status='open')">">
        <td nowrap>
