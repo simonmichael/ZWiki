@@ -256,15 +256,15 @@ class GeneralForms:
     security.declareProtected(Permissions.View, 'wikipage')
     def wikipage(self, dummy=None, REQUEST=None, RESPONSE=None):
         """
-        Render the main page view (template-customizable).
+        Render the main page view (dummy method to allow standard skin in CMF).
 
+        XXX this may or may not still be useful. Old comment:
         The wikipage template is usually applied by addSkinTo;
         this is provided so you can configure it as the "view" method
         in portal_types -> Wiki Page -> actions to use Zwiki's standard 
         skin inside a CMF/Plone site.
         """
-        return self.getSkinTemplate('wikipage')(self,REQUEST,
-                                                body=self.render())
+        return self.render(REQUEST=REQUEST,RESPONSE=RESPONSE)
 
     # backwards compatibility
     wikipage_view = wikipage
