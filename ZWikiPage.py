@@ -930,7 +930,7 @@ class ZWikiPage(
 	or None.
         """
         return (
-            self.pageWithName(getattr(self.folder,'default_page','FrontPage'))
+            self.pageWithName(getattr(self.folder(),'default_page','FrontPage'))
             or (list(self.pageObjects())+[None])[0]) # pageObjects may be a LazyMap
         
     security.declareProtected(Permissions.View, 'defaultPageId')
