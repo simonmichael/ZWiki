@@ -97,7 +97,8 @@ mo:
 	 echo $$L; \
 	 msgfmt --statistics zwiki-$$L.po -o zwiki-$$L.mo; \
 	 msgfmt --statistics zwiki-plone-$$L.po -o zwiki-plone-$$L.mo; \
-	 done
+	 done; \
+	rm -f *.mo
 
 ## testing
 
