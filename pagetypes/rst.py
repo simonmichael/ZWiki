@@ -2,6 +2,10 @@ from common import *
 from Products.ZWiki.I18nSupport import _
 from Products.ZWiki.pagetypes import registerPageType
 
+# flag for the restructured text report level (for all zwikis)
+# possible values:  0-4  [debug, info, warning, error, severe]
+RST_REPORT_LEVEL = 2
+
 try:
     import reStructuredText # import this one first
     try:
@@ -22,9 +26,9 @@ class ZwikiRstPageType(AbstractPageType):
     supportsRst = yes
     supportsWikiLinks = yes
 
-    def renderRstIn(self,t):
+    def renderRstIn(self, t, rst_report_level=RST_REPORT_LEVEL):
         if reStructuredText:
-            return reStructuredText.HTML(t,report_level=0) # doesn't work:(
+            return reStructuredText.HTML(t,report_level=rst_report_level)
         else:
             return "<pre>Error: could not import reStructuredText</pre>\n"+t
 
@@ -32,6 +36,9 @@ class ZwikiRstPageType(AbstractPageType):
         t = text or (page.document()+'\n'+MIDSECTIONMARKER+ \
                      self.preRenderMessages(page))
         t = page.applyWikiLinkLineEscapesIn(t)
+        # the next two lines would make the rst_report_level customizable per folder:
+        #rst_report_level = getattr(page.folder(),"rst_report_level",0)
+        #t = self.renderRstIn(t,rst_report_level)
         t = self.renderRstIn(t)
         if page.usingPurpleNumbers(): t = page.renderPurpleNumbersIn(t)
         t = page.markLinksIn(t)
