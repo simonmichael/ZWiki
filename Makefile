@@ -572,15 +572,19 @@ pot:
 	PYTHONPATH=/usr/local/src/Zope3/src python \
 	  /usr/local/src/Zope3/utilities/i18nextract.py -d zwiki -p . -o ./i18n \
 	    -x _darcs -x old -x misc -x ftests 
-	# ----------------------------------
-	# now do fixups to zwiki.pot:
-	# 1. update license & Language-Team
-	# 2. add meta data required by PTS:
-	# "Language-code: xx\n"
-	# "Language-name: X\n"
-	# "Preferred-encodings: utf-8 latin1\n"
-	# "Domain: zwiki\n"
-	# ----------------------------------
+	python \
+	-c "import re; \
+	    f = open('i18n/zwiki.pot','r+'); \
+	    t = f.read(); \
+	    t = re.sub(r'(?s)^.*?msgid',r'msgid',t); \
+	    t = re.sub(r'Zope 3 Developers <zope3-dev@zope.org>',\
+	               r'<zwiki@zwiki.org>', \
+	               t); \
+	    t = re.sub(r'(?s)\"(Generated-By:.*?\n)', \
+	               r'\"Language-code: xx\\\n\"\n\"Language-name: X\\\n\"\n\"Preferred-encodings: utf-8 latin1\\\n\"\n\"Domain: zwiki\\\n\"\n', \
+	               t); \
+	    f.seek(0); \
+	    f.write(t)"
 
 po:
 	cd i18n; \
