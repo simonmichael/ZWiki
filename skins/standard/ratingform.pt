@@ -9,8 +9,8 @@
       >
   <span i18n:translate="">page rating</span>: 
   <span i18n:translate="rating_score">
-  <span tal:replace="here/rating" style="font-weight:bold" i18n:name='score' /> from
-  <span tal:replace="here/voteCount" i18n:name='nb_votes' /> votes
+  <span tal:replace="here/rating" style="font-weight:bold" i18n:name="score" /> from
+  <span tal:replace="here/voteCount" i18n:name="nb_votes" /> votes
   </span> <br />
   <input type="submit" name="score:int" 
          tal:condition="python:0 #no good, leaves space between" 
