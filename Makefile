@@ -33,9 +33,9 @@ dtml:
 	  >skins/standard/searchwikidtml.dtml
 	$(CLEAN) content/dtml/UserOptions.stxdtml \
 	  >skins/standard/useroptionsdtml.dtml
-	$(CLEAN) content/tracker/IssueTracker.stxdtml \
+	$(CLEAN) plugins/tracker/IssueTracker.stxdtml \
 	  >skins/standard/issuetrackerdtml.dtml
-	$(CLEAN) content/tracker/FilterIssues.stxdtml \
+	$(CLEAN) plugins/tracker/FilterIssues.stxdtml \
 	  >skins/standard/filterissuesdtml.dtml
 	cp skins/standard/{recentchanges,searchwiki,useroptions,issuetracker,filterissues}dtml.dtml skins/zwiki_plone
 
