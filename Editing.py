@@ -242,64 +242,51 @@ class EditingSupport:
         """
         General-purpose method for editing & creating zwiki pages.
 
-        Changes the text and/or markup type of this (or the specified)
-        page, or creates the specified page (name or id allowed) if it
-        does not exist.
-        
-        Other special features:
+        This method does a lot; combining all this stuff in one powerful
+        method simplifies the skin layer above, I think.
 
-        - Usually called from a time-stamped web form; we use
-        timeStamp to detect and warn when two people attempt to work
-        on a page at the same time. This makes sense only if timeStamp
-        came from an editform for the page we are actually changing.
+        - changes the text and/or formatting type of this (or another )
+        page, or creates that page if it doesn't exist.
+
+        - when called from a time-stamped web form, detects and warn when
+        two people attempt to work on a page at the same time
 
         - The username (authenticated user or zwiki_username cookie)
         and ip address are saved in page's last_editor, last_editor_ip
         attributes if a change is made
 
-        - If the text begins with "DeleteMe", move this page to the
-        recycle_bin subfolder.
+        - If the text begins with "DeleteMe", delete this page
+        (move it to the /recycle_bin)
 
         - If file has been submitted in REQUEST, create a file or
         image object and link or inline it on the current page.
 
-        - May also cause mail notifications to be sent to subscribers
-
         - if title differs from page, assume it is the new page name and
-        do a rename (the argument remains as "title" for backwards
+        do a rename (the argument remains "title" for backwards
         compatibility)
 
         - may set, clear or remove this page's show_subtopics property
 
-        This code has become more complex to support late page
-        creation, but the api should now be more general & powerful
-        than it was.  Doing all this stuff in one method simplifies
-        the layer above (the skin) I think.
-        """
-        #self._validateProxy(REQUEST)   # XXX correct ? don't think so
-                                        # do zwiki pages obey proxy roles ?
+        - sends mail notification to subscribers if appropriate
 
+        """
+        # what are we doing ?
         if page: page = unquote(page)
-        # are we changing this page ?
         if page is None:
-            p = self
-        # changing another page ?
+            p = self                    # changing this page
         elif self.pageWithNameOrId(page):
-            p = self.pageWithNameOrId(page)
-        # or creating a new page
+            p = self.pageWithNameOrId(page) # changing another page
         else:
             return self.create(page,text,type,title,REQUEST,log,
-                               subtopics=subtopics)
+                               subtopics=subtopics) # creating a page
+        if check_conflict:
+            if self.checkEditConflict(timeStamp, REQUEST):
+                return self.editConflictDialog()
+            if self.isDavLocked():
+                return self.davLockDialog()
 
-        # ok, changing p. We may be doing several things here;
-        # each of these handlers checks permissions and does the
-        # necessary. Some of these can halt further processing.
-        # todo: tie these in to mail notification, along with 
-        # other changes like reparenting
-        if check_conflict and self.checkEditConflict(timeStamp, REQUEST):
-            return self.editConflictDialog()
-        if check_conflict and hasattr(self,'wl_isLocked') and self.wl_isLocked():
-            return self.davLockDialog()
+        # ok, changing p. We may do several things at once; each of these
+        # handlers checks permissions and does the necessary.
         if p.handleDeleteMe(text,REQUEST,log): return
         p.handleEditPageType(type,REQUEST,log)
         p.handleEditText(text,REQUEST,subjectSuffix,log)
@@ -307,13 +294,15 @@ class EditingSupport:
         p.handleFileUpload(REQUEST,log)
         p.handleRename(title,leaveplaceholder,updatebacklinks,REQUEST,log)
         #if self.usingRegulations(): p.handleSetRegulations(REQUEST)
+
         p.updateCatalog()
-        # tell browser to reload the page
+
+        # tell browser to reload the page (or redirect elsewhere)
         if REQUEST:
             try:
-                u = (REQUEST.get('redirectURL',None) or
-                     REQUEST['URL2']+'/'+ quote(p.id()))
-                REQUEST.RESPONSE.redirect(u)
+                REQUEST.RESPONSE.redirect(
+                    (REQUEST.get('redirectURL',None) or
+                     REQUEST['URL2']+'/'+ quote(p.id())))
             except KeyError: pass
 
     def handleSubtopicsProperty(self,subtopics,REQUEST=None):
@@ -489,7 +478,7 @@ class EditingSupport:
         """
         Rename this page, if permissions allow.
 
-        We do various optional extras:
+        Another method that does quite a lot. Options:
         - preserve parentage of our children
         - update links throughout the wiki. Warning, this may not be 100%
         reliable. It replaces all occurrences of the old page name
