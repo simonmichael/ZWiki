@@ -8,11 +8,12 @@ from AccessControl import ClassSecurityInfo
 import Globals
 
 import Permissions
+from Utils import BLATHER
 
 
 class RatingSupport:
     """
-    I manage a rating (score) for a wiki page, based on user votes.
+    I manage a numeric rating based on user votes.
 
     User votes are stored as a dictionary keyed by username/ip address.
     A user can change their vote by re-voting.
@@ -22,20 +23,13 @@ class RatingSupport:
     _votes = None # not {}, it would be shared
 
     security.declarePrivate('votes')
-    def votes(self):
-        votes = self.aq_base._votes
-        if votes is None: return {}
-        else: return votes
+    def votes(self): return self.aq_base._votes or {}
 
     security.declarePrivate('setVotes')
-    def setVotes(self,votes):
-        self.aq_base._votes = votes
-        # make sure persistence sees this - no longer needed ?
-        #self._p_changed = 1
+    def setVotes(self,votes): self.aq_base._votes = votes
         
     security.declarePrivate('resetVotes')
-    def resetVotes(self):
-        self.setVotes({})
+    def resetVotes(self): self.setVotes({})
 
     # api methods
     
@@ -48,10 +42,13 @@ class RatingSupport:
         if username:
             votes = self.votes()
             if score is None:
-                try: del votes[username]
+                try:
+                    del votes[username]
+                    BLATHER("%s: forgot %s's vote" % (self.pageName(),username))
                 except KeyError: pass
             else:
                 votes[username] = score
+                BLATHER("%s: recorded %s vote for %s" % (self.pageName(),score,username))
             self.setVotes(votes)
             self.reindex_object() # XXX only need update votes fields
             if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1']+'#ratingform')
@@ -63,6 +60,9 @@ class RatingSupport:
         """
         return len(self.votes())
 
+    security.declareProtected(Permissions.View, 'hasVotes')
+    def hasVotes(self): return self.voteCount() > 0
+        
     security.declareProtected(Permissions.View, 'myVote')
     def myVote(self,REQUEST=None):
         """
@@ -75,12 +75,8 @@ class RatingSupport:
         """
         Get this page's average rating (an integer).
         """
-        total = 0
-        for score in self.votes().values(): total += score
-        return total / (self.voteCount() or 1)
-        
-
-
+        if self.hasVotes(): return sum(self.votes().values())/self.voteCount()
+        else: return 0
 
 # install permissions
 Globals.InitializeClass(RatingSupport) 
