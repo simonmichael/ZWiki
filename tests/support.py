@@ -33,6 +33,7 @@ def zwikiAfterSetUp(self):
         Permissions.Edit,
         Permissions.ChangeType,
         Permissions.Delete,
+        Permissions.Rate,
         Permissions.Rename,
         Permissions.Reparent,
         Permissions.Upload,

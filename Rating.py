@@ -25,8 +25,8 @@ class RatingSupport:
         self._votes = {}
         self.reindex_object() # XXX votes field only
 
-    security.declareProtected(Permissions.View, 'rate')
-    def vote(self,score,REQUEST=None):
+    security.declareProtected(Permissions.Rate, 'rate')
+    def vote(self,score=None,REQUEST=None):
         """
         Record a user's vote for this page.
         """

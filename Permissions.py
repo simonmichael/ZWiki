@@ -14,6 +14,7 @@ ChangeType    = 'Zwiki: Change page types'
 Delete        = 'Zwiki: Delete pages'
 Edit          = 'Zwiki: Edit pages'
 Rename        = 'Zwiki: Rename pages'
+Rate          = 'Zwiki: Rate pages'
 Reparent      = 'Zwiki: Reparent pages'
 
 AddPage = Add
