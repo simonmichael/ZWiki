@@ -375,14 +375,17 @@ class GeneralForms:
                                                 oldid=self.id())
 
     security.declareProtected(Permissions.Add, 'createform')
-    def createform(self, REQUEST=None, page=None, text=None):
+    def createform(self, REQUEST=None, page=None, text=None, pagename=None):
         """
         Render the create form (template-customizable).
 
         This is just editform protected by a different permission.
         The new page name and initial text may be specified. 
+
+        XXX pagename is a temporary alternate argument so the page
+        management form can call this.
         """
-        return self.editform(REQUEST,page,text,action='Create')
+        return self.editform(REQUEST,page or pagename,text,action='Create')
     
 
 #    security.declareProtected(Permissions.Edit,'xedit')

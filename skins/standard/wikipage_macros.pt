@@ -458,38 +458,40 @@ style="font-weight:bold" /></td>
 <form method="post" action="page_url" enctype="multipart/form-data"
 tal:attributes="action here/page_url" style="margin-top:0;margin-bottom:0">
 <table border="0" cellspacing="0" cellpadding="1" align="center"
-class="shade1" width="100%"
+class="shade1" width="100%" style="font-size:90%;"
 >
 <tr>
-<td align="left" valign="top" >
-<small>
-<span i18n:translate="parent_name_replace">new parent, name or replacement</span>:
+<td align="left" valign="top">
+<span i18n:translate="parent_name_replace">new parent, name, replacement, subtopic</span>:
 <br tal:condition="here/inCMF" comment="hack! cmf/plone layout hint" />
 <input 
-name="pagename" type="text" size="20" maxlength="100" value="" 
+name="pagename" type="text" size="25" maxlength="100" value="" 
 class="shade2"
-title="enter a new parent, new name, or replacement page (if any) for this one"
+title="enter a new parent, new name, replacement page (if any) or subtopic name"
 i18n:attributes="title"
-/>
-<input type="submit" name="reparent:method" value="reparent" 
-style="font-weight:normal"
+/><span style="white-space:nowrap;"
+><input type="submit" name="reparent:method" value="reparent" 
+style="font-weight:normal;"
 title="reparent this page under the page you have entered"
 i18n:attributes="value;title"
 tal:condition="python:user.has_permission('Zwiki: Reparent pages',here)" 
-/>
-<input type="submit" name="rename:method" value="rename" 
+/><input type="submit" name="rename:method" value="rename" 
 style="font-weight:normal" 
 title="rename this page to the name you have entered, updating all links"
 i18n:attributes="value;title"
 tal:condition="python:user.has_permission('Zwiki: Rename pages',here)" 
-/>
-<input type="submit" name="delete:method" value="delete!" 
+/><input type="submit" name="delete:method" value="delete!" 
 style="font-weight:normal"
-title="move this page to the recycle bin, and relink to the name you have entered."
+title="move this page to the recycle bin, and relink to the name you have entered"
 i18n:attributes="value;title"
 tal:condition="python:user.has_permission('Zwiki: Delete pages',here)" 
+/><input type="submit" name="createform:method" value="create" 
+style="font-weight:normal"
+title="create a new subtopic of this page"
+i18n:attributes="value;title"
+tal:condition="python:user.has_permission('Zwiki: Add pages',container)" 
 />
-</small>
+</span>
 </td>
 </tr>
 </table>
