@@ -9,14 +9,17 @@ import Globals
 
 import Permissions
 from Utils import BLATHER
+from UI import loadPageTemplate, onlyBodyFrom, DEFAULT_TEMPLATES
+
+DEFAULT_TEMPLATES['ratingform'] = loadPageTemplate('ratingform')
 
 
 class RatingSupport:
     """
     I manage a numeric rating based on user votes.
 
-    User votes are stored as a dictionary keyed by username/ip address.
-    A user can change their vote by re-voting.
+    Votes are stored as a dictionary keyed by username/ip address.
+    A user can change their vote by re-voting, or cancel their vote.
     """
     security = ClassSecurityInfo()
 
@@ -44,7 +47,7 @@ class RatingSupport:
             if score is None:
                 try:
                     del votes[username]
-                    BLATHER("%s: forgot %s's vote" % (self.pageName(),username))
+                    BLATHER("%s: removed %s's vote" % (self.pageName(),username))
                 except KeyError: pass
             else:
                 votes[username] = score
@@ -77,6 +80,18 @@ class RatingSupport:
         """
         if self.hasVotes(): return sum(self.votes().values())/self.voteCount()
         else: return 0
+
+    security.declareProtected(Permissions.View, 'ratingform')
+    def ratingform(self, REQUEST=None):
+        """
+        Render the page rating form as a (customizable) HTML fragment.
+
+        The page's rating, current user's vote etc. will be highlighted.
+        """
+        return onlyBodyFrom(
+            self.getSkinTemplate('ratingform')(self,REQUEST)
+            )
+
 
 # install permissions
 Globals.InitializeClass(RatingSupport) 
