@@ -37,7 +37,7 @@ class AdminSupport:
     def upgradeAll(self,render=1,partial_commits=0,rename_issues=0,REQUEST=None):
                    
         """
-        Upgrade, tone and pre-render all pages, rebuild the wiki outline, etc.
+        Update, upgrade, pre-render and re-index all pages and data structures.
 
         Requires 'Manage properties' permission on the folder.
         Normally pages are upgraded/pre-rendered as needed when viewed.
@@ -72,6 +72,8 @@ class AdminSupport:
                     msg = 'upgraded and pre-rendered page'
                 else:
                     msg = 'upgraded page'
+                # make sure every page is cataloged - slow but thorough
+                p.index_object(log=0)
                 BLATHER('%s %d/%d %s'%(msg,n,total,p.id()))
             except:
                 BLATHER('failed to upgrade page %d/%d %s: %s' \
@@ -84,11 +86,10 @@ class AdminSupport:
 
         BLATHER('upgrade complete, %d pages processed' % n)
 
-    #security.declarePublic('upgradeId')
     security.declareProtected(Permissions.View, 'upgradeId')
     def upgradeId(self,REQUEST=None,rename_issues=0):
         """
-        Make sure a page's id conforms with it's title, renaming as needed.
+        Make sure a page's id conforms with it's title (cf canonicalIdFrom).
 
         Does not leave a placeholder, so may break incoming links.  Does
         update backlinks, because it's less work than fixing up links by
@@ -121,7 +122,7 @@ class AdminSupport:
     security.declareProtected(Permissions.View, 'upgrade')
     def upgrade(self,REQUEST=None):
         """
-        Upgrade an old page instance (and possibly the parent folder).
+        Upgrade an old page instance (and possibly the folder as well).
 
         Called on every page view (set AUTO_UPGRADE=0 in Default.py to
         prevent this).  You could also call this on every page in your
