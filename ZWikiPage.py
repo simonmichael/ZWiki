@@ -653,7 +653,7 @@ class ZWikiPage(
         """
         interval = self.asAgeString(last_edit_time)
         if not prettyprint:
-            s = _("last edited %(interval)s ago").__str__() % {"interval":interval}
+            s = _("last edited %(interval)s ago") % {"interval":interval}
         else:
             try:
                 #XXX do timezone conversion ?
@@ -661,25 +661,26 @@ class ZWikiPage(
                 if lastlog: lastlog = ' ('+lastlog+')'
                 
                 # build the link around the interval
-                linked_interval = (' <a href="%(page_url)s/diff" title="' % (self.page_url()) +
-                                   (_('show last edit %(lastlog)s').__str__() % {"lastlog":lastlog}) +
+                linked_interval = (' <a href="%(page_url)s/diff" title="' % self.page_url() +
+                                   _('show last edit %(lastlog)s') % {"lastlog":lastlog} +
                                    ">" + interval + "</a>" )
                 
                 # use the link in a clear i18n way                                                                         
-                s =  (_('last edited %(interval)s ago').__str__())  % {"interval": linked_interval}
+                s =  _('last edited %(interval)s ago')  % {"interval": linked_interval}
 
             except:
-                s = (_('last edited %(interval)s ago').__str__()) % {"interval": interval}
+                s = _('last edited %(interval)s ago') % {"interval": interval}
                 
         if (last_editor and
             not re.match(r'^[0-9\.\s]*$',last_editor)):
             # escape some things that might cause trouble in an attribute
             editor = re.sub(r'"',r'',last_editor)
 
+            #XXX cleanup
             if not prettyprint:
-                s = s + " " + (_("by %(editor)s").__str__() % {"editor":editor})
+                s = s + " " + _("by %(editor)s")% {"editor":editor}
             else:
-                s = s + " " + (_("by %(editor)s").__str__() % {"editor": ("<b>%s</b>" % (editor)) })                
+                s = s + " " + _("by %(editor)s") % {"editor":"<b>%s</b>" % editor} 
         return s
     
     def linkToAllCataloged(self):
@@ -1110,7 +1111,7 @@ class ZWikiPage(
         </span>
         """
     
-        translate_msg = _(msgid).__str__()
+        translate_msg = _(msgid)
         if map:
             try:
                 translate_msg = translate_msg % (map)

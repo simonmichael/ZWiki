@@ -53,7 +53,7 @@ class ZwikiRstPageType(AbstractPageType):
         heading += '**%s** --' % (subject or '...')
         if username: heading = heading + '`%s`, ' % (username)
         heading += time
-        heading += ' `%s`__\n\n' % ( _("reply").__str__())
+        heading += ' `%s`__\n\n' % _("reply")
         if message_id:
             inreplytobit = '&in_reply_to='+quote(message_id)
         else:

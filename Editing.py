@@ -521,7 +521,7 @@ class EditingSupport:
             # the url has changed, leave a placeholder
             try: self.create(oldid,
                              _("This page was renamed to %s. You can delete this one if no longer needed.\n") % (newname),
-                             sendmail=0) #XXX 0856
+                             sendmail=0)
             # special case: we'll end up here when first saving a
             # page that was created via the CMF/Plone content
             # management interface - we can't save a placeholder

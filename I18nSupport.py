@@ -21,6 +21,12 @@ try:
 
             Called for every i18n string, performance sensitive ?
             Disables itself during unit testing.  
+
+            Also: an i18n doc I've seen (find ref) thinks that _()
+            returning a MessageIDFactory rather than a string is a good
+            thing for some unicode reason, but it causes problems here and
+            there for code that expects a string. We'll convert to a
+            string for now.
             """
             def __call__(self, ustr, default=None):
                 REQUEST = get_request()
@@ -28,7 +34,7 @@ try:
                     REQUEST.RESPONSE.setHeader( 
                         'Content-Type','text/html; charset=utf-8')
                 return MessageIDFactory.__call__(self,ustr,default)
-        _ = MessageIDFactoryWithUtf8Fix('zwiki')
+        _ = lambda s:str(MessageIDFactoryWithUtf8Fix('zwiki')(s))
         from Products.PageTemplates.PageTemplateFile import PageTemplateFile
         from Globals import HTMLFile, DTMLFile
         BLATHER('using PlacelessTranslationService for i18n')

@@ -57,11 +57,11 @@ class Tests(ZopeTestCase.ZopeTestCase):
         #        lambda self,context: MockRequest()
         #    PlacelessTranslationService.negotiate_language = \
         #        lambda self,context,domain: language
-        #    translation = str(_(string))
+        #    translation = _(string)
         #finally:
         #    PlacelessTranslationService._getContext = save1
         #    PlacelessTranslationService.negotiate_language = save2
-        translation = str(_(string))
+        translation = _(string)
         self.assertEqual(translation,expected)
 
     def test_python_i18n(self):

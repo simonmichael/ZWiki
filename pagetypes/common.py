@@ -175,7 +175,7 @@ class AbstractHtmlPageType(AbstractPageType):
             inreplytobit = ''
         #heading += ( (' <a href="%s?subject=%s%s#bottom">' 
         #             % (page.page_url(),quote(subject or ''),inreplytobit)) +
-        #             + _("reply").__str__() + '</a>' )
+        #             + _("reply") + '</a>' )
         
         heading += ' <a href="%s?subject=%s%s#bottom">reply</a>'\
                    % (page.page_url(),quote(subject or ''),inreplytobit)
@@ -189,8 +189,8 @@ class AbstractHtmlPageType(AbstractPageType):
         # but also have it look ok by default in plone, which has it's own..
         # without preventing it being overridden - perhaps b outside the span
         # will work
-        return ( '\n\n<a name="comments"><br /><b><span class="commentsheading">%(comments)s:</span></b></a>\n\n'
-                 % { "comments" : ( _("comments").__str__() ) } )
+        return '\n\n<a name="comments"><br /><b><span class="commentsheading">%(comments)s:</span></b></a>\n\n' % \
+               { "comments":_("comments") }
             
     def inlineImage(self, page, id, path):
         return '\n\n<img src="%s" />\n' % path
