@@ -12,12 +12,6 @@ UI.py:editform() calls us with these options:
 		   global pagetypes here/allowedPageTypes;
 		   global creating python:action=='Create';
 		   global editing  python:not creating;
-		   global renamingsolepage python: 
-		     editing and len(here.pages())==1 and here.id()!='FrontPage'
-		     # are we editing the only page in this wiki ?
-		     # if so, we'll make the page name default to FrontPage
-		     # (intended to rename the first ugly CMF-named page,
-		     # but will activate any time we edit a lone page) ;
 		   " />
 
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
@@ -81,8 +75,8 @@ UI.py:editform() calls us with these options:
             <input name="leaveplaceholder" 
                    value="" 
                    type="hidden"
-                   tal:condition="python:creating or renamingsolepage
-                   # never leave a placeholder in these situations ;
+                   tal:condition="python:creating
+                   # never leave a placeholder when changing name during create
                    " />
     
         <div class="field"
@@ -107,7 +101,7 @@ UI.py:editform() calls us with these options:
                    value="" 
                    size="40" 
                    tabindex=""
-                   tal:attributes="value python: (renamingsolepage and 'FrontPage') or title;
+                   tal:attributes="value title;
                                    tabindex tabindex/next|nothing;" 
                    />
         </div>
