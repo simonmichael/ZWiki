@@ -24,6 +24,8 @@ registerPageType at startup. Quick start:
 
 """
 
+from Products.ZWiki.Utils import BLATHER
+
 # global page type registry
 PAGETYPES = []
 
@@ -92,6 +94,7 @@ def registerPageType(t,prepend=0):
     else: pos = len(PAGETYPES)
     PAGETYPES.insert(pos,t)
     PAGE_TYPES[t._id] = t._name
+    BLATHER('registered page type: %s (%s)'%(t._id,t._name))
 
 def registerPageTypeUpgrade(old,new):
     """

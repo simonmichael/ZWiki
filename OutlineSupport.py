@@ -697,7 +697,7 @@ class OutlineRenderingMixin:
             return ''
         if did is None: did = []
         if got is None:
-            got = ['<ul>']
+            got = ['<ul class="aqtree3clickable">'] #SKWM 
             recursing = 0
         else:
             recursing = 1
@@ -707,7 +707,7 @@ class OutlineRenderingMixin:
                     got.append('%s <li>[%s]</li>' % (indent,n[0]))
                 if len(n) > 1:
                     if not (n[0]==here and suppress_current): #XXX temp
-                        got.append("<ul>")
+                        got.append('<ul>')
                     for i in n[1:]:
                         if type(i) == ListType:
                             got = self.renderNesting(
