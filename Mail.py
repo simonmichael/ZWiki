@@ -488,10 +488,9 @@ class MailSupport:
         """
         if not self.isMailoutEnabled(): return
 
-        # ugLy temp hack
-        # strip out the message heading typically prepended on *Discussion
-        # pages
-        mailouttext = self.formatMailout(text)
+        # XXX try unformatted mailouts again (IssueNo0696)
+        #mailouttext = self.formatMailout(text)
+        mailouttext = text
 
         # gather bits and pieces
         mhost=self.MailHost
