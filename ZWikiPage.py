@@ -697,14 +697,17 @@ class ZWikiPage(
         - we'd like to encourage serendipitous linking between free-form
           and wikiname links & pages
 
-        So this version
-        - discards non-word-separating punctuation (')
-        - converts remaining punctuation to spaces
-        - capitalizes and joins whitespace-separated words into a wikiname
-        - converts any non-zope-and-url-safe characters and _ to _hexvalue
-        - if the above results in an id that's still illegal (it begins with _
-          or it is one of the IDS_TO_AVOID (RESPONSE, etc.), prepends X
-          (note this breaks the uniqueness property. Better ideas ?)
+        So, we
+        - discard non-word-separating punctuation (')
+        - convert remaining punctuation to spaces
+        - capitalize and join whitespace-separated words into a wikiname
+        - convert any non-zope-and-url-safe characters and _ to _hexvalue
+        - if this results in an id that begins with _ (illegal), prepend X
+        - or if we have a legal id but it's one of the delicate IDS_TO_AVOID
+          (REQUEST, epoz, etc), also prepend X.
+          XXX not so good in this case, XREQUEST is an unfriendly url.
+          Better to put it at the end, for these ? Confusing ? Try it.
+          Note these last break the uniqueness property. Better ideas welcome.
 
         performance-sensitive
         """
@@ -729,9 +732,11 @@ class ZWikiPage(
                 safeid = safeid + '_%02x' % ord(c)
 
         # zope ids may not begin with _
-        if ((len(safeid) > 0 and safeid[0] == '_') or
-            safeid in IDS_TO_AVOID):
-            safeid = 'X'+safeid
+        if len(safeid) > 0 and safeid[0] == '_': safeid = 'X'+safeid
+
+        # some ids collide with common zope objects and would break things
+        if safeid in IDS_TO_AVOID: safeid = safeid+'X'
+
         return safeid
 
     security.declareProtected(Permissions.View, 'canonicalId')
