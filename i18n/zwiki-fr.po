@@ -1,10 +1,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-31-0dev\n"
-"POT-Creation-Date: Sat Jun 12 14:15:35 2004\n"
+"POT-Creation-Date: Tue Jun 15 11:46:22 2004\n"
 "PO-Revision-Date: 2004-06-14 23:00+0200\n"
-"Last-Translator: Nicolas Laurent <foenyx[at]online{dot}fr>,"
-"Raphael Badin <raphael(dot)badin{at}sopinspace[dot]com>\n"
+"Last-Translator: Nicolas Laurent <foenyx[at]online{dot}fr>,Raphael Badin "
+"<raphael(dot)badin{at}sopinspace[dot]com>\n"
 "Language-Team: <zwiki(at)zwiki.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Preferred-encodings: utf-8\n"
 "Domain: zwiki\n"
 
-#: i/Admin.py:100
+#: i/Admin.py:55
 msgid "You are not authorized to upgrade all pages."
 msgstr "Vous n'êtes pas autorisé à mettre à niveau l'ensemble des pages"
 
-#: i/Admin.py:101
+#: i/Admin.py:56
 msgid "(folder -> Manage properties)"
 msgstr "(dossier -> Gestion propriétés)"
 
@@ -56,7 +56,8 @@ msgstr ""
 
 #: i/Editing.py:619
 msgid "You are not authorized to upload files here."
-msgstr "Vous n'êtes pas autorisé à transférer de fichiers vers cette destination."
+msgstr ""
+"Vous n'êtes pas autorisé à transférer de fichiers vers cette destination."
 
 #: i/Editing.py:623
 msgid "You are not authorized to add a link on this ZWiki Page."
@@ -69,14 +70,6 @@ msgstr "quelles sont les pages liées à celle-ci ?"
 #: i/OutlineSupport.py:742
 msgid "You are here"
 msgstr "Vous êtes ici"
-
-#: i/PageTypes.py:203
-msgid "comments"
-msgstr "commentaires"
-
-#: i/PageTypes.py:361
-msgid "reply"
-msgstr "répondre"
 
 #: i/UI.py:495
 msgid "Edit conflict"
@@ -104,14 +97,15 @@ msgstr "Cliquez sur le boutton «Actualiser» de votre navigateur"
 
 #: i/UI.py:520
 msgid "Paste in your edits again, being mindful of the latest changes"
-msgstr "Collez à nouveau vos modifications, mais en tenant compte des "
-"changements apportés entre temps"
+msgstr ""
+"Collez à nouveau vos modifications, mais en tenant compte des changements "
+"apportés entre temps"
 
 #: i/UI.py:521
 msgid "Click the Change button again"
 msgstr "Cliquez sur le boutton «Changer» à nouveau"
 
-#: i/UI.py:522 i/skins/standard/editform.pt:178
+#: i/UI.py:522 i/skins/standard/editform.pt:181
 msgid "or"
 msgstr "ou"
 
@@ -236,81 +230,89 @@ msgstr ""
 "        p    version précédente\n"
 "        "
 
-#: i/Utils.py:431
+#: i/Utils.py:461
 msgid "years"
 msgstr "ans"
 
-#: i/Utils.py:431
+#: i/Utils.py:461
 msgid "year"
 msgstr "an"
 
-#: i/Utils.py:433
+#: i/Utils.py:463
 msgid "month"
 msgstr "mois"
 
-#: i/Utils.py:433
+#: i/Utils.py:463
 msgid "months"
 msgstr "mois"
 
-#: i/Utils.py:435
+#: i/Utils.py:465
 msgid "weeks"
 msgstr "semaines"
 
-#: i/Utils.py:435
+#: i/Utils.py:465
 msgid "week"
 msgstr "semaine"
 
-#: i/Utils.py:437
+#: i/Utils.py:467
 msgid "day"
 msgstr "jour"
 
-#: i/Utils.py:437
+#: i/Utils.py:467
 msgid "days"
 msgstr "jours"
 
-#: i/Utils.py:439
+#: i/Utils.py:469
 msgid "hours"
 msgstr "heures"
 
-#: i/Utils.py:439
+#: i/Utils.py:469
 msgid "hour"
 msgstr "heure"
 
-#: i/Utils.py:441
+#: i/Utils.py:471
 msgid "minute"
 msgstr "minute"
 
-#: i/Utils.py:441
+#: i/Utils.py:471
 msgid "minutes"
 msgstr "minutes"
 
-#: i/Utils.py:443
+#: i/Utils.py:473
 msgid "second"
 msgstr "seconde"
 
-#: i/Utils.py:443
+#: i/Utils.py:473
 msgid "seconds"
 msgstr "secondes"
 
-#: i/ZWikiPage.py:580
+#: i/ZWikiPage.py:561
 msgid "page in parent wiki"
 msgstr "page dans le Wiki parent"
 
-#: i/ZWikiPage.py:585
+#: i/ZWikiPage.py:566
 msgid "create this page"
 msgstr "créer cette page"
 
-#: i/ZWikiPage.py:661 i/ZWikiPage.py:674 i/ZWikiPage.py:677
+#: i/ZWikiPage.py:642 i/ZWikiPage.py:655 i/ZWikiPage.py:658
 msgid "last edited %(interval)s ago"
 msgstr "dernière édition il y a %(interval)s"
 
-#: i/ZWikiPage.py:670
+#: i/ZWikiPage.py:651
 msgid "show last edit %(lastlog)s"
 msgstr "afficher la dernière modification %(lastlog)s"
 
-#: i/ZWikiPage.py:685 i/ZWikiPage.py:687
+#: i/ZWikiPage.py:666 i/ZWikiPage.py:668
 msgid "by %(editor)s"
 msgstr "par %(editor)s"
+
+#: i/pagetypes/common.py:193
+msgid "comments"
+msgstr "commentaires"
+
+#: i/pagetypes/rst.py:55
+msgid "reply"
+msgstr "répondre"
 
 #: i/skins/dtmlmessages.pt:11
 msgid ""
@@ -649,7 +651,8 @@ msgstr "Voici les pages de controverses du Wiki"
 #: i/skins/dtmlmessages.pt:73 i/skins/dtmlmessages.pt:162
 #: i/skins/dtmlmessages.pt:258
 msgid "Enter a search term, or click the numbers to the right, or"
-msgstr "Entrez une expression à rechercher, ou cliquez sur les nombres à droite, ou"
+msgstr ""
+"Entrez une expression à rechercher, ou cliquez sur les nombres à droite, ou"
 
 #: i/skins/dtmlmessages.pt:74 i/skins/dtmlmessages.pt:163
 #: i/skins/dtmlmessages.pt:259
@@ -841,51 +844,51 @@ msgstr "Différences pour"
 msgid "cancel"
 msgstr "annuler"
 
-#: i/skins/standard/editform.pt:130
+#: i/skins/standard/editform.pt:133
 msgid "toggle source/WYSIWYG mode"
 msgstr "basculer entre les sources et le mode WYSIWYG"
 
-#: i/skins/standard/editform.pt:142
+#: i/skins/standard/editform.pt:145
 msgid "Optional change note"
 msgstr "Commentaire optionnel sur ce changement"
 
-#: i/skins/standard/editform.pt:143
+#: i/skins/standard/editform.pt:146
 msgid "a note makes RecentChanges more useful"
 msgstr "un commentaire rend la page des changements récents plus utile"
 
-#: i/skins/standard/editform.pt:161
+#: i/skins/standard/editform.pt:164
 msgid "Upload a file or image"
 msgstr "Transférer une image ou un fichier vers le Wiki"
 
-#: i/skins/standard/editform.pt:162
+#: i/skins/standard/editform.pt:165
 msgid "upload a file and link it on this page ?"
 msgstr "transférer un fichier vers le Wiki et le lier à cette page ?"
 
-#: i/skins/standard/editform.pt:172
+#: i/skins/standard/editform.pt:175
 msgid "For editing help, see"
 msgstr "Pour obtenir de l'aide sur l'édition, consultez"
 
-#: i/skins/standard/editform.pt:174
+#: i/skins/standard/editform.pt:177
 msgid "HelpPage"
 msgstr "Le Manuel"
 
-#: i/skins/standard/editform.pt:181
+#: i/skins/standard/editform.pt:184
 msgid "TextFormattingRules"
 msgstr "Les Règles de formattage"
 
-#: i/skins/standard/editform.pt:195
+#: i/skins/standard/editform.pt:198
 msgid "Create"
 msgstr "Créer"
 
-#: i/skins/standard/editform.pt:196
+#: i/skins/standard/editform.pt:199
 msgid "create this wiki page"
 msgstr "créer cette page wiki"
 
-#: i/skins/standard/editform.pt:198
+#: i/skins/standard/editform.pt:201
 msgid "Cancel"
 msgstr "Annuler"
 
-#: i/skins/standard/editform.pt:198
+#: i/skins/standard/editform.pt:201
 msgid "cancel this edit and return to the page"
 msgstr "annuler cette édition et retourner à la page"
 
@@ -1101,8 +1104,8 @@ msgstr "Nouvelle hiérarchie, nouveau nom, ou remplacement"
 msgid ""
 "enter a new parent, new name, replacement page (if any) or subtopic name"
 msgstr ""
-"entrer une nouvelle page parente, un nouveau nom, une page "
-"pour remplacer celle-ci (au besoin), ou le nom d'une sous rubrique"
+"entrer une nouvelle page parente, un nouveau nom, une page pour remplacer "
+"celle-ci (au besoin), ou le nom d'une sous rubrique"
 
 #: i/skins/standard/wikipage_macros.pt:469
 msgid "reparent"
@@ -1260,7 +1263,7 @@ msgstr ""
 "            Plain Text (texte non formaté) et tapez le document\n"
 "            comme vous le faîtes d'habitude."
 
-#: i/skins/zwiki_plone/editform.pt:250
+#: i/skins/zwiki_plone/editform.pt:253
 msgid "Save"
 msgstr "Sauvegarder"
 
