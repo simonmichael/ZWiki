@@ -123,7 +123,7 @@ class TrackerSupport:
 
     def shortIssueNamesEnabled(self):
         """Should issue page names start with just # in this wiki ?"""
-        return getattr(self.folder(),'short_issue_names',0) and 1
+        return 1 #return getattr(self.folder(),'short_issue_names',1) and 1
 
     security.declareProtected(Permissions.View, 'issueNumberAndNameFrom')
     def issueNumberAndNameFrom(self, pagename):
