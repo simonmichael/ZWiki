@@ -189,7 +189,7 @@ class OutlineManagerMixin:
         parentmap = {}
         for p in self.pages():
             name = p.Title
-            parents = p.parents[:] # use a copy
+            parents = list(p.parents) # take a copy, and make sure it's a list
             parents = filter(lambda x:x,parents) # remove stray null strings
             parents.sort()
             parentmap[name] = parents
