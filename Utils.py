@@ -131,11 +131,19 @@ class Utils:
 
         This should only happen with catalog brains, where the catalog does not
         have all the metadata Zwiki expects. We can't add fields to catalog brains,
-        so we'll return a PageBrain instead.
+        so in that case we'll return a PageBrain instead.
+
+        If the catalog says eg page id is None, we don't do anything about that;
+        we'll return it in the metadata.
+
+        If getObject() returns None (a stale catalog entry), we return None.
         """
         for attr in PAGE_METADATA:
             if not hasattr(brain,attr):
-                return self.metadataFor(brain.getObject())
+                # incomplete brain - make a PageBrain
+                p = brain.getObject()
+                if p: return self.metadataFor(p)
+                else: return None
         return brain
 
     security.declareProtected(Permissions.View, 'isZwikiPage')

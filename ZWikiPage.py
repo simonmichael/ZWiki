@@ -777,6 +777,9 @@ class ZWikiPage(
         zodb and add them to the catalog brains. In this case the
         catalog's caching advantage is lost.
 
+        ensureCompleteMetadata may return None, indicating a stale catalog
+        entry; we filter those out.
+
         Different catalog configurations screw up our title and text
         searches somewhat. For the standard search form, we want: case
         insensitive, partial matching in page names and page text.
@@ -785,18 +788,20 @@ class ZWikiPage(
         if self.hasCatalogIndexesMetadata((['meta_type','path'], [])):
             if self.linkToAllCataloged():
                 # look at all cataloged pages ?
-                return map(lambda x:self.ensureCompleteMetadataIn(x),
-                           self.searchCatalog(meta_type=self.meta_type,
-                                              **kw))
+                return filter(lambda x:x is not None,
+                              map(lambda x:self.ensureCompleteMetadataIn(x),
+                                  self.searchCatalog(meta_type=self.meta_type,
+                                                     **kw)))
             else:
                 # or (usually) just the ones in this folder
                 wikipath = self.wikiPath()
                 def folderpath(s): return s[:s.rfind('/')]
-                return map(lambda x:self.ensureCompleteMetadataIn(x),
-                           filter(lambda x:folderpath(x.getPath())==wikipath,
-                                  self.searchCatalog(meta_type=self.meta_type,
-                                                     path=wikipath,
-                                                     **kw)))
+                return filter(lambda x:x is not None,
+                              map(lambda x:self.ensureCompleteMetadataIn(x),
+                                  filter(lambda x:folderpath(x.getPath())==wikipath,
+                                         self.searchCatalog(meta_type=self.meta_type,
+                                                            path=wikipath,
+                                                            **kw))))
         else:
             results = []
             for p in self.pageObjects(): results.append(self.metadataFor(p))
@@ -838,9 +843,12 @@ class ZWikiPage(
     def pageIds(self):
         """
         Return a list of all page ids in this wiki.
+
+        If there's junk in the catalog, pages could return a page with id
+        None; we guard against that.
         """
         #return self.folder().objectIds(spec=self.meta_type) # more robust ?
-        return map(lambda x:x.id,self.pages())
+        return filter(lambda x:x is not None, map(lambda x:x.id,self.pages()))
 
     security.declareProtected(Permissions.View, 'pageNames')
     def pageNames(self):
