@@ -116,7 +116,8 @@ class MailIn:
         This perhaps should do the isJunk test up front to avoid
         unnecessary resource usage.
         """
-        BLATHER('mailin.py: processing incoming message:\n%s' % message)
+        #BLATHER('mailin.py processing incoming message:\n%s' % message)
+        BLATHER('mailin.py processing incoming message\n')
         self.context = context
         self.original = message
         self.msg = email.message_from_string(self.original)
@@ -146,9 +147,13 @@ class MailIn:
 	# ..Type Error - configured ezmlm to provide beenthere instead (?)
         self.xbeenthere = self.msg.get('X-BeenThere')
 
-        plaintextpart = typed_subpart_iterator(self.msg,
-                                               'text',
-                                               'plain').next().get_payload(decode=1)
+        # raises an exception if there's no text part
+        try:
+            plaintextpart = typed_subpart_iterator(self.msg,
+                                                   'text',
+                                                   'plain').next().get_payload(decode=1)
+        except StopIteration:
+            plaintextpart = ''
         self.body = self.cleanupBody(plaintextpart)
         
     def isJunk(self):
@@ -187,6 +192,9 @@ class MailIn:
         #    return 1
         #if re.search(r'(?mi)^Precedence:\s*(junk|bulk|list)\s*$',msgtext):
         #    return 1
+        # no plaintext part
+        if not self.body:
+            return 1
         return 0
 
     def isSpamReport(self):
