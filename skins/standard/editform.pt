@@ -8,6 +8,7 @@
       actioning  python:(creating and 'Creating') or 'Editing';
       previewing python:request.form.get('editform',None);
       page       request/form/page|options/page;
+      newname    request/form/title|page;
       title      string:${container/title} ${actioning} ${page};
       text       request/form/text|options/text;
       type       request/form/type|python:(creating and here.defaultPageType()) or here.pageTypeId();
@@ -79,7 +80,7 @@
                          title="the name of this wiki page (changing this may be slow!)"                          
                          tabindex="" class="formfield" style="font-weight:bold;"
 			 i18n:attributes="title"
-                         tal:attributes="value python:page;" />
+                         tal:attributes="value python:newname;" />
                 </span>
               </td>
               <td valign="middle" align="right" bgcolor="#dddddd">

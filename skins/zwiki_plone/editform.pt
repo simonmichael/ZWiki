@@ -13,6 +13,7 @@ UI.py:editform() calls us with these options:
            global actioning  python:(creating and 'Creating') or 'Editing';
            global previewing python:request.form.get('editform',None);
            global page       request/form/page|options/page;
+           global newname    request/form/title|page;
            global text       request/form/text|options/text;
            global type       request/form/type|python:(creating and here.defaultPageType()) or here.pageTypeId();
            global timestamp  request/form/timeStamp|here/timeStamp;
@@ -91,8 +92,7 @@ UI.py:editform() calls us with these options:
                    " />
     
         <div class="field"
-             tal:define="error errors/title|nothing;
-                         title page;"> 
+             tal:define="error errors/title|nothing;">
 
             <label for="title" i18n:translate="label_pagename">Page name</label>
             
@@ -112,7 +112,7 @@ UI.py:editform() calls us with these options:
                    value="" class="formfield"
                    size="40" 
                    tabindex=""
-                   tal:attributes="value title;
+                   tal:attributes="value newname;
                                    tabindex tabindex/next|nothing;" 
                    />
         </div>
