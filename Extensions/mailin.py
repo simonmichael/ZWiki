@@ -1,10 +1,9 @@
 """
 zwiki mailin - post an incoming email message to a wiki
 
-This external method expects at least one argument, a message in RFC2822
-format, and takes appropriate action in the wiki where it has been called
-(usually, posts a comment to one of the pages). Typically called by an
-email alias like::
+This external method receives a message in RFC2822 format and takes
+appropriate action in the wiki where it has been called (usually, posts a
+comment to one of the pages). Typically called by an email alias like::
 
  | curl -n -F 'msg=<-' http://mysite/mywikifolder/mailin
 
@@ -25,20 +24,14 @@ Here are the delivery rules, in essence:
 
 - if there is not at least one zwiki page in the current folder, DISCARD.
 
-- identify recipient:
-  if the message has multiple recipients, decide which one is us as follows:
-  the first recipient matching the folder's mail_from property,
-  or the first one looking like a typical zwiki mailin alias (.*MAILINADDREXP),
-  or the first one.
-
-- check sender:
+- check sender's subscription status:
   unless the folder's mailin_policy property, possibly acquired, is
   'open', check that the sender is either subscribed somewhere in the wiki
   or listed in the mail_accept_nonmembers property, and if not BOUNCE the
   message.
 
-- if the recipient looks like a zwiki tracker mailin alias
-  (.*TRACKERADDREXP), CREATE AN ISSUE page.  Otherwise,
+- if the recipient looks like a zwiki tracker mailin alias (.*TRACKERADDREXP),
+  CREATE AN ISSUE page.  Otherwise,
 
 - identify destination page name:
   the first [bracketed name] (PAGEINSUBJECTEXP) in the message subject
@@ -46,7 +39,7 @@ Here are the delivery rules, in essence:
 
 - if no destination page name was found, DISCARD.
 
-- if no wiki page by that name exists, CREATE it
+- if no wiki page by that name exists (fuzzy match allowed), CREATE it
 
 - POST message as a comment to that page
 
@@ -84,44 +77,6 @@ TRACKERADDREXP = r'(tracker|bugs|issues)@'
 MAX_SIGNATURE_STRIP_SIZE = 500
 
 
-def isJunk(msgtext):
-    """
-    Return true if this message should be silently ignored.
-
-    Ideally, this should block mail loops, auto-responders and spam,
-    but allow mailing list messages and mailouts from other zwikis.
-    Currently it flags everything that looks like it came from a bot.
-    Actually I don't think works as a way to filter autoresponders.
-    We should make sure to include mailing headers in our mailouts
-    and then most autoresponders should ignore us.
-
-    qmail-autoresponder's bot-filtering procedure is reportedly good - see
-    http://untroubled.org/qmail-autoresponder/procedure.txt .
-    TMDA and spamassassin are two good spam filters - see
-    http://software.libertine.org/tmda ,
-    http://spamassassin.taint.org .
-    """
-    # a zwiki mailout
-    if re.search(r'(?mi)^X-Zwiki-Version:',msgtext):
-        return 1
-    # the most common auto-response subject
-    if re.search(r'(?mi)^Subject:.*out of office',msgtext):
-        return 1
-    # XXX don't need this ?
-    # mailing list or low precedence mail
-    # should allow these, but need to pass through the list loop
-    # headers to avoid mail loop between mutually-subscribed zwiki and
-    # mail list
-    #if re.search(r'(?mi)^(List-ID|(X-)?Mailing-List|X-ML-Name):',msgtext):
-    #    return 1
-    #if re.search(
-    #    r'(?mi)^List-(Help|Unsubscribe|Subscribe|Post|Owner|Archive):',msgtext):
-    #    return 1
-    #if re.search(r'(?mi)^Precedence:\s*(junk|bulk|list)\s*$',msgtext):
-    #    return 1
-    return 0
-
-
 class MailIn:
     """
     I represent an incoming mail message being posted to a wiki folder.
@@ -145,9 +100,16 @@ class MailIn:
                  context,
                  message,
                  ):
+        """
+        Extract the bits of interest from an RFC2822 message string.
+
+        This perhaps should do the isJunk test up front to avoid
+        unnecessary resource usage.
+        """
         BLATHER('mailin.py: processing incoming message:\n%s' % message)
         self.context = context
-        self.msg = email.message_from_string(message)
+        self.original = message
+        self.msg = email.message_from_string(self.original)
         self.date = self.msg['Date']
         self.subject = re.sub(r'\n',r'',self.msg.get('Subject',''))
         self.realSubject = re.sub(r'.*?\[.*?\] ?(.*)',r'\1',self.subject)
@@ -179,6 +141,44 @@ class MailIn:
                                                'plain').next().get_payload()
         self.body = self.cleanupBody(plaintextpart)
         
+    def isJunk(self):
+        """
+        Return true if this message should be silently ignored.
+
+        Ideally, this should block mail loops, auto-responders and spam,
+        but allow mailing list messages and mailouts from other zwikis.
+        Currently it flags everything that looks like it came from a bot.
+        Actually I don't think works as a way to filter autoresponders.
+        We should make sure to include mailing headers in our mailouts
+        and then most autoresponders should ignore us.
+
+        qmail-autoresponder's bot-filtering procedure is reportedly good - see
+        http://untroubled.org/qmail-autoresponder/procedure.txt .
+        TMDA and spamassassin are two good spam filters - see
+        http://software.libertine.org/tmda ,
+        http://spamassassin.taint.org .
+        """
+        msgtext = self.original
+        # a zwiki mailout
+        if re.search(r'(?mi)^X-Zwiki-Version:',msgtext):
+            return 1
+        # the most common auto-response subject
+        if re.search(r'(?mi)^Subject:.*out of office',msgtext):
+            return 1
+        # XXX don't need this ?
+        # mailing list or low precedence mail
+        # should allow these, but need to pass through the list loop
+        # headers to avoid mail loop between mutually-subscribed zwiki and
+        # mail list
+        #if re.search(r'(?mi)^(List-ID|(X-)?Mailing-List|X-ML-Name):',msgtext):
+        #    return 1
+        #if re.search(
+        #    r'(?mi)^List-(Help|Unsubscribe|Subscribe|Post|Owner|Archive):',msgtext):
+        #    return 1
+        #if re.search(r'(?mi)^Precedence:\s*(junk|bulk|list)\s*$',msgtext):
+        #    return 1
+        return 0
+
     def cleanupBody(self,body):
         """
         Clean up/remove uninteresting parts of an incoming message body.
@@ -224,10 +224,11 @@ class MailIn:
         """
         The message recipient that was used for delivery here (an email tuple).
 
-        The recipient helps determine the mailin action; if there are
-        several, we need to find out which one refers to the wiki.  We'll
-        use the folder's mail_from property as a hint, or guess if we have
-        to. 
+        This may be needed to determine the mailin action.  If the message
+        has multiple recipients, decide which one refers to us as follows:
+        - the first recipient matching the folder's mail_from property,
+        - or the first one looking like a typical zwiki mailin alias (.*MAILINADDREXP),
+        - or the first one.
         """
         if len(self.recipients) == 1:
             return self.recipients[0]
@@ -253,28 +254,31 @@ class MailIn:
         """
         pass
         
-    def decideDestination(self):
+    def decideMailinAction(self):
         """
-        Figure out what wiki page this mail-in should go to.
+        Figure out what we should do with this mail-in.
 
         Fairly involved calculations trying to figure out what to do in a
-        robust way. Sets self.destpage, self.destpagename, self.newpage,
-        self.trackerissue, or sets a message in self.error if it can't.
-        
+        robust way (see the module docstring for more).  Sets
+        self.destpage, self.destpagename, self.newpage, self.trackerissue,
+        or sets a message in self.error if it can't.
         """
+        if self.isJunk():
+            self.error = '\nDiscarding junk mailin.\n\n\n'
+            return
+
         if self.contextIsPage():
             self.destpage = self.workingpage = self.context
             self.destpagename = self.destpage.title_or_id()
             self.newpage = self.trackerissue = 0
+            self.checkMailinAllowed()
             return
 
         # posting in wiki folder context (the normal case)
 
-        # find the default mailin page if any
-        # note this is now different from the default_page folder property
         defaultpagename = getattr(self.folder(),'default_mailin_page',None)
 
-        # find a preliminary working page
+        # find a page to work from
         #self.workingpage = self.workingPage()
         if defaultpagename:
             self.workingpage = getattr(self.folder(),defaultpagename,None)
@@ -288,6 +292,9 @@ class MailIn:
             BLATHER('mailin.py: could not find a working page')
             self.error = '\nSorry, I could not find an existing wiki page to work with.\n\n\n'
             return
+
+        self.checkMailinAllowed()
+        if self.error: return
 
         # are we creating a tracker issue, which doesn't need a name ?
         if re.search(TRACKERADDREXP,self.recipient()[1]):
@@ -318,7 +325,7 @@ class MailIn:
                 self.workingpage.pageWithFuzzyName(self.destpagename,
                                                    ignore_case=1))
         if page:
-            # also change working page to get right parentage etc.
+            # also adjust working page to get right parentage etc.
             self.destpage = self.workingpage = page
             self.destpagename = self.destpage.title_or_id()
         # or we have the name of a new page to create..
@@ -329,18 +336,17 @@ class MailIn:
             self.error = '\nMessage had no destination page, ignored.\n\n\n'
             BLATHER('mailin.py: message had no destination page, ignored')
 
-        return
-
     def checkMailinAllowed(self):
         """
-        Check if the mailin determined by decideDestination() is permitted.
+        Check if the mailin determined by decideMailinAction() is permitted.
 
         Is the sender allowed to mail in here ?
         - if open posting is allowed, we'll accept anybody.
         - otherwise they must be a subscriber somewhere in the wiki
         - or be listed in the mail_accept_nonmembers property
           (useful to allow mailing lists, etc)
-        Set self.error if not permitted.
+        Otherwise, set self.error.
+        Requires self.workingpage to be already set up.
         """
         postingpolicy = getattr(self.folder(),'mailin_policy',None)
         accept = getattr(self.folder(),'mail_accept_nonmembers',[])
@@ -392,16 +398,12 @@ class MailIn:
 
 
 def mailin(self, msg):
-
-    context = self
-
-    # silently discard any junk before doing anything else
-    if isJunk(msg): return
-
+    """
+    See module docstring.
+    """
     # parse and figure out how to deliver the message
-    m = MailIn(context, msg)
-    m.decideDestination()
-    m.checkMailinAllowed()
+    m = MailIn(self, msg)
+    m.decideMailinAction()
     if m.error: return m.error
 
     # stash the sender's username in REQUEST as a hint for usernameFrom
@@ -416,7 +418,6 @@ def mailin(self, msg):
         m.workingpage.create(m.destpagename,text='',sendmail=0)
         m.destpage = m.workingpage.pageWithName(m.destpagename)
         subjectPrefix = '(new) '
-        #BLATHER('mailin.py: created '+m.destpagename)
 
     # or new tracker issue ?
     elif m.trackerissue:
@@ -436,7 +437,6 @@ def mailin(self, msg):
                                                  sendmail=0)
         m.destpage = m.workingpage.pageWithName(pagename)
         subjectPrefix = '(new) '
-        #BLATHER('mailin.py: created issue '+subject)
 
     # add comment
     # use the time of sending, or the time of posting to the wiki - see
@@ -454,4 +454,3 @@ def mailin(self, msg):
                        message_id=m.messageid,
                        in_reply_to=m.inreplyto
                        )
-    #BLATHER('mailin.py: commented on '+m.destpagename)
