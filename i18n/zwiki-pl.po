@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-31-0\n"
-"POT-Creation-Date: Wed Jun 16 15:02:46 2004\n"
+"POT-Creation-Date: Sat Jul  3 09:18:06 2004\n"
 "PO-Revision-Date: 2004-06-10 10:38+0100\n"
 "Last-Translator: Jakub Wiśniowski <klippe@pf.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -56,11 +56,11 @@ msgstr ""
 "Ta strona zmieniła nazwę na %s. Możesz ją skasować gdy nie będzie już "
 "potrzebna.\n"
 
-#: i/Editing.py:619
+#: i/Editing.py:621
 msgid "You are not authorized to upload files here."
 msgstr "Nie masz odpowiednich praw do wgrania plików tutaj."
 
-#: i/Editing.py:623
+#: i/Editing.py:625
 msgid "You are not authorized to add a link on this ZWiki Page."
 msgstr "Nie masz odpowiednich praw do dodania odnośnika na tej stronie ZWiki"
 
@@ -298,7 +298,7 @@ msgstr "ostatnia modyfikacja: %(interval)s"
 msgid "show last edit %(lastlog)s"
 msgstr "ostatnia edycja: %(lastlog)s"
 
-#: i/ZWikiPage.py:679 i/ZWikiPage.py:681
+#: i/ZWikiPage.py:680 i/ZWikiPage.py:682
 msgid "by %(editor)s"
 msgstr "przez %(editor)s"
 
@@ -306,7 +306,7 @@ msgstr "przez %(editor)s"
 msgid "comments"
 msgstr "komentarze"
 
-#: i/pagetypes/rst.py:55
+#: i/pagetypes/rst.py:56
 msgid "reply"
 msgstr "odpowiedź"
 
@@ -1096,12 +1096,39 @@ msgstr ""
 "istnieje)"
 
 #: i/skins/standard/wikipage_macros.pt:469
+msgid "reparent"
+msgstr "zmień rodzica"
+
+#: i/skins/standard/wikipage_macros.pt:469
+msgid "reparent this page under the page you have entered"
+msgstr "Uczyń stronę której nazwę wpisałeś rodzicem bieżącej strony"
+
 #: i/skins/standard/wikipage_macros.pt:474
+msgid "rename this page to the name you have entered, updating all links"
+msgstr ""
+"Zmień nazwę strony na taką jaką wpisałeś (wszystkie odnośniki zostaną "
+"zaktualizowane)"
+
+#: i/skins/standard/wikipage_macros.pt:474
+msgid "rename"
+msgstr "zmień nazwę"
+
 #: i/skins/standard/wikipage_macros.pt:479
+msgid "delete!"
+msgstr "skasuj!"
+
+#: i/skins/standard/wikipage_macros.pt:479
+msgid ""
+"move this page to the recycle bin, and relink to the name you have entered"
+msgstr "umieść stronę w koszu i zaktualizuj odnośniki"
+
 #: i/skins/standard/wikipage_macros.pt:484
-#, fuzzy
-msgid "title"
-msgstr "Tytuł"
+msgid "create"
+msgstr "twórz"
+
+#: i/skins/standard/wikipage_macros.pt:484
+msgid "create a new subtopic of this page"
+msgstr "utwórz nowy podtemat na tej stronie"
 
 #: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
 msgid "Backlinks for"
@@ -1446,32 +1473,14 @@ msgstr "wprowadź komentarz i naciśnij przycisk dodaj"
 msgid "add-comment"
 msgstr "Dodaj komentarz"
 
-#~ msgid "reparent"
-#~ msgstr "zmień rodzica"
+# Default: "Add a comment"
+#, fuzzy
+#~ msgid "add a comment"
+#~ msgstr "Dodaj komentarz"
 
-#~ msgid "reparent this page under the page you have entered"
-#~ msgstr "Uczyń stronę której nazwę wpisałeś rodzicem bieżącej strony"
-
-#~ msgid "rename this page to the name you have entered, updating all links"
-#~ msgstr ""
-#~ "Zmień nazwę strony na taką jaką wpisałeś (wszystkie odnośniki zostaną "
-#~ "zaktualizowane)"
-
-#~ msgid "rename"
-#~ msgstr "zmień nazwę"
-
-#~ msgid "delete!"
-#~ msgstr "skasuj!"
-
-#~ msgid ""
-#~ "move this page to the recycle bin, and relink to the name you have entered"
-#~ msgstr "umieść stronę w koszu i zaktualizuj odnośniki"
-
-#~ msgid "create"
-#~ msgstr "twórz"
-
-#~ msgid "create a new subtopic of this page"
-#~ msgstr "utwórz nowy podtemat na tej stronie"
+#, fuzzy
+#~ msgid "title"
+#~ msgstr "Tytuł"
 
 # Default: "edit this page"
 #~ msgid "edit-page"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: Wed Jun 16 15:02:46 2004\n"
+"POT-Creation-Date: Sat Jul  3 09:18:06 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Juan David Ibáñez Palomar <j-david@noos.fr>\n"
 "Language-Team: spanish <es@li.org>\n"
@@ -51,11 +51,11 @@ msgid ""
 "This page was renamed to %s. You can delete this one if no longer needed.\n"
 msgstr ""
 
-#: i/Editing.py:619
+#: i/Editing.py:621
 msgid "You are not authorized to upload files here."
 msgstr "No estás autorizado a cargar ficheros aquí."
 
-#: i/Editing.py:623
+#: i/Editing.py:625
 msgid "You are not authorized to add a link on this ZWiki Page."
 msgstr "No estás autorizado a añadir un enlace en esta página ZWiki."
 
@@ -248,7 +248,7 @@ msgstr ""
 msgid "show last edit %(lastlog)s"
 msgstr ""
 
-#: i/ZWikiPage.py:679 i/ZWikiPage.py:681
+#: i/ZWikiPage.py:680 i/ZWikiPage.py:682
 msgid "by %(editor)s"
 msgstr ""
 
@@ -256,7 +256,7 @@ msgstr ""
 msgid "comments"
 msgstr ""
 
-#: i/pagetypes/rst.py:55
+#: i/pagetypes/rst.py:56
 msgid "reply"
 msgstr ""
 
@@ -1044,12 +1044,39 @@ msgid ""
 msgstr ""
 
 #: i/skins/standard/wikipage_macros.pt:469
+msgid "reparent"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:469
+msgid "reparent this page under the page you have entered"
+msgstr ""
+
 #: i/skins/standard/wikipage_macros.pt:474
+msgid "rename this page to the name you have entered, updating all links"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:474
+#, fuzzy
+msgid "rename"
+msgstr "Crear wiki"
+
 #: i/skins/standard/wikipage_macros.pt:479
+msgid "delete!"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:479
+msgid ""
+"move this page to the recycle bin, and relink to the name you have entered"
+msgstr ""
+
 #: i/skins/standard/wikipage_macros.pt:484
 #, fuzzy
-msgid "title"
-msgstr "Título"
+msgid "create"
+msgstr "Crear wiki"
+
+#: i/skins/standard/wikipage_macros.pt:484
+msgid "create a new subtopic of this page"
+msgstr ""
 
 #: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
 msgid "Backlinks for"
@@ -1372,8 +1399,8 @@ msgid "add-comment"
 msgstr ""
 
 #, fuzzy
-#~ msgid "create"
-#~ msgstr "Crear wiki"
+#~ msgid "title"
+#~ msgstr "Título"
 
 #, fuzzy
 #~ msgid "You are not authorized to comment on this ZWiki Page."

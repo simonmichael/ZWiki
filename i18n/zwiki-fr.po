@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-31-0dev\n"
-"POT-Creation-Date: Wed Jun 16 15:02:46 2004\n"
+"POT-Creation-Date: Sat Jul  3 09:18:06 2004\n"
 "PO-Revision-Date: 2004-06-14 23:00+0200\n"
 "Last-Translator: Nicolas Laurent <foenyx[at]online{dot}fr>,Raphael Badin "
 "<raphael(dot)badin{at}sopinspace[dot]com>\n"
@@ -54,12 +54,12 @@ msgstr ""
 "Cette page a été renommée en «%s». Vous pouvez supprimer celle-ci si elle "
 "n'est plus requise.\n"
 
-#: i/Editing.py:619
+#: i/Editing.py:621
 msgid "You are not authorized to upload files here."
 msgstr ""
 "Vous n'êtes pas autorisé à transférer de fichiers vers cette destination."
 
-#: i/Editing.py:623
+#: i/Editing.py:625
 msgid "You are not authorized to add a link on this ZWiki Page."
 msgstr "Vous n'êtes pas autorisé à ajouter de lien sur cette page ZWiki."
 
@@ -302,7 +302,7 @@ msgstr "dernière édition il y a %(interval)s"
 msgid "show last edit %(lastlog)s"
 msgstr "afficher la dernière modification %(lastlog)s"
 
-#: i/ZWikiPage.py:679 i/ZWikiPage.py:681
+#: i/ZWikiPage.py:680 i/ZWikiPage.py:682
 msgid "by %(editor)s"
 msgstr "par %(editor)s"
 
@@ -310,7 +310,7 @@ msgstr "par %(editor)s"
 msgid "comments"
 msgstr "commentaires"
 
-#: i/pagetypes/rst.py:55
+#: i/pagetypes/rst.py:56
 msgid "reply"
 msgstr "répondre"
 
@@ -1113,12 +1113,43 @@ msgstr ""
 "celle-ci (au besoin), ou le nom d'une sous rubrique"
 
 #: i/skins/standard/wikipage_macros.pt:469
+msgid "reparent"
+msgstr "ré-hiérarchiser"
+
+#: i/skins/standard/wikipage_macros.pt:469
+msgid "reparent this page under the page you have entered"
+msgstr ""
+"Placer la page courante sous la hiérarchie de la page dont vous avez entré "
+"le nom"
+
 #: i/skins/standard/wikipage_macros.pt:474
+msgid "rename this page to the name you have entered, updating all links"
+msgstr ""
+"Renommer cette page avec le nom que vous avez entré, et mettre à jour tous "
+"les liens"
+
+#: i/skins/standard/wikipage_macros.pt:474
+msgid "rename"
+msgstr "renommer"
+
 #: i/skins/standard/wikipage_macros.pt:479
+msgid "delete!"
+msgstr "supprimer"
+
+#: i/skins/standard/wikipage_macros.pt:479
+msgid ""
+"move this page to the recycle bin, and relink to the name you have entered"
+msgstr ""
+"déplacer cette page vers la corbeille, et rediriger les anciens liens, "
+"pointant sur la page à supprimer, vers le nom que vous avez entré"
+
 #: i/skins/standard/wikipage_macros.pt:484
-#, fuzzy
-msgid "title"
-msgstr "Titre"
+msgid "create"
+msgstr "créer"
+
+#: i/skins/standard/wikipage_macros.pt:484
+msgid "create a new subtopic of this page"
+msgstr "créer une sous-rubrique pour cette page"
 
 #: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
 msgid "Backlinks for"
@@ -1471,36 +1502,13 @@ msgstr ""
 msgid "add-comment"
 msgstr "Ajouter un commentaire"
 
-#~ msgid "reparent"
-#~ msgstr "ré-hiérarchiser"
+#, fuzzy
+#~ msgid "add a comment"
+#~ msgstr "Ajouter un commentaire"
 
-#~ msgid "reparent this page under the page you have entered"
-#~ msgstr ""
-#~ "Placer la page courante sous la hiérarchie de la page dont vous avez "
-#~ "entré le nom"
-
-#~ msgid "rename this page to the name you have entered, updating all links"
-#~ msgstr ""
-#~ "Renommer cette page avec le nom que vous avez entré, et mettre à jour "
-#~ "tous les liens"
-
-#~ msgid "rename"
-#~ msgstr "renommer"
-
-#~ msgid "delete!"
-#~ msgstr "supprimer"
-
-#~ msgid ""
-#~ "move this page to the recycle bin, and relink to the name you have entered"
-#~ msgstr ""
-#~ "déplacer cette page vers la corbeille, et rediriger les anciens liens, "
-#~ "pointant sur la page à supprimer, vers le nom que vous avez entré"
-
-#~ msgid "create"
-#~ msgstr "créer"
-
-#~ msgid "create a new subtopic of this page"
-#~ msgstr "créer une sous-rubrique pour cette page"
+#, fuzzy
+#~ msgid "title"
+#~ msgstr "Titre"
 
 # Default: "edit this page"
 #~ msgid "edit-page"

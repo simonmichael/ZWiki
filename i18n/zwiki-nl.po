@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: zwiki-nl\n"
-"POT-Creation-Date: Wed Jun 16 15:02:46 2004\n"
+"POT-Creation-Date: Sat Jul  3 09:18:06 2004\n"
 "PO-Revision-Date: 2004-07-03 13:40+0200\n"
 "Last-Translator: Jaap Noordzij <jaap@jaapnoordzij.nl>\n"
 "Language-Team: Nederlands <nl@li.org>\n"
@@ -53,16 +53,17 @@ msgid "You are not authorized to rename this ZWiki Page."
 msgstr "U bent niet gemachtigd om deze Wiki pagina een andere naam te geven"
 
 #: i/Editing.py:523
-msgid "This page was renamed to %s. You can delete this one if no longer needed.\n"
+msgid ""
+"This page was renamed to %s. You can delete this one if no longer needed.\n"
 msgstr ""
 "Deze pagina is hernoemd naar %s. U kunt deze pagina verwijderen als hij niet "
 "meer nodig is \n"
 
-#: i/Editing.py:619
+#: i/Editing.py:621
 msgid "You are not authorized to upload files here."
 msgstr "U bent niet gemachtigd om hier bestanden te laden"
 
-#: i/Editing.py:623
+#: i/Editing.py:625
 msgid "You are not authorized to add a link on this ZWiki Page."
 msgstr "U bent niet gemachtigd om een link aan deze ZWiki pagina toe te voegen"
 
@@ -305,7 +306,7 @@ msgstr "laatst gewijzigd %(interval)s geleden"
 msgid "show last edit %(lastlog)s"
 msgstr "toon laatste wijziging %(lastlog)s"
 
-#: i/ZWikiPage.py:679 i/ZWikiPage.py:681
+#: i/ZWikiPage.py:680 i/ZWikiPage.py:682
 msgid "by %(editor)s"
 msgstr "door %(editor)s"
 
@@ -313,7 +314,7 @@ msgstr "door %(editor)s"
 msgid "comments"
 msgstr "Commentaar"
 
-#: i/pagetypes/rst.py:55
+#: i/pagetypes/rst.py:56
 msgid "reply"
 msgstr "antwoord"
 
@@ -352,7 +353,9 @@ msgstr "Geef hier uw voorkeurinstellingen aan."
 #: i/skins/dtmlmessages.pt:18 i/skins/dtmlmessages.pt:108
 #: i/skins/dtmlmessages.pt:205
 msgid "You may also click the full, simple, minimal links if provided."
-msgstr "U kunt ook op de links \"volledig\", \"eenvoudig\" of \"minimaal\" klikken als ze zichtbaar zijn."
+msgstr ""
+"U kunt ook op de links \"volledig\", \"eenvoudig\" of \"minimaal\" klikken "
+"als ze zichtbaar zijn."
 
 #: i/skins/dtmlmessages.pt:19 i/skins/dtmlmessages.pt:109
 #: i/skins/dtmlmessages.pt:206
@@ -424,7 +427,9 @@ msgstr "hoogte"
 #: i/skins/dtmlmessages.pt:26 i/skins/dtmlmessages.pt:116
 #: i/skins/dtmlmessages.pt:213
 msgid "textarea dimensions; width will be 100% if supported"
-msgstr "afmetingen van het tekstgebied; de breedte wordt zo mogelijk ingesteld op 100%"
+msgstr ""
+"afmetingen van het tekstgebied; de breedte wordt zo mogelijk ingesteld op "
+"100%"
 
 #: i/skins/dtmlmessages.pt:27 i/skins/dtmlmessages.pt:117
 #: i/skins/dtmlmessages.pt:214
@@ -547,7 +552,9 @@ msgstr "Een enkel woord werkt het best voor het zoeken naar pagina namen."
 msgid ""
 "Case-insensitivity and wildcards may be supported depending on your catalog "
 "configuration."
-msgstr "Case-onafhankelijkheid of wildcards kunnen ondersteund zijn, afhanekelijk van de Catalog instellingen."
+msgstr ""
+"Case-onafhankelijkheid of wildcards kunnen ondersteund zijn, afhanekelijk "
+"van de Catalog instellingen."
 
 #: i/skins/dtmlmessages.pt:56 i/skins/dtmlmessages.pt:146
 #: i/skins/dtmlmessages.pt:243
@@ -581,8 +588,11 @@ msgstr "hits"
 
 #: i/skins/dtmlmessages.pt:61 i/skins/dtmlmessages.pt:151
 #: i/skins/dtmlmessages.pt:248
-msgid "no catalog or the catalog search gave an error, a brute-force search was used"
-msgstr "er is geen Catalog of de Catalog-zoekactie gaf een fout. Er is een rechttoe-rechtaan zoekactie uitgevoerd"
+msgid ""
+"no catalog or the catalog search gave an error, a brute-force search was used"
+msgstr ""
+"er is geen Catalog of de Catalog-zoekactie gaf een fout. Er is een rechttoe-"
+"rechtaan zoekactie uitgevoerd"
 
 #: i/skins/dtmlmessages.pt:63 i/skins/dtmlmessages.pt:153
 #: i/skins/dtmlmessages.pt:250
@@ -636,7 +646,8 @@ msgstr "anoniem"
 #: i/skins/dtmlmessages.pt:72 i/skins/dtmlmessages.pt:162
 #: i/skins/dtmlmessages.pt:259
 msgid "Pages marked (NEW) have been created within the last week"
-msgstr "Pagina's die zijn gemarkeerd als (NIEUW) zijn in de afgelopen week gemaakt"
+msgstr ""
+"Pagina's die zijn gemarkeerd als (NIEUW) zijn in de afgelopen week gemaakt"
 
 #: i/skins/dtmlmessages.pt:73 i/skins/dtmlmessages.pt:163
 #: i/skins/dtmlmessages.pt:260
@@ -1066,7 +1077,8 @@ msgstr "antwoorden"
 
 #: i/skins/standard/wikipage_macros.pt:405
 msgid "to comment (and cc any subscribers) enter text here and click add"
-msgstr "geef commentaar (met cc aan abonnees): voer de tekst in en klik op toevoegen"
+msgstr ""
+"geef commentaar (met cc aan abonnees): voer de tekst in en klik op toevoegen"
 
 #: i/skins/standard/wikipage_macros.pt:429
 msgid "${nb} subscribers"
@@ -1086,15 +1098,48 @@ msgid "parent_name_replace"
 msgstr "nieuwe ouder, naam of vervanging"
 
 #: i/skins/standard/wikipage_macros.pt:463
-msgid "enter a new parent, new name, replacement page (if any) or subtopic name"
-msgstr "geef een pagina als ouder, nieuwe naam of vervanging (indien nodig) of een onderwerpnaam"
+msgid ""
+"enter a new parent, new name, replacement page (if any) or subtopic name"
+msgstr ""
+"geef een pagina als ouder, nieuwe naam of vervanging (indien nodig) of een "
+"onderwerpnaam"
 
 #: i/skins/standard/wikipage_macros.pt:469
+msgid "reparent"
+msgstr "nieuwe ouder toekennen"
+
+#: i/skins/standard/wikipage_macros.pt:469
+msgid "reparent this page under the page you have entered"
+msgstr "Geef deze pagina als nieuwe ouder de pagina die u hebt opgegeven"
+
 #: i/skins/standard/wikipage_macros.pt:474
+msgid "rename this page to the name you have entered, updating all links"
+msgstr ""
+"hernoem deze pagina naar de naam die u hebt opgegeven. Alle verwijzingen  "
+"worden bijgewerkt."
+
+#: i/skins/standard/wikipage_macros.pt:474
+msgid "rename"
+msgstr "hernoemen"
+
 #: i/skins/standard/wikipage_macros.pt:479
+msgid "delete!"
+msgstr "verwijder!"
+
+#: i/skins/standard/wikipage_macros.pt:479
+msgid ""
+"move this page to the recycle bin, and relink to the name you have entered"
+msgstr ""
+"Verwijder deze pagina naar de prullenbak en maak een nieuwe verwijzing naar "
+"de naam die u hebt opgegeven."
+
 #: i/skins/standard/wikipage_macros.pt:484
-msgid "title"
-msgstr "titel"
+msgid "create"
+msgstr "Maken"
+
+#: i/skins/standard/wikipage_macros.pt:484
+msgid "create a new subtopic of this page"
+msgstr "toon nooit sub-onderwerpen op deze pagina"
 
 #: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
 msgid "Backlinks for"
@@ -1137,8 +1182,8 @@ msgstr "Wezen (Singeltons)"
 #: i/skins/zwiki_plone/contentspage.pt:21
 msgid "singleton_desc"
 msgstr ""
-"Wezen zijn pagina's die niet zijn verbonden via verwijzingen "
-"met andere pagina's."
+"Wezen zijn pagina's die niet zijn verbonden via verwijzingen met andere "
+"pagina's."
 
 #: i/skins/zwiki_plone/diffform.pt:15
 msgid "History for"
@@ -1451,3 +1496,36 @@ msgstr "geef hier commentaar en klik op toevoegen of klik op wijzigen"
 msgid "add-comment"
 msgstr "voeg commentaar toe"
 
+#~ msgid "title"
+#~ msgstr "titel"
+
+# Default: "edit this page"
+#~ msgid "edit-page"
+#~ msgstr "bewerk deze pagina"
+
+#, fuzzy
+#~ msgid "Description:"
+#~ msgstr "Mail abonnement"
+
+#~ msgid "Enter a word"
+#~ msgstr "Voeg een woord toe"
+
+#~ msgid "Show subtopics on this page & below ?"
+#~ msgstr "Toon subonderwerpen op deze pagina & lager ?"
+
+#~ msgid "show subtopics in full mode, or if ancestor page has 'always'"
+#~ msgstr ""
+#~ "toon sub-onderwerpen in volledige mode of wanneer een ouder pagina "
+#~ "'altijd' aangeeft"
+
+#~ msgid "default"
+#~ msgstr "standaard"
+
+#~ msgid "never"
+#~ msgstr "nooit"
+
+#~ msgid "always show subtopics on this page"
+#~ msgstr "toon altijd sub-onderwerpen op deze pagina"
+
+#~ msgid "always"
+#~ msgstr "altijd"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-31-0rc3\n"
-"POT-Creation-Date: Wed Jun 16 15:02:46 2004\n"
+"POT-Creation-Date: Sat Jul  3 09:18:06 2004\n"
 "PO-Revision-Date: 2004-06-22 07:35+0800\n"
 "Last-Translator: T.C. Chou <tcchou-at-tcchou-dot-org>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
@@ -49,11 +49,11 @@ msgid ""
 "This page was renamed to %s. You can delete this one if no longer needed.\n"
 msgstr "这页已被改名为 %s. 如果此页不需要, 您可以删除.\n"
 
-#: i/Editing.py:619
+#: i/Editing.py:621
 msgid "You are not authorized to upload files here."
 msgstr "您没有权力在这里上传档案."
 
-#: i/Editing.py:623
+#: i/Editing.py:625
 msgid "You are not authorized to add a link on this ZWiki Page."
 msgstr "您没有权力在此页增加连接."
 
@@ -291,7 +291,7 @@ msgstr "最新变更在 %(interval)s 以前"
 msgid "show last edit %(lastlog)s"
 msgstr "显示最新修改 %(lastlog)s"
 
-#: i/ZWikiPage.py:679 i/ZWikiPage.py:681
+#: i/ZWikiPage.py:680 i/ZWikiPage.py:682
 msgid "by %(editor)s"
 msgstr "作者 %(editor)s"
 
@@ -299,7 +299,7 @@ msgstr "作者 %(editor)s"
 msgid "comments"
 msgstr "建议"
 
-#: i/pagetypes/rst.py:55
+#: i/pagetypes/rst.py:56
 msgid "reply"
 msgstr "回复"
 
@@ -1085,12 +1085,38 @@ msgid ""
 msgstr "输入一个新父层, 页面名称, 或替代名称(如果有的话) 或 子主题名称"
 
 #: i/skins/standard/wikipage_macros.pt:469
+msgid "reparent"
+msgstr "变更父层"
+
+#: i/skins/standard/wikipage_macros.pt:469
+msgid "reparent this page under the page you have entered"
+msgstr "变更这一个页面的父页, 让它在已有页面之下"
+
 #: i/skins/standard/wikipage_macros.pt:474
+msgid "rename this page to the name you have entered, updating all links"
+msgstr "变更这一页面名称为您已输入的, 更新所有连结"
+
+# Default: "Page name"
+#: i/skins/standard/wikipage_macros.pt:474
+msgid "rename"
+msgstr "变更名称"
+
 #: i/skins/standard/wikipage_macros.pt:479
+msgid "delete!"
+msgstr "删除!"
+
+#: i/skins/standard/wikipage_macros.pt:479
+msgid ""
+"move this page to the recycle bin, and relink to the name you have entered"
+msgstr "把这一页面搬移到垃圾桶, 并且重新连结到您已输入的名称."
+
 #: i/skins/standard/wikipage_macros.pt:484
-#, fuzzy
-msgid "title"
-msgstr "标题"
+msgid "create"
+msgstr "建立"
+
+#: i/skins/standard/wikipage_macros.pt:484
+msgid "create a new subtopic of this page"
+msgstr "为这页面建立一个新的子主题吗?"
 
 #: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
 msgid "Backlinks for"
@@ -1434,31 +1460,14 @@ msgstr "在这里输入建议并且点选 新增(add) 按钮, 或点选 修改(e
 msgid "add-comment"
 msgstr "新增一个建议"
 
-#~ msgid "reparent"
-#~ msgstr "变更父层"
+# Default: "Add a comment"
+#, fuzzy
+#~ msgid "add a comment"
+#~ msgstr "新增一个建议"
 
-#~ msgid "reparent this page under the page you have entered"
-#~ msgstr "变更这一个页面的父页, 让它在已有页面之下"
-
-#~ msgid "rename this page to the name you have entered, updating all links"
-#~ msgstr "变更这一页面名称为您已输入的, 更新所有连结"
-
-# Default: "Page name"
-#~ msgid "rename"
-#~ msgstr "变更名称"
-
-#~ msgid "delete!"
-#~ msgstr "删除!"
-
-#~ msgid ""
-#~ "move this page to the recycle bin, and relink to the name you have entered"
-#~ msgstr "把这一页面搬移到垃圾桶, 并且重新连结到您已输入的名称."
-
-#~ msgid "create"
-#~ msgstr "建立"
-
-#~ msgid "create a new subtopic of this page"
-#~ msgstr "为这页面建立一个新的子主题吗?"
+#, fuzzy
+#~ msgid "title"
+#~ msgstr "标题"
 
 # Default: "edit this page"
 #~ msgid "edit-page"

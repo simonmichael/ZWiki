@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-30-0\n"
-"POT-Creation-Date: Wed Jun 16 15:02:46 2004\n"
+"POT-Creation-Date: Sat Jul  3 09:18:06 2004\n"
 "PO-Revision-Date: 2004-06-19 17:49+0200\n"
 "Last-Translator: Lele Gaifax <lele@seldati.it>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
@@ -53,11 +53,11 @@ msgstr ""
 "Questa pagina è stata rinominata %s.  Puoi cancellare questa se non serve "
 "più.\n"
 
-#: i/Editing.py:619
+#: i/Editing.py:621
 msgid "You are not authorized to upload files here."
 msgstr "Non sei autorizzato a caricare dei file qui."
 
-#: i/Editing.py:623
+#: i/Editing.py:625
 msgid "You are not authorized to add a link on this ZWiki Page."
 msgstr "Non sei autorizzato ad aggiungere collegamenti a questa pagina ZWiki."
 
@@ -297,7 +297,7 @@ msgstr "modificata %(interval)s fa"
 msgid "show last edit %(lastlog)s"
 msgstr "mostra l'ultima modifica %(lastlog)s"
 
-#: i/ZWikiPage.py:679 i/ZWikiPage.py:681
+#: i/ZWikiPage.py:680 i/ZWikiPage.py:682
 msgid "by %(editor)s"
 msgstr "da %(editor)s"
 
@@ -305,7 +305,7 @@ msgstr "da %(editor)s"
 msgid "comments"
 msgstr "commenti"
 
-#: i/pagetypes/rst.py:55
+#: i/pagetypes/rst.py:56
 msgid "reply"
 msgstr "replica"
 
@@ -1117,11 +1117,41 @@ msgstr ""
 "(eventualmente) sostituita da questa oppure il nome del sotto argomento"
 
 #: i/skins/standard/wikipage_macros.pt:469
+#, fuzzy
+msgid "reparent"
+msgstr "Aggiorna gerarchia"
+
+#: i/skins/standard/wikipage_macros.pt:469
+msgid "reparent this page under the page you have entered"
+msgstr ""
+
 #: i/skins/standard/wikipage_macros.pt:474
+msgid "rename this page to the name you have entered, updating all links"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:474
+#, fuzzy
+msgid "rename"
+msgstr "nome"
+
 #: i/skins/standard/wikipage_macros.pt:479
+msgid "delete!"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:479
+msgid ""
+"move this page to the recycle bin, and relink to the name you have entered"
+msgstr ""
+
 #: i/skins/standard/wikipage_macros.pt:484
-msgid "title"
-msgstr "titolo"
+#, fuzzy
+msgid "create"
+msgstr "Crea"
+
+#: i/skins/standard/wikipage_macros.pt:484
+#, fuzzy
+msgid "create a new subtopic of this page"
+msgstr "crea questa pagina"
 
 #: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
 msgid "Backlinks for"
@@ -1474,3 +1504,10 @@ msgstr ""
 #: i/skins/standard/wikipage_macros.pt:440
 msgid "add-comment"
 msgstr "aggiungi un commento"
+
+#, fuzzy
+#~ msgid "add a comment"
+#~ msgstr "aggiungi un commento"
+
+#~ msgid "title"
+#~ msgstr "titolo"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zwiki 0.9.10\n"
-"POT-Creation-Date: Wed Jun 16 15:02:46 2004\n"
+"POT-Creation-Date: Sat Jul  3 09:18:06 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,11 +48,11 @@ msgid ""
 "This page was renamed to %s. You can delete this one if no longer needed.\n"
 msgstr ""
 
-#: i/Editing.py:619
+#: i/Editing.py:621
 msgid "You are not authorized to upload files here."
 msgstr ""
 
-#: i/Editing.py:623
+#: i/Editing.py:625
 msgid "You are not authorized to add a link on this ZWiki Page."
 msgstr ""
 
@@ -241,7 +241,7 @@ msgstr ""
 msgid "show last edit %(lastlog)s"
 msgstr ""
 
-#: i/ZWikiPage.py:679 i/ZWikiPage.py:681
+#: i/ZWikiPage.py:680 i/ZWikiPage.py:682
 msgid "by %(editor)s"
 msgstr ""
 
@@ -249,7 +249,7 @@ msgstr ""
 msgid "comments"
 msgstr ""
 
-#: i/pagetypes/rst.py:55
+#: i/pagetypes/rst.py:56
 msgid "reply"
 msgstr ""
 
@@ -1019,12 +1019,37 @@ msgid ""
 "enter a new parent, new name, replacement page (if any) or subtopic name"
 msgstr ""
 
-# Default: "reparent"
 #: i/skins/standard/wikipage_macros.pt:469
+msgid "reparent"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:469
+msgid "reparent this page under the page you have entered"
+msgstr ""
+
 #: i/skins/standard/wikipage_macros.pt:474
+msgid "rename this page to the name you have entered, updating all links"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:474
+msgid "rename"
+msgstr ""
+
 #: i/skins/standard/wikipage_macros.pt:479
+msgid "delete!"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:479
+msgid ""
+"move this page to the recycle bin, and relink to the name you have entered"
+msgstr ""
+
 #: i/skins/standard/wikipage_macros.pt:484
-msgid "title"
+msgid "create"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:484
+msgid "create a new subtopic of this page"
 msgstr ""
 
 #: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29

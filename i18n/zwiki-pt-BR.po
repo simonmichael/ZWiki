@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki 0.30.0\n"
-"POT-Creation-Date: Wed Jun 16 15:02:46 2004\n"
+"POT-Creation-Date: Sat Jul  3 09:18:06 2004\n"
 "PO-Revision-Date: 2004-05-11 17:00-0200E\n"
 "Last-Translator: Jean Rodrigo Ferri <jeanrodrigoferri@yahoo.com.br>\n"
 "Language-Team: TcheZope.org <tchezope@yahoogrupos.com.br>\n"
@@ -54,11 +54,11 @@ msgstr ""
 "Esta página foi renomeada para %s. Você pode deletá-la não precisar por "
 "muito tempo.\n"
 
-#: i/Editing.py:619
+#: i/Editing.py:621
 msgid "You are not authorized to upload files here."
 msgstr "Você não está autorizado a carregar arquivos aqui."
 
-#: i/Editing.py:623
+#: i/Editing.py:625
 msgid "You are not authorized to add a link on this ZWiki Page."
 msgstr "Você não está autorizado a adicionar um link nesta Página ZWiki."
 
@@ -259,7 +259,7 @@ msgstr ""
 msgid "show last edit %(lastlog)s"
 msgstr ""
 
-#: i/ZWikiPage.py:679 i/ZWikiPage.py:681
+#: i/ZWikiPage.py:680 i/ZWikiPage.py:682
 msgid "by %(editor)s"
 msgstr ""
 
@@ -268,7 +268,7 @@ msgstr ""
 msgid "comments"
 msgstr "Conteúdos"
 
-#: i/pagetypes/rst.py:55
+#: i/pagetypes/rst.py:56
 msgid "reply"
 msgstr ""
 
@@ -1080,13 +1080,42 @@ msgid ""
 "enter a new parent, new name, replacement page (if any) or subtopic name"
 msgstr ""
 
-# Default: "reparent"
 #: i/skins/standard/wikipage_macros.pt:469
-#: i/skins/standard/wikipage_macros.pt:474
-#: i/skins/standard/wikipage_macros.pt:479
-#: i/skins/standard/wikipage_macros.pt:484
-msgid "title"
+#, fuzzy
+msgid "reparent"
+msgstr "Reparentar"
+
+#: i/skins/standard/wikipage_macros.pt:469
+msgid "reparent this page under the page you have entered"
 msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:474
+msgid "rename this page to the name you have entered, updating all links"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:474
+#, fuzzy
+msgid "rename"
+msgstr "Nome da página"
+
+#: i/skins/standard/wikipage_macros.pt:479
+msgid "delete!"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:479
+msgid ""
+"move this page to the recycle bin, and relink to the name you have entered"
+msgstr ""
+
+#: i/skins/standard/wikipage_macros.pt:484
+#, fuzzy
+msgid "create"
+msgstr "Nome da página"
+
+#: i/skins/standard/wikipage_macros.pt:484
+#, fuzzy
+msgid "create a new subtopic of this page"
+msgstr "Mostrar subtópicos na página abaixo?"
 
 #: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
 msgid "Backlinks for"
@@ -1434,20 +1463,8 @@ msgid "add-comment"
 msgstr ""
 
 #, fuzzy
-#~ msgid "reparent"
-#~ msgstr "Reparentar"
-
-#, fuzzy
-#~ msgid "rename"
-#~ msgstr "Nome da página"
-
-#, fuzzy
-#~ msgid "create"
-#~ msgstr "Nome da página"
-
-#, fuzzy
-#~ msgid "create a new subtopic of this page"
-#~ msgstr "Mostrar subtópicos na página abaixo?"
+#~ msgid "add a comment"
+#~ msgstr "Conteúdos"
 
 #~ msgid "Show subtopics on this page & below ?"
 #~ msgstr "Mostrar subtópicos na página abaixo?"
