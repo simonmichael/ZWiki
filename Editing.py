@@ -33,40 +33,39 @@ class EditingSupport:
     def checkPermission(self, permission, object):
         return getSecurityManager().checkPermission(permission,object)
 
-# XXX refactor
-
-    security.declareProtected(Permissions.View, 'create') 
-    # really Permissions.Add, but keep our informative unauthorized message
+    security.declareProtected(Permissions.Add, 'create') 
     def create(self,page,text=None,type=None,title='',REQUEST=None,log='',
                leaveplaceholder=1, updatebacklinks=1, sendmail=1,
                subtopics=None):
         """
-        Create a new wiki page and redirect there if appropriate; can
-        upload a file at the same time.  Normally edit() will call
-        this for you.
+        Create a new wiki page, with optional extras.
 
-        Assumes page has been url-quoted. If it's not a url-safe name, we
-        will create the page with a url-safe id that's similar. We assume
-        this id won't match anything already existing (zwiki would have
-        linked it instead of offering to create it).
+        Normally edit() will call this for you. 
 
-        Can handle a rename during page creation also. This seems less
-        sensible than in edit(), but it helps support CMF/Plone.
+        We assume the page name comes url-quoted. If it's not a url-safe
+        name, we will create the page with a similar url-safe id, which we
+        assume won't match any existing page (or zwiki would have linked
+        instead of offering to create). Other features:
+
+        - can upload a file at the same time.  
+
+        - can set the subtopics display property
+
+        - can handle a rename during page creation. This helps CMF/Plone
+        and is occasionally useful.
+        
+        - redirects to the new page if appropriate
+
         """
-        # do we have permission ?
-        if not self.checkPermission(Permissions.Add,self.folder()):
-            raise 'Unauthorized', (
-                _('You are not authorized to add ZWiki Pages here.'))
-
         name = unquote(page)
         id = self.canonicalIdFrom(name)
 
-        # make a new (blank) page object, situate it
-        # in the parent folder and get a hold of it's
-        # normal acquisition wrapper
+        # here goes.. sequence is delicate here
+
+        # make a new page object and situate it in the wiki
+        # get a hold of it's acquisition wrapper
         p = self.__class__(source_string='', __name__=id)
-        # make sure the title is set, since manage_afterAdd
-        # will use it to make an entry in the wiki outline
+        # set title now since manage_afterAdd will use it for wiki outline
         p.title = name
         # newid should be the same as id, but don't assume
         newid = self.folder()._setObject(id,p)
@@ -79,65 +78,41 @@ class EditingSupport:
         p.parents = [self.title_or_id()]
         self.wikiOutline().add(p.pageName(),p.parents) # update wiki outline
 
-        # set the specified page type, otherwise use this wiki's default
-        p.setPageType(type)
-
-        # set initial page text as edit() would, with cleanups and dtml
-        # validation
+        # choose the specified type, the default type or whatever we're allowed 
+        p.setPageType(type or self.defaultPageType())
         p.setText(text or '',REQUEST)
-
-        # if a file was submitted as well, handle that
         p.handleFileUpload(REQUEST)
-
-        # if a subtopics property was specified, handle that
         p.handleSubtopicsProperty(subtopics,REQUEST)
-
-        # plone support, etc: they might alter the page name in the
-        # creation form! allow that. We do a full rename after all the
-        # above to make sure everything gets handled properly.  We need to
-        # commit first though, so p.cb_isMoveable() succeeds.
-        # Renaming will do all the indexing we need.
+        if p.autoSubscriptionEnabled(): p.subscribeThisUser(REQUEST)
+        #if p.usingRegulations(): p.setRegulations(REQUEST,new=1)
+        # users can alter the page name in the creation form; allow that.
+        # We do a full rename, after all the above, to make sure
+        # everything gets handled properly.  We must first commit though,
+        # to get p.cb_isMoveable(). Renaming will also get us indexed.
         if title and title != p.title_or_id():
             get_transaction().note('rename during creation')
             get_transaction().commit()
             p.handleRename(title,leaveplaceholder,updatebacklinks,REQUEST,log)
         else:
-            # we got indexed after _setObject,
-            # but do it again with our text in place
+            # we got indexed after _setObject, but do it again with our text
             p.index_object()
 
-        #if p.usingRegulations():
-        #    # initialize regulations settings.
-        #    p.setRegulations(REQUEST,new=1)
-
-        # if auto-subscription is enabled (folder-wide), subscribe the creator
-        if p.autoSubscriptionEnabled():
-           usernameoremail = (REQUEST and (
-                              str(REQUEST.get('AUTHENTICATED_USER')) or
-                              REQUEST.cookies.get('email')))
-           if usernameoremail:
-               if not self.isWikiSubscriber(usernameoremail):
-                   p.subscribe(usernameoremail)
-                   BLATHER('auto-subscribing',usernameoremail,'to',p.id())
-
-        # always mail out page creations, unless disabled
-        # and give these a message id we can use for threading
-        message_id = self.messageIdFromTime(p.creationTime())
+        # mail subscribers, unless disabled
         if sendmail:
-            p.sendMailToSubscribers(p.read(),
-                                    REQUEST=REQUEST,
-                                    subjectSuffix='',
-                                    subject='(new) '+log,
-                                    message_id=message_id)
-
-        # redirect browser if needed
+            p.sendMailToSubscribers(
+                p.read(),
+                REQUEST=REQUEST,
+                subjectSuffix='',
+                subject='(new) '+log,
+                message_id=self.messageIdFromTime(p.creationTime())
+                )
+        # and move on
         if REQUEST is not None:
             try:
                 u = (REQUEST.get('redirectURL',None) or
                      REQUEST['URL2']+'/'+ quote(p.id()))
                 REQUEST.RESPONSE.redirect(u)
-            except KeyError:
-                pass
+            except KeyError: pass
 
     security.declarePublic('isDavLocked')
     def isDavLocked(self):
@@ -205,6 +180,11 @@ class EditingSupport:
         self.setPreRendered(self.preRendered()+t)
         self.cookDtmlIfNeeded()
 
+        self.setLastEditor(REQUEST)
+        self.setLastLog(note)
+        if self.autoSubscriptionEnabled(): self.subscribeThisUser(REQUEST)
+        self.updateCatalog()
+
         # send out mail to any subscribers
         # hack the username in there for usernameFrom
         if REQUEST: REQUEST.cookies['zwiki_username'] = m['From']
@@ -216,10 +196,6 @@ class EditingSupport:
                                    exclude_address=exclude_address
                                    )
 
-        if self.autoSubscriptionEnabled(): self.subscribeThisUser(REQUEST)
-        self.setLastEditor(REQUEST)
-        self.setLastLog(note)
-        self.updateCatalog()
         if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1']+'#bottom')
 
     security.declareProtected(Permissions.Comment, 'append')
