@@ -12,17 +12,17 @@
  recentlisting="'?sort_on=lastEditTime&sort_order=reverse&num=%s'%recentnum"
  >
 <!-- issue search form ------------------------- -->
-<a name="tracker" />
+<a name="tracker"></a>
  <form action="&dtml-URL;" method="GET">
    <table border="0" cellspacing="1" cellpadding="0" width="100%">
      <tr>
        <td valign="top">
          <!-- CUSTOM TEXT -->
-         <dtml-translate domain=zwiki>Here is the wiki's issue tracker.</dtml-translate>
+         <dtml-translate domain=zwiki>Here are the wiki's issue pages.</dtml-translate>
          <!-- END OF CUSTOM TEXT -->
-         
          <dtml-translate domain=zwiki>Enter a search term, or click the numbers to the right, or</dtml-translate>
-          <a href="&dtml-filterUrl;"><dtml-translate domain=zwiki>filter issues.</dtml-translate></a>
+          <a href="&dtml-filterUrl;"><dtml-translate domain=zwiki>filter issues</dtml-translate></a>.
+         <br />
          <br />
          <b>
            <input type="text" name="textortitle" size="25" maxlength="100" 
@@ -34,22 +34,21 @@
          </b>
        </td>
        <td valign="top" class="">
+         <span style="font-size:100%;">
          <table border="0" cellspacing="2" cellpadding="0" 
            <dtml-in issue_statuses prefix=x>
              <dtml-let bold="x_sequence_item in REQUEST.get('status','')">
                <tr>
                  <td align="right">
-                   <small>
                      <dtml-var "bold and '<b>' or ''">
                      <a href="&dtml-URL;?status:list=&dtml-x_sequence_item;&sort_on=severity_index&dtml-scrollto;"
                       ><dtml-var "_.len(pages(isIssue=1,status=x_sequence_item))"
                       ></a>
                      <dtml-var "bold and '</b>' or ''">
-                   </small>
                  </td>
                  <td align="left" nowrap>
                    <dtml-var "bold and '<b>' or ''">
-                   <small> &dtml-x_sequence_item;</small>
+                   &dtml-x_sequence_item;
                    <dtml-var "bold and '</b>' or ''">
                  </td>
                </tr>
@@ -59,17 +58,15 @@
              <tr>
                <td align="right">
                  <br />
-                 <small>
                  <dtml-var "bold and '<b>' or ''">
                    <a href="&dtml-URL;&dtml-recentlisting;&dtml-scrollto;"
                    >&dtml-recentnum;</a>
                  <dtml-var "bold and '</b>' or ''">
-                 </small>
                </td>
                <td align="left" nowrap>
                  <br />
                  <dtml-var "bold and '<b>' or ''">
-                 <small>recent</small>
+                 recent
                  <dtml-var "bold and '</b>' or ''">
                </td>
              </tr>
@@ -78,44 +75,43 @@
              <tr>
                <td align="right">
                  <dtml-var "bold and '<b>' or ''">
-                 <small>
                    <a href="&dtml-URL;?sort_on=id&dtml-scrollto;"
                    >&dtml-issueCount;</a>
-                 </small>
                  <dtml-var "bold and '</b>' or ''">
                </td>
                <td align="left" nowrap>
                  <dtml-var "bold and '<b>' or ''">
-                 <small>all</small>
+                 all
                  <dtml-var "bold and '</b>' or ''">
                </td>
              </tr>
              </dtml-let>
          </table>
+         </span>
        </td>
        <td valign="top" class="">
+         <span style="font-size:100%;">
          <table border="0" cellspacing="2" cellpadding="0">
            <dtml-in issue_categories prefix=x>
              <dtml-let bold="x_sequence_item in REQUEST.get('category','')">
                <tr>
                  <td align="right">
-                   <small>
                    <dtml-var "bold and '<b>' or ''">
                    <a href="&dtml-URL;?category:list=&dtml.url_quote-sequence-item;&sort_on=status_index&dtml-scrollto;"
                      ><dtml-var "_.len(pages(isIssue=1,category=_['sequence-item']))"
                      ></a>
                    <dtml-var "bold and '</b>' or ''">
-                   </small>
                  </td>
                  <td align="left" nowrap>
                    <dtml-var "bold and '<b>' or ''">
-                   <small> &dtml-sequence-item;</small>
+                   &dtml-sequence-item;
                    <dtml-var "bold and '</b>' or ''">
                  </td>
                </tr>
              </dtml-let>
            </dtml-in>
          </table>
+         </span>
        </td>
        <dtml-comment>
        <td align=right valign="top" class="">
@@ -124,15 +120,15 @@
               ><dtml-var "_.len(pages(isIssue=1,status=['open','pending']))"></a></b>
            /<b><a href="&dtml-URL;?sort_on=&dtml-sort_on;&dtml-scrollto;">&dtml-issueCount;</a></b><br />
          </big></big></big></big>
-         <small>open/total issues</small>
+         <span style="font-size:90%;">open/total issues</span>
        </td>
        </dtml-comment> 
     </tr>
    </table>
  </form>
-
+ <p>
  <!-- issue search results ------------------------- -->
- <a name="issues" />
+ <a name="issues"></a>
  <dtml-comment>dtml madness</dtml-comment>
  <dtml-comment>
    Three cases:
@@ -343,21 +339,30 @@
      </dtml-in>
    </table>
  </dtml-let>
- 
- 
+ <p>
  <!-- add issue form ------------------------- -->
- <a name="addissue" />
+ <a name="addissue"></a>
  <form action="&dtml-URL;" method="POST">
-   <b><dtml-translate domain=zwiki>Add an issue:</dtml-translate></b>
-   <table border="0" cellspacing="0" cellpadding="5" width="60%">
-     <tr bgcolor="<dtml-var "'#ffffff' #issueColourFor(status='open')">">
-       <td nowrap>
-         <dtml-translate domain=zwiki>Description:</dtml-translate>
-         <b><input type="text" name="newtitle" 
-             value="<dtml-var newtitle missing html_quote>" 
-             size="60" maxlength="200" style="font-weight:bold" /></b>
-         <br />
+   <b><dtml-translate domain=zwiki>Add a new issue:</dtml-translate></b>
+   <br /><br />
+   <table border="0" cellspacing="1" cellpadding="0" width="60%">
+     <tr valign="middle">
+       <td align="right">
+         <dtml-translate domain=zwiki>Name:</dtml-translate>
+       </td>
+       <td>
+         <b>
+           <input 
+            type="text" name="newtitle" 
+            value="<dtml-var newtitle missing html_quote>" 
+            size="40" maxlength="200" style="font-weight:bold;width:100%;" />
+         </b>
+       </td>
+     <tr valign="middle">
+       <td align="right">
          <dtml-translate domain=zwiki>Category:</dtml-translate>
+       </td>
+       <td nowrap>
          <select name="newcategory">
            <dtml-in issue_categories>
            <option <dtml-var "_['sequence-item'] == 'zwiki: general' and 'SELECTED' or ''">>
@@ -365,32 +370,40 @@
            </option>
            </dtml-in>
          </select> 
-         <a href="TrackerSearchTips"><dtml-translate domain=zwiki>Severity:</dtml-translate></a>
-         <select name="newseverity">
+         &nbsp;<dtml-translate domain=zwiki>Severity:</dtml-translate
+         ><select name="newseverity">
            <dtml-in issue_severities>
            <option <dtml-var "_['sequence-item'] == 'normal' and 'SELECTED' or ''">>
              &dtml-sequence-item;
            </option>
            </dtml-in>
          </select> 
-         <dtml-translate domain=zwiki>Status:</dtml-translate>
-         <select name="newstatus">
+         &nbsp;<dtml-translate domain=zwiki>Status:</dtml-translate
+         ><select name="newstatus">
            <dtml-in issue_statuses>
            <option <dtml-var "_['sequence-item'] == 'open' and 'SELECTED' or ''">>
              &dtml-sequence-item;
            </option>
            </dtml-in>
          </select>
-         <br />
+       </td>
+     </tr>
+     <tr valign="top">
+       <td align="right">
          <dtml-translate domain=zwiki>Details:</dtml-translate>
-         <br />
-         <textarea name="newtext" wrap="virtual" rows=5 cols=60></textarea>
+       </td>
+       <td>
+         <textarea name="newtext" wrap="virtual" rows="5" cols="40" style="width:100%"></textarea>
        </td>
      </tr>
      <tr>
        <td>
-         <b><input name="submit" type="submit" value="<dtml-translate domain=zwiki>add issue</dtml-translate>" 
-             style="font-weight:bold"></b>
+         &nbsp;
+       </td>
+       <td><b><input 
+               name="submit" type="submit" 
+               value="<dtml-translate domain=zwiki>add issue</dtml-translate>" 
+               style="font-weight:bold"></b>
        </td>
      </tr>
    </table>
