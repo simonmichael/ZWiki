@@ -147,6 +147,18 @@ check:
 push:
 	darcs push -v -a $(REPO)
 
+pull-simon: 
+	darcs pull --interactive -v http://zwiki.org/repos/ZWiki
+
+pull-lele: 
+	darcs pull --interactive -v http://nautilus.homeip.net/~lele/projects/ZWiki
+
+pull-bob: 
+	darcs pull --interactive -v http://bob.mcelrath.org/darcs/zwiki
+
+pull-bill: 
+	darcs pull --interactive -v http://page.axiom-developer.org/repository/ZWiki
+
 ## release
 
 VERSION:=$(shell cut -c7- version.txt )
@@ -558,4 +570,5 @@ zdo-swreleasefile-retract:
 #
 #zdo-newsitem-retract:
 #	@echo retracting the $(VERSIONNO) News Item on zope.org
+
 
