@@ -13,7 +13,7 @@ class ZwikiPlaintextPageType(AbstractPageType):
         t = text or page.read()
         t = self.renderPlaintextIn(t)
         if not text: t += '\n'+MIDSECTIONMARKER
-        t = self.escapeEmailAddresses(page,t)
+        t = self.protectEmailAddresses(page,t)
         return t
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):

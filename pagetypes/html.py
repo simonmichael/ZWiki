@@ -13,7 +13,7 @@ class ZwikiHtmlPageType(AbstractHtmlPageType):
         t = text or (page.read()+'\n'+MIDSECTIONMARKER)
         t = page.applyWikiLinkLineEscapesIn(t)
         t = page.markLinksIn(t)
-        t = self.escapeEmailAddresses(page,t)
+        t = self.protectEmailAddresses(page,t)
         return t
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):

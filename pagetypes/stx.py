@@ -75,7 +75,7 @@ class ZwikiStxPageType(AbstractHtmlPageType):
         t = self.renderStxIn(page, t)
         if page.usingPurpleNumbers(): t = page.renderPurpleNumbersIn(t)
         t = page.markLinksIn(t)
-        t = self.escapeEmailAddresses(page,t)
+        t = self.protectEmailAddresses(page,t)
         return t
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):

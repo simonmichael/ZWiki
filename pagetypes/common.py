@@ -92,12 +92,12 @@ class AbstractPageType:
 
     def preRenderMessage(self,page,msg):
         t = msg.get_payload()
-        t = self.escapeEmailAddresses(page,t)
+        t = self.protectEmailAddresses(page,t)
         t = self.renderCitationsIn(page,t)
         t = self.addCommentHeadingTo(page,t,msg)
         return t
 
-    def escapeEmailAddresses(self,page,text):
+    def protectEmailAddresses(self,page,text):
         return re.sub(r'(?<!mailto:)\b(?!msg\d{14}-\d{4})(?<!msg\d{14}-)(\w[\w\-\+\.]*)@([\w\-\.]+)\.([\w\-\.]+)\b([^>]*<|$)', 
             lambda m: '<span class="nospam1">&#' + str(ord(m.groups()[0][0])) 
                 + m.groups()[0][1:] 
