@@ -18,7 +18,7 @@ class ZwikiPlaintextPageType(AbstractPageType):
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):
         t = page.preRendered()
-        t = page.renderMidsectionIn(t)
+        t = page.renderMidsectionIn(t,**kw)
         t = page.addSkinTo(t,**kw)
         return t
 

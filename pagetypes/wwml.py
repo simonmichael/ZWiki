@@ -29,7 +29,7 @@ class ZwikiWwmlPageType(AbstractPageType):
         t = page.renderMarkedLinksIn(t)
         if page.hasFitTests(): t = page.runFitTestsIn(t)
         if page.isIssue(): t = page.addIssueFormTo(t)
-        t = page.renderMidsectionIn(t)
+        t = page.renderMidsectionIn(t,**kw)
         t = page.addSkinTo(t,**kw)
         return t
 

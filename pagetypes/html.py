@@ -22,7 +22,7 @@ class ZwikiHtmlPageType(AbstractHtmlPageType):
         else:
             t = page.preRendered()
         t = page.renderMarkedLinksIn(t)
-        t = page.renderMidsectionIn(t)
+        t = page.renderMidsectionIn(t,**kw)
         t = page.addSkinTo(t,**kw)
         return t
 

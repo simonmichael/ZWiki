@@ -287,7 +287,7 @@ class ZWikiPage(
         if not self.hasDynamicContent(): return self.preRendered()
         return DTMLDocument.__call__(self,client,REQUEST,RESPONSE,**kw)
 
-    def renderMidsectionIn(self, text):
+    def renderMidsectionIn(self, text, **kw):
         """
         Insert some final things between the rendered document and discussion.
 
@@ -313,10 +313,10 @@ class ZWikiPage(
             discussion = '<a name="messages">' + discussion
         else:
             return text
-        return doc + self.renderMidsection() + discussion
+        return doc + self.renderMidsection(**kw) + discussion
 
-    def renderMidsection(self):
-        if self.subtopicsEnabled(): return self.subtopics(deep=1)
+    def renderMidsection(self,**kw):
+        if self.subtopicsEnabled(**kw): return self.subtopics(deep=1)
         else: return ''
     
     security.declareProtected(Permissions.View, 'supportsStx')

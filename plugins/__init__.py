@@ -14,6 +14,8 @@
 # 
 # - some page types call purple numbers during rendering
 #
+# - dependencies in the standard and plone skins - what do we do here ?
+#
 # page types are another kind of "plugin", residing in their own pagetypes
 # package. 
 

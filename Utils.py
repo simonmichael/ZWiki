@@ -476,7 +476,7 @@ class Utils:
         return s
 
     security.declareProtected(Permissions.View,'include')
-    def include(self,page,REQUEST=None):
+    def include(self,page,REQUEST=None, **kw):
         """
         Convenience method for including the body of one page within another.
 
@@ -484,7 +484,7 @@ class Utils:
         needed, fails silently if page does not exist.
         """
         p = self.pageWithNameOrId(page)
-        if p: return p(bare=1,REQUEST=REQUEST)
+        if p: return p(bare=1,REQUEST=REQUEST, **kw)
         else: return ''
         
 InitializeClass(Utils)
