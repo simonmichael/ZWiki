@@ -632,3 +632,10 @@ class Popen3:
             self.err=open(errfile,"r").read()
             os.remove(errfile)
 
+def stripList(lines):
+    """
+    Strip whitespace elements from a list of strings, such as a lines property.
+
+    Accept a list or tuple, return a list. (Zope 2.7 props are tuples.)
+    """
+    return filter(lambda x:x.strip(),list(lines))

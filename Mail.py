@@ -5,7 +5,7 @@ from string import split,join,find,lower,rfind,atoi,strip,lstrip
 from types import *
 
 from TextFormatter import TextFormatter
-from Utils import html_unquote,BLATHER,formattedTraceback
+from Utils import html_unquote,BLATHER,formattedTraceback,stripList
 from Defaults import AUTO_UPGRADE, PAGE_METATYPE
 
 class MailSupport:                 
@@ -39,7 +39,7 @@ class MailSupport:
         if AUTO_UPGRADE: self._upgradeSubscribers()
         if parent:
             if hasattr(self.folder(),'subscriber_list'):
-                return list(self.folder().subscriber_list)
+                return stripList(self.folder().subscriber_list)
             else:
                 return []
         else:
@@ -581,7 +581,7 @@ List-Help: <%s>
         % (fromhdr,
            replytohdr,
            tohdr,
-           join(filter(lambda x:strip(x)!='', recipients), ', '),
+           join(stripList(recipients), ', '),
            join([strip(getattr(self.folder(),'mail_subject_prefix',
                                '')), #getattr(self.folder(),'title'))),
                  #strip(self.id()),
@@ -685,7 +685,7 @@ Subject: %s
         # try to do some useful formatting
         # wrap and fill each paragraph, except indented ones,
         # and preserve citation prefixes
-        paragraphs = filter(lambda x:x.strip(),split(text,'\n\n'))
+        paragraphs = stripList(split(text,'\n\n'))
         for i in range(len(paragraphs)):
             p = paragraphs[i]
             indent = len(p) - len(lstrip(p))
