@@ -634,9 +634,10 @@ class GeneralForms:
         
         page functions:
         v    view page
-        +    view pages in full mode
-        =    view pages in simple mode
-        -    view pages in minimal mode
+        +    view pages in cmf/plone skin (in a cmf/plone site)
+        =    view pages in standard skin, full mode
+        _    view pages in standard skin, simple mode
+        -    view pages in standard skin, minimal mode
         m    mail subscription
         b    show backlinks (links to this page)
         d    show diffs (page edit history)
