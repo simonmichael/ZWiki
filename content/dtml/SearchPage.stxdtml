@@ -122,7 +122,8 @@
     <dtml-call "REQUEST.set('count',REQUEST.count + 1)">
     <a href="&dtml-wikiurl;/&dtml.url_quote-id;">&dtml-Title;</a>
     (<a href="&dtml-wikiurl;/&dtml.url_quote-id;/diff">diff</a>,
-    <a href="&dtml-wikiurl;/&dtml.url_quote-id;/manage_change_history_page">history</a>)<br>
+    <a href="&dtml-wikiurl;/&dtml.url_quote-id;/manage_change_history_page">history</a>,
+    <a href="&dtml-wikiurl;/&dtml.url_quote-id;/src">src</a>)<br>
   </dtml-unless>
 </dtml-in>
 <p><b>(<dtml-var count>)</b>
