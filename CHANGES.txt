@@ -4,9 +4,11 @@
 
     Upgrade notes
 
-	For wikis in cmf/plone or using a catalog: you might want to run
-	FRONTPAGE/setupCatalog after this upgrade just to make sure you
-	have all necessary catalog metadata for best performance.
+        There have been changes to the zwiki catalog fields.  
+	After upgrading, if your wikis use a catalog or are in a CMF/plone
+	site, visit FRONTPAGE/setupCatalog, or if issue tracking is
+	enabled, visit FRONTPAGE/setupTracker, to ensure your catalog
+	is configured for best large-wiki performance.
 	
 	index_object's arguments have changed and the reindex_object and
 	updateCatalog methods are deprecated.
