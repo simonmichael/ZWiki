@@ -2,13 +2,13 @@
 <dtml-let 
  wikiurl=wiki_url
  summaries="REQUEST.get('summaries',0)"
- period="REQUEST.get('period','Day')"
+ period="_.string.lower(REQUEST.get('period','day'))"
  days="{
-   'Day':1,
-   'Week':7,
-   'Month':30,
-   'Year':365,
-   'Ever':999999,
+   'day':1,
+   'week':7,
+   'month':30,
+   'year':365,
+   'ever':999999,
    'default':3}[period]"
  newdays="7"
  now=ZopeTime
@@ -23,7 +23,7 @@
     <tr valign="top">
       <dtml-if hasCatalog>
       <td align="right"><dtml-translate domain=zwiki>Pages changed in the last</dtml-translate></td>
-      <dtml-in "['Day','Week','Month','Year','Ever']" prefix=x>
+      <dtml-in "['day','week','month','year','ever']" prefix=x>
       <td align="center">
         <input type=submit name=period value="&dtml-x_sequence_item;" 
                <dtml-if "x_sequence_item==period">style="font-weight:bold"</dtml-if>
