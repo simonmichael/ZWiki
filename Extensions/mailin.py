@@ -142,7 +142,7 @@ class MailIn:
     destpagename = None
     workingpage = None
     trackerissue = 0
-    creating = 0
+    newpage = 0
     error = None
 
     def __init__(self,
@@ -272,14 +272,14 @@ class MailIn:
         Figure out what wiki page this mail-in should go to.
 
         Fairly involved calculations trying to figure out what to do in a
-        robust way. Sets self.destpage, self.destpagename, self.creating,
+        robust way. Sets self.destpage, self.destpagename, self.newpage,
         self.trackerissue, or sets a message in self.error if it can't.
         
         """
         if self.contextIsPage():
             self.destpage = self.workingpage = self.context
             self.destpagename = self.destpage.title_or_id()
-            self.creating = self.trackerissue = 0
+            self.newpage = self.trackerissue = 0
             return
 
         # posting in wiki folder context (the normal case)
@@ -334,13 +334,12 @@ class MailIn:
             # also change working page to get right parentage etc.
             self.destpage = self.workingpage = page
             self.destpagename = self.destpage.title_or_id()
-            self.creating = 0
         # or we have the name of a new page to create
         elif self.destpagename:
-            self.creating = 1
+            self.newpage = 1
         # or we are creating a tracker issue, which doesn't need a name
         elif (self.trackerissue or re.search(TRACKERADDREXP,self.recipient()[1])):
-            self.trackerissue = self.creating = 1
+            self.trackerissue = 1
         # or we discard this message
         else:
             self.error = '\nMessage had no destination page, ignored.\n\n\n'
@@ -448,32 +447,40 @@ def mailin(self,
     # last_editor
     self.REQUEST.set('MAILIN_USERNAME', m.FromUserName)
 
-    # a new tracker issue ?
-    if m.trackerissue:
-        subject = m.subject or 'no subject'
-        self.REQUEST.set('newtitle', subject)
-        # XXX italicize quoted text in replies (as in comment().. but DRY)
-        body = re.sub(r'(?m)^>(.*)',r'<br />><i>\1</i>',m.body)
-        self.REQUEST.set('newtext', body)
-        self.REQUEST.set('submitted', 1)
-        m.folder().IssueTracker(REQUEST=self.REQUEST)
-        #BLATHER('mailin.py: created issue '+subject)
-        return 
-
-    # a new page ?
+    # now, create new page ?
     subject = m.realSubject
-    if m.creating:
-        subject = '(new) '+subject
-        # XXX may need to pass REQUEST for authentication ?
-        # but "REQUEST has no URL2" and create fails. Leave out for now.
-        m.workingpage.create(m.destpagename,text='')
+    subjectPrefix = ''
+    if m.newpage:
+        # XXX need to pass REQUEST for authentication ?  but "REQUEST has
+        # no URL2" and create fails. Leave out for now.
+        m.workingpage.create(m.destpagename,text='',sendmail=0)
         m.destpage = m.workingpage.pageWithName(m.destpagename)
+        subjectPrefix = '(new) '
         #BLATHER('mailin.py: created '+m.destpagename)
+
+    # or new tracker issue ?
+    elif m.trackerissue:
+        # cf IssueNo0879
+        # citations are normally formatted only within comments, but they
+        # are often found in the body of mailed-in issue pages and we'd
+        # like to display these nicely. Options ?
+        # - format them here as a special case. This means the mailout
+        #   and page source contains ugly html.
+        # - enable citation rendering everywhere. This deviates from
+        #   standard STX etc.
+        # - leave them unformatted
+        # - post the issue details as a comment, not as the initial page
+        #   text. Hey, that makes sense.        
+        pagename = m.workingpage.createNextIssue(subject,
+                                                 REQUEST=self.REQUEST,
+                                                 sendmail=0)
+        m.destpage = m.workingpage.pageWithName(pagename)
+        subjectPrefix = '(new) '
+        #BLATHER('mailin.py: created issue '+subject)
 
     # add comment
     # use the time of sending, or the time of posting to the wiki - see
     # how the latter works out
-
     # mailing list support: when a list and wiki are mutually subscribed,
     # and a mail comes in from the list, we want to forward it out to all
     # subscribers except the list, which has done it's own delivery. So,
@@ -483,7 +490,7 @@ def mailin(self,
     m.destpage.comment(text=m.body,
                        username=m.FromUserName,
                        REQUEST=self.REQUEST,
-                       subject_heading=subject,
+                       subject_heading=subjectPrefix+subject,
                        exclude_address=m.xbeenthere,
                        message_id=m.messageid,
                        in_reply_to=m.inreplyto

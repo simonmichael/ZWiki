@@ -50,14 +50,8 @@ class MailinTests(unittest.TestCase):
 
     def setUp(self):
         self.p = MockZWikiPage(__name__=THISPAGE)
-        # hack the Folder class to add a mock IssueTracker page which
-        # captures REQUEST
-        def IssueTracker(self,REQUEST=None):
-            self.issuetracker_request = REQUEST
-        self.p.folder().__class__.IssueTracker = IssueTracker
         
     def tearDown(self):
-        del self.p.folder().__class__.IssueTracker
         del self.p
 
     # test the mailin delivery rules
@@ -296,23 +290,18 @@ Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
         self.assertEqual(1, len(re.findall(r'\*bold\*', p.text())))
 
     def testMailinTrackerIssue(self):
+        self.p.upgradeFolderIssueProperties()
+        self.assertEqual(0, self.p.issueCount())
         mailin.mailin(self.p.folder(),TESTMSG,trackerissue=1,subscribersonly=0)
-        self.checkAddIssueRequest(self.p.folder().issuetracker_request)
+        self.assertEqual(1, self.p.issueCount())
 
     # this works.. need a functional test which sends through mail
     def testMailinTrackerIssueLongSubject(self):
         longsubjmsg = str(TestMessage(subject=LONGSUBJECT))
+        self.p.upgradeFolderIssueProperties()
+        self.assertEqual(0, self.p.issueCount())
         mailin.mailin(self.p.folder(),longsubjmsg,trackerissue=1,subscribersonly=0)
-        self.checkAddIssueRequest(self.p.folder().issuetracker_request,
-                                  newtitle=LONGSUBJECT)
-
-    def checkAddIssueRequest(self,req,newtitle=TESTSUBJECT,newtext=TESTBODY):
-        self.assert_(hasattr(req,'newtitle'))
-        self.assertEqual(req.newtitle, newtitle)
-        self.assert_(hasattr(req,'newtext'))
-        self.assertEqual(req.newtext, newtext)
-        self.assert_(hasattr(req,'submitted'))
-        self.assertEqual(req.submitted, 1)
+        self.assertEqual(1, self.p.issueCount())
 
     def testStripSignature(self):
         # signatures after -- should be stripped
