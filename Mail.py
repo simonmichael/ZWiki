@@ -467,7 +467,7 @@ class MailSupport:
         member's email property
         """
         address = (self.fromProperty() or
-                   self.usersEmailAddress() or
+                   #self.usersEmailAddress() or
                    self.replyToProperty())
         realname = self.usernameFrom(REQUEST,ip_address=0) or _('anonymous')
         return '%s (%s)' % (address, realname)
