@@ -64,7 +64,7 @@
             tal:define="showsearch python:request.get('zwiki_showsearch',1)">
           <input id="searchinput" class="shade2" tal:condition="showsearch"
                  name="expr" type="text" size="20" maxlength="100" value="" 
-                 title="search all pages" accesskey="s" /><br 
+                 title="search all pages" accesskey="s" i18n:attributes="title" /><br 
                  tal:condition="showsearch" />
           <span id="lasteditor" 
                 tal:content="structure python:here.linkTitle(prettyprint=1)">
