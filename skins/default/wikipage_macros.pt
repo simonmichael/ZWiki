@@ -20,9 +20,11 @@
 <!-- site links panel -->
 <div id="linkpanel"
      tal:define="
-       displaymode python: request.get('zwiki_displaymode',0);
+       macros      python: here.wikipage_macros(request).macros;
+       displaymode python: here.displayMode();
        minimal     python: displaymode=='minimal';
-       macros      python: here.wikipage_macros(request).macros
+       simple      python: displaymode=='simple';
+       full        python: displaymode=='full';
      "
      tal:condition="not: minimal"
      tal:attributes="id python: minimal and 'linkpanel_minimal' or 'linkpanel';"
@@ -143,31 +145,33 @@
    ><span class="accesskey">h</span>elp</a>
 <span tal:define="bmarks request/zwiki_bookmarks|nothing"
       tal:content="structure python:here.wikilink(bmarks)"
-      tal:condition="python:0 #request.get('zwiki_displaymode',0)!='minimal'"
+      tal:condition="python:0 #minimal"
       tal:on-error="nothing">
 </span>
 &nbsp;&nbsp;
 </span>
 
 <!-- displaymodes -->
-<span metal:define-macro="displaymodes">
-
-<a href="" title="show all features" accesskey=","
-   tal:define="current python:request.get('zwiki_displaymode',0)=='full';
-               prefs string:?setcookies=1&zwiki_displaymode=full&zwiki_showhierarchy=1&redirectURL=${here/pageUrl};"
-   tal:attributes="style python:[nothing,'font-weight:bold'][current];
+<span metal:define-macro="displaymodes"
+      tal:define="
+        displaymode python: here.displayMode();
+        minimal     python: displaymode=='minimal';
+        simple      python: displaymode=='simple';
+        full        python: displaymode=='full';
+        ">
+<a href="" title="show all features" accesskey="+"
+   tal:define="prefs string:?setcookies=1&zwiki_displaymode=full&zwiki_showhierarchy=1&redirectURL=${here/pageUrl};"
+   tal:attributes="style python:[nothing,'font-weight:bold'][full];
                    href python:here.preferencesUrl()+prefs;"
   ><span class="accesskey"></span>full</a
->/<a href="" title="show basic features" accesskey="."
-   tal:define="current python:request.get('zwiki_displaymode',0)=='simple';
-               prefs string:?setcookies=1&zwiki_displaymode=simple&zwiki_showhierarchy=1&redirectURL=${here/pageUrl};"
-   tal:attributes="style python:[nothing,'font-weight:bold'][current];
+>/<a href="" title="show basic features" accesskey="="
+   tal:define="prefs string:?setcookies=1&zwiki_displaymode=simple&zwiki_showhierarchy=1&redirectURL=${here/pageUrl};"
+   tal:attributes="style python:[nothing,'font-weight:bold'][simple];
                    href python:here.preferencesUrl()+prefs;"
   >s<span class="accesskey"></span>imple</a
->/<a href="" title="show only essential features" accesskey="/"
-   tal:define="current python:request.get('zwiki_displaymode',0)=='minimal';
-               prefs string:?setcookies=1&zwiki_displaymode=minimal&zwiki_showhierarchy=&redirectURL=${here/pageUrl};"
-   tal:attributes="style python:[nothing,'font-weight:bold'][current];
+>/<a href="" title="show only essential features" accesskey="-"
+   tal:define="prefs string:?setcookies=1&zwiki_displaymode=minimal&zwiki_showhierarchy=&redirectURL=${here/pageUrl};"
+   tal:attributes="style python:[nothing,'font-weight:bold'][minimal];
                    href python:here.preferencesUrl()+prefs;"
   ><span class="accesskey"></span>minimal</a>
 
@@ -348,7 +352,7 @@ tal:condition="python:user.has_permission('Zwiki: Add comments',here)"
 <tr>
 <td align="left" valign="middle" nowrap="nowrap" colspan="2"
 tal:attributes="
-  bgcolor python:nothing# (request.get('zwiki_displaymode',0) != 'minimal' and '#dddddd') or '';
+  bgcolor python:nothing# not minimal and '#dddddd') or '';
 ">
 <small>
 subject: <input type="text" name="subject_heading" value="" size="40" maxlength="100" style="font-weight:bold;" class="shade2" title="a subject helps clarify threads and RecentChanges" tal:attributes="value request/subject|nothing" /></small>

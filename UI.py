@@ -32,7 +32,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from OFS.Image import File
 from Products.PageTemplates.Expressions import SecureModuleImporter
 
-from Defaults import PAGE_METATYPE
+from Defaults import PAGE_METATYPE, DEFAULT_DISPLAYMODE
 from Utils import BLATHER,formattedTraceback
 from LocalizerSupport import _, N_
 
@@ -604,4 +604,24 @@ class UI:
         p    previous edit
         """
     
+    def displayMode(self,REQUEST=None):
+        """
+        Give the user's current display mode - full, simple, or minimal.
+
+        This affects the default skin's appearance; it's not used in CMF/Plone.
+        This is either
+        - user's zwiki_displaymode cookie, set by clicking full/simple/minimal
+        - or the folder's default_displaymode string property (can acquire)
+        - or DEFAULT_DISPLAYMODE
+        """
+        if not REQUEST: REQUEST = self.REQUEST
+        return REQUEST.get('zwiki_displaymode',self.defaultDisplayMode())
+
+    def defaultDisplayMode(self,REQUEST=None):
+        """
+        Give the default display mode for this wiki. See displayMode.
+        """
+        return getattr(self.folder(),'default_displaymode',
+                       DEFAULT_DISPLAYMODE)
+
 Globals.InitializeClass(UI)

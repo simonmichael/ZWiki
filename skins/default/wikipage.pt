@@ -3,8 +3,9 @@
  xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
  tal:define="
    macros      python: here.wikipage_macros(request).macros;
-   displaymode python: request.get('zwiki_displaymode',0);
+   displaymode python: here.displayMode();
    minimal     python: displaymode=='minimal';
+   simple      python: displaymode=='simple';
    full        python: displaymode=='full';
    hierarchy   python: request.get('zwiki_showhierarchy',0);
    linearhdr   python: displaymode=='full';
@@ -139,7 +140,7 @@
 
 <div tal:condition="python:
      request.get('zwiki_showpagemgmt',1)
-     and request.get('zwiki_displaymode',0)=='full'
+     and full
      and (   user.has_permission('Zwiki: Rename pages',here)
      or user.has_permission('Zwiki: Reparent pages',here)
      or user.has_permission('Zwiki: Delete pages',here))

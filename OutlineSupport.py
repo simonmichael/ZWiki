@@ -399,7 +399,7 @@ class SubtopicsPropertyMixin:
         and user is in full UI mode.
         """
         return (getattr(self,'show_navlinks',1) and
-                self.REQUEST.get('zwiki_displaymode',0) == 'full')
+                self.displayMode() == 'full')
 
     def subtopicsEnabled(self):
         """
