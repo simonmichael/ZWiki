@@ -67,8 +67,11 @@ class Utils:
         characters & replace the last word with ellipsis if necessary.
         """
         size, paragraphs = int(size), int(paragraphs)
-        t = join(split(self.documentPart(),'\n\n')[:paragraphs],'\n\n')[:size]
-        if len(t) == size: t = re.sub(r'\W*\w*$',r'',t) + '...'
+        t = self.documentPart()
+        if paragraphs: t = join(split(t,'\n\n')[:paragraphs],'\n\n')
+        if len(t) > size:
+            t = t[:size]
+            t = re.sub(r'\W*(\w*)?$',r'',t) + '...'
         return html_quote(t)
 
     security.declareProtected(Permissions.View, 'excerptAt')
