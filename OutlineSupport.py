@@ -154,11 +154,7 @@ class ParentsPropertyMixin:
 
     def ensureValidParents(self):
         """
-        Make sure that this page's parents property is all valid.
-
-        Also updates the catalog and wiki outline (optional in case we
-        want to do a bunch of these). This is a little higher-level
-        than setParents.
+        Ensure that this page's parents are all valid, and reindex if needed.
         """
         parents = self.getParents()
         # convert to exact page names, filtering out any which don't exist
@@ -176,8 +172,7 @@ class ParentsPropertyMixin:
             BLATHER("adjusting %s's parents from %s to %s" % 
                  (self.pageName(), parents, cleanedupparents))
             self.setParents(cleanedupparents)
-            self.index_object() #XXX only need update parents index & metadata
-            if update_outline: self.updateWikiOutline()
+            self.index_object() #XXX only need to update parents index & metadata
 
 InitializeClass(ParentsPropertyMixin) 
 
@@ -214,15 +209,14 @@ class OutlineManagerMixin:
         """
         Generate an outline object from the pages' parents properties.
 
-        Note we don't check for valid parents here.
+        We check and correct any invalid parents as we go.  This touches
+        all page objects, which is probably ok as this is not done
+        frequently.
         """
         parentmap = {}
-        for p in self.pages():
-            name = p.Title
-            parents = list(p.parents) # take a copy, and make sure it's a list
-            parents = filter(lambda x:x,parents) # remove stray null strings
-            parents.sort()
-            parentmap[name] = parents
+        for p in self.pageObjects():
+            p.ensureValidParents() # poor caching
+            parentmap[p.pageName()] = p.getParents()
         return PersistentOutline(parentmap)
 
     security.declareProtected(Permissions.Reparent, 'reparent')
