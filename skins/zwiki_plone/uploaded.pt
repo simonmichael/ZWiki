@@ -13,7 +13,7 @@
 
 <h1 i18n:translate="">File Uploads</h1>
 
-<p i18n:translate="uploads_desc">This page lists all uploads in this Wiki.</p>
+<p i18n:translate="uploads_desc">This page lists all uploads in this wiki.</p>
 
 <tal:filelist define="files python:container.objectValues('File')">
 
@@ -22,7 +22,7 @@
         <img tal:attributes="src string:${portal_url}/file_icon.gif" alt="File" />
         <a href="thisfile/absolute_url" tal:content="thisfile/id">ID</a>
         (<span tal:replace="thisfile/content_type">Content type</span>)
-        - <a href="thisfile/absolute_url"><span i18n:translate="">View</span>/<span i18n:translate="">Save</span></a> 
+        - <a href="thisfile/absolute_url"><span i18n:translate="">view</span>/<span i18n:translate="">save</span></a> 
         </p>
     </tal:files>
     
