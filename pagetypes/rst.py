@@ -15,7 +15,7 @@ except ImportError:
     BLATHER('could not import reStructuredText, will not be available')
 
 class ZwikiRstPageType(AbstractPageType):
-    _id = 'msgrstprelinkfitissue'
+    _id = 'rst'
     _name = 'reStructured Text'
     supportsRst = yes
     supportsWikiLinks = yes

@@ -133,10 +133,10 @@ def _addZWikiPage(self, id, title='',
     # choose page type based on file suffix
     # must match ids in PageTypes.py
     from ZWikiPage import PAGE_TYPES
-    if page_type == 'stxdtml': page_type = PAGE_TYPES['msgstxprelinkdtmlfitissuehtml']
-    elif page_type == 'stx': page_type = PAGE_TYPES['msgstxprelinkdtmlfitissuehtml']
-    elif page_type == 'htmldtml': page_type = PAGE_TYPES['dtmlhtml']
-    elif page_type == 'html': page_type = PAGE_TYPES['dtmlhtml']
+    if page_type == 'stxdtml': page_type = PAGE_TYPES['stx']
+    elif page_type == 'stx': page_type = PAGE_TYPES['stx']
+    elif page_type == 'htmldtml': page_type = PAGE_TYPES['html']
+    elif page_type == 'html': page_type = PAGE_TYPES['html']
     
     # parse optional parents list
     m = re.match(r'(?si)(^#parents:(.*?)\n)?(.*)',file)

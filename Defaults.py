@@ -20,20 +20,20 @@ PAGE_ADD_MENU_NAME = 'ZWiki Page' # (this one must match PAGE_METATYPE)
 
 # the page types we'll offer in the default edit form,
 # unless overridden by an allowed_page_types property.
-# These must match the ids in PageTypes.py.
+# These must match the ids in pagetypes
 ALLOWED_PAGE_TYPES = [
-    'msgstxprelinkdtmlfitissuehtml',
-    'msgrstprelinkfitissue',
-    'msgwwmlprelinkfitissue',
-    'dtmlhtml',
+    'stx',
+    'rst',
+    'wwml',
+    'html',
     'plaintext',
     ]
 # ditto for wikis in CMF/Plone
 ALLOWED_PAGE_TYPES_IN_PLONE = [
-    'msgstxprelinkdtmlfitissuehtml',
-    'msgrstprelinkfitissue',
-    #'msgwwmlprelinkfitissue',
-    'dtmlhtml',
+    'stx',
+    'rst',
+    #'wwml',
+    'html',
     'plaintext',
     ]
 

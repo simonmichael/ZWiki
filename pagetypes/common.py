@@ -2,11 +2,11 @@ import string, re
 from string import split,join,find,lower,rfind,atoi,strip,lstrip
 from urllib import quote, unquote
 
-from Utils import BLATHER, html_quote, html_unquote, formattedTraceback, \
+from Products.ZWiki.Utils import BLATHER, html_quote, html_unquote, formattedTraceback, \
      ZOPEVERSION
-from PurpleNumbers import add_purple_numbers_to
-from Regexps import dtmlorsgmlexpr, footnoteexpr
-from I18nSupport import _
+from Products.ZWiki.PurpleNumbers import add_purple_numbers_to
+from Products.ZWiki.Regexps import dtmlorsgmlexpr, footnoteexpr
+from Products.ZWiki.I18nSupport import _
 
 
 # XXX temporary hack, used for placing subtopics in the page. Supposed to
@@ -16,14 +16,19 @@ MIDSECTIONMARKER = 'ZWIKIMIDSECTION'
 def yes(self): return 1
 def no(self): return 0
 
+from AccessControl import getSecurityManager, ClassSecurityInfo
+from Globals import InitializeClass
+
 class AbstractPageType:
     _id = None
     _name = None
+    security = ClassSecurityInfo()
     supportsStx = no
     supportsRst = no
     supportsWwml = no
     supportsWikiLinks = no
     supportsHtml = no
+    security.declarePublic('supportsDtml')
     supportsDtml = no
     supportsEpoz = no
 
@@ -103,6 +108,8 @@ class AbstractPageType:
 
     def linkFile(self, page, id, path):
         return '\n\nfile: %s/%s\n' % (page.pageUrl(),path)
+
+InitializeClass(AbstractPageType)
 
 class AbstractHtmlPageType(AbstractPageType):
     supportsHtml = yes

@@ -1,7 +1,7 @@
 from common import *
 
 class ZwikiHtmlPageType(AbstractHtmlPageType):
-    _id = 'dtmlhtml'
+    _id = 'html'
     _name = 'HTML'
     supportsHtml = yes
     supportsDtml = yes

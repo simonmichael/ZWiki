@@ -80,14 +80,7 @@ from PurpleNumbers import PurpleNumbersSupport
 from Admin import AdminSupport
 from Editing import EditingSupport
 from I18nSupport import DTMLFile, _
-
-#from pagetypes import MIDSECTIONMARKER, PAGETYPES, PAGE_TYPES, ZwikiStxPageType
-# these seem to need to be in this module or zope complains couldn't load state
-from pagetypes import \
-    MIDSECTIONMARKER, \
-    PAGETYPES, \
-    PAGE_TYPES, \
-    ZwikiStxPageType
+from pagetypes import MIDSECTIONMARKER, PAGETYPES, PAGE_TYPES, ZwikiStxPageType
 
 
 class ZWikiPage(

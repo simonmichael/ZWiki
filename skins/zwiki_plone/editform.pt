@@ -231,7 +231,10 @@ UI.py:editform() calls us with these options:
                 <label for="pagetype" 
                        tal:define="
                          dtmlallowed python:
-                           type.find('dtml')!=-1 and here.dtmlAllowed();
+                                type in ('stx','html') and
+                                here.dtmlAllowed()
+                                #here.lookupPageType(type).supportsDtml() and 
+                                #here.dtmlAllowed();
                          extrasuffix python:
                            dtmlallowed and ' (+ DTML)' or ''; "
                        tal:content="

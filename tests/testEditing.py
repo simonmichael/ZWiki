@@ -279,10 +279,10 @@ class EditingTests(ZopeTestCase.ZopeTestCase):
         self.assertEqual(f.TestPageB.parents,[])
         
         # create a wwml page with some text
-        p.create('TestPage2',text='test page data',type='msgwwmlprelinkfitissue')
+        p.create('TestPage2',text='test page data',type='wwml')
         self.assert_(hasattr(f,'TestPage1'))
         self.assertEqual(f.TestPage2.read(),'test page data')
-        self.assertEqual(f.TestPage2.pageTypeId(),'msgwwmlprelinkfitissue')
+        self.assertEqual(f.TestPage2.pageTypeId(),'wwml')
 
 # having trouble making MZP support this
 # handleFileUpload -> checkPermission(,MZP.folder()) loops
@@ -357,7 +357,7 @@ class EditingTests(ZopeTestCase.ZopeTestCase):
         p.setText(r'first: line\n\nsecond line\n')
         self.assertEqual(p.text(),'first: line\\n\\nsecond line\\n')
         # ensure none of these reveal the antidecapkludge
-        p.edit(type='dtmlhtml')
+        p.edit(type='html')
         p.setText('test text')
         self.assertEqual(p.text(),'test text')
         self.assertEqual(p.read(),'test text')
@@ -592,7 +592,7 @@ long citations
 
     def XXXtestNoDoubleHtmlTag(self):
         p = self.page
-        p.edit(type='msgstxprelinkdtmlfitissuehtml')
+        p.edit(type='stx')
         text = p.render()     # slow! why ?
         self.assertEquals(len(re.findall(r'(?i)<html',text)),1)
         self.assertEquals(len(re.findall(r'(?i)<body',text)),1)

@@ -6,7 +6,7 @@ try: from StructuredText.DocumentClass import StructuredTextTable
 except ImportError: pass #older zope, won't need it
 
 class ZwikiStxPageType(AbstractHtmlPageType):
-    _id = 'msgstxprelinkdtmlfitissuehtml'
+    _id = 'stx'
     _name = 'Structured Text'
     supportsStx = yes
     supportsWikiLinks = yes

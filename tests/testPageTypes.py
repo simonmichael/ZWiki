@@ -10,7 +10,7 @@ class PageTypesTests(ZopeTestCase.ZopeTestCase):
         zwikiAfterSetUp(self)
 
     def test_ZwikiStxPageType(self):
-        self.p.edit(text='! PageOne PageTwo\n',type='msgstxprelinkdtmlfitissuehtml')
+        self.p.edit(text='! PageOne PageTwo\n',type='stx')
         self.assertEquals(self.p.render(bare=1),
                           '<p> PageOne PageTwo</p>\n<p></p>\n')
 
@@ -21,15 +21,15 @@ class PageTypesTests(ZopeTestCase.ZopeTestCase):
     #        '<p> PageOne PageTwo</p>\n<p></p>\n')
 
     def test_ZwikiHtmlPageType(self):
-        self.p.edit(text='! PageOne PageTwo\n',type='dtmlhtml')
+        self.p.edit(text='! PageOne PageTwo\n',type='html')
         self.assertEquals(self.p.render(bare=1),' PageOne PageTwo\n\n')
-        self.p.edit(text='PageOne\n',type='dtmlhtml')
+        self.p.edit(text='PageOne\n',type='html')
         self.assertEquals(
             self.p.render(bare=1),
             'PageOne<a class="new" href="http://nohost/test_folder_1_/wiki/TestPage/createform?page=PageOne" title="create this page">?</a>\n\n')
 
     def test_ZwikiWwmlPageType(self):
-        self.p.edit(text='! PageOne PageTwo\n',type='msgwwmlprelinkfitissue')
+        self.p.edit(text='! PageOne PageTwo\n',type='wwml')
         #self.assertEquals(self.p.render(bare=1),'    PageOne PageTwo\n')
         # XXX temporary, due to midsection marker perhaps
         self.assertEquals(self.p.render(bare=1),'    PageOne PageTwo\n<P>\n')

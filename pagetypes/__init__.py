@@ -9,13 +9,13 @@
 # They could be singleton objects, unless that has problems with persistence..
 # XXX check ram cache manager code
 
-from pagetypes.common import *
+from common import *
 
-from pagetypes.stx import ZwikiStxPageType
-from pagetypes.html import ZwikiHtmlPageType
-from pagetypes.rst import ZwikiRstPageType
-from pagetypes.wwml import ZwikiWwmlPageType
-from pagetypes.plaintext import ZwikiPlaintextPageType
+from stx import ZwikiStxPageType
+from html import ZwikiHtmlPageType
+from rst import ZwikiRstPageType
+from wwml import ZwikiWwmlPageType
+from plaintext import ZwikiPlaintextPageType
 
 PAGETYPES = [
     ZwikiStxPageType,

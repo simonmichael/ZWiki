@@ -46,7 +46,7 @@ class PurpleNumbersTests(unittest.TestCase):
 #            )
 #
 #    def test_addPurpleNumbersToRST(self):
-#        self.p.edit(type='msgrstprelinkfitissue')
+#        self.p.edit(type='rst')
 #        self.assertEquals(
 #            self.p.addPurpleNumbersToRST('a\n'),
 #            'a {nid 1}\n'
@@ -62,7 +62,7 @@ class PurpleNumbersTests(unittest.TestCase):
 #        #    )
 #
 #    def test_addPurpleNumbersToWWML(self):
-#        self.p.edit(type='msgwwmlprelinkfitissue')
+#        self.p.edit(type='wwml')
 #        self.assertEquals(
 #            self.p.addPurpleNumbersToRST('a\n'),
 #            'a {nid 1}\n'

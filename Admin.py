@@ -15,50 +15,56 @@ from I18nSupport import _
 import Permissions
 from Utils import BLATHER,formattedTraceback, DateTimeSyntaxError
 
-# if page types are states, here is the table of transitions for upgrading
+# here is the table of transitions for upgrading page types
 PAGE_TYPE_UPGRADES = {
     # early zwiki
-    'Structured Text'           :'msgstxprelinkdtmlfitissuehtml',
-    'structuredtext_dtml'       :'msgstxprelinkdtmlfitissuehtml',
-    'HTML'                      :'dtmlhtml',
-    'html_dtml'                 :'dtmlhtml',
-    'Classic Wiki'              :'msgwwmlprelinkfitissue',
-    'Plain Text'                :'plaintext',
+    'Structured Text'              :'stx',
+    'structuredtext_dtml'          :'stx',
+    'HTML'                         :'html',
+    'html_dtml'                    :'html',
+    'Classic Wiki'                 :'wwml',
+    'Plain Text'                   :'plaintext',
     # pre-0.9.10
-    'stxprelinkdtml'            :'msgstxprelinkdtmlfitissuehtml',
-    'structuredtextdtml'        :'msgstxprelinkdtmlfitissuehtml',
-    'dtmlstructuredtext'        :'msgstxprelinkdtmlfitissuehtml',
-    'structuredtext'            :'msgstxprelinkdtmlfitissuehtml',
-    'structuredtextonly'        :'msgstxprelinkdtmlfitissuehtml',
-    'classicwiki'               :'msgwwmlprelinkfitissue',
-    'htmldtml'                  :'dtmlhtml',
-    'plainhtmldtml'             :'dtmlhtml',
-    'plainhtml'                 :'dtmlhtml',
+    'stxprelinkdtml'               :'stx',
+    'structuredtextdtml'           :'stx',
+    'dtmlstructuredtext'           :'stx',
+    'structuredtext'               :'stx',
+    'structuredtextonly'           :'stx',
+    'classicwiki'                  :'wwml',
+    'htmldtml'                     :'html',
+    'plainhtmldtml'                :'html',
+    'plainhtml'                    :'html',
     # pre-0.17
-    'stxprelinkdtmlhtml'        :'msgstxprelinkdtmlfitissuehtml',
-    'issuedtml'                 :'msgstxprelinkdtmlfitissuehtml',
+    'stxprelinkdtmlhtml'           :'stx',
+    'issuedtml'                    :'stx',
     # pre-0.19
-    'stxdtmllinkhtml'           :'msgstxprelinkdtmlfitissuehtml',
-    'dtmlstxlinkhtml'           :'msgstxprelinkdtmlfitissuehtml',
-    'stxprelinkhtml'            :'msgstxprelinkdtmlfitissuehtml',
-    'stxlinkhtml'               :'msgstxprelinkdtmlfitissuehtml',
-    'stxlink'                   :'msgstxprelinkdtmlfitissuehtml',
-    'wwmllink'                  :'msgwwmlprelinkfitissue',
-    'wwmlprelink'               :'msgwwmlprelinkfitissue',
-    'prelinkdtmlhtml'           :'dtmlhtml',
-    'dtmllinkhtml'              :'dtmlhtml',
-    'prelinkhtml'               :'dtmlhtml',
-    'linkhtml'                  :'dtmlhtml',
-    'textlink'                  :'plaintext',
+    'stxdtmllinkhtml'              :'stx',
+    'dtmlstxlinkhtml'              :'stx',
+    'stxprelinkhtml'               :'stx',
+    'stxlinkhtml'                  :'stx',
+    'stxlink'                      :'stx',
+    'wwmllink'                     :'wwml',
+    'wwmlprelink'                  :'wwml',
+    'prelinkdtmlhtml'              :'html',
+    'dtmllinkhtml'                 :'html',
+    'prelinkhtml'                  :'html',
+    'linkhtml'                     :'html',
+    'textlink'                     :'plaintext',
     # pre-0.20
-    'stxprelinkfitissue'        :'msgstxprelinkdtmlfitissuehtml',
-    'stxprelinkfitissuehtml'    :'msgstxprelinkdtmlfitissuehtml',
-    'stxprelinkdtmlfitissuehtml':'msgstxprelinkdtmlfitissuehtml',
-    'rstprelinkfitissue'        :'msgrstprelinkfitissue',
-    'wwmlprelinkfitissue'       :'msgwwmlprelinkfitissue',
+    'stxprelinkfitissue'           :'stx',
+    'stxprelinkfitissuehtml'       :'stx',
+    'stxprelinkdtmlfitissuehtml'   :'stx',
+    'rstprelinkfitissue'           :'rst',
+    'wwmlprelinkfitissue'          :'wwml',
     # pre-0.22
-    'msgstxprelinkfitissuehtml' :'msgstxprelinkdtmlfitissuehtml',
-    'html'                      :'dtmlhtml',
+    # warning: pre-.22 'html' pages will not be auto-upgraded
+    'msgstxprelinkfitissuehtml'    :'stx',
+    #'html'                         :'html',
+    # pre-0.32
+    'msgstxprelinkdtmlfitissuehtml':'stx',
+    'msgrstprelinkfitissue'        :'rst',
+    'msgwwmlprelinkfitissue'       :'wwml',
+    'dtmlhtml'                     :'html',
     }
 
 # copied from ZWikiWeb.py
