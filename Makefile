@@ -27,17 +27,17 @@ default: test
 CLEAN=perl -p -e "s/(?s)^\#parents:.*?\n//;"
 dtml:
 	@echo regenerating dtml-based skin templates from pages
-	@$(CLEAN) content/dtml/RecentChanges.stxdtml \
+	$(CLEAN) content/dtml/RecentChanges.stxdtml \
 	  >skins/standard/recentchangesdtml.dtml
-	@$(CLEAN) content/dtml/SearchPage.stxdtml \
+	$(CLEAN) content/dtml/SearchPage.stxdtml \
 	  >skins/standard/searchwikidtml.dtml
-	@$(CLEAN) content/dtml/UserOptions.stxdtml \
+	$(CLEAN) content/dtml/UserOptions.stxdtml \
 	  >skins/standard/useroptionsdtml.dtml
-	@$(CLEAN) content/tracker/IssueTracker.stxdtml \
+	$(CLEAN) content/tracker/IssueTracker.stxdtml \
 	  >skins/standard/issuetrackerdtml.dtml
-	@$(CLEAN) content/tracker/FilterIssues.stxdtml \
+	$(CLEAN) content/tracker/FilterIssues.stxdtml \
 	  >skins/standard/filterissuesdtml.dtml
-	@cp skins/standard/{recentchanges,searchwiki,useroptions,issuetracker,filterissues}dtml.dtml skins/zwiki_plone
+	cp skins/standard/{recentchanges,searchwiki,useroptions,issuetracker,filterissues}dtml.dtml skins/zwiki_plone
 
 epydoc:
 	PYTHONPATH=/zope/lib/python \
