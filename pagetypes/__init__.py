@@ -124,3 +124,12 @@ for mod in firstmods:
         pass
 for file in modules:
     __import__('Products.ZWiki.pagetypes.%s' % file[:-3])
+
+# XXX backwards compatibility
+# keep the classes here for a bit to stop warnings
+from plaintext import ZwikiPlaintextPageType
+from html import ZwikiHtmlPageType
+from stx import ZwikiStxPageType
+from rst import ZwikiRstPageType
+from wwml import ZwikiWwmlPageType
+
