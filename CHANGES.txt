@@ -1,3 +1,104 @@
+Zwiki 0.30rc1 2004/04/25
+
+    Summary
+
+        Page rating, fix epoz support, bugfixes, code cleanups, i18n work,
+	a french translation.
+
+    Upgrade notes
+
+	You should probably remove the 'links' field from your catalog's
+	indexes and metadata now as it isn't needed and leads to slowdowns
+	in Plone+Epoz sites (IssueNo0784).
+	
+    	If you want to do zopewiki-style queries on page ratings, you'll
+	need to add the new rating and voteCount fields to your catalog.
+	Running PAGE/setupCatalog?reindex= will take care of this.
+
+    Changes
+
+      General
+
+	* page rating support: new methods rating, voteCount, and
+	ratingform are supported and enabled in the standard skin by the
+	'Zwiki: Rate pages' permission. rating and voteCount are cataloged
+	by default.
+
+	* our 'links' catalog field caused slowdowns with plone+epoz, try
+	life without it (IssueNo0784)
+
+	* obey LEAVE_PLACEHOLDER default when renaming via edit form
+	(IssueNo0579)
+
+	* renaming to a page name beginning or ending with spaces was not
+	reparenting the children
+
+	* make parent and firstParent more robust (IssueNo0788)
+
+	* "completed" log messages for long admin operations (eg cataloging)
+
+	* make Url methods fall back to '' instead of None
+
+	* drop show_navlinks property
+
+	* allow partial page names when reparenting
+
+	* do citation formatting only for >'s at column 0 - this leaves
+	::-quoted python examples alone, and seems to still catch normal
+	comment citations. It doesn't prevent all unintended citation
+	rendering though. (IssueNo0770)
+
+	* pages named REQUEST, RESPONSE, or Epoz caused problems for zope,
+	  possibly breaking the whole wiki (ZMI too). These are now
+	  handled safely by adding X to their id.
+
+	* fix page creation with zope 2.6/python 2.1 (IssueNo0777)
+
+	* code refactoring, new tests
+
+      Skins and content
+
+	* epoz fixes: make editform work with epoz 0.8, simplify
+	installation, don't show parent page content when creating, remove
+	duplicate source-mode checkbox (IssueNo0773)
+
+	* standard: remove last interfering leave placeholder option
+	(IssueNo0764)
+
+	* french translations (Nicolas Laurent)
+
+	* update po files
+
+	* don't show subscriber count when mailout is disabled, and don't
+	italicise it
+
+	* use small font in the dimtext style
+
+	* contents page heading tweak
+
+	* remove unused navpanel2 macro
+
+	* rename 'default' skin to 'standard'
+
+	* xhtml fixes (Alvaro Cantero, Bob McElrath)
+	
+	* standard: some i18n attributes, html formatting
+
+	* standard: add badtemplate error template
+
+      Mail and comments
+
+	* fix mailin destination with multiline subjects (IssueNo0547)
+
+	* drop fewer_headers feature
+
+	* comment mailouts now appear the same with either 'comments' or
+	'edits' mailout policy.
+
+	* rename MessagesSupport & Messages.py to Comments*; refactor
+	mailin & comment code, use new email lib, new tests
+
+
 Zwiki 0.29 2004/04/01
 
     Summary
