@@ -1,3 +1,62 @@
+    Summary
+
+        Improved rating form, chinese translation updates, bugfixes.
+	
+    Changes
+
+      Page hierarchy
+
+	* make updateWikiOutline redirect to the updated contents view,
+	and provide an easier alias: updatecontents
+
+        * don't log a traceback when deleting a page with out-of-date outline cache
+
+      Rating
+ 
+	* new compact rating form at top right. Unrated pages now have
+	rating 1 by default.
+
+      Mail
+
+        * mailin: don't log incoming message text or traceback for missing text part
+
+	* make mailout logging less verbose
+
+        * fix a bug preventing subscribe link from appearing when
+	mailhost's id is not 'MailHost'
+
+      General - i18n
+
+	* zh-TW and zh-CN translation updates (T.C. Chou)
+
+        * add missing metadata to finnish po files
+
+      General - skins
+	
+	* close a cross-site scripting vulnerability in standard error message (SSA-20041122-12, #925, ChrisW)
+
+	* Hide web only elements when printing from plone (Michael Twomey)
+	  When printing from plone certain elements are visible on the
+	  printed page, especially the access links. With the default
+	  plone print style
+	  (plonePrint.css) all links get expanded to full URLs which
+	  results in a lot of useless junk at the top of the screen. This
+	  patch adds a few plone related CSS classes to certain sections
+	  of the page which in turn ensures they aren't visible when
+	  printed.  This has no effect on browsers which aren't aware of
+	  the print style sheet. The access keys still work fine in
+	  FireFox 1.0.
+
+	* fix html title in plone sites
+
+        * rearrange/reword wiki actions in cmf/plone, drop filter issues action
+
+        * tweak page management help in cmf/plone
+
+        * display site_header in standard skin header, if present
+
+
+
 Zwiki 0.36.2 2004/11/17
 
     Changes
