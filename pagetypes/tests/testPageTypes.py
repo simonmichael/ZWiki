@@ -29,10 +29,55 @@ class PageTypesTests(ZopeTestCase.ZopeTestCase):
             'PageOne<a class="new" href="http://nohost/test_folder_1_/wiki/TestPage/createform?page=PageOne" title="create this page">?</a>\n\n')
 
     def test_ZwikiWwmlPageType(self):
-        self.p.edit(text='! PageOne PageTwo\n',type='wwml')
-        #self.assertEquals(self.p.render(bare=1),'    PageOne PageTwo\n')
-        # XXX temporary, due to midsection marker perhaps
-        self.assertEquals(self.p.render(bare=1),'    PageOne PageTwo\n<P>\n')
+        self.p.edit(text = \
+"""
+This is the first paragraph.  There should be a paragraph marker before it,
+and it should wrap nicely around.
+
+---------
+That should have produced a horizontal rule.
+
+The last word should be ''emphasized''.
+
+The last word should be '''strong'''
+
+Can we do both ''emph'' and '''strong''' on the same line?
+
+How about two times:  ''emph1'' followed by ''emph2''?
+
+	* one bullet, with a WikiName
+	* second bullet, with an UnknownWikiName
+		1. nested digit
+		2. nested digit
+
+	1. Top-level numbered list
+	2. Top-level numbered list
+		* nested bullet
+		* nested bullet
+	3. See if we keep the numbering here!
+
+	Term: a definition
+	''Marked-up Term'': another definition, but with ''markup''
+	: a definition without a term
+
+  This should be monospaced,
+    and indented manually
+
+and now this is another normal paragraph.
+
+  Here is some more pre-formatted text.
+	* followed by a bullet
+
+Let's see if AutomaticURLLinking works yet:
+	* http://www.palladion.com
+	* ftp://www.neosoft.com/pub/users/t/tseaver
+	* mailto:tseaver@palladion.com
+
+And [these words] should be linked, too.
+""")
+        self.assertEquals(self.p.render(bare=1),
+"""
+""")
 
     def test_ZwikiPlaintextPageType(self):
         self.p.folder().allowed_page_types = ['plaintext']

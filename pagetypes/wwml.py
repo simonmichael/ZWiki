@@ -11,9 +11,6 @@ class ZwikiWwmlPageType(AbstractPageType):
     supportsWwml = yes
     supportsWikiLinks = yes
 
-    def renderWwmlIn(self,t):
-        return translate_WWML(html_quote(t))
-
     def preRender(self, page, text=None):
         t = text or (page.document()+'\n'+MIDSECTIONMARKER+\
                      self.preRenderMessages(page))
@@ -34,65 +31,8 @@ class ZwikiWwmlPageType(AbstractPageType):
         t = page.addSkinTo(t,**kw)
         return t
 
-
-# WWML formatter
-
-name_pattern_1        = r'[A-Z]+[a-z]+[A-Z][A-Za-z]'
-name_pattern_2        = r'[A-Z][A-Z]+[a-z][A-Za-z]'
-bracket_pattern       = r'\[[\\\w.:_ ]+\]'
-
-full_wikilink_pattern = re.compile( r'!?(%s*|%s*|%s)'
-                                  % ( name_pattern_1
-                                    , name_pattern_2
-                                    , bracket_pattern
-                                    )
-                                  )
-
-abbrev_wikilink_pattern = re.compile( r'!?(%s*|%s*)'
-                                    % ( name_pattern_1
-                                      , name_pattern_2
-                                      )
-                                    )
-
-strip_bracket_pattern   = re.compile( r'^\[(.*)\]$' )
-
-def Wiki_ize( self, text='', full_pattern=1 ):
-    """
-    Transform a html page into a wiki page by changing WikiNames
-    into hyperlinks; pass full_pattern=1 to pick up square bracket
-    links, too (default not to avoid fighting with StructuredText).
-    """
-    pattern = full_pattern and full_wikilink_pattern or abbrev_wikilink_pattern
-
-    wikifier = _Wikifier( self )
-    text = pattern.sub( wikifier._replaceWikilink, text )
-    return text
-
-class _Wikifier :
-
-    def __init__( self, other ) :
-        self.other_ = other
-
-    def _replaceWikilink( self, matchobj ):
-        """replace an occurrence of wikilink_pattern with a suitable hyperlink
-        """
-        # any matches preceded by ! should be left alone
-        if re.match( '^!', matchobj.group( 0 ) ):
-            return matchobj.group( 1 )
-
-        # discard enclosing [] if any
-        wikiname = strip_bracket_pattern.sub( r'\1', matchobj.group( 1 ) )
-
-        # if something of this name exists, link to it;
-        # otherwise, provide a "?" creation link
-        if hasattr( self.other_.aq_parent, wikiname ): 
-            return '<a href="../' + urllib.quote(wikiname) \
-                 + '">' + wikiname + '</a>'
-        else:
-            return '%s<a href="%s/new?id=%s">?</a>' \
-              % ( wikiname
-                , urllib.quote( self.other_.id )
-                , urllib.quote( wikiname ) )
+    def renderWwmlIn(self,t):
+        return translate_WWML(html_quote(t))
 
 
 class WWMLTranslator :
@@ -319,7 +259,6 @@ class WWMLTranslator :
         """
         """
         #   Munge "simple" markup.
-#        line        = Wiki_ize( self.other, line, 1 )
         line        = self.blankLine.sub( '<P>', line )
         line        = self.strong.sub( self.replaceStrong, line )
         line        = self.emphasis.sub( self.replaceEmphasis, line )
@@ -436,69 +375,8 @@ class WWMLTranslator :
     
     __call__ = translate
 
-#def translate_WWML( self, text ) :
-#    wt = WWMLTranslator( self )
-def translate_WWML( text ) :
-    wt = WWMLTranslator()
-    lines = wt( string.split( str( text ), '\n' ) )
-    return string.join( lines, '\n' )
+def translate_WWML(text) :
+    return string.join(WWMLTranslator()(str(text).split('\n')),'\n')
 
-if __name__ == '__main__' :
-
-    testString = \
-"""
-This is the first paragraph.  There should be a paragraph marker before it,
-and it should wrap nicely around.
-
----------
-That should have produced a horizontal rule.
-
-The last word should be ''emphasized''.
-
-The last word should be '''strong'''
-
-Can we do both ''emph'' and '''strong''' on the same line?
-
-How about two times:  ''emph1'' followed by ''emph2''?
-
-	* one bullet, with a WikiName
-	* second bullet, with an UnknownWikiName
-		1. nested digit
-		2. nested digit
-
-	1. Top-level numbered list
-	2. Top-level numbered list
-		* nested bullet
-		* nested bullet
-	3. See if we keep the numbering here!
-
-	Term: a definition
-	''Marked-up Term'': another definition, but with ''markup''
-	: a definition without a term
-
-  This should be monospaced,
-    and indented manually
-
-and now this is another normal paragraph.
-
-  Here is some more pre-formatted text.
-	* followed by a bullet
-
-Let's see if AutomaticURLLinking works yet:
-	* http://www.palladion.com
-	* ftp://www.neosoft.com/pub/users/t/tseaver
-	* mailto:tseaver@palladion.com
-
-And [these words] should be linked, too.
-"""
-    class FakeParent :
-        def __init__( self, parent, **kw ) :
-            self.aq_parent = parent
-            for key, value in kw.items() :
-                setattr( self, key, value )
-
-    grandparent = FakeParent( None, WikiName = 0 )
-#    print translate_WWML( FakeParent( grandparent, id = 'parent' ), testString )
-    print translate_WWML( testString )
 
 registerPageType(ZwikiWwmlPageType)

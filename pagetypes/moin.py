@@ -18,9 +18,6 @@ class ZwikiMoinPageType(AbstractPageType):
     supportsMoin = yes
     supportsWikiLinks = yes
 
-    def renderMoinIn(self,t):
-        return translate_MoinMoinML(html_quote(t))
-
     def preRender(self, page, text=None):
         t = text or (page.document()+'\n'+MIDSECTIONMARKER+\
                      self.preRenderMessages(page))
@@ -41,6 +38,9 @@ class ZwikiMoinPageType(AbstractPageType):
         t = page.addSkinTo(t,**kw)
         return t
 
+    def renderMoinIn(self,t):
+        return translate_MoinMoinML(html_quote(t))
+
 registerPageType(ZwikiMoinPageType)
 
 
@@ -48,7 +48,6 @@ class MoinMoinMLTranslator(WWMLTranslator):
 
     # Add other protocols here?
     textlink      = re.compile( "\[(http://[^ ]+) ([^\[]+)\]" )
-
     header1Line   = re.compile( '^= (.*) =$' )
     header2Line   = re.compile( '^== (.*) ==$' )
     header3Line   = re.compile( '^=== (.*) ===$' )
@@ -89,10 +88,8 @@ class MoinMoinMLTranslator(WWMLTranslator):
         return line
 
 
-def translate_MoinMoinML( text ) :
-    wt = MoinMoinMLTranslator()
-    lines = wt( string.split( str( text ), '\n' ) )
-    return string.join( lines, '\n' )
+def translate_MoinMoinML(text) :
+    return string.join(MoinMoinMLTranslator()(str(text).split('\n')),'\n')
 
 if __name__ == '__main__' :
 
