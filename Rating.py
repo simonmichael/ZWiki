@@ -35,6 +35,7 @@ class RatingSupport:
         Update this page's rating based on a user's vote.
         """
         self.setRating(score)
+        if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1'])
 
 
 # install permissions
