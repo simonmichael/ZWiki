@@ -543,7 +543,7 @@ class GeneralForms:
             ),
             action=self.page_url()+'/editform')
 
-    security.declareProtected(Permissions.View, 'editConflictDialog')
+    security.declareProtected(Permissions.View, 'showAccessKeys')
     def showAccessKeys(self):
         """
         Show the access keys supported by the built-in skins.
