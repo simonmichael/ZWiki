@@ -57,7 +57,7 @@ class EditingSupport:
         - redirects to the new page if appropriate
 
         """
-        name = unquote(page or pagename)
+        name = unquote(page)
         id = self.canonicalIdFrom(name)
 
         # here goes.. sequence is delicate here
