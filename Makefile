@@ -45,6 +45,15 @@ epydoc:
 	        --output /var/www/zopewiki.org/epydoc  \
 	        /zope/lib/python/Products/* /zope1/Products/*
 
+epydoc2:
+	PYTHONPATH=. \
+	cd /zope/lib/python; \
+	epydoc \
+	-o /var/www/zopewiki.org/epydoc \
+	-n Zope-2.7.1b2 \
+	AccessControl/ App BDBStorage/ DateTime/ DBTab/ DocumentTemplate/ HelpSys/ OFS/ Persistence/ SearchIndex/ Shared/ Signals/ StructuredText/ TAL/ webdav/ ZClasses/ ZConfig/ zExceptions/ zLOG/ Zope ZopeUndo/ ZPublisher/ ZServer/ ZTUtils/ PageTemplates ExternalMethod Mailhost MIMETools OFSP PluginIndexes PythonScripts Sessions SiteAccess SiteErrorLog
+
+
 ## i18n
 # remember: 1. merge source files 2. make pot 3. replace po files 4. make po
 # using zope 3's i18nextract.py with zopewiki/ZopeInternationalization patches
