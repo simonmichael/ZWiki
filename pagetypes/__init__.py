@@ -1,26 +1,26 @@
 # PAGE TYPES
 """
-Zwiki page type objects are State objects which encapsulate any behaviour
-which is specific to the different kinds of zwiki page. All pages hold an
-instance of the appropriate page type class in their page_type attribute.
-XXX cf ram cache manager code to check for persistence issues ?
-Page type objects hold no state of their own so when calling them we
-usually pass in the page object as first argument.
+A zwiki page holds a page type object (in its page_type attribute) to
+which it delegates certain methods, so that formatting and other behaviour
+can be changed by replacing this page type object with another (the State
+pattern). Page type objects hold no state aside from their class, so when
+calling them we usually pass in the page as first argument.
+XXX cf ram cache manager code to check for persistence issue ?
 
-You can plug in new zwiki page types by adding a new page type module in this
-package, or in a separate zope product, and calling registerPageType at
-startup. Your page type can inherit from one of the abstract page types in
-common.py, or any other page type. All overrideable page-type-specific
-methods appear in common.AbstractPageType.
+To define a new page type, add a module in this package or in a separate
+zope product which subclasses any of the *PageType classes, and call
+registerPageType at startup. Quick start:
 
-Quick start:
+- copy one of the existing modules (files) in this package; give your page
+  type a suitable class name, _id and _name; register it with the others
+  at the end of this file.  Or: put your module in a separate zope product
+  and call registerPageType in your __init__.py.
 
-- copy one of the existing modules in this package
-- give the class a suitable name, _id and _name
-- register it below
-- restart or refresh zwiki; it should appear in the editform
-- tweak it until it does what you want
-- don't forget to modify your supports* methods too
+- restart zope or refresh zwiki; your page type should appear in the editform
+
+- tweak your page type until it does what you want. You can see a list of
+  overrideable page-type-specific methods in common.AbstractPageType.
+  Don't forget to modify your supports* methods as appropriate.
 
 """
 
