@@ -355,11 +355,12 @@ class ZWikiPage(
                 re.search(r'(?i)(<dtml|&dtml)',self.read()) is not None)
 
     security.declareProtected(Permissions.View, 'dtmlAllowed')
-    def dtmlAllowed(self): return (
+    def dtmlAllowed(self):
         """Is embedded DTML permitted on this page ?"""
-        getattr(self,'allow_dtml',0) and
-        not hasattr(self,'no_dtml')
-        )
+        return (
+            getattr(self,'allow_dtml',0) and
+            not hasattr(self,'no_dtml')
+            )
 
     security.declareProtected(Permissions.View, 'supportsEpoz')
     def supportsEpoz(self):
