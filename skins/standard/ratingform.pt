@@ -20,20 +20,19 @@
          style python:(myvote == int(v)) and 'font-weight:bold' or '';
          "/>
    <STYLE type="text/css">
-    .ratebtn {width: 30px;}
+    .ratebtn {width: 40px;}
    </STYLE>
-
    <input type="submit" name="score:int" value="-1" class="ratebtn"
-   tal:attributes="style python:(myvote == -1) and 'font-weight:bold' or ''"   />
-   <input type="submit" name="score:int" value="0"  class="ratebtn"
-   tal:attributes="style python:(myvote ==  0) and 'font-weight:bold' or ''"   />
-   <input type="submit" name="score:int" value="+1" class="ratebtn"
-   tal:attributes="style python:(myvote == +1) and 'font-weight:bold' or ''"   />
-   <input type="submit" name="score:int" value="+2" class="ratebtn"
-   tal:attributes="style python:(myvote == +2) and 'font-weight:bold' or ''"   />
-   <input type="submit" name="score:int" value="+3" class="ratebtn"
-   tal:attributes="style python:(myvote == +3) and 'font-weight:bold' or ''"   />
-   <br>
+   tal:attributes="style python:(myvote == -1) and 'font-weight:bold' or ''"
+   /><input type="submit" name="score:int" value="0"  class="ratebtn"
+   tal:attributes="style python:(myvote ==  0) and 'font-weight:bold' or ''"
+   /><input type="submit" name="score:int" value="+1" class="ratebtn"
+   tal:attributes="style python:(myvote == +1) and 'font-weight:bold' or ''"
+   /><input type="submit" name="score:int" value="+2" class="ratebtn"
+   tal:attributes="style python:(myvote == +2) and 'font-weight:bold' or ''"
+   /><input type="submit" name="score:int" value="+3" class="ratebtn"
+   tal:attributes="style python:(myvote == +3) and 'font-weight:bold' or ''"
+   /><br />
   <span i18n:translate="">click to rate</span> (<span i18n:translate="">voting as</span>: 
   <span tal:replace="python:here.usernameFrom(request)" />)
 </form>
