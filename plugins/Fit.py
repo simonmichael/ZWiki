@@ -7,6 +7,7 @@ from Globals import InitializeClass
 from OFS.DTMLDocument import DTMLDocument
 
 from Products.ZWiki.plugins import registerPlugin
+from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import Popen3
 

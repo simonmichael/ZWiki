@@ -12,6 +12,7 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 
 from Products.ZWiki.plugins import registerPlugin
+from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki.Regexps import fromlineexpr, nidexpr
 
 purplestyle = """

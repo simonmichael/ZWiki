@@ -8,11 +8,19 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 
 from Products.ZWiki.plugins import registerPlugin
+from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER
 from Products.ZWiki.UI import loadPageTemplate, onlyBodyFrom, DEFAULT_TEMPLATES
 
 DEFAULT_TEMPLATES['ratingform'] = loadPageTemplate('ratingform')
+
+
+for a in [
+    'voteCount',
+    'rating',
+    ]:
+    registerPageMetaData(a)
 
 
 class RatingSupport:

@@ -9,6 +9,7 @@ from AccessControl import getSecurityManager, ClassSecurityInfo
 from Globals import InitializeClass, package_home
 
 from Products.ZWiki.plugins import registerPlugin
+from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER,formattedTraceback
 from Products.ZWiki.UI import DEFAULT_TEMPLATES, loadDtmlMethod, loadPageTemplate#, onlyBodyFrom
@@ -45,6 +46,18 @@ ISSUE_COLOURS = [
     ',closed,       ,#e0f0e0',
     ',,             ,',
     ]
+
+
+for a in [
+    'category',
+    'category_index',
+    'severity',
+    'severity_index',
+    'status',
+    'status_index',
+    'issueColour',
+    ]:
+    registerPageMetaData(a)
 
 
 class TrackerSupport:

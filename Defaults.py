@@ -19,20 +19,19 @@ PAGE_PORTALTYPE =    'Wiki Page'  # content type used in CMF/Plone
 WIKI_ADD_MENU_NAME = 'ZWiki'      # items in ZMI add menu.. 
 PAGE_ADD_MENU_NAME = 'ZWiki Page' # (this one must match PAGE_METATYPE)
 
+IDS_TO_AVOID = ['RESPONSE','REQUEST','Epoz','epoz']
 
-# standard metadata fields Zwiki expects to be in page brain objects
-# for best large-wiki performance, ensure these are in catalog metadata
-# (all of them! since pages() will otherwise go to the ZODB to get them)
-# see also http://zwiki.org/ZwikiAndZCatalog
+# standard metadata fields Zwiki expects/provides in page brain objects
+# for best large-wiki performance, ensure all of these are in catalog
+# metadata (all of them! so that pages() does not go to the ZODB to get
+# them) see also http://zwiki.org/ZwikiAndZCatalog
+# plugins will add more of these
 PAGE_METADATA = [
     'Title',
     #'cachedSize',
-    'category',
-    'category_index',
     'creation_time',
     'creator',      
     'id',
-    'issueColour',
     'lastEditTime',
     'last_edit_time',
     'last_editor',   
@@ -40,15 +39,20 @@ PAGE_METADATA = [
     #'links', # XXX problems for epoz/plone, not needed ?
     'page_type',     
     'parents',
-    'rating',
-    'severity',
-    'severity_index',
     'size',
-    'status',
-    'status_index',
     'subscriber_list',
     'summary',
-    'voteCount',
     ]
 
-IDS_TO_AVOID = ['RESPONSE','REQUEST','Epoz','epoz']
+#from Utils import BLATHER
+def registerPageMetaData(t):
+    """
+    Add an attribute name to the list of standard page metadata.
+
+    >>> from Products.ZWiki.Defaults import registerPageMetaData
+    >>> registerPageMetaData('myattribute')
+
+    """
+    PAGE_METADATA.append(t)
+    #BLATHER('registered standard metadata field: %s'%t)
+
