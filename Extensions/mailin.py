@@ -1,65 +1,64 @@
 """
 zwiki mailin - post an incoming email message to a wiki
 
-This is an external method for receiving mail from a mailer alias,
-procmail recipe or script via something like:
-| curl -n -F 'msg=<-' http://mysite/mywikifolder/mailin
-and posting it to a suitable zwiki page.  It expects at least one
-argument, a message in RFC2822 format.
+This external method expects at least one argument, a message in RFC2822
+format, and takes appropriate action in the wiki where it has been called
+(usually, posts a comment to one of the pages). Typically called by an
+email alias like::
 
-Here are the delivery rules:
-XXX see the latest CHANGES.txt for some updates to these.
+ | curl -n -F 'msg=<-' http://mysite/mywikifolder/mailin
+
+See http://zwiki.org/HowToSetUpMailin for more.
+
+Here are the delivery rules, in essence:
 
 - if the message appears to be a zwiki mailout or from an auto-responder
-  or junk, silently discard it
+  or junk, DISCARD.
 
-- if called in a page context (http://site/wikipage/mailin), always use
-  that page. Otherwise,
+- if we have been called in a page context (../SOMEPAGE/mailin), POST
+  message as a comment on that page.
 
-- (DISABLED: if a recipient of the form
-  ".*(wiki|mailin|tracker|bugs|issues)@virtualhost" (MAILINADDREXP) is
-  found, where virtualhost matches an existing VirtualHostMonster entry,
-  then in the corresponding folder, otherwise,)
+- (DISABLED) select virtual host:
+  Intended to allow a single mailin alias to serve many vhosts.  If there
+  is a recipient of the form .*MAILINADDREXP@vhost where vhost matches a
+  virtual host monster entry on this server, use that vhost's folder.
 
-- in the current folder (which must contain at least one zwiki page),
+- if there is not at least one zwiki page in the current folder, DISCARD.
 
-- unless called with subscribersonly=0 or the folder's mailin_policy
-  property is 'open' (old posting_policy property also supported), check
-  that the sender (From or Sender address) is subscribed somewhere in the
-  wiki; or, is listed in the mail_accept_nonmembers property. If not,
-  bounce the message.
+- identify recipient:
+  if the message has multiple recipients, decide which one is us as follows:
+  the first recipient matching the folder's mail_from property,
+  or the first one looking like a typical zwiki mailin alias (.*MAILINADDREXP),
+  or the first one.
 
-- decide which of the recipients is us, as follows:
+- check sender:
+  unless called with subscribersonly=0 or the folder's mailin_policy
+  property is 'open', check that the sender is either subscribed somewhere
+  in the wiki or listed in the mail_accept_nonmembers property, and if not
+  BOUNCE the message.
 
-   1. if there's only one, use that one
-   2. or the first one whose address matches the folder's mail_from property
-   3. or the first one whose address matches MAILINADDREXP
-   4. or the first one
+- if called with trackerissue=1 or the recipient looks like a zwiki
+  tracker mailin alias (.*TRACKERADDREXP), CREATE AN ISSUE page.
+  Otherwise,
 
-  NB cases 3 and 4 may sometimes lead it to guess the wrong recipient and
-  potentially deliver to the wrong page. Perhaps we can get this from the
-  mail servers and pass it as an argument.
+- identify destination page name:
+  1. if called with checkrecipient=1, a page name (PAGEINREALNAMEEXP) in
+     the recipient's real name part (XXX REMOVE ?)
+  2. or the first [bracketed name] (PAGEINSUBJECTEXP) in the message subject
+  3. or the folder's default_mailin_page property (XXX NOT IMPLEMENTED) 
+  4. or the defaultpage argument we were called with (XXX REMOVE ?)
 
-- if called with trackerissue=1 or the recipient matches
-  ".*(tracker|bugs|issues)@" (TRACKERADDREXP), create a tracker issue page.
+- if no destination page name was found, DISCARD.
 
-- Otherwise, look for
+- if no wiki page by that name exists, CREATE it
 
-   1. a non-empty page name in the recipient real name (PAGEINREALNAMEEXP)
-   2. or the first WikiName or [bracketed name] in the subject
-   3. or the folder's default_page property (possibly acquired)
-       (XXX no longer, support default_mailin_page instead ?)
-   4. or the defaultpage argument we were called with (XXX remove ?)
-   5. or the DEFAULTPAGE defined below
-   6. or the first zwiki page in the folder (as returned by objectValues)
+- POST message as a comment to that page
 
-- and add a comment to that page, creating it if necessary.
 
-Note page creation and comments will trigger subscriber mail-outs as usual.
 
 todo:
-refactor
-size limits
+keep refactoring
+size limit
 friendly bounce messages
 
 """
@@ -359,9 +358,7 @@ class MailIn:
           (useful to allow mailing lists, etc)
         Set self.error if not permitted.
         """
-        postingpolicy = getattr(self.folder(),'mailin_policy',
-                                # backwards compatibility
-                                getattr(self.folder(),'posting_policy',None)) 
+        postingpolicy = getattr(self.folder(),'mailin_policy',None)
         accept = getattr(self.folder(),'mail_accept_nonmembers',[])
         if (not self.subscribersonly or
             postingpolicy == 'open' or
