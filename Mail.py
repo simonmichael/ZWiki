@@ -32,18 +32,18 @@ class MailSupport:
 
     def _getSubscribers(self, parent=0):
         """
-        Return (a copy of!) this page's subscriber list.
+        Return a copy of this page's subscriber list, as a list.
         
         With parent flag, manage the parent folder's subscriber list instead.
         """
         if AUTO_UPGRADE: self._upgradeSubscribers()
         if parent:
             if hasattr(self.folder(),'subscriber_list'):
-                return self.folder().subscriber_list[:]
+                return list(self.folder().subscriber_list)
             else:
                 return []
         else:
-            return self.subscriber_list[:]
+            return list(self.subscriber_list)
 
     def _setSubscribers(self, subscriberlist, parent=0):
         """
