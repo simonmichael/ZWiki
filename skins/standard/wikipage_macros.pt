@@ -88,6 +88,7 @@
 <a tal:attributes="href here/preferencesUrl" accesskey="o"></a>
 <a tal:attributes="href here/helpUrl" accesskey="h" tal:condition="here/helpUrl"></a>
 <a tal:attributes="href python:here.pageUrl()+'/setskin?skin=plone'" accesskey="+" tal:condition="here/inCMF"></a>
+<a tal:attributes="href python:here.pageUrl()+'/setskin?skin=full'" accesskey="+" tal:condition="not:here/inCMF"></a>
 <a tal:attributes="href python:here.pageUrl()+'/setskin?skin=full'" accesskey="="></a>
 <a tal:attributes="href python:here.pageUrl()+'/setskin?skin=simple'" accesskey="_"></a>
 <a tal:attributes="href python:here.pageUrl()+'/setskin?skin=minimal'" accesskey="-"></a>
