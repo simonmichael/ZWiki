@@ -73,38 +73,45 @@ class MailinTests(unittest.TestCase):
         m = mailin.MailIn(self.p.aq_parent,str(TestMessage(
             to='a'
             )),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.recipient,('','a'))
 
         m = mailin.MailIn(self.p.aq_parent,str(TestMessage(
             to='a, b'
             )),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.recipient,('','a'))
 
         self.p.folder().mail_from = 'b'
         m = mailin.MailIn(self.p.aq_parent,str(TestMessage(
             to='a, b, wiki@c.c'
             )),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.recipient,('','b'))
         del self.p.folder().mail_from
 
         m = mailin.MailIn(self.p.aq_parent,str(TestMessage(
             to='a@a.a, mailin@b.b'
             )),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.recipient,('','mailin@b.b'))
 
         m = mailin.MailIn(self.p.aq_parent,str(TestMessage(
             to='a@a.a, tracker@b.b'
             )),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.recipient,('','tracker@b.b'))
 
         m = mailin.MailIn(self.p.aq_parent,str(TestMessage(
             to='a@a.a, bugs@b.b'
             )),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.recipient,('','bugs@b.b'))
 
         m = mailin.MailIn(self.p.aq_parent,str(TestMessage(
             to='a@a.a, issues@b.b'
             )),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.recipient,('','issues@b.b'))
 
     def testDestinationFromHardCodedDefaultPage(self):
@@ -112,6 +119,7 @@ class MailinTests(unittest.TestCase):
         self.p.create('APage')
         self.p.create(mailin.DEFAULTPAGE)
         m = mailin.MailIn(self.p.aq_parent,testmsg,subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.destpagename,mailin.DEFAULTPAGE)
     
     def testDestinationFromDefaultPageProperty(self):
@@ -120,6 +128,7 @@ class MailinTests(unittest.TestCase):
         self.p.create('BPage')
         self.p.aq_parent.default_page = 'BPage'
         m = mailin.MailIn(self.p.aq_parent,testmsg,subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.destpagename,'BPage')
     
     def testDestinationFromFirstExistingPage(self):
@@ -127,16 +136,19 @@ class MailinTests(unittest.TestCase):
         self.p.create('APage')
         self.p.aq_parent.default_page = 'NonExistentPage'
         m = mailin.MailIn(self.p.aq_parent,testmsg,subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.destpagename,THISPAGE)
     
     def testDestinationFromRealNameWithRecognizedEmail(self):
         testmsg = str(TestMessage(to='wiki@b.c (SomePage)'))
         m = mailin.MailIn(self.p.aq_parent,testmsg,subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.destpagename,'SomePage')
     
     def testDestinationFromRealNameWithAnyEmail(self):
         testmsg = str(TestMessage(to='a@b.c (SomePage)'))
         m = mailin.MailIn(self.p.aq_parent,testmsg,subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.destpagename,'SomePage')
     
     def testDestinationFromRealNameWithSubject(self):
@@ -145,17 +157,20 @@ class MailinTests(unittest.TestCase):
             subject='[AnotherPage]',
             ))
         m = mailin.MailIn(self.p.aq_parent,testmsg,subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.destpagename,'SomePage')
     
     def testDestinationFromWikiNameInSubject(self):
         # we don't do this any more
         m = mailin.MailIn(self.p.aq_parent,
             str(TestMessage(subject='SomePage')),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.destpagename,THISPAGE) 
 
     def testDestinationFromBracketedNameInSubject(self):
         m = mailin.MailIn(self.p.aq_parent,
             str(TestMessage(subject='[Some Page]')),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.destpagename,'Some Page')
 
     def testDestinationFromMultipleBracketedNamesInSubject(self):
@@ -163,6 +178,7 @@ class MailinTests(unittest.TestCase):
             self.p.aq_parent,
             str(TestMessage(subject='[Fwd:][LIST][Some Page]')),
             subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.destpagename,'Some Page')
     
     def testDestinationWithBlankRealName(self):
@@ -170,6 +186,7 @@ class MailinTests(unittest.TestCase):
             to='wiki@b.c (   )',
             subject='SomePage',
             )),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.destpagename,THISPAGE)
 
     def testDestinationWithNoWordsInRealName(self):
@@ -177,28 +194,33 @@ class MailinTests(unittest.TestCase):
             to='wiki@b.c (...)',
             subject='SomePage',
             )),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.destpagename,THISPAGE)
 
     def testDestinationRealNameStripping(self):
         m = mailin.MailIn(self.p.aq_parent,str(TestMessage(
             to='wiki@b.c (  SomePage\t)',
             )),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.destpagename,'SomePage')
 
     def testDestinationWithQuotesInRealName(self):
         m = mailin.MailIn(self.p.aq_parent,str(TestMessage(
             to="wiki@b.c ('SomePage')",
             )),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.destpagename,'SomePage')
         m = mailin.MailIn(self.p.aq_parent,str(TestMessage(
             to='wiki@b.c ("SomePage")',
             )),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.destpagename,'SomePage')
 
     def testDestinationWithEmailInRealName(self):
         m = mailin.MailIn(self.p.aq_parent,str(TestMessage(
             to="wiki@b.c (wiki@b.c)",
             )),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.destpagename,THISPAGE)
 
     def testDestinationFromPageContext(self):
@@ -206,12 +228,14 @@ class MailinTests(unittest.TestCase):
             to='a@b.c (SomePage)',
             subject='[SomePage] SomePage',
             )),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.destpagename,THISPAGE)
 
     def testDestinationFromTrackerAddress(self):
         m = mailin.MailIn(self.p,str(TestMessage(
             to='bugs@b.c',
             )),subscribersonly=0)
+        m.decideDestination()
         self.assertEqual(m.trackerissue,1)
 
     def testSubscriberMailin(self):
@@ -230,6 +254,20 @@ class MailinTests(unittest.TestCase):
         mailin.mailin(self.p,TESTMSG,subscribersonly=0)
         self.assertEqual(1, len(re.findall(TESTBODY,self.p.text())))
         
+    def testMailinMultipart(self):
+        p = self.p
+        self.p.subscribe(TESTSENDER)
+        from email.MIMEText import MIMEText
+        from email.MIMEMultipart import MIMEMultipart
+        msg = MIMEMultipart()
+        msg['From'] = TESTSENDER
+        msg['To'] = TESTTO
+        msg.attach(MIMEText('*bold*'))
+        msg.attach(MIMEText('<b>bold</b>','html'))
+        mailin.mailin(p, msg.as_string())
+        self.assertEqual(1, p.commentCount())
+        self.assertEqual(1, len(re.findall(r'\*bold\*', p.text())))
+
     def testMailinTrackerIssue(self):
         mailin.mailin(self.p,TESTMSG,trackerissue=1,subscribersonly=0)
         self.checkAddIssueRequest(self.p.aq_parent.issuetracker_request)

@@ -5,7 +5,7 @@ This is an external method for receiving mail from a mailer alias,
 procmail recipe or script via something like:
 | curl -n -F 'msg=<-' http://mysite/mywikifolder/mailin
 and posting it to a suitable zwiki page.  It expects at least one
-argument, an RFC822 message.
+argument, a message in RFC2822 format.
 
 Here are the delivery rules:
 XXX see the latest CHANGES.txt for some updates to these.
@@ -56,20 +56,20 @@ XXX see the latest CHANGES.txt for some updates to these.
 
 Note page creation and comments will trigger subscriber mail-outs as usual.
 
-Tests for this code are in ZWiki/tests/testMailin.py.
-
 todo:
 refactor
-use email lib
 size limits
 friendly bounce messages
-integrate pb's http posting, attachment handling ?
 
 """
 
 from types import *
-import re, string 
-import rfc822, mimetools, multifile, StringIO
+import string, re
+import email
+from email.Message import Message
+from email.Utils import parseaddr, getaddresses
+from email.Iterators import typed_subpart_iterator
+
 from Products.ZWiki.Regexps import wikiname1,wikiname2,bracketedexpr
 from Products.ZWiki.Utils import BLATHER
 
@@ -127,14 +127,14 @@ def isJunk(msgtext):
 
 class MailIn:
     """
-    An incoming wikimail message.
+    I represent a wiki mail-in (incoming mail message).
 
-    Responsibilities:
-    - parse the message and expose the parts of interest.
-    - figure out how to deliver itself as per the rules above.
-
-    Uses the rfc822 package so as to work with python 1.5.
+    I parse the incoming rfc2822 message string and expose the parts of
+    interest, and (given a wiki context) figure out how to deliver myself
+    as per the zwiki delivery rules above.
     """
+
+    msg = None
     folder = None
     recipient = None
     destpage = None
@@ -143,6 +143,70 @@ class MailIn:
     trackerissue = 0
     creating = 0
     error = None
+
+    def __init__(self,
+                 context,
+                 message,
+                 defaultpage=DEFAULTPAGE,
+                 subscribersonly=1,
+                 trackerissue=0,
+                 checkrecipient=1,
+                 checksubject=1,
+                 ):
+        BLATHER('mailin.py: processing incoming message:\n%s' % message)
+        self.context = context
+        self.defaultpage = defaultpage
+        self.subscribersonly = subscribersonly
+        self.trackerissue = trackerissue
+        self.checkrecipient = checkrecipient
+        self.checksubject = checksubject
+        self.msg = email.message_from_string(message)
+        self.date = self.msg['Date']
+        self.subject = self.msg.get('Subject','')
+        self.realSubject = re.sub(r'.*?\[.*?\](.*)',r'\1',self.subject)
+        self.messageid = self.msg.get('Message-id','')
+        self.inreplyto = self.msg.get('In-reply-to','')
+        self.From = self.msg.get('From')
+        self.FromRealName = parseaddr(self.From)[0]
+        self.FromEmail    = parseaddr(self.From)[1]
+        self.FromUserName = (self.FromRealName or
+                             re.sub(r'@.*$',r'',self.FromEmail))
+        self.sender = self.msg.get('Sender')
+        self.senderEmail = (self.sender and
+                            parseaddr(self.sender)[1]) or None
+        tos = self.msg.get_all('to', [])
+        ccs = self.msg.get_all('cc', [])
+        resent_tos = self.msg.get_all('resent-to', [])
+        resent_ccs = self.msg.get_all('resent-cc', [])
+        self.recipients = getaddresses(tos + ccs + resent_tos + resent_ccs)
+
+        # mailing list support
+	# XXX x-beenthere is mailman-specific - need to support ezmlm & others here
+        #self.xbeenthere = (self.msg.get('X-BeenThere') or
+	#                   re.search(r'[^\s<]+@[^\s>]+',self.msg.get('Delivered-To')).group())
+	# Type Error
+	# made ezmlm include beenthere
+        self.xbeenthere = self.msg.get('X-BeenThere')
+
+        plaintextpart = typed_subpart_iterator(self.msg,
+                                               'text',
+                                               'plain').next().get_payload()
+        self.body = self.cleanupBody(plaintextpart)
+        
+    def cleanupBody(self,body):
+        """
+        Clean up/remove uninteresting parts of an incoming message body.
+        """
+        # strip trailing newlines that seem to get added in transit
+        body = re.sub(r'(?s)\n+$',r'\n',body)
+        # strip Bob's signature
+        body = self.stripSignature(body)
+        # strip TBC (typical bloody citations)
+        #body = re.sub(
+        #    r'(?si)----- ?message d\'origine.*',r'',body)
+        #body = re.sub(
+        #    r'(?si)----- ?original message.*',r'',body)
+        return body
 
     def stripSignature(self,body):
         """
@@ -157,71 +221,23 @@ class MailIn:
             body = re.sub(re.escape(signature),'',body)
         return body
     
-    def __init__(self,
-                 context,
-                 message,
-                 defaultpage=DEFAULTPAGE,
-                 subscribersonly=1,
-                 trackerissue=0,
-                 checkrecipient=1,
-                 checksubject=1,
-                 ):
-        BLATHER('mailin.py: processing incoming message:\n%s' % message)
+    def decideDestination(self):
+        """
+        Figure out what wiki page this mail-in should go to.
 
-        # parse the message
-        self.context = context
-        self.raw = message
-        self.stream = StringIO.StringIO(self.raw)
-        self.msg = mimetools.Message(self.stream)
-        self.date = self.msg['Date']
-        self.subject = (self.msg.has_key('Subject') and self.msg['Subject']) or ''
-        self.realSubject = re.sub(r'.*?\[.*?\](.*)',r'\1',self.subject)
-	# XXX x-beenthere is mailman-specific - need to support ezmlm & others here
-        #self.xbeenthere = (self.msg.get('X-BeenThere') or
-	#                   re.search(r'[^\s<]+@[^\s>]+',self.msg.get('Delivered-To')).group())
-	# Type Error
-	# made ezmlm include beenthere
-        self.xbeenthere = self.msg.get('X-BeenThere')
-        self.messageid = self.msg.get('Message-id')
-        self.inreplyto = self.msg.get('In-reply-to')
-        self.From = self.msg.get('From')
-        self.FromRealName = rfc822.parseaddr(self.From)[0]
-        self.FromEmail    = rfc822.parseaddr(self.From)[1]
-        self.FromUserName = (self.FromRealName or
-                             re.sub(r'@.*$',r'',self.FromEmail))
-        self.sender = self.msg.get('Sender')
-        self.senderEmail = (self.sender and
-                            rfc822.parseaddr(self.sender)[1]) or None
-        self.recipients = []
-        for hdr in ['To','Cc','Bcc']:
-            if self.msg.has_key(hdr):
-                self.recipients.extend(self.msg.getaddrlist(hdr))
-        if self.isMime():
-            self.body = self.firstMimePartMatching('text/plain')
-        else:
-            self.body = self.msg.fp.read()
-        # strip trailing newlines that seem to get added in transit
-        self.body = re.sub(r'(?s)\n+$',r'\n',self.body)
-        # strip Bob's signature
-        self.body = self.stripSignature(self.body)
-        # strip TBC (typical bloody citations)
-        #self.body = re.sub(
-        #    r'(?si)----- ?message d\'origine.*',r'',self.body)
-        #self.body = re.sub(
-        #    r'(?si)----- ?original message.*',r'',self.body)
-
-        # figure out where it should go
+        Sets self.destpage and self.creating, self.trackerissue flags.
+        If we run into problems, we'll return a message in self.error.
+        """
         if self.context.meta_type == 'ZWiki Page':
             self.folder = self.context.aq_parent
             self.destpage = self.workingpage = self.context
             self.destpagename = self.destpage.title_or_id()
             self.creating = 0
-        # or at least the folder and a working page
         else:
             self.folder = self.context
             # find default and working pages..
             # NB the default page may have a freeform name
-            defaultpagename = getattr(self.folder,'default_page',defaultpage)
+            defaultpagename = getattr(self.folder,'default_page',self.defaultpage)
             self.workingpage = getattr(self.folder,defaultpagename,None)
             if not self.workingpage:
                 allpages = self.folder.objectValues(spec='ZWiki Page')
@@ -247,7 +263,7 @@ class MailIn:
         postingpolicy = getattr(self.folder,'mailin_policy',
                                 getattr(self.folder,'posting_policy',None))
         accept = getattr(self.folder,'mail_accept_nonmembers',[])
-        if not subscribersonly or postingpolicy == 'open':
+        if not self.subscribersonly or postingpolicy == 'open':
             pass
         # XXX poor caching
         elif (self.workingpage.allSubscriptionsFor(self.FromEmail) or
@@ -279,19 +295,19 @@ class MailIn:
             self.recipient = self.recipients[0]
 
         # decide if this is a tracker issue
-        if (trackerissue or re.search(TRACKERADDREXP,self.recipient[1])):
+        if (self.trackerissue or re.search(TRACKERADDREXP,self.recipient[1])):
             self.trackerissue = 1
             return
 
         # finalize our choice of destination page
         if not self.destpage:
             # look for a page name in recipient real name
-            if checkrecipient:
+            if self.checkrecipient:
                 m = re.search(PAGEINREALNAMEEXP,self.recipient[0])
                 if m:
                     self.destpagename = m.group('page')
             # or in the subject
-            if (not self.destpagename) and checksubject:
+            if (not self.destpagename) and self.checksubject:
                 matches = re.findall(PAGEINSUBJECTEXP,self.subject)
                 if matches:
                     self.destpagename = matches[-1] # use rightmost
@@ -315,31 +331,10 @@ class MailIn:
             else:
                 self.creating = 1
 
-    def isMime(self):
-        return re.search(r'Content-Type:.*multipart',self.raw)
-
-    # based on python manual example
-    def firstMimePartMatching(self,mimetype):
-        msgtype = self.msg.gettype()
-        params = self.msg.getplist()
-        data = StringIO.StringIO()
-        if msgtype[:10] == "multipart/":
-            file = multifile.MultiFile(self.stream)
-            file.push(self.msg.getparam("boundary"))
-            while file.next():
-                submsg = mimetools.Message(file)
-                try:
-                    data = StringIO.StringIO()
-                    mimetools.decode(file, data, submsg.getencoding())
-                except ValueError:
-                    continue
-                if submsg.gettype() == mimetype:
-                    break
-            file.pop()
-        return data.getvalue()
-    
 #    def findDestinationVirtualHost(self, msg):
 #        """
+#        Do tricky vhost-folder-finding.
+#        
 #        If we have one of the special recipients listed above along with a
 #        matching virtual host, return the virtual host's folder; otherwise None.
 #        Also save the username part of the matched recipient for later.
@@ -388,7 +383,7 @@ def mailin(self,
     trackerissue    = int(trackerissue or 0)
     subscribersonly = int(subscribersonly or 0)
 
-    # silently discard any junk
+    # silently discard any junk before doing anything else
     if isJunk(msg): return
 
     # parse and figure out how to deliver the message
@@ -400,8 +395,8 @@ def mailin(self,
                checkrecipient=checkrecipient,
                checksubject=checksubject,
                )
-    if m.error:
-        return m.error
+    m.decideDestination()
+    if m.error: return m.error
 
     # stash the sender's username in REQUEST so zwiki can use it to set
     # last_editor
