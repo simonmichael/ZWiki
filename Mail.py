@@ -4,6 +4,8 @@ import string, re, sys
 from string import split,join,find,lower,rfind,atoi,strip,lstrip
 from types import *
 
+from Products.CMFCore.utils import getToolByName
+
 from TextFormatter import TextFormatter
 from Utils import html_unquote,BLATHER,formattedTraceback,stripList
 from Defaults import AUTO_UPGRADE, PAGE_METATYPE
@@ -362,22 +364,34 @@ class SubscriberManagerMixin:
     
     def emailAddressFrom(self,subscriber):
         """
-        Convert subscriber to an email address, if needed.
+        Convert an email address or CMF member id to an email address.
 
-        If subscriber is an email address, return as-is.  Otherwise assume
-        it's a username and try to look up the corresponding CMF member's
-        email address.  Otherwise return None.
+        If subscriber is an email address, return as-is.
+
+        Otherwise assume it's a member id and if we are in a CMF site
+        look up the member's email address.
+
+        Note to avoid a tricky incompatibility with subscribeform &
+        useroptions, we handle the special case of a user acquired
+        from above who is a non-member but has an email address in
+        portal_memberdata all the same. Since we don't know how to get
+        hold of this user object, dig out the member data by id which
+        is damned ugly, but can't burn any more time on this right now.
+
+        If we can't get an email address, return None.
+
         """
         if self.isEmailAddress(subscriber):
             return subscriber
+        elif self.inCMF():
+            mtool = getToolByName(self, 'portal_membership')
+            member = mtool.getMemberById(subscriber)
+            if not member:
+                mdata = getToolByName(self, 'portal_memberdata')
+                member = mdata._members.get(subscriber,None)
+            return getattr(member,'email',None)
         else:
-            folder = self.folder()
-            try:
-                user = folder.portal_membership.getMemberById(subscriber)
-                member = folder.portal_memberdata.wrapUser(user)
-                return member.email
-            except AttributeError:
-                return None
+            return None
 
     def emailAddressesFrom(self,subscribers):
         """
