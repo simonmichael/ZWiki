@@ -8,6 +8,8 @@ if __name__ == '__main__': execfile(os.path.join(sys.path[0], 'framework.py'))
 from Testing import ZopeTestCase
 from support import *
 ZopeTestCase.installProduct('ZWiki')
+ZopeTestCase.installProduct('TextIndexNG2')
+
 # we can no longer set up a test plone ourselves with plone 2 - rely on
 # PloneTestCase instead.
 # XXX Skip these tests if plone 2 & all required products are not present
