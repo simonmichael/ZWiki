@@ -439,7 +439,7 @@ class AdminSupport:
             ]
         KeywordIndexes = [
             'canonicalLinks',
-            'links',
+            #'links', # XXX problems for epoz/plone, not needed ?
             'parents',
             ]
         DateIndexes = [
@@ -458,7 +458,7 @@ class AdminSupport:
             'last_edit_time',
             'last_editor',
             'last_log',
-            'links',
+            #'links', # XXX problems for epoz/plone, not needed ?
             'page_type',
             'parents',
             'size',

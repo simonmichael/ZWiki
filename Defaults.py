@@ -85,7 +85,7 @@ PAGE_METADATA = [
     'last_edit_time',
     'last_editor',   
     'last_log',
-    'links',
+    #'links', # XXX problems for epoz/plone, not needed ?
     'page_type',     
     'parents',
     'severity',
