@@ -19,6 +19,7 @@
         tal:attributes="content here/summary;" />
 </head>
 <body>
+<div tal:condition="here/site_header|nothing" tal:replace="site_header" />
 
 <div metal:use-macro="macros/linkpanel">site links panel</div>
 
