@@ -7,9 +7,9 @@ import string, re
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 
-import Permissions
-from Utils import BLATHER
-from UI import loadPageTemplate, onlyBodyFrom, DEFAULT_TEMPLATES
+from Products.ZWiki import Permissions
+from Products.ZWiki.Utils import BLATHER
+from Products.ZWiki.UI import loadPageTemplate, onlyBodyFrom, DEFAULT_TEMPLATES
 
 DEFAULT_TEMPLATES['ratingform'] = loadPageTemplate('ratingform')
 

@@ -6,13 +6,13 @@ from string import join, split, strip
 
 import DocumentTemplate
 from AccessControl import getSecurityManager, ClassSecurityInfo
-import Permissions
 from Globals import InitializeClass, package_home
 
-from Utils import BLATHER,formattedTraceback
-from Defaults import ISSUE_CATEGORIES, ISSUE_SEVERITIES, ISSUE_STATUSES, \
+from Products.ZWiki import Permissions
+from Products.ZWiki.Utils import BLATHER,formattedTraceback
+from Products.ZWiki.Defaults import ISSUE_CATEGORIES, ISSUE_SEVERITIES, ISSUE_STATUSES, \
      ISSUE_COLOURS
-from UI import DEFAULT_TEMPLATES, loadDtmlMethod, loadPageTemplate#, onlyBodyFrom
+from Products.ZWiki.UI import DEFAULT_TEMPLATES, loadDtmlMethod, loadPageTemplate#, onlyBodyFrom
 
 DEFAULT_TEMPLATES['issuepropertiesform'] = loadDtmlMethod('issuepropertiesformdtml')
 

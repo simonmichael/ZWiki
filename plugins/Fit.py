@@ -5,9 +5,9 @@ import sys, os, string, re
 from AccessControl import getSecurityManager, ClassSecurityInfo
 from Globals import InitializeClass
 from OFS.DTMLDocument import DTMLDocument
-from Utils import Popen3
 
-import Permissions
+from Products.ZWiki import Permissions
+from Products.ZWiki.Utils import Popen3
 
 # from tests/support.py:
 def pdir(path): return os.path.split(path)[0]

@@ -68,19 +68,21 @@ from Regexps import url, bracketedexpr, doublebracketedexpr, \
 from Utils import Utils, BLATHER
 from UI import UI
 from OutlineSupport import OutlineSupport
-from Rating import RatingSupport
 from Diff import DiffSupport
 from Mail import SubscriberManagerMixin, MailSupport
 from CatalogAwareness import CatalogAwareness
-from Tracker import TrackerSupport
 from CMF import CMFAwareness
-from Fit import FitSupport
 from Comments import CommentsSupport
 from Admin import AdminSupport
 from Editing import EditingSupport
 from I18nSupport import DTMLFile, _
+
 from pagetypes import MIDSECTIONMARKER, PAGETYPES, PAGE_TYPES, ZwikiStxPageType
+
+from plugins.Tracker import TrackerSupport
+from plugins.Rating import RatingSupport
 from plugins.PurpleNumbers import PurpleNumbersSupport
+from plugins.Fit import FitSupport
 
 
 class ZWikiPage(
