@@ -728,12 +728,13 @@ class OutlineRenderingMixin:
                            t)
                 # XXX temporary kludge.. assume we are in the page header here
                 t = re.sub(r'(\[%s\])' % re.escape(self.pageName()),
-                           '<a href="%s/backlinks" title="which pages link to this one ?">%s</a>' \
-                           % (self.page_url(),self.pageName()),
+                           ('<a href="%s/backlinks" ' % (self.page_url())) +
+                           ' title="' + _("which pages link to this one ?") +
+                           ('">%s</a>' % (self.pageName())),
                            t)
             else:
                 t = re.sub(r'(\[%s\])' % re.escape(here),
-                           r'\1 <b><-- You are here.</b>',t)
+                           r'\1 <b><-- ' + _("You are here") + '.</b>',t)
             if suppress_hyperlink:
                 t = re.sub(r'(\[%s\])' % re.escape(here), r'!\1', t)
         #t = self.renderLinksIn(t) # too expensive for now.. do it on the cheap
