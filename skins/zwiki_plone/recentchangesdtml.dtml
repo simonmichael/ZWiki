@@ -12,10 +12,7 @@
    'default':3}[period]"
  newdays="7"
  now=ZopeTime
- results="pages(
-   lastEditTime={'query': now-days,
-   'range':'min'}
-   )"
+ results="pages(lastEditTime={'query': now-days, 'range':'min'})"
  number="_.len(results)"
  >
 <form action="&dtml-URL;" method="GET">
