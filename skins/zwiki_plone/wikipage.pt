@@ -19,7 +19,7 @@
     </small>
     
     
-    <h1 tal:content="here/title_or_id" >The headline</h1>
+    <h1 tal:content="here/formattedPageName" >The headline</h1>
 
     <div metal:use-macro="python:
          (hasattr(here,'document_actions')
