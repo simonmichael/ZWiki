@@ -15,12 +15,11 @@ from Products.ZWiki.UI import loadPageTemplate, onlyBodyFrom, DEFAULT_TEMPLATES
 
 DEFAULT_TEMPLATES['ratingform'] = loadPageTemplate('ratingform')
 
-
-for a in [
+RATING_METADATA = [
     'voteCount',
     'rating',
-    ]:
-    registerPageMetaData(a)
+    ]
+for a in RATING_METADATA: registerPageMetaData(a)
 
 
 class RatingSupport:

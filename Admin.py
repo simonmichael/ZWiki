@@ -16,6 +16,7 @@ from I18nSupport import _
 import Permissions
 from Utils import BLATHER,formattedTraceback, DateTimeSyntaxError
 from pagetypes import PAGE_TYPE_UPGRADES
+from Defaults import PAGE_METADATA
 
 # copied from ZWikiWeb.py
 def _addDTMLMethod(self, id, title='', file=''):
@@ -362,8 +363,8 @@ class AdminSupport:
         Create and/or configure a catalog for this wiki.
 
         Safe to call more than once; will ignore any already existing
-        items.  Based on the data at http://zwiki.org/ZwikiAndZCatalog ;
-        see also PAGE_METADATA.
+        items. For simplicity we install all metadata for plugins (like
+        Tracker) here as well.
         """
         TextIndexes = [
             'Title',
@@ -393,24 +394,6 @@ class AdminSupport:
         PathIndexes = [
             'path',
             ]
-        metadata = [
-            'Title',
-            'creation_time',
-            'creator',
-            'id',
-            'lastEditTime',
-            'last_edit_time',
-            'last_editor',
-            'last_log',
-            #'links', # XXX problems for epoz/plone, not needed ?
-            'page_type',
-            'parents',
-            'size',
-            'subscriber_list',
-            'summary',
-            'rating',
-            'voteCount',
-            ]
         #XXX during unit testing, somehow a non-None catalog is false
         #if not self.catalog():
         if self.catalogId() == 'NONE':
@@ -436,7 +419,7 @@ class AdminSupport:
             if not i in catalogindexes: PluginIndexes.manage_addDateIndex(i)
         for i in PathIndexes:
             if not i in catalogindexes: PluginIndexes.manage_addPathIndex(i)
-        for m in metadata:
+        for m in PAGE_METADATA:
             if not m in catalogmetadata: catalog.manage_addColumn(m)
         if reindex:
             # now index each page, to make all indexes and metadata current

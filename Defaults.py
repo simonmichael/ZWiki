@@ -21,14 +21,14 @@ PAGE_ADD_MENU_NAME = 'ZWiki Page' # (this one must match PAGE_METATYPE)
 
 IDS_TO_AVOID = ['RESPONSE','REQUEST','Epoz','epoz','URL']
 
-# standard metadata fields Zwiki expects/provides in page brain objects
-# for best large-wiki performance, ensure all of these are in catalog
-# metadata (all of them! so that pages() does not go to the ZODB to get
-# them) see also http://zwiki.org/ZwikiAndZCatalog
-# plugins will add more of these
+# Standard metadata fields which Zwiki will expect in page brain objects.
+# Plugins will add more of these.
+# NB for best large-wiki performance, all of these must be in the wiki
+# catalog so that ensureCompleteMetadataIn() does not have to go to the
+# ZODB. To be safe, setupCatalog will add them all.
+# see also http://zwiki.org/ZwikiAndZCatalog
 PAGE_METADATA = [
     'Title',
-    #'cachedSize',
     'creation_time',
     'creator',      
     'id',
@@ -36,12 +36,12 @@ PAGE_METADATA = [
     'last_edit_time',
     'last_editor',   
     'last_log',
-    #'links', # XXX problems for epoz/plone, not needed ?
     'page_type',     
     'parents',
     'size',
     'subscriber_list',
     'summary',
+    #'links', # XXX problems for epoz/plone, not needed ?
     ]
 
 #from Utils import BLATHER

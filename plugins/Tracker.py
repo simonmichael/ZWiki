@@ -48,8 +48,7 @@ ISSUE_COLOURS = [
     ',,             ,',
     ]
 
-
-for a in [
+TRACKER_METADATA = [
     'category',
     'category_index',
     'severity',
@@ -57,8 +56,8 @@ for a in [
     'status',
     'status_index',
     'issueColour',
-    ]:
-    registerPageMetaData(a)
+    ]
+for a in TRACKER_METADATA: registerPageMetaData(a)
 
 
 class TrackerSupport:
@@ -406,8 +405,7 @@ class TrackerSupport:
         - if pages=1, installs forms as DTML pages, for easy customizing
         
         Safe to call more than once; will ignore any already existing
-        items.  Based on the setupIssueTracker.py external method and the
-        data at http://zwiki.org/ZwikiAndZCatalog.
+        items.  
         """
         TextIndexes = [
             ]
@@ -426,15 +424,6 @@ class TrackerSupport:
             ]
         PathIndexes = [
             ]
-        metadata = [
-            'category',
-            'category_index',
-            'issueColour',
-            'severity',
-            'severity_index',
-            'status',
-            'status_index',
-            ]
         # make sure we have a basic zwiki catalog set up
         self.setupCatalog(reindex=0)
         catalog = self.catalog()
@@ -452,8 +441,10 @@ class TrackerSupport:
         for i in PathIndexes:
             if not i in catalogindexes: PluginIndexes.manage_addPathIndex(i)
         # metadata,
-        for m in metadata:
-            if not m in catalogmetadata: catalog.manage_addColumn(m)
+        # setupCatalog just does this by default now, since
+        # ensureCompleteMetadataIn always tries to fetch all metadata
+        #for m in TRACKER_METADATA:
+        #    if not m in catalogmetadata: catalog.manage_addColumn(m)
         # properties,
         self.upgradeFolderIssueProperties()
         # dtml pages,
