@@ -142,6 +142,8 @@ class EditingSupport:
         if not username:
             username = self.usernameFrom(REQUEST)
             if re.match(r'^[0-9\.\s]*$',username): username = ''
+        subject_heading = self.cleanupText(subject_heading)
+        text = self.cleanupText(text)
         # some subtleties here: we ensure the page comment and mail-out
         # will use the same message-id, and the same timestamp if possible
         # (helps threading & debugging)
@@ -155,10 +157,10 @@ class EditingSupport:
         m = Message()
         m['From'] = username
         m['Date'] = time
-        m['Subject'] = self.cleanupText(subject_heading)
+        m['Subject'] = subject_heading
         m['Message-ID'] = message_id
         if in_reply_to: m['In-Reply-To'] = in_reply_to
-        m.set_payload(self.cleanupText(text))
+        m.set_payload(text)
         m.set_unixfrom(self.fromLineFrom(m['From'],m['Date'])[:-1])
         
         # discard junk comments
