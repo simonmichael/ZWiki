@@ -1,10 +1,12 @@
 # PAGE TYPES
 """
-
-Zwiki page type objects are singleton State objects which encapsulate any
-behaviour which is specific to the different kinds of zwiki page. They
-hold no state of their own so we usually pass in the page object as first
-argument.  XXX cf ram cache manager code to check for persistence issues
+Zwiki page type objects are State objects which encapsulate any behaviour
+which is specific to the different kinds of zwiki page. All pages hold a
+reference to the appropriate page type class in their page_type attribute
+(page types are singleton objects, never instantiated). Page type objects
+hold no state of their own so when calling them we usually pass in the
+page object as first argument.
+XXX cf ram cache manager code to check for persistence issues
 
 You can plug in new zwiki page types by adding a new page type module in this
 package, or in a separate zope product, and calling registerPageType at
@@ -29,14 +31,76 @@ PAGETYPES = []
 # ids-to-names mapping used by legacy skin templates
 PAGE_TYPES = {}
 
+# how to upgrade legacy page types, used by upgrade()
+PAGE_TYPE_UPGRADES = {
+    # early zwiki
+    'Structured Text'              :'stx',
+    'structuredtext_dtml'          :'stx',
+    'HTML'                         :'html',
+    'html_dtml'                    :'html',
+    'Classic Wiki'                 :'wwml',
+    'Plain Text'                   :'plaintext',
+    # pre-0.9.10
+    'stxprelinkdtml'               :'stx',
+    'structuredtextdtml'           :'stx',
+    'dtmlstructuredtext'           :'stx',
+    'structuredtext'               :'stx',
+    'structuredtextonly'           :'stx',
+    'classicwiki'                  :'wwml',
+    'htmldtml'                     :'html',
+    'plainhtmldtml'                :'html',
+    'plainhtml'                    :'html',
+    # pre-0.17
+    'stxprelinkdtmlhtml'           :'stx',
+    'issuedtml'                    :'stx',
+    # pre-0.19
+    'stxdtmllinkhtml'              :'stx',
+    'dtmlstxlinkhtml'              :'stx',
+    'stxprelinkhtml'               :'stx',
+    'stxlinkhtml'                  :'stx',
+    'stxlink'                      :'stx',
+    'wwmllink'                     :'wwml',
+    'wwmlprelink'                  :'wwml',
+    'prelinkdtmlhtml'              :'html',
+    'dtmllinkhtml'                 :'html',
+    'prelinkhtml'                  :'html',
+    'linkhtml'                     :'html',
+    'textlink'                     :'plaintext',
+    # pre-0.20
+    'stxprelinkfitissue'           :'stx',
+    'stxprelinkfitissuehtml'       :'stx',
+    'stxprelinkdtmlfitissuehtml'   :'stx',
+    'rstprelinkfitissue'           :'rst',
+    'wwmlprelinkfitissue'          :'wwml',
+    # pre-0.22
+    # warning: pre-.22 'html' pages will not be auto-upgraded
+    'msgstxprelinkfitissuehtml'    :'stx',
+    #'html'                         :'html',
+    # pre-0.32
+    'msgstxprelinkdtmlfitissuehtml':'stx',
+    'msgrstprelinkfitissue'        :'rst',
+    'msgwwmlprelinkfitissue'       :'wwml',
+    'dtmlhtml'                     :'html',
+    }
+
 def registerPageType(t,prepend=0):
     """
     Add a page type class to Zwiki's global registry, optionally at the front.
+
+    Example: registerPageType(MyPageTypeClass)
     """
     if prepend: pos = 0
     else: pos = len(PAGETYPES)
     PAGETYPES.insert(pos,t)
     PAGE_TYPES[t._id] = t._name
+
+def registerPageTypeUpgrade(old,new):
+    """
+    Add a page type transition to ZWiki's list of auto-upgrades.
+
+    Example: registerPageTypeUpgrade('oldpagetypeid','newpagetypeid')
+    """
+    PAGE_TYPE_UPGRADES[old] = new
 
 from common import MIDSECTIONMARKER
 from plaintext import ZwikiPlaintextPageType

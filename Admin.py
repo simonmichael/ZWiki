@@ -14,58 +14,7 @@ from DateTime import DateTime
 from I18nSupport import _
 import Permissions
 from Utils import BLATHER,formattedTraceback, DateTimeSyntaxError
-
-# here is the table of transitions for upgrading page types
-PAGE_TYPE_UPGRADES = {
-    # early zwiki
-    'Structured Text'              :'stx',
-    'structuredtext_dtml'          :'stx',
-    'HTML'                         :'html',
-    'html_dtml'                    :'html',
-    'Classic Wiki'                 :'wwml',
-    'Plain Text'                   :'plaintext',
-    # pre-0.9.10
-    'stxprelinkdtml'               :'stx',
-    'structuredtextdtml'           :'stx',
-    'dtmlstructuredtext'           :'stx',
-    'structuredtext'               :'stx',
-    'structuredtextonly'           :'stx',
-    'classicwiki'                  :'wwml',
-    'htmldtml'                     :'html',
-    'plainhtmldtml'                :'html',
-    'plainhtml'                    :'html',
-    # pre-0.17
-    'stxprelinkdtmlhtml'           :'stx',
-    'issuedtml'                    :'stx',
-    # pre-0.19
-    'stxdtmllinkhtml'              :'stx',
-    'dtmlstxlinkhtml'              :'stx',
-    'stxprelinkhtml'               :'stx',
-    'stxlinkhtml'                  :'stx',
-    'stxlink'                      :'stx',
-    'wwmllink'                     :'wwml',
-    'wwmlprelink'                  :'wwml',
-    'prelinkdtmlhtml'              :'html',
-    'dtmllinkhtml'                 :'html',
-    'prelinkhtml'                  :'html',
-    'linkhtml'                     :'html',
-    'textlink'                     :'plaintext',
-    # pre-0.20
-    'stxprelinkfitissue'           :'stx',
-    'stxprelinkfitissuehtml'       :'stx',
-    'stxprelinkdtmlfitissuehtml'   :'stx',
-    'rstprelinkfitissue'           :'rst',
-    'wwmlprelinkfitissue'          :'wwml',
-    # pre-0.22
-    # warning: pre-.22 'html' pages will not be auto-upgraded
-    'msgstxprelinkfitissuehtml'    :'stx',
-    #'html'                         :'html',
-    # pre-0.32
-    'msgstxprelinkdtmlfitissuehtml':'stx',
-    'msgrstprelinkfitissue'        :'rst',
-    'msgwwmlprelinkfitissue'       :'wwml',
-    'dtmlhtml'                     :'html',
-    }
+from pagetypes import PAGE_TYPE_UPGRADES
 
 # copied from ZWikiWeb.py
 def _addDTMLMethod(self, id, title='', file=''):

@@ -129,9 +129,39 @@ class Utils:
         for attr in PAGE_METADATA+['page_url','title_or_id']:
             # don't acquire these properties
             # XXX messy.. aq_base won't be present in tests
-            setattr(brain, attr,
-                    absattr(getattr(getattr(page,'aq_base',page),attr,None)))
-            #setattr(brain,attr+'__roles__',None) # not needed ?
+            # XXX temp protection for unpickler import error when page
+            # type class is missing
+            try:
+                setattr(brain, attr,
+                        absattr(getattr(getattr(page,'aq_base',page),attr,None)))
+                #setattr(brain,attr+'__roles__',None) # not needed ?
+            except ImportError:
+                setattr(brain, attr, None)
+                # didn't work
+                #Traceback (most recent call last):
+                #    File "/usr/local/src/Zope-2.7.1-b2/lib/python/ZPublisher/Publish.py", line 101, in publish
+                #        request, bind=1)
+                #    File "/usr/local/src/Zope-2.7.1-b2/lib/python/ZPublisher/mapply.py", line 88, in mapply
+                #        if debug is not None: return debug(object,args,context)
+                #    File "/usr/local/src/Zope-2.7.1-b2/lib/python/ZPublisher/Publish.py", line 39, in call_object
+                #        result=apply(object,args) # Type s<cr> to step into published object.
+                #    File "/zope1/Products/ZWiki/UI.py", line 415, in recentchanges
+                #        return form(self,REQUEST,body=dtmlpart(self,REQUEST))
+                #    File "/usr/local/src/Zope-2.7.1-b2/lib/python/App/special_dtml.py", line 62, in __call__
+                #        (self,)+args[1:],kw)
+                #    File "/usr/local/src/Zope-2.7.1-b2/lib/python/DocumentTemplate/DT_String.py", line 474, in __call__
+                #        try: result = render_blocks(self._v_blocks, md)
+                #    File "/usr/local/src/Zope-2.7.1-b2/lib/python/DocumentTemplate/DT_Let.py", line 76, in render
+                #        return render_blocks(self.section, md)
+                #    File "/usr/local/src/Zope-2.7.1-b2/lib/python/DocumentTemplate/DT_In.py", line 703, in renderwob
+                #        try: append(render(section, md))
+                #    File "/usr/local/src/Zope-2.7.1-b2/lib/python/DocumentTemplate/DT_Try.py", line 140, in render
+                #        return self.render_try_except(md)
+                #    File "/usr/local/src/Zope-2.7.1-b2/lib/python/DocumentTemplate/DT_Try.py", line 174, in render_try_except
+                #        return render_blocks(handler, md)
+                #    File "/usr/local/src/Zope-2.7.1-b2/lib/python/DocumentTemplate/DT_Var.py", line 280, in render
+                #        val = fmt % val
+                #TypeError: not all arguments converted during string formatting
         brain.linkTitle = '' #XXX not using now.. leave blank so tests pass
         return brain
 
