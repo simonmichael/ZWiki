@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # provide generic i18n support
 
+import re
+
 #problems.. due to circular import ?
 #from Utils import BLATHER
 #XXX temp
@@ -8,42 +10,37 @@ def BLATHER(t):
     import zLOG
     zLOG.LOG('ZWiki',zLOG.BLATHER,t)
 
-import re
-
 USE_PTS=1
 
 try:
     if USE_PTS:
         from Products.PlacelessTranslationService.MessageID import MessageIDFactory
         from Products.PlacelessTranslationService.PatchStringIO import get_request
-        class MessageIDFactoryWithUtf8Fix(MessageIDFactory):
-            """
-            XXX hacky wrapper ensuring proper utf-8 http header when _ is used.
-
-            Called for every i18n string, performance sensitive ?
-
-            When there is no request, does nothing to allow unit tests to
-            run.
-
-            Also: an i18n doc I've seen (find ref) thinks that _()
-            returning a MessageIDFactory rather than a string is a good
-            thing for some unicode reason, but it causes problems here and
-            there for code that expects a string. We'll convert to a
-            string for now.
-            """
-            def __call__(self, ustr, default=None):
-                REQUEST = get_request()
-                if REQUEST:
-                    mycontent = REQUEST.RESPONSE.getHeader('content-type')
-                    if mycontent == None:
-                        mycontent = 'text/html'
-                    if not re.search(r'charset', mycontent):
-                        REQUEST.RESPONSE.setHeader( 
-                            'Content-Type',  mycontent + '; charset=utf-8')
-                    return MessageIDFactory.__call__(self,ustr,default)
-                else:
-                    return ustr
-        _ = lambda s:str(MessageIDFactoryWithUtf8Fix('zwiki')(s))
+        # an i18n doc claimed _() should return a MessageIDFactory for
+        # some unicode reason, but it causes problems here and there for
+        # code that expects a string. We'll convert to a string for now.
+        _ = lambda s:str(MessageIDFactory('zwiki')(s))
+        # this hack forced proper utf-8 header with PTS, but I seem not to
+        # need it any more.. possibly since zope 2.7.2 or some other upgrade ?
+        # reenable if utf-8 encoding is broken, and please report at zwiki.org
+        #class MessageIDFactoryWithUtf8Fix(MessageIDFactory):
+        #    """
+        #    XXX hacky wrapper ensuring proper utf-8 http header when _ is used.
+        #
+        #    Called for every i18n string, performance sensitive ?
+        #    When there is no request, do nothing so unit tests can run.
+        #    """
+        #    def __call__(self, ustr, default=None):
+        #        def setResponseCharset(RESPONSE, charset):
+        #            contenttype = RESPONSE.getHeader('content-type') or 'text/html'
+        #            if not 'charset' in contenttype:
+        #                RESPONSE.setHeader('Content-Type','%s; charset=utf-8' % contenttype)
+        #        REQUEST = get_request()
+        #        if not REQUEST: return ustr
+        #        else:
+        #            setResponseCharset(REQUEST.RESPONSE,'utf-8')
+        #            return MessageIDFactory.__call__(self,ustr,default)
+        #_ = lambda s:str(MessageIDFactoryWithUtf8Fix('zwiki')(s))
         from Products.PageTemplates.PageTemplateFile import PageTemplateFile
         from Globals import HTMLFile, DTMLFile
         BLATHER('using PlacelessTranslationService for i18n')
