@@ -12,7 +12,7 @@ See http://zwiki.org/HowToSetUpMailin for more.
 Here are the delivery rules, in essence:
 
 - if the message appears to be a zwiki mailout or from an auto-responder
-  or junk, DISCARD.
+  or junk, or it does't have a plain text part, DISCARD.
 
 - if we have been called in a page context (../SOMEPAGE/mailin), POST
   message as a comment on that page.
@@ -30,12 +30,15 @@ Here are the delivery rules, in essence:
   or listed in the mail_accept_nonmembers property, and if not BOUNCE the
   message.
 
-- if the recipient looks like a zwiki tracker mailin alias (.*TRACKERADDREXP),
+- if the recipient looks like a spam reporting address (.*SPAMADDREXP),
+  UPDATE SPAM BLOCKING RULES and DISCARD (see updateSpamBlocks).
+
+- if the recipient looks like a tracker mailin address (.*TRACKERADDREXP),
   CREATE AN ISSUE page.  Otherwise,
 
 - identify destination page name:
-  the first [bracketed name] (PAGEINSUBJECTEXP) in the message subject
-  or the folder's default_mailin_page property, possibly acquired
+  the first [bracketed name] in the message subject or the folder's
+  default_mailin_page property, possibly acquired
 
 - if no destination page name was found, DISCARD.
 
@@ -59,13 +62,19 @@ from email.Message import Message
 from email.Utils import parseaddr, getaddresses
 from email.Iterators import typed_subpart_iterator
 
-from Products.ZWiki.Regexps import wikiname1,wikiname2,bracketedexpr
+from Products.ZWiki.Regexps import wikiname1,wikiname2,bracketedexpr,urlchars
 from Products.ZWiki.Utils import BLATHER
 
-# which page should be used when there is no bracketed page name in the subject
+# use email aliases like these to influence delivery
+WIKIADDREXP =    r'\b(wiki|mailin)@'         # comments and new pages
+TRACKERADDREXP = r'\b(tracker|bugs|issues)@' # new tracker issues
+SPAMADDREXP =    r'\b(spam)@'                # spam reports
+MAILINADDREXP = r'(%s|%s|%s)' % (
+    WIKIADDREXP,
+    TRACKERADDREXP,
+    SPAMADDREXP,
+    )
 PAGEINSUBJECTEXP = bracketedexpr
-MAILINADDREXP = r'(wiki|mailin|tracker|bugs|issues)@'
-TRACKERADDREXP = r'(tracker|bugs|issues)@'
 # extract a page name from the recipient real name
 # because different things show up here - 'name', mail address, etc. -
 # we recognize only page names beginning and ending with a word character
@@ -176,6 +185,67 @@ class MailIn:
         #    return 1
         return 0
 
+    def isSpamReport(self):
+        """
+        Return true if this message appears to be a spam report.
+        """
+        return re.search(SPAMADDREXP,self.recipientAddress()) and 1
+
+    def updateSpamBlocks(self):
+        """
+        Update the wiki's spam-blocking rules based on this message.
+
+        1. add any urls in the message body and/or attached message body to the
+           folder's banned_links property, if it exists (can acquire)
+        2. add the first ip address found in the message body, if any, to the
+           folder's banned_ips property, if it exists (can acquire). 
+
+        This means that any subscriber can forward a spam mailout to the
+        wiki's spam address, and/or submit spammer urls or one spammer's
+        IP address manually, and the banned_links/banned_ips properties
+        will be updated. It's probably best to create these on the root
+        folder; they will not be created automatically.
+
+        XXX how to prevent frivolous reports ?
+
+        XXX add support for banned_ips, see http://zwiki.org/BlockList.
+        Better to use apache ? should we append to some filesystem config
+        file instead ? make this a separate external method ?
+        call add_spammer_url() and add_spammer_ip() for each ?
+        
+        """
+        # update the banned links property
+        if hasattr(folder,'banned_links'):
+            banned_links = list(self.folder().banned_links)
+            spam_links = re.findall(
+                r'((?:http|https|ftp|mailto|file):/*%s)' % urlchars,
+                self.subject + ' ' + self.body)
+            added_links = []
+            for l in spam_links:
+                if l not in banned_links:
+                    banned_links.append(l)
+                    added_links.append(l)
+            # have we got new urls to add ?
+            if added_links:
+                # update property - need to find the real  owner
+                folder = self.folder()
+                while not hasattr(folder.aq_base,'banned_links'):
+                    folder = folder.aq_parent
+                folder.manage_changeProperties(banned_links=banned_links)
+                # log, also try to notify admin by mail, for now
+                log = 'mailin.py: added %s to %s/banned_links' % \
+                      (added_links,string.join(folder.getPhysicalPath(),'/'))
+                BLATHER(log)
+                admin = getattr(self.folder(),'mail_admin',None)
+                page = self.workingPage()
+                if admin and page:
+                    page.sendMailTo(
+                        [],
+                        log,
+                        None,
+                        subject='banned_links updated',
+                        to=admin)
+
     def cleanupBody(self,body):
         """
         Clean up/remove uninteresting parts of an incoming message body.
@@ -219,7 +289,7 @@ class MailIn:
 
     def recipient(self):
         """
-        The message recipient that was used for delivery here (an email tuple).
+        The recipient that was used to deliver here (an email tuple).
 
         This may be needed to determine the mailin action.  If the message
         has multiple recipients, decide which one refers to us as follows:
@@ -239,11 +309,27 @@ class MailIn:
                 return r
         return self.recipients[0]
 
+    def recipientAddress(self):
+        """
+        Just the email address part of the recipient used to deliver here.
+        """
+        return self.recipient()[1]
+
     def workingPage(self):
         """
-        A wiki page object which we can use for further operations. tricksy XXX
+        Try to get a wiki page object which we can use for further operations.
         """
-        pass
+        workingpage = None
+        defaultpagename = self.defaultMailinPage()
+        if defaultpagename:
+            workingpage = getattr(self.folder(),defaultpagename,None)
+        if not workingpage:
+            allpages = self.folder().objectValues(spec='ZWiki Page')
+            if allpages:
+                firstpage = allpages[0]
+                workingpage = \
+                    firstpage.pageWithName(defaultpagename) or firstpage
+        return workingpage
         
     def defaultMailinPage(self):
         """
@@ -264,6 +350,12 @@ class MailIn:
             self.error = '\nDiscarding junk mailin.\n\n\n'
             return
 
+        if self.isSpamReport():
+            BLATHER('mailin.py: processing spam report')
+            self.updateSpamBlocks()
+            self.error = '\nProcessed spam report.\n\n\n'
+            return
+
         if self.contextIsPage():
             self.destpage = self.workingpage = self.context
             self.destpagename = self.destpage.title_or_id()
@@ -272,36 +364,26 @@ class MailIn:
             return
 
         # posting in wiki folder context (the normal case)
-
-        defaultpagename = self.defaultMailinPage()
-
         # find a page to work from
-        #self.workingpage = self.workingPage()
-        if defaultpagename:
-            self.workingpage = getattr(self.folder(),defaultpagename,None)
+        self.workingpage = self.workingPage()
         if not self.workingpage:
-            allpages = self.folder().objectValues(spec='ZWiki Page')
-            if allpages:
-                firstpage = allpages[0]
-                self.workingpage = \
-                    firstpage.pageWithName(defaultpagename) or firstpage
-        if not self.workingpage:
-            BLATHER('mailin.py: could not find a working page')
-            self.error = '\nSorry, I could not find an existing wiki page to work with.\n\n\n'
+            BLATHER('mailin.py: could not find a working page, discarding message')
+            self.error = '\nCould not find a wiki page to work from, discarding message.\n\n\n'
             return
 
         self.checkMailinAllowed()
         if self.error: return
 
         # are we creating a tracker issue, which doesn't need a name ?
-        if re.search(TRACKERADDREXP,self.recipient()[1]):
+        # XXX todo: mail to tracker address is not always a new issue
+        if re.search(TRACKERADDREXP,self.recipientAddress()):
             self.trackerissue = 1
             return
 
         # find the destination page name
         ## in the recipient's real name part if enabled..
         ##if self.checkrecipient:
-        ##    m = re.search(PAGEINREALNAMEEXP,self.recipient()[0])
+        ##    m = re.search(PAGEINREALNAMEEXP,self.recipientRealName())
         ##    if m:
         ##        self.destpagename = m.group('page')
         # in the subject
@@ -314,7 +396,7 @@ class MailIn:
                                            self.destpagename)
         # or use the default mailin page if any..
         if (not self.destpagename):
-            self.destpagename = defaultpagename
+            self.destpagename = self.defaultMailinPage()
 
         # now, either we have the name of an existing page (fuzzy match
         # allowed)..
