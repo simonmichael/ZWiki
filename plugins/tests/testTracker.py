@@ -77,6 +77,14 @@ class TrackerTests(ZopeTestCase.ZopeTestCase):
         self.assert_(self.p.pageWithName('#3 c'))
         self.assertEqual(self.p.issueCount(),3)
 
+    def test_nextIssueNumber(self):
+        self.assertEqual(self.p.nextIssueNumber(),2)
+        self.p.createNextIssue('b')
+        self.assertEqual(self.p.nextIssueNumber(),3)
+        self.p.folder().short_issue_names = 1
+        self.p.createNextIssue('c')
+        self.assertEqual(self.p.nextIssueNumber(),4)
+
     def test_issuePageWithNumber(self):
         self.assert_(self.p.issuePageWithNumber(1))
         self.assert_(not self.p.issuePageWithNumber(2))

@@ -245,14 +245,16 @@ class TrackerSupport:
         """
         Get the next available issue number.
 
+        Adds one to the current highest issue number, so gaps are allowed.
+        Handles both old and new-style issue page names.
+        
         Does a catalog search, so REQUEST may be required to authenticate
         and get the proper results. I think.
         """
-        issues = self.pages(isIssue=1,sort_on='id',REQUEST=REQUEST)
-        if issues:
-            return self.issueNumberFrom(issues[-1].Title) + 1
-        else:
-            return 1
+        issuenumbers = [self.issueNumberFrom(b.Title) for b in \
+                        self.pages(isIssue=1,REQUEST=REQUEST)]
+        issuenumbers.sort()
+        return (([0]+issuenumbers)[-1]) + 1
 
     security.declareProtected(Permissions.Edit, 'changeIssueProperties')
     def changeIssueProperties(self, name=None, category=None, severity=None, 
