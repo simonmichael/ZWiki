@@ -47,21 +47,21 @@
 <div id="navpanel" 
      tal:condition="python:getattr(here.folder(),'show_navlinks',0) and full">
   <table class="shade1" width="100%" border="0" cellspacing="0">
-    <tr>
+    <tr valign="top">
       <td tal:condition="nothing" tal:content="structure python: here.navlinks()"></td>
       <td align="left" width="33%">
         <a tal:condition="here/previousPage" tal:attributes="href here/previousPageUrl"
-           access_key='P' tal:content="python:'&lt;&lt; '+here.previousPage()" />
+           access_key='P' tal:content="python:'&lt;&lt;'+here.previousPage()" />
       </td>
       <td align="center" width="33%">
         <a tal:condition="here/primaryParentName" 
            tal:attributes="href here/primaryParentUrl"
            access_key='U' 
-           tal:content="python:'^^ '+(here.primaryParentName() or 'wiki contents')" />
+           tal:content="python:'^^'+(here.primaryParentName() or 'wiki contents')" />
       </td>
       <td align="right" width="33%">
         <a tal:condition="here/nextPage" tal:attributes="href here/nextPageUrl"
-           access_key='N' tal:content="python:here.nextPage()+' &gt;&gt;'" />
+           access_key='N' tal:content="python:here.nextPage()+'&gt;&gt;'" />
       </td>
     </tr>
   </table>
@@ -137,7 +137,7 @@
    tal:condition="here/indexUrl"><span class="accesskey">i</span>ndex</a>
 <a href="" tal:attributes="href here/uploadsUrl" 
    tal:condition="here/uploadsUrl">uploads</a>
-<a tal:attributes="href here/preferencesUrl" accesskey="o">prefs</a>
+<a tal:attributes="href here/preferencesUrl" accesskey="o">options</a>
 <a title="go to help page" accesskey="h"
    tal:attributes="href here/helpUrl" tal:condition="here/helpUrl"
    ><span class="accesskey">h</span>elp</a>
