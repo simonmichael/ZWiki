@@ -580,7 +580,7 @@ class UI:
              view pages in full mode
              view pages in simple mode
              view pages in minimal mode
-             mail subscription
+        m    mail subscription
         b    show backlinks (links to this page)
         d    show diffs (page edit history)
         y    show full history (in ZMI)
@@ -590,7 +590,7 @@ class UI:
         q    view page source (quick-view)
              wipe and regenerate this page's render cache
         t    go to subtopics
-        m    go to comments (messages)
+             go to comments (messages)
              go to page author's home page, if possible
         n    next page
         p    previous page

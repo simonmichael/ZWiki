@@ -69,7 +69,7 @@
 <a tal:attributes="href here/preferencesUrl" accesskey="o"></a>
 <a tal:attributes="href here/helpUrl" accesskey="h"></a>
 <a tal:attributes="href here/pageUrl" accesskey="v"></a>
-<a tal:attributes="href string:${here/pageUrl}/subscribeform" accesskey=""></a>
+<a tal:attributes="href string:${here/pageUrl}/subscribeform" accesskey="m"></a>
 <a tal:attributes="href string:${here/pageUrl}/backlinks" accesskey="b"></a>
 <a tal:attributes="href string:${here/pageUrl}/diff" accesskey="d"></a>
 <a tal:attributes="href string:${here/pageUrl}/manage_change_history_page" accesskey="y"></a>
@@ -79,7 +79,6 @@
     '?borrow_lock=1'" accesskey="x"></a>
 <a tal:condition="nothing" tal:attributes="href string:${here/pageUrl}/print" accesskey=""></a>
 <a tal:attributes="href string:#subtopics" accesskey="t"></a>
-<a tal:attributes="href string:#comments" accesskey="m"></a>
 <a tal:attributes="href here/nextPageUrl" accesskey="n"></a>
 <a tal:attributes="href here/previousPageUrl" accesskey="p"></a>
 <a tal:attributes="href here/primaryParentUrl" accesskey="u"></a>
@@ -142,7 +141,7 @@
 
 <a tal:condition="python:here.isMailoutEnabled()"
    tal:attributes="href python:here.page_url() + '/subscribeform'"
-   href="page_url/subscribeform" accesskey=""
+   href="page_url/subscribeform" accesskey="m"
    title="configure email subscription to this page or site" 
    ><span tal:condition="python:0 #show subscription status - expensive# here.allSubscriptionsFor(request.get('email',''))"
    >(un)</span
