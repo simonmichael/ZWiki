@@ -24,26 +24,51 @@ class TrackerSupport:
     """
     security = ClassSecurityInfo()
     
+    security.declareProtected(Permissions.View, 'issueNumberAndName')
+    def issueNumberAndName(self):
+        """
+        Return issue number and name parts from this page's name if possible.
+
+        Valid formats for issue page names are:
+
+        IssueNoNNNN ...
+        NNNN ...
+        #NNNN ...
+
+        where NNNN is one or more digits. Returns a (number:int, name:str)
+        tuple or None. The name part is stripped of surrounding whitespace.
+        """
+        name = self.pageName()
+        m = (re.match(r'^IssueNo([0-9]+)(.*)$',name) # IssueNoNNNN...
+             or re.match(r'^#?([0-9]+)(.*)$',name))  # NNNN... or #NNNN...
+        if m: return (int(m.group(1)), m.group(2).strip())
+        else: return None
+
+    security.declareProtected(Permissions.View, 'issueNumber')
+    def issueNumber(self):
+        """
+        Return this page's issue number, or None.
+        """
+        tuple = self.issueNumberAndName()
+        return tuple and tuple[0]
+
+    security.declareProtected(Permissions.View, 'issueName')
+    def issueName(self):
+        """
+        Return this page's issue name (page name without the number), or None.
+        """
+        tuple = self.issueNumberAndName()
+        return tuple and tuple[1]
+
     security.declareProtected(Permissions.View, 'isIssue')
     def isIssue(self,client=None,REQUEST=None,RESPONSE=None,**kw):
         """
-        Return true if this page is a tracker issue.
+        Is this page a tracker issue ?
 
-        In the past pages with a special page type were issues. Now, any
-        page named "IssueNo.." is an issue. (and, whose type supports
-        issue properties ? No never mind that)
-
-        Flexibility will be useful here so this method may be overridden
-        with a DTML method (XXX or python script).
+        If we are able to extract an issue number and name from the page
+        name, yes.
         """
-        if (
-            re.match(r'^IssueNo[0-9]',self.pageName()) # name is IssueNoNNNN... ?
-            or self.getId()[0].isdigit()               # id begins with a digit ?
-            or self.pageTypeId() == 'issuedtml'        # backwards compatibility
-            ):
-            return 1
-        else:
-            return 0
+        return self.issueNumberAndName() and 1
 
     security.declareProtected(Permissions.View, 'issueCount')
     def issueCount(self):
