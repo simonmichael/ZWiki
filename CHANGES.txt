@@ -1,3 +1,168 @@
+Zwiki 0.31
+
+    Summary
+
+        More i18n work and a number of new translations - chinese,
+	portuguese, italian; tracker improvements; tests, refactoring,
+	bugfixes.
+
+    Upgrade notes
+
+        Same as 0.30..
+
+	changeIssueProperties' "title" argument is now "name".
+
+    Changes
+
+      General
+
+      Skins and content
+
+      Mail and comments
+
+      Tracker
+
+        * make utf-8 character encoding of python code translations work
+
+	* i18n support logging bugfix
+
+	* fix showAccessKeys security declaration
+
+	* make PTS-based python code i18n work
+
+	* Other italian messages (Lele Gaifax)
+
+	* always push to zwiki repo, not last repo pulled from
+
+	* merge latest messages to it.po
+
+	* add it.po to makefile
+
+	* Support for Zope 2.7.1 (Lele Gaifax)
+
+	* Better comments in reST (Lele Gaifax)
+
+	* Italian message catalog (Lele Gaifax)
+
+	* internationalize access key help and update po files as a test
+
+	* rename LocalizerSupport to I18nSupport, try PTS first
+
+	* issue tracker & filter issues improvements
+
+	* add simple curl-based functional tests based on zwiki.org & plone.zwiki.org suites
+
+	* always parent new issues either under IssueTracker or at the top level
+
+	* allow parent(s) to be specified in create
+
+	* use pageName in create
+
+	* new issue fields default to '' instead of None for robustness
+
+	* add missing testTracker.py
+
+	* add missing i18n domain tag to plone footer and rating form (Foenyx)
+
+	* make plone action urls point to customized pages if present (IssueNo0786)
+
+	* fix bugs from tracker refactoring
+
+	* show 30 issues by default instead of 10
+
+	* support code for displaying wiki links with spaces
+
+	* GeneralForms.stylesheet comment correction
+
+	* use grey background for code sections too
+
+	* forcing a sole page's page name field to FrontPage was unhelpful, remove
+
+	* rename cleanupText and implement link banning (banned_links property)
+
+	* refactor and move tracker setup code to Tracker.py
+
+	* generate latest pot and merge in po files
+
+	* lighten pre bg a bit ?
+
+	* include zwiki.org percentage styles, why not
+
+	* make pre-formatted areas gray by default
+
+	* make comment in-reply-to indicator more discreet
+
+	* added explicit RESPONSE.setHeader to make i18n chartype work
+
+	* .cvsignore update - don't upload generated mo files
+
+	* rename pt-BR in makefile
+
+	* rename pt-br to pt-BR
+
+	* merge latest pot with pt-br.po
+
+	* need to explicitly set foreground color as well as bg
+
+	* add pt-br
+
+	* add portuguese-brazilian translation (Jean Rodrigo Ferri)
+
+	* add a missing newline to zh-TW.po to keep tools happy
+
+	* emailAddressesFrom now highlights problem users instead of quietly dropping them
+
+	* make emailAddressFrom smarter; handle non-cmf-members-with-prefs
+
+	* merge latest pot with zh-TW.po
+
+	* add chinese translation to make rules
+
+	* traditional chinese translation (T.C. Chou)
+
+	* remove old plone wiki folder skin items
+
+	* add i18n attributes as per zwiki_plone subscribeform
+
+	* simplify ratingform template
+
+	* set background color explicitly, for people with unusual browser setups
+
+	* simplify broken summary regexp
+
+	* latest fr translations (Foenyx)
+
+	* update po files
+
+	* generate a good pot
+
+	* fix pot munging
+
+	* generate latest pot
+
+	* fully automate pot extraction
+
+	* add i18n attributes to zwiki_plone skin (Foenyx)
+
+	* add i18n attributes (Foenyx)
+
+	* makefile docs
+
+	* update pot (remove license)
+
+	* add paragraphs argument to summary
+
+	* more summary improvements..
+
+	* make summary smarter
+
+	* simplify render
+
+	* don't include more than the first paragraph in page summary
+
+	* make rating() not require python 2.3 (IssueNo0794)
+
+	
 Zwiki 0.30 2004/05/03
 
     Summary
