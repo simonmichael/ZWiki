@@ -217,12 +217,12 @@ class Outline:
         """
         Return a nesting/list representing node's immediate parents.
         """
-        return self.parentmap()[node][:]
+        return self.parentmap().get(node,[])[:]
     def firstParent(self,node):
         """
         Return the first parent of node, if any.
         """
-        parents = self.parentmap()[node]
+        parents = self.parentmap().get(node,None)
         if parents: return parents[0]
         else: return None
     def siblings(self,node): 
