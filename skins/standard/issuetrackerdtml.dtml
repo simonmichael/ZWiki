@@ -99,7 +99,7 @@
                  <td align="right">
                    <dtml-var "bold and '<b>' or ''">
                    <a href="&dtml-URL;?category:list=&dtml.url_quote-sequence-item;&sort_on=status_index&dtml-scrollto;"
-                     ><dtml-var "_.len(pages(isIssue=1,category=_['sequence-item']))"
+                     ><dtml-var "_.len(pages(isIssue=1,category=_['sequence-item'],status=['open','pending']))"
                      ></a>
                    <dtml-var "bold and '</b>' or ''">
                  </td>
