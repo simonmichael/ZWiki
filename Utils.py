@@ -265,20 +265,30 @@ class Utils:
         return ("<%s %s at 0x%s>"
                 % (self.__class__.__name__, `self.id()`, hex(id(self))[2:]))
 
-    security.declareProtected(Permissions.View, 'page_url')
-    def page_url(self):
-        """return the url path for this wiki page"""
+    security.declareProtected(Permissions.View, 'pageUrl')
+    def pageUrl(self):
+        """Return the url for this wiki page."""
         return self.wiki_url() + '/' + quote(self.id())
 
-    pageUrl=page_url
+    page_url=pageUrl
 
-    security.declareProtected(Permissions.View, 'wiki_url')
-    def wiki_url(self):
-        """return the base url path for this wiki"""
+    security.declareProtected(Permissions.View, 'wikiUrl')
+    def wikiUrl(self):
+        """Return the url for this wiki's folder."""
         try: return self.folder().absolute_url()
         except (KeyError,AttributeError): return '' # for debugging/testing
 
-    wikiUrl=wiki_url
+    wiki_url=wikiUrl
+
+    security.declareProtected(Permissions.View, 'wikiPath')
+    def wikiPath(self):
+        """Return the path part of this wiki's url.
+        """
+        # absolute_url_path and virtual_url_path just don't work 
+        # in a apache proxy-vhm-zope situation, apparently.
+        #try: return self.folder().absolute_url_path()
+        try: return re.sub(r'.*?//.*?/',r'/',self.folder().absolute_url())
+        except (KeyError,AttributeError): return '' # for debugging/testing
 
     def defaultPageUrl(self):
         p = self.defaultPage()
