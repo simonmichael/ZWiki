@@ -14,8 +14,8 @@
 
 PRODUCT=ZWiki
 HOST=zwiki.org
-REPO=$(HOST):/usr/local/src/$(PRODUCT)
-RSYNCPATH=$(HOST):/usr/local/src/$(PRODUCT)
+REPO=$(HOST):$(PRODUCT)
+RSYNCPATH=$(HOST):$(PRODUCT)
 LHOST=localhost:8080
 CURL=curl -o.curllog -sS -n
 
@@ -229,25 +229,31 @@ tags:
 	  -o -name old     -prune -type f \
 	  | xargs etags
 
+getzope:
+	cd /zope; svn update
+
 zopetags:
 	cd /zope/lib/python; \
-	  ~/bin/eptags.py `find $$PWD -name '*.py' -o  -name '*.dtml' -o -name '*.pt' \
+	  ~/bin/eptags.py `find $$PWD/ -name '*.py' -o  -name '*.dtml' -o -name '*.pt' \
 	     -o -name old     -prune -type f `
+
+getproducts:
+	cd /zope1/Products; \
+	  rsync -rl --progress --exclude="*.pyc" zwiki.org:/zope1/Products . 
 
 producttags:
-	cd /var/lib/zope/Products; \
-	  ~/bin/eptags.py `find $$PWD -name '*.py' -o  -name '*.dtml' -o -name '*.pt' \
-	     -o -name old     -prune -type f `
-
-alltags: tags producttags zopetags
-	cat TAGS /zope1/Products/TAGS /zope/lib/python/TAGS \
-	 >TAGS.all
+	cd /zope1/Products; \
+	  ~/bin/eptags.py `find $$PWD/ -name '*.py' -o  -name '*.dtml' -o -name '*.pt' \
+	     -o -name old     -prune -type f ` 
 
 plonetags:
 	cd /zope1/Products/CMFPlone; \
 	  ~/bin/eptags.py \
-	  `find $$PWD -name '*.py' -o -name '*.dtml' -o -name '*.pt' \
+	  `find $$PWD/ -name '*.py' -o -name '*.dtml' -o -name '*.pt' \
 	     -o -name old     -prune -type f `
+
+alltags: tags producttags zopetags
+	cat TAGS /zope1/Products/TAGS /zope/lib/python/TAGS >TAGS.all
 
 clean:
 	rm -f .*~ *~ *.tgz *.bak `find . -name "*.pyc"`
