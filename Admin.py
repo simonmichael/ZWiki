@@ -3,6 +3,7 @@
 from types import *
 import os, re, os.path
 from string import join, split, strip
+from time import clock
 
 from AccessControl import getSecurityManager, ClassSecurityInfo
 from Globals import package_home, InitializeClass
@@ -62,6 +63,7 @@ class AdminSupport:
         
         if render: BLATHER('upgrading and pre-rendering all pages:')
         else: BLATHER('upgrading all pages:')
+        starttime = clock()
         n, total = 0, self.pageCount()
         for p in self.pageObjects(): # poor caching (not a problem here)
             n += 1
@@ -84,9 +86,13 @@ class AdminSupport:
                 get_transaction().commit()
 
         self.updateWikiOutline()
+        endtime = clock()
+        BLATHER('upgrade complete, %d pages processed in %fs, %f pages/s' \
+                %(n, endtime-starttime, n/(endtime-starttime)))
 
         BLATHER('upgrade complete, %d pages processed' % n)
 
+    #security.declarePublic('upgradeId')
     security.declareProtected(Permissions.View, 'upgradeId')
     def upgradeId(self,REQUEST=None):
         """
