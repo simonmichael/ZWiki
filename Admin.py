@@ -53,7 +53,7 @@ class AdminSupport:
                                      self.folder()):
             raise 'Unauthorized', (
              _('You are not authorized to upgrade all pages.') + \
-             _('(folder -> Manage properties)'))
+             _('(folder -> Manage properties)')) #XXX 0856
         try: pre_render = int(pre_render)
         except: pre_render = 0
         if pre_render:
