@@ -223,21 +223,25 @@ restart:
 	ssh $(HOST) '/instance/zope_stop;sleep 1;/instance/zope_start'
 #	curl -n -sS -o.curllog 'http://$(HOST)/Control_Panel/manage_restart'
 
-lrefresh: lrefresh-$(PRODUCT)
-
-lrefresh-%:
-	@echo refreshing product $* on $(LHOST)
-	curl -n -sS -o.curllog 'http://$(LHOST)/Control_Panel/Products/$*/manage_performRefresh'
-
 refresh: refresh-$(PRODUCT)
 
 refresh-%:
 	@echo refreshing $* product on $(HOST)
 	@$(CURL) 'http://$(HOST)/Control_Panel/Products/$*/manage_performRefresh'
 
+refresh-%.po:
+	@echo refreshing $(PRODUCT) $*.po file on $(HOST)
+	@echo $(CURL) 'http://$(HOST)/Control_Panel/TranslationService/ZWiki.i18n-$*.po/reload'
+
 refresh-mailin:
 	@echo refreshing mailin.py external method on $(HOST)
 	@$(CURL) 'http://$(HOST)/mailin/manage_edit?id=mailin&module=mailin&function=mailin&title='
+
+lrefresh: lrefresh-$(PRODUCT)
+
+lrefresh-%:
+	@echo refreshing product $* on $(LHOST)
+	curl -n -sS -o.curllog 'http://$(LHOST)/Control_Panel/Products/$*/manage_performRefresh'
 
 # misc automation
 
