@@ -55,7 +55,7 @@ bracketedexpr    = r'\[\[?([^\n\]]+)\]\]?'
 doublebracketedexpr = r'\[\[([^\n\]]+)\]\]'
 
 # tracker support
-hashnumberexpr = r'\#[0-9]+'
+simplehashnumberexpr = r'\#[0-9]+'
 
 # bare wiki links
 #
@@ -137,6 +137,9 @@ wikiname3        = r'(?:%s|%s)' % (wikiname1, wikiname2)
 wikiname4        = r'(?:(?<!&)%s(?![%s])|(?<=&)%s(?![%s;]))' \
                    % (wikiname3, U+L, wikiname3, U+L)
 wikiname         = r'!?(%s)' %(wikiname4)
+# tracker support (+ character reference lookbehind/-ahead to avoid &#123;)
+hashnumberexpr   = r'(?:(?<!&)%s|(?<=&)%s(?![%s;]))' \
+                   % (simplehashnumberexpr, simplehashnumberexpr, U+L)
 wikilink         = r'!?(%s|%s|%s|%s)' % (wikiname4,bracketedexpr,url,hashnumberexpr)
 localwikilink1   = r'(?:%s|%s|%s)' % (wikiname4,bracketedexpr,hashnumberexpr)
 localwikilink    = r'!?(%s)' % (localwikilink1)
