@@ -112,7 +112,15 @@ gtest:
 	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope1 \
 	  python /zope/test.py -m --libdir .
 
-# a single test module
+# a single test module in one of the tests directories
+test%plugin:
+	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope1 \
+	  python plugins/tests/test$*.py
+
+test%pagetype:
+	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope1 \
+	  python pagetypes/tests/test$*.py
+
 test%:
 	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope1 \
 	  python tests/test$*.py
