@@ -1,6 +1,6 @@
 # MoinMoin-flavour Wiki-style markup
 # contributed by Chad Miller <code@chad.org>
-# extends WWML (or the misspelled WMML) to include MoinMoinIsms, approximately.
+# extends WWML to include MoinMoinIsms, approximately.
 
 from common import *
 from Products.ZWiki.I18nSupport import _
@@ -43,10 +43,6 @@ class ZwikiMoinPageType(AbstractPageType):
 
 registerPageType(ZwikiMoinPageType)
 
-
-#  compatibility layer, for use until "WMML" spelling is finally corrected.
-class WWMLTranslator(WMMLTranslator):
-    pass
 
 class MoinMoinMLTranslator(WWMLTranslator):
 

@@ -12,7 +12,7 @@ class ZwikiWwmlPageType(AbstractPageType):
     supportsWikiLinks = yes
 
     def renderWwmlIn(self,t):
-        return translate_WMML(html_quote(t))
+        return translate_WWML(html_quote(t))
 
     def preRender(self, page, text=None):
         t = text or (page.document()+'\n'+MIDSECTIONMARKER+\
@@ -95,7 +95,7 @@ class _Wikifier :
                 , urllib.quote( wikiname ) )
 
 
-class WMMLTranslator :
+class WWMLTranslator :
     """
     |FSM/translator for texts marked up using WikiWikiMarkupLanguage, as
     | defined at http://www.c2.org/cgi/wiki?TextFormattingRules:
@@ -436,10 +436,10 @@ class WMMLTranslator :
     
     __call__ = translate
 
-#def translate_WMML( self, text ) :
-#    wt = WMMLTranslator( self )
-def translate_WMML( text ) :
-    wt = WMMLTranslator()
+#def translate_WWML( self, text ) :
+#    wt = WWMLTranslator( self )
+def translate_WWML( text ) :
+    wt = WWMLTranslator()
     lines = wt( string.split( str( text ), '\n' ) )
     return string.join( lines, '\n' )
 
@@ -498,7 +498,7 @@ And [these words] should be linked, too.
                 setattr( self, key, value )
 
     grandparent = FakeParent( None, WikiName = 0 )
-#    print translate_WMML( FakeParent( grandparent, id = 'parent' ), testString )
-    print translate_WMML( testString )
+#    print translate_WWML( FakeParent( grandparent, id = 'parent' ), testString )
+    print translate_WWML( testString )
 
 registerPageType(ZwikiWwmlPageType)
