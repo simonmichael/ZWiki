@@ -348,6 +348,8 @@ class TrackerSupport:
             for page in ['IssueTracker','FilterIssues']:
                 if not self.pageWithName(page):
                     self.create(page,text=open(dir+page+'.stxdtml','r').read())
+            # also, disable subtopics display under IssueTracker
+            self.IssueTracker.setSubtopicsPropertyStatus(0)
         # index each page, to make all indexes and metadata current
         # may duplicate some work in setupCatalog
         n = 0
