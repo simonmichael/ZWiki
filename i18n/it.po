@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-30-0\n"
-"POT-Creation-Date: Fri May 28 10:28:03 2004\n"
+"POT-Creation-Date: Fri May 28 11:57:28 2004\n"
 "PO-Revision-Date: 2004-05-28 00:45+0200\n"
 "Last-Translator: Lele Gaifax <lele@seldati.it>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
@@ -357,6 +357,87 @@ msgstr "mostra l'ultima modifica %(lastlog)s"
 #: i/ZWikiPage.py:685 i/ZWikiPage.py:687
 msgid "by %(editor)s"
 msgstr "da %(editor)s"
+
+#: i/skins/dtmlmessages.pt:13
+#, fuzzy
+msgid "File"
+msgstr "semplice"
+
+#: i/skins/dtmlmessages.pt:14
+msgid "Add"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:15
+msgid "Add and Edit"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:16 i/skins/dtmlmessages.pt:17
+#: i/skins/dtmlmessages.pt:25
+msgid "Enter a word"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:18
+#, fuzzy
+msgid "Name"
+msgstr "rinomina"
+
+#: i/skins/dtmlmessages.pt:19
+msgid "Category"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:2 i/skins/dtmlmessages.pt:3
+msgid "Add a ZWiki web"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:20
+#, fuzzy
+msgid "Severity"
+msgstr "mai"
+
+#: i/skins/dtmlmessages.pt:21
+msgid "Status"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:22
+#, fuzzy
+msgid "Optional note"
+msgstr "Annotazione opzionale alla modifica"
+
+#: i/skins/dtmlmessages.pt:23
+msgid "Submitted by"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:24
+#, fuzzy
+msgid "Details & comments"
+msgstr "commenti"
+
+#: i/skins/dtmlmessages.pt:4 i/skins/dtmlmessages.pt:11
+msgid "Id"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:5 i/skins/dtmlmessages.pt:12
+msgid "Title"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:6
+#, fuzzy
+msgid "Type"
+msgstr "tipo"
+
+#: i/skins/dtmlmessages.pt:7
+#, fuzzy
+msgid "Create wiki"
+msgstr "Crea"
+
+#: i/skins/dtmlmessages.pt:8
+msgid "and enter"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:10
+#, fuzzy
+msgid "Add ZWiki Page"
+msgstr "Modifiche al wiki"
 
 # Default: ""
 # "You can change this page's parent(s) to place it within the overall page\n"
@@ -875,11 +956,6 @@ msgstr ""
 "scrivi la pagina come fai di solito."
 
 # Default: ""
-#: i/skins/zwiki_plone/editform.pt:231
-msgid "pagetype"
-msgstr "Formato del testo"
-
-# Default: ""
 # "Edit\n"
 # "        ${itemtype} \n"
 # "\n"
@@ -1066,7 +1142,7 @@ msgstr "File allegati"
 msgid "uploads_desc"
 msgstr "Questa pagina elenca tutti gli allegati in questo Wiki."
 
-#: i/skins/zwiki_plone/uploaded.pt:25 i/skins/zwiki_plone/editform.pt:246
+#: i/skins/zwiki_plone/uploaded.pt:25 i/skins/zwiki_plone/editform.pt:250
 msgid "Save"
 msgstr "Conferma"
 
@@ -1105,6 +1181,10 @@ msgstr ""
 #: i/skins/standard/wikipage_macros.pt:444
 msgid "add-comment"
 msgstr "aggiungi un commento"
+
+# Default: ""
+#~ msgid "pagetype"
+#~ msgstr "Formato del testo"
 
 #~ msgid "in reply to"
 #~ msgstr "in risposta a"

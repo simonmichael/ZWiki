@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-30-0dev\n"
-"POT-Creation-Date: Fri May 28 10:28:03 2004\n"
+"POT-Creation-Date: Fri May 28 11:57:28 2004\n"
 "PO-Revision-Date: 2004-05-27 14:09-0700\n"
 "Last-Translator: Nicolas Laurent <foenyx(at)online(dot)fr>, Raphael Badin "
 "<raphael(dot)badin(at)sopinspace(dot)com>\n"
@@ -357,6 +357,83 @@ msgstr "afficher la dernière modification %(lastlog)s"
 #: i/ZWikiPage.py:685 i/ZWikiPage.py:687
 msgid "by %(editor)s"
 msgstr "par %(editor)s"
+
+#: i/skins/dtmlmessages.pt:13
+#, fuzzy
+msgid "File"
+msgstr "simple"
+
+#: i/skins/dtmlmessages.pt:14
+msgid "Add"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:15
+msgid "Add and Edit"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:16 i/skins/dtmlmessages.pt:17
+#: i/skins/dtmlmessages.pt:25
+msgid "Enter a word"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:18
+msgid "Name"
+msgstr "Nom"
+
+#: i/skins/dtmlmessages.pt:19
+msgid "Category"
+msgstr "Catégorie"
+
+#: i/skins/dtmlmessages.pt:2 i/skins/dtmlmessages.pt:3
+msgid "Add a ZWiki web"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:20
+msgid "Severity"
+msgstr "Séverité"
+
+#: i/skins/dtmlmessages.pt:21
+msgid "Status"
+msgstr "Statut"
+
+#: i/skins/dtmlmessages.pt:22
+msgid "Optional note"
+msgstr "Note optionnelle"
+
+#: i/skins/dtmlmessages.pt:23
+msgid "Submitted by"
+msgstr "Soumis par"
+
+#: i/skins/dtmlmessages.pt:24
+msgid "Details & comments"
+msgstr "Détails & commentaires"
+
+#: i/skins/dtmlmessages.pt:4 i/skins/dtmlmessages.pt:11
+msgid "Id"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:5 i/skins/dtmlmessages.pt:12
+msgid "Title"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:6
+#, fuzzy
+msgid "Type"
+msgstr "type"
+
+#: i/skins/dtmlmessages.pt:7
+#, fuzzy
+msgid "Create wiki"
+msgstr "Créer"
+
+#: i/skins/dtmlmessages.pt:8
+msgid "and enter"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:10
+#, fuzzy
+msgid "Add ZWiki Page"
+msgstr "Changements récents du Wiki"
 
 # Default: ""
 # "You can change this page's parent(s) to place it within the overall page\n"
@@ -858,11 +935,6 @@ msgstr ""
 "            comme vous le faîtes d'habitude."
 
 # Default: ""
-#: i/skins/zwiki_plone/editform.pt:231
-msgid "pagetype"
-msgstr ""
-
-# Default: ""
 # "Edit\n"
 # "        ${itemtype} \n"
 # "\n"
@@ -1049,7 +1121,7 @@ msgstr "Transferts de fichiers vers le serveur"
 msgid "uploads_desc"
 msgstr "Cette page liste tous les transferts effectués vers ce Wiki"
 
-#: i/skins/zwiki_plone/uploaded.pt:25 i/skins/zwiki_plone/editform.pt:246
+#: i/skins/zwiki_plone/uploaded.pt:25 i/skins/zwiki_plone/editform.pt:250
 msgid "Save"
 msgstr "Sauvegarder"
 
@@ -1098,24 +1170,3 @@ msgstr "Ajouter un commentaire"
 
 #~ msgid "%(nb)u %(period)s"
 #~ msgstr "%(nb)u %(period)s"
-
-#~ msgid "Name"
-#~ msgstr "Nom"
-
-#~ msgid "Category"
-#~ msgstr "Catégorie"
-
-#~ msgid "Severity"
-#~ msgstr "Séverité"
-
-#~ msgid "Status"
-#~ msgstr "Statut"
-
-#~ msgid "Optional note"
-#~ msgstr "Note optionnelle"
-
-#~ msgid "Submitted by"
-#~ msgstr "Soumis par"
-
-#~ msgid "Details & comments"
-#~ msgstr "Détails & commentaires"
