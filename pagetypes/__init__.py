@@ -109,7 +109,7 @@ def registerPageTypeUpgrade(old,new):
     PAGE_TYPE_UPGRADES[old] = new
 
 # import all modules in this directory so that each will register its page type
-import os,glob,re
+import os,glob
 modules = glob.glob(__path__[0] + os.sep + '*.py')
 modules.remove(__path__[0] + os.sep + '__init__.py')
 # force the usual ordering of standard page types in the editform
@@ -125,8 +125,7 @@ for mod in firstmods:
     except ValueError:
         pass
 for file in modules:
-    m = re.search(r'%s([^%s]+?)\.py$'%(os.sep, os.sep), file)
-    file = m.group(1)
+    file = os.path.splitext(os.path.basename(file))[0]
     __import__('Products.ZWiki.pagetypes.%s' % file)
 
 # XXX backwards compatibility
