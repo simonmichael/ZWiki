@@ -57,7 +57,7 @@ class EditingSupport:
         - redirects to the new page if appropriate
 
         """
-        name = unquote(page)
+        name = unquote(page or pagename)
         id = self.canonicalIdFrom(name)
 
         # here goes.. sequence is delicate here
@@ -942,8 +942,8 @@ class EditingSupport:
         """
         if self.inCMF(): default = ALLOWED_PAGE_TYPES_IN_PLONE
         else: default = ALLOWED_PAGE_TYPES
-        allowed = getattr(self,'allowed_page_types',default)
-        return filter(lambda x:strip(x),allowed)
+        return filter(lambda x:strip(x),
+                      getattr(self,'allowed_page_types',[])) or default
 
     def defaultPageType(self):
         """This wiki's default page type."""
