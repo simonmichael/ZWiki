@@ -1,3 +1,56 @@
+    Summary
+
+	Bugfixes, preliminary built-in RSS support.
+
+    Upgrade notes
+
+	For wikis in cmf/plone or using a catalog: you might want to run
+	FRONTPAGE/setupCatalog after this upgrade just to make sure you
+	have all necessary catalog metadata for best performance.
+	
+	index_object's arguments have changed and the reindex_object and
+	updateCatalog methods are deprecated.
+	
+    Changes
+
+      Configuring
+
+        * don't require /setupTracker for good large-wiki performance;
+	  /setupCatalog now always adds all metadata fields (#993)
+
+        * be compatible with plone's default_page lines property (#914)
+
+      Browsing
+
+        * preliminary built-in RSS support - FRONTPAGE/pages_rss, /changes_rss
+
+      Issue tracking
+
+        * make closed issues greener.. may be different on your screen,
+	  feedback welcome
+
+        * make filter issues matrix clearer (hide zeros)
+
+        * try to improve spacing glitch with dtml-translate on filter issues
+
+      Fit tests
+
+        * just log a fit import warning instead of displaying on the page
+
+      General - i18n
+
+        * i18n (global and french) for issue tracker in plone -
+          i18n in plone skin require some i18n elements (for instance the
+          so called 'contentaction' items) to be in zwiki-plone-* as well
+          (huron)
+
+      General
+
+        * catalog awareness cleanups
+
+        * make setskin links harmless for anonymous users and bots,
+	  instead of logging errors (#1010)
+
 Zwiki 0.37.0 2005/01/02
 
     Summary
