@@ -567,10 +567,12 @@ class EditingSupport:
     def replaceLinksThroughoutWiki(self,oldlink,newlink,REQUEST=None):
         BLATHER('replacing all %s links with %s' % (oldlink,newlink))
         for p in self.backlinksFor(oldlink):
-            # regexps may fail on large pages (IssueNo0395), carry on
+            # this is an extensive, risky operation which can fail for
+            # a number of reasons - carry on regardless so we don't
+            # block renames
             # poor caching
             try: p.getObject().replaceLinks(oldlink,newlink,REQUEST)
-            except (RuntimeError, AttributeError):
+            except:
                 BLATHER('replaceLinks failed to update %s links in %s' \
                      % (oldlink,p.id))
 
