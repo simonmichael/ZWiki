@@ -326,7 +326,7 @@ class WMMLTranslator :
         #line        = self.ftpURL.sub( self.replaceInlineURL, line )
         #line        = self.mailtoURL.sub( self.replaceInlineURL, line )
         line        = self.hrule.sub( '<HR>', line )
-        line        = self.forceBreak.sub( '<BR>', line )
+        line        = self.forceBreak.sub( '<BR />', line )
         line        = self.blankLine.sub( '<P>', line )
         return line
 
@@ -349,7 +349,7 @@ class WMMLTranslator :
     def insertBlockItem( self, matchObj ) :
         """
         """
-        return "%s<BR>" % matchObj.group( 2 )
+        return "%s<BR />" % matchObj.group( 2 )
 
     def replaceListItem( self, matchObj ) :
         """

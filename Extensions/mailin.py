@@ -408,7 +408,7 @@ def mailin(self,
         subject = m.subject or 'no subject'
         self.REQUEST.set('newtitle', subject)
         # XXX italicize quoted text in replies (as in comment().. but DRY)
-        body = re.sub(r'(?m)^>(.*)',r'<br>><i>\1</i>',m.body)
+        body = re.sub(r'(?m)^>(.*)',r'<br />><i>\1</i>',m.body)
         self.REQUEST.set('newtext', body)
         self.REQUEST.set('submitted', 1)
         m.folder.IssueTracker(REQUEST=self.REQUEST)

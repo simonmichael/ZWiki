@@ -11,7 +11,7 @@ bgcolor="&dtml-issueColour;">
   issue_severities="_.getattr(this(),'issue_severities','') or ['serious','normal','wishlist']"
   issue_statuses="_.getattr(this(),'issue_statuses','') or ['open','closed']"
   >
-<br>
+<br />
 <b><dtml-translate domain="zwiki">Category</dtml-translate>:</b>
 <select name="category" class="formfield">
 <dtml-in issue_categories prefix=x>
@@ -34,9 +34,9 @@ bgcolor="&dtml-issueColour;">
 </dtml-in>
 </select>
 </dtml-let>
-<br><b><dtml-translate domain="zwiki">Optional note</dtml-translate>:</b> <input type="text" name="log" value="" size="55" maxlength="100" class="formfield">&nbsp;
+<br /><b><dtml-translate domain="zwiki">Optional note</dtml-translate>:</b> <input type="text" name="log" value="" size="55" maxlength="100" class="formfield">&nbsp;
 <input name="submit" type="submit" value="Change">
-<br>
+<br />
 <b><dtml-translate domain="zwiki">Submitted by</dtml-translate>:</b>
 <dtml-var "_.getattr(this(),'creator','') or '(unknown)'">
 <b>at:</b>
@@ -71,7 +71,7 @@ seconds="_.int(_.round((elapsed-days-hourfactor*hours-minutefactor*minutes)/seco
 <dtml-var seconds> second<dtml-var "seconds > 1 and 's' or ''">
 </dtml-if> ago)
 </dtml-let>
-<br>
+<br />
 <b><dtml-translate domain="zwiki">Details & comments</dtml-translate>:</b>
 </td></tr></table>
 </form>
