@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-31-0rc3\n"
-"POT-Creation-Date: Sat Jun 12 00:34:26 2004\n"
+"POT-Creation-Date: Sat Jun 12 10:57:58 2004\n"
 "PO-Revision-Date: 2004-05-31 07:18+0800\n"
 "Last-Translator: T.C. Chou <tcchou-at-tcchou.org>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
@@ -73,51 +73,51 @@ msgstr "建议"
 msgid "reply"
 msgstr "回复"
 
-#: i/UI.py:493
+#: i/UI.py:495
 msgid "Edit conflict"
 msgstr "修改冲突"
 
-#: i/UI.py:513
+#: i/UI.py:515
 msgid "Someone else has saved this page while you were editing"
 msgstr "当您修改时, 已经有人存入新的页面"
 
-#: i/UI.py:514
+#: i/UI.py:516
 msgid "To resolve the conflict, do this"
 msgstr "要解决冲突问题, 请按以下步骤"
 
-#: i/UI.py:515
+#: i/UI.py:517
 msgid "Click your browser's back button"
 msgstr "点选您浏览器的上ㄧ页按钮(Back)"
 
-#: i/UI.py:516
+#: i/UI.py:518
 msgid "Copy your recent edits to the clipboard"
 msgstr "复制您最近修改的内容到剪贴簿"
 
-#: i/UI.py:517
+#: i/UI.py:519
 msgid "Click your browser's refresh button"
 msgstr "点选您浏览器更新页面按钮(Refresh)"
 
-#: i/UI.py:518
+#: i/UI.py:520
 msgid "Paste in your edits again, being mindful of the latest changes"
 msgstr "贴上您所修改的内容, 在最新变更的内容里头"
 
-#: i/UI.py:519
+#: i/UI.py:521
 msgid "Click the Change button again"
 msgstr "再按一次变更按钮(Change)"
 
-#: i/UI.py:520 i/skins/standard/editform.pt:178
+#: i/UI.py:522 i/skins/standard/editform.pt:178
 msgid "or"
 msgstr "或"
 
-#: i/UI.py:521
+#: i/UI.py:523
 msgid "To discard your changes and start again, click OK"
 msgstr "放弃所有您变更的内容, 并重新再读一次, 点选确认按钮(OK)"
 
-#: i/UI.py:530
+#: i/UI.py:532
 msgid "Page is locked"
 msgstr "页面被锁"
 
-#: i/UI.py:541
+#: i/UI.py:543
 msgid ""
 "\n"
 "            This page has a webDAV lock. Someone is probably editing it\n"
@@ -135,11 +135,11 @@ msgstr ""
 "            \n"
 "            "
 
-#: i/UI.py:548
+#: i/UI.py:550
 msgid "To discard your changes and try again, click OK."
 msgstr "放弃您变更的内容, 并且再试一次, 点选确认按钮(OK)."
 
-#: i/UI.py:557
+#: i/UI.py:559
 msgid ""
 "\n"
 "        0    show these access key assignments\n"
@@ -324,154 +324,154 @@ msgstr "新增"
 msgid "Add and Edit"
 msgstr "新增并编辑"
 
-#: i/skins/dtmlmessages.pt:17 i/skins/dtmlmessages.pt:97
-#: i/skins/dtmlmessages.pt:184
+#: i/skins/dtmlmessages.pt:17 i/skins/dtmlmessages.pt:106
+#: i/skins/dtmlmessages.pt:202
 msgid "Set your site preferences below."
 msgstr ""
 
-# Default: "Page name"
-#: i/skins/dtmlmessages.pt:177
-msgid "Name"
-msgstr "页面名称"
-
-#: i/skins/dtmlmessages.pt:178
-msgid "Category"
-msgstr "分类"
-
-#: i/skins/dtmlmessages.pt:179
-msgid "Severity"
-msgstr "严重"
-
-#: i/skins/dtmlmessages.pt:18 i/skins/dtmlmessages.pt:98
-#: i/skins/dtmlmessages.pt:185
+#: i/skins/dtmlmessages.pt:18 i/skins/dtmlmessages.pt:107
+#: i/skins/dtmlmessages.pt:203
 msgid "You may also click the full, simple, minimal links if provided."
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:180
-msgid "Status"
-msgstr "状态"
-
-#: i/skins/dtmlmessages.pt:181
-msgid "Optional note"
-msgstr "变更注记(选项)"
-
-#: i/skins/dtmlmessages.pt:182
-msgid "Submitted by"
-msgstr "提出者"
-
-#: i/skins/dtmlmessages.pt:183
-msgid "Details & comments"
-msgstr "细节与建议"
-
 # Default: "Page name"
-#: i/skins/dtmlmessages.pt:19 i/skins/dtmlmessages.pt:99
-#: i/skins/dtmlmessages.pt:186
+#: i/skins/dtmlmessages.pt:19 i/skins/dtmlmessages.pt:108
+#: i/skins/dtmlmessages.pt:204
 #, fuzzy
 msgid "User name"
 msgstr "变更名称"
+
+# Default: "Page name"
+#: i/skins/dtmlmessages.pt:195
+msgid "Name"
+msgstr "页面名称"
+
+#: i/skins/dtmlmessages.pt:196
+msgid "Category"
+msgstr "分类"
+
+#: i/skins/dtmlmessages.pt:197
+msgid "Severity"
+msgstr "严重"
+
+#: i/skins/dtmlmessages.pt:198
+msgid "Status"
+msgstr "状态"
+
+#: i/skins/dtmlmessages.pt:199
+msgid "Optional note"
+msgstr "变更注记(选项)"
 
 #: i/skins/dtmlmessages.pt:2 i/skins/dtmlmessages.pt:3
 msgid "Add a ZWiki web"
 msgstr "新增一个ZWiki网站"
 
-#: i/skins/dtmlmessages.pt:20 i/skins/dtmlmessages.pt:100
-#: i/skins/dtmlmessages.pt:187
+#: i/skins/dtmlmessages.pt:20 i/skins/dtmlmessages.pt:109
+#: i/skins/dtmlmessages.pt:205
 msgid "identifies your edits"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:21 i/skins/dtmlmessages.pt:101
-#: i/skins/dtmlmessages.pt:188
+#: i/skins/dtmlmessages.pt:200
+msgid "Submitted by"
+msgstr "提出者"
+
+#: i/skins/dtmlmessages.pt:201
+msgid "Details & comments"
+msgstr "细节与建议"
+
+#: i/skins/dtmlmessages.pt:21 i/skins/dtmlmessages.pt:110
+#: i/skins/dtmlmessages.pt:206
 #, fuzzy
 msgid "Email address"
 msgstr "您的电子邮件"
 
-#: i/skins/dtmlmessages.pt:22 i/skins/dtmlmessages.pt:102
-#: i/skins/dtmlmessages.pt:189
+#: i/skins/dtmlmessages.pt:22 i/skins/dtmlmessages.pt:111
+#: i/skins/dtmlmessages.pt:207
 #, fuzzy
 msgid "for subscribing"
 msgstr "没有人订阅"
 
-#: i/skins/dtmlmessages.pt:23 i/skins/dtmlmessages.pt:103
-#: i/skins/dtmlmessages.pt:190
+#: i/skins/dtmlmessages.pt:23 i/skins/dtmlmessages.pt:112
+#: i/skins/dtmlmessages.pt:208
 #, fuzzy
 msgid "Editform"
 msgstr "修改"
 
-#: i/skins/dtmlmessages.pt:24 i/skins/dtmlmessages.pt:104
-#: i/skins/dtmlmessages.pt:191
+#: i/skins/dtmlmessages.pt:24 i/skins/dtmlmessages.pt:113
+#: i/skins/dtmlmessages.pt:209
 msgid "width"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:25 i/skins/dtmlmessages.pt:105
-#: i/skins/dtmlmessages.pt:192
+#: i/skins/dtmlmessages.pt:25 i/skins/dtmlmessages.pt:114
+#: i/skins/dtmlmessages.pt:210
 #, fuzzy
 msgid "height"
 msgstr "修改"
 
-#: i/skins/dtmlmessages.pt:26 i/skins/dtmlmessages.pt:106
-#: i/skins/dtmlmessages.pt:193
+#: i/skins/dtmlmessages.pt:26 i/skins/dtmlmessages.pt:115
+#: i/skins/dtmlmessages.pt:211
 msgid "textarea dimensions; width will be 100% if supported"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:27 i/skins/dtmlmessages.pt:107
-#: i/skins/dtmlmessages.pt:194
+#: i/skins/dtmlmessages.pt:27 i/skins/dtmlmessages.pt:116
+#: i/skins/dtmlmessages.pt:212
 msgid "Time zone"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:28 i/skins/dtmlmessages.pt:108
-#: i/skins/dtmlmessages.pt:195
+#: i/skins/dtmlmessages.pt:28 i/skins/dtmlmessages.pt:117
+#: i/skins/dtmlmessages.pt:213
 msgid "Your local time is"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:29 i/skins/dtmlmessages.pt:109
-#: i/skins/dtmlmessages.pt:196
+#: i/skins/dtmlmessages.pt:29 i/skins/dtmlmessages.pt:118
+#: i/skins/dtmlmessages.pt:214
 msgid "(localizes most times)"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:30 i/skins/dtmlmessages.pt:110
-#: i/skins/dtmlmessages.pt:197
+#: i/skins/dtmlmessages.pt:30 i/skins/dtmlmessages.pt:119
+#: i/skins/dtmlmessages.pt:215
 msgid "Show logo ?"
 msgstr ""
 
 #: i/skins/dtmlmessages.pt:31 i/skins/dtmlmessages.pt:34
 #: i/skins/dtmlmessages.pt:39 i/skins/dtmlmessages.pt:43
-#: i/skins/dtmlmessages.pt:47 i/skins/dtmlmessages.pt:111
-#: i/skins/dtmlmessages.pt:114 i/skins/dtmlmessages.pt:119
-#: i/skins/dtmlmessages.pt:123 i/skins/dtmlmessages.pt:127
-#: i/skins/dtmlmessages.pt:198 i/skins/dtmlmessages.pt:201
-#: i/skins/dtmlmessages.pt:206 i/skins/dtmlmessages.pt:210
-#: i/skins/dtmlmessages.pt:214
+#: i/skins/dtmlmessages.pt:47 i/skins/dtmlmessages.pt:120
+#: i/skins/dtmlmessages.pt:123 i/skins/dtmlmessages.pt:128
+#: i/skins/dtmlmessages.pt:132 i/skins/dtmlmessages.pt:136
+#: i/skins/dtmlmessages.pt:216 i/skins/dtmlmessages.pt:219
+#: i/skins/dtmlmessages.pt:224 i/skins/dtmlmessages.pt:228
+#: i/skins/dtmlmessages.pt:232
 msgid "No"
 msgstr ""
 
 #: i/skins/dtmlmessages.pt:32 i/skins/dtmlmessages.pt:35
 #: i/skins/dtmlmessages.pt:40 i/skins/dtmlmessages.pt:44
-#: i/skins/dtmlmessages.pt:48 i/skins/dtmlmessages.pt:112
-#: i/skins/dtmlmessages.pt:115 i/skins/dtmlmessages.pt:120
-#: i/skins/dtmlmessages.pt:124 i/skins/dtmlmessages.pt:128
-#: i/skins/dtmlmessages.pt:199 i/skins/dtmlmessages.pt:202
-#: i/skins/dtmlmessages.pt:207 i/skins/dtmlmessages.pt:211
-#: i/skins/dtmlmessages.pt:215
+#: i/skins/dtmlmessages.pt:48 i/skins/dtmlmessages.pt:121
+#: i/skins/dtmlmessages.pt:124 i/skins/dtmlmessages.pt:129
+#: i/skins/dtmlmessages.pt:133 i/skins/dtmlmessages.pt:137
+#: i/skins/dtmlmessages.pt:217 i/skins/dtmlmessages.pt:220
+#: i/skins/dtmlmessages.pt:225 i/skins/dtmlmessages.pt:229
+#: i/skins/dtmlmessages.pt:233
 msgid "Yes"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:33 i/skins/dtmlmessages.pt:113
-#: i/skins/dtmlmessages.pt:200
+#: i/skins/dtmlmessages.pt:33 i/skins/dtmlmessages.pt:122
+#: i/skins/dtmlmessages.pt:218
 msgid "Show page hierarchy ?"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:36 i/skins/dtmlmessages.pt:116
-#: i/skins/dtmlmessages.pt:203
+#: i/skins/dtmlmessages.pt:36 i/skins/dtmlmessages.pt:125
+#: i/skins/dtmlmessages.pt:221
 msgid "This wiki keeps a page hierarchy, which you can use or ignore."
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:37 i/skins/dtmlmessages.pt:117
-#: i/skins/dtmlmessages.pt:204
+#: i/skins/dtmlmessages.pt:37 i/skins/dtmlmessages.pt:126
+#: i/skins/dtmlmessages.pt:222
 msgid "Show search field ?"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:38 i/skins/dtmlmessages.pt:118
-#: i/skins/dtmlmessages.pt:205
+#: i/skins/dtmlmessages.pt:38 i/skins/dtmlmessages.pt:127
+#: i/skins/dtmlmessages.pt:223
 msgid "except in minimal mode"
 msgstr ""
 
@@ -479,24 +479,24 @@ msgstr ""
 msgid "Id"
 msgstr "名称"
 
-#: i/skins/dtmlmessages.pt:41 i/skins/dtmlmessages.pt:121
-#: i/skins/dtmlmessages.pt:208
+#: i/skins/dtmlmessages.pt:41 i/skins/dtmlmessages.pt:130
+#: i/skins/dtmlmessages.pt:226
 msgid "Show AnnoyingQuote ?"
 msgstr ""
 
 #: i/skins/dtmlmessages.pt:42 i/skins/dtmlmessages.pt:46
-#: i/skins/dtmlmessages.pt:122 i/skins/dtmlmessages.pt:126
-#: i/skins/dtmlmessages.pt:209 i/skins/dtmlmessages.pt:213
+#: i/skins/dtmlmessages.pt:131 i/skins/dtmlmessages.pt:135
+#: i/skins/dtmlmessages.pt:227 i/skins/dtmlmessages.pt:231
 msgid "in full mode"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:45 i/skins/dtmlmessages.pt:125
-#: i/skins/dtmlmessages.pt:212
+#: i/skins/dtmlmessages.pt:45 i/skins/dtmlmessages.pt:134
+#: i/skins/dtmlmessages.pt:230
 msgid "Show page management form ?"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:49 i/skins/dtmlmessages.pt:129
-#: i/skins/dtmlmessages.pt:216
+#: i/skins/dtmlmessages.pt:49 i/skins/dtmlmessages.pt:138
+#: i/skins/dtmlmessages.pt:234
 msgid "You must also configure a username or be logged in."
 msgstr ""
 
@@ -504,61 +504,61 @@ msgstr ""
 msgid "Title"
 msgstr "标题"
 
-#: i/skins/dtmlmessages.pt:50 i/skins/dtmlmessages.pt:130
-#: i/skins/dtmlmessages.pt:217
+#: i/skins/dtmlmessages.pt:50 i/skins/dtmlmessages.pt:139
+#: i/skins/dtmlmessages.pt:235
 #, fuzzy
 msgid "Save options"
 msgstr "选项"
 
-#: i/skins/dtmlmessages.pt:51 i/skins/dtmlmessages.pt:131
-#: i/skins/dtmlmessages.pt:218
+#: i/skins/dtmlmessages.pt:51 i/skins/dtmlmessages.pt:140
+#: i/skins/dtmlmessages.pt:236
 #, fuzzy
 msgid "Forget options"
 msgstr "选项"
 
-#: i/skins/dtmlmessages.pt:52 i/skins/dtmlmessages.pt:132
-#: i/skins/dtmlmessages.pt:219
+#: i/skins/dtmlmessages.pt:52 i/skins/dtmlmessages.pt:141
+#: i/skins/dtmlmessages.pt:237
 msgid "Enter a word or phrase and hit enter to search the entire wiki."
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:53 i/skins/dtmlmessages.pt:133
-#: i/skins/dtmlmessages.pt:220
+#: i/skins/dtmlmessages.pt:53 i/skins/dtmlmessages.pt:142
+#: i/skins/dtmlmessages.pt:238
 msgid "This is the same as using the search field at top right."
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:54 i/skins/dtmlmessages.pt:134
-#: i/skins/dtmlmessages.pt:221
+#: i/skins/dtmlmessages.pt:54 i/skins/dtmlmessages.pt:143
+#: i/skins/dtmlmessages.pt:239
 msgid "Tips: A single word works best for matching page names."
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:55 i/skins/dtmlmessages.pt:135
-#: i/skins/dtmlmessages.pt:222
+#: i/skins/dtmlmessages.pt:55 i/skins/dtmlmessages.pt:144
+#: i/skins/dtmlmessages.pt:240
 msgid ""
 "Case-insensitivity and wildcards may be supported depending on your catalog "
 "configuration."
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:56 i/skins/dtmlmessages.pt:136
-#: i/skins/dtmlmessages.pt:223
+#: i/skins/dtmlmessages.pt:56 i/skins/dtmlmessages.pt:145
+#: i/skins/dtmlmessages.pt:241
 msgid "Leave it blank to list all pages."
 msgstr ""
 
 #: i/skins/dtmlmessages.pt:57 i/skins/dtmlmessages.pt:62
-#: i/skins/dtmlmessages.pt:137 i/skins/dtmlmessages.pt:142
-#: i/skins/dtmlmessages.pt:224 i/skins/dtmlmessages.pt:229
+#: i/skins/dtmlmessages.pt:146 i/skins/dtmlmessages.pt:151
+#: i/skins/dtmlmessages.pt:242 i/skins/dtmlmessages.pt:247
 #, fuzzy
 msgid "Search"
 msgstr "年"
 
 # Default: "Page name"
-#: i/skins/dtmlmessages.pt:58 i/skins/dtmlmessages.pt:138
-#: i/skins/dtmlmessages.pt:225
+#: i/skins/dtmlmessages.pt:58 i/skins/dtmlmessages.pt:147
+#: i/skins/dtmlmessages.pt:243
 #, fuzzy
 msgid "Page names matching"
 msgstr "页面名称"
 
-#: i/skins/dtmlmessages.pt:59 i/skins/dtmlmessages.pt:139
-#: i/skins/dtmlmessages.pt:226
+#: i/skins/dtmlmessages.pt:59 i/skins/dtmlmessages.pt:148
+#: i/skins/dtmlmessages.pt:244
 #, fuzzy
 msgid "Text matching"
 msgstr "文字格式规则"
@@ -567,194 +567,241 @@ msgstr "文字格式规则"
 msgid "Type"
 msgstr "型态"
 
-#: i/skins/dtmlmessages.pt:60 i/skins/dtmlmessages.pt:140
-#: i/skins/dtmlmessages.pt:227
+#: i/skins/dtmlmessages.pt:60 i/skins/dtmlmessages.pt:149
+#: i/skins/dtmlmessages.pt:245
 msgid "hits"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:61 i/skins/dtmlmessages.pt:141
-#: i/skins/dtmlmessages.pt:228
+#: i/skins/dtmlmessages.pt:61 i/skins/dtmlmessages.pt:150
+#: i/skins/dtmlmessages.pt:246
 msgid ""
 "no catalog or the catalog search gave an error, a brute-force search was used"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:63 i/skins/dtmlmessages.pt:143
-#: i/skins/dtmlmessages.pt:230
-#, fuzzy
-msgid "Here are the wiki's issue pages."
-msgstr "显示事例追踪"
-
-#: i/skins/dtmlmessages.pt:64 i/skins/dtmlmessages.pt:144
-#: i/skins/dtmlmessages.pt:231
-msgid "Enter a search term, or click the numbers to the right, or"
+#: i/skins/dtmlmessages.pt:63 i/skins/dtmlmessages.pt:152
+#: i/skins/dtmlmessages.pt:248
+msgid "Recently changed pages, with summaries"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:65 i/skins/dtmlmessages.pt:145
-#: i/skins/dtmlmessages.pt:232
-#, fuzzy
-msgid "filter issues"
-msgstr "过滤事例"
-
-#: i/skins/dtmlmessages.pt:66 i/skins/dtmlmessages.pt:146
-#: i/skins/dtmlmessages.pt:233
-#, fuzzy
-msgid "search issues"
-msgstr "过滤事例"
-
-#: i/skins/dtmlmessages.pt:67 i/skins/dtmlmessages.pt:147
-#: i/skins/dtmlmessages.pt:234
-#, fuzzy
-msgid "recent"
-msgstr "变更父层"
-
-#: i/skins/dtmlmessages.pt:68 i/skins/dtmlmessages.pt:148
-#: i/skins/dtmlmessages.pt:235
-msgid "all"
+#: i/skins/dtmlmessages.pt:64 i/skins/dtmlmessages.pt:153
+#: i/skins/dtmlmessages.pt:249
+msgid "Show summaries ?"
 msgstr ""
 
-# Default: "Page name"
-#: i/skins/dtmlmessages.pt:69 i/skins/dtmlmessages.pt:91
-#: i/skins/dtmlmessages.pt:149 i/skins/dtmlmessages.pt:171
-#: i/skins/dtmlmessages.pt:236 i/skins/dtmlmessages.pt:258
+#: i/skins/dtmlmessages.pt:65 i/skins/dtmlmessages.pt:154
+#: i/skins/dtmlmessages.pt:250
+msgid "Refresh"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:66 i/skins/dtmlmessages.pt:155
+#: i/skins/dtmlmessages.pt:251
 #, fuzzy
-msgid "name"
-msgstr "变更名称"
+msgid "Page"
+msgstr "变更"
+
+#: i/skins/dtmlmessages.pt:67 i/skins/dtmlmessages.pt:156
+#: i/skins/dtmlmessages.pt:252
+msgid "Edited&nbsp;by"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:68 i/skins/dtmlmessages.pt:157
+#: i/skins/dtmlmessages.pt:253
+#, fuzzy
+msgid "Time"
+msgstr "标题"
+
+#: i/skins/dtmlmessages.pt:69 i/skins/dtmlmessages.pt:158
+#: i/skins/dtmlmessages.pt:254
+msgid "NEW"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:7
 msgid "Create wiki"
 msgstr "建立wiki"
 
-#: i/skins/dtmlmessages.pt:70 i/skins/dtmlmessages.pt:92
-#: i/skins/dtmlmessages.pt:150 i/skins/dtmlmessages.pt:172
-#: i/skins/dtmlmessages.pt:237 i/skins/dtmlmessages.pt:259
+#: i/skins/dtmlmessages.pt:70 i/skins/dtmlmessages.pt:159
+#: i/skins/dtmlmessages.pt:255
+msgid "anonymous"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:71 i/skins/dtmlmessages.pt:160
+#: i/skins/dtmlmessages.pt:256
+msgid "Pages marked (NEW) have been created within the last week"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:72 i/skins/dtmlmessages.pt:161
+#: i/skins/dtmlmessages.pt:257
+#, fuzzy
+msgid "Here are the wiki's issue pages."
+msgstr "显示事例追踪"
+
+#: i/skins/dtmlmessages.pt:73 i/skins/dtmlmessages.pt:162
+#: i/skins/dtmlmessages.pt:258
+msgid "Enter a search term, or click the numbers to the right, or"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:74 i/skins/dtmlmessages.pt:163
+#: i/skins/dtmlmessages.pt:259
+#, fuzzy
+msgid "filter issues"
+msgstr "过滤事例"
+
+#: i/skins/dtmlmessages.pt:75 i/skins/dtmlmessages.pt:164
+#: i/skins/dtmlmessages.pt:260
+#, fuzzy
+msgid "search issues"
+msgstr "过滤事例"
+
+#: i/skins/dtmlmessages.pt:76 i/skins/dtmlmessages.pt:165
+#: i/skins/dtmlmessages.pt:261
+#, fuzzy
+msgid "recent"
+msgstr "变更父层"
+
+#: i/skins/dtmlmessages.pt:77 i/skins/dtmlmessages.pt:166
+#: i/skins/dtmlmessages.pt:262
+msgid "all"
+msgstr ""
+
+# Default: "Page name"
+#: i/skins/dtmlmessages.pt:78 i/skins/dtmlmessages.pt:100
+#: i/skins/dtmlmessages.pt:167 i/skins/dtmlmessages.pt:189
+#: i/skins/dtmlmessages.pt:263 i/skins/dtmlmessages.pt:285
+#, fuzzy
+msgid "name"
+msgstr "变更名称"
+
+#: i/skins/dtmlmessages.pt:79 i/skins/dtmlmessages.pt:101
+#: i/skins/dtmlmessages.pt:168 i/skins/dtmlmessages.pt:190
+#: i/skins/dtmlmessages.pt:264 i/skins/dtmlmessages.pt:286
 #, fuzzy
 msgid "category"
 msgstr "分类"
-
-#: i/skins/dtmlmessages.pt:71 i/skins/dtmlmessages.pt:93
-#: i/skins/dtmlmessages.pt:151 i/skins/dtmlmessages.pt:173
-#: i/skins/dtmlmessages.pt:238 i/skins/dtmlmessages.pt:260
-#, fuzzy
-msgid "severity"
-msgstr "严重"
-
-#: i/skins/dtmlmessages.pt:72 i/skins/dtmlmessages.pt:94
-#: i/skins/dtmlmessages.pt:152 i/skins/dtmlmessages.pt:174
-#: i/skins/dtmlmessages.pt:239 i/skins/dtmlmessages.pt:261
-#, fuzzy
-msgid "status"
-msgstr "状态"
-
-#: i/skins/dtmlmessages.pt:73 i/skins/dtmlmessages.pt:95
-#: i/skins/dtmlmessages.pt:153 i/skins/dtmlmessages.pt:175
-#: i/skins/dtmlmessages.pt:240 i/skins/dtmlmessages.pt:262
-#, fuzzy
-msgid "age"
-msgstr "变更"
-
-#: i/skins/dtmlmessages.pt:74 i/skins/dtmlmessages.pt:96
-#: i/skins/dtmlmessages.pt:154 i/skins/dtmlmessages.pt:176
-#: i/skins/dtmlmessages.pt:241 i/skins/dtmlmessages.pt:263
-msgid "modified"
-msgstr ""
-
-#: i/skins/dtmlmessages.pt:75 i/skins/dtmlmessages.pt:155
-#: i/skins/dtmlmessages.pt:242
-#, fuzzy
-msgid "Add a new issue:"
-msgstr "新增并编辑"
-
-# Default: "Page name"
-#: i/skins/dtmlmessages.pt:76 i/skins/dtmlmessages.pt:156
-#: i/skins/dtmlmessages.pt:243
-#, fuzzy
-msgid "Name:"
-msgstr "页面名称"
-
-#: i/skins/dtmlmessages.pt:77 i/skins/dtmlmessages.pt:157
-#: i/skins/dtmlmessages.pt:244
-#, fuzzy
-msgid "Category:"
-msgstr "分类"
-
-#: i/skins/dtmlmessages.pt:78 i/skins/dtmlmessages.pt:158
-#: i/skins/dtmlmessages.pt:245
-#, fuzzy
-msgid "Severity:"
-msgstr "严重"
-
-#: i/skins/dtmlmessages.pt:79 i/skins/dtmlmessages.pt:159
-#: i/skins/dtmlmessages.pt:246
-#, fuzzy
-msgid "Status:"
-msgstr "状态"
 
 #: i/skins/dtmlmessages.pt:8
 msgid "and enter"
 msgstr "并输入"
 
-#: i/skins/dtmlmessages.pt:80 i/skins/dtmlmessages.pt:160
-#: i/skins/dtmlmessages.pt:247
-msgid "Details:"
-msgstr ""
-
-#: i/skins/dtmlmessages.pt:81 i/skins/dtmlmessages.pt:161
-#: i/skins/dtmlmessages.pt:248
+#: i/skins/dtmlmessages.pt:80 i/skins/dtmlmessages.pt:102
+#: i/skins/dtmlmessages.pt:169 i/skins/dtmlmessages.pt:191
+#: i/skins/dtmlmessages.pt:265 i/skins/dtmlmessages.pt:287
 #, fuzzy
-msgid "add issue"
-msgstr "事例"
-
-#: i/skins/dtmlmessages.pt:82 i/skins/dtmlmessages.pt:162
-#: i/skins/dtmlmessages.pt:249
-msgid "More advanced"
-msgstr ""
-
-#: i/skins/dtmlmessages.pt:83 i/skins/dtmlmessages.pt:163
-#: i/skins/dtmlmessages.pt:250
-#, fuzzy
-msgid "issue tracker"
-msgstr "事例追踪"
-
-#: i/skins/dtmlmessages.pt:84 i/skins/dtmlmessages.pt:164
-#: i/skins/dtmlmessages.pt:251
-#, fuzzy
-msgid "search options"
-msgstr "选项"
-
-#: i/skins/dtmlmessages.pt:85 i/skins/dtmlmessages.pt:165
-#: i/skins/dtmlmessages.pt:252
-msgid "Name contains any of:"
-msgstr ""
-
-#: i/skins/dtmlmessages.pt:86 i/skins/dtmlmessages.pt:166
-#: i/skins/dtmlmessages.pt:253
-msgid "Page text contains any of:"
-msgstr ""
-
-#: i/skins/dtmlmessages.pt:87 i/skins/dtmlmessages.pt:167
-#: i/skins/dtmlmessages.pt:254
-#, fuzzy
-msgid "Categories:"
-msgstr "分类"
-
-#: i/skins/dtmlmessages.pt:88 i/skins/dtmlmessages.pt:168
-#: i/skins/dtmlmessages.pt:255
-#, fuzzy
-msgid "Severities:"
+msgid "severity"
 msgstr "严重"
 
-#: i/skins/dtmlmessages.pt:89 i/skins/dtmlmessages.pt:169
-#: i/skins/dtmlmessages.pt:256
+#: i/skins/dtmlmessages.pt:81 i/skins/dtmlmessages.pt:103
+#: i/skins/dtmlmessages.pt:170 i/skins/dtmlmessages.pt:192
+#: i/skins/dtmlmessages.pt:266 i/skins/dtmlmessages.pt:288
 #, fuzzy
-msgid "Statuses:"
+msgid "status"
 msgstr "状态"
+
+#: i/skins/dtmlmessages.pt:82 i/skins/dtmlmessages.pt:104
+#: i/skins/dtmlmessages.pt:171 i/skins/dtmlmessages.pt:193
+#: i/skins/dtmlmessages.pt:267 i/skins/dtmlmessages.pt:289
+#, fuzzy
+msgid "age"
+msgstr "变更"
+
+#: i/skins/dtmlmessages.pt:83 i/skins/dtmlmessages.pt:105
+#: i/skins/dtmlmessages.pt:172 i/skins/dtmlmessages.pt:194
+#: i/skins/dtmlmessages.pt:268 i/skins/dtmlmessages.pt:290
+msgid "modified"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:84 i/skins/dtmlmessages.pt:173
+#: i/skins/dtmlmessages.pt:269
+#, fuzzy
+msgid "Add a new issue:"
+msgstr "新增并编辑"
+
+# Default: "Page name"
+#: i/skins/dtmlmessages.pt:85 i/skins/dtmlmessages.pt:174
+#: i/skins/dtmlmessages.pt:270
+#, fuzzy
+msgid "Name:"
+msgstr "页面名称"
+
+#: i/skins/dtmlmessages.pt:86 i/skins/dtmlmessages.pt:175
+#: i/skins/dtmlmessages.pt:271
+#, fuzzy
+msgid "Category:"
+msgstr "分类"
+
+#: i/skins/dtmlmessages.pt:87 i/skins/dtmlmessages.pt:176
+#: i/skins/dtmlmessages.pt:272
+#, fuzzy
+msgid "Severity:"
+msgstr "严重"
+
+#: i/skins/dtmlmessages.pt:88 i/skins/dtmlmessages.pt:177
+#: i/skins/dtmlmessages.pt:273
+#, fuzzy
+msgid "Status:"
+msgstr "状态"
+
+#: i/skins/dtmlmessages.pt:89 i/skins/dtmlmessages.pt:178
+#: i/skins/dtmlmessages.pt:274
+msgid "Details:"
+msgstr ""
 
 #: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:10
 msgid "Add ZWiki Page"
 msgstr "新增ZWiki页面"
 
-#: i/skins/dtmlmessages.pt:90 i/skins/dtmlmessages.pt:170
-#: i/skins/dtmlmessages.pt:257
+#: i/skins/dtmlmessages.pt:90 i/skins/dtmlmessages.pt:179
+#: i/skins/dtmlmessages.pt:275
+#, fuzzy
+msgid "add issue"
+msgstr "事例"
+
+#: i/skins/dtmlmessages.pt:91 i/skins/dtmlmessages.pt:180
+#: i/skins/dtmlmessages.pt:276
+msgid "More advanced"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:92 i/skins/dtmlmessages.pt:181
+#: i/skins/dtmlmessages.pt:277
+#, fuzzy
+msgid "issue tracker"
+msgstr "事例追踪"
+
+#: i/skins/dtmlmessages.pt:93 i/skins/dtmlmessages.pt:182
+#: i/skins/dtmlmessages.pt:278
+#, fuzzy
+msgid "search options"
+msgstr "选项"
+
+#: i/skins/dtmlmessages.pt:94 i/skins/dtmlmessages.pt:183
+#: i/skins/dtmlmessages.pt:279
+msgid "Name contains any of:"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:95 i/skins/dtmlmessages.pt:184
+#: i/skins/dtmlmessages.pt:280
+msgid "Page text contains any of:"
+msgstr ""
+
+#: i/skins/dtmlmessages.pt:96 i/skins/dtmlmessages.pt:185
+#: i/skins/dtmlmessages.pt:281
+#, fuzzy
+msgid "Categories:"
+msgstr "分类"
+
+#: i/skins/dtmlmessages.pt:97 i/skins/dtmlmessages.pt:186
+#: i/skins/dtmlmessages.pt:282
+#, fuzzy
+msgid "Severities:"
+msgstr "严重"
+
+#: i/skins/dtmlmessages.pt:98 i/skins/dtmlmessages.pt:187
+#: i/skins/dtmlmessages.pt:283
+#, fuzzy
+msgid "Statuses:"
+msgstr "状态"
+
+#: i/skins/dtmlmessages.pt:99 i/skins/dtmlmessages.pt:188
+#: i/skins/dtmlmessages.pt:284
 msgid "Filter issues"
 msgstr "过滤事例"
 

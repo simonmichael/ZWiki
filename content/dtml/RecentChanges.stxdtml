@@ -32,23 +32,23 @@
       </td>
       </dtml-in>
       <dtml-else>
-      <td align="right">Recently changed pages, with summaries</td>
+      <td align="right"><dtml-translate domain=zwiki>Recently changed pages, with summaries</dtml-translate>.</td>
       </dtml-if>
       <td>
         <input type=checkbox name=summaries <dtml-if summaries>checked</dtml-if> />
-        Show summaries ?
+        <dtml-translate domain=zwiki>Show summaries ?</dtml-translate>
       </td>
       <dtml-unless hasCatalog>
-      <td align="center"><input type=submit value="Refresh" /></td>
+      <td align="center"><input type=submit value="<dtml-translate domain=zwiki>Refresh</dtml-translate>" /></td>
       </dtml-unless>
     </tr>
   </table>
 </form>
 <table border="0" cellspacing="0" cellpadding="1" width="100%">
   <tr>
-    <th align="left">Page</th>
-    <th align="left">Edited&nbsp;by&nbsp;&nbsp;&nbsp;</th>
-    <th align="left">Time</th>
+    <th align="left"><dtml-translate domain=zwiki>Page</dtml-translate></th>
+    <th align="left"><dtml-translate domain=zwiki>Edited&nbsp;by</dtml-translate>&nbsp;&nbsp;&nbsp;</th>
+    <th align="left"><dtml-translate domain=zwiki>Time</dtml-translate></th>
   </tr>
   <tr><td colspan=3></td></tr>
   <dtml-in results sort=lastEditTime reverse prefix=x>
@@ -59,7 +59,7 @@
          style="background-color:<dtml-var issueColour>;"
          ><dtml-var Title></a>
       <dtml-if "creation_time and (now - _.DateTime(creation_time)) < newdays">
-      <small><span style="background-color:palegreen">NEW</span></small>
+      <small><span style="background-color:palegreen"><dtml-translate domain=zwiki>NEW</dtml-translate></span></small>
       </dtml-if>
       &nbsp;&nbsp;&nbsp;
       <dtml-unless summaries>
@@ -74,7 +74,7 @@
       <dtml-if "last_editor and _.string.swapcase(last_editor) != last_editor">
       <a href="&dtml-wikiurl;/&dtml.url_quote-last_editor;">&dtml-last_editor;</a>
       <dtml-else>
-      anonymous
+      <dtml-translate domain=zwiki>anonymous</dtml-translate>
       </dtml-if>
       &nbsp;&nbsp;&nbsp;
     </td>
@@ -101,5 +101,5 @@
   </dtml-in>
 </table>
 
-Pages marked (NEW) have been created within the last week.
+<dtml-translate domain=zwiki>Pages marked (NEW) have been created within the last week</dtml-translate>.
 </dtml-let>
