@@ -367,6 +367,8 @@ class EditingTests(ZopeTestCase.ZopeTestCase):
 
     def test_comment(self):
         p = self.page
+
+        # an ordinary comment
         p.edit(text='test')
         p.comment(text='comment',username='me',time='1999/12/31 GMT')
         self.assertEqual(
@@ -391,7 +393,13 @@ ZWIKIMIDSECTION</p>
 <b>...</b> --me,  <a href="http://nohost/test_folder<u>1</u>/wiki/TestPage#msg19991231000000+0000@foo">1999/12/31 GMT</a> <a href="http://nohost/test_folder<u>1</u>/wiki/TestPage?subject=&in_reply_to=%3C19991231000000%2B0000%40foo%3E#bottom">reply</a><br />
 comment</p>
 ''')
-        
+
+        # ignore comments with no subject or body
+        old = p.read()
+        p.comment(text='',subject_heading='')
+        self.assertEqual(p.read(),old)
+
+    # XXX this is now the default - not needed ?
     def test_quickcomment(self):
         p = self.page
         p.edit(text='test')

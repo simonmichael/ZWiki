@@ -164,6 +164,8 @@ class EditingSupport:
             username = self.usernameFrom(REQUEST)
             if re.match(r'^[0-9\.\s]*$',username): 
                 username = ''
+        # basic junk comment detection
+        if not subject and not text: return
         # ensure message_id is defined at this point so page and mail-out
         # will use the same value and threading will work
         # also ensure it matches time where possible (!) may help debugging
