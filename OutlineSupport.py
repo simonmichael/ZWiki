@@ -414,7 +414,7 @@ class SubtopicsPropertyMixin:
         prop = 'show_subtopics'
         if getattr(self.folder(),prop,0):
             if hasattr(self,'REQUEST') and hasattr(self.REQUEST,prop):
-                return getattr(REQUEST,prop) and 1
+                return getattr(self.REQUEST,prop) and 1
             elif hasattr(self.aq_base,prop):
                 return getattr(self,prop) and 1
             elif self.primaryParent():
