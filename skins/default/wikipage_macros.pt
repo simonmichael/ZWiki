@@ -123,7 +123,7 @@
   ><span class="accesskey"></span>full</a
 >/<a href="" title="show basic features" accesskey=""
    tal:define="current python:request.get('zwiki_displaymode',0)=='simple';
-               prefs string:?setcookies=1&zwiki_displaymode=simple&zwiki_showhierarchy=&redirectURL=${here/pageUrl};"
+               prefs string:?setcookies=1&zwiki_displaymode=simple&zwiki_showhierarchy=1&redirectURL=${here/pageUrl};"
    tal:attributes="style python:[nothing,'font-weight:bold'][current];
                    href python:here.preferencesUrl()+prefs;"
   >s<span class="accesskey"></span>imple</a
