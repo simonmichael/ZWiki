@@ -1,5 +1,9 @@
-# UI-related methods
+# general UI-related methods
 #
+# refactoring ongoing.. the specific UI methods should perhaps be moved to
+# their respective modules
+#
+# rewrite:
 # Here we emulate CMF skins for a limited set of skin templates with known
 # names (wikipage, editform, backlinks etc): if they're in the zodb, use
 # them, if not get defaults from the filesystem. To make this work in any
@@ -15,8 +19,7 @@
 #  5. (if we are in a method from step 1 and no template was found,
 #     get it from ZWiki/skins/default on the filesystem)
 #
-# Skin templates may be either page templates or DTML methods, again for
-# backwards compatibility.
+# Skin templates may be either page templates or DTML methods.
 
 from __future__ import nested_scopes
 import os, sys, re, string, time, math
@@ -37,8 +40,13 @@ from Utils import BLATHER,formattedTraceback
 from Regexps import htmlheaderexpr, htmlfooterexpr, htmlbodyexpr
 from LocalizerSupport import _, N_
 
-# built-in defaults for skin objects
-def defaultPageTemplate(name):
+
+# utilities
+
+def loadPageTemplate(name):
+    """
+    Load the named page template from the filesystem for use as a default.
+    """
     # hack PageTemplateFile templates to see the folder as their container,
     # like their zodb counterparts do. Some simpler way to do this ?
     class MyPTFile(PageTemplateFile):
@@ -57,9 +65,17 @@ def defaultPageTemplate(name):
     pt = MyPTFile('skins/default/%s.pt'%name, globals(), __name__=name)
     pt._cook_check() # ensure _text is there, we peek at it below    
     return pt
-def defaultDtmlMethod(name):
+
+def loadDtmlMethod(name):
+    """
+    Load the named DTML method from the filesystem for use as a default.
+    """
     return HTMLFile('skins/default/%s'%name, globals())
-def defaultStylesheet(name):
+
+def loadStylesheetFile(name):
+    """
+    Load the stylesheet File from the filesystem. Also fix it's mod. time.
+    """
     thisdir = os.path.split(os.path.abspath(__file__))[0]
     filepath = os.path.join(thisdir,'skins/default',name)
     data,mtime = '',0
@@ -74,34 +90,13 @@ def defaultStylesheet(name):
     file.bobobase_modification_time = lambda:mtime
     return file
 
-# the basic skin templates
-default_wikipage = defaultPageTemplate('wikipage')
-default_wikipage_macros = defaultPageTemplate('wikipage_macros')
-default_stylesheet = defaultStylesheet('stylesheet.css')
-default_backlinks = defaultPageTemplate('backlinks')
-default_contentspage = defaultPageTemplate('contentspage')
-default_diffform = defaultPageTemplate('diffform')
-default_editform = defaultPageTemplate('editform')
-default_subscribeform = defaultPageTemplate('subscribeform')
-# these include a chunk of DTML for easier syncing with the page-based
-# implementations:
-default_recentchanges = defaultPageTemplate('recentchanges')
-default_recentchangesdtml = defaultDtmlMethod('recentchangesdtml')
-default_searchwiki = defaultPageTemplate('searchwiki')
-default_searchwikidtml = defaultDtmlMethod('searchwikidtml')
-default_useroptions = defaultPageTemplate('useroptions')
-default_useroptionsdtml = defaultDtmlMethod('useroptionsdtml')
-default_issuetracker = defaultPageTemplate('issuetracker')
-default_issuetrackerdtml = defaultDtmlMethod('issuetrackerdtml')
-default_filterissues = defaultPageTemplate('filterissues')
-default_filterissuesdtml = defaultDtmlMethod('filterissuesdtml')
-
 def isPageTemplate(obj):
     return getattr(obj,'meta_type',None) in (
         'Page Template',            # template found in wiki folder or above
         'Filesystem Page Template', # default template in CMF skin/SkinnedFolder
         'Page Template (File)',     # default from filesystem
         )
+
 def isDtmlMethod(obj):
     return getattr(obj,'meta_type',None) in (
         'DTML Method', 
@@ -111,10 +106,12 @@ def isDtmlMethod(obj):
         'Filesystem DTML Document',
         'DTML Document (File)',
         )
+
 def isFile(obj):
     return getattr(obj,'meta_type',None) in (
         'File',
         )
+
 def isZwikiPage(obj):
     return getattr(obj,'meta_type',None) in (
         PAGE_METATYPE,
@@ -130,44 +127,73 @@ def onlyBodyFrom(t):
     # this might be better, but more inclined to mess with valid text ?
     #return re.sub(htmlbodyexpr, r'\1', t)
 
-class UI:
-    # see above
+
+# filesystem defaults for the skin templates
+
+badtemplate = loadPageTemplate('badtemplate')
+default_wikipage = loadPageTemplate('wikipage')
+default_wikipage_macros = loadPageTemplate('wikipage_macros')
+default_stylesheet = loadStylesheetFile('stylesheet.css')
+default_backlinks = loadPageTemplate('backlinks')
+default_contentspage = loadPageTemplate('contentspage')
+default_diffform = loadPageTemplate('diffform')
+default_editform = loadPageTemplate('editform')
+default_subscribeform = loadPageTemplate('subscribeform')
+default_recentchanges = loadPageTemplate('recentchanges')
+default_recentchangesdtml = loadDtmlMethod('recentchangesdtml')
+default_searchwiki = loadPageTemplate('searchwiki')
+default_searchwikidtml = loadDtmlMethod('searchwikidtml')
+default_useroptions = loadPageTemplate('useroptions')
+default_useroptionsdtml = loadDtmlMethod('useroptionsdtml')
+default_issuetracker = loadPageTemplate('issuetracker')
+default_issuetrackerdtml = loadDtmlMethod('issuetrackerdtml')
+default_filterissues = loadPageTemplate('filterissues')
+default_filterissuesdtml = loadDtmlMethod('filterissuesdtml')
+
+DEFAULT_TEMPLATES = {
+    'badtemplate'        : loadPageTemplate('badtemplate'),
+    'wikipage'           : loadPageTemplate('wikipage'),
+    'wikipage_macros'    : loadPageTemplate('wikipage_macros'),
+    'backlinks'          : loadPageTemplate('backlinks'),
+    'contentspage'       : loadPageTemplate('contentspage'),
+    'diffform'           : loadPageTemplate('diffform'),
+    'editform'           : loadPageTemplate('editform'),
+    'subscribeform'      : loadPageTemplate('subscribeform'),
+    'recentchanges'      : loadPageTemplate('recentchanges'),
+    'searchwiki'         : loadPageTemplate('searchwiki'),
+    'searchwikidtml'     : loadDtmlMethod('searchwikidtml'),
+    'useroptions'        : loadPageTemplate('useroptions'),
+    'useroptionsdtml'    : loadDtmlMethod('useroptionsdtml'),
+    'issuetracker'       : loadPageTemplate('issuetracker'),
+    'issuetrackerdtml'   : loadDtmlMethod('issuetrackerdtml'),
+    'filterissues'       : loadPageTemplate('filterissues'),
+    'filterissuesdtml'   : loadDtmlMethod('filterissuesdtml'),
+    'stylesheet'         : loadStylesheetFile('stylesheet.css'),
+    }
+
+
+class UIUtils:
     """ 
-    A CMF/non-CMF skinning mechanism and UI-related methods for ZWikiPage.
-
-    This provides a small number of well-known methods - editform,
-    backlinks etc. - which render an appropriate view based on templates
-    (Page Templates or DTML Methods) in the CMF skin, in the wiki folder
-    or above, or built-in defaults.
-
-    To facilitate troubleshooting and bug reporting, template errors are
-    caught and a traceback and some attempt at a useful error message are
-    displayed (this sometimes hinders debugging though).
-
-    XXX cleanup ongoing
-    XXX simplify/update/improve error messages
+    This mixin provides a generic CMF/non-CMF skin mechanism and UI utilities.
     """
     security = ClassSecurityInfo()
 
-    # XXX kludge: wikipage usually gets called by addStandardLayout, not
-    # directly; but provide this so you can configure it as the "view"
-    # method in portal_types -> Wiki Page -> actions to force the use of
-    # Zwiki's non-CMF skin inside CMF
-    security.declareProtected(Permissions.View, 'wikipage')
-    def wikipage(self, dummy=None, REQUEST=None, RESPONSE=None):
+    def getSkinTemplate(self,name):
         """
-        Display the default or custom page view.
-                    
-        May be overridden by a page template or DTML method of the same name.
+        Get the named skin template from the ZODB or filesystem.
+
+        This will find either a Page Template or DTML Method, preferring
+        the former, and return it wrapped in this page's context.  If the
+        named template is not found in the ZODB we'll load it from
+        ZWiki/skins/default (or rather, we'll return the pre-loaded object).
         """
-        form = getattr(self.folder(),'wikipage',default_wikipage)
-        if isPageTemplate(form):
-            return form.__of__(self)(self,REQUEST,body=self.render()) #XXX temporary kludge!
-        elif isDtmlMethod(form):
-            return form(self,REQUEST)
-        else:
-            return "<html><body>This wiki's custom wikipage template is not a Page Template or DTML Method. Suggestion: remove it.</body></html>"
-           
+        form = getattr(self.folder(),
+                       name,
+                       DEFAULT_TEMPLATES.get(name,
+                                             DEFAULT_TEMPLATES['badtemplate']))
+        if not (isPageTemplate(form) or isDtmlMethod(form)): form = badtemplate
+        return form.__of__(self)
+
     security.declareProtected(Permissions.View, 'addSkinTo')
     def addSkinTo(self,body,**kw):
         """
@@ -208,6 +234,53 @@ class UI:
         else:
             return default_wikipage.__of__(self)(self,REQUEST,body=body,**kw)
 
+    def displayMode(self,REQUEST=None):
+        """
+        Give the user's current display mode - full, simple, or minimal.
+
+        This affects the default skin's appearance; it's not used in CMF/Plone.
+        This is either
+        - user's zwiki_displaymode cookie, set by clicking full/simple/minimal
+        - or the folder's default_displaymode string property (can acquire)
+        - or DEFAULT_DISPLAYMODE
+        """
+        if not REQUEST: REQUEST = self.REQUEST
+        return REQUEST.get('zwiki_displaymode',self.defaultDisplayMode())
+
+    def defaultDisplayMode(self,REQUEST=None):
+        """
+        Give the default display mode for this wiki. See displayMode.
+        """
+        return getattr(self.folder(),'default_displaymode',DEFAULT_DISPLAYMODE)
+
+
+class GeneralForms:
+    """ 
+    This mixin provides most of the main UI form/view methods. 
+
+    Perhaps these will move to their specific modules.
+    """
+    security = ClassSecurityInfo()
+
+    # XXX kludge: wikipage usually gets called by addStandardLayout, not
+    # directly; but provide this so you can configure it as the "view"
+    # method in portal_types -> Wiki Page -> actions to force the use of
+    # Zwiki's non-CMF skin inside CMF
+    security.declareProtected(Permissions.View, 'wikipage')
+    def wikipage(self, dummy=None, REQUEST=None, RESPONSE=None):
+        """
+        Display the default or custom page view.
+                    
+        May be overridden by a page template or DTML method of the same name.
+        """
+        form = getattr(self.folder(),'wikipage',default_wikipage)
+        if isPageTemplate(form):
+            return form.__of__(self)(self,REQUEST,body=self.render()) #XXX temporary kludge!
+        elif isDtmlMethod(form):
+            return form(self,REQUEST)
+        else:
+            return "<html><body>This wiki's custom wikipage template is not a Page Template or DTML Method. Suggestion: remove it.</body></html>"
+           
     security.declareProtected(Permissions.View, 'wikipage_macros')
     def wikipage_macros(self, REQUEST=None):
         """
@@ -614,24 +687,8 @@ class UI:
         p    previous edit
         """
     
-    def displayMode(self,REQUEST=None):
-        """
-        Give the user's current display mode - full, simple, or minimal.
-
-        This affects the default skin's appearance; it's not used in CMF/Plone.
-        This is either
-        - user's zwiki_displaymode cookie, set by clicking full/simple/minimal
-        - or the folder's default_displaymode string property (can acquire)
-        - or DEFAULT_DISPLAYMODE
-        """
-        if not REQUEST: REQUEST = self.REQUEST
-        return REQUEST.get('zwiki_displaymode',self.defaultDisplayMode())
-
-    def defaultDisplayMode(self,REQUEST=None):
-        """
-        Give the default display mode for this wiki. See displayMode.
-        """
-        return getattr(self.folder(),'default_displaymode',
-                       DEFAULT_DISPLAYMODE)
+class UI(UIUtils, GeneralForms): pass
 
 Globals.InitializeClass(UI)
+
+
