@@ -1,7 +1,24 @@
 # Zwiki/zwiki.org makefile
 
+# RELEASE SCRIPT (darcs)
+# simple single-threaded release process
+# ----------------------------------------
+# check all recorded, make summary
+# make test
+# check tracker
+# check docs (showAccessKeys,README,dtml/*,content/*, zwiki.org HelpPage,QuickReference)
+# update CHANGES.txt from darcs changes, add release date/version
+# update version.txt, make version
+# record all
+# make test
+# make releasetag
+# make push
+# make release
+# make rpush
+# update FrontPage,KnownIssues,OldKnownIssues,ReleaseNotes,discussion,#zwiki
+# final: send mail to zope-announce@zope.org, zwiki@zwiki.org
 
-# RELEASE SCRIPT (CVS)
+# OLD RELEASE SCRIPT (CVS)
 # ----------------------------------------
 # IN TRUNK   # IN BRANCH
 # check all in, check tests, check tracker, check docs
@@ -26,23 +43,6 @@
 # update FrontPage,KnownIssues,OldKnownIssues,ReleaseNotes,GeneralDiscussion,#zwiki
 # FINAL RELEASE:
 # mail announcement to zope-announce@zope.org, zwiki@zwiki.org
-
-# NEW RELEASE SCRIPT (darcs)
-# simple no-branch version:
-# ----------------------------------------
-# record all
-# check tests
-# check tracker
-# check docs (showAccessKeys,README,dtml/*,content/*, zwiki.org HelpPage,QuickReference)
-# update CHANGES.txt from darcs changes, add release date/version
-# update version.txt, make version
-# record all
-# check tests
-# tag release
-# build tarball
-# push all
-# update FrontPage,KnownIssues,OldKnownIssues,ReleaseNotes,discussion,#zwiki
-# final: send mail to zope-announce@zope.org, zwiki@zwiki.org
 
 HOST=zwiki.org
 LHOST=localhost:9673
@@ -218,16 +218,18 @@ mergeuntag:
 	#@echo do: cvs tag -d -r HEAD merge-$(VERSION)+1
 
 releasetag:
-	cvs tag -cF release-$(VERSION)
+	darcs tag -m release-$(VERSION)
 
 releaseuntag:
 	cvs tag -d release-$(VERSION)
 
-release: clean releasetag
+release: clean #releasetag
 	rm -f $(HOME)/zwiki/releases/$(FILE)
-	cvs export -r release-$(VERSION) -d $(PRODUCT) $(CVSMODULE)
-	find $(PRODUCT) -name Makefile -o -name TAGS -o -name ChangeLog \
-	  |xargs rm -f
+	#darcs get -t release-$(VERSION) --repo-name=$(PRODUCT) --partial http://zwiki.org/repos/zwiki
+	#rm -rf $(PRODUCT)/{Makefile,_darcs}
+	#hoho
+	cp -r _darcs/current $(PRODUCT)
+	rm $(PRODUCT)/Makefile
 	tar -czvf $(HOME)/zwiki/releases/$(FILE) $(PRODUCT)
 	rm -rf $(PRODUCT)
 

@@ -356,10 +356,11 @@ in reply to: <span tal:replace="request/in_reply_to"></span>
 </small></em>
 </td>
 <td align="right" valign="top" nowrap="nowrap"> 
-<input type="hidden" name="in_reply_to" value="" tal:attributes="value request/in_reply_to|nothing" />
+<input type="hidden" name="in_reply_to"
+       tal:attributes="value request/in_reply_to|nothing" />
 <input type="hidden" name="use_heading" value="1" />
 <span tal:condition="python:here.isMailoutEnabled()"
-      tal:content="python:'('+str(here.subscriberCount() + \
+      tal:content="python:'('+str(here.subscriberCount() +
                           here.wikiSubscriberCount()) + ' subscribers)'">
 <small>N subscribers</small>
 </span>
