@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, string
 if __name__ == '__main__': execfile(os.path.join(sys.path[0], 'framework.py'))
 from Testing import ZopeTestCase
 from support import *
@@ -16,6 +16,13 @@ class CommentsTests(ZopeTestCase.ZopeTestCase):
         self.assertEqual(p.commentCount(),1)
         p.comment('test')
         self.assertEqual(p.commentCount(),2)
+
+    def test_unicodeInComments(self):
+        p = self.page
+        u = unicode(string.uppercase,'utf8')
+        p.comment(text=u)
+        self.assertEqual(p.commentCount(),1)
+        self.assertEqual(p.comments()[-1].get_payload(),u)
 
 if __name__ == '__main__':
     framework(descriptions=1, verbosity=2)
