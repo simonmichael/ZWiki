@@ -105,7 +105,7 @@ class CatalogAwareness:
             if log:
                 BLATHER('indexing',self.url(),'in',self.catalog().getId())
             try:
-                self.catalog().catalog_object(self,self.url(),idxs,update_metadata=1)
+                self.catalog().catalog_object(self,self.url(),idxs)
             except:
                 BLATHER('failed to index',self.id(),'\n',formattedTraceback())
 
