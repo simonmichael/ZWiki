@@ -1,25 +1,25 @@
 <HTML>  
 <HEAD>  
-<TITLE><dtml-var "gettext('Add a ZWiki web')"></TITLE>
+<TITLE><dtml-translate domain=zwiki>Add a ZWiki web</dtml-translate></TITLE>
 </HEAD>  
 <BODY BGCOLOR="#FFFFFF" LINK="#000099" VLINK="#555555">  
-<H2><dtml-var "gettext('Add a ZWiki web')"></H2>
+<H2><dtml-translate domain=zwiki>Add a ZWiki web</dtml-translate></H2>
 <FORM ACTION="manage_addZWikiWeb" METHOD="POST" ENCTYPE="multipart/form-data">
 <TABLE CELLSPACING="2">
 <TR> 
-<TH ALIGN="LEFT" VALIGN="middle"><dtml-var "gettext('Id')"></TH>
+<TH ALIGN="LEFT" VALIGN="middle"><dtml-translate domain=zwiki>Id</dtml-translate></TH>
 <TD ALIGN="LEFT" VALIGN="middle">
 <INPUT TYPE="TEXT" NAME="new_id" SIZE="30">
 </TD>
 </TR>
 <TR> 
-<TH ALIGN="LEFT" VALIGN="middle"><dtml-var "gettext('Title')"></TH>
+<TH ALIGN="LEFT" VALIGN="middle"><dtml-translate domain=zwiki>Title</dtml-translate></TH>
 <TD ALIGN="LEFT" VALIGN="middle">
 <INPUT TYPE="TEXT" NAME="new_title" SIZE="30">
 </TD>
 </TR>
 <TR> 
-<TH ALIGN="LEFT" VALIGN="top"><dtml-var "gettext('Type')"></TH>
+<TH ALIGN="LEFT" VALIGN="top"><dtml-translate domain=zwiki>Type</dtml-translate></TH>
 <TD ALIGN="LEFT" VALIGN="middle">
 
 <table border="0" cellspacing=3>
@@ -50,8 +50,8 @@
 <TR>
 <TD></TD>
 <TD><BR>
-<b><INPUT TYPE="SUBMIT" VALUE="<dtml-var "gettext('Create wiki')">" style="font-weight:strong"></b>
-<INPUT TYPE="checkbox" CHECKED name="enter"> <dtml-var "gettext('(and enter)')">
+<b><INPUT TYPE="SUBMIT" VALUE="<dtml-translate domain=zwiki>Create wiki</dtml-translate>" style="font-weight:strong"></b>
+<INPUT TYPE="checkbox" CHECKED name="enter" /> <dtml-translate domain=zwiki>(and enter)</dtml-translate>
 </TD>
 </TR>
 </TABLE>
