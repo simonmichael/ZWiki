@@ -484,6 +484,8 @@ class ZWikiPage(
     def spacedNameFrom(self,pagename):
         """
         Return pagename with spaces inserted if it's a WikiName, or unchanged.
+
+        Tries to be conformant with the wikiname regexp wrt. i18n, etc.
         """
         #spaced = pagename[0]
         #for c in pagename[1:]:
@@ -736,7 +738,6 @@ class ZWikiPage(
         Return this page's name, with spaces inserted if it's a WikiName.
 
         We use this for eg the html title tag to improve search engine relevance.
-        Attempts to use the same characters and patterns as the wikiname regexp.
         """
         return self.spacedNameFrom(self.pageName())
     
