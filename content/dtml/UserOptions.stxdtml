@@ -9,7 +9,7 @@
 <dtml-with REQUEST>
 <dtml-let 
  RESPONSE="REQUEST.RESPONSE"
- cookiepath="wikiUrl() # SERVER_URL or '/' for fewer cookies"
+ cookiepath="'/' #wikiUrl() #928"
  cookieduration="(ZopeTime() + 365).rfc822()"
  cookielist="[
    'zwiki_username',
