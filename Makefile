@@ -3,18 +3,14 @@
 
 # RELEASE SCRIPT (CVS)
 # ----------------------------------------
-# IN TRUNK
-             # IN BRANCH
-
+# IN TRUNK   # IN BRANCH
 # check all in, check tests, check tracker, check docs
 #  (README,dtml/*,content/*,zwiki.org/HelpPage,QuickReference,showAccessKeys)
 # make changelog, update CHANGES.txt and commit
-
 # RC1 ONLY:
 #  remove cvs from version.txt
 #  make releasebranch
 #  (later) bump version.txt to 0-WW-0cvs, make version
-
              # RC2 ONWARDS:
              #  make sure all branch fixes checked in and merged to trunk, including CHANGES.txt
              #  selectively tag and merge trunk changes, including CHANGES.txt: 
@@ -26,18 +22,27 @@
              # (check tests, check tracker)
              # cvs commit -m 'merge fixes to release-0-VV-branch'
              # make release
-
 # make push
 # update FrontPage,KnownIssues,OldKnownIssues,ReleaseNotes,GeneralDiscussion,#zwiki
-
 # FINAL RELEASE:
 # mail announcement to zope-announce@zope.org, zwiki@zwiki.org
 
-
 # NEW RELEASE SCRIPT (darcs)
+# simple no-branch version:
 # ----------------------------------------
-
-
+# record all
+# check tests
+# check tracker
+# check docs (showAccessKeys,README,dtml/*,content/*, zwiki.org HelpPage,QuickReference)
+# update CHANGES.txt from darcs changes, add release date/version
+# update version.txt, make version
+# record all
+# check tests
+# tag release
+# build tarball
+# push all
+# update FrontPage,KnownIssues,OldKnownIssues,ReleaseNotes,discussion,#zwiki
+# final: send mail to zope-announce@zope.org, zwiki@zwiki.org
 
 HOST=zwiki.org
 LHOST=localhost:9673
