@@ -78,20 +78,16 @@ class TrackerTests(ZopeTestCase.ZopeTestCase):
         self.assertEqual(self.p.issueCount(),3)
 
     def test_short_issue_links(self):
+        # test the full two-step linking procedure
+        link = lambda t: self.p.renderMarkedLinksIn(self.p.markLinksIn(t))
         self.p.folder().short_issue_names = 1
         self.p.createNextIssue('b')
-        self.assertEquals(self.p.renderLinksIn('[#2]')[-6:],
-                          '#2</a>')
+        self.assertEquals(link('[#2]')[-6:],  '#2</a>')
         self.p.createIssue('#987 test')
-        self.assertEquals(self.p.renderLinksIn('[#9]')[-6:],
-                          '>?</a>')
-        self.assertEquals(self.p.renderLinksIn('[#987]')[-8:],
-                          '#987</a>')
-        self.assertEquals(self.p.renderLinksIn('#9')[-6:],
-                          '>?</a>')
-        self.assertEquals(self.p.renderLinksIn('#987')[-8:],
-                          '#987</a>')
-        
+        self.assertEquals(link('[#9]')[-6:],  '>?</a>')
+        self.assertEquals(link('[#987]')[-8:],'#987</a>')
+        self.assertEquals(link('#9'),         '#9')
+        self.assertEquals(link('#987')[-8:],  '#987</a>')
 
 if __name__ == '__main__':
     framework(descriptions=1, verbosity=2)

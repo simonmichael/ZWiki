@@ -397,6 +397,7 @@ class ZWikiPage(
 
     def hasAllowedLinkSyntax(self,link):
         if (re.match(url,link) or
+            re.match(hashnumberexpr,link) or
             (self.wikinameLinksAllowed() and
              re.match(wikiname,link)) or
             (self.bracketLinksAllowed() and
@@ -454,7 +455,7 @@ class ZWikiPage(
 
     def renderLinksIn(self,text):
         """
-        Find and render all links in text.
+        Find and render all links in one step, without marking.
         """
         t = self.applyWikiLinkLineEscapesIn(text)
         t = re.sub(anywikilinkexpr,

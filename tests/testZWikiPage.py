@@ -117,6 +117,8 @@ class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
         self.assert_(not p.isWikiName('Wiki2Name'))
 
     def test_hasAllowedLinkSyntax(self):
+        self.assertEquals(self.p.hasAllowedLinkSyntax('http://foo'),1)
+        self.assertEquals(self.p.hasAllowedLinkSyntax('#42'),1)
         self.assertEquals(self.p.hasAllowedLinkSyntax('WikiName'),1)
         self.p.use_wikiname_links = 0
         self.assertEquals(self.p.hasAllowedLinkSyntax('WikiName'),0)
