@@ -112,23 +112,6 @@ class CommentsSupport:
 
     # utilities
 
-    def makeMessageFrom(self,From,time,message_id,
-                        subject='',in_reply_to=None,body=''):
-        """
-        Create a nice RFC2822-format message to store in the page.
-        """
-        msg = """\
-%s
-From: %s
-Date: %s
-Subject: %s
-Message-ID: %s
-""" % (self.fromLineFrom(From,time)[:-1],From,time,subject,message_id)
-        if in_reply_to:
-            msg += 'In-reply-to: %s\n' % in_reply_to
-        msg += '\n'+body
-        return msg
-
     def fromLineFrom(self,email,date):
         """
         Generate a conformant mbox From line from email and date strings.
