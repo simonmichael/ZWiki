@@ -79,7 +79,7 @@ po:
 	cd i18n; \
 	for L in $(LANGUAGES); do \
 	 msgmerge -U zwiki-$$L.po zwiki.pot; \
-	 msgmerge -U plone-$$L.po plone.pot; \
+	 msgmerge -U zwiki-plone-$$L.po zwiki-plone.pot; \
 	 done
 
 mo:
@@ -87,7 +87,7 @@ mo:
 	for L in $(LANGUAGES); do \
 	 echo $$L; \
 	 msgfmt --statistics zwiki-$$L.po -o zwiki-$$L.mo; \
-	 msgfmt --statistics plone-$$L.po -o plone-$$L.mo; \
+	 msgfmt --statistics zwiki-plone-$$L.po -o zwiki-plone-$$L.mo; \
 	 done
 
 ## testing
