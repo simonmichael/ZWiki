@@ -104,8 +104,7 @@ mo:
 
 # all tests, test.py
 test:
-	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope1 \
-	  python /zope/test.py --libdir .
+	python /zope/test.py -vv -C /zope1/etc/zope.conf --libdir .
 
 # all tests, gui
 gtest:
