@@ -307,25 +307,38 @@ class ZWikiPage(
         else: return ''
     
     security.declareProtected(Permissions.View, 'supportsStx')
-    def supportsStx(self): return self.pageType().supportsStx()
+    def supportsStx(self): 
+        """supportsStx""" 
+        return self.pageType().supportsStx()
 
     security.declareProtected(Permissions.View, 'supportsRst')
-    def supportsRst(self): return self.pageType().supportsRst()
+    def supportsRst(self): 
+        """supportsRst""" 
+        return self.pageType().supportsRst()
 
     security.declareProtected(Permissions.View, 'supportsWwml')
-    def supportsWwml(self): return self.pageType().supportsWwml()
+    def supportsWwml(self): 
+        """supportsWwml""" 
+        return self.pageType().supportsWwml()
 
     security.declareProtected(Permissions.View, 'supportsWikiLinks')
-    def supportsWikiLinks(self): return self.pageType().supportsWikiLinks()
+    def supportsWikiLinks(self): 
+        """supportsWikiLinks"""
+        return self.pageType().supportsWikiLinks()
 
     security.declareProtected(Permissions.View, 'supportsHtml')
-    def supportsHtml(self): return self.pageType().supportsHtml()
+    def supportsHtml(self): 
+        """supportsHtml"""
+        return self.pageType().supportsHtml()
 
     security.declareProtected(Permissions.View, 'supportsDtml')
-    def supportsDtml(self): return self.pageType().supportsDtml()
+    def supportsDtml(self): 
+        """supportsDtml"""
+        return self.pageType().supportsDtml()
 
     security.declareProtected(Permissions.View, 'hasDynamicContent')
     def hasDynamicContent(self):
+        """hasDynamicContent"""
         return (self.supportsDtml() and
                 re.search(r'(?i)(<dtml|&dtml)',self.read()) is not None)
 
@@ -691,6 +704,9 @@ class ZWikiPage(
     
     security.declarePublic('Title')
     def Title(self):
+        """
+        Title
+        """
         return self.pageName()
 
     security.declareProtected(Permissions.View, 'canonicalIdFrom')
@@ -876,27 +892,45 @@ class ZWikiPage(
 
     security.declareProtected(Permissions.View, 'pageIdsStartingWith')
     def pageIdsStartingWith(self,text):
+        """
+        pageIdsStartingWith
+        """
         return filter(lambda x:x[:len(text)]==text,self.pageIds())
 
     security.declareProtected(Permissions.View, 'pageNamesStartingWith')
     def pageNamesStartingWith(self,text):
+        """
+        pageNamesStartingWith
+        """
         return filter(lambda x:x[:len(text)]==text,self.pageNames())
 
     security.declareProtected(Permissions.View, 'firstPageIdStartingWith')
     def firstPageIdStartingWith(self,text):
+        """
+        firstPageIdStartingWith
+        """
         return (self.pageIdsStartingWith(text) or [None])[0]
 
     security.declareProtected(Permissions.View, 'firstPageNameStartingWith')
     def firstPageNameStartingWith(self,text):
+        """
+        firstPageNameStartingWith
+        """
         return (self.pageNamesStartingWith(text) or [None])[0]
 
     security.declareProtected(Permissions.View, 'pageIdsMatching')
     def pageIdsMatching(self,text):
+        """
+        pageIdsMatching
+        """
         text = text.lower()
         return filter(lambda x:x.lower().find(text)!=-1,self.pageIds())
 
     security.declareProtected(Permissions.View, 'pageNamesMatching')
     def pageNamesMatching(self,text):
+        """
+        pageNamesMatching
+        """
         text = text.lower()
         return filter(lambda x:x.lower().find(text)!=-1,self.pageNames())
 
@@ -916,6 +950,15 @@ class ZWikiPage(
         
     security.declareProtected(Permissions.View, 'defaultPageId')
     def defaultPageId(self):
+        """
+        Return this wiki's default page ID.
+	
+	That is the page named in the default_page property,
+	or FrontPage,
+        or the first page object in the folder, 
+	or None.
+        """
+
         p = self.defaultPage()
         return (p and p.id()) or None
 
