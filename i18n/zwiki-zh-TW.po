@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ZWiki-0-32-0rc1\n"
+"Project-Id-Version: ZWiki-0-35-0\n"
 "POT-Creation-Date: Sun Oct 24 21:50:56 2004\n"
-"PO-Revision-Date: 2004-07-06 00:02+0800\n"
+"PO-Revision-Date: 2004-10-27 11:04+0800\n"
 "Last-Translator: T.C. Chou <tcchou-at-tcchou-dot-org>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr "(目錄 -> 管理屬性)"
 
 #: i/Editing.py:107 i/skins/standard/wikipage_macros.pt:459
 msgid "new"
-msgstr ""
+msgstr "新的"
 
 #: i/Editing.py:292
 msgid ""
@@ -214,7 +214,7 @@ msgstr ""
 "        q    檢視頁面的源碼 (快速檢視)\n"
 "             清除並且重新產生這一頁面的快取\n"
 "             跳到子主題\n"
-"             跳到建議 (訊息)\n"
+"             跳到回應 (訊息)\n"
 "             如果可能的話, 會跳到這一頁面作者的首頁\n"
 "        n    下一頁面\n"
 "        p    上一頁面\n"
@@ -306,43 +306,43 @@ msgstr "作者 %(editor)s"
 
 #: i/pagetypes/common.py:224
 msgid "comments"
-msgstr "建議"
+msgstr "回應"
 
 #: i/pagetypes/moin_support.py:1922
 msgid "Expected \"=\" to follow \"%(token)s\""
-msgstr ""
+msgstr "預期在 \"%(token)s\" 之後是 \"=\""
 
 #: i/pagetypes/moin_support.py:1931
 msgid "Expected a value for key \"%(token)s\""
-msgstr ""
+msgstr "預期鍵值 \"%(token)s\" 要有對應資料"
 
 #: i/pagetypes/moin_support.py:237
 msgid "Create new drawing \"%(filename)s\""
-msgstr ""
+msgstr "建立新圖片 \"%(filename)s\""
 
 #: i/pagetypes/moin_support.py:239
 msgid "Upload new attachment \"%(filename)s\""
-msgstr ""
+msgstr "上傳新附件 \"%(filename)s\""
 
 #: i/pagetypes/moin_support.py:270 i/pagetypes/moin_support.py:280
 msgid "Edit drawing %(filename)s"
-msgstr ""
+msgstr "修改圖片 \"%(filename)s\""
 
 #: i/pagetypes/moin_support.py:665
 msgid "Expected \"%(wanted)s\" after \"%(key)s\", got \"%(token)s\""
-msgstr ""
+msgstr "期待在 \"%(key)s\" 之後的 \"%(wanted)s\" 能夠取得 \"%(token)s\""
 
 #: i/pagetypes/moin_support.py:671
 msgid "Expected an integer \"%(key)s\" before \"%(token)s\""
-msgstr ""
+msgstr "期待在 \"%(token)s\" 之前的 \"%(key)s\" 為整數值"
 
 #: i/pagetypes/moin_support.py:680 i/pagetypes/moin_support.py:689
 msgid "Expected an integer \"%(arg)s\" after \"%(key)s\""
-msgstr ""
+msgstr "期待在 \"%(key)s\" 之後的 \"%(arg)s\" 為整數值"
 
 #: i/pagetypes/moin_support.py:709
 msgid "Expected a color value \"%(arg)s\" after \"%(key)s\""
-msgstr ""
+msgstr "期待在 \"%(key)s\" 之後的 \"%(args)s\" 為色彩指定值"
 
 #: i/pagetypes/rst.py:58
 msgid "reply"
@@ -392,7 +392,7 @@ msgstr "提出者"
 
 #: i/skins/dtmlmessages.pt:155
 msgid "Details & comments"
-msgstr "細節與建議"
+msgstr "細節與回應"
 
 #: i/skins/dtmlmessages.pt:16
 msgid "Add and Edit"
@@ -400,44 +400,38 @@ msgstr "新增並編輯"
 
 #: i/skins/dtmlmessages.pt:17 i/skins/dtmlmessages.pt:83
 #: i/skins/dtmlmessages.pt:156
-#, fuzzy
 msgid "Set your preferences for this wiki:"
-msgstr "設定在下面您個人的站台相關偏好."
+msgstr "設定在這個站台個人相關偏好."
 
 # Default: "Page name"
 #: i/skins/dtmlmessages.pt:18 i/skins/dtmlmessages.pt:84
 #: i/skins/dtmlmessages.pt:157
-#, fuzzy
 msgid "User name:"
-msgstr "使用者名稱"
+msgstr "使用者名稱:"
 
 #: i/skins/dtmlmessages.pt:19 i/skins/dtmlmessages.pt:85
 #: i/skins/dtmlmessages.pt:158
-#, fuzzy
 msgid "(identifies your edits)"
-msgstr "您編輯文章時的名稱"
+msgstr "(您編輯文章時的名稱)"
 
 #: i/skins/dtmlmessages.pt:2 i/skins/dtmlmessages.pt:3
 msgid "Add a ZWiki web"
-msgstr "新增一個ZWiki網站"
+msgstr "新增一ZWiki網站"
 
 #: i/skins/dtmlmessages.pt:20 i/skins/dtmlmessages.pt:86
 #: i/skins/dtmlmessages.pt:159
-#, fuzzy
 msgid "Email address:"
-msgstr "電子郵件"
+msgstr "電子郵件:"
 
 #: i/skins/dtmlmessages.pt:21 i/skins/dtmlmessages.pt:87
 #: i/skins/dtmlmessages.pt:160
-#, fuzzy
 msgid "(allows mail subscription)"
-msgstr "郵件訂閱"
+msgstr "(得以訂閱郵件)"
 
 #: i/skins/dtmlmessages.pt:22 i/skins/dtmlmessages.pt:88
 #: i/skins/dtmlmessages.pt:161
-#, fuzzy
 msgid "Your time zone:"
-msgstr "時區"
+msgstr "您所在時區:"
 
 #: i/skins/dtmlmessages.pt:23 i/skins/dtmlmessages.pt:89
 #: i/skins/dtmlmessages.pt:162
@@ -446,14 +440,13 @@ msgstr "(選擇接近的時間)"
 
 #: i/skins/dtmlmessages.pt:24 i/skins/dtmlmessages.pt:90
 #: i/skins/dtmlmessages.pt:163
-#, fuzzy
 msgid "Edit form height:"
-msgstr "修改欄位"
+msgstr "修改欄位高度:"
 
 #: i/skins/dtmlmessages.pt:25 i/skins/dtmlmessages.pt:91
 #: i/skins/dtmlmessages.pt:164
 msgid "(adjusts form size)"
-msgstr ""
+msgstr "(調整表格大小)"
 
 #: i/skins/dtmlmessages.pt:26 i/skins/dtmlmessages.pt:92
 #: i/skins/dtmlmessages.pt:165
@@ -751,16 +744,14 @@ msgstr "不同於"
 
 # Default: "Note for the page history (optional)"
 #: i/skins/standard/diffform.pt:44
-#, fuzzy
 msgid "log_note"
-msgstr "頁面歷史的註釋說明(選擇性項目)"
+msgstr "歷史註記:"
 
 #: i/skins/standard/diffform.pt:58
 msgid "Revert this change and all successive changes"
-msgstr ""
+msgstr "回溯到這個版本及相關變更"
 
 #: i/skins/standard/diffform.pt:61
-#, fuzzy
 msgid "Return to page"
 msgstr "回到頁面"
 
@@ -998,8 +989,7 @@ msgstr "回覆"
 
 #: i/skins/standard/wikipage_macros.pt:407
 msgid "to comment (and cc any subscribers) enter text here and click add"
-msgstr ""
-"想要建議 (並且 cc 給所有訂閱者) 請在這裡輸入文字然後點選 新增(add) 按鈕"
+msgstr "想寫回應 (並且 cc 給所有訂閱者) 請在這裡輸入文字然後點選 新增(add) 按鈕"
 
 #: i/skins/standard/wikipage_macros.pt:430
 msgid "${nb} subscribers"
@@ -1010,35 +1000,30 @@ msgid "1 subscriber"
 msgstr "1 位訂閱者"
 
 #: i/skins/standard/wikipage_macros.pt:460
-#, fuzzy
 msgid "parent,"
-msgstr "變更父層"
+msgstr "父層, "
 
 # Default: "Page name"
 #: i/skins/standard/wikipage_macros.pt:463
-#, fuzzy
 msgid "name,"
-msgstr "名稱"
+msgstr "名稱, "
 
 #: i/skins/standard/wikipage_macros.pt:466
-#, fuzzy
 msgid "replacement,"
-msgstr "變更父層"
+msgstr "刪除, "
 
 #: i/skins/standard/wikipage_macros.pt:469
-#, fuzzy
 msgid "subtopic"
-msgstr "子主題上層為:"
+msgstr "子頁面"
 
 #: i/skins/standard/wikipage_macros.pt:473
 msgid "enter a page name and click buttons to the right (mouse over for help)"
-msgstr ""
+msgstr "輸入一頁面名稱並點選右邊按鈕(游標停留有相關訊息)"
 
 #: i/skins/standard/wikipage_macros.pt:479
 #: i/skins/standard/wikipage_macros.pt:484
 #: i/skins/standard/wikipage_macros.pt:489
 #: i/skins/standard/wikipage_macros.pt:494
-#, fuzzy
 msgid "title"
 msgstr "標題"
 
@@ -1051,9 +1036,11 @@ msgid "Here are the pages which link to"
 msgstr "有相關連結的頁面"
 
 #: i/skins/zwiki_plone/backlinks.pt:30
-#, fuzzy
 msgid "box_canreparent"
-msgstr "變更父層"
+msgstr ""
+"您可設定此頁的<em>父層</em>, 也就是安排主題的階層結構.\n"
+"點選這個項目, 或輸入新的頁面名稱並點選變更父層. 一般而\n"
+"言, 單一個父層就足夠了."
 
 #: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:100
 msgid "Other parent"
@@ -1171,14 +1158,12 @@ msgid "Save"
 msgstr "儲存"
 
 #: i/skins/zwiki_plone/editform.pt:273 i/skins/standard/editform.pt:200
-#, fuzzy
 msgid "preview this edit"
-msgstr "<< 上一版"
+msgstr "前一版"
 
 #: i/skins/zwiki_plone/editform.pt:273 i/skins/standard/editform.pt:200
-#, fuzzy
 msgid "Preview"
-msgstr "檢視"
+msgstr "預覽"
 
 #: i/skins/zwiki_plone/editform.pt:282 i/skins/standard/editform.pt:205
 msgid "Cancel"
@@ -1191,7 +1176,7 @@ msgstr "取消這頁的編輯, 回到原先頁面"
 #: i/skins/zwiki_plone/editform.pt:42 i/skins/zwiki_plone/editform.pt:54
 #: i/skins/standard/editform.pt:192
 msgid "XXX"
-msgstr ""
+msgstr "XXX"
 
 # Default: ""
 # "Edit\n"
@@ -1299,7 +1284,7 @@ msgstr "Wiki訂閱者"
 msgid "subscribe_desc"
 msgstr ""
 "您可以訂閱這一頁面或是整個Wiki.\n"
-"訂閱者會透過電子郵件收到一份份的使用者意見\n"
+"訂閱者會透過電子郵件收到一份份的使用者回應\n"
 "(但不是一般頁面修訂,除非網站管理者開放). \n"
 "或回到"
 
@@ -1395,13 +1380,13 @@ msgstr "標題"
 
 #: i/skins/zwiki_plone/wikipage_footer.pt:26
 msgid "enter comments here and click add; or, click edit"
-msgstr "在這裡輸入建議並且點選 新增(add) 按鈕, 或點選 修改(edit) 按鈕."
+msgstr "在這裡輸入回應並且點選 新增(add) 按鈕, 或點選 修改(edit) 按鈕."
 
 # Default: "Add a comment"
 #: i/skins/zwiki_plone/wikipage_footer.pt:40
 #: i/skins/standard/wikipage_macros.pt:438
 msgid "add-comment"
-msgstr "新增一個建議"
+msgstr "新增回應"
 
 #~ msgid "You may also click the full, simple, minimal links if provided."
 #~ msgstr "您也可以點選 完全, 簡單, 極簡 連結 (如果有的話)."
