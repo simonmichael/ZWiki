@@ -1,3 +1,79 @@
+    Summary
+
+        Spaced wikiname display, a basic MoinMoin page type, better search
+	engine indexability, i18n updates, bugfixes.
+	
+    Upgrade notes
+
+        Nothing special to do.
+	
+    Changes
+
+      General
+
+        * partial MoinMoin markup support (Chad Miller/Simon Michael)
+
+        * display wikinames with spaces when there is a true
+	'space_wikinames' folder property
+
+        * Don't change zope's current working directory (IssueNo0919, Kai
+	Hoppert/Bob McElrath)
+
+        * allow page types or a 'zwiki_content_type' property to set the
+	HTTP content-type header (Bob McElrath/Simon Michael)
+
+        * give a warning message rather than a python error for edits
+	containing banned links (Bob McElrath/Simon Michael)
+
+        * omit error-generating Structured Text tables instead of showing
+	a traceback (IssueNo0692)
+
+        * increase default summary size to 200 letters
+
+        * new methods: spacedPageName, Subject, Description
+
+      Skins and content
+
+        * provide keywords and description meta headers for better search
+	engine listings
+
+        * recent changes: make period buttons lower case
+
+        * plone: fix double doctype header (Bob McElrath)
+
+        * plone: add External Editor action for Wiki Page type (Bob McElrath)
+
+        * don't show "no subscribers" by the add comment button
+
+        * make sure page- & skin-based tracker forms are all up to date again
+
+      Mail and comments
+
+        * decode quoted printable mailins (get rid of =20's) (Bob McElrath)
+
+      Tracker
+
+      I18n
+
+        * removed the workaround to fix utf-8 encoding with PTS, as I
+	  seem to no longer need it; if your utf-8 encoding breaks, please
+	  see I18nSupport.py and report
+
+        * i18n updates (Nicolas Laurent)
+
+        * french translation updates (Nicolas Laurent)
+
+        * german translation updates (Andreas Mayer)
+
+        * new partial finnish translation (Jyrki Kuoppala)
+
+        * internationalise "new" in mailout subjects
+
+        * fix incorrect value;title syntax in page management form i18n
+	(Bob McElrath)
+
+
+
 Zwiki 0.34.0 2004/09/02
 
     Summary
