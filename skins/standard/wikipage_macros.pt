@@ -7,6 +7,7 @@
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <meta metal:define-slot="noindex" tal:omit-tag="" />
   <title metal:define-slot="title">title..</title>
+  <meta metal:define-slot="keywords" name="keywords" content="" />
   <link rel="stylesheet" type="text/css" href="" 
         tal:attributes="
         href python:here.defaultPageUrl()+'/stylesheet'

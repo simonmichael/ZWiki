@@ -12,7 +12,9 @@
       ">
 <head metal:use-macro="macros/head">
   <title metal:fill-slot="title" 
-         tal:content="string:${container/title} ${here/title_or_id}" />
+         tal:content="string:${container/title} ${here/pageName}" />
+  <meta metal:fill-slot="keywords" name="keywords" 
+        tal:attributes="content here/spacedPageName;" />
 </head>
 <body>
 
