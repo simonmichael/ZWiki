@@ -25,6 +25,7 @@ class CatalogAwareness:
         {'id':'NOT_CATALOGED', 'type': 'boolean', 'mode': 'w'},
         )
 
+    security.declareProtected(Permissions.View, 'isCatalogable')
     def isCatalogable(self):
         return not getattr(self, 'NOT_CATALOGED', 0)
 
@@ -50,18 +51,17 @@ class CatalogAwareness:
         else:
             return getattr(folder,self.SITE_CATALOG,None)
 
-    security.declareProtected('Manage properties', 'hasCatalog')
+    security.declareProtected(Permissions.View, 'hasCatalog')
     def hasCatalog(self):
         """Is this page keeping itself indexed in a catalog ?"""
         return self.catalog() != None
 
-    security.declareProtected(Permissions.manage_properties, 'catalogid')
+    security.declareProtected(Permissions.View, 'catalogid')
     def catalogId(self):
         """
         Give the id of the catalog used by this page, or "NONE".
 
-        Should be useful for troubleshooting. Requires manage properties
-        permission. Not the same as the old getCatalogId.
+        Should be useful for troubleshooting. 
         """
         if self.hasCatalog(): return self.catalog().getId()
         else: return 'NONE'
@@ -113,6 +113,7 @@ class CatalogAwareness:
 
     getPath = url
 
+    security.declareProtected(Permissions.View, 'index_object')
     def index_object(self,log=1):
         """A common method to allow Findables to index themselves."""
         if (self.hasCatalog() and self.isCatalogable()):
