@@ -237,10 +237,6 @@ accesskey="-"
    title="edit this page (last edited n days ago by so-and-so)"
    accesskey="e"
    >
-<span tal:condition='python: False'>
-            <!-- force i18n extraction -->
-            <span title='edit this page' i18n:attributes='title edit-page'></span>            
-</span>
 <span i18n:translate="">edit</span></a>
 <a tal:condition="python:
     user.has_permission('Zwiki: Edit pages',here) and
