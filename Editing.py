@@ -214,7 +214,7 @@ class EditingSupport:
     def edit(self, page=None, text=None, type=None, title='', 
              timeStamp=None, REQUEST=None, 
              subjectSuffix='', log='', check_conflict=1, # temp (?)
-             leaveplaceholder=1, updatebacklinks=1,
+             leaveplaceholder=LEAVE_PLACEHOLDER, updatebacklinks=1,
              subtopics=None): 
         """
         General-purpose method for editing & creating zwiki pages.
@@ -516,11 +516,9 @@ class EditingSupport:
         self.wikiOutline().replace(oldname,newname)
 
         # do this after the above so it will have correct parent
-        if newid != oldid and leaveplaceholder:
+        if (newid != oldid) and leaveplaceholder:
             # the url has changed, leave a placeholder
             try: self.create(oldid,
-                             # XXX puts unicode in the page which causes
-                             # problems for UnixMailbox later
                              _("This page was renamed to %s. You can delete this one if no longer needed.\n") % (newname),
                              sendmail=0)
             # special case: we'll end up here when first saving a
