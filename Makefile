@@ -176,7 +176,7 @@ tarball: clean
 # misc
 
 tags:
-	find $$PWD/ -name '*.py' -o  -name '*.dtml' -o -name '*.pt' \
+	find $$PWD/ -name '*.py' -o  -name '*dtml' -o -name '*.pt' \
 	  -o -name _darcs  -prune -type f \
 	  -o -name contrib -prune -type f \
 	  -o -name misc    -prune -type f \
