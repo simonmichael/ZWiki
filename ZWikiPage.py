@@ -135,8 +135,10 @@ class ZWikiPage(
     security.declareProtected(Permissions.Edit, 'manage_upload')
     security.declareProtected(Permissions.FTP, 'manage_FTPstat') # needed
     security.declareProtected(Permissions.FTP, 'manage_FTPlist') # ?
+    # perms need at least one declaration (in this file ?) to be recognized
     security.declareProtected(Permissions.ChangeType, 'dummy')
-    def dummy(self): pass # ensure all permission declarations work
+    security.declareProtected(Permissions.Reparent, 'dummy')
+    def dummy(self): pass 
     def checkPermission(self, permission, object):
         return getSecurityManager().checkPermission(permission,object)
 
