@@ -136,7 +136,7 @@
     <br />
     <span metal:use-macro="macros/commentform"></span>
   </div>
-  <div tal:condition="python:user.has_permission('Zwiki: Rate pages',here) and not minimal" 
+  <div tal:condition="python:user.has_permission('Zwiki: Rate pages',here)# and not minimal" 
        align="right">
     <br />
     <span tal:replace="structure here/ratingform"></span>
