@@ -574,7 +574,8 @@ class MailSupport:
         """
         folder = self.folder()
         mhost = None
-        while folder and not mhost:
+        # folder might not have objectValues, don't know why right now (#938)
+        while (not mhost) and folder and hasattr(folder,'objectValues'): # XXX
             mhosts = folder.objectValues(spec='Mail Host')
             if mhosts: mhost = mhosts[0]
             folder = getattr(folder,'aq_parent',None)
