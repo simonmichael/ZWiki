@@ -167,10 +167,10 @@ class Parser:
             else:
                 text = url
                 url = ""
-        elif config.allow_subpages and url[0] == wikiutil.CHILD_PREFIX:
+        elif 0: #config.allow_subpages and url[0] == wikiutil.CHILD_PREFIX:
             # fancy link to subpage [wiki:/SubPage text]
             return self._word_repl(url, text)
-        elif Page(self.request, url).exists():
+        elif 0: #Page(self.request, url).exists():
             # fancy link to local page [wiki:LocalPage text]
             return self._word_repl(url, text)
 
@@ -458,7 +458,7 @@ class Parser:
                     self.formatter.url(0))
 
         scheme = words[0].split(":", 1)[0]
-        if scheme == "wiki": return self.interwiki(words, pretty_url=1)
+        #if scheme == "wiki": return self.interwiki(words, pretty_url=1)
         if scheme in self.attachment_schemas:
             return self.attachment(words, pretty_url=1)
 
