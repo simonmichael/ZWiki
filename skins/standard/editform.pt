@@ -186,24 +186,25 @@
                   </span>.
               </td>
               <td valign="top" align="right" bgcolor="#dddddd" colspan="1">
-                <input type="submit" value="Cancel" 
+                <strong><input 
+                       type="submit" name="edit:method" 
+                       value="Save" title="change this wiki page"
+                       tabindex="" style="font-weight:bold" accesskey="s"
+                       tal:attributes="
+                       value python:creating and ('Create') or default;
+                       title python:creating and ('create this wiki page') or default;"
+                       i18n:attributes="title;value"
+                       /></strong>&nbsp;<input 
+                       type="submit" name="editform:method" 
+                       value="Preview" title="preview this edit"
+                       tabindex="" accesskey="p"
+                       i18n:attributes="title;value"
+                       />&nbsp;<input 
+                       type="submit" value="Cancel" 
                        title="cancel this edit and return to the page"
                        tabindex="" 
 		       i18n:attributes="title;value"
-		/>
-                <input type="submit" name="editform:method" 
-                value="Preview" title="preview this edit"
-                tabindex="" accesskey="p"
-		i18n:attributes="title;value"
-		/>
-                <strong><input type="submit" name="edit:method" 
-                value="Save" title="change this wiki page"
-                tabindex="" style="font-weight:bold" accesskey="s"
-                tal:attributes="
-                value python:creating and ('Create') or default;
-                title python:creating and ('create this wiki page') or default;"
-		i18n:attributes="title;value"
-		/></strong>
+                       />
 		<span tal:condition="python: False">
 			<!-- force i18n extraction -->
 			<span title="Create" i18n:attributes="title"></span>

@@ -256,13 +256,16 @@ UI.py:editform() calls us with these options:
 
         <div class="formControls" tal:define="process_creation request/process_creation|nothing;">
           <input class="context" 
-                 type="submit" 
-                 value="Cancel" 
-                 title="cancel this edit and return to the page"
-                 i18n:attributes="title;value"
                  tabindex=""
-                 />
-          <input class="context" 
+                 type="submit" 
+                 name="edit:method" 
+                 value="Save" 
+                 accesskey="s"
+                 i18n:attributes="value"
+                 tal:attributes="tabindex string:20;" 
+                 style="font-weight:bold" 
+                 />&nbsp;<input 
+                 class="context" 
                  tabindex=""
                  type="submit" 
                  name="editform:method" 
@@ -270,15 +273,14 @@ UI.py:editform() calls us with these options:
                  title="preview this edit"
                  accesskey="p"
                  i18n:attributes="title;value"
+                 />&nbsp;<input 
+                 class="context" 
+                 type="submit" 
+                 value="Cancel" 
+                 title="cancel this edit and return to the page"
+                 i18n:attributes="title;value"
+                 tabindex=""
                  />
-            <input class="context" 
-                   tabindex=""
-                   type="submit" 
-                   name="edit:method" 
-                   value="Save" 
-                   accesskey="s"
-                   i18n:attributes="value"
-                   tal:attributes="tabindex string:20;" /> 
         </div>
 
     </form>
