@@ -11,7 +11,7 @@
  single_category="((_.len(category)==1) and category[0]) or ''"
  single_status="((_.len(status)==1) and status[0]) or ''"
  >
-More advanced <a href="&dtml-trackerUrl;">issue tracker</a> search options.
+<dtml-translate domain=zwiki>More advanced</dtml-translate> <a href="&dtml-trackerUrl;"><dtml-translate domain=zwiki>issue tracker</dtml-translate></a><dtml-translate domain=zwiki>search options.</dtml-translate>
 
 <table border="0" cellpadding="0" cellspacing="0">
 <tr valign="top">
@@ -34,7 +34,7 @@ More advanced <a href="&dtml-trackerUrl;">issue tracker</a> search options.
 <td align="right">
 <dtml-let bold="cat_sequence_item in category and stat_sequence_item in status">
 <dtml-if bold><b></dtml-if>
-<a href="&dtml-page_url;?category:list=&dtml.url_quote-cat_sequence_item;&status:list=&dtml.url_quote-stat_sequence_item;&sort_on=severity_index"
+<a href="&dtml-page_url;/filterissues?category:list=&dtml.url_quote-cat_sequence_item;&status:list=&dtml.url_quote-stat_sequence_item;&sort_on=severity_index"
 ><dtml-var "_.len(pages(isIssue=1,category=cat_sequence_item,status=stat_sequence_item))"
 ></a>
 <dtml-if bold></b></dtml-if>
@@ -44,7 +44,7 @@ More advanced <a href="&dtml-trackerUrl;">issue tracker</a> search options.
 <td align="right">
 <dtml-let bold="category and (cat_sequence_item in category) and not status">
 <dtml-if bold><b></dtml-if>
-<a href="&dtml-page_url;?category:list=&dtml.url_quote-cat_sequence_item;&sort_on=severity_index"
+<a href="&dtml-page_url;/filterissues?category:list=&dtml.url_quote-cat_sequence_item;&sort_on=severity_index"
 ><dtml-var "_.len(pages(isIssue=1,category=cat_sequence_item))"
 ></a>
 <dtml-if bold></b></dtml-if>
@@ -58,7 +58,7 @@ More advanced <a href="&dtml-trackerUrl;">issue tracker</a> search options.
 <td align="right">
 <dtml-let bold="status and (stat_sequence_item in status) and not category">
 <dtml-if bold><b></dtml-if>
-<a href="&dtml-page_url;?status:list=&dtml.url_quote-stat_sequence_item;&sort_on=severity_index"
+<a href="&dtml-page_url;/filterissues?status:list=&dtml.url_quote-stat_sequence_item;&sort_on=severity_index"
 ><dtml-var "_.len(pages(isIssue=1,status=stat_sequence_item))"
 ></a>
 <dtml-if bold></b></dtml-if>
@@ -72,7 +72,7 @@ More advanced <a href="&dtml-trackerUrl;">issue tracker</a> search options.
           (_.len(status)==0 or 
            _.len(status)==_.len(issue_statuses))">
 <dtml-if bold><b></dtml-if>
-<a href="&dtml-page_url;?titlesearch=&sort_on=severity_index"
+<a href="&dtml-page_url;/filterissues?titlesearch=&sort_on=severity_index"
 ><dtml-var "_.len(pages(isIssue=1))"
 ></a>
 <dtml-if bold></b></dtml-if>
@@ -88,23 +88,23 @@ More advanced <a href="&dtml-trackerUrl;">issue tracker</a> search options.
 </td>
 <td>
 <!-- start of filter form -->
-<form action="&dtml-page_url;" method="GET">
+<form action="&dtml-page_url;/filterissues" method="GET">
 <table border="0" cellspacing="0" cellpadding="3">
 <tr>
 <td align=left valign=top colspan=3>
-Name contains any of:<br>
+<dtml-translate domain=zwiki>Name contains any of:</dtml-translate><br />
 <input type="text" name="titlesearch" value="<dtml-var titlesearch missing>" size="40" maxlength="60" accesskey="s" class="shade2">
 </td>
 </tr>
 <tr>
 <td align=left valign=top colspan=3>
-Page text contains any of:<br>
+<dtml-translate domain=zwiki>Page text contains any of:</dtml-translate><br />
 <input type="text" name="textsearch" value="<dtml-var textsearch missing>" size="40" maxlength="60" class="shade2">
 </td>
 </tr>
 <tr>
 <td align=left valign=top>
-Categories:<br>
+<dtml-translate domain=zwiki>Categories:</dtml-translate><br />
 <select name="category:list" multiple class="shade2">
 <dtml-in issue_categories prefix=x>
 <option
@@ -114,7 +114,7 @@ Categories:<br>
 </select> 
 </td>
 <td align=left valign=top>
-Severities:<br>
+<dtml-translate domain=zwiki>Severities:</dtml-translate><br />
 <select name="severity:list" multiple class="shade2">
 <dtml-in issue_severities prefix=x>
 <option
@@ -124,7 +124,7 @@ Severities:<br>
 </select> 
 </td>
 <td align=left valign=top>
-Statuses:<br>
+<dtml-translate domain=zwiki>Statuses:</dtml-translate><br />
 <select name="status:list" multiple class="shade2">
 <dtml-in issue_statuses prefix=x>
 <option
@@ -135,7 +135,7 @@ Statuses:<br>
 </td>
 </tr>
 <tr>
-<td align="left"><input type="submit" value="Filter issues" style="font-weight:bold;"> 
+<td align="left"><input type="submit" value="<dtml-translate domain=zwiki>Filter issues</dtml-translate>" style="font-weight:bold;"> 
 </td>
 <td align="center" colspan=2>&nbsp;</td>
 </tr>
@@ -194,42 +194,42 @@ Statuses:<br>
        <td align=left valign=top>
          <dtml-let bold="sort_on=='id'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=id&dtml-query;&dtml-scrollto;">name</a>
+         <a href="&dtml-URL;?sort_on=id&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>name</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
        <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='category_index'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=category_index&dtml-query;&dtml-scrollto;">category</a>
+         <a href="&dtml-URL;?sort_on=category_index&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>category</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
        <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='severity_index'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=severity_index&dtml-query;&dtml-scrollto;">severity</a>
+         <a href="&dtml-URL;?sort_on=severity_index&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>severity</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
        <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='status_index'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=status_index&dtml-query;&dtml-scrollto;">status</a>
+         <a href="&dtml-URL;?sort_on=status_index&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>status</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
        <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='creation_time'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=creation_time&dtml-query;&dtml-scrollto;">age</a>
+         <a href="&dtml-URL;?sort_on=creation_time&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>age</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
        <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='lastEditTime'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=lastEditTime&dtml-query;&sort_order=reverse&dtml-scrollto;">modified</a>
+         <a href="&dtml-URL;?sort_on=lastEditTime&dtml-query;&sort_order=reverse&dtml-scrollto;"><dtml-translate domain=zwiki>modified</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>

@@ -18,17 +18,18 @@
      <tr>
        <td valign="top">
          <!-- CUSTOM TEXT -->
-         Here is the wiki's issue tracker.
+         <dtml-translate domain=zwiki>Here is the wiki's issue tracker.</dtml-translate>
          <!-- END OF CUSTOM TEXT -->
- 
-         Enter a search term, or click the numbers to the right, or <a href="&dtml-filterUrl;">filter issues</a>.
+         
+         <dtml-translate domain=zwiki>Enter a search term, or click the numbers to the right, or</dtml-translate>
+          <a href="&dtml-filterUrl;"><dtml-translate domain=zwiki>filter issues.</dtml-translate></a>
          <br />
          <b>
            <input type="text" name="textortitle" size="25" maxlength="100" 
                   value="&dtml-searchexpr;" 
                   class="shade2" style="font-weight:bold" accesskey="s"
                   title="search issue pages" 
-            /><input type="submit" value="search issues" 
+            /><input type="submit" value="<dtml-translate domain=zwiki>search issues</dtml-translate>" 
                      style="font-weight:bold" title="search issue pages" />
          </b>
        </td>
@@ -180,42 +181,42 @@
        <td align=left valign=top>
          <dtml-let bold="sort_on=='id'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=id&dtml-query;&dtml-scrollto;">name</a>
+         <a href="&dtml-URL;?sort_on=id&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>name</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
        <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='category_index'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=category_index&dtml-query;&dtml-scrollto;">category</a>
+         <a href="&dtml-URL;?sort_on=category_index&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>category</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
        <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='severity_index'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=severity_index&dtml-query;&dtml-scrollto;">severity</a>
+         <a href="&dtml-URL;?sort_on=severity_index&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>severity</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
        <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='status_index'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=status_index&dtml-query;&dtml-scrollto;">status</a>
+         <a href="&dtml-URL;?sort_on=status_index&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>status</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
        <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='creation_time'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=creation_time&dtml-query;&dtml-scrollto;">age</a>
+         <a href="&dtml-URL;?sort_on=creation_time&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>age</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
        <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='lastEditTime'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=lastEditTime&dtml-query;&sort_order=reverse&dtml-scrollto;">modified</a>
+         <a href="&dtml-URL;?sort_on=lastEditTime&dtml-query;&sort_order=reverse&dtml-scrollto;"><dtml-translate domain=zwiki>modified</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
@@ -347,16 +348,16 @@
  <!-- add issue form ------------------------- -->
  <a name="addissue" />
  <form action="&dtml-URL;" method="POST">
-   **Add an issue: **
+   **<dtml-translate domain=zwiki>Add an issue:</dtml-translate>**
    <table border="0" cellspacing="0" cellpadding="5" width="60%">
      <tr bgcolor="<dtml-var "'#ffffff' #issueColourFor(status='open')">">
        <td nowrap>
-         Description:
+         <dtml-translate domain=zwiki>Description:</dtml-translate>
          <b><input type="text" name="newtitle" 
              value="<dtml-var newtitle missing html_quote>" 
              size="60" maxlength="200" style="font-weight:bold" /></b>
          <br />
-         Category:
+         <dtml-translate domain=zwiki>Category:</dtml-translate>
          <select name="newcategory">
            <dtml-in issue_categories>
            <option <dtml-var "_['sequence-item'] == 'zwiki: general' and 'SELECTED' or ''">>
@@ -364,7 +365,7 @@
            </option>
            </dtml-in>
          </select> 
-         <a href="TrackerSearchTips">Severity</a>:
+         <a href="TrackerSearchTips"><dtml-translate domain=zwiki>Severity:</dtml-translate></a>
          <select name="newseverity">
            <dtml-in issue_severities>
            <option <dtml-var "_['sequence-item'] == 'normal' and 'SELECTED' or ''">>
@@ -372,7 +373,7 @@
            </option>
            </dtml-in>
          </select> 
-         Status:
+         <dtml-translate domain=zwiki>Status:</dtml-translate>
          <select name="newstatus">
            <dtml-in issue_statuses>
            <option <dtml-var "_['sequence-item'] == 'open' and 'SELECTED' or ''">>
@@ -381,21 +382,20 @@
            </dtml-in>
          </select>
          <br />
-         Details:
+         <dtml-translate domain=zwiki>Details:</dtml-translate>
          <br />
          <textarea name="newtext" wrap="virtual" rows=5 cols=60></textarea>
        </td>
      </tr>
      <tr>
        <td>
-         <b><input name="submit" type="submit" value="add issue" 
+         <b><input name="submit" type="submit" value="<dtml-translate domain=zwiki>add issue</dtml-translate>" 
              style="font-weight:bold"></b>
        </td>
      </tr>
    </table>
    <input type="hidden" name="submitted" value="1" />
  </form>
- 
  
  <!-- add issue form handler ------------------------- -->
  <dtml-if "REQUEST.get('submitted',0) and REQUEST.get('newtitle',0)">
