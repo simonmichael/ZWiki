@@ -61,7 +61,7 @@ class AbstractPageType:
         """
         return page.preRendered()
 
-    def renderText(self, page, text, REQUEST={}, RESPONSE=None, **kw):
+    def renderText(self, page, text, **kw):
         """
         Render some source text as if it were in page, as far as possible.
 
@@ -74,12 +74,12 @@ class AbstractPageType:
         p = page.__class__(source_string='', __name__=page.getId())
         p.title = page.pageName()
         p = p.__of__(page.aq_parent)
-        p.setPageType(page.pageType())
+        p.setPageType(self.id())
         p.setText(text)
         return p.render(
             page,
-            REQUEST,
-            RESPONSE,
+            kw.get('REQUEST',{}),
+            kw.get('RESPONSE',None),
             bare=1,
             show_subtopics=0,
             show_issueproperties=0)

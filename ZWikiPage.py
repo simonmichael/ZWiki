@@ -257,16 +257,16 @@ class ZWikiPage(
         get_transaction().note('prerender')
         self.setPreRendered(self.pageType().preRender(self))
 
-    def renderText(self, text, REQUEST={}, RESPONSE=None, **kw):
+    def renderText(self, text, type, **kw):
         """
-        Render some source text according to this page's page type.
+        Render some source text according to the specified page type.
 
         This is a helper for edit preview. Some source text is hard to
         preview accurately or even rendered at all without being situated
         in a page object (DTML, permissions etc). We hand off to the page
         type and let it do its best.
         """
-        return self.pageType().renderText(self,text,REQUEST,RESPONSE,**kw)
+        return self.lookupPageType(type)().renderText(self,text,**kw)
             
     security.declareProtected(Permissions.View, 'clearCache')
     def clearCache(self,REQUEST=None):

@@ -2,21 +2,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
       i18n:domain="zwiki"
       tal:define="
-      action    request/form/action|options/action;
-      page      request/form/page|options/page;
-      text      request/form/text|options/text;
-      timestamp request/form/timeStamp|here/timeStamp;
-      wiki_url  here/wiki_url;
-      rows      python:request.get('zwiki_height',20);
-      cols      python:request.get('zwiki_width',60);
-      creating  python:action == 'Create';
-      actioning python:(creating and 'Creating') or 'Editing';
-      uploaddir python:getattr(container,'uploads',container);
-      pagetypes here/allowedPageTypes;
-      editing   python:not creating;
-      title   string:${container/title} ${actioning} ${page};
-      macros  python:here.wikipage_macros(request).macros;
+      action     request/form/action|options/action;
+      creating   python:action == 'Create';
+      editing    python:not creating;
+      actioning  python:(creating and 'Creating') or 'Editing';
       previewing python:request.form.get('editform',None);
+      page       request/form/page|options/page;
+      title      string:${container/title} ${actioning} ${page};
+      text       request/form/text|options/text;
+      type       request/form/type|python:(creating and here.defaultPageType()) or here.pageTypeId();
+      timestamp  request/form/timeStamp|here/timeStamp;
+      pagetypes  here/allowedPageTypes;
+      wiki_url   here/wikiUrl;
+      rows       python:request.get('zwiki_height',20);
+      cols       python:request.get('zwiki_width',60);
+      uploaddir  python:getattr(container,'uploads',container);
+      macros     python:here.wikipage_macros(request).macros;
       "
       onload="document.forms[0].text.focus();"
       >
@@ -83,23 +84,21 @@
                   <select name="type" tabindex="" class="formfield"
                           title="select the formatting and rendering style for this page"
 			  i18n:attributes="title" >
-                    <tal:options tal:repeat="type pagetypes">
+                    <tal:options tal:repeat="t pagetypes">
                       <option value="type"
                               tal:define="
                               dtmlallowed python:
-                                type in ('stx','html') and
+                                t in ('stx','html') and
                                 here.dtmlAllowed()
-                                #here.lookupPageType(type).supportsDtml() and 
+                                #here.lookupPageType(t).supportsDtml() and 
                                 #here.dtmlAllowed();
                               extrasuffix python:
                               dtmlallowed and ' (+ DTML)' or ''; "
                               tal:attributes="
-                              value python:type; 
-                              selected python:
-                              type==((creating and here.defaultPageType()) or 
-                                     here.pageTypeId());"
+                              value python:t; 
+                              selected python:t==type"
                               tal:content="python:
-                              here.PAGE_TYPES.get(type,type) + extrasuffix">
+                              here.PAGE_TYPES.get(t,t) + extrasuffix">
                         type
                       </option>
                     </tal:options>
@@ -228,7 +227,7 @@
         <table border="4" width="100%" cellpadding="10" class="preview">
           <tr>
             <td tal:content="structure python:here.renderText(
-              request.form.get('text',''),request,request.RESPONSE)"></td>
+            text,type,REQUEST=request,RESPONSE=request.RESPONSE)"></td>
           </tr>
         </table>
         <table border="0" width="100%" class="dimtext"><tr>

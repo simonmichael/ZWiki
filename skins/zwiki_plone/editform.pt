@@ -6,15 +6,18 @@ UI.py:editform() calls us with these options:
  text   - initial contents of text area
  action - 'Create' or 'Edit'
 </tal:comment>
-<tal:block define="global action request/form/action|options/action; 
-		   global page request/form/page|options/page;
-                   global text request/form/text|options/text; 
-                   global timestamp request/form/timeStamp|here/timeStamp;
-		   global pagetypes here/allowedPageTypes;
-		   global creating python:action=='Create';
-		   global editing  python:not creating;
-                   global previewing python:request.form.get('editform',None);
-		   " />
+<tal:block define="
+           global action     request/form/action|options/action;
+           global creating   python:action == 'Create';
+           global editing    python:not creating;
+           global actioning  python:(creating and 'Creating') or 'Editing';
+           global previewing python:request.form.get('editform',None);
+           global page       request/form/page|options/page;
+           global text       request/form/text|options/text;
+           global type       request/form/type|python:(creating and here.defaultPageType()) or here.pageTypeId();
+           global timestamp  request/form/timeStamp|here/timeStamp;
+           global pagetypes  here/allowedPageTypes;
+           " />
 
 <html xmlns:tal="http://xml.zope.org/namespaces/tal"
        xmlns:metal="http://xml.zope.org/namespaces/metal"
@@ -216,7 +219,7 @@ UI.py:editform() calls us with these options:
                  that as an exercise for the reader for now, though ;)
                  (limi, june 2003) -->
 
-            <tal:formats repeat="type pagetypes"
+            <tal:formats repeat="t pagetypes"
                          define="tabindex tabindex/next|nothing;
                                  text_format python:request.get('text_format', getattr(here,'text_format','structured-text'))">
                 <input class="noborder" 
@@ -225,23 +228,23 @@ UI.py:editform() calls us with these options:
                        value="pagetype" 
                        tabindex=""
                        id="pagetype"
-                       tal:attributes="checked python:test(type==((creating and here.defaultPageType()) or here.pageTypeId()), 1, None);
-                                       value python:type;
-                                       id python:type;
+                       tal:attributes="checked python:t==type;
+                                       value python:t;
+                                       id python:t;
                                        tabindex tabindex|nothing;" 
                        />
                 <label for="pagetype" 
                        tal:define="
                          dtmlallowed python:
-                                type in ('stx','html') and
+                                t in ('stx','html') and
                                 here.dtmlAllowed()
-                                #here.lookupPageType(type).supportsDtml() and 
+                                #here.lookupPageType(t).supportsDtml() and 
                                 #here.dtmlAllowed();
                          extrasuffix python:
                            dtmlallowed and ' (+ DTML)' or ''; "
                        tal:content="
-                         python:here.PAGE_TYPES.get(type,type) + extrasuffix"
-                       tal:attributes="for python:type
+                         python:here.PAGE_TYPES.get(t,t) + extrasuffix"
+                       tal:attributes="for python:t
                        # there might be some way to set an i18n tag for each 
                        # page type, forget for now as we don't really need it
                        "
@@ -281,12 +284,12 @@ UI.py:editform() calls us with these options:
       <td align="center"><b>PREVIEW</b></td>
       <td align="center"><b>PREVIEW</b></td>
       </tr></table>
-      <table border="4" width="100%" cellpadding="10" class="preview">
-        <tr>
-          <td tal:content="structure python:here.renderText(
-          request.form.get('text',''),request,request.RESPONSE)"></td>
-        </tr>
-      </table>
+        <table border="4" width="100%" cellpadding="10" class="preview">
+          <tr>
+            <td tal:content="structure python:here.renderText(
+            text,type) #already present in plone ,REQUEST=request,RESPONSE=request.RESPONSE)"></td>
+          </tr>
+        </table>
       <table border="0" width="100%" class="dimtext"><tr>
       <td align="center"><b>PREVIEW</b></td>
       <td align="center"><b>PREVIEW</b></td>
