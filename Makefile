@@ -42,7 +42,7 @@ dtml:
 epydoc:
 	PYTHONPATH=/zope/lib/python \
 	 epydoc --docformat restructuredtext \
-	        --target /var/www/zopewiki.org/epydoc  \
+	        --output /var/www/zopewiki.org/epydoc  \
 	        /zope/lib/python/Products/* /zope1/Products/*
 
 ## i18n
