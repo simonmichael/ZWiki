@@ -110,6 +110,7 @@ class ZWikiPage(
     """
     security = ClassSecurityInfo()
     security.declareObjectProtected('View')
+    security.declareProtected(Permissions.Edit, 'revert')
     security.declareProtected(Permissions.Edit, 'manage_upload')
     security.declareProtected(Permissions.FTP, 'manage_FTPstat') # needed
     security.declareProtected(Permissions.FTP, 'manage_FTPlist') # ?
