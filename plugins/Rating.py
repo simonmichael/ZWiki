@@ -127,10 +127,7 @@ class RatingSupport:
         no stars means a bad page.)
         """
         if self.hasVotes():
-            #return sum(self.votes().values())/self.voteCount() # what was wrong here
-            return int(round(
-                float(reduce(lambda a,b:int(a)+int(b), self.votes().values()))\
-                / self.voteCount()))
+            return float(sum(map(int,self.votes().values())))/self.voteCount()
         else:
             return 1
 
