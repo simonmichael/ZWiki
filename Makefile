@@ -105,9 +105,12 @@ check:
 	rsync -ruvC -e ssh --include=ChangeLog --include=misc \
 	  --include=releases  -n . zwiki.org:zwiki
 
-push:
+rpush:
 	rsync -ruvC -e ssh --include=ChangeLog --include=misc \
 	  --include=releases . zwiki.org:zwiki
+
+push:
+	darcs push -v -a
 
 ## server control
 

@@ -136,9 +136,10 @@ UI.py:editform() calls us with these options:
                 text
             </textarea>
             <span tal:condition="here/supportsEpoz"
-                  tal:replace="structure python:here.Epoz(
+                  tal:replace="structure python:
+                  here.Epoz(
                   'text',
-                  data=here.text(),
+                  data=text,
                   style='background:white;border:thin solid black;width:100%;height:300px;',
                   )
                   #toolbox='/toolbox',

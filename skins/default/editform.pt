@@ -97,21 +97,21 @@ type
           tal:attributes="rows rows; cols cols"
           tal:content="text">text...</textarea>
 <span tal:condition="here/supportsEpoz"
-      tal:replace="structure python:here.Epoz(
+      tal:replace="structure python:
+      here.Epoz(
       'text',
-      data=here.text(),
+      data=text,
       style='background:white;border:thin solid black;width:100%;height:'+str(rows)+'em;',
       css=here.defaultPageUrl()+'/stylesheet',
-      path='epoz/',
       )
       #toolbox='/toolbox',
       #lang='en',
-      "></span>
+"></span>
 </td>
 </tr>
 
-<!-- epoz source checkbox -->
-<tr tal:condition="here/supportsEpoz">
+<!-- better-positioned epoz source-mode checkbox -->
+<tr tal:condition="python:0 #here/supportsEpoz">
 <td valign="top" align="right" bgcolor="#dddddd" colspan="2"
 ><input id="EpozViewMode" type="checkbox" 
        onclick="SwitchViewMode(this.checked)" 
