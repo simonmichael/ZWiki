@@ -1,7 +1,5 @@
 <div i18n:domain="zwiki">
-
 <a name="bottom"></a>
-
 <div tal:condition="python:user.has_permission('Zwiki: Add comments',here)">
   <!-- comment form -->
   <br />
@@ -11,11 +9,13 @@
         enctype="multipart/form-data"
         action="" 
         tal:attributes="action here/pageUrl">
-    <table border="0" cellspacing="0" cellpadding="0">
+    <table border="0" cellspacing="0" cellpadding="0" width="100%">
+
       <tr>
         <td>
-    Subject:&nbsp;<input type="text" name="subject_heading" 
+    <span i18n:translate="subject">Subject</span>:&nbsp;<input type="text" name="subject_heading" 
     title="a subject helps clarify threads and RecentChanges" 
+    i18n:attributes="title"
     size="40" maxlength="100" 
     value="" tal:attributes="value request/subject|nothing" />
     <br />
@@ -23,10 +23,10 @@
       </tr>
       <tr>
         <td>
-    <textarea name="text" rows="3" cols="60" wrap="virtual" 
+    <textarea name="text" rows="3" style="width:100%;" cols="60" wrap="virtual" 
               tal:attributes="cols python:request.get('zwiki_width','') or 60"
               title="enter comments here and click add; or, click edit"
-		i18n:attributes="title"
+	      i18n:attributes="title"
     ></textarea>
         </td>
       </tr>
@@ -42,7 +42,7 @@
            type="submit" 
            name="comment:method" 
            value="Add a comment" 
-	   i18n:attributes="value"
+	   i18n:attributes="value add-comment"
            style="font-weight:bold;" />
         </td>
       </tr>
@@ -65,5 +65,4 @@
   <!-- page management panel -->
   <span metal:use-macro="python:here.wikipage_macros().macros['pagemanagement']" />
 </div>
-
 </div>
