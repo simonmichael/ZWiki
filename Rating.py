@@ -91,6 +91,8 @@ class RatingSupport:
             return reduce(lambda a,b:a+b,self.votes().values())/self.voteCount()
         else: return 0
 
+    # UI methods
+
     security.declareProtected(Permissions.View, 'ratingform')
     def ratingform(self, REQUEST=None):
         """
@@ -102,6 +104,21 @@ class RatingSupport:
             self.getSkinTemplate('ratingform')(self,REQUEST)
             )
 
+    security.declareProtected(Permissions.View, 'ratingStyle')
+    def ratingStyle(self,rating=''):
+        """
+        Return the CSS rating class for this page, or for the specified rating.
+        """
+        if rating == '' or rating == None: rating = self.rating()
+        return ['lowrated','neutralrated','highrated'][cmp(rating,0)+1]
+
+    security.declareProtected(Permissions.View, 'styledNumericRating')
+    def styledNumericRating(self,rating=''):
+        """
+        A HTML fragment displaying this page's or the specified rating, styled.
+        """
+        if rating == '' or rating == None: rating = self.rating()
+        return '<span class="%s">(%s)</span>' % (self.ratingStyle(rating),rating)
 
 # install permissions
 Globals.InitializeClass(RatingSupport) 

@@ -1,7 +1,12 @@
 <a name="ratingform"></a>
-<form method="POST" id="ratingform" class="dimtext"
-      tal:attributes="action string:${here/pageUrl}/vote"
-      tal:define="myvote python:here.myVote(request)">
+<form method="POST" id="ratingform" 
+      tal:define="myvote python:here.myVote(request); rating here/rating"
+      tal:attributes="
+        action string:${here/pageUrl}/vote;
+        class python:['lowrated','neutralrated','highrated'][cmp(rating,0)+1]#+' dimtext'
+                     #'dimtext '+(((rating<0) and 'lowrated') or ((rating>0) and 'highrated') or 'neutralrated');
+        "
+      >
   <span i18n:translate="">page rating</span>: 
   <b><span tal:replace="here/rating" /></b> 
   <span i18n:translate="">from</span> 

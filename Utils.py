@@ -63,7 +63,8 @@ class Utils:
         """
         Give a short summary of this page's content.
         """
-        return html_quote(self.text()[:size])
+        firstparagraph = split(self.text(),'\n\n')[0]
+        return html_quote(firstparagraph[:size])
 
     security.declareProtected(Permissions.View, 'excerptAt')
     def excerptAt(self, expr, size=100, highlight=1):
