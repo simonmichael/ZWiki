@@ -1,8 +1,35 @@
+Zwiki 0.31rc4 2004/05/29
+
+        * always update backlinks by default when renaming (page
+	management form was not)
+
+        * show current page in contents by default again
+        This is much more convenient for a human user. The drawback is
+	more hits to contents (one for each page) from robots which treat
+	#ref as a separate url.
+
+        * defaultPage (and navigation links) were ignoring the
+	default_page folder property
+
+        * issue tracker: show recent issues by default again
+
+        * standard wikipage.pt: add a left/right layout table around ratingform
+
+        * issuepropertiesform: replace stx markup with html
+
+        * FrenchGrammarAndVocabularyFix2 (foenyx@online.fr)
+
+        * add dtml messages to pot & po files
+
+        * plone editform: don't attempt to translate page names, showing
+	duplicates instead (IssueNo0823)
+
 Zwiki 0.31rc3 2004/05/28
 
         * update pot and po files
 
-        * minor additional i18n, pluralize number of subscribers correctly (foenyx@online.fr)
+        * minor additional i18n, pluralize number of subscribers correctly
+	(foenyx@online.fr)
 
         * FrenchGrammarAndVocabularyFix1 (foenyx@online.fr)
 
