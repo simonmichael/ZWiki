@@ -599,6 +599,7 @@ class GeneralForms:
         
         in edit form:
         s    save changes
+        p    preview
         
         when viewing diffs:
         n    next edit
