@@ -106,7 +106,24 @@ class Outline:
         Change node's parents to newparents in the outline.
         """
         self.add(node,newparents,update)
+    def first(self):
+        """
+        Get the first node in the outline.
+        """
+        list = self.flat()
+        if list: return list[0]
+        else: return None
+    def last(self):
+        """
+        Get the last node in the outline.
+        """
+        list = self.flat()
+        if list: return list[-1]
+        else: return None
     def next(self,node,wrap=0):
+        """
+        Get the next node in the outline.
+        """
         list = self.flat()
         if node in list:
             i = list.index(node)
@@ -114,6 +131,9 @@ class Outline:
             elif wrap: return list[0]
         return None
     def previous(self,node,wrap=0):
+        """
+        Get the previous node in the outline.
+        """
         list = self.flat()
         if node in list:
             i = list.index(node)
