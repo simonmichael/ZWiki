@@ -27,9 +27,11 @@ class TrackerSupport:
     security.declareProtected(Permissions.View, 'issueNumberAndName')
     def pageNameFromIssueNumberAndName(self, number, name):
         """
-        Generate an issue page name according to this wiki's style.
+        Generate a valid issue page name for this wiki.
 
-        Expects number:int, name:str. One of the formats below is hard-coded.
+        Expects number:int, name:str. This determines the naming of new
+        issue pages. It should use one of the formats recognized by
+        issueNumberAndName.
         """
         return 'IssueNo%04d %s' % (number,name)
         #return '%04d %s' % (number,name)
