@@ -193,6 +193,8 @@ def listFsWikis(self):
         # developers may have content/CVS.. assume wiki templates
         # will never be called that:
         if 'CVS' in list: list.remove('CVS')
+        # likewise for Subversion
+        if '.svn' in list: list.remove('.svn')
         if 'tracker' in list: list.remove('tracker') #XXX temp
         return list
     except OSError:
