@@ -61,6 +61,7 @@ class AdminSupport:
         else:
             BLATHER('upgrading all pages:')
         n = 0
+        total = self.pageCount()
         # poor caching (ok in this case)
         for p in self.pageObjects():
             n = n + 1
@@ -70,10 +71,10 @@ class AdminSupport:
                 if pre_render: p.preRender(clear_cache=1)
                 if upgrade_messages: p.upgradeMessages(REQUEST)
                 if check_parents: p.checkParents(update_outline=0)
-                BLATHER('upgraded page #%d %s'%(n,p.id()))
+                BLATHER('upgraded page %d/%d %s'%(n,total,p.id()))
             except:
-                BLATHER('failed to upgrade page #%d %s: %s' \
-                     % (n,p.id(),formattedTraceback()))
+                BLATHER('failed to upgrade page %d/%d %s: %s' \
+                     % (n,total,p.id(),formattedTraceback()))
             if n % 100 == 0:
                 BLATHER('committing')
                 # do this at each commit just in case
