@@ -286,13 +286,11 @@ class MailIn:
 
         # find the default mailin page if any
         # note this is now different from the default_page folder property
-        #defaultpagename = getattr(self.folder(),'default_page',self.defaultpage)
-        defaultpagename = self.defaultpage
+        defaultpagename = getattr(self.folder(),'default_mailin_page','')
 
         # find a preliminary working page
         #self.workingpage = self.workingPage()
-        if defaultpagename:
-            self.workingpage = getattr(self.folder(),defaultpagename,None)
+        self.workingpage = getattr(self.folder(),defaultpagename,None)
         if not self.workingpage:
             allpages = self.folder().objectValues(spec='ZWiki Page')
             if allpages:
@@ -303,7 +301,7 @@ class MailIn:
             BLATHER('mailin.py: could not find a working page')
             self.error = '\nSorry, I could not find an existing wiki page to work with.\n\n\n'
             return
-        # update defaultpagename if it was wrong
+        # adjust defaultpagename if it was wrong
         defaultpagename = self.workingpage.title_or_id()
 
         # find the destination page
