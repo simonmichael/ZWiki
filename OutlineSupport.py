@@ -204,11 +204,10 @@ class OutlineManagerMixin:
         - in the parents argument (a list or string of page names)
         - in a parents REQUEST attribute (ditto) #XXX needed ?
         - in the pagename argument (a single name)
-        (the last is to support the page management form, whose field name
-        is constrained).
+        (this last is to support the page management form).
 
-        Page names may be fuzzy, or ids; any which do not resolve to an
-        existing page or are duplicates will be ignored. 
+        Page names may be ids, or fuzzy, even partial. Any which do not
+        resolve to an existing page or are duplicates will be ignored.
         """
         # validate args
         if pagename: parents = [pagename]
@@ -216,7 +215,7 @@ class OutlineManagerMixin:
         if type(parents) != ListType: parents = [parents]
         parents = map(lambda x:absattr(x.Title),
                       filter(lambda x:x,
-                             map(lambda x:self.pageWithFuzzyName(x),
+                             map(lambda x:self.pageWithFuzzyName(x,allow_partial=1),
                                  parents)))
         uniqueparents = []
         for p in parents:
