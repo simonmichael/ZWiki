@@ -271,40 +271,6 @@ class OutlineManagerMixin:
         #else: return self.wikiUrl()    # the front page
         else: return self.contentsUrl() # the wiki contents
 
-    security.declareProtected(Permissions.View, 'nextPage')
-    def nextPage(self):
-        """
-        Get the name of the next page in the hierarchy.
-
-        XXX nextPageName ?
-        """
-        return self.wikiOutline().next(self.pageName())
-
-    security.declareProtected(Permissions.View, 'nextPageUrl')
-    def nextPageUrl(self):
-        """
-        Get the URL of the next page in the hierarchy.
-        """
-        p = self.pageWithName(self.nextPage())
-        if p: return p.pageUrl()
-        else: return self.wikiUrl()
-
-    security.declareProtected(Permissions.View, 'previousPage')
-    def previousPage(self):
-        """
-        Get the name of the previous page in the hierarchy.
-        """
-        return self.wikiOutline().previous(self.pageName())
-
-    security.declareProtected(Permissions.View, 'previousPageUrl')
-    def previousPageUrl(self):
-        """
-        Get the URL of the previous page in the hierarchy.
-        """
-        p = self.pageWithName(self.previousPage())
-        if p: return p.pageUrl()
-        else: return self.wikiUrl()
-
     security.declareProtected(Permissions.View, 'firstPage')
     def firstPage(self):
         """
@@ -334,6 +300,40 @@ class OutlineManagerMixin:
         Get the URL of the last page in the hierarchy.
         """
         p = self.pageWithName(self.lastPage())
+        if p: return p.pageUrl()
+        else: return None
+
+    security.declareProtected(Permissions.View, 'nextPage')
+    def nextPage(self):
+        """
+        Get the name of the next page in the hierarchy.
+
+        XXX nextPageName ?
+        """
+        return self.wikiOutline().next(self.pageName())
+
+    security.declareProtected(Permissions.View, 'nextPageUrl')
+    def nextPageUrl(self):
+        """
+        Get the URL of the next page in the hierarchy.
+        """
+        p = self.pageWithName(self.nextPage())
+        if p: return p.pageUrl()
+        else: return None
+
+    security.declareProtected(Permissions.View, 'previousPage')
+    def previousPage(self):
+        """
+        Get the name of the previous page in the hierarchy.
+        """
+        return self.wikiOutline().previous(self.pageName())
+
+    security.declareProtected(Permissions.View, 'previousPageUrl')
+    def previousPageUrl(self):
+        """
+        Get the URL of the previous page in the hierarchy.
+        """
+        p = self.pageWithName(self.previousPage())
         if p: return p.pageUrl()
         else: return None
 

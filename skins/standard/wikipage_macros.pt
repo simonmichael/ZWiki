@@ -96,8 +96,8 @@
     '?borrow_lock=1'" accesskey="x"></a>
 <a tal:condition="nothing" tal:attributes="href string:${here/pageUrl}/print" accesskey=""></a>
 <a tal:attributes="href string:#subtopics" accesskey=""></a>
-<a tal:condition="here/nextPage" tal:attributes="href here/nextPageUrl" accesskey="n"></a>
-<a tal:condition="here/previousPage" tal:attributes="href here/previousPageUrl" accesskey="p"></a>
+<a tal:attributes="href python:here.nextPageUrl() or here.firstPageUrl()" accesskey="n"></a>
+<a tal:attributes="href python:here.previousPageUrl() or here.lastPageUrl()" accesskey="p"></a>
 <a tal:attributes="href here/primaryParentUrl" accesskey="u"></a>
 <a tal:attributes="href string:${here/pageUrl}/showAccessKeys" accesskey="0"></a>
 </span>
