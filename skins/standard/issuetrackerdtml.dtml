@@ -20,13 +20,13 @@
        <td valign="top">
          <!-- CUSTOM TEXT -->
          <dtml-translate domain=zwiki>Here are the wiki's issue pages.</dtml-translate>
+
          <!-- END OF CUSTOM TEXT -->
          <dtml-translate domain=zwiki>Enter a search term, or click the numbers to the right, or</dtml-translate>
           <a href="&dtml-filterUrl;"><dtml-translate domain=zwiki>filter issues</dtml-translate></a>.
          <br />
-         <br />
          <b>
-           <input type="text" name="textortitle" size="25" maxlength="100" 
+           <input type="text" name="textortitle" size="20" maxlength="100" 
                   value="&dtml-searchexpr;" 
                   class="formfield" style="font-weight:bold" accesskey="s"
                   title="search issue pages" 
@@ -67,7 +67,12 @@
                </td>
              </tr>
            </dtml-let>
-           <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+         </table>
+         </span>
+       </td>
+       <td valign="top" class="">
+         <span style="font-size:100%;">
+         <table border="0" cellspacing="2" cellpadding="0">
            <dtml-in issue_statuses prefix=x>
              <dtml-let bold="x_sequence_item in REQUEST.get('status',[])">
                <tr>
@@ -92,7 +97,6 @@
        <td valign="top" class="">
          <span style="font-size:100%;">
          <table border="0" cellspacing="2" cellpadding="0">
-           <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
            <dtml-in issue_severities prefix=x>
              <dtml-let bold="x_sequence_item in REQUEST.get('severity',[])">
                <tr>
@@ -123,7 +127,7 @@
                  <td align="right">
                    <dtml-var "bold and '<b>' or ''">
                    <a href="&dtml-URL;?category:list=&dtml.url_quote-sequence-item;&sort_on=status_index&dtml-scrollto;"
-                     ><dtml-var "_.len(pages(isIssue=1,category=_['sequence-item'],status=['open','pending']))"
+                     ><dtml-var "_.len(pages(isIssue=1,category=_['sequence-item']))#,status=['open','pending']))"
                      ></a>
                    <dtml-var "bold and '</b>' or ''">
                  </td>
@@ -138,16 +142,6 @@
          </table>
          </span>
        </td>
-       <dtml-comment>
-       <td align=right valign="top" class="">
-         <big><big><big><big>
-           <b><a href="&dtml-URL;?status:list=open&status:list=pending&sort_on=&dtml-sort_on;&sort_order=reverse&dtml-scrollto;"
-              ><dtml-var "_.len(pages(isIssue=1,status=['open','pending']))"></a></b>
-           /<b><a href="&dtml-URL;?sort_on=&dtml-sort_on;&dtml-scrollto;">&dtml-issueCount;</a></b><br />
-         </big></big></big></big>
-         <span style="font-size:90%;">open/total issues</span>
-       </td>
-       </dtml-comment> 
     </tr>
    </table>
  </form>

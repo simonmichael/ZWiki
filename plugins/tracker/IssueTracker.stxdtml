@@ -127,7 +127,7 @@
                  <td align="right">
                    <dtml-var "bold and '<b>' or ''">
                    <a href="&dtml-URL;?category:list=&dtml.url_quote-sequence-item;&sort_on=status_index&dtml-scrollto;"
-                     ><dtml-var "_.len(pages(isIssue=1,category=_['sequence-item'],status=['open','pending']))"
+                     ><dtml-var "_.len(pages(isIssue=1,category=_['sequence-item']))#,status=['open','pending']))"
                      ></a>
                    <dtml-var "bold and '</b>' or ''">
                  </td>
@@ -142,16 +142,6 @@
          </table>
          </span>
        </td>
-       <dtml-comment>
-       <td align=right valign="top" class="">
-         <big><big><big><big>
-           <b><a href="&dtml-URL;?status:list=open&status:list=pending&sort_on=&dtml-sort_on;&sort_order=reverse&dtml-scrollto;"
-              ><dtml-var "_.len(pages(isIssue=1,status=['open','pending']))"></a></b>
-           /<b><a href="&dtml-URL;?sort_on=&dtml-sort_on;&dtml-scrollto;">&dtml-issueCount;</a></b><br />
-         </big></big></big></big>
-         <span style="font-size:90%;">open/total issues</span>
-       </td>
-       </dtml-comment> 
     </tr>
    </table>
  </form>
