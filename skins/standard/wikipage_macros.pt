@@ -2,8 +2,7 @@
 
 <head metal:define-macro="head"
       tal:define="dummy python:
-      request.RESPONSE.setHeader('Content-Type','text/html;; charset=utf-8')
-      # like PTS.. don't know why this is needed, but it is (firefox at least);
+      request.RESPONSE.setHeader('Content-Type','text/html;; charset=utf-8');
       ">
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <meta metal:define-slot="noindex" tal:omit-tag="" />
@@ -165,7 +164,7 @@
       tal:condition="python:0 #minimal"
       tal:on-error="nothing">
 </span>
-&nbsp;
+&nbsp;&nbsp;
 </span>
 
 <!-- displaymodes -->
@@ -448,50 +447,39 @@ style="font-weight:bold" /></td>
 <br />
 <form method="post" action="page_url" enctype="multipart/form-data"
 tal:attributes="action here/page_url" style="margin-top:0;margin-bottom:0">
-<table border="0" cellspacing="1" cellpadding="1" align="center"
+<table border="0" cellspacing="0" cellpadding="1" align="center"
 class="shade1" width="100%"
 >
 <tr>
-<td align="left" valign="top" colspan="4">
+<td align="left" valign="top" >
 <small>
 <span i18n:translate="parent_name_replace">new parent, name or replacement</span>:
-</small>
 <br tal:condition="here/inCMF" comment="hack! cmf/plone layout hint" />
-</td>
-</tr>
-<tr>
-<td width="30%" valign="top">
 <input 
-name="pagename" type="text" maxlength="100" value="" 
+name="pagename" type="text" size="20" maxlength="100" value="" 
 class="shade2"
-i18n:attributes="title"
-style="width:95%;"
 title="enter a new parent, new name, or replacement page (if any) for this one"
+i18n:attributes="title"
 />
-</td>
-<td width="23%">
 <input type="submit" name="reparent:method" value="reparent" 
-style="width:100%;font-weight:normal" class="context"
+style="font-weight:normal"
 title="reparent this page under the page you have entered"
 i18n:attributes="value;title"
 tal:condition="python:user.has_permission('Zwiki: Reparent pages',here)" 
 />
-</td>
-<td width="23%">
 <input type="submit" name="rename:method" value="rename" 
-style="width:100%;font-weight:normal" class="context"
+style="font-weight:normal" 
 title="rename this page to the name you have entered, updating all links"
 i18n:attributes="value;title"
 tal:condition="python:user.has_permission('Zwiki: Rename pages',here)" 
 />
-</td>
-<td width="23%">
 <input type="submit" name="delete:method" value="delete!" 
-style="width:100%;font-weight:normal" class="context"
+style="font-weight:normal"
 title="move this page to the recycle bin, and relink to the name you have entered."
 i18n:attributes="value;title"
 tal:condition="python:user.has_permission('Zwiki: Delete pages',here)" 
 />
+</small>
 </td>
 </tr>
 </table>
