@@ -402,7 +402,7 @@ class MailIn:
         # allowed)..
         page = (self.destpagename and
                 self.workingpage.pageWithFuzzyName(self.destpagename,
-                                                   ignore_case=1))
+                                                   allow_partial=1))
         if page:
             # also adjust working page to get right parentage etc.
             self.destpage = self.workingpage = page
