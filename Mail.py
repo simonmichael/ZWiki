@@ -698,7 +698,7 @@ Content-Type: text/plain; charset="utf-8"
         try:
             self.mailhost().send(msg)
             #BLATHER('sent mail:\n%s' % msg)
-            BLATHER('sent mail to subscribers\n%s\n%s' % (
+            BLATHER('sent mail to subscribers:\nTo: %s\nBcc: %s' % (
                 tohdr,self.bccHeader(recipients)))
         # if there is any failure, notify admin or log
         except:
