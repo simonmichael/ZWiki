@@ -572,8 +572,9 @@ class ZWikiPage(
                  self.bracketLinksAllowed())):
                 # yes - convert to the id of an existing page if possible,
                 # using fuzzy matching, and continue. 
-                p = self.pageWithFuzzyName(linknobrackets) or \
-                    self.issuePageWithNumber(self.issueNumberFrom(linknobrackets))
+                p = self.pageWithFuzzyName(linknobrackets)
+                    #or self.issuePageWithNumber(self.issueNumberFrom(linknobrackets))
+                    #keep freeform links to old IssueNo pages working, no longer needed
                 if p:
                     try: link = p.getId() # XXX poor caching
                     except: link = p.id # all-brains
