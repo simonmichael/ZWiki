@@ -70,7 +70,10 @@ def loadDtmlMethod(name):
     """
     Load the named DTML method from the filesystem.
     """
-    return HTMLFile('skins/default/%s'%name, globals())
+    dm = HTMLFile('skins/default/%s'%name, globals())
+    # work around some (2.7 ?) glitch
+    if not hasattr(dm,'meta_type'): dm.meta_type = 'DTML Method (File)'
+    return dm
 
 def loadStylesheetFile(name):
     """
@@ -138,6 +141,7 @@ DEFAULT_TEMPLATES = {
     'editform'           : loadPageTemplate('editform'),
     'subscribeform'      : loadPageTemplate('subscribeform'),
     'recentchanges'      : loadPageTemplate('recentchanges'),
+    'recentchangesdtml'  : loadDtmlMethod('recentchangesdtml'),
     'searchwiki'         : loadPageTemplate('searchwiki'),
     'searchwikidtml'     : loadDtmlMethod('searchwikidtml'),
     'useroptions'        : loadPageTemplate('useroptions'),
@@ -206,10 +210,12 @@ class UIUtils:
 
         If we are in a CMF site, do nothing; CMF does its own skinning.
         Ditto if the 'bare' keyword is found in REQUEST.  Otherwise, apply
-        - the 'wikipage' page template in our acquisition context
-        - or the standard_wiki_header/standard_wiki_footer dtml methods
-          (legacy support..)
-        - or the default 'wikipage' template, from the filesystem.
+        the 'wikipage' template or (legacy support) the
+        standard_wiki_header / standard_wiki_footer dtml methods.
+        Specifically, use
+        - the wikipage page template in our acquisition context
+        - or the dtml methods, if either can be acquired
+        - or the default wikipage template from the filesystem.
 
         """
         REQUEST = getattr(self,'REQUEST',None)
@@ -221,37 +227,62 @@ class UIUtils:
         folder = self.folder()
         if hasattr(folder,'wikipage') and isPageTemplate(folder.wikipage):
             return folder.wikipage.__of__(self)(self,REQUEST,body=body,**kw)
-        elif ((hasattr(folder,'standard_wiki_header') and
-               isDtmlMethod(folder.standard_wiki_header)) or
-              (hasattr(folder,'standard_wiki_footer') and
-               isDtmlMethod(folder.standard_wiki_footer))):
-            return self.standard_wiki_header(REQUEST) + \
+        elif (hasattr(folder,'standard_wiki_header') and
+              hasattr(folder,'standard_wiki_footer')):
+            return self.getSkinTemplate('standard_wiki_header')(self,REQUEST)+\
                    body + \
-                   self.standard_wiki_footer(REQUEST)
+                   self.getSkinTemplate('standard_wiki_footer')(self,REQUEST)
+            #return self.standard_wiki_header(REQUEST) + \
+            #       body + \
+            #       self.standard_wiki_footer(REQUEST)
         else:
-            return DEFAULT_TEMPLATES['wikipage'].__of__(self)(self,REQUEST,body=body,**kw)
+            return DEFAULT_TEMPLATES['wikipage'].__of__(self)(self,REQUEST,
+                                                              body=body,**kw)
+
+    # XXX
+    #security.declareProtected(Permissions.View, 'standard_wiki_header')
+    #def standard_wiki_header(self, REQUEST=None):
+    #    """
+    #    Return the custom standard_wiki_header or a warning.
+    #    """
+    #    if (hasattr(self.folder(),'standard_wiki_header') and
+    #        isDtmlMethod(self.folder().standard_wiki_header)):
+    #        return self.folder().standard_wiki_header(self,REQUEST)
+    #    else:
+    #        return '<html>\n<body>\nThis wiki has a custom standard_wiki_footer but no corresponding standard_wiki_header. Suggestion: remove it.\n'
+    #
+    #security.declareProtected(Permissions.View, 'standard_wiki_footer')
+    #def standard_wiki_footer(self, REQUEST=None):
+    #    """
+    #    Return the custom standard_wiki_footer or a warning.
+    #    """
+    #    if (hasattr(self.folder(),'standard_wiki_footer') and
+    #        isDtmlMethod(self.folder().standard_wiki_footer)):
+    #        return self.folder().standard_wiki_footer(self,REQUEST)
+    #    else:
+    #        return '<p>This wiki has a custom standard_wiki_header but no corresponding standard_wiki_footer. Suggestion: remove it.</body></html>'
 
 
 class GeneralForms:
     """ 
-    This mixin provides most of the main UI form/view methods. 
+    This mixin provides most of the main UI forms/views.
 
-    Perhaps these will move to their specific modules.
+    Perhaps these should move to their respective modules.
     """
     security = ClassSecurityInfo()
 
-    # XXX kludge: the wikipage template is usually applied by addSkinTo,
-    # but provide this here so you can configure it as the "view" method
-    # in portal_types -> Wiki Page -> actions to force the use of Zwiki's
-    # non-CMF skin inside CMF
     security.declareProtected(Permissions.View, 'wikipage')
     def wikipage(self, dummy=None, REQUEST=None, RESPONSE=None):
         """
         Render the main page view (template-customizable).
+
+        The wikipage template is usually applied by addSkinTo;
+        this is provided so you can configure it as the "view" method
+        in portal_types -> Wiki Page -> actions to Zwiki's standard skin
+        inside a CMF/Plone site.
         """
-        return self.getSkinTemplate('wikipage')(self,
-                                                REQUEST,
-                                                body=self.render()) #XXX temporary kludge! eh ?
+        return self.getSkinTemplate('wikipage')(self,REQUEST,
+                                                body=self.render())
            
     security.declareProtected(Permissions.View, 'wikipage_macros')
     def wikipage_macros(self, REQUEST=None):
@@ -262,29 +293,6 @@ class GeneralForms:
         """
         return self.getSkinTemplate('wikipage_macros')
            
-    # XXX
-    security.declareProtected(Permissions.View, 'standard_wiki_header')
-    def standard_wiki_header(self, REQUEST=None):
-        """
-        Return the custom standard_wiki_header or a warning.
-        """
-        if (hasattr(self.folder(),'standard_wiki_header') and
-            isDtmlMethod(self.folder().standard_wiki_header)):
-            return self.folder().standard_wiki_header(self,REQUEST)
-        else:
-            return '<html>\n<body>\nThis wiki has a custom standard_wiki_footer but no corresponding standard_wiki_header. Suggestion: remove it.\n'
-
-    security.declareProtected(Permissions.View, 'standard_wiki_footer')
-    def standard_wiki_footer(self, REQUEST=None):
-        """
-        Return the custom standard_wiki_footer or a warning.
-        """
-        if (hasattr(self.folder(),'standard_wiki_footer') and
-            isDtmlMethod(self.folder().standard_wiki_footer)):
-            return self.folder().standard_wiki_footer(self,REQUEST)
-        else:
-            return '<p>This wiki has a custom standard_wiki_header but no corresponding standard_wiki_footer. Suggestion: remove it.</body></html>'
-
     security.declareProtected(Permissions.View, 'stylesheet')
     def stylesheet(self, REQUEST=None):
         """
