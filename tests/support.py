@@ -22,6 +22,11 @@ def zwikiAfterSetUp(self):
 
     self is a ZopeTestCase instance; this should be called from it's
     afterSetUp method.
+
+    WARNING: this sets self.page.request at the beginning of the test.
+    If you replace it with a new one, be sure to set page.request again
+    and not just past REQUEST as an argument to avoid confusing DTML.
+    
     """
     # grant all zwiki permissions by default
     from Products.ZWiki import Permissions
@@ -78,15 +83,20 @@ class MockRequest(HTTPRequest):
 
     like makerequest without the app dependency
     """
-    def __init__(self):
+    def __init__(self,language=None):
         resp = HTTPResponse(stdout=sys.stdout)
         environ={}
         environ['SERVER_NAME']='foo'
         environ['SERVER_PORT']='80'
         environ['REQUEST_METHOD'] = 'GET'
         environ['SCRIPT_NAME']='/foo/test'
+        environ['SESSION']=None
+        self.SESSION={}
         HTTPRequest.__init__(self,None,environ,resp)
-
+        if language: self.setLanguage(language)
+    def setLanguage(self,language):
+        self.environ['HTTP_ACCEPT_LANGUAGE']=language
+        
 class MockUser:
     def __init__(self,username='testuser'):
         self.username = username
@@ -117,7 +127,7 @@ class MockZWikiPage(ZWikiPage):
 
     - some zopish things don't work and are too much work to mock.
 
-    - time wasted debugging problems arising from use of this
+    - much time wasted debugging obscure mockup-related problems
 
     """
     def __init__(self, source_string='', mapping=None, __name__='TestPage',
