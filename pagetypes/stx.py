@@ -387,27 +387,7 @@ class MyDocumentWithImages(DocumentWithImages):
 
         # XXX bad, but we just don't want to hear about STX table breakage
         except:
-            titlestr=_('Structured Text table rendering error')
-            return MessageDialog(
-                title=titlestr,
-                message="""
-                <b>%s</b>
-                <p>
-                %s
-                <p>
-                %s
-                """ % (titlestr,
-                       _("""
-                       Sorry, but a Structured Text table in this page
-                       gave an error while rendering.  This happens due to
-                       incorrect spacing, the wrong number of column
-                       separators, etc.  Please correct the table,
-                       following the Structured Text rules, or remove it,
-                       so that this page can be displayed.
-                       """),
-                       _("To edit this page, click OK."),
-                       ),
-                action=self.page_url()+'/editform')
+            return StructuredTextTable([],'',subs,indent=paragraph.indent)
             
 MyDocumentWithImages = MyDocumentWithImages()
     
