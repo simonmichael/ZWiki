@@ -1,14 +1,15 @@
 # TrackerSupport mixin
 
 from __future__ import nested_scopes
-import string, re
+import os, string, re
 from string import join, split, strip
 
 import DocumentTemplate
 from AccessControl import getSecurityManager, ClassSecurityInfo
 import Permissions
+from Globals import package_home
 
-from Utils import BLATHER
+from Utils import BLATHER,formattedTraceback
 from Defaults import ISSUE_CATEGORIES, ISSUE_SEVERITIES, ISSUE_STATUSES, \
      ISSUE_COLOURS
 
