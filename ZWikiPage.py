@@ -803,9 +803,9 @@ class ZWikiPage(
 
         Any keyword arguments will be passed through to the catalog, for
         refining the search, sorting etc. When there is no catalog, only
-        these arguments are supported: id, Title, text, and they do case
-        insensitive partial matching.  With no arguments, all pages in the
-        wiki are returned.
+        these arguments are supported: id, Title, text, isIssue, and they
+        do case insensitive partial matching.  With no arguments, all
+        pages in the wiki are returned.
 
         With a partial catalog, ie a catalog which does not include all
         the metadata Zwiki expects, we'll get the missing fields from the
@@ -862,6 +862,10 @@ class ZWikiPage(
                     if arg == 'Title':
                         results = filter(
                             lambda x:find(x.Title.lower(),value.lower()) != -1,
+                            results)
+                    if arg == 'isIssue':
+                        results = filter(
+                            lambda x:self.isIssue(x.Title) == value,
                             results)
                     #if arg == 'sort_order':
                     #if arg == 'sort_on':
