@@ -11,7 +11,7 @@ from App.Common import rfc1123_date
 from AccessControl import getSecurityManager, ClassSecurityInfo
 import Permissions
 import Globals
-from Globals import MessageDialog, HTMLFile, DTMLFile
+from Globals import MessageDialog
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from OFS.Image import File
 from Products.PageTemplates.Expressions import SecureModuleImporter
@@ -19,7 +19,7 @@ from Products.PageTemplates.Expressions import SecureModuleImporter
 from Defaults import PAGE_METATYPE, DEFAULT_DISPLAYMODE
 from Utils import BLATHER,formattedTraceback
 from Regexps import htmlheaderexpr, htmlfooterexpr, htmlbodyexpr
-from I18nSupport import _
+from I18nSupport import _, DTMLFile, HTMLFile
 
 
 # utilities
@@ -51,6 +51,8 @@ def loadDtmlMethod(name,dir='skins/standard'):
     """
     Load the named DTML method from the filesystem.
     """
+    # need this one for i18n gettext patch to work ?
+    #dm = DTMLFile(os.path.join(dir,name), globals())
     dm = HTMLFile(os.path.join(dir,name), globals())
     # work around some (2.7 ?) glitch
     if not hasattr(dm,'meta_type'): dm.meta_type = 'DTML Method (File)'
