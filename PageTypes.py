@@ -10,11 +10,15 @@ except ImportError: pass #older zope, won't need it
 from Utils import BLATHER, html_quote, html_unquote, formattedTraceback, \
      ZOPEVERSION
 try:
-    # start headings at level 2, not 3; will affect all rst clients
-    # XXX not working
     import reStructuredText # import this one first
-    import docutils.writers.html4zope
-    docutils.writers.html4zope.default_level = 2
+    try:
+        # start headings at level 2, not 3; will affect all rst clients
+        # XXX not working
+        import docutils.writers.html4zope
+        docutils.writers.html4zope.default_level = 2
+    except ImportError:
+        # new zope 2.7.1, without html4zope
+        pass
 except ImportError:
     reStructuredText = None
     BLATHER('could not import reStructuredText, will not be available')
