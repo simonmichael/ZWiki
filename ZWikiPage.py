@@ -75,6 +75,7 @@ from CMF import CMFAwareness
 from Comments import CommentsSupport
 from Admin import AdminSupport
 from Editing import EditingSupport
+from RSS import RSSMixin
 from I18nSupport import DTMLFile, _
 from pagetypes import PAGETYPES, PAGE_TYPES
 from pagetypes.common import MIDSECTIONMARKER
@@ -95,6 +96,7 @@ class ZWikiPage(
     CommentsSupport,
     AdminSupport,
     Utils,
+    RSSMixin,
     PLUGINS[0],     # runtime mixins hack, see plugins
     PLUGINS[1],
     PLUGINS[2],
