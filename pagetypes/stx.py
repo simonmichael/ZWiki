@@ -387,7 +387,7 @@ class MyDocumentWithImages(DocumentWithImages):
 
         # XXX bad, but we just don't want to hear about STX table breakage
         except:
-            titlestr=_('Structed Text table rendering error')
+            titlestr=_('Structured Text table rendering error')
             return MessageDialog(
                 title=titlestr,
                 message="""
