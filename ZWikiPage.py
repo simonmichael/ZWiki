@@ -1015,18 +1015,26 @@ class ZWikiPage(
     security.declareProtected(Permissions.View, 'defaultPage')
     def defaultPage(self):
         """
-        Return this wiki's default page (object).
+        Return this wiki's default/front page object.
 	
-	That is the page named in the default_page property,
-	or FrontPage,
-        or the first page object in the folder, 
-	or None.
+	That is:
+        -a page named in the default_page string or lines property
+	-or the page named FrontPage
+        -or the first page object in the folder
+	-or None.
         """
-        # XXX need to handle a plone-like list property also
-        # XXX and will this pick up default_page from portal_properties ?
-        return (
-            self.pageWithName(getattr(self.folder(),'default_page','FrontPage'))
-            or (list(self.pageObjects())+[None])[0]) # pageObjects may be a LazyMap
+        # default_page property could be a list, tuple or string
+        default_page_names = getattr(self.folder(),'default_page',[])
+        if type(default_page_names) == StringType: 
+            default_page_names = [default_page_names]
+        elif type(default_page_names) == TupleType:
+            default_page_names = list(default_page_names)
+        default_page_names.append('FrontPage')
+        for name in default_page_names:
+            p = self.pageWithName(name)
+            if p: return p
+        # pageObjects could be a LazyMap
+        return (list(self.pageObjects())+[None])[0]
         
     security.declareProtected(Permissions.View, 'defaultPageId')
     def defaultPageId(self):
