@@ -280,14 +280,13 @@ class GeneralForms:
 
         Template-customizable. Unlike the other skin methods, this one can
         be overridden by either a 'stylesheet' or a 'stylesheet.css'
-        template - for now. Also the template in this case is usually a
-        File (but can also be a page template or dtml method). A File
-        (static stylesheet) will have it's last-modified header set so it
-        caches somewhat, but note even a File or the builtin default will
-        get loaded at least once per page, since the standard skin links
-        here with a per-page url.  XXX can we do better ? always inline
-        the stylesheet ?
-        
+        template - this is a little annoying.
+
+        Also the template in this case is usually a File (but can also be
+        a page template or dtml method for a dynamic stylesheet). When a
+        File is used the Last-modified header is set to help caching.
+        (Also, all pages use a single stylesheet url -
+        DEFAULTPAGE/stylesheet).
         """
         if REQUEST: REQUEST.RESPONSE.setHeader('Content-Type', 'text/css')
         #XXX self.getSkinTemplate('stylesheet')
