@@ -73,17 +73,6 @@ class CommentsSupport:
         """
         Return the messages on this page as a Mailbox (iterator of Message)
         """
-        # we used to have a problem handling unicode.. perhaps no longer
-        # unicode may get added to the page:
-        # - via user edit
-        # - when a comment is posted and the local timezone contains unicode
-        # - when rename writes a placeholder page (because of the use of _() !)
-        #try:
-        #    return UnixMailbox(StringIO(self.text()))
-        #except TypeError:
-        #    BLATHER(self.id(),'contains unicode, could not parse comments')
-        #    return UnixMailbox(StringIO(''))
-
         # from mailbox docs: this is defensive against ill-formed MIME
         # messages in the mailbox, but you have to be prepared to receive
         # the empty string from the mailbox's `next()' method
