@@ -10,6 +10,7 @@ from AccessControl import getSecurityManager
 from OFS.Image import Image, File
 from OFS.ObjectManager import customImporters
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
+from Products.PythonScripts.PythonScript import PythonScript
 from ZWikiPage import ZWikiPage
 from Defaults import ALLOWED_PAGE_TYPES
 from I18nSupport import DTMLFile
@@ -105,6 +106,9 @@ def addZWikiWebFromFs(self, new_id, title='', wiki_type='zwikidotorg',
             _addZWikiPage(ob,id,title='',page_type=type,file=text)
         elif type == 'pt':
             ob._setObject(id, ZopePageTemplate(id, text, 'text/html'))
+        elif type == 'py':
+            ob._setObject(id, PythonScript(id))
+            ob._getOb(id).write(text)
         elif type == 'zexp' or type == 'xml':
             connection = self.getPhysicalRoot()._p_jar
             ob._setObject(id, connection.importFile(dir + os.sep + filename, 
