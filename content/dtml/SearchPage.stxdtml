@@ -11,30 +11,40 @@
 
 <table border="0" width="100%">
 <tr>
-<td width="50%">
+<td>
 <form method="GET" action="&dtml-URL;">
   search this wiki:<br />
-  <input name="expr" type="text" size="30" value="<dtml-var expr html_quote missing>" accesskey="s">
-  <input type="submit" name="submit" value="<dtml-translate domain=zwiki>Search</dtml-translate>">
+  <input name="expr" type="text" size="20" value="<dtml-var expr html_quote missing>" accesskey="s"
+  /><input type="submit" name="submit" value="<dtml-translate domain=zwiki>Search</dtml-translate>" />
 </form>
 </td>
-<td width="50%">
+<td>
 <form method="GET" action="http://www.google.com/custom">
   google search this wiki:<br />
   <input type="hidden" name="sitesearch"  value="<dtml-var "wikiUrl().split('/')[2]">" />
-  <input type="text" size="30" name="q" value="<dtml-var expr html_quote missing>" />
   <input type="hidden" name="cof" VALUE="L:&dtml-SERVER_URL;/misc_/ZWiki/ZWikiPage_icon.gif"" />
   <input type="hidden" name="site" value="<dtml-var "wikiUrl().split('/')[2]">" />
-  <input type="submit" VALUE="Search" />
+  <input type="text" size="20" name="q" value="<dtml-var expr html_quote missing>" 
+  /><input type="submit" VALUE="Search" />
 </form>
 </td>
+<dtml-if "_.has_key('thoroughexpr')">
+<td>
+<!-- for spam hunting -->
+<form method="GET" action="&dtml-URL;">
+  thorough search (for spam, etc.):<br />
+  <input name="thoroughexpr" type="text" size="20" value="<dtml-var thoroughexpr html_quote missing>"
+  /><input type="submit" name="submit" value="<dtml-translate domain=zwiki>Search</dtml-translate>" />
+</form>
+</td>
+</dtml-if>
 </tr>
 </table>
 
 <!-- results -->
 <dtml-if "_.has_key('expr')">
 <dtml-let 
- wikiurl=wiki_url
+ wikiurl=wikiUrl
  comment="0
  # Catalog notes
  #
@@ -97,6 +107,25 @@
     <dt>error</dt>
   </dtml-try>
 </dtml-in>
+
+</dtml-let>
+</dtml-if>
+
+<dtml-if "_.has_key('thoroughexpr')">
+<dtml-let wikiurl=wikiUrl>
+<p>
+<b><dtml-translate domain=zwiki>Thorough (non-catalog) search for text matching</dtml-translate> &dtml.html_quote-thoroughexpr;:</b>
+<br /><br />
+<dtml-call "REQUEST.set('count',0)">
+<dtml-in "aq_parent.objectValues(spec='ZWiki Page')" sort=Title>
+  <dtml-unless "_.string.find(_.string.lower(_.getitem('sequence-item').raw),_.string.lower(thoroughexpr)) == -1 and _.string.find(_.string.lower(id()),_.string.lower(thoroughexpr)) == -1">
+    <dtml-call "REQUEST.set('count',REQUEST.count + 1)">
+    <a href="&dtml-wikiurl;/&dtml.url_quote-id;">&dtml-Title;</a>
+    (<a href="&dtml-wikiurl;/&dtml.url_quote-id;/diff">diff</a>,
+    <a href="&dtml-wikiurl;/&dtml.url_quote-id;/manage_change_history_page">history</a>)<br>
+  </dtml-unless>
+</dtml-in>
+<p><b>(<dtml-var count>)</b>
 
 </dtml-let>
 </dtml-if>

@@ -98,5 +98,26 @@
   </dtml-try>
 </dtml-in>
 
+
+
+<dtml-comment>
+<!-- for spam hunting, etc. -->
+<p>
+<b><dtml-translate domain=zwiki>Thorough (non-catalog) search</dtml-translate>:</b>
+<br /><br />
+<dtml-call "REQUEST.set('count',0)">
+<dtml-in "aq_parent.objectValues(spec='ZWiki Page')" sort=Title>
+  <dtml-unless "_.string.find(_.string.lower(_.getitem('sequence-item').raw),_.string.lower(expr)) == -1 and _.string.find(_.string.lower(id()),_.string.lower(expr)) == -1">
+    <dtml-call "REQUEST.set('count',REQUEST.count + 1)">
+    <a href="&dtml-wikiurl;/&dtml.url_quote-id;">&dtml-Title;</a>
+    (<a href="&dtml-wikiurl;/&dtml.url_quote-id;/diff">diff</a>,
+    <a href="&dtml-wikiurl;/&dtml.url_quote-id;/manage_change_history_page">history</a>)<br>
+  </dtml-unless>
+</dtml-in>
+<p><b>(<dtml-var count>)</b>
+</dtml-comment>
+
+
+
 </dtml-let>
 </dtml-if>
