@@ -11,7 +11,7 @@
 # update version.txt, make version
 # record all
 # make test
-# make releasetag
+# make rctag or releasetag
 # make push
 # make release
 # make rpush
@@ -217,10 +217,13 @@ mergetag:
 mergeuntag:
 	#@echo do: cvs tag -d -r HEAD merge-$(VERSION)+1
 
-releasetag:
+rctag:
 	darcs tag -m release-$(VERSION)
 
-releaseuntag:
+releasetag:
+	darcs tag --checkpoint -m release-$(VERSION)
+
+untag:
 	cvs tag -d release-$(VERSION)
 
 release: clean #releasetag
@@ -597,3 +600,9 @@ mo:
 # skins/{css,wiki,zpt_wiki,zwiki_cmf,zwiki_orig}
 # templates
 # wikis
+
+epydoc:
+	PYTHONPATH=/zope/lib/python \
+	 epydoc --docformat restructuredtext \
+	        --target /var/www/zopewiki.org/epydoc  \
+	        /zope/lib/python/Products/* /zope1/Products/*

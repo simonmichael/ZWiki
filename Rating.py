@@ -86,7 +86,9 @@ class RatingSupport:
         """
         Get this page's average rating (an integer).
         """
-        if self.hasVotes(): return sum(self.votes().values())/self.voteCount()
+        if self.hasVotes():
+            #return sum(self.votes().values())/self.voteCount()
+            return reduce(lambda a,b:a+b,self.votes().values())/self.voteCount()
         else: return 0
 
     security.declareProtected(Permissions.View, 'ratingform')

@@ -761,6 +761,19 @@ class EditingSupport:
         # strip any browser-appended ^M's
         t = re.sub('\r\n', '\n', t)
 
+        # XXX epoz & dtml compatibility
+        # editing a page with Epoz changes
+        # <dtml-var "TestPage(bare=1,REQUEST=REQUEST)"> to
+        # <dtml-var ="" testpage(bare="1,REQUEST=REQUEST)&quot;"></dtml-var>
+        #
+        # <dtml-var expr="TestPage(bare=1,REQUEST=REQUEST)"> does better
+        # but still gets a </dtml-var> added.. we can strip this.  At
+        # least now a dtml page or method can be included safely in an
+        # epoz page.
+        #BLATHER('text from epoz:',t[:100])
+        #t = re.sub(r'</dtml-var>','',t)
+        #BLATHER('saving text:',t[:100])
+
         # convert international characters to HTML entities for safekeeping
         #for c,e in intl_char_entities:
         #    t = re.sub(c, e, t)
