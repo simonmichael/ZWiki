@@ -443,55 +443,55 @@ class MailSupport:
         """
         return getattr(self,'mailout_policy','comments')
 
-    def formatMailout(self, text):
-        """
-        Format some text (usually a page diff) for email delivery.
-
-        This is supposed to present a diff, but in the most human-readable
-        and clutter-free way possible, since people may be receiving many
-        of these. In the case of a simple comment, it should look as if
-        the comment was just forwarded out.  See
-        test_formatMailout/testEndToEndCommentFormatting for examples.
-
-        """
-        if not text: return ''
-        
-        # try to do some useful formatting
-        # wrap and fill each paragraph, except indented ones,
-        # and preserve citation prefixes
-        paragraphs = stripList(split(text,'\n\n'))
-        for i in range(len(paragraphs)):
-            p = paragraphs[i]
-            indent = len(p) - len(lstrip(p))
-            #if indent or p[0] == '>': continue
-            if indent: continue
-            m = re.match(r'^[>\s]+',p)
-            if m:
-                prefix = m.group()
-                p = re.sub(r'(?m)^'+prefix,'',p)
-            else:
-                prefix = ''
-            # TextFormatter loses a trailing newline
-            # (and a single leading newline, but that shouldn't apply)
-            if p[-1] == '\n': nl = '\n'
-            else: nl = ''
-            p = TextFormatter([{'width':70-len(prefix),
-                                'margin':0,
-                                'fill':1,
-                                'pad':0}]).compose([p])
-            p = re.sub(r'(?m)^',prefix,p)
-            p += nl
-            paragraphs[i] = p
-            
-        text = join(paragraphs,'\n\n')
-
-        # strip leading newlines
-        text = re.sub(r'(?s)^\n+',r'',text)
-        # strip trailing newlines
-        text = re.sub(r'(?s)\n+$',r'\n',text)
-        # lose any html quoting
-        text = html_unquote(text)
-        return text
+    #def formatMailout(self, text):
+    #    """
+    #    Format some text (usually a page diff) for email delivery.
+    #
+    #    This is supposed to present a diff, but in the most human-readable
+    #    and clutter-free way possible, since people may be receiving many
+    #    of these. In the case of a simple comment, it should look as if
+    #    the comment was just forwarded out.  See
+    #    test_formatMailout/testEndToEndCommentFormatting for examples.
+    #
+    #    """
+    #    if not text: return ''
+    #    
+    #    # try to do some useful formatting
+    #    # wrap and fill each paragraph, except indented ones,
+    #    # and preserve citation prefixes
+    #    paragraphs = stripList(split(text,'\n\n'))
+    #    for i in range(len(paragraphs)):
+    #        p = paragraphs[i]
+    #        indent = len(p) - len(lstrip(p))
+    #        #if indent or p[0] == '>': continue
+    #        if indent: continue
+    #        m = re.match(r'^[>\s]+',p)
+    #        if m:
+    #            prefix = m.group()
+    #            p = re.sub(r'(?m)^'+prefix,'',p)
+    #        else:
+    #            prefix = ''
+    #        # TextFormatter loses a trailing newline
+    #        # (and a single leading newline, but that shouldn't apply)
+    #        if p[-1] == '\n': nl = '\n'
+    #        else: nl = ''
+    #        p = TextFormatter([{'width':70-len(prefix),
+    #                            'margin':0,
+    #                            'fill':1,
+    #                            'pad':0}]).compose([p])
+    #        p = re.sub(r'(?m)^',prefix,p)
+    #        p += nl
+    #        paragraphs[i] = p
+    #        
+    #    text = join(paragraphs,'\n\n')
+    #
+    #    # strip leading newlines
+    #    text = re.sub(r'(?s)^\n+',r'',text)
+    #    # strip trailing newlines
+    #    text = re.sub(r'(?s)\n+$',r'\n',text)
+    #    # lose any html quoting
+    #    text = html_unquote(text)
+    #    return text
 
     def sendMailToSubscribers(self, text, REQUEST, subjectSuffix='',
                               subject='',message_id=None,in_reply_to=None,
