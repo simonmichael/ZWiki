@@ -4,12 +4,6 @@
       tal:define="
       title   string:${container/title} ${here/title_or_id} diffs;
       macros  python:here.wikipage_macros(request).macros;
-      displaymode python: here.displayMode();
-      minimal     python: displaymode=='minimal';
-      simple      python: displaymode=='simple';
-      full        python: displaymode=='full';
-      hierarchy   python: request.get('zwiki_showhierarchy',0);
-      linearhdr   python: 0 #displaymode=='full';
       revA options/revA; 
       difftext options/difftext;
       ">
@@ -21,92 +15,23 @@
 
 <div metal:use-macro="macros/linkpanel"></div>
 
-<div id="pageheading">
-  <form method="GET" 
-        tal:define="
-        methodname string:searchwiki;
-        pagename string:SearchPage; 
-        page python:here.pageWithName(pagename);
-        pagehasdtml python:page and page.dtmlAllowed() and page.hasDynamicContent();
-        url python:(pagehasdtml and page.id()) or (here.defaultPageId()+'/'+methodname);
-        "
-        tal:attributes="action python:here.wiki_url()+'/'+url;"
-        action="">
-
-    <!-- page heading in full & simple mode -->
-    <table tal:condition="not: minimal"
-           width="100%" border="0" cellspacing="0" class=""
-           tal:attributes="class python: nothing #not minimal and 'shade1' or nothing">
-      <tr>
-
-        <!-- ...logo -->
-        <td id="logo" width="1%" valign="top"
-            tal:attributes="id python: full and 'logo_full' or 'logo_simple'">
-          <span metal:use-macro="macros/logolink"></span>
-        </td>
-        <!-- ...page name + maybe parent context -->
-        <td id="pagenameand_linear" align="left" width="59%"
-            tal:condition="python: hierarchy and linearhdr">
-          <span metal:use-macro="macros/pagenameand_linear"></span>
-        </td>
-        <td id="pagenameand" align="left" width="59%"
-            tal:condition="python: hierarchy and not linearhdr">
-          <span metal:use-macro="macros/pagenameand"></span>
-        </td>
-        <td width="20%"><h1 tal:content="string: Changes in revision ${revA}"></h1>
-        </td>
-        <td id="pagenameonly" align="left" width="59%"
-            tal:condition="not: hierarchy">
-          <span metal:use-macro="macros/pagename"></span>
-        </td>
-      </tr>
-    </table>
-
-    <!-- page heading in minimal mode -->
-    <!-- twk: use table for minimal so logo and pagename are aligned consistently 
-         in simple & minimal -->
-    <table width="100%" border="0" cellspacing="0" tal:condition="minimal">
-      <tr>
-
-        <!-- ...logo -->
-        <td id="logo_minimal" width="1%" valign="middle">
-          <span metal:use-macro="macros/logolink"></span>
-        </td>
-
-        <!-- ...page name + maybe parent context -->
-        <td id="pagenameand_linear" align="left" width="79%"
-            tal:condition="python: hierarchy and linearhdr">
-          <span metal:use-macro="macros/pagenameand_linear"></span>
-        </td>
-        <td id="pagenameand" align="left" width="79%"
-            tal:condition="python: hierarchy and not linearhdr">
-          <span metal:use-macro="macros/pagenameand"></span>
-        </td>
-        <td id="pagenameonly" align="left" width="79%"
-            tal:condition="not: hierarchy">
-          <span metal:use-macro="macros/pagename"></span>
-        </td>
-
-        <!-- ...edit links + search box -->
-        <!-- twk: put otherlinks here rather than in a table above this -->
-        <td id="searchbox" width="20%" align="right" nowrap="nowrap"
-            tal:define="showsearch python:request.get('zwiki_showsearch',1)">
-          <span metal:use-macro="macros/displaymodes"></span>
-          <span metal:use-macro="macros/editlinks"></span>
-          <div tal:condition="python:1">
-            <input id="searchinput" class="formfield" tal:condition="showsearch"
-                   name="expr" type="text" size="20" maxlength="100" value="" 
-                   title="search all pages" accesskey="s" style="width: 95%" /> 
-            <!-- XXX hack: width 95% keeps moz from chopping off right end 
-                 with 1px borders -->
-          </div>
-        </td>
-
-      </tr>
-    </table>
-
-  </form>
-</div>
+<table width="100%" border="0" cellspacing="0" cellpadding="3" tal:condition="python:0">
+<tr>
+<td width="1%" valign="middle">
+<a 
+tal:condition="python:request.get('zwiki_showlogo',1)"
+tal:attributes="href here/wiki_url"
+href="wiki_url" title="go to home page" accesskey="f">
+<img 
+tal:replace="structure container/site_logo|default"
+src="/misc_/ZWiki/ZWikiPage_icon.gif" height="48" width="48" border="0" alt="home" />
+</a>
+</td>
+<td valign="middle">
+<h1><span i18n:translate="">Diffs for</span> <span tal:replace="here/title_or_id">Pagename..</span></h1>
+</td>
+</tr>
+</table>
 <!-- end of header -->
 
 <div id="formcontent">
