@@ -415,7 +415,7 @@
  <!-- add issue form handler ------------------------- -->
  <dtml-if "REQUEST.get('submitted',0) and REQUEST.get('newtitle',0)">
    <dtml-let
-    newtitle="getattr(REQUEST,'newtitle','')"
+    newtitle="_.getattr(REQUEST,'newtitle','')"
     newtext="_.getattr(REQUEST,'newtext','')"
     newcategory="_.getattr(REQUEST,'newcategory','zwiki: general')"
     newseverity="_.getattr(REQUEST,'newseverity','normal')"

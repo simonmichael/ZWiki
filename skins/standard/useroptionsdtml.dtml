@@ -257,7 +257,7 @@ value="<dtml-translate domain=zwiki>Forget options</dtml-translate>"
 tabindex=14> 
 </div>
 <input type="hidden" name="zwiki_displaymode" 
-value="<dtml-var "REQUEST.get('zwiki_displaymode',_.getattr(aq_parent,'default_displaymode','minimal'))">">
+value="<dtml-var "REQUEST.get('zwiki_displaymode',getattr(aq_parent,'default_displaymode','minimal'))">">
 
 </form>
 </dtml-with>
