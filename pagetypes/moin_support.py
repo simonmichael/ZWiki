@@ -903,7 +903,8 @@ class Parser:
                 self.formatter.in_p) and lastpos<len(line):
             result.append(self.formatter.paragraph(1))
         result.append(self.formatter.text(line[lastpos:]))
-        return u''.join(result)
+        #return u''.join(result)
+        return u''.join(unicode(result))
 
     def replace(self, match):
         #hit = filter(lambda g: g[1], match.groupdict().items())
