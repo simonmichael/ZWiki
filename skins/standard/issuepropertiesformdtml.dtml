@@ -1,3 +1,4 @@
+<dtml-call "RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
 <!-- issue properties form -->
 <form action="&dtml-page_url;/changeIssueProperties" method="post">
 <table border="0" cellspacing="0" cellpadding="5"
@@ -54,7 +55,7 @@ years="days / 365"
 hours="_.int(_.math.floor((elapsed-days)/hourfactor))"
 minutes="_.int(_.math.floor((elapsed-days-hourfactor*hours)/minutefactor))"
 seconds="_.int(_.round((elapsed-days-hourfactor*hours-minutefactor*minutes)/secondsfactor))"
->(<dtml-unless creation_time>unknown, ></dtml-unless><dtml-if years>
+> (<dtml-unless creation_time>unknown, ></dtml-unless><dtml-if years>
 <dtml-var years> year<dtml-var "years > 1 and 's' or ''">
 <dtml-elif months>
 <dtml-var months> month<dtml-var "months > 1 and 's' or ''">

@@ -1,3 +1,4 @@
+<dtml-call "RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
 <p>
   <dtml-translate domain=zwiki>Enter a word or phrase and hit enter to search the entire wiki.</dtml-translate>
   <dtml-translate domain=zwiki>This is the same as using the search field at top right.</dtml-translate>  
