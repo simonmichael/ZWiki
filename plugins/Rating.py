@@ -29,6 +29,9 @@ class RatingSupport:
 
     Votes are stored as a dictionary keyed by username/ip address.
     A user can change their vote by re-voting, or cancel their vote.
+
+    In theory at least, votes are strings.  The rating method interprets
+    votes as numbers and returns the average.
     """
     security = ClassSecurityInfo()
 
@@ -57,10 +60,16 @@ class RatingSupport:
     def vote(self,score=None,REQUEST=None):
         """
         Record a user's vote for this page (or unrecord it).
+
+        To help with image-button forms, if score is a list, use just the
+        last element.  Zope/browsers seem to marshal the score.x and
+        score.y coordinates into a list along with the value.
         """
         username = self.usernameFrom(REQUEST)
         if username:
             votes = self.votes()
+            if type(score) == type([]):
+                score = score[-1]
             if score is None:
                 try:
                     del votes[username]
@@ -71,7 +80,14 @@ class RatingSupport:
                 BLATHER("%s: recorded %s vote for %s" % (self.pageName(),score,username))
             self.setVotes(votes)
             self.reindex_object() # XXX only need update votes fields
-            if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1']+'#ratingform')
+            if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1']) #+'#ratingform')
+
+    security.declareProtected(Permissions.Rate, 'rate')
+    def unvote(self,REQUEST=None):
+        """
+        Unrecord a user's vote for this page.
+        """
+        return self.vote(None,REQUEST)
 
     security.declareProtected(Permissions.View, 'voteCount')
     def voteCount(self):
@@ -86,19 +102,29 @@ class RatingSupport:
     security.declareProtected(Permissions.View, 'myVote')
     def myVote(self,REQUEST=None):
         """
-        What is the user's current rating for this page ? May be None.
+        What is the current user's recorded vote for this page ? 
+
+        Returns a string or None.
         """
         return self.votes().get(self.usernameFrom(REQUEST),None)
 
     security.declareProtected(Permissions.View, 'rating')
     def rating(self):
         """
-        Get this page's average rating (an integer).
+        Return this page's overall rating, an integer.
+
+        Interprets the recorded votes as numbers, as far as possible, and
+        returns their average.  But if there have been no votes, returns a
+        default rating of 1. This is so we can represent negative ratings
+        with a standard simple five-star graphic. (New pages have 1 star,
+        no stars means a bad page.)
         """
         if self.hasVotes():
-            #return sum(self.votes().values())/self.voteCount()
-            return reduce(lambda a,b:a+b,self.votes().values())/self.voteCount()
-        else: return 0
+            #return sum(self.votes().values())/self.voteCount() # what was wrong here
+            return reduce(lambda a,b:int(a)+int(b),
+                          self.votes().values())/self.voteCount()
+        else:
+            return 1
 
     # UI methods
 
