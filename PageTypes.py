@@ -89,7 +89,7 @@ class AbstractPageType:
         return t
 
     def escapeEmailAddresses(self,page,text):
-        return re.sub(r'(?<!mailto:)([\w\-\+\.]+)@([\w\-\+\.]+)\.([\w\-\+\.]+)([^>]*<|$)', 
+        return re.sub(r'(?<!mailto:)\b(?!msg\d{14}-\d{4})(?<!msg\d{14}-)(\w[\w\-\+\.]*)@([\w\-\.]+)\.([\w\-\.]+)\b([^>]*<|$)', 
             lambda m: '<span class="nospam1">&#' + str(ord(m.groups()[0][0])) 
                 + m.groups()[0][1:] 
                 + '<!-- foobar --></span>&#64;<span class="nospam2">' 
