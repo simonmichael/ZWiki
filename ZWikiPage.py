@@ -74,7 +74,7 @@ from CatalogAwareness import CatalogAwareness
 from Tracker import TrackerSupport
 from CMF import CMFAwareness
 from Fit import FitSupport
-from Messages import MessagesSupport
+from Comments import CommentsSupport
 from PurpleNumbers import PurpleNumbersSupport
 from Admin import AdminSupport
 from Editing import EditingSupport
@@ -114,7 +114,7 @@ class ZWikiPage(
     TrackerSupport,
     CMFAwareness,
     FitSupport,
-    MessagesSupport,
+    CommentsSupport,
     PurpleNumbersSupport,
     AdminSupport,
     Utils,

@@ -1,5 +1,4 @@
-# Messages mixin
-# to  be renamed to Comments ?
+# CommentsSupport mixin
 # related to Mail.py
 
 import sys, os, string, re, email, email.Errors
@@ -17,17 +16,19 @@ from Utils import BLATHER, html_quote, DateTimeSyntaxError, \
 from Regexps import fromlineexpr
 
 
-class MessagesSupport:
+class CommentsSupport:
     """
     This mix-in class handles comments stored as rfc2822 messages in the page.
 
-    This class looks for messages in the page text, in mbox/RFC2822
-    format, and provides services for parsing and displaying them.
-    Everything above the first message is considered the document part,
-    the rest of the page is considered the messages part.
+    This class looks for comments in mbox/RFC2822 format in the page text,
+    and provides services for parsing and displaying them.  Everything
+    above the first comment is considered the document part, the rest of
+    the page is considered the discussion part.
 
-    So that we can recognize messages without extra markup or too many
-    false positives, we require each message to begin with BAW's "strict"
+    Prior to 0.30 we called these Messages; you may see references to both.
+
+    So that we can recognize comments/messages without extra markup or too
+    many false positives, we require each message to begin with BAW's "strict"
     From line regexp from the python mailbox module.
 
     """
@@ -35,22 +36,22 @@ class MessagesSupport:
 
     # accessors
 
-    security.declareProtected(Permissions.View, 'supportsMessages')
-    def supportsMessages(self):
+    security.declareProtected(Permissions.View, 'supportsComments')
+    def supportsComments(self):
         """does this page parse embedded rfc2822 messages ?"""
         return re.search(r'(?i)(msg)',self.pageTypeId()) is not None
 
-    security.declareProtected(Permissions.View, 'hasMessages')
-    def hasMessages(self):
-        """does this page have one or more embedded messages ?"""
+    security.declareProtected(Permissions.View, 'hasComments')
+    def hasComments(self):
+        """does this page have one or more rfc2822-style comments ?"""
         return self.messageCount() > 0
 
-    security.declareProtected(Permissions.View, 'messageCount')
-    def messageCount(self):
+    security.declareProtected(Permissions.View, 'commentCount')
+    def commentCount(self):
         """
-        The number of messages in this page.
+        The number of comments in this page.
         """
-        return len(re.findall(fromlineexpr,self.messagesPart()))
+        return len(re.findall(fromlineexpr,self.discussionPart()))
 
     security.declareProtected(Permissions.View, 'documentPart')
     def documentPart(self):
@@ -61,10 +62,10 @@ class MessagesSupport:
 
     document = documentPart
 
-    security.declareProtected(Permissions.View, 'messagesPart')
-    def messagesPart(self):
+    security.declareProtected(Permissions.View, 'discussionPart')
+    def discussionPart(self):
         """
-        This page's text from the first message to the end (or '').
+        This page's text from the first comment to the end (or '').
         """
         return stringAfterAndIncluding(fromlineexpr,self.text())
 
@@ -76,12 +77,12 @@ class MessagesSupport:
         # UnixMailbox(/rfc822 ?) doesn't like unicode.. work around for now.
         # NB at present unicode may get added:
         # - via user edit
-        # - when a message is posted and the local timezone contains unicode
+        # - when a comment is posted and the local timezone contains unicode
         # - when rename writes a placeholder page (because of the use of _() !)
         #try:
         #    return UnixMailbox(StringIO(self.text()))
         #except TypeError:
-        #    BLATHER(self.id(),'contains unicode, could not parse messages')
+        #    BLATHER(self.id(),'contains unicode, could not parse comments')
         #    #BLATHER(repr(self.text()))
         #    return UnixMailbox(StringIO(''))
 
@@ -96,9 +97,9 @@ class MessagesSupport:
                 return ''
         return UnixMailbox(StringIO(self.text()), msgfactory)
 
-    def messages(self):
+    def comments(self):
         """
-        Return this page's messages as a list of Messages.
+        Return this page's comments as a list of Messages.
         """
         msgs = []
         mbox = self.mailbox()
@@ -107,6 +108,7 @@ class MessagesSupport:
             msgs.append(m)
             m = mbox.next()
         return msgs
+
 
     # utilities
 
@@ -143,10 +145,10 @@ Message-ID: %s
         except (DateTimeSyntaxError,AttributeError,IndexError):
             return 'From %s\n' % email
 
-    security.declareProtected(Permissions.View, 'upgradeMessages')
-    def upgradeMessages(self,REQUEST=None):
+    security.declareProtected(Permissions.View, 'upgradeComments')
+    def upgradeComments(self,REQUEST=None):
         """
-        Update the format of any messages on this page.
+        Update the format of any comments on this page.
         """
         # XXX upgrade old-style zwiki comments to mbox-style messages ?
         pass
@@ -165,6 +167,14 @@ Message-ID: %s
                 msgs += m.fp.read()
                 m = mailbox.next()
             new = re.split('\n\nFrom: ',self.text(),1)[0]+'\n\n'+msgs
-            self.edit(text=new, REQUEST=REQUEST,log='upgraded messages')
-            BLATHER('upgraded messages on',self.id())
+            self.edit(text=new, REQUEST=REQUEST,log='upgraded comments')
+            BLATHER('upgraded comments on',self.id())
+
+    # backwards compatibility
+    supportsMessages = supportsComments
+    hasMessages = hasComments
+    messageCount = commentCount
+    messagesPart = discussionPart
+    messages = comments
+    upgradeMessages = upgradeComments
 
