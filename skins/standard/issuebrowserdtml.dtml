@@ -1,17 +1,15 @@
 <!-- category box and font sizes adjusted for number of open issues --> 
 <a name="categories" />
 <dtml-let 
-    cols="['user','admin','general','site','non-zwiki'] 
-          # replace with prefixes of issue categories to be grouped in a column"
+    cols="['user','admin','general','site','other']
+          #replace with prefixes of issue categories to be grouped in a column"
     items=issue_categories
     barearg="'bare' in QUERY_STRING and '&bare=%s'%REQUEST.get('bare') or ''"
-    href="lambda x:'%s?category=%s&sort_on=status_index%s'%(URL,urlquote(x),barearg)"
+    href="lambda x:'%s?category=%s&sort_on=status_index%s'%(_['URL'],_.this.urlquote(x),_['barearg'])"
     num="_.len(issue_categories)"
-    itemsbeginningwith="lambda x:[i for i in items if i.startswith(x)]"
+    itemsbeginningwith="lambda x:[i for i in _['items'] if i.startswith(x)]"
     colvalues="[itemsbeginningwith(i) for i in cols]"
     longest="max([_.len(col) for col in colvalues])"
-    yellowcount="1"
-    redcount="10"
     >
 <table width="100%" border=0 cellpadding="0" cellspacing="0"
   <tr>
@@ -19,11 +17,13 @@
       <em>
 issue categories sized and coloured according to open issues
 (also
+<dtml-comment>
 <dtml-if barearg>
 <a href="&dtml-URL;">with skin</a>,
 <dtml-else>
 <a href="<dtml-var "URL+'?bare=1'">">bare</a>,
 </dtml-if>
+</dtml-comment>
 <a href="&dtml-trackerUrl;">issue tracker</a>,
 <a href="&dtml-filterUrl;">filter issues</a>
 )
@@ -75,7 +75,6 @@ issue categories sized and coloured according to open issues
   </tr>
 </table>
 </dtml-let>
-
 
 <a name="issues" />
 <dtml-if "REQUEST.get('category','')">
@@ -134,73 +133,3 @@ issue categories sized and coloured according to open issues
 </dtml-if>
 
 
-<dtml-comment>
-<!-- simple fixed-size category boxes --> 
-<a name="categories" />
-<dtml-let 
-    items=issue_categories
-    barearg="'bare' in QUERY_STRING and '&bare=%s'%REQUEST.get('bare') or ''"
-    href="lambda x:'%s?category=%s&sort_on=status_index%s'%(URL,urlquote(x),barearg)"
-    num="_.len(issue_categories)"
-    cols="['user','admin','general','site','non-zwiki']"
-    itemsbeginningwith="lambda x:[i for i in items if i.startswith(x)]"
-    colvalues="[itemsbeginningwith(i) for i in cols]"
-    longest="max([_.len(col) for col in colvalues])"
-    yellowcount="1"
-    redcount="10"
-    >
-<table width="100%" border=0>  
-  <tr>
-    <td colspan="<dtml-var "_.len(cols)">" align="center">
-      <em>
-issue categories sized and coloured according to open issues
-(<dtml-if barearg>
-<a href="&dtml-URL;">with skin</a>,
-<dtml-else>
-<a href="<dtml-var "URL+'?bare=1'">">bare</a>,
-</dtml-if>
-<a href="&dtml-trackerUrl;">issue tracker</a>,
-<a href="&dtml-filterUrl;">filter issues</a>
-<dtml-if "REQUEST.get('category','')">
-</dtml-if>
-)
-      </em>
-    </td>
-  </tr>
-  <dtml-in "_.range(longest)" prefix=row>
-    <tr height="<dtml-var "'%s%%'%(100/(longest))">">
-      <dtml-in "_.range(_.len(cols))" prefix=col>
-        <dtml-let 
-          row=row_sequence_item
-          col=col_sequence_item
-          >
-          <dtml-if "row < _.len(colvalues[col])">
-          <dtml-let
-            item="colvalues[col][row]"
-            open="pages(isIssue=1,category=item,status=['open','pending'])"
-            all="pages(isIssue=1,category=item)"
-            issues="open or all"
-            highestseverity="min([999]+[i.severity_index for i in issues]) #XXX my severities are backwards"
-            firsthighissue="([i for i in issues if i.severity_index==highestseverity]+[None])[0]"
-            colour="firsthighissue and firsthighissue.issueColour or '#aaffaa'"
-            bold="item == REQUEST.get('category','')"
-            >
-            <td bgcolor="&dtml-colour;">
-              <dtml-var "bold and '<b>' or ''">
-              <a href="<dtml-var "href(item)">"
-              >&dtml-item;
-              <dtml-var "_.len(open)">
-            </a>
-            <dtml-var "bold and '</b>' or ''">
-            </td>
-          </dtml-let>
-          <dtml-else>
-            <td>&nbsp;</td>
-          </dtml-if>
-        </dtml-let>
-      </dtml-in>
-    </tr>
-  </dtml-in>
-</table>
-</dtml-let>
-</dtml-comment>
