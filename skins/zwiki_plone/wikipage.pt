@@ -36,8 +36,9 @@
     last edited n days ago by by so-and-so
     </div>
 
-
-    <div tal:replace="structure python:here.render(here,request)" />
+    <div tal:replace="structure options/body">
+      page body goes here..
+    </div>
     
     <div tal:condition="not: wiki_footer_present|nothing">
       <span tal:condition="nothing"> In case master has no "footer" macro. </span>

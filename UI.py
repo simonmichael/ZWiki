@@ -187,20 +187,19 @@ class UIUtils:
     security.declareProtected(Permissions.View, 'addSkinTo')
     def addSkinTo(self,body,**kw):
         """
-        Add the main (non-CMF) wiki page skin to the rendered body text.
+        Apply the main view template (wikipage) to the rendered body text.
 
-        If we are in a CMF site, do nothing; CMF does its own skinning.
-        Ditto if the 'bare' keyword is found in REQUEST.  Otherwise, apply
-        the 'wikipage' template or (legacy support) the
-        standard_wiki_header / standard_wiki_footer dtml methods.
+        Unless the 'bare' keyword is found in REQUEST.
+
+        If no wikipage template is found, standard_wiki_header /
+        standard_wiki_footer dtml methods will be used (legacy support).
         Specifically, use
         - the wikipage page template in our acquisition context
         - or the dtml methods, if either can be acquired
         - or the default wikipage template from the filesystem.
-
         """
         REQUEST = getattr(self,'REQUEST',None)
-        if ((self.supportsCMF() and self.inCMF()) or
+        if (#(self.supportsCMF() and self.inCMF()) or
             hasattr(REQUEST,'bare') or
             kw.has_key('bare')):
             return body

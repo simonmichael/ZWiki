@@ -109,20 +109,20 @@ try:
         def SearchableText(self):
             return self.text()
 
-        security.declareProtected(Permissions.View, '__call__')
-        def __call__(self, client=None, REQUEST={}, RESPONSE=None, **kw):
-            '''
-            Invokes the default view.
-            '''
-            view = _getViewFor( self )
-            if getattr(aq_base(view), 'isDocTemp', 0):
-                return apply(view, (self, REQUEST))
-            else:
-                if REQUEST:
-                    kw[ 'REQUEST' ] = REQUEST
-                if RESPONSE:
-                    kw[ 'RESPONSE' ] = RESPONSE
-                return apply( view, (self,), kw )
+        #security.declareProtected(Permissions.View, '__call__')
+        #def __call__(self, client=None, REQUEST={}, RESPONSE=None, **kw):
+        #    '''
+        #    Invokes the default view.
+        #    '''
+        #    view = _getViewFor( self )
+        #    if getattr(aq_base(view), 'isDocTemp', 0):
+        #        return apply(view, (self, REQUEST))
+        #    else:
+        #        if REQUEST:
+        #            kw[ 'REQUEST' ] = REQUEST
+        #        if RESPONSE:
+        #            kw[ 'RESPONSE' ] = RESPONSE
+        #        return apply( view, (self,), kw )
 
         # needed ?
         #index_html = None  # This special value informs ZPublisher to use __call__
