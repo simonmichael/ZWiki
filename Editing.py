@@ -147,13 +147,9 @@ class EditingSupport:
         """
         Add a comment to this page without re-rendering the whole thing.
 
-        Bundles the bits it needs from comment, edit, handleEditText,
-        setText etc.  Doesn't do timestamp-based edit conflict checking, I
-        don't think it needs to.
+        Combines the bits it needs from comment, edit, handleEditText,
+        setText etc.  See also comment().
         """
-        if not self.checkPermission(Permissions.Append, self):
-            raise 'Unauthorized', (
-                _('You are not authorized to comment on this ZWiki Page.'))
         if hasattr(self,'wl_isLocked') and self.wl_isLocked():
             return self.davLockDialog()
 
@@ -171,7 +167,7 @@ class EditingSupport:
 
         # ensure message_id is defined at this point so page and mail-out
         # will use the same value and threading will work
-        # also ensure it matches time where possible (!) may help debugging
+        # also ensure it matches time if possible! may help debugging
         if time:
             dtime = DateTime(time)
         else:
@@ -180,34 +176,35 @@ class EditingSupport:
         if not message_id:
             message_id = self.messageIdFromTime(dtime)
 
-        # add message to page - append it to both source and _prerendered
-        # without redoing the whole thing!
-        # testing support: only if subject is not [test], except on TestPage
-        if subject != '[test]' or self.getId() == 'TestPage':
-            # add comment to page source in RFC2822 format
-            t = self.makeMessageFrom(username,time,message_id,
-                                     subject,in_reply_to,text)
-            if self.usingPurpleNumbers(): t = self.addPurpleNumbersTo(t,self)
-            t = '\n\n' + t
-            self.raw += t
-            # add rendered comment to pre-rendered data
-            t = text
-            t = self.pageType().renderCitationsIn(self,t)
-            t = self.pageType().makeCommentHeading(
-                self, subject, username, time, message_id, in_reply_to) + t
-            if self.messageCount() == 1:
-                t = self.pageType().discussionSeparator(self)+t
-            t = self.pageType().preRender(self,t)
-            self.setPreRendered(self.preRendered()+t)
-            self.cookDtmlIfNeeded()
-            self.setLastEditor(REQUEST)
-            self.setLastLog(note)
-            self.updateCatalog()
-            # send mail for "edits" policy - XXX for now, see IssueNo0690
-            if getattr(self.folder(),'mailout_policy','')=='edits':
-                self.sendMailToSubscribers(
-                    self.textDiff(a=oldtext,b=self.read()),
-                    REQUEST=REQUEST, subject=subject)
+        # add message to page -
+        # carefully append it to both source and _prerendered cached
+        # without re-rendering the whole thing! works for current page types
+
+        # convert to rfc2822 and add to source
+        t = self.makeMessageFrom(username,time,message_id,
+                                 subject,in_reply_to,text)
+        if self.usingPurpleNumbers(): t = self.addPurpleNumbersTo(t,self)
+        t = '\n\n' + t
+        self.raw += t
+
+        # render message and add to _prerendered cache
+        t = text
+        t = self.pageType().renderCitationsIn(self,t)
+        t = self.pageType().makeCommentHeading(
+            self, subject, username, time, message_id, in_reply_to) + t
+        if self.messageCount() == 1:
+            t = self.pageType().discussionSeparator(self)+t
+        t = self.pageType().preRender(self,t)
+        self.setPreRendered(self.preRendered()+t)
+        self.cookDtmlIfNeeded()
+        self.setLastEditor(REQUEST)
+        self.setLastLog(note)
+        self.updateCatalog()
+        # send mail for "edits" policy - XXX for now, see IssueNo0690
+        if getattr(self.folder(),'mailout_policy','')=='edits':
+            self.sendMailToSubscribers(
+                self.textDiff(a=oldtext,b=self.read()),
+                REQUEST=REQUEST, subject=subject)
 
         # if mailout policy is comments only, send it now
         # (otherwise append did it) # XXX refactor
@@ -261,6 +258,9 @@ class EditingSupport:
         Special testing support: if the subject is '[test]', we skip
         changing the page (except on TestPage).
         """
+        if hasattr(self,'wl_isLocked') and self.wl_isLocked():
+            return self.davLockDialog()
+
         # gather various bits and pieces
         oldtext = self.read()
         text = re.sub(r'\r\n',r'\n',text) # where did these appear from ?
@@ -282,12 +282,10 @@ class EditingSupport:
             message_id = self.messageIdFromTime(dtime)
 
         # add message to page
-        # testing support: only if subject is not [test] except on TestPage
-        if subject != '[test]' or self.getId() == 'TestPage':
-            self.append(self.makeMessageFrom(username,time,message_id,
-                                             subject,in_reply_to,text),
-                        REQUEST=REQUEST,
-                        log=subject)
+        self.append(self.makeMessageFrom(username,time,message_id,
+                                         subject,in_reply_to,text),
+                    REQUEST=REQUEST,
+                    log=subject)
 
         # if mailout policy is comments only, send it now
         # (otherwise append did it) # XXX refactor
