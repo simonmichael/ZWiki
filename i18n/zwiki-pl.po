@@ -3,7 +3,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pl\n"
+"Project-Id-Version: ZWiki-0-31-0\n"
 "POT-Creation-Date: Sat Jun 12 10:57:58 2004\n"
 "PO-Revision-Date: 2004-06-10 10:38+0100\n"
 "Last-Translator: Jakub Wiśniowski <klippe@pf.pl>\n"
@@ -210,7 +210,7 @@ msgstr ""
 "        +    Podgląd stron w trybie pełnoekranowym\n"
 "        =    Podgląd stron w trybie zwykłym\n"
 "        -    Podgląd stron w trybie minimalnym\n"
-"        m    Subskrybcja pocztowa\n"
+"        m    Prenumerata pocztowa\n"
 "        b    Pokaż odnośniki powrotne (do tej strony)\n"
 "        d    Pokaż różnice (strona z edycją historii)\n"
 "        y    Pokaż pełną historię (w ZMI)\n"
@@ -268,7 +268,7 @@ msgstr "dni"
 
 #: i/Utils.py:439
 msgid "hours"
-msgstr "godziny"
+msgstr "godzin temu"
 
 #: i/Utils.py:439
 msgid "hour"
@@ -280,7 +280,7 @@ msgstr "minuta"
 
 #: i/Utils.py:441
 msgid "minutes"
-msgstr "minut"
+msgstr "minut temu"
 
 #: i/Utils.py:443
 msgid "second"
@@ -288,7 +288,7 @@ msgstr "sekund"
 
 #: i/Utils.py:443
 msgid "seconds"
-msgstr "sekundy"
+msgstr "sekund temu"
 
 #: i/ZWikiPage.py:580
 msgid "page in parent wiki"
@@ -335,17 +335,19 @@ msgstr "Dodaj i Edytuj"
 #: i/skins/dtmlmessages.pt:17 i/skins/dtmlmessages.pt:106
 #: i/skins/dtmlmessages.pt:202
 msgid "Set your site preferences below."
-msgstr ""
+msgstr "Poniżej możesz ustawić swoje preferencje."
 
 #: i/skins/dtmlmessages.pt:18 i/skins/dtmlmessages.pt:107
 #: i/skins/dtmlmessages.pt:203
 msgid "You may also click the full, simple, minimal links if provided."
 msgstr ""
+"Możesz też kliknąć jeden z odnośników pełny, prosty, minimalny, jeśli są "
+"widoczne."
 
 #: i/skins/dtmlmessages.pt:19 i/skins/dtmlmessages.pt:108
 #: i/skins/dtmlmessages.pt:204
 msgid "User name"
-msgstr "zmień nazwę"
+msgstr "Nazwa użytkownika"
 
 #: i/skins/dtmlmessages.pt:195
 msgid "Name"
@@ -374,7 +376,7 @@ msgstr "Dodaj witrynę ZWiki"
 #: i/skins/dtmlmessages.pt:20 i/skins/dtmlmessages.pt:109
 #: i/skins/dtmlmessages.pt:205
 msgid "identifies your edits"
-msgstr ""
+msgstr "identyfikuje Twoje zmiany"
 
 #: i/skins/dtmlmessages.pt:200
 msgid "Submitted by"
@@ -392,12 +394,12 @@ msgstr "Twój adres e-mail"
 #: i/skins/dtmlmessages.pt:22 i/skins/dtmlmessages.pt:111
 #: i/skins/dtmlmessages.pt:207
 msgid "for subscribing"
-msgstr "brak prenumeratorów"
+msgstr "dla prenumeraty"
 
 #: i/skins/dtmlmessages.pt:23 i/skins/dtmlmessages.pt:112
 #: i/skins/dtmlmessages.pt:208
 msgid "Editform"
-msgstr "Edycja"
+msgstr "Rozmiary formularza edycyjnego"
 
 #: i/skins/dtmlmessages.pt:24 i/skins/dtmlmessages.pt:113
 #: i/skins/dtmlmessages.pt:209
@@ -412,7 +414,7 @@ msgstr "wysokość"
 #: i/skins/dtmlmessages.pt:26 i/skins/dtmlmessages.pt:115
 #: i/skins/dtmlmessages.pt:211
 msgid "textarea dimensions; width will be 100% if supported"
-msgstr "wymiary pola tekstowego; szerokość wyniesie 100% o ile to możliwe"
+msgstr "szerokość pola tekstowego wyniesie 100%, jeśli będzie to możliwe"
 
 #: i/skins/dtmlmessages.pt:27 i/skins/dtmlmessages.pt:116
 #: i/skins/dtmlmessages.pt:212
@@ -427,7 +429,7 @@ msgstr "Twój lokalny czas to"
 #: i/skins/dtmlmessages.pt:29 i/skins/dtmlmessages.pt:118
 #: i/skins/dtmlmessages.pt:214
 msgid "(localizes most times)"
-msgstr ""
+msgstr "(większość czasów lokalnych)"
 
 #: i/skins/dtmlmessages.pt:30 i/skins/dtmlmessages.pt:119
 #: i/skins/dtmlmessages.pt:215
@@ -459,22 +461,23 @@ msgstr "Tak"
 #: i/skins/dtmlmessages.pt:33 i/skins/dtmlmessages.pt:122
 #: i/skins/dtmlmessages.pt:218
 msgid "Show page hierarchy ?"
-msgstr ""
+msgstr "Pokazać hirarchię stron?"
 
 #: i/skins/dtmlmessages.pt:36 i/skins/dtmlmessages.pt:125
 #: i/skins/dtmlmessages.pt:221
 msgid "This wiki keeps a page hierarchy, which you can use or ignore."
 msgstr ""
+"To wiki utrzymuje hierarchię stron, którą możesz wykorzystać lub zignorować."
 
 #: i/skins/dtmlmessages.pt:37 i/skins/dtmlmessages.pt:126
 #: i/skins/dtmlmessages.pt:222
 msgid "Show search field ?"
-msgstr ""
+msgstr "Pokazać pole wyszukiwania?"
 
 #: i/skins/dtmlmessages.pt:38 i/skins/dtmlmessages.pt:127
 #: i/skins/dtmlmessages.pt:223
 msgid "except in minimal mode"
-msgstr ""
+msgstr "za wyjątkiem trybu minimalnego"
 
 #: i/skins/dtmlmessages.pt:4 i/skins/dtmlmessages.pt:12
 msgid "Id"
@@ -483,23 +486,23 @@ msgstr "Id"
 #: i/skins/dtmlmessages.pt:41 i/skins/dtmlmessages.pt:130
 #: i/skins/dtmlmessages.pt:226
 msgid "Show AnnoyingQuote ?"
-msgstr ""
+msgstr "Pokazać cytat dnia?"
 
 #: i/skins/dtmlmessages.pt:42 i/skins/dtmlmessages.pt:46
 #: i/skins/dtmlmessages.pt:131 i/skins/dtmlmessages.pt:135
 #: i/skins/dtmlmessages.pt:227 i/skins/dtmlmessages.pt:231
 msgid "in full mode"
-msgstr ""
+msgstr "w trybie pełnym"
 
 #: i/skins/dtmlmessages.pt:45 i/skins/dtmlmessages.pt:134
 #: i/skins/dtmlmessages.pt:230
 msgid "Show page management form ?"
-msgstr ""
+msgstr "Pokazać formularz zarządzania stroną?"
 
 #: i/skins/dtmlmessages.pt:49 i/skins/dtmlmessages.pt:138
 #: i/skins/dtmlmessages.pt:234
 msgid "You must also configure a username or be logged in."
-msgstr ""
+msgstr "Musisz także ustawić nazwę użytkownika lub być zalogowanym."
 
 #: i/skins/dtmlmessages.pt:5 i/skins/dtmlmessages.pt:13
 msgid "Title"
@@ -508,12 +511,12 @@ msgstr "Tytuł"
 #: i/skins/dtmlmessages.pt:50 i/skins/dtmlmessages.pt:139
 #: i/skins/dtmlmessages.pt:235
 msgid "Save options"
-msgstr "opcje"
+msgstr "Zapisz zmiany"
 
 #: i/skins/dtmlmessages.pt:51 i/skins/dtmlmessages.pt:140
 #: i/skins/dtmlmessages.pt:236
 msgid "Forget options"
-msgstr "opcje"
+msgstr "Odrzuć zmiany"
 
 #: i/skins/dtmlmessages.pt:52 i/skins/dtmlmessages.pt:141
 #: i/skins/dtmlmessages.pt:237
@@ -580,39 +583,39 @@ msgstr ""
 #: i/skins/dtmlmessages.pt:63 i/skins/dtmlmessages.pt:152
 #: i/skins/dtmlmessages.pt:248
 msgid "Recently changed pages, with summaries"
-msgstr ""
+msgstr "Ostatnio zmienione strony z podsumowaniami"
 
+# i/skins/standard/recentchangesdtml.dtml:
 #: i/skins/dtmlmessages.pt:64 i/skins/dtmlmessages.pt:153
 #: i/skins/dtmlmessages.pt:249
 msgid "Show summaries ?"
-msgstr ""
+msgstr "Pokazać podsumowania?"
 
 #: i/skins/dtmlmessages.pt:65 i/skins/dtmlmessages.pt:154
 #: i/skins/dtmlmessages.pt:250
 msgid "Refresh"
-msgstr ""
+msgstr "Odśwież"
 
 #: i/skins/dtmlmessages.pt:66 i/skins/dtmlmessages.pt:155
 #: i/skins/dtmlmessages.pt:251
-#, fuzzy
 msgid "Page"
-msgstr "wiek"
+msgstr "Strona"
 
 #: i/skins/dtmlmessages.pt:67 i/skins/dtmlmessages.pt:156
 #: i/skins/dtmlmessages.pt:252
+#, fuzzy
 msgid "Edited&nbsp;by"
-msgstr ""
+msgstr "Edytowana&nbsp;przez&nbsp;&nbsp;&nbsp;"
 
 #: i/skins/dtmlmessages.pt:68 i/skins/dtmlmessages.pt:157
 #: i/skins/dtmlmessages.pt:253
-#, fuzzy
 msgid "Time"
-msgstr "Tytuł"
+msgstr "Czas modyfikacji"
 
 #: i/skins/dtmlmessages.pt:69 i/skins/dtmlmessages.pt:158
 #: i/skins/dtmlmessages.pt:254
 msgid "NEW"
-msgstr ""
+msgstr "NOWA"
 
 #: i/skins/dtmlmessages.pt:7
 msgid "Create wiki"
@@ -621,12 +624,13 @@ msgstr "Stwórz wiki"
 #: i/skins/dtmlmessages.pt:70 i/skins/dtmlmessages.pt:159
 #: i/skins/dtmlmessages.pt:255
 msgid "anonymous"
-msgstr ""
+msgstr "anonimowy"
 
 #: i/skins/dtmlmessages.pt:71 i/skins/dtmlmessages.pt:160
 #: i/skins/dtmlmessages.pt:256
 msgid "Pages marked (NEW) have been created within the last week"
 msgstr ""
+"Strony oznaczone jako (NOWA) zostały utworzone w trakcie ostatniego tygodnia"
 
 #: i/skins/dtmlmessages.pt:72 i/skins/dtmlmessages.pt:161
 #: i/skins/dtmlmessages.pt:257
@@ -800,7 +804,7 @@ msgstr "to jest drugi temat z:"
 
 #: i/skins/standard/backlinks.pt:69
 msgid "Here are the pages which link to it:"
-msgstr "Tutaj są linki do tej strony:"
+msgstr "Strony, które odnoszą się do tej strony:"
 
 #: i/skins/standard/badtemplate.pt:12
 msgid ""
@@ -916,7 +920,7 @@ msgstr "głosujesz jako"
 
 #: i/skins/standard/subscribeform.pt:102
 msgid " Unsubscribe from this page "
-msgstr " Skasuj subskrypcje z tej strony "
+msgstr " Skasuj prenumeratę tej strony "
 
 #: i/skins/standard/subscribeform.pt:109
 msgid " Subscribe to this page "
@@ -1006,7 +1010,7 @@ msgstr "pokaż wszystkie możliwości"
 
 #: i/skins/standard/wikipage_macros.pt:184
 msgid "full"
-msgstr "cały"
+msgstr "pełny"
 
 #: i/skins/standard/wikipage_macros.pt:185
 msgid "show basic features"
@@ -1022,15 +1026,16 @@ msgstr "pokaż tylko wybrane mozliwości"
 
 #: i/skins/standard/wikipage_macros.pt:198
 msgid "minimal"
-msgstr "minimalne"
+msgstr "minimalny"
 
 #: i/skins/standard/wikipage_macros.pt:205
 msgid "configure email subscription to this page or site"
-msgstr "konfiguracja skrzynki e-mail subskrypcji dla tej strony lub witryny"
+msgstr ""
+"konfiguracja skrzynki e-mail dla prenumeraty tej strony lub całej witryny"
 
 #: i/skins/standard/wikipage_macros.pt:215
 msgid "subscribe"
-msgstr "subskrypcja"
+msgstr "prenumerata"
 
 #: i/skins/standard/wikipage_macros.pt:224
 msgid "backlinks"
@@ -1139,7 +1144,7 @@ msgstr "Odnośniki powrotne dla"
 
 #: i/skins/zwiki_plone/backlinks.pt:21
 msgid "Here are the pages which link to"
-msgstr "Strony odnoszące się do tej strony"
+msgstr "Strony odnoszące się do"
 
 # Default: ""
 # "You can also set this page's <em>parent(s)</em>, to locate it within the\n"
@@ -1180,11 +1185,11 @@ msgstr "Pełna historia"
 
 #: i/skins/zwiki_plone/diffform.pt:31
 msgid "&laquo; previous edit"
-msgstr "&laquo; poprzednia edycja"
+msgstr "<< poprzednia edycja"
 
 #: i/skins/zwiki_plone/diffform.pt:39
 msgid "next edit &raquo;"
-msgstr "następna edycja &raquo;"
+msgstr "następna edycja >>"
 
 #: i/skins/zwiki_plone/diffform.pt:47
 msgid "return to page"
@@ -1321,39 +1326,39 @@ msgstr "Przeszukaj wiki"
 #: i/skins/standard/subscribeform.pt:126
 msgid "subscribed_wiki_no"
 msgstr ""
-"Nie jesteś obecnie subskrybentem<br />\n"
+"Nie jesteś obecnie prenumeratorem<br />\n"
 "całego wiki."
 
 #: i/skins/zwiki_plone/subscribeform.pt:107
 #: i/skins/standard/subscribeform.pt:130
 msgid "Unsubscribe from whole wiki"
-msgstr "Odwołanie subskrypcji wiki"
+msgstr "Odwołanie prenumeraty całego wiki"
 
 #: i/skins/zwiki_plone/subscribeform.pt:114
 #: i/skins/standard/subscribeform.pt:137
 msgid "Subscribe to whole wiki"
-msgstr "Subskrybuj całe wiki"
+msgstr "Prenumeruj całe wiki"
 
 # Default: "You are subscribed to these other pages"
 #: i/skins/zwiki_plone/subscribeform.pt:125
 #: i/skins/standard/subscribeform.pt:148
 msgid "other_page_subscribed"
-msgstr "Jesteś subskrybentem tych stron"
+msgstr "Prenumerujesz te strony"
 
 #: i/skins/zwiki_plone/subscribeform.pt:13
 #: i/skins/standard/subscribeform.pt:36
 msgid "Mail subscription"
-msgstr "Supskrypcja e-mail"
+msgstr "Prenumerata e-mail"
 
 #: i/skins/zwiki_plone/subscribeform.pt:142
 #: i/skins/standard/subscribeform.pt:165
 msgid "Page subscribers"
-msgstr "Subskrybenci strony"
+msgstr "Prenumeratorzy strony"
 
 #: i/skins/zwiki_plone/subscribeform.pt:150
 #: i/skins/standard/subscribeform.pt:173
 msgid "Wiki subscribers"
-msgstr "Subskrybenci wiki"
+msgstr "Prenumeratorzy wiki"
 
 # Default: ""
 # "You can subscribe to this page or to the whole wiki.\n"
@@ -1364,11 +1369,11 @@ msgstr "Subskrybenci wiki"
 #: i/skins/standard/subscribeform.pt:58
 msgid "subscribe_desc"
 msgstr ""
-"Możesz subskrybować tą stronę lub całe wiki.\n"
-"          Subskrybenci otrzymują kopie komentarzy e-mailem\n"
-"          (ale nie informacje o edycjach, o ile opcji tej nie włączy "
+"Możesz tu włączyć prenumeratę tej strony lub całego wiki.\n"
+"          Prenumeratorzy otrzymują kopie komentarzy e-mailem\n"
+"          (za wyjątkiem informacji o edycjach, o ile opcji tej nie włączył "
 "administrator).\n"
-"          lub wrócić do"
+"Możesz też wrócić do"
 
 #: i/skins/zwiki_plone/subscribeform.pt:49
 #: i/skins/standard/subscribeform.pt:72
@@ -1384,7 +1389,7 @@ msgstr "Zmień"
 #: i/skins/zwiki_plone/subscribeform.pt:61
 #: i/skins/standard/subscribeform.pt:84
 msgid "subscribe_no_email"
-msgstr "Aby zostać subskrybentem podaj swój adres e-mail."
+msgstr "Aby zostać prenumeratorem podaj swój adres e-mail."
 
 # Default: ""
 # "You are currently subscribed<br />\n"
@@ -1393,7 +1398,7 @@ msgstr "Aby zostać subskrybentem podaj swój adres e-mail."
 #: i/skins/standard/subscribeform.pt:94
 msgid "subscribed_page_ok"
 msgstr ""
-"Jesteś obecnie subskrybentem<br />\n"
+"Jesteś obecnie prenumeratorem<br />\n"
 "tej strony."
 
 # Default: ""
@@ -1403,16 +1408,16 @@ msgstr ""
 #: i/skins/standard/subscribeform.pt:98
 msgid "subscribed_page_no"
 msgstr ""
-"Obecnie nie jesteś subskrybentem<br />\n"
+"Obecnie nie jesteś prenumeratorem<br />\n"
 "tej strony."
 
 #: i/skins/zwiki_plone/subscribeform.pt:79
 msgid "Unsubscribe from this page"
-msgstr "Odwołaj subskrypcję z tej strony"
+msgstr "Odwołaj prenumeratę tej strony"
 
 #: i/skins/zwiki_plone/subscribeform.pt:86
 msgid "Subscribe to this page"
-msgstr "Subskrybuj tą stronę"
+msgstr "Prenumeruj tą stronę"
 
 # Default: ""
 # "You are currently subscribed<br />\n"
@@ -1421,7 +1426,7 @@ msgstr "Subskrybuj tą stronę"
 #: i/skins/standard/subscribeform.pt:122
 msgid "subscribed_wiki_ok"
 msgstr ""
-"Jesteś obecnie subskrybentem<br />\n"
+"Jesteś obecnie prenumeratorem<br />\n"
 "całego wiki."
 
 #: i/skins/zwiki_plone/uploaded.pt:14
