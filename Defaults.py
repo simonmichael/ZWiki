@@ -97,11 +97,4 @@ PAGE_METADATA = [
     'summary',
     ]
 
-# for reStructuredText:
-# You can customize the default encoding by creating a file
-# sitecustomize.py somewhere in yout PYTHONPATH:
-#  import sys
-#  sys.setdefaultencoding("iso-8859-1")
-#import sys
-#sys.setdefaultencoding("iso-8859-1")
-#hmm not right
+IDS_TO_AVOID = ['RESPONSE','REQUEST','Epoz','epoz']

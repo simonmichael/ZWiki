@@ -58,7 +58,7 @@ import Globals
 from OFS.DTMLDocument import DTMLDocument
 
 import Permissions
-from Defaults import AUTO_UPGRADE, \
+from Defaults import AUTO_UPGRADE, IDS_TO_AVOID, \
      PAGE_METATYPE, LINK_TO_ALL_CATALOGED, LINK_TO_ALL_OBJECTS
 from Regexps import url, bracketedexpr, doublebracketedexpr, \
      wikiname, wikilink, interwikilink, remotewikiurl, \
@@ -689,7 +689,7 @@ class ZWikiPage(
 
         Constraints for zwiki page ids:
         - it needs to be a legal zope object id
-        - to avoid gross acquisition problems, it can't be RESPONSE or REQUEST
+        - to avoid gross acquisition problems, it needs to avoid certain names
         - to simplify linking, we will require it to be a valid url
         - it should be unique for a given name (ignoring whitespace)
         - we'd like it to be as similar to the name and as simple to read
@@ -703,8 +703,8 @@ class ZWikiPage(
         - capitalizes and joins whitespace-separated words into a wikiname
         - converts any non-zope-and-url-safe characters and _ to _hexvalue
         - if the above results in an id that's still illegal (it begins with _
-          or it is RESPONSE or REQUEST), prepends X
-          (XXX this breaks the uniqueness requirement, better ideas ?)
+          or it is one of the IDS_TO_AVOID (RESPONSE, etc.), prepends X
+          (note this breaks the uniqueness property. Better ideas ?)
 
         performance-sensitive
         """
@@ -730,8 +730,7 @@ class ZWikiPage(
 
         # zope ids may not begin with _
         if ((len(safeid) > 0 and safeid[0] == '_') or
-            safeid == 'RESPONSE' or
-            safeid == 'REQUEST'):
+            safeid in IDS_TO_AVOID):
             safeid = 'X'+safeid
         return safeid
 
