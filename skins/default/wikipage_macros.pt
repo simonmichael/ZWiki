@@ -183,13 +183,13 @@
    ><span tal:condition="python:0 #show subscription status - expensive# here.allSubscriptionsFor(request.get('email',''))"
    >(un)</span
    ><span class="accesskey"></span>subscribe</a>
-<a tal:condition="python:1 #user.has_permission('Zwiki: Edit pages',here)"
+<a tal:condition="python:0 #user.has_permission('Zwiki: Edit pages',here)"
    tal:attributes="href python:here.pageUrl() + '/backlinks';"
    href="" 
    title="which pages link to this one ?" 
    accesskey="b"
    ><span class="accesskey">b</span>acklinks</a>
-<a tal:condition="python:1 #user.has_permission('Zwiki: Edit pages',here)"
+<a tal:condition="python:0 #user.has_permission('Zwiki: Edit pages',here)"
    tal:attributes="href python:here.pageUrl() + '/diff';"
    href="" 
    title="show this page's change history" 
