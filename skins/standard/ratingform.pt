@@ -3,8 +3,7 @@
       tal:define="myvote python:here.myVote(request); rating here/rating"
       tal:attributes="
         action string:${here/pageUrl}/vote;
-        class python:['lowrated','neutralrated','highrated'][cmp(rating,0)+1]#+' dimtext'
-                     #'dimtext '+(((rating<0) and 'lowrated') or ((rating>0) and 'highrated') or 'neutralrated');
+        class here/ratingStyle;
         "
       >
   <span i18n:translate="">page rating</span>: 
