@@ -79,12 +79,12 @@
 <a tal:attributes="href here/homeUrl" accesskey="f"></a>
 <a tal:attributes="href here/contentsUrl" accesskey="c"></a>
 <a tal:attributes="href here/changesUrl" accesskey="r"></a>
-<a tal:attributes="href here/discussionUrl" accesskey=""></a>
-<a tal:attributes="href here/trackerUrl" accesskey="t"></a>
-<a tal:attributes="href here/indexUrl" accesskey="i"></a>
-<a tal:condition="python:0" tal:attributes="href here/uploadsUrl" accesskey=""></a>
+<a tal:attributes="href here/discussionUrl" accesskey="" tal:condition="here/discussionUrl"></a>
+<a tal:attributes="href here/trackerUrl" accesskey="t" tal:condition="here/hasIssues"></a>
+<a tal:attributes="href here/indexUrl" accesskey="i" tal:condition="here/indexUrl"></a>
+<a tal:attributes="href here/uploadsUrl" accesskey="" tal:condition="python:0 #here/uploadsUrl"></a>
 <a tal:attributes="href here/preferencesUrl" accesskey="o"></a>
-<a tal:attributes="href here/helpUrl" accesskey="h"></a>
+<a tal:attributes="href here/helpUrl" accesskey="h" tal:condition="here/helpUrl"></a>
 <a tal:attributes="href here/pageUrl" accesskey="v"></a>
 <a tal:attributes="href string:${here/pageUrl}/subscribeform" accesskey="m"></a>
 <a tal:attributes="href string:${here/pageUrl}/backlinks" accesskey="b"></a>
