@@ -11,6 +11,7 @@ from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki.Utils import Popen3, formattedTraceback
 from Products.ZWiki.UI import addErrorTo
+from Products.ZWiki.Utils import BLATHER
 
 # from tests/support.py:
 def pdir(path): return os.path.split(path)[0]
@@ -22,7 +23,7 @@ def hasFitTests(self):
 
     Should match python fit's regexp.
     """
-    return re.search(r'([Ff]ixtures|\bfit)\.',self.read()
+    return re.search(r'([Ff]ixtures|\bfit)\.\w',self.read()
                      ) is not None
 
 try:
@@ -96,12 +97,12 @@ try:
 
 
 except ImportError:
-    error = formattedTraceback()
+    BLATHER('unable to enable fit support\n%s' % formattedTraceback())
     class FitSupport:
         security = ClassSecurityInfo()
         security.declareProtected(Permissions.View, 'hasFitTests')
         def hasFitTests(self): return hasFitTests(self)
-        def runFitTestsIn(self,text): return addErrorTo(text,error)
+        def runFitTestsIn(self,text): return text
 
 InitializeClass(FitSupport)
 registerPlugin(FitSupport)
