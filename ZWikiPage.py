@@ -249,8 +249,7 @@ class ZWikiPage(
         """
         Render the body of this zwiki page according to it's page_type
         """
-        if not self.preRendered():
-            self.setPreRendered(self.pageType().preRender(self))
+        if not self.preRendered(): self.preRender()
         return self.pageType().render(self, REQUEST, RESPONSE, **kw)
 
     def preRender(self,clear_cache=0):
