@@ -109,26 +109,26 @@
    The default is ZWiki:StructuredText which works like this:
 
    1. non-blank lines are run together to form a paragraph; 
-      paragraphs are separated by blank lines<br>
+      paragraphs are separated by blank lines<br />
 
    2. a one-line "paragraph" followed by a more-indented paragraph makes a
-      heading. Tip: you need only indent the first line.<br>
+      heading. Tip: you need only indent the first line.<br />
 
    3. a paragraph beginning with - or a number followed by a space makes a bullet
-      or numbered list item; a more-indented list item starts a sub-list<br>
+      or numbered list item; a more-indented list item starts a sub-list<br />
 
    4. short text enclosed in 
       &#42;...&#42; , 
       &#42;&#42;...&#42;&#42; , 
       &#95;...&#95; or 
-      &#39;...&#39; is *italic*, **bold**, _underlined_ or 'monospaced' respectively<br>
+      &#39;...&#39; is *italic*, **bold**, _underlined_ or 'monospaced' respectively<br />
 
    5. WikiName's, [Free-form name]s enclosed in brackets, ZWiki:RemoteWikiLinks , 
       http://bare/urls , and "Structured Text links":http://zwiki.org/StructuredText are
       made into hyperlinks
 
    6. HTML tags may be added if necessary; on sites which permit it,
-      DTML (server-side code) may also be used <br>
+      DTML (server-side code) may also be used <br />
 
    7. short text enclosed in single quotes is quoted, ie
       displayed in monospace font and protected from some of the above formatting. 

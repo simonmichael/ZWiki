@@ -12,31 +12,31 @@ Don't forget to check the release notes and known issues.
 
 Other things you may want to configure:
 
-- **Permissions** <br>
+- **Permissions** <br />
 You normally configure permissions in the wiki folder's Security tab in
 the ZMI. ZWiki:FAQs has a list.
 
-- **Mail out (subscription)** <br> 
+- **Mail out (subscription)** <br /> 
 To mail out comments, use the ZMI to add a 'mail_replyto' string property
 on the folder with a valid email address. Also add a !MailHost object if
 you don't already have one.  Reload this page and the subscribe link
 should appear.
 
-- **Mail in** <br>
+- **Mail in** <br />
 So that users will be able to reply to comments by mail - 
 see ZWiki:WikiMail.
 
-- **External (client-side) editing** <br> 
+- **External (client-side) editing** <br /> 
 
 Install ZWiki:ExternalEditor on server and client as described on that
 page. EE's pencil icon should appear and clicking it should open pages for
 editing in your preferred editor.
 
-- **A bug tracker** <br>
+- **A bug tracker** <br />
 A simple issue tracker integrated with the wiki.  See
 ZWiki:HowToInstallAZwikiTracker
 
-- **DTML** <br> 
+- **DTML** <br /> 
 If you want to enable live DTML code in pages, add a true allow_dtml
 boolean property on the folder. This makes your server much more
 vulnerable to abuse, you should be aware of the ZWiki:ZwikiSecurity

@@ -92,19 +92,19 @@ More advanced <a href="&dtml-trackerUrl;">issue tracker</a> search options.
 <table border="0" cellspacing="0" cellpadding="3">
 <tr>
 <td align=left valign=top colspan=3>
-Name contains any of:<br>
+Name contains any of:<br />
 <input type="text" name="titlesearch" value="<dtml-var titlesearch missing>" size="40" maxlength="60" accesskey="s" class="shade2">
 </td>
 </tr>
 <tr>
 <td align=left valign=top colspan=3>
-Page text contains any of:<br>
+Page text contains any of:<br />
 <input type="text" name="textsearch" value="<dtml-var textsearch missing>" size="40" maxlength="60" class="shade2">
 </td>
 </tr>
 <tr>
 <td align=left valign=top>
-Categories:<br>
+Categories:<br />
 <select name="category:list" multiple class="shade2">
 <dtml-in issue_categories prefix=x>
 <option
@@ -114,7 +114,7 @@ Categories:<br>
 </select> 
 </td>
 <td align=left valign=top>
-Severities:<br>
+Severities:<br />
 <select name="severity:list" multiple class="shade2">
 <dtml-in issue_severities prefix=x>
 <option
@@ -124,7 +124,7 @@ Severities:<br>
 </select> 
 </td>
 <td align=left valign=top>
-Statuses:<br>
+Statuses:<br />
 <select name="status:list" multiple class="shade2">
 <dtml-in issue_statuses prefix=x>
 <option

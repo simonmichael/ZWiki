@@ -10,7 +10,7 @@ class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
         zwikiAfterSetUp(self)
 
     def test_excerptAt(self):
-        self.page.edit(text='This is a test of the<br>\n excerptAt method,')
+        self.page.edit(text='This is a test of the<br />\n excerptAt method,')
         self.assertEquals(self.page.excerptAt('excerptat',size=10,highlight=0),
                           '\n excerptAt ')
         #self.assertEquals(self.page.excerptAt('this*',size=21,highlight=1),
@@ -22,7 +22,7 @@ class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
                           '<span class="hit" style="background-color:yellow;font-weight:bold;">This</span> is a tes')
         self.assertEquals(self.page.excerptAt('br',size=4),
                           'e&lt;<span class="hit" style="background-color:yellow;font-weight:bold;">br</span>&gt;\n')
-        self.assertEquals(self.page.excerptAt('<br>',size=4,highlight=0),
+        self.assertEquals(self.page.excerptAt('<br />',size=4,highlight=0),
                           'e&lt;br&gt;\n')
         self.assertEquals(self.page.excerptAt('nomatch'),'')
         self.assertEquals(self.page.excerptAt(''),'')
