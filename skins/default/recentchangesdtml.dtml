@@ -35,6 +35,7 @@
       </dtml-if>
       <td>
         <input type=checkbox name=summaries <dtml-if summaries>checked</dtml-if> />
+        Show summaries ?
       </td>
       <dtml-unless hasCatalog>
       <td align="center"><input type=submit value="Refresh" /></td>
