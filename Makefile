@@ -99,15 +99,17 @@ skinviews:
 	  >skins/default/filterissuesdtml.dtml
 	cp skins/default/{recentchanges,searchwiki,useroptions,issuetracker,filterissues}dtml.dtml skins/zwiki_plone
 
-## server syncing
+## upload to server (rsync)
 
-check:
+rcheck:
 	rsync -ruvC -e ssh --include=ChangeLog --include=misc \
 	  --include=releases  -n . zwiki.org:zwiki
 
 rpush:
 	rsync -ruvC -e ssh --include=ChangeLog --include=misc \
 	  --include=releases . zwiki.org:zwiki
+
+## upload to server (darcs push)
 
 push:
 	darcs push -v -a
