@@ -38,7 +38,7 @@
          <span style="font-size:100%;">
          <table border="0" cellspacing="2" cellpadding="0" 
            <dtml-in issue_statuses prefix=x>
-             <dtml-let bold="x_sequence_item in REQUEST.get('status','')">
+             <dtml-let bold="x_sequence_item in REQUEST.get('status',[])">
                <tr>
                  <td align="right">
                      <dtml-var "bold and '<b>' or ''">
@@ -94,7 +94,7 @@
          <span style="font-size:100%;">
          <table border="0" cellspacing="2" cellpadding="0">
            <dtml-in issue_categories prefix=x>
-             <dtml-let bold="x_sequence_item in REQUEST.get('category','')">
+             <dtml-let bold="REQUEST.get('category',[])">
                <tr>
                  <td align="right">
                    <dtml-var "bold and '<b>' or ''">
