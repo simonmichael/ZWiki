@@ -144,7 +144,7 @@ class MailIn:
 
         plaintextpart = typed_subpart_iterator(self.msg,
                                                'text',
-                                               'plain').next().get_payload()
+                                               'plain').next().get_payload(decode=1)
         self.body = self.cleanupBody(plaintextpart)
         
     def isJunk(self):
