@@ -204,6 +204,11 @@ class OutlineManagerMixin:
         """
         BLATHER('saving outline data for wiki',self.folder().getId())
         self.folder().outline = self.wikiOutlineFromParents()
+        REQUEST = getattr(self,'REQUEST',None)
+        if REQUEST: REQUEST.RESPONSE.redirect(self.contentsUrl())
+
+    # easier alias
+    updatecontents = updateWikiOutline
         
     def wikiOutlineFromParents(self):
         """
