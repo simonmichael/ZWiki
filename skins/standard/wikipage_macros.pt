@@ -433,7 +433,7 @@ i18n:attributes="title">
   <span tal:condition="python:nbsubscriber==1" i18n:translate="">
     1 subscriber
   </span>
-  <span tal:condition="python:nbsubscriber==0" i18n:translate="">
+  <span tal:condition="python:0 #nbsubscriber==0" i18n:translate="">
     no subscribers
   </span>
 </span>
