@@ -46,8 +46,7 @@
 
 <span metal:define-macro="navpanel" tal:omit-tag="">
 <!-- navigation panel -->
-<div id="navpanel" 
-     tal:condition="python:getattr(here.folder(),'show_navlinks',0) and full">
+<div id="navpanel" tal:condition="full">
   <table class="shade1" width="100%" border="0" cellspacing="0">
     <tr valign="top">
       <td tal:condition="nothing" tal:content="structure python: here.navlinks()"></td>
@@ -73,7 +72,7 @@
 <span metal:define-macro="navpanel2" tal:omit-tag="">
 <!-- navigation panel -->
 <div id="navpanel" 
-     tal:condition="python:getattr(here.folder(),'show_navlinks',0) and full">
+     tal:condition="full">
   <table class="shade1" width="100%" border="0" cellspacing="0">
     <tr>
       <td tal:condition="nothing" tal:content="structure python: here.navlinks()"></td>

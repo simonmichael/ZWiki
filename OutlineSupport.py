@@ -386,19 +386,9 @@ class OutlineManagerMixin:
 
 class SubtopicsPropertyMixin:
     """
-    I determine when to display subtopics on a page (navlinks too).
+    I determine when to display subtopics on a page.
     """
     security = ClassSecurityInfo()
-
-    def navlinksEnabled(self):
-        """
-        Should this page display extra navigation links ?
-
-        True when there is a true show_navlinks page or folder property
-        and user is in full UI mode.
-        """
-        return (getattr(self,'show_navlinks',1) and
-                self.displayMode() == 'full')
 
     def subtopicsEnabled(self):
         """
