@@ -88,16 +88,16 @@ CLEAN=perl -p -e "s/(?s)^\#parents:.*?\n//;"
 skinviews:
 	@echo regenerating skin views from dtml pages
 	$(CLEAN) content/dtml/RecentChanges.stxdtml \
-	  >skins/default/recentchangesdtml.dtml
+	  >skins/standard/recentchangesdtml.dtml
 	$(CLEAN) content/dtml/SearchPage.stxdtml \
-	  >skins/default/searchwikidtml.dtml
+	  >skins/standard/searchwikidtml.dtml
 	$(CLEAN) content/dtml/UserOptions.stxdtml \
-	  >skins/default/useroptionsdtml.dtml
+	  >skins/standard/useroptionsdtml.dtml
 	$(CLEAN) content/tracker/IssueTracker.stxdtml \
-	  >skins/default/issuetrackerdtml.dtml
+	  >skins/standard/issuetrackerdtml.dtml
 	$(CLEAN) content/tracker/FilterIssues.stxdtml \
-	  >skins/default/filterissuesdtml.dtml
-	cp skins/default/{recentchanges,searchwiki,useroptions,issuetracker,filterissues}dtml.dtml skins/zwiki_plone
+	  >skins/standard/filterissuesdtml.dtml
+	cp skins/standard/{recentchanges,searchwiki,useroptions,issuetracker,filterissues}dtml.dtml skins/zwiki_plone
 
 ## upload to server (rsync)
 

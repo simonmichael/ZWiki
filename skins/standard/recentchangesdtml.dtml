@@ -63,9 +63,9 @@
       &nbsp;&nbsp;&nbsp;
       <dtml-unless summaries>
       <dtml-if last_log>
-      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><dtml-var last_log></b><br>&nbsp;
+      <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><dtml-var last_log></b><br/>&nbsp;
       <dtml-else>
-      <br><br>
+      <br/><br/>
       </dtml-if>
       </dtml-unless>
     </td>
@@ -90,9 +90,9 @@
     <td colspan=2>
       <small><dtml-var summary></small>
       <dtml-if last_log>
-      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><dtml-var last_log></b>&nbsp;
+      <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><dtml-var last_log></b>&nbsp;
       </dtml-if>
-      <br><br>
+      <br/><br/>
     </td>
     <td>&nbsp;</td>
   </tr>

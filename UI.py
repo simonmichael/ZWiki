@@ -1,25 +1,6 @@
 # UI-related methods and utilities
 #
 # the GeneralForms should perhaps be moved to their respective modules
-#
-# rewrite this:
-# Here we emulate CMF skins for a limited set of skin templates with known
-# names (wikipage, editform, backlinks etc): if they're in the zodb, use
-# them, if not get defaults from the filesystem. To make this work in any
-# Folder, wiki pages have methods of those names (below) which invoke the
-# appropriate templates. From 0.25, we still support this for backwards
-# compatibility but prefer to use the CMF-style SkinnedFolder whenever
-# possible, eg with new wikis.  So outside of CMF, templates are found thus:
-#
-#  1. (if there's a method of that name (below), call it; it will..)
-#  2. look in the wiki folder
-#  3. in a SkinnedFolder, look in the user's skin (one or more layers in skins/)
-#  4. look in the parent folders, up to the root folder (acquisition)
-#  5. (if we are in a method from step 1 and no template was found,
-#     get it from ZWiki/skins/default on the filesystem)
-#
-# Skin templates may be either page templates or DTML methods (or
-# occasionally, Files).
 
 from __future__ import nested_scopes
 import os, sys, re, string, time, math
@@ -62,7 +43,7 @@ def loadPageTemplate(name):
                  'modules': SecureModuleImporter,
                  }
             return c
-    pt = MyPTFile('skins/default/%s.pt'%name, globals(), __name__=name)
+    pt = MyPTFile('skins/standard/%s.pt'%name, globals(), __name__=name)
     pt._cook_check() # ensure _text is there, we peek at it below    
     return pt
 
@@ -70,7 +51,7 @@ def loadDtmlMethod(name):
     """
     Load the named DTML method from the filesystem.
     """
-    dm = HTMLFile('skins/default/%s'%name, globals())
+    dm = HTMLFile('skins/standard/%s'%name, globals())
     # work around some (2.7 ?) glitch
     if not hasattr(dm,'meta_type'): dm.meta_type = 'DTML Method (File)'
     return dm
@@ -80,7 +61,7 @@ def loadStylesheetFile(name):
     Load the stylesheet File from the filesystem. Also fix a mod. time bug.
     """
     thisdir = os.path.split(os.path.abspath(__file__))[0]
-    filepath = os.path.join(thisdir,'skins/default',name)
+    filepath = os.path.join(thisdir,'skins/standard',name)
     data,mtime = '',0
     try:
         fp = open(filepath,'rb')
@@ -177,7 +158,7 @@ class UIUtils:
         """
         Tell the user's current display mode - full, simple, or minimal.
 
-        This affects the default skin's appearance; it's not used in CMF/Plone.
+        This affects the standard skin's appearance; it's not used in CMF/Plone.
         This is either
         - user's zwiki_displaymode cookie, set by clicking full/simple/minimal
         - or the folder's default_displaymode string property (can acquire)
@@ -193,7 +174,7 @@ class UIUtils:
         This will find either a Page Template or DTML Method, preferring
         the former, and return it wrapped in this page's context.  If the
         template is not found in this page's acquisition context we'll
-        get it from the filesystem (ZWiki/skins/default).
+        get it from the filesystem (ZWiki/skins/standard).
         """
         form = getattr(self.folder(),
                        name,
@@ -304,7 +285,7 @@ class GeneralForms:
         File (but can also be a page template or dtml method). A File
         (static stylesheet) will have it's last-modified header set so it
         caches somewhat, but note even a File or the builtin default will
-        get loaded at least once per page, since the default skin links
+        get loaded at least once per page, since the standard skin links
         here with a per-page url.  XXX can we do better ? always inline
         the stylesheet ?
         

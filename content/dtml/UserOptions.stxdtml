@@ -204,19 +204,19 @@ Show page management form ? (in full mode)
 Use which zwiki skin ?
 <select name="skin" tabindex=11>
 <dtml-let skins="[
-  'default',
+  'standard',
   'commonplace',
   'wikipagex',
   ]">
 <dtml-in skins prefix=x>
 <option value="&dtml-x_sequence_item;"
-<dtml-if "REQUEST.get('skin','default') == x_sequence_item">selected</dtml-if>
+<dtml-if "REQUEST.get('skin','standard') == x_sequence_item">selected</dtml-if>
 >
 &dtml-x_sequence_item;
 </dtml-in>
 </dtml-let>
 </select>
-(Skins other than default may have problems. Commonplace is slow on this site.)
+(Skins other than standard may have problems. Commonplace is slow on this site.)
 </p>
 <p>
 Use which theme with the commonplace skin ?

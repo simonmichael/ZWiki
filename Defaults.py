@@ -11,7 +11,7 @@ AUTO_UPGRADE = 1             # upgrade old pages when viewed
 LARGE_FILE_SIZE = 1024*1024  # images larger than this will not be inlined
 LEAVE_PLACEHOLDER = 0        # leave a placeholder page when renaming ?
 SCROLL_CONTENTS = 0          # scroll to current page in contents (=>many urls)
-DEFAULT_DISPLAYMODE = 'minimal' # default display mode for the default skin
+DEFAULT_DISPLAYMODE = 'minimal' # default display mode for the standard skin
 
 PAGE_METATYPE =      'ZWiki Page' # meta_type of ZWikiPage objects
 PAGE_PORTALTYPE =    'Wiki Page'  # content type used in CMF/Plone
