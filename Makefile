@@ -525,12 +525,6 @@ plonetags:
 	  `find $$PWD -name '*.py' -o -name '*.dtml' -o -name '*.pt' \
 	     -o -name old     -prune -type f `
 
-clean:
-	rm -f .*~ *~ *.tgz *.bak i18n/*.mo
-
-Clean: clean
-	rm -f locale/*.mo
-
 
 ## misc automation
 
@@ -566,7 +560,14 @@ Clean: clean
 LANGUAGES=en es fr-CA fr ga it zh-TW pt-BR zh-CN 
 
 # using zope 3's i18nextract.py with my patches (-x option, multiline defaults fix)
-pot: 
+
+# a dtml extraction hack, should integrate with i18nextract
+dtmlextract: 
+	echo '<div i18n:domain="zwiki">' >skins/dtmlmessages.pt
+	find skins content -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt
+	echo '</div>' >>skins/dtmlmessages.pt
+
+pot: dtmlextract
 	PYTHONPATH=/usr/local/src/Zope3/src python \
 	  /usr/local/src/Zope3/utilities/i18nextract.py -d zwiki -p . -o ./i18n \
 	    -x _darcs -x old -x misc -x ftests 
@@ -608,3 +609,10 @@ epydoc:
 	 epydoc --docformat restructuredtext \
 	        --target /var/www/zopewiki.org/epydoc  \
 	        /zope/lib/python/Products/* /zope1/Products/*
+
+clean:
+	rm -f .*~ *~ *.tgz *.bak 
+
+Clean: clean
+	rm -f i18n/*.mo skins/dtmlmessages.pt
+
