@@ -205,6 +205,7 @@ class MailSupport:
         subscriber = email
         if subscriber:
             if not self.isSubscriber(subscriber,parent):
+                BLATHER('subscribed',subscriber,'to',self.id())
                 subs = self._getSubscribers(parent)
                 subs.append(subscriber)
                 self._setSubscribers(subs,parent)
@@ -226,6 +227,7 @@ class MailSupport:
             sl = self.subscriberList(parent)
             for s in sl:
                 if string.lower(s) == string.lower(subscriber):
+                    BLATHER('unsubscribed',subscriber,'from',self.id())
                     sl.remove(s)
             self._setSubscribers(sl,parent)
             if not parent: self.index_object()
@@ -257,6 +259,19 @@ class MailSupport:
         return self.unsubscribe(email,REQUEST,parent=1)
 
     ## misc api methods ##################################################
+
+    def subscribeThisUser(self,REQUEST):
+        """
+        Subscribe the current user to this page.
+
+        We'll use their username if appropriate, otherwise their email
+        address cookie.
+        """
+        if not REQUEST: return
+        user = ((self.inCMF() and str(REQUEST.get('AUTHENTICATED_USER'))) or
+                REQUEST.cookies.get('email',None))
+        if user and not (self.isSubscriber(user) or self.isWikiSubscriber(user)):
+            self.subscribe(user)
 
     def allSubscribers(self):
         """
@@ -336,6 +351,12 @@ class MailSupport:
             return 1
         else:
             return 0
+
+    def mailoutPolicy(self):
+        """
+        Get my mail-out policy - comments or edits ?
+        """
+        return getattr(self,'mailout_policy','comments')
 
     def autoSubscriptionEnabled(self):
         if getattr(self,'auto_subscribe',0):

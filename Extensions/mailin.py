@@ -59,10 +59,11 @@ Note page creation and comments will trigger subscriber mail-outs as usual.
 Tests for this code are in ZWiki/tests/testMailin.py.
 
 todo:
+refactor
+use email lib
 size limits
 friendly bounce messages
 integrate pb's http posting, attachment handling ?
-use python 2.2 email package ?
 
 """
 

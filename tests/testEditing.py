@@ -365,11 +365,11 @@ class EditingTests(ZopeTestCase.ZopeTestCase):
     #    p.rename('new parent name')
     #    self.assertEquals(['new parent name'],c.parents)
 
-    def test_comment(self):
+    def comment(self):
         p = self.page
-
-        # an ordinary comment
         p.edit(text='test')
+
+        # check that page source has changed after a comment
         p.comment(text='comment',username='me',time='1999/12/31 GMT')
         self.assertEqual(
             p.read(),
@@ -383,41 +383,8 @@ Subject:
 Message-ID: <19991231000000+0000@foo>
 
 comment''')
-        self.assertEqual(
-            p.preRendered(),
-            '''\
-<p>test
-ZWIKIMIDSECTION</p>
-<p><a name="comments"><br><b><span class="commentsheading">comments:</span></b></a></p>
-<p><a name="msg19991231000000+0000@foo"></a>
-<b>...</b> --me,  <a href="http://nohost/test_folder<u>1</u>/wiki/TestPage#msg19991231000000+0000@foo">1999/12/31 GMT</a> <a href="http://nohost/test_folder<u>1</u>/wiki/TestPage?subject=&in_reply_to=%3C19991231000000%2B0000%40foo%3E#bottom">reply</a><br />
-comment</p>
-''')
-
-        # ignore comments with no subject or body
-        old = p.read()
-        p.comment(text='',subject_heading='')
-        self.assertEqual(p.read(),old)
-
-    # XXX this is now the default - not needed ?
-    def test_quickcomment(self):
-        p = self.page
-        p.edit(text='test')
-        # check the comment was added, in RFC2822 format
-        p.quickcomment(text='comment',username='me',time='1999/12/31 GMT')
-        self.assertEqual(
-            p.read(),
-            '''\
-test
-
-From me Fri Dec 31 00:00:00 GMT 1999
-From: me
-Date: 1999/12/31 GMT
-Subject: 
-Message-ID: <19991231000000+0000@foo>
-
-comment''')
-        # check the prerendered was also updated, and messages separator added
+        # check that the html cache has also been updated,
+        # and a discussion separator added
         # XXX this was one of those "copy & paste" tests.. note the
         # underlining of _1_ in the date heading, this is not what we
         # want.
@@ -431,8 +398,9 @@ ZWIKIMIDSECTION</p>
 <b>...</b> --me,  <a href="http://nohost/test_folder<u>1</u>/wiki/TestPage#msg19991231000000+0000@foo">1999/12/31 GMT</a> <a href="http://nohost/test_folder<u>1</u>/wiki/TestPage?subject=&in_reply_to=%3C19991231000000%2B0000%40foo%3E#bottom">reply</a><br />
 comment</p>
 ''')
-        # check no more than one separator
-        p.quickcomment(text='comment',username='me',time='1999/12/31 GMT')
+
+        # check there's at most one separator
+        p.comment(text='comment',username='me',time='1999/12/31 GMT')
         self.assertEqual(
             p.preRendered(),
             '''\
@@ -447,6 +415,11 @@ comment</p>
 comment</p>
 ''')
         
+        # check we ignore comments with no subject or body
+        old = p.read()
+        p.comment(text='',subject_heading='')
+        self.assertEqual(p.read(),old)
+
     def testEndToEndCommentFormatting(self):
         USER = "me"
         TIME = "Fri, 31 Dec 1999 00:00:00 +0000"

@@ -82,7 +82,7 @@ class AbstractPageType:
         return t
 
     def preRenderMessage(self,page,msg):
-        t = msg.fp.read()
+        t = msg.get_payload()
         t = self.escapeEmailAddresses(page,t)
         t = self.renderCitationsIn(page,t)
         t = self.addCommentHeadingTo(page,t,msg)

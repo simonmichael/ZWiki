@@ -1,6 +1,8 @@
-# Messages mixin 
+# Messages mixin
+# to  be renamed to Comments ?
+# related to Mail.py
 
-import sys, os, string, re, rfc822
+import sys, os, string, re, email, email.Errors
 from mailbox import UnixMailbox, PortableUnixMailbox
 from urllib import quote
 from cStringIO import StringIO
@@ -31,43 +33,16 @@ class MessagesSupport:
     """
     security = ClassSecurityInfo()
 
+    # accessors
+
     security.declareProtected(Permissions.View, 'supportsMessages')
     def supportsMessages(self):
-        """does this page parse embedded rfc822-ish messages ?"""
+        """does this page parse embedded rfc2822 messages ?"""
         return re.search(r'(?i)(msg)',self.pageTypeId()) is not None
-
-    security.declareProtected(Permissions.View, 'mailbox')
-    def mailbox(self):
-        """
-        Return the messages on this page as an iterator of rfc822.Message.
-        """
-        # XXX UnixMailbox doesn't like unicode.. work around for now.
-        # NB at present unicode may get added:
-        # - via user edit
-        # - when a message is posted and the local timezone contains unicode
-        # - when rename writes a placeholder page (because of the use of _() !)
-        try:
-            return UnixMailbox(StringIO(self.text()))
-        except TypeError:
-            BLATHER(self.id(),'contains unicode, could not parse messages')
-            #BLATHER(repr(self.text()))
-            return UnixMailbox(StringIO(''))
-
-    def messages(self):
-        """
-        Return this page's messages as a list of rfc822.Message.
-        """
-        msgs = []
-        mbox = self.mailbox()
-        m = mbox.next()
-        while m is not None:
-            msgs.append(m)
-            m = mbox.next()
-        return msgs
 
     security.declareProtected(Permissions.View, 'hasMessages')
     def hasMessages(self):
-        """does this page have one or more embedded rfc822-ish messages ?"""
+        """does this page have one or more embedded messages ?"""
         return self.messageCount() > 0
 
     security.declareProtected(Permissions.View, 'messageCount')
@@ -92,6 +67,48 @@ class MessagesSupport:
         This page's text from the first message to the end (or '').
         """
         return stringAfterAndIncluding(fromlineexpr,self.text())
+
+    security.declareProtected(Permissions.View, 'mailbox')
+    def mailbox(self):
+        """
+        Return the messages on this page as an iterator of Message objects.
+        """
+        # UnixMailbox(/rfc822 ?) doesn't like unicode.. work around for now.
+        # NB at present unicode may get added:
+        # - via user edit
+        # - when a message is posted and the local timezone contains unicode
+        # - when rename writes a placeholder page (because of the use of _() !)
+        #try:
+        #    return UnixMailbox(StringIO(self.text()))
+        #except TypeError:
+        #    BLATHER(self.id(),'contains unicode, could not parse messages')
+        #    #BLATHER(repr(self.text()))
+        #    return UnixMailbox(StringIO(''))
+
+        # mailbox docs: this is defensive against ill-formed MIME messages
+        # in the mailbox, but you have to be prepared to receive the empty
+        # string from the mailbox's `next()' method
+        def msgfactory(fp):
+            try:
+                return email.message_from_file(fp)
+            except email.Errors.MessageParseError:
+                BLATHER('message parsing error in',self.id())
+                return ''
+        return UnixMailbox(StringIO(self.text()), msgfactory)
+
+    def messages(self):
+        """
+        Return this page's messages as a list of Messages.
+        """
+        msgs = []
+        mbox = self.mailbox()
+        m = mbox.next()
+        while m is not None:
+            msgs.append(m)
+            m = mbox.next()
+        return msgs
+
+    # utilities
 
     def makeMessageFrom(self,From,time,message_id,
                         subject='',in_reply_to=None,body=''):

@@ -139,182 +139,92 @@ class EditingSupport:
             except KeyError:
                 pass
 
-    security.declareProtected(Permissions.Comment, 'quickcomment')
-    def quickcomment(self, text='', username='', time='',
-                     note=None, use_heading=None, # not used
-                     REQUEST=None, subject_heading='', message_id=None,
-                     in_reply_to=None, exclude_address=None):
-        """
-        Add a comment to this page without re-rendering the whole thing.
+    security.declarePublic('isDavLocked')
+    def isDavLocked(self):
+        return hasattr(self,'wl_isLocked') and self.wl_isLocked()
 
-        Combines the bits it needs from comment, edit, handleEditText,
-        setText etc.  See also comment().
-        """
-        if hasattr(self,'wl_isLocked') and self.wl_isLocked():
-            return self.davLockDialog()
-
-        # gather various bits and pieces
-        oldtext = self.read()
-        text = self._cleanupText(text)
-        subject = subject_heading      # clashes with some zope attribute
-        if not username:
-            username = self.usernameFrom(REQUEST)
-            if re.match(r'^[0-9\.\s]*$',username): 
-                username = ''
-
-        # do basic junk comment filtering
-        if not subject and not text: return
-
-        # ensure message_id is defined at this point so page and mail-out
-        # will use the same value and threading will work
-        # also ensure it matches time if possible! may help debugging
-        if time:
-            dtime = DateTime(time)
-        else:
-            dtime = self.ZopeTime()
-            time = dtime.rfc822()
-        if not message_id:
-            message_id = self.messageIdFromTime(dtime)
-
-        # add message to page -
-        # carefully append it to both source and _prerendered cached
-        # without re-rendering the whole thing! works for current page types
-
-        # convert to rfc2822 and add to source
-        t = self.makeMessageFrom(username,time,message_id,
-                                 subject,in_reply_to,text)
-        if self.usingPurpleNumbers(): t = self.addPurpleNumbersTo(t,self)
-        t = '\n\n' + t
-        self.raw += t
-
-        # render message and add to _prerendered cache
-        t = text
-        t = self.pageType().renderCitationsIn(self,t)
-        t = self.pageType().makeCommentHeading(
-            self, subject, username, time, message_id, in_reply_to) + t
-        if self.messageCount() == 1:
-            t = self.pageType().discussionSeparator(self)+t
-        t = self.pageType().preRender(self,t)
-        self.setPreRendered(self.preRendered()+t)
-        self.cookDtmlIfNeeded()
-        self.setLastEditor(REQUEST)
-        self.setLastLog(note)
-        self.updateCatalog()
-        # send mail for "edits" policy - XXX for now, see IssueNo0690
-        if getattr(self.folder(),'mailout_policy','')=='edits':
-            self.sendMailToSubscribers(
-                self.textDiff(a=oldtext,b=self.read()),
-                REQUEST=REQUEST, subject=subject)
-
-        # if mailout policy is comments only, send it now
-        # (otherwise append did it) # XXX refactor
-        # testing support: is confused, see Mail.py XXX
-        if (getattr(self.folder(),'mailout_policy','comments')=='comments'
-            and (text or subject)):
-            # get the username in there
-            if REQUEST: REQUEST.cookies['zwiki_username'] = username
-            self.sendMailToSubscribers(text, 
-                                       REQUEST,
-                                       subjectSuffix="",
-                                       subject=subject,
-                                       message_id=message_id,
-                                       in_reply_to=in_reply_to,
-                                       exclude_address=exclude_address)
-
-        # if auto-subscription is in effect, subscribe this user
-        if self.autoSubscriptionEnabled():
-           usernameoremail = (REQUEST and (
-                              str(REQUEST.get('AUTHENTICATED_USER')) or
-                              REQUEST.cookies.get('email')))
-           if usernameoremail:
-               if not (self.isSubscriber(usernameoremail) or
-                       self.isWikiSubscriber(usernameoremail)):
-                   self.subscribe(usernameoremail)
-                   BLATHER('auto-subscribing',usernameoremail,'to',self.id())
-
-        # tell browser to reload & scroll to bottom
-        if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1']+'#bottom')
-
-    security.declareProtected(Permissions.Comment, 'slowcomment')
-    def slowcomment(self, text='', username='', time='',
+    security.declareProtected(Permissions.Comment, 'comment')
+    def comment(self, text='', username='', time='',
                 note=None, use_heading=None, # not used
                 REQUEST=None, subject_heading='', message_id=None,
                 in_reply_to=None, exclude_address=None):
         """
-        A handy method, like append but adds a standard rfc2822 message
-        heading with the specified or default values.
+        Add a comment to this page.
 
-        If mailout policy is "comments", we generate the mailout here
-        (otherwise it's done by edit).
+        We try to do this without unnecessary rendering.  The comment will
+        also be mailed out to any subscribers.  If auto-subscription is in
+        effect, we subscribe the poster to this page.
 
-        Finally, if auto-subscription is in effect, we subscribe the
-        poster to this page.
-
-        The subject_heading argument is so named to avoid a clash with
-        some existing zope or CMF subject attribute. The note and
-        use_heading arguments remain only for backwards compatibility with
-        old skin templates.
-
-        Special testing support: if the subject is '[test]', we skip
-        changing the page (except on TestPage).
+        subject_heading is so named to avoid a clash with some existing
+        zope subject attribute.  note and use_heading are not used and
+        kept only for backwards compatibility.
         """
-        if hasattr(self,'wl_isLocked') and self.wl_isLocked():
-            return self.davLockDialog()
+        if self.isDavLocked(): return self.davLockDialog()
 
         # gather various bits and pieces
         oldtext = self.read()
-        text = re.sub(r'\r\n',r'\n',text) # where did these appear from ?
-        subject = subject_heading      # clashes with some zope attribute
         if not username:
             username = self.usernameFrom(REQUEST)
-            if re.match(r'^[0-9\.\s]*$',username): 
-                username = ''
-
-        # ensure message_id is defined at this point so page and mail-out
-        # will use the same value and threading will work
-        # also ensure it matches time where possible (!) may help debugging
-        if time:
-            dtime = DateTime(time)
+            if re.match(r'^[0-9\.\s]*$',username): username = ''
+        # some subtleties here: we ensure the page comment and mail-out
+        # will use the same message-id, and the same timestamp if possible
+        # (helps threading & debugging)
+        if time: dtime = DateTime(time)
         else:
             dtime = self.ZopeTime()
             time = dtime.rfc822()
-        if not message_id:
-            message_id = self.messageIdFromTime(dtime)
+        if not message_id: message_id = self.messageIdFromTime(dtime)
 
-        # add message to page
-        self.append(self.makeMessageFrom(username,time,message_id,
-                                         subject,in_reply_to,text),
-                    REQUEST=REQUEST,
-                    log=subject)
+        # make a Message representing this comment
+        import email.Message
+        m = email.Message.Message()
+        m['From'] = username
+        m['Date'] = time
+        m['Subject'] = subject_heading
+        m['Message-ID'] = message_id
+        if in_reply_to: m['In-Reply-To'] = in_reply_to
+        m.set_payload(self._cleanupText(text))
+        m.set_unixfrom(self.fromLineFrom(m['From'],m['Date'])[:-1])
+        
+        # discard junk comments
+        if not (m['Subject'] or m.get_payload()): return
 
-        # if mailout policy is comments only, send it now
-        # (otherwise append did it) # XXX refactor
-        # testing support: is confused, see Mail.py XXX
-        if (getattr(self.folder(),'mailout_policy','comments')=='comments'
-            and (text or subject)):
-            # get the username in there
-            if REQUEST: REQUEST.cookies['zwiki_username'] = username
-            self.sendMailToSubscribers(text, 
-                                       REQUEST,
-                                       subjectSuffix="",
-                                       subject=subject,
-                                       message_id=message_id,
-                                       in_reply_to=in_reply_to,
-                                       exclude_address=exclude_address)
+        # add the comment to the page with minimal work - carefully append
+        # it to both source and _prerendered cached without re-rendering
+        # the whole thing! This might not be legal for all future page
+        # types.
+        # add to source, in standard rfc2822 format:
+        t = str(m)
+        if self.usingPurpleNumbers(): t = self.addPurpleNumbersTo(t,self)
+        t = '\n\n' + t
+        self.raw += t
+        # add to html cache, rendered:
+        t = self.pageType().preRenderMessage(self,m)
+        if self.messageCount()==1:t=self.pageType().discussionSeparator(self)+t
+        t = self.pageType().preRender(self,t)
+        self.setPreRendered(self.preRendered()+t)
+        self.cookDtmlIfNeeded()
 
-        # if auto-subscription is in effect, subscribe this user
-        if self.autoSubscriptionEnabled():
-           usernameoremail = (REQUEST and (
-                              str(REQUEST.get('AUTHENTICATED_USER')) or
-                              REQUEST.cookies.get('email')))
-           if usernameoremail:
-               if not (self.isSubscriber(usernameoremail) or
-                       self.isWikiSubscriber(usernameoremail)):
-                   self.subscribe(usernameoremail)
-                   BLATHER('auto-subscribing',usernameoremail,'to',self.id())
+        # send out mail to any subscribers
+        # XXX for 'edits' policy, we have always sent a (more exact) diff
+        # rather than just the comment text. Maybe not necessary ?
+        #if self.mailoutPolicy()=='edits': text = self.textDiff(a=oldtext,b=self.read())
+        #else: text = m.get_payload()
+        # hack the username in there for usernameFrom
+        if REQUEST: REQUEST.cookies['zwiki_username'] = m['From']
+        self.sendMailToSubscribers(m.get_payload(), #text, 
+                                   REQUEST,
+                                   subject=m['Subject'],
+                                   message_id=m['Message-ID'],
+                                   in_reply_to=m['In-Reply-To'],
+                                   exclude_address=exclude_address
+                                   )
 
-    security.declareProtected(Permissions.Comment, 'comment')
-    comment = quickcomment
+        if self.autoSubscriptionEnabled(): self.subscribeThisUser(REQUEST)
+        self.setLastEditor(REQUEST)
+        self.setLastLog(note)
+        self.updateCatalog()
+        if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1']+'#bottom')
 
     security.declareProtected(Permissions.Comment, 'append')
     def append(self, text='', separator='\n\n', REQUEST=None, log=''):
