@@ -69,30 +69,6 @@
 </div>
 </span>
 
-<span metal:define-macro="navpanel2" tal:omit-tag="">
-<!-- navigation panel -->
-<div id="navpanel" 
-     tal:condition="full">
-  <table class="shade1" width="100%" border="0" cellspacing="0">
-    <tr>
-      <td tal:condition="nothing" tal:content="structure python: here.navlinks()"></td>
-      <td align="left" width="33%">
-        <a tal:condition="here/previousPage" tal:attributes="href here/previousPageUrl"
-           access_key='P'>&lt;&lt; <span class="accesskey">p</span>revious</a>
-      </td>
-      <td align="center" width="33%">
-        <a tal:attributes="href here/primaryParentUrl"
-           access_key='U'><span class="accesskey">u</span>p</a>
-      </td>
-      <td align="right" width="33%">
-        <a tal:condition="here/nextPage" tal:attributes="href here/nextPageUrl"
-           access_key='N'><span class="accesskey">n</span>ext &gt;&gt;</a>
-      </td>
-    </tr>
-  </table>
-</div>
-</span>
-
 <span metal:define-macro="quickaccesskeys" tal:omit-tag="">
 <!-- always-available quick access keys -->
 <a tal:attributes="href string:${here/pageUrl}/src" accesskey="q"></a>
