@@ -167,3 +167,19 @@ class MockZWikiPage(ZWikiPage):
             return 1
         else:
             return 0
+
+# neutralize PTS to get most tests working.. see testI18n.py
+def patchPTSForUnitTesting(): 
+    try:
+        from Products.PlacelessTranslationService.PlacelessTranslationService \
+             import PlacelessTranslationService
+        save1 = PlacelessTranslationService._getContext
+        save2 = PlacelessTranslationService.negotiate_language
+        PlacelessTranslationService._getContext = \
+            lambda self,context: MockRequest()
+        PlacelessTranslationService.negotiate_language = \
+            lambda self,context,domain: 'en'
+    except ImportError:
+        pass
+
+patchPTSForUnitTesting()
