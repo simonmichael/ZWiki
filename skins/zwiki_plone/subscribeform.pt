@@ -122,14 +122,16 @@
           </tr>
           <tr tal:condition="python:email and othersubscriptions">
             <td>
-              <span i18n:translate="other_page_subscribed">You are subscribed to these other pages</span>: <br />
-              <a tal:repeat="pageid othersubscriptions" 
-                 href="../pageid/subscribeform?email=email"
+              <span i18n:translate="other_page_subscribed">You are subscribed to these other pages</span>:
+              <span tal:repeat="pageid othersubscriptions">
+                <br />
+                <a href="../pageid/subscribeform?email=email"
                  tal:attributes="href python:
                  '%s/%s/subscribeform?email=%s' % (
                  here.wiki_url(),pageid,here.urlquote(email))"
                  tal:content="python:here.pageWithId(pageid).title_or_id()"
-              >pagename</a>
+                >pagename</a>
+              </span>
             </td>
             <td>
               &nbsp;
