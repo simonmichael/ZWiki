@@ -205,6 +205,18 @@ class DiffSupport:
                 pass 
         return '\n' + join(r,'\n')
 
+    def addedText(self,a,b):
+        """
+        Return any lines which are in b but not in a, according to difflib.
+        """
+        a = split(a,'\n')
+        b = split(b,'\n')
+        r = []
+        for tag, alo, ahi, blo, bhi in self.rawDiff(a,b):
+            if tag in ('insert','replace'): r.extend((b[blo:bhi]))
+            else: pass
+        return '\n' + join(r,'\n')
+
     def rawDiff(self,a,b):
         """
         Return a diff between two texts, as difflib opcodes.

@@ -62,6 +62,8 @@ class EditingSupport:
 
         # here goes.. sequence is delicate here
 
+        self.checkForSpam(text)
+
         # make a new page object and situate it in the wiki
         # get a hold of it's acquisition wrapper
         p = self.__class__(source_string='', __name__=id)
@@ -174,6 +176,7 @@ class EditingSupport:
         # types.
         # add to source, in standard rfc2822 format:
         t = str(m)
+        self.checkForSpam(t)
         if self.usingPurpleNumbers(): t = self.addPurpleNumbersTo(t,self)
         t = '\n\n' + t
         self.raw += t
@@ -264,6 +267,13 @@ class EditingSupport:
                 return self.editConflictDialog()
             if self.isDavLocked():
                 return self.davLockDialog()
+
+        # XXX require at least a username cookie to edit
+        #if not self.requestHasSomeId(REQUEST):
+        #    raise 'Unauthorized', (
+        #        _('Sorry, this wiki requires that you configure a username to edit; please back up and visit options first.'))
+
+        self.checkForSpam(self.addedText(self.read(),text))
 
         # ok, changing p. We may do several things at once; each of these
         # handlers checks permissions and does the necessary.
@@ -764,16 +774,25 @@ class EditingSupport:
         #    #get_transaction().commit()
         #    DTMLDocument.__call__(self,self,REQUEST,REQUEST.RESPONSE)
 
+    def checkForSpam(self, t):
+        """
+        Check for signs of spam in some text, and raise an error if needed.
+        """
+        # banned links ?
+        for pat in getattr(self.folder(),'banned_links',[]):
+            pat = strip(pat)
+            if pat and re.search(pat,t):
+                raise _("There was a problem with your edit: it contains a banned link pattern. Please contact the site administrator for help.")
+        
+        # block anonymous edits containing urls ?
+        if getattr(self.folder(),'no_anonymous_links',0):
+            if (not self.requestHasSomeId(getattr(self,'REQUEST',None))) and re.search(r'https?://',t):
+                raise _("There was a problem with your edit: this site does not permit anonymous editors to add external links. Please contact the site administrator for help.")
+
     def cleanupText(self, t):
         """
         Do some cleanup of incoming text, also block spam links.
         """
-        # block spammer links - for now, just give an unexplained site error
-        for pat in getattr(self.folder(),'banned_links',[]):
-            pat = strip(pat)
-            if pat and re.search(pat,t):
-                raise "There was a problem with your edit, please contact the site administrator."
-        
         # strip any browser-appended ^M's
         t = re.sub('\r\n', '\n', t)
 
