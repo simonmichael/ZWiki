@@ -25,11 +25,12 @@
             action="page_url/subscribeform" 
             tal:attributes="action string:${here/page_url}/subscribeform"
             tal:define="
-            email member/getUserName|request/email|nothing;
+            email python:here.usernameOrEmailOfSubscriber();
             pagesubscriber python:here.isSubscriber(email);
             wikisubscriber python:here.isWikiSubscriber(email);
             othersubscriptions python:here.otherPageSubscriptionsFor(email);
             split python:modules['string'].split;
+            inCMFandLoggedIn python:context.inCMF() and not context.portal_membership.isAnonymousUser();
             ">
         <p>
 	  <span i18n:translate="subscribe_desc" tal:omit-tag="">
@@ -42,10 +43,10 @@
              tal:content="here/title_or_id">Page name</a>.
         </p>
 
-        <div tal:condition="here/inCMF">
+        <div tal:condition="inCMFandLoggedIn">
           <input name="email" type="hidden" tal:attributes="value email" />
         </div>
-        <div tal:condition="not:here/inCMF">
+        <div tal:condition="not:inCMFandLoggedIn">
           <span i18n:translate="" tal:omit-tag="">Your email address</span>:
           <input name="email" type="text" size=30 value="email" 
                  tal:attributes="value email" class="formfield" />
