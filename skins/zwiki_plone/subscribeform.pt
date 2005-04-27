@@ -31,12 +31,17 @@
             othersubscriptions python:here.otherPageSubscriptionsFor(email);
             split python:modules['string'].split;
             inCMFandLoggedIn python:context.inCMF() and not context.portal_membership.isAnonymousUser();
+            mailoutEverything python:getattr(here, 'mailout_policy','') == 'edits';
             ">
         <p>
-	  <span i18n:translate="subscribe_desc" tal:omit-tag="">
+	  <span tal:condition="not:mailoutEverything" i18n:translate="subscribe_desc_comments" tal:omit-tag="">
           You can subscribe to this page or to the whole wiki.
-          Subscribers receive a copy of comments via email
-          (or all edits, if enabled by the site admin).
+          Subscribers receive a copy of comments via email.
+          Or return to
+	  </span>
+	  <span tal:condition="mailoutEverything" i18n:translate="subscribe_desc_edits" tal:omit-tag="">
+          You can subscribe to this page or to the whole wiki.
+          Subscribers receive a copy of all edits via email.
           Or return to
 	  </span>
           <a href="page_url" tal:attributes="href here/page_url" 
