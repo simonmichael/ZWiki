@@ -26,15 +26,14 @@ Notes/stories:
 -images become images, files become files
 -relative links and image paths are adjusted
 -allow ignoring/replacing/deleting old pages (as long wiki is anon-writable)
-
+todo:
+suffixes influence the page type: .html, .stx, .rst, .txt etc.
 an id collision creates a page with modified name
 a front page may be selected from the imported pages
-
 text patterns may be removed from the pages
 file(s) may be specified on the command line
 use cmf or plone image/files when appropriate
 images and files have safe ids assigned if needed
-suffixes influence the page type: .html, .stx, .rst, .txt etc.
 use visitor pattern
 smarter dry run
 get around anon-writable requirement of zwiki web api
