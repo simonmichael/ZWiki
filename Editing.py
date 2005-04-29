@@ -792,19 +792,23 @@ class EditingSupport:
             raise _("There was a problem: %s. Please contact the site administrator for help." % \
                     (verbose_reason))
             
-        # banned links ?
+        # banned link pattern ?
         for pat in getattr(self.folder(),'banned_links',[]):
             pat = strip(pat)
             if pat and re.search(pat,t):
-                raiseSpamError(_("banned_links"),
+                raiseSpamError(_("banned_links match"),
                                _("your edit contained a banned link pattern"))
 
-        # block anonymous edits containing urls ?
-        if getattr(self.folder(),'no_anonymous_links',0):
-            if (not self.requestHasSomeId(REQUEST) and
-                re.search(r'https?://',t):
-                raiseSpamError(_("no_anonymous_links"),
-                               _("this site does not permit anonymous editors to add external links"))
+        # anonymous edit with too many urls ?
+        prop = 'max_anonymous_links'
+        if (not self.requestHasSomeId(REQUEST) and
+            hasattr(self.folder(), prop)):
+            try: max = int(getattr(self.folder(), prop))
+            except ValueError: max = None
+            if max is not None:
+                if len(re.findall(r'https?://',t)) > max:
+                    raiseSpamError(_("exceeded max_anonymous_links"),
+                                   _("adding of external links by anonymous authors is restricted"))
 
     def cleanupText(self, t):
         """
