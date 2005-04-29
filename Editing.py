@@ -800,6 +800,7 @@ class EditingSupport:
                                _("your edit contained a banned link pattern"))
 
         # anonymous edit with too many urls ?
+        # we'll handle either an int or string property
         prop = 'max_anonymous_links'
         if (not self.requestHasSomeId(REQUEST) and
             hasattr(self.folder(), prop)):
