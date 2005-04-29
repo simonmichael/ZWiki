@@ -35,7 +35,7 @@ class EditingSupport:
         return getSecurityManager().checkPermission(permission,object)
 
     security.declareProtected(Permissions.Add, 'create') 
-    def create(self,page,text=None,type=None,title='',REQUEST=None,log='',
+    def create(self,page,text='',type=None,title='',REQUEST=None,log='',
                sendmail=1, parents=None, subtopics=None):
         """
         Create a new wiki page, with optional extras.
@@ -62,8 +62,6 @@ class EditingSupport:
 
         # here goes.. sequence is delicate here
 
-        self.checkForSpam(text)
-
         # make a new page object and situate it in the wiki
         # get a hold of it's acquisition wrapper
         p = self.__class__(source_string='', __name__=id)
@@ -73,6 +71,7 @@ class EditingSupport:
         newid = self.folder()._setObject(id,p)
         p = getattr(self.folder(),newid)
 
+        p.checkForSpam(text)
         p.setCreator(REQUEST)
         p.setLastEditor(REQUEST)
         p.setLastLog(log)
@@ -83,7 +82,7 @@ class EditingSupport:
 
         # choose the specified type, the default type or whatever we're allowed 
         p.setPageType(type or self.defaultPageType())
-        p.setText(text or '',REQUEST)
+        p.setText(text,REQUEST)
         p.handleFileUpload(REQUEST)
         p.handleSubtopicsProperty(subtopics,REQUEST)
         if p.autoSubscriptionEnabled(): p.subscribeThisUser(REQUEST)
@@ -260,7 +259,12 @@ class EditingSupport:
         elif self.pageWithNameOrId(page):
             p = self.pageWithNameOrId(page) # changing another page
         else:
-            return self.create(page,text,type,title,REQUEST,log,
+            return self.create(page,
+                               text or '', # string expected
+                               type,
+                               title,
+                               REQUEST,
+                               log,
                                subtopics=subtopics) # creating a page
         if check_conflict:
             if self.checkEditConflict(timeStamp, REQUEST):
@@ -273,7 +277,7 @@ class EditingSupport:
         #    raise 'Unauthorized', (
         #        _('Sorry, this wiki requires that you configure a username to edit; please back up and visit options first.'))
 
-        self.checkForSpam(self.addedText(self.read(),text))
+        p.checkForSpam(p.addedText(p.read(), text or '')) # string expected
 
         # ok, changing p. We may do several things at once; each of these
         # handlers checks permissions and does the necessary.
@@ -776,18 +780,31 @@ class EditingSupport:
 
     def checkForSpam(self, t):
         """
-        Check for signs of spam in some text, and raise an error if needed.
+        Check for signs of spam in some text, and raise an error if found.
         """
+        REQUEST = getattr(self,'REQUEST',None))
+        username = self.usernameFrom(REQUEST,ip_address=0)
+        ip = REQUEST.REMOTE_ADDR
+        page = self.pageName()
+        def raiseSpamError(reason, verbose_reason):
+            BLATHER(('Blocked edit from %s (%s) on %s (%s)\n%s\n\n') % \
+                    (username, ip, page, reason, t))
+            raise _("There was a problem: %s. Please contact the site administrator for help." % \
+                    (verbose_reason))
+            
         # banned links ?
         for pat in getattr(self.folder(),'banned_links',[]):
             pat = strip(pat)
             if pat and re.search(pat,t):
-                raise _("There was a problem with your edit: it contains a banned link pattern. Please contact the site administrator for help.")
-        
+                raiseSpamError(_("banned_links"),
+                               _("your edit contained a banned link pattern"))
+
         # block anonymous edits containing urls ?
         if getattr(self.folder(),'no_anonymous_links',0):
-            if (not self.requestHasSomeId(getattr(self,'REQUEST',None))) and re.search(r'https?://',t):
-                raise _("There was a problem with your edit: this site does not permit anonymous editors to add external links. Please contact the site administrator for help.")
+            if (not self.requestHasSomeId(REQUEST) and
+                re.search(r'https?://',t):
+                raiseSpamError(_("no_anonymous_links"),
+                               _("this site does not permit anonymous editors to add external links"))
 
     def cleanupText(self, t):
         """
