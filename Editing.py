@@ -787,7 +787,7 @@ class EditingSupport:
         ip = REQUEST.REMOTE_ADDR
         page = self.pageName()
         def raiseSpamError(reason, verbose_reason):
-            BLATHER(('Blocked edit from %s (%s) on %s (%s)\n%s\n\n') % \
+            BLATHER(('blocked edit from %s (%s) on %s (%s)\n%s\n\n') % \
                     (ip, username, page, reason, t))
             raise _("There was a problem: %s. Please contact the site administrator for help." % \
                     (verbose_reason))
