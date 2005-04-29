@@ -5,11 +5,13 @@
       request.RESPONSE.setHeader('Content-Type','text/html;; charset=utf-8');
       ">
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-  <meta metal:define-slot="noindex" tal:omit-tag="" />
+  <meta tal:condition="python:here.lastEditIntervalInHours() < 24" 
+        name="robots" content="noindex" metal:define-slot="noindex" />
+  <meta tal:condition="python:here.lastEditIntervalInHours() >= 24" 
+        tal:omit-tag="" metal:define-slot="noindex" />
   <title metal:define-slot="title">title..</title>
   <meta metal:define-slot="keywords" name="keywords" content="" />
   <meta metal:define-slot="description" name="description" content="" />
-  <meta tal:condition="python:here.lastEditIntervalInHours < 24" name="robots" content="noindex" />
   <link rel="stylesheet" type="text/css" href="" 
         tal:attributes="
         href python:here.defaultPageUrl()+'/stylesheet'
