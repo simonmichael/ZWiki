@@ -260,7 +260,7 @@ class EditingSupport:
             p = self.pageWithNameOrId(page) # changing another page
         else:
             return self.create(page,
-                               text or '', # string expected
+                               text or '', # string expected here
                                type,
                                title,
                                REQUEST,
@@ -277,13 +277,11 @@ class EditingSupport:
         #    raise 'Unauthorized', (
         #        _('Sorry, this wiki requires that you configure a username to edit; please back up and visit options first.'))
 
-        p.checkForSpam(p.addedText(p.read(), text or '')) # string expected
-
         # ok, changing p. We may do several things at once; each of these
         # handlers checks permissions and does the necessary.
         if p.handleDeleteMe(text,REQUEST,log): return
         p.handleEditPageType(type,REQUEST,log)
-        p.handleEditText(text,REQUEST,subjectSuffix,log)
+        if text != None: p.handleEditText(text,REQUEST,subjectSuffix,log)
         p.handleSubtopicsProperty(subtopics,REQUEST)
         p.handleFileUpload(REQUEST,log)
         p.handleRename(title,leaveplaceholder,updatebacklinks,REQUEST,log)
@@ -350,19 +348,25 @@ class EditingSupport:
 
 
     def handleEditText(self,text,REQUEST=None, subjectSuffix='', log=''):
-        # is the new text valid and different ?
-        if (text is not None and
-            self.cleanupText(text) != self.read()):
+        old = self.read()
+        new = self.cleanupText(text)
+        # is the new text different ?
+        if new != old:
             # do we have permission ?
             if (not
                 (self.checkPermission(Permissions.Edit, self) or
                  (self.checkPermission(Permissions.Append, self)
-                  and find(self.cleanupText(text),self.read()) == 0))):
+                  and find(new,old) == 0))):
                 raise 'Unauthorized', (
                     _('You are not authorized to edit this ZWiki Page.'))
 
+            # does this edit look like spam ?
+            # Tries to count the links added by this edit. Not perfect -
+            # existing links on a line that you tweak will be counted.
+            # Not sure what happens if you replace existing links.
+            self.checkForSpam(self.addedText(old, new))
+                
             # change it
-            oldtext = self.read()
             self.setText(text,REQUEST)
             self.setLastEditor(REQUEST)
             self.setLastLog(log)
@@ -370,7 +374,7 @@ class EditingSupport:
             # if mailout policy is all edits, do it here
             if getattr(self,'mailout_policy','') == 'edits':
                 self.sendMailToSubscribers(
-                    self.textDiff(a=oldtext,b=self.read()),
+                    self.textDiff(a=old,b=self.read()),
                     REQUEST=REQUEST,
                     subject=log)
 
