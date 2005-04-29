@@ -9,6 +9,7 @@
   <title metal:define-slot="title">title..</title>
   <meta metal:define-slot="keywords" name="keywords" content="" />
   <meta metal:define-slot="description" name="description" content="" />
+  <meta tal:condition="python:here.lastEditIntervalInHours < 24" name="robots" content="noindex" />
   <link rel="stylesheet" type="text/css" href="" 
         tal:attributes="
         href python:here.defaultPageUrl()+'/stylesheet'

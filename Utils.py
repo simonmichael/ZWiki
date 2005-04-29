@@ -446,6 +446,14 @@ class Utils:
         return int(self.getPhysicalRoot().ZopeTime() -
                    self.lastEditTime())
 
+    security.declareProtected(Permissions.View, 'lastEditInterval')
+    def lastEditIntervalInHours(self):
+        """
+        return the number of hours since last edit
+        """
+        return int((self.getPhysicalRoot().ZopeTime() -
+                    self.lastEditTime()) * 24)
+
     security.declareProtected(Permissions.View, 'asAgeString')
     def asAgeString(self,time):
         """
