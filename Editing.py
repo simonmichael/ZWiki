@@ -782,7 +782,7 @@ class EditingSupport:
         """
         Check for signs of spam in some text, and raise an error if found.
         """
-        REQUEST = getattr(self,'REQUEST',None))
+        REQUEST = getattr(self,'REQUEST',None)
         username = self.usernameFrom(REQUEST,ip_address=0)
         ip = REQUEST.REMOTE_ADDR
         page = self.pageName()
