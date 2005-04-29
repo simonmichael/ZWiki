@@ -785,13 +785,15 @@ class EditingSupport:
     def checkForSpam(self, t):
         """
         Check for signs of spam in some text, and raise an error if found.
+
+        Also looks at the current user's info in REQUEST.
         """
         REQUEST = getattr(self,'REQUEST',None)
         username = self.usernameFrom(REQUEST,ip_address=0)
         ip = REQUEST.REMOTE_ADDR
         page = self.pageName()
         def raiseSpamError(reason, verbose_reason):
-            BLATHER(('blocked edit from %s (%s) on %s (%s)\n%s\n\n') % \
+            BLATHER(('blocked edit from %s (%s) on %s (%s)\n%s\n') % \
                     (ip, username, page, reason, t))
             raise _("There was a problem: %s. Please contact the site administrator for help." % \
                     (verbose_reason))
