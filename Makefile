@@ -115,12 +115,12 @@ mo:
 test:
 	zopectl test -v --libdir .
 
-# silliness to propertly capture output of a test run
+# silliness to properly capture output of a test run
 testresults:
 	date >.testresults 
 	make -s test >>.testresults 2>.stderr
 	cat .stderr >>.testresults
-	rm .stderr
+	rm -f .stderr
 
 # old:
 
