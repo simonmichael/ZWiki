@@ -790,7 +790,7 @@ class EditingSupport:
         """
         REQUEST = getattr(self,'REQUEST',None)
         username = self.usernameFrom(REQUEST,ip_address=0)
-        ip = REQUEST.REMOTE_ADDR
+        ip = getattr(REQUEST,'REMOTE_ADDR','')
         page = self.pageName()
         def raiseSpamError(reason, verbose_reason):
             BLATHER(('blocked edit from %s (%s) on %s (%s)\n%s\n') % \
@@ -806,8 +806,8 @@ class EditingSupport:
                                _("your edit contained a banned link pattern"))
 
         # anonymous edit with too many urls ?
-        # we'll handle either an int or string property
         prop = 'max_anonymous_links'
+        # we'll handle either an int or string property
         if (not self.requestHasSomeId(REQUEST) and
             hasattr(self.folder(), prop)):
             try: max = int(getattr(self.folder(), prop))
