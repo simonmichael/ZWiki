@@ -1,3 +1,61 @@
+    Summary
+
+        Some anti-spam features, skin fixes and translation updates.
+
+    Upgrade notes
+
+        Translations may be somewhat in flux this release.
+        
+    Changes
+
+      Configuring
+
+        * restrict external links: if a max_anonymous_links int property
+	is defined, edits from unidentified users (with no username)
+	containing more than that number of http:// links will be refused
+	and logged
+
+        * delayed indexing: pages now include the NOINDEX meta tag for 24
+	hours after an edit, to reduce the chance of spam links being
+	indexed by search engines.
+
+      Browsing
+
+        * show page source links when using thorough search, to help with
+	spam cleanup
+
+      Mail
+
+        * make subscribe form help reflect the comments/edits mailout policy
+	 (Jens Nachtigall)
+
+        * AnonymousUserSubscriptionInPlone (Jens Nachtigall)
+          fixes #878 anonymous subscription in cmf/plone subscribes "Anonymous User"
+
+        * br_for_subscribed_pages_list_on_subscribeform (Jens Nachtigall)
+          If one is subscribed to several pages, theses pages are
+          on the same line, which looks confusing. Now it is done as
+          with the page_subscribers list on the very same subscribeform,
+          ie an "<br />" is inserted between each page name.
+
+      General - i18n
+
+        * regenerate pot and po files, and this time with up-to-date
+	Default comments (#1093, SM, Jens Nachtigall)
+
+        * mark_PREVIEW_as_translatable (Jens Nachtigall)
+
+	* chinese translation updates (T.C. Chou)
+
+        * spanish translation updates (Gaspar Quiles)
+
+      General - skins
+        
+        * subscribeform_remove-unneccessary-span-tags (Jens Nachtigall)
+
+	* new api method: lastEditIntervalInHours
+	
+
 Zwiki 0.40.0 2005/04/01
 
     Summary
