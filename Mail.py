@@ -578,15 +578,21 @@ class MailSupport:
         """
         Give the MailHost that should be used for sending mail, or None.
 
-        We want to find a mailhost, any mailhost, in a robust way without
-        confusion from pages named MailHost, and to acquire it from a
-        parent folder if necessary. So: we look for the first object of
-        Mail Host meta_type in this folder, then in the parent folder, and
-        so on. Overkill ? But it needs to just work.
+        This needs to just work, as follows: we want to find a real
+        mailhost, preferably a nice transaction-safe MaildropHost, in a
+        robust way, acquiring it from a parent folder if necessary, and
+        not getting confused by other kinds of object called MailHost.
+        So: we look for the first object with Maildrop Host or Mail Host
+        meta_type in this folder, then in the parent folder, and so on.
         """
-        folder = self.folder()
         mhost = None
+        folder = self.folder()
         # folder might not have objectValues, don't know why right now (#938)
+        while (not mhost) and folder and hasattr(folder,'objectValues'): # XXX
+            mhosts = folder.objectValues(spec='Maildrop Host')
+            if mhosts: mhost = mhosts[0]
+            folder = getattr(folder,'aq_parent',None)
+        folder = self.folder()
         while (not mhost) and folder and hasattr(folder,'objectValues'): # XXX
             mhosts = folder.objectValues(spec='Mail Host')
             if mhosts: mhost = mhosts[0]
