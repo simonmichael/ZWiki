@@ -257,11 +257,12 @@ class TrackerSupport:
 
     security.declareProtected(Permissions.Edit, 'changeIssueProperties')
     def changeIssueProperties(self, name=None, category=None, severity=None, 
-                              status=None, log=None, REQUEST=None):
+                              status=None, log=None, text='', REQUEST=None):
         """
         Change an issue page's properties and redirect back there.
 
         Also, add a comment to the page describing what was done.
+        Optionally a comment subject and body can be set.
 
         name is the issue name excluding the issue number. Changing this
         will trigger a page rename, which may be slow.
@@ -295,6 +296,8 @@ class TrackerSupport:
             if status != self.status:
                 comment += "Status: %s => %s \n" % (self.status,status)
                 self.manage_changeProperties(status=status)
+        if text:
+            comment += '\n' + text
         if log or (comment != ''):
             log = log or 'property change'
             self.comment(text=comment, subject_heading=log, REQUEST=REQUEST)
