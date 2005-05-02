@@ -4,39 +4,6 @@
 <table border="0" cellspacing="0" cellpadding="5"
 bgcolor="&dtml-issueColour;">
 <tr><td>
-<b><dtml-translate domain="zwiki">Name</dtml-translate>:</b>
-<b><input type="text" name="name" value="<dtml-var issueName html_quote>" size="50" maxlength="200" class="formfield" style="font-weight:bold;"></b>
-<dtml-let
-  issue_categories="_.getattr(this(),'issue_categories','') or ['general']"
-  issue_severities="_.getattr(this(),'issue_severities','') or ['serious','normal','wishlist']"
-  issue_statuses="_.getattr(this(),'issue_statuses','') or ['open','closed']"
-  >
-<br />
-<b><dtml-translate domain="zwiki">Category</dtml-translate>:</b>
-<select name="category" class="formfield">
-<dtml-in issue_categories prefix=x>
-<option <dtml-if "category==x_sequence_item">selected</dtml-if>>
-&dtml-x_sequence_item;</option>
-</dtml-in>
-</select> 
-<b><dtml-translate domain="zwiki">Severity</dtml-translate>:</b>
-<select name="severity" class="formfield">
-<dtml-in issue_severities prefix=x>
-<option <dtml-if "severity==x_sequence_item">selected</dtml-if>>
-&dtml-x_sequence_item;</option>
-</dtml-in>
-</select> 
-<b><dtml-translate domain="zwiki">Status</dtml-translate>:</b>
-<select name="status" class="formfield">
-<dtml-in issue_statuses prefix=x>
-<option <dtml-if "status==x_sequence_item">selected</dtml-if>>
-&dtml-x_sequence_item;</option>
-</dtml-in>
-</select>
-</dtml-let>
-<br /><b><dtml-translate domain="zwiki">Optional note</dtml-translate>:</b> <input type="text" name="log" value="" size="55" maxlength="100" class="formfield">&nbsp;
-<input name="submit" type="submit" value="Change">
-<br />
 <b><dtml-translate domain="zwiki">Submitted by</dtml-translate>:</b>
 <dtml-var "_.getattr(this(),'creator','') or '(unknown)'">
 <b>at:</b>
@@ -72,7 +39,45 @@ seconds="_.int(_.round((elapsed-days-hourfactor*hours-minutefactor*minutes)/seco
 </dtml-if> ago)
 </dtml-let>
 <br />
-<b><dtml-translate domain="zwiki">Details & comments</dtml-translate>:</b>
+<b><dtml-translate domain="zwiki">Name</dtml-translate>:</b>
+<b><input type="text" name="name" value="<dtml-var issueName html_quote>" size="50" maxlength="200" class="formfield" style="font-weight:bold;"></b>
+<dtml-let
+  issue_categories="_.getattr(this(),'issue_categories','') or ['general']"
+  issue_severities="_.getattr(this(),'issue_severities','') or ['serious','normal','wishlist']"
+  issue_statuses="_.getattr(this(),'issue_statuses','') or ['open','closed']"
+  >
+<br />
+<b><dtml-translate domain="zwiki">Category</dtml-translate>:</b>
+<select name="category" class="formfield">
+<dtml-in issue_categories prefix=x>
+<option <dtml-if "category==x_sequence_item">selected</dtml-if>>
+&dtml-x_sequence_item;</option>
+</dtml-in>
+</select> 
+<b><dtml-translate domain="zwiki">Severity</dtml-translate>:</b>
+<select name="severity" class="formfield">
+<dtml-in issue_severities prefix=x>
+<option <dtml-if "severity==x_sequence_item">selected</dtml-if>>
+&dtml-x_sequence_item;</option>
+</dtml-in>
+</select> 
+<b><dtml-translate domain="zwiki">Status</dtml-translate>:</b>
+<select name="status" class="formfield">
+<dtml-in issue_statuses prefix=x>
+<option <dtml-if "status==x_sequence_item">selected</dtml-if>>
+&dtml-x_sequence_item;</option>
+</dtml-in>
+</select>
+</dtml-let>
+<br /><b><dtml-translate domain="zwiki">Optional note</dtml-translate>:</b> <input type="text" name="log" value="" size="55" maxlength="100" class="formfield">&nbsp;
+<input name="submit" type="submit" value="Change">
+<br />
+<b><dtml-translate domain="zwiki">Optional comment</dtml-translate>:</b> <textarea 
+wrap="virtual" name="text" rows="3" cols="50" class="formfield"
+style="vertical-align:top"
+title=""
+i18n:attributes="title">
+</textarea>
 </td></tr></table>
 </form>
 <!-- end of issue properties form -->
