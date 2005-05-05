@@ -455,20 +455,26 @@ class MailSupport:
     def fromProperty(self):
         """
         Give the mail_from property for this page.
+
+        Usually acquires from the folder.
         """
-        return getattr(self.folder(),'mail_from','')
+        return getattr(self,'mail_from','')
     
     def replyToProperty(self):
         """
         Give the mail_replyto property for this page.
+
+        Usually acquires from the folder.
         """
-        return getattr(self.folder(),'mail_replyto','')
+        return getattr(self,'mail_replyto','')
     
     def toProperty(self):
         """
         Give the mail_to property for this page.
+
+        Usually acquires from the folder.
         """
-        return getattr(self.folder(),'mail_to','')
+        return getattr(self,'mail_to','')
     
     def fromHeader(self,REQUEST=None):
         """
