@@ -176,10 +176,11 @@ class ZWikiPage(
     page_type = PAGETYPES[0]()
     # XXX page_type's are separate instances - use class or singleton instance ?
     def setPageType(self,id=None): self.page_type = self.lookupPageType(id)()
+    security.declarePublic('pageType') # public, useful for troubleshooting
     def pageType(self):
-        # I'd rather keep this in upgrade(), but someone might do
-        # something requiring this before the page gets viewed
         if type(self.page_type) == StringType:
+            # I'd rather do this check in upgrade(), but someone 
+            # might need this before the page gets viewed
             BLATHER('upgraded page_type attribute of '+self.id())
             self.setPageType(self.page_type)
         return self.page_type
