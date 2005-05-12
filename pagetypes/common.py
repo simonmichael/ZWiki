@@ -125,7 +125,7 @@ class AbstractPageType:
         heading = '\n\n'
         heading += '%s --' % (subject or '...')
         if username: heading = heading + '%s, ' % (username)
-        heading += time
+        heading += time or ''
         heading += '\n\n'
         return heading
 
@@ -199,10 +199,10 @@ class AbstractHtmlPageType(AbstractPageType):
             heading += ' <a href="%s#msg%s">%s</a>' % \
                        (page.page_url(),
                         re.sub(r'^<(.*)>$',r'\1',message_id),
-                        html_quote(time))
+                        html_quote(time or ''))
             inreplytobit = '&in_reply_to='+quote(message_id)
         else:
-            heading += html_quote(time)
+            heading += html_quote(time or '')
             inreplytobit = ''
         #heading += ( (' <a href="%s?subject=%s%s#bottom">' 
         #             % (page.page_url(),quote(subject or ''),inreplytobit)) +
