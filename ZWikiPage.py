@@ -176,8 +176,9 @@ class ZWikiPage(
     page_type = PAGETYPES[0]()
     # XXX page_type's are separate instances - use class or singleton instance ?
     def setPageType(self,id=None): self.page_type = self.lookupPageType(id)()
-    security.declarePublic('pageType') # public, useful for troubleshooting
+    security.declarePublic('pageType') # useful for troubleshooting
     def pageType(self):
+        """Return this page's page type object."""
         if type(self.page_type) == StringType:
             # I'd rather do this check in upgrade(), but someone 
             # might need this before the page gets viewed
@@ -187,7 +188,10 @@ class ZWikiPage(
     def lookupPageType(self,id=None):
         match = filter(lambda x:x._id==id,PAGETYPES)
         return (match and match[0]) or PAGETYPES[0]
-    def pageTypeId(self): return self.pageType().id()
+    security.declarePublic('pageType') # useful for troubleshooting
+    def pageTypeId(self):
+        """Return the short id for this page's page type."""
+        return self.pageType().id()
 
     # pre-rendered text cache
     _prerendered = ''   
