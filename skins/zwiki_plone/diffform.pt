@@ -25,7 +25,7 @@
            name="history_form:method"
            value="full history" 
 	   i18n:attributes="value"
-	   tal:condition="python:user.has_permission('View history',here)"
+	   tal:condition="python:user.has_permission('View History',here)"
            />
            
     <input class="context"
