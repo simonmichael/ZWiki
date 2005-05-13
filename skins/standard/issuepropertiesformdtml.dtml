@@ -69,7 +69,7 @@ seconds="_.int(_.round((elapsed-days-hourfactor*hours-minutefactor*minutes)/seco
 </dtml-in>
 </select>
 </dtml-let>
-<br /><b><dtml-translate domain="zwiki">Optional note</dtml-translate>:</b> <input type="text" name="log" value="" size="55" maxlength="100" class="formfield">&nbsp;
+<br /><b><dtml-translate domain="zwiki">Optional subject</dtml-translate>:</b> <input type="text" name="log" value="" size="55" maxlength="100" class="formfield">&nbsp;
 <input name="submit" type="submit" value="Change">
 <br />
 <b><dtml-translate domain="zwiki">Optional comment</dtml-translate>:</b> <textarea 
