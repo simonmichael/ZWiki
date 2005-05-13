@@ -367,9 +367,11 @@ class SubscriberManagerMixin:
         If we can't get an email address, return None.
 
         """
-        if isEmailAddress(subscriber):
+        if subscriber == None:
+            return None
+        elif isEmailAddress(subscriber):
             return subscriber
-        elif self.inCMF():
+        elif self.inCMF() and not self.portal_membership.isAnonymousUser():
             from Products.CMFCore.utils import getToolByName
             mtool = getToolByName(self, 'portal_membership')
             member = mtool.getMemberById(subscriber)
