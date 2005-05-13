@@ -141,7 +141,9 @@ class MockZWikiPage(ZWikiPage):
             self._folder = folder
         else:
             self._folder = OFS.Folder.Folder()
-            self._folder.aq_parent = None # no use (see testCreateWithFileUpload)
+            # XXX a MZP's folder's aq_parent will point back to the MZP 
+            # the following has no effect.. why ? breaks mailhost() etc.
+            self._folder.aq_parent = None
             self.aq_parent = self._folder
             self.aq_parent.__class__.manage_addFolder = OFS.Folder.manage_addFolder
             self.aq_inner = self
