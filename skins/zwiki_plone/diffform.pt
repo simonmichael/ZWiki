@@ -45,6 +45,14 @@
 	   i18n:attributes="value"
            accesskey="n" 
            />
+
+    <input class="standalone"
+           tal:condition="python:user.has_permission('Zwiki: Edit pages', here)" 
+           type="submit" 
+           name="revert:method" 
+           value="Revert to this" 
+           i18n:attributes="value"
+           />
            
     <input class="standalone"
            type="submit" 
