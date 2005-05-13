@@ -112,8 +112,9 @@ mo:
 # PlacelessTranslationService ? maybe
 
 # all tests, test.py
+# avoid mailin tests hanging due to #1104
 test:
-	zopectl test -v --libdir .
+	zopectl test --libdir . -v '!testmailin'
 
 # silliness to properly capture output of a test run
 testresults:
@@ -216,8 +217,7 @@ version:
 
 releasetag:
 	@echo tagging release-$(VERSION)
-	@darcs tag -m release-$(VERSION) \
-	  `echo $(VERSION)|perl -ne '!/(rc|b)[0-9]/ and print "--checkpoint"'`
+	@darcs tag --checkpoint -m release-$(VERSION) 
 
 # always puts tarball in mainbranch/releases
 # look at darcs dist
