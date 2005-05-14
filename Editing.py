@@ -671,7 +671,7 @@ class EditingSupport:
                 # failed to create - give up (what about an error)
                 pass
 
-    def _createFileOrImage(self,file,title='',REQUEST=None,parent=None):
+    def _createFileOrImage(self,file,title='',REQUEST=None):
         # based on WikiForNow which was based on
         # OFS/Image.py:File:manage_addFile
         """
@@ -688,14 +688,12 @@ class EditingSupport:
         if not id:
             return None, None, None
 
-        # find out where to store files - in an 'uploads'
-        # subfolder if defined, otherwise in the "parent" folder
-        # if specified (what is this ?), or, usually, the wiki folder
-        if (folderHas(self.folder(),'uploads') and
-            self.folder().uploads.isPrincipiaFolderish):
-            folder = self.folder().uploads
-        else:
-            folder = parent or self.folder() # see create()
+        # find out where to store files - in an 'uploads' subfolder if
+        # present, otherwise the wiki folder
+        folder = self.folder()
+        if (folderHas(folder,'uploads') and
+            folder.uploads.isPrincipiaFolderish):
+            folder = folder.uploads
 
         # unless it already exists, create the file or image object
         # use the CMF/Plone types if appropriate
