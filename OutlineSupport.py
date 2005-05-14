@@ -237,13 +237,6 @@ class OutlineManagerMixin:
     # easier alias ?
     updatecontents = updateWikiOutline
         
-    def wikiOutlineFromParents(self):
-        """
-        Generate an outline object from the pages' parents properties.
-
-        """
-        return PersistentOutline(parentmap)
-
     security.declareProtected(Permissions.Reparent, 'reparent')
     def reparent(self, parents=[], REQUEST=None, pagename=None):
         """
