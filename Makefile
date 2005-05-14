@@ -113,7 +113,7 @@ mo:
 
 # all tests, test.py
 # avoid mailin tests hanging due to #1104
-WHICH_TESTS='!testmailin'
+WHICH_TESTS=''
 
 test:
 	zopectl test --libdir . -v $(WHICH_TESTS)
