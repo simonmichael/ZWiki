@@ -46,6 +46,10 @@ class CMFPloneSpecificTests(PloneTestCase.PloneTestCase):
         self.page = self.portal.TestPage
 
     def testLinkToAllCataloged(self):
+        # you're not allowed to shadow the id of an object in the portal
+        # root folder (!) so we need to remove the outline object that
+        # got created there during setup
+        self.portal._delObject('outline')
         self.portal.manage_addFolder(id='folder1')
         self.portal.folder1.manage_addProduct['ZWiki'].manage_addZWikiPage('Page1')
         self.portal.manage_addFolder(id='folder2')
@@ -71,11 +75,6 @@ class CMFPloneSpecificTests(PloneTestCase.PloneTestCase):
         self.portal.link_to_all_objects = 1
         self.assert_(self.page.linkToAllObjects())
         #self.assertEquals(len(self.page.pages()),1)
-
-    def testWwmlNotInPageTypes(self):
-        anyWwmlTypes = filter(lambda x:x.find('wwml') != -1,
-                              self.page.allowedPageTypes())
-        self.failIf(anyWwmlTypes)
 
     def XXXtestPageViewing(self):
         #t = self.portal.index_html() # works

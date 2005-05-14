@@ -24,8 +24,8 @@ class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
                           'e&lt;<span class="hit" style="background-color:yellow;font-weight:bold;">br</span> /')
         self.assertEquals(self.page.excerptAt('<br />',size=4,highlight=0),
                           '&lt;br /&gt;')
-        self.assertEquals(self.page.excerptAt('nomatch'),'')
-        self.assertEquals(self.page.excerptAt(''),'')
+        self.assertEquals(self.page.excerptAt('nomatch'), 'This is a test of the&lt;br /&gt;\n excerptAt method,')
+        self.assertEquals(self.page.excerptAt(''), 'This is a test of the&lt;br /&gt;\n excerptAt method,')
 
     def testWithPartialCatalog(self):
         # a number of things are known to be affected by a partial catalog

@@ -20,19 +20,16 @@ class OutlineSupportTests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
         zwikiAfterSetUp(self)
         setupPageHierarchy(self)
-        # other tests cause this to be generated.. make sure to start fresh
-        delattr(self.wiki,'outline')
+
+    def beforeTearDown(self):
+        # this usually gets generated.. clear it so next tests
+        # will get a fresh one
+        self.wiki._delObject('outline')
 
     def test_wikiOutline(self):
-        self.assert_(not hasattr(self.wiki,'outline'))
-        o = self.page.wikiOutline()
         self.assert_(hasattr(self.wiki,'outline'))
+        o = self.page.wikiOutline()
         self.assertEquals(o,self.wiki.outline)
-        self.assertEquals(o.nesting(),
-                          self.page.wikiOutlineFromParents().nesting())
-        
-    def test_wikiOutlineFromParents(self):
-        o = self.page.wikiOutlineFromParents()
         self.assertEquals(o.nesting(),
                           [['RootPage',
                             ['ChildPage',
@@ -43,7 +40,7 @@ class OutlineSupportTests(ZopeTestCase.ZopeTestCase):
         # stray empty parents should be ignored
         self.wiki.TestPage.parents = ['']
         self.wiki.ChildPage.parents.append('')
-        o = self.page.wikiOutlineFromParents()
+        o = self.page.wikiOutline()
         self.assertEquals(o.nesting(),
                           [['RootPage',
                             ['ChildPage',
