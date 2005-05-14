@@ -38,7 +38,7 @@ class ZWikiWebsTests(unittest.TestCase):
 #                               #PARENTS=PARENTS)
 
 #    def testAddZwikiWeb(self):
-#        p = MockZWikiPage(__name__='TestPage')
+#        p = mockPage()
 #        f = p.aq_parent
 #        req = p.REQUEST
 #        wikitype = 'zwikidotorg'

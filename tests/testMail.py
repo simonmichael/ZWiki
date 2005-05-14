@@ -2,9 +2,9 @@ from support import *
 
 class MailoutTests(unittest.TestCase):
     def setUp(self):
-        self.p = MockZWikiPage()
+        self.p = mockPage()
         # mock up and record mail sending
-        # XXX hacks MockZWikiPage class
+        # XXX hacks MockZWikiPage class!
         self.p.mock_mailout_happened = 0
         def mock_sendMailToSubscribers(self, text, REQUEST, subjectSuffix='',
                                        subject='',message_id=None,in_reply_to=None,
@@ -83,7 +83,7 @@ class MailoutTests(unittest.TestCase):
 
 class SubscriptionTests(unittest.TestCase):
     def test_isSubscriber(self):
-        sl = MockZWikiPage().aq_parent.TestPage
+        sl = mockPage()
         sl._setSubscribers(['a','b'])
         self.assert_(sl.isSubscriber('a'))
         self.assert_(not sl.isSubscriber('c'))
@@ -91,7 +91,7 @@ class SubscriptionTests(unittest.TestCase):
         self.assert_(not sl.isSubscriber(' '))
 
     def test_subscribe(self):
-        sl = MockZWikiPage().aq_parent.TestPage
+        sl = mockPage()
         sl._setSubscribers(['spamandeggs'])
         self.assertEquals(sl.subscriberList(),['spamandeggs'])
         sl._resetSubscribers()
@@ -99,7 +99,8 @@ class SubscriptionTests(unittest.TestCase):
         self.assertEquals(sl.subscriberCount(),0)
         sl.subscribe('1@test.com')
         self.assertEquals(sl.subscriberList(),['1@test.com'])
-        self.assertEquals(MockZWikiPage.subscriber_list,[])  # ! (IssueNo0161)
+        # check issue #161
+        self.assertEquals(MockZWikiPage.subscriber_list,[]) 
         self.assertEquals(sl.subscriberCount(),1)
         self.assert_(sl.isSubscriber('1@test.com'))
         self.assert_(not sl.isSubscriber('2@test.com'))
@@ -118,7 +119,7 @@ class SubscriptionTests(unittest.TestCase):
 
     # XXX doesn't test subscription by CMF member id
     def test_allSubscriptionsFor(self):
-        p = MockZWikiPage().aq_parent.TestPage
+        p = mockPage()
         p._resetSubscribers()
         p._resetSubscribers(parent=1)
         p.subscribe('a@a.a')
@@ -129,7 +130,7 @@ class SubscriptionTests(unittest.TestCase):
         self.assertEquals(p.allSubscriptionsFor('c@c.c'),[])
         
     def test_otherSubscriptionsFor(self):
-        thispage = MockZWikiPage(__name__='ThisPage').aq_parent.ThisPage
+        thispage = mockPage(__name__='ThisPage')
         thispage.create('ThatPage')
         thatpage = thispage.aq_parent.ThatPage
         thispage.subscribe('me')

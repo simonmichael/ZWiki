@@ -3,7 +3,7 @@ from Products.ZWiki.plugins.PurpleNumbers import nidexpr
 
 class PurpleNumbersTests(unittest.TestCase):
     def setUp(self):
-        self.p = MockZWikiPage().aq_parent.TestPage
+        self.p = mockPage()
 
     def testUsePurpleNumbersProperty(self):
         self.p.edit(text='a\n')

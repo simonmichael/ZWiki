@@ -51,7 +51,7 @@ class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
 
     def test_asAgeString(self):
         #p = self.page
-        p = MockZWikiPage().aq_parent.TestPage
+        p = mockPage()
         self.assertEqual(p.asAgeString(p.last_edit_time),'some time')
 
     def test_pageIdsStartingWith(self):

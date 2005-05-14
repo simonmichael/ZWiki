@@ -177,7 +177,7 @@ class EditingTests(ZopeTestCase.ZopeTestCase):
     #    #- move to recycle_bin
     #    #- redirect to first parent or default page
     #
-    #    p = MockZWikiPage(__name__='TestPage')
+    #    p = mockPage(__name__='TestPage')
     #    f = p.aq_parent
     #    self.assert_(hasattr(f,'TestPage'))
     #    self.assert_(not hasattr(f,'recycle_bin'))
@@ -194,7 +194,7 @@ class EditingTests(ZopeTestCase.ZopeTestCase):
     
     # same problem as above
     #def test_recycle(self):
-    #    p = MockZWikiPage(__name__='TestPage')
+    #    p = mockPage(__name__='TestPage')
     #    f = p.aq_parent
     #    self.assert_(hasattr(f,'TestPage'))
     #    p.recycle()                     
@@ -203,7 +203,7 @@ class EditingTests(ZopeTestCase.ZopeTestCase):
     #    self.assertEqual(f.recycle_bin.TestPage.read(),'\nDeleteMe')
 
     #def test_delete(self):
-        #p = MockZWikiPage().aq_parent.TestPage
+        #p = mockPage()
         #f = p.folder()
         #self.assert_(hasattr(f,'TestPage'))
         #p.delete()
@@ -213,13 +213,13 @@ class EditingTests(ZopeTestCase.ZopeTestCase):
 
     # failed to make this test work
     #def test_delete_leaves_no_orphans(self):
-    #    p = MockZWikiPage(__name__='Page')
+    #    p = mockPage(__name__='Page')
     #    f = p.folder()
     #    # create() would give real zwiki pages, build these by hand
-    #    child = MockZWikiPage(__name__='Child')
+    #    child = mockPage(__name__='Child')
     #    f._setObject('Child',child,set_owner=0)
     #    child.parents = ['Page']
-    #    grandchild = MockZWikiPage(__name__='GrandChild')
+    #    grandchild = mockPage(__name__='GrandChild')
     #    f._setObject('GrandChild',grandchild,set_owner=0)
     #    grandchild.parents = ['Child']
     #    child.recycle = lambda x: None
@@ -287,7 +287,7 @@ class EditingTests(ZopeTestCase.ZopeTestCase):
 # because page.aq_parent.aq_parent == page
 # even if you set it to None, somewhere it comes back
 #    def testCreateWithFileUpload(self):
-#        p = MockZWikiPage().aq_parent.TestPage
+#        p = mockPage()
 #        f = p.folder()
 #        f.aq_parent = None
 #        
@@ -365,7 +365,7 @@ class EditingTests(ZopeTestCase.ZopeTestCase):
 
     # MZP doesn't support manage_renameObject
     #def testRenameLeavesNoOrphans(self):
-    #    p = MockZWikiPage('parent page')
+    #    p = mockPage('parent page')
     #    c = p.create('child page')
     #    p.rename('new parent name')
     #    self.assertEquals(['new parent name'],c.parents)

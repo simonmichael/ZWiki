@@ -48,7 +48,7 @@ TESTMSG = str(TestMessage())
 class MailinTests(unittest.TestCase):
 
     def setUp(self):
-        self.p = MockZWikiPage(__name__=THISPAGE)
+        self.p = mockPage(__name__=THISPAGE)
         self.p.folder().mailin_policy='open'
         
     def tearDown(self):
@@ -131,17 +131,22 @@ class MailinTests(unittest.TestCase):
     #    self.assertEqual(m.destpagename,'SomePage')
     
     def testDestinationWithNoNamedPage(self):
-        m = mailin.MailIn(self.p.folder(),
-            str(TestMessage(subject='test')))
-        m.decideMailinAction()
-        self.assertEqual(m.destpagename,None) 
-
-    def testDestinationWithNoNamedPageAndDefaultMailinPageProperty(self):
-        self.p.folder().default_mailin_page='TestPage'
-        m = mailin.MailIn(self.p.folder(),
-            str(TestMessage(subject='test')))
+        m = mailin.MailIn(self.p.folder(), str(TestMessage(subject='test')))
         m.decideMailinAction()
         self.assertEqual(m.destpagename,'TestPage') 
+
+    def testDestinationWithNoNamedPageAndDefaultMailinPageProperty(self):
+        # should create a different page here but I have things to do!
+        self.p.folder().default_mailin_page='TestPage'
+        m = mailin.MailIn(self.p.folder(), str(TestMessage(subject='test')))
+        m.decideMailinAction()
+        self.assertEqual(m.destpagename,'TestPage') 
+
+    def testDestinationWithNoNamedPageAndBlankDefaultMailinPageProperty(self):
+        self.p.folder().default_mailin_page=''
+        m = mailin.MailIn(self.p.folder(), str(TestMessage(subject='test')))
+        m.decideMailinAction()
+        self.assertEqual(m.destpagename,'') 
 
     #def testDestinationFromWikiNameInSubject(self):
     #    m = mailin.MailIn(self.p.folder(),

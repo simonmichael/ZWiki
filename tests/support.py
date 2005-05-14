@@ -113,56 +113,41 @@ from Products import ZWiki
 from Products.ZWiki.ZWikiPage import ZWikiPage
 from Products.ZWiki.Mail import MailSupport
 
+def mockPage(source_string='', mapping=None, __name__='TestPage', folder=None):
+    """
+    Generate a mock zwiki page with a realistic acquisition context.
+    """
+    page = MockZWikiPage(source_string=source_string,
+                         mapping=mapping,
+                         __name__=__name__)
+    # situate the page in a folder, making it out of thin air if needed
+    if not folder:
+        folder = OFS.Folder.Folder()
+        folder.aq_base = folder.aq_inner = folder
+        folder.aq_parent = None
+    id = folder._setObject(page.getId(), page, set_owner=0)
+    # make sure self.REQUEST works in folder context also
+    folder.REQUEST = page.REQUEST
+    return folder[id]
+
 class MockZWikiPage(ZWikiPage):
     """
     A mock ZWikiPage object for use in testing.
 
-    Problems, limitations:
-
-    - we fake acquisition below, good enough for some tests. To get closer
-    to the real thing, use p = MockZWikiPage().aq_parent.TestPage.  For
-    the real thing, pass in a real folder (and call _setObject).
-
-    - page methods like standard_wiki_header appear as attributes
-    of the parent folder, breaking tests
-
-    - some zopish things don't work and are too much work to mock.
-
+    Notes:
+    - use mockPage() to instantiate these with a real acquisition context
+    - some zopish things don't work and are too much work to mock
     - much time wasted debugging obscure mockup-related problems
-
     """
-    def __init__(self, source_string='', mapping=None, __name__='TestPage',
-                 folder=None,
-                 **vars): # XXX change default name to MockPage ?
-        apply(ZWikiPage.__init__,
-              (self,source_string,mapping,__name__),vars)
+    def __init__(self, source_string='', mapping=None, __name__='TestPage'):
+        apply(ZWikiPage.__init__,(self,source_string,mapping,__name__))
         self.REQUEST = MockRequest()
-        if folder:
-            self._folder = folder
-        else:
-            self._folder = OFS.Folder.Folder()
-            # XXX a MZP's folder's aq_parent will point back to the MZP 
-            # the following has no effect.. why ? breaks mailhost() etc.
-            self._folder.aq_parent = None
-            self.aq_parent = self._folder
-            self.aq_parent.__class__.manage_addFolder = OFS.Folder.manage_addFolder
-            self.aq_inner = self
-            self.aq_base = self
-            self._folder._setObject(self.getId(),self,set_owner=0)
 
-    # XXX can we do without ?
-    #def getPhysicalPath(self): return ('',)
+    def checkPermission(self, permission, object): return 1
 
-    def folder(self): return self._folder
-
-    def checkPermission(self, permission, object):
-        return 1
-
+    def cb_isMoveable(self): return 1
+        
     ZopeTime = DateTime.DateTime
-
-    def cb_isMoveable(self):
-        return 1
-
 
 
 # neutralize PTS to get most tests working.. see also testI18n.py

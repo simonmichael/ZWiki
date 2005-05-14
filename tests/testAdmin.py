@@ -10,7 +10,7 @@ class AdminTests(ZopeTestCase.ZopeTestCase):
         zwikiAfterSetUp(self)
 
     #def test_upgrade(self):
-    #    p = MockZWikiPage(__name__='SomeId').aq_parent.SomeId
+    #    p = mockPage(__name__='SomeId').aq_parent.SomeId
     #    p.title = 'something elSe!'
     #    p.upgrade()
     #    self.assertEqual(p.id(),'SomethingElse')
