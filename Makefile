@@ -113,8 +113,13 @@ mo:
 
 # all tests, test.py
 # avoid mailin tests hanging due to #1104
+WHICH_TESTS='!testmailin'
+
 test:
-	zopectl test --libdir . -v '!testmailin'
+	zopectl test --libdir . -v $(WHICH_TESTS)
+
+testd:
+	zopectl test --libdir . -v -D $(WHICH_TESTS)
 
 # silliness to properly capture output of a test run
 testresults:
