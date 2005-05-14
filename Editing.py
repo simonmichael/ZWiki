@@ -679,6 +679,9 @@ class EditingSupport:
         suffix. Returns a tuple containing the new id, content type &
         size, or (None,None,None).
         """
+        # macro to check folder contents without acquiring
+        folderHas = lambda folder,id: hasattr(folder.aq_base,id)
+
         # set id & title from filename
         title=str(title)
         id, title = OFS.Image.cookId('', title, file)
@@ -686,27 +689,40 @@ class EditingSupport:
             return None, None, None
 
         # find out where to store files - in an 'uploads'
-        # subfolder if defined, otherwise in the wiki folder
-        if (hasattr(self.folder().aq_base,'uploads') and
+        # subfolder if defined, otherwise in the "parent" folder
+        # if specified (what is this ?), or, usually, the wiki folder
+        if (folderHas(self.folder(),'uploads') and
             self.folder().uploads.isPrincipiaFolderish):
             folder = self.folder().uploads
         else:
             folder = parent or self.folder() # see create()
 
-        if hasattr(folder,id) and folder[id].meta_type in ('File','Image'):
-            pass
-        else:
-            # First, we create the file or image object without data
+        # unless it already exists, create the file or image object
+        # use the CMF/Plone types if appropriate
+        # it will be renamed if there is an id collision with some other
+        # kind of object
+        if not (folderHas(folder,id) and
+                folder[id].meta_type in ('File','Image')):#,
+                                         #'Portal File','Portal Image')):
             if guess_content_type(file.filename)[0][0:5] == 'image':
-                folder._setObject(id, OFS.Image.Image(id,title,''))
+                if self.inCMF():
+                    #XXX how ?
+                    id = folder._setObject(id, OFS.Image.Image(id,title,'')) 
+                else:
+                    id = folder._setObject(id, OFS.Image.Image(id,title,''))
             else:
-                folder._setObject(id, OFS.Image.File(id,title,''))
+                if self.inCMF():
+                    #XXX how ?
+                    id = folder._setObject(id, OFS.Image.File(id,title,''))
+                else:
+                    id = folder._setObject(id, OFS.Image.File(id,title,''))
 
         # Now we "upload" the data.  By doing this in two steps, we
-        # can use a database trick to make the upload more efficient.
-        folder._getOb(id).manage_upload(file)
+        # can use a database trick to make the upload more efficient. (?)
+        ob = folder._getOb(id)
+        ob.manage_upload(file)
 
-        return id, folder._getOb(id).content_type, folder._getOb(id).getSize()
+        return (id, ob.content_type, ob.getSize())
 
     def _addFileLink(self, file_id, content_type, size, REQUEST):
         """
