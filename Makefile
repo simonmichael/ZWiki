@@ -14,8 +14,8 @@
 
 PRODUCT=ZWiki
 HOST=zwiki.org
-REPO=$(HOST):$(PRODUCT)
-RSYNCPATH=$(HOST):$(PRODUCT)
+REPO=$(HOST):/repos/$(PRODUCT)
+RSYNCPATH=$(HOST):/repos/$(PRODUCT)
 LHOST=localhost:8080
 CURL=curl -o.curllog -sS -n
 
@@ -177,6 +177,9 @@ check:
 
 push:
 	darcs push -v -a $(REPO)
+
+push-exp:
+	darcs push -v -a $(HOST):/repos/$(PRODUCT)-exp
 
 pull-simon: 
 	darcs pull --interactive -v http://zwiki.org/repos/ZWiki
