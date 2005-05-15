@@ -367,7 +367,7 @@ class SubscriberManagerMixin:
         If we can't get an email address, return None.
 
         """
-        if subscriber == None:
+        if not subscriber:
             return None
         elif isEmailAddress(subscriber):
             return subscriber

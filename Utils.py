@@ -737,7 +737,7 @@ def isEmailAddress(s):
     """
     True if s looks like an email address.
     """
-    if s and '@' in s: return 1
+    if type(s) is StringType and '@' in s: return 1
     else: return 0
 
 def isUsername(s):
