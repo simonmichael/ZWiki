@@ -1,12 +1,17 @@
+<dtml-let subtopics=childrenAsList>
+<dtml-if subtopics>
 <dtml-call "REQUEST.RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
+<div class="subtopics_board">
+<a name="subtopics"></a>
+<b class="subtopicspanel">subtopics:</b><br />
 <table cellpadding="6">
 <tr>
-<th><dtml-translate domain="zwiki">Topic</dtml-translate></th>
+<td><b><dtml-translate domain="zwiki">Topic</dtml-translate></b></td>
 <th><dtml-translate domain="zwiki">Last updated</dtml-translate></th>
 <th><dtml-translate domain="zwiki">Comments</dtml-translate></th>
 <th><dtml-translate domain="zwiki">Created</dtml-translate></th>
 </tr>
-<dtml-in "[pageWithName(c) for c in childrenAsList()]" prefix=x sort=ageInDays>
+<dtml-in "[pageWithName(c) for c in subtopics]" prefix=x sort=ageInDays>
 <dtml-let 
   active="lastEditIntervalInDays() < 7"
   bold="active and 'font-weight:bold;' or ''"
@@ -33,3 +38,6 @@
 </dtml-let>
 </dtml-in>
 </table>
+</div>
+</dtml-if>
+</dtml-let>
