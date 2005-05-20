@@ -332,7 +332,7 @@ class ZWikiPage(
         return doc + self.renderMidsection(**kw) + discussion
 
     def renderMidsection(self,**kw):
-        if self.subtopicsEnabled(**kw): return self.subtopics()
+        if self.subtopicsEnabled(**kw): return self.subtopics(deep=1)
         else: return ''
     
     security.declareProtected(Permissions.View, 'supportsStx')

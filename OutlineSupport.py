@@ -733,13 +733,16 @@ class OutlineRenderingMixin:
             suppress_current=exclude_self)
 
     security.declareProtected(Permissions.View, 'subtopics')
-    def subtopics(self, REQUEST=None):
+    def subtopics(self,deep=0):
         """
-        Render my subtopics as a HTML fragment, using a template.
+        Return HTML showing my subtopics (offspring with different formatting).
         """
-        style = 'subtopics_outline'
-        #style = 'subtopics_board'
-        return self.getSkinTemplate(style)(self,REQUEST)
+        subtopics = ((deep and self.offspring(exclude_self=1)) or
+                     self.children())
+        if subtopics:
+            return '\n\n<a name="subtopics"><br /></a>\n<p><table id="subtopicspanel"><tr><td><b>subtopics:</b>\n%s</td></tr></table>' \
+                   % (subtopics) #XXX i18n
+        else: return ''
 
     security.declareProtected(Permissions.View, 'navlinks')
     def navlinks(self):
