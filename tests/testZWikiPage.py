@@ -212,6 +212,18 @@ class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
         self.assertEquals(self.p.pageCount(),1000)
         print time.time() - t
         
+    def test_displaysSubtopicsWithDtml(self):
+        self.p.edit(text='')
+        self.failIf(self.p.displaysSubtopicsWithDtml())
+        self.p.edit(text='<dtml subtopics')
+        self.failIf(self.p.displaysSubtopicsWithDtml())
+        self.p.edit(text='<dtml-var subtopics')
+        self.failIf(self.p.displaysSubtopicsWithDtml())
+        self.p.allow_dtml = 1
+        self.p.edit(text='<dtml-var subtopics')
+        self.failUnless(self.p.displaysSubtopicsWithDtml())
+        self.p.edit(text='&dtml-subtopics')
+        self.failUnless(self.p.displaysSubtopicsWithDtml())
 
 
 if __name__ == '__main__':

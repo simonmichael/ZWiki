@@ -138,6 +138,8 @@ DEFAULT_TEMPLATES = {
     'issuebrowser'       : loadPageTemplate('issuebrowser'),
     'issuebrowserdtml'   : loadDtmlMethod('issuebrowserdtml'),
     'stylesheet'         : loadStylesheetFile('stylesheet.css'),
+    'subtopics_outline'  : loadDtmlMethod('subtopics_outline'),
+    'subtopics_board'    : loadDtmlMethod('subtopics_board'),
     }
 
 

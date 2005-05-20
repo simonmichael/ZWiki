@@ -332,8 +332,25 @@ class ZWikiPage(
         return doc + self.renderMidsection(**kw) + discussion
 
     def renderMidsection(self,**kw):
-        if self.subtopicsEnabled(**kw): return self.subtopics(deep=1)
-        else: return ''
+        """
+        Render whatever should be in this page's midsection.
+
+        This is the subtopics, in the preferred style, if enabled, or
+        nothing.  As a convenience, if it seems subtopics are already
+        displayed via custom DTML code, we won't display them again.
+        """
+        if self.subtopicsEnabled(**kw) and not self.displaysSubtopicsWithDtml():
+            return self.subtopics()
+        else:
+            return ''
+
+    def displaysSubtopicsWithDtml(self):
+        """
+        True if this page appears to display subtopics via custom DTML.
+        """
+        return (self.hasDynamicContent() and
+                self.dtmlAllowed() and
+                (re.search(r'(?i)(<dtml-var\s+|&dtml-)subtopics',self.read()) is not None))
     
     security.declareProtected(Permissions.View, 'supportsStx')
     def supportsStx(self): 

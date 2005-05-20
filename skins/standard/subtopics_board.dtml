@@ -1,0 +1,35 @@
+<dtml-call "REQUEST.RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
+<table cellpadding="6">
+<tr>
+<th><dtml-translate domain="zwiki">Topic</dtml-translate></th>
+<th><dtml-translate domain="zwiki">Last updated</dtml-translate></th>
+<th><dtml-translate domain="zwiki">Comments</dtml-translate></th>
+<th><dtml-translate domain="zwiki">Created</dtml-translate></th>
+</tr>
+<dtml-in "[pageWithName(c) for c in childrenAsList()]" prefix=x sort=ageInDays>
+<dtml-let 
+  active="lastEditIntervalInDays() < 7"
+  bold="active and 'font-weight:bold;' or ''"
+  star="active and '<img src=star.gif align=right />' or ''"
+  creationdate="'%s/%s/%s' % (creationTime().year(),creationTime().month(),creationTime().day())"
+>
+<tr style="background-color:#eeffdd;">
+<td>
+  <b><dtml-var "wikilink('['+pageName()+']')"></b>
+</td>
+<td align="center" style="font-size:90%;&dtml-bold;">
+  <dtml-var star>
+  <dtml-translate domain="zwiki">by</dtml-translate> <dtml-var last_editor><br>
+  <dtml-translate domain="zwiki"><dtml-var lastEditInterval> ago</dtml-translate>
+</td>
+<td align="center" style="font-size:90%;">
+  <dtml-var commentCount>
+</td>
+<td align="center" style="font-size:90%;">
+  <dtml-translate domain="zwiki">by</dtml-translate> <dtml-var creator><br>
+  <dtml-translate domain="zwiki">on</dtml-translate> <dtml-var creationdate>
+</td>
+</tr>
+</dtml-let>
+</dtml-in>
+</table>

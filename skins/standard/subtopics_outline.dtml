@@ -1,0 +1,15 @@
+<dtml-call "REQUEST.RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
+<dtml-let subtopics="offspring(exclude_self=1)">
+<dtml-if subtopics>
+<a name="subtopics"><br /></a>
+<p>
+<table class="subtopicspanel">
+  <tr>
+    <td>
+      <b>subtopics:</b>
+      <dtml-var subtopics>
+    </td>
+  </tr>
+</table>
+</dtml-if>
+</dtml-let>
