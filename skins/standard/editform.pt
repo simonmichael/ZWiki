@@ -24,6 +24,7 @@
       rows       python:request.get('zwiki_height',20);
       uploaddir  python:getattr(container,'uploads',container);
       macros     python:here.wikipage_macros(request).macros;
+      pageurl     python: here.pageUrl()
       "
       onload="document.forms[0].text.focus();"
       >
@@ -42,7 +43,7 @@
       <tr>
         <td width="1%" valign="middle">
           <a tal:condition="python:request.get('zwiki_showlogo',1)"
-             tal:attributes="href here/wiki_url"
+             tal:attributes="href string:${wiki_url}"
              href="wiki_url" title="go to home page" accesskey="f" i18n:attributes="title">
             <img tal:replace="structure container/site_logo|default"
                  src="/misc_/ZWiki/ZWikiPage_icon.gif" height="48" width="48" 
@@ -60,7 +61,7 @@
 
     <div class="formcontent">
       <form method="post" enctype="multipart/form-data" action="" 
-            tal:attributes="action string:${here/page_url}">
+            tal:attributes="action string:${pageurl}">
         <input name="timeStamp" type="hidden" value="" 
                tal:attributes="value timestamp" />
         <input name="page" type=hidden value="page"
