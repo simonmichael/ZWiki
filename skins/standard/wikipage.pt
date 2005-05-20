@@ -9,7 +9,6 @@
       full        python: displaymode=='full';
       showhierarchy   python: displaymode!='minimal';
       linearhdr   python: 0 #displaymode=='full';
-      pageurl     python: here.pageUrl()
       ">
 <head metal:use-macro="macros/head">
   <title metal:fill-slot="title" 

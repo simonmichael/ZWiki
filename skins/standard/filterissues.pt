@@ -4,7 +4,6 @@
       tal:define="
       title string:Filter issues;
       macros python:here.wikipage_macros(request).macros;
-      pageurl     python: here.pageUrl()
       ">
 <head metal:use-macro="macros/head">
   <title tal:content="title" metal:fill-slot="title" ></title>

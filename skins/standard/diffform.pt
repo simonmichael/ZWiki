@@ -4,7 +4,6 @@
       tal:define="
       title   string:${container/title} ${here/title_or_id} diffs;
       macros  python:here.wikipage_macros(request).macros;
-      pageurl     python: here.pageUrl()
       revA options/revA; 
       difftext options/difftext;
       ">
@@ -45,7 +44,7 @@ src="/misc_/ZWiki/ZWikiPage_icon.gif" height="48" width="48" border="0" alt="hom
 <b i18n:translate="log_note">Log note :</b> <em tal:content="python:here.lastlog(revA-1)">log note..</em>
 </td>
 <td align="right" valign="top" nowrap="nowrap">
-<form method="GET" action="" tal:attributes="action string:${pageurl}">
+<form method="GET" action="" tal:attributes="action here/page_url">
 <input type="submit" name="manage_change_history_page:method" i18n:attributes="value"
  value="full history" tal:condition="python:user.has_permission('View History',here)" />
 <input tal:condition="python:revA < 19" type="submit" name="prevDiff:method" 
