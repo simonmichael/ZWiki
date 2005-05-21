@@ -1,4 +1,7 @@
-<dtml-let subtopics=childrenAsList>
+<dtml-let 
+ subtopics=childrenAsList
+ viewcounter="_.has_key('mxm_counter')"
+>
 <dtml-if subtopics>
 <dtml-call "REQUEST.RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
 <div class="subtopics_board">
@@ -9,6 +12,9 @@
 <td><b><dtml-translate domain="zwiki">Topic</dtml-translate></b></td>
 <th><dtml-translate domain="zwiki">Last updated</dtml-translate></th>
 <th><dtml-translate domain="zwiki">Comments</dtml-translate></th>
+<dtml-if viewcounter>
+<th><dtml-translate domain="zwiki">Views</dtml-translate></th>
+</dtml-if>
 <th><dtml-translate domain="zwiki">Created</dtml-translate></th>
 </tr>
 <dtml-in "[pageWithName(c) for c in subtopics]" prefix=x sort=ageInDays>
@@ -30,6 +36,11 @@
 <td align="center" style="font-size:90%;">
   <dtml-var commentCount>
 </td>
+<dtml-if viewcounter>
+<td align="center" style="font-size:90%;">
+  <dtml-var "mxm_counter.get_count(x_item)">
+</td>
+</dtml-if>
 <td align="center" style="font-size:90%;">
   <dtml-translate domain="zwiki">by</dtml-translate> <dtml-var creator><br>
   <dtml-translate domain="zwiki">on</dtml-translate> <dtml-var creationdate>
