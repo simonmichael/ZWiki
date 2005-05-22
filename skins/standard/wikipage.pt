@@ -211,11 +211,10 @@
                    title="configure email subscription to this page or site" 
                    i18n:attributes="title"
                    >
-                <span tal:condition="python:0 #show subscription status - expensive# here.allSubscriptionsFor(request.get('email',''))" >
-                	<span >(un)</span >
-                </span >
-                	<span i18n:translate="">subscribe</span>
-                </a>
+                  <span tal:condition="python:0 
+                              #here.allSubscriptionsFor(request.get('email',''))
+                              #show subscription status - too expensive " >(un)</span >
+                  <span i18n:translate="">subscribe</span></a>
                 <a tal:condition="python:0 #user.has_permission('Zwiki: Edit pages',here)"
                    tal:attributes="href python:here.pageUrl() + '/backlinks';"
                    href="" 
