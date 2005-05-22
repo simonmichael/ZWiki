@@ -28,9 +28,10 @@ try:
         # this hack forced proper utf-8 header with PTS, but I seem not to
         # need it any more.. possibly since zope 2.7.2 or some other upgrade ?
         # reenable if utf-8 encoding is broken, and please report at zwiki.org
+        # XXX still happening with "you are here" in wiki contents view ?
         #class MessageIDFactoryWithUtf8Fix(MessageIDFactory):
         #    """
-        #    XXX hacky wrapper ensuring proper utf-8 http header when _ is used.
+        #    XXX wrapper ensuring proper utf-8 http header when _ is used.
         #
         #    Called for every i18n string, performance sensitive ?
         #    When there is no request, do nothing so unit tests can run.
