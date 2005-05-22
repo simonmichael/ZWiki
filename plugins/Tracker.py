@@ -15,7 +15,7 @@ from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER,formattedTraceback
 from Products.ZWiki.UI import DEFAULT_TEMPLATES, loadDtmlMethod, loadPageTemplate#, onlyBodyFrom
 
-DEFAULT_TEMPLATES['issuepropertiesform'] = loadDtmlMethod('issuepropertiesformdtml')
+DEFAULT_TEMPLATES['issuepropertiesform'] = loadDtmlMethod('issuepropertiesform')
 
 # issue tracker defaults, will be installed as folder properties
 ISSUE_CATEGORIES = [

@@ -56,7 +56,7 @@ DEFAULT_TEMPLATES = {
     'subtopics_outline'  : loadDtmlMethod('subtopics_outline'),
     'subtopics_board'    : loadDtmlMethod('subtopics_board'),
     # ratingform           : loadPageTemplate('ratingform'),
-    # issuepropertiesformdtml : loadDtmlMethod('issuepropertiesformdtml'),
+    # issuepropertiesform : loadDtmlMethod('issuepropertiesform'),
     }
 
 
