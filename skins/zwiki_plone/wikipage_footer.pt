@@ -57,6 +57,6 @@
      #and (user.has_role('Authenticated') or request.get('zwiki_username',''))
      ">
   <!-- page management panel -->
-  <span metal:use-macro="python:here.wikipage_macros().macros['pagemanagement']" />
+  <span metal:use-macro="python:here.wikipage_template().macros['pagemanagement']" />
 </div>
 </div>

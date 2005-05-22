@@ -10,7 +10,7 @@
 <div metal:fill-slot="main"
      tal:define="revA options/revA; difftext options/difftext;">	  
 
-<span metal:use-macro="python:here.wikipage_macros().macros['quickaccesskeys']" />
+<span metal:use-macro="python:here.wikipage_template().macros['quickaccesskeys']" />
 
 <h1><span i18n:translate="">History for</span> <span tal:replace="here/title_or_id">Pagename..</span></h1>
 

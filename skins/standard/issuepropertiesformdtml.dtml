@@ -1,4 +1,4 @@
-<dtml-call "RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
+<dtml-call "REQUEST.RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
 <!-- issue properties form -->
 <form action="&dtml-page_url;/changeIssueProperties" method="post">
 <table border="0" cellspacing="0" cellpadding="5"

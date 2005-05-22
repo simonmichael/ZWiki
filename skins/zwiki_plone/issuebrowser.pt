@@ -7,7 +7,7 @@
 
   <div metal:fill-slot="main">
 
-    <span metal:use-macro="python:here.wikipage_macros().macros['quickaccesskeys']" />
+    <span metal:use-macro="python:here.wikipage_template().macros['quickaccesskeys']" />
 
     <h1 i18n:translate="heading_wiki_issue_browser">
       Issue browser

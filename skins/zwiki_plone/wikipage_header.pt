@@ -5,5 +5,5 @@ I thought I'd use this for "things common to all zwiki views", but
 </tal:comment>
 
 <div i18n:domain="zwiki">
-<span metal:use-macro="python:here.wikipage_macros().macros['quickaccesskeys']" />
+<span metal:use-macro="python:here.wikipage_template().macros['quickaccesskeys']" />
 </div>

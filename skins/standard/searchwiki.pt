@@ -2,37 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
       i18n:domain="zwiki"
       tal:define="
-      title string:Search this wiki;
-      macros python:here.wikipage_macros(request).macros;
-      ">
-<head metal:use-macro="macros/head">
-  <title tal:content="title" metal:fill-slot="title" ></title>
-  <meta name="robots" content="noindex,nofollow" metal:fill-slot="noindex" />
-</head>
-<body bgcolor="#ffffff">
+                  macros  python:here.wikipage_template(request).macros;
+                  macros2 python:here.getSkinTemplate('contentspage').macros;
+                  ">
+  <head metal:use-macro="macros/head">
+    <meta metal:fill-slot="noindex" name="robots" content="noindex,nofollow" />
+    <title metal:fill-slot="title" i18n:translate="">Search this wiki</title>
+  </head>
 
-<div metal:use-macro="macros/linkpanel"></div>
+  <body bgcolor="#ffffff">
+    <div metal:use-macro="macros/linkpanel" />
+    <div metal:use-macro="macros2/wikiformheading">
+      <h1 metal:fill-slot="title" i18n:translate="">Search this wiki</h1>
+    </div>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="3">
-<tr>
-<td width="1%" valign="middle">
-<a 
-tal:condition="python:request.get('zwiki_showlogo',1)"
-tal:attributes="href here/wiki_url"
-i18n:attributes="title"
-href="wiki_url" title="go to home page" accesskey="f">
-<img 
-tal:replace="structure container/site_logo|default"
-i18n:attributes="alt"
-src="/misc_/ZWiki/ZWikiPage_icon.gif" height="48" width="48" border="0" alt="home" />
-</a>
-</td>
-<td valign="middle"><h1 tal:content="title"></h1></td>
-</tr>
-</table>
-<!-- end of header -->
+    <div class="formcontent" tal:content="structure options/body">content..</div>
 
-<div class="formcontent" tal:content="structure options/body">content..</div>
-
-</body>
+  </body>
 </html>

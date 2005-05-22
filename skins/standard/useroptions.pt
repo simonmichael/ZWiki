@@ -3,15 +3,15 @@
       i18n:domain="zwiki"
       tal:define="
       title string:User options;
-      macros python:here.wikipage_macros(request).macros;
+      macros python:here.wikipage_template(request).macros;
       ">
-<head metal:use-macro="macros/head">
-  <title tal:content="title" metal:fill-slot="title" ></title>
-  <meta name="robots" content="noindex,nofollow" metal:fill-slot="noindex" />
-</head>
-<body bgcolor="#ffffff">
+  <head metal:use-macro="macros/head">
+    <title metal:fill-slot="title" tal:content="title" />
+    <meta metal:fill-slot="noindex" name="robots" content="noindex,nofollow" />
+  </head>
 
-<div metal:use-macro="macros/linkpanel"></div>
+  <body bgcolor="#ffffff">
+    <div metal:use-macro="macros/linkpanel" />
 
 <div class="formcontent" tal:content="structure options/body">content..</div>
 

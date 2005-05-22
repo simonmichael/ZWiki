@@ -20,6 +20,45 @@ from Utils import BLATHER,formattedTraceback
 from Regexps import htmlheaderexpr, htmlfooterexpr, htmlbodyexpr
 from I18nSupport import _, DTMLFile, HTMLFile
 
+DEFAULT_TEMPLATES = {
+    'badtemplate'        : loadPageTemplate('badtemplate'),
+
+    #main page view
+    #wikipage defines macros used by most other templates
+    'wikipage'           : loadPageTemplate('wikipage'),
+    'stylesheet'         : loadStylesheetFile('stylesheet.css'),
+
+    #secondary page views/forms
+    #these omit the pageheading
+    'backlinks'          : loadPageTemplate('backlinks'),
+    'editform'           : loadPageTemplate('editform'),
+    'diffform'           : loadPageTemplate('diffform'),
+    'subscribeform'      : loadPageTemplate('subscribeform'),
+
+    #wiki views/forms
+    #contentspage defines a wikiformheading,
+    #used by all the rest except useroptions
+    'contentspage'       : loadPageTemplate('contentspage'),
+    'recentchanges'      : loadPageTemplate('recentchanges'),
+    'recentchangesdtml'  : loadDtmlMethod('recentchangesdtml'),
+    'searchwiki'         : loadPageTemplate('searchwiki'),
+    'searchwikidtml'     : loadDtmlMethod('searchwikidtml'),
+    'useroptions'        : loadPageTemplate('useroptions'),
+    'useroptionsdtml'    : loadDtmlMethod('useroptionsdtml'),
+    'issuetracker'       : loadPageTemplate('issuetracker'),
+    'issuetrackerdtml'   : loadDtmlMethod('issuetrackerdtml'),
+    'issuebrowser'       : loadPageTemplate('issuebrowser'),
+    'issuebrowserdtml'   : loadDtmlMethod('issuebrowserdtml'),
+    'filterissues'       : loadPageTemplate('filterissues'),
+    'filterissuesdtml'   : loadDtmlMethod('filterissuesdtml'),
+
+    #fragments
+    'subtopics_outline'  : loadDtmlMethod('subtopics_outline'),
+    'subtopics_board'    : loadDtmlMethod('subtopics_board'),
+    # ratingform           : loadPageTemplate('ratingform'),
+    # issuepropertiesformdtml : loadDtmlMethod('issuepropertiesformdtml'),
+    }
+
 
 # utilities
 
@@ -114,33 +153,6 @@ def onlyBodyFrom(t):
 
 def addErrorTo(text,error):
     return """<div class="error">%s</div>\n%s""" % (error,text)
-
-
-DEFAULT_TEMPLATES = {
-    'badtemplate'        : loadPageTemplate('badtemplate'),
-    'wikipage'           : loadPageTemplate('wikipage'),
-    'wikipage_macros'    : loadPageTemplate('wikipage_macros'),
-    'backlinks'          : loadPageTemplate('backlinks'),
-    'contentspage'       : loadPageTemplate('contentspage'),
-    'diffform'           : loadPageTemplate('diffform'),
-    'editform'           : loadPageTemplate('editform'),
-    'subscribeform'      : loadPageTemplate('subscribeform'),
-    'recentchanges'      : loadPageTemplate('recentchanges'),
-    'recentchangesdtml'  : loadDtmlMethod('recentchangesdtml'),
-    'searchwiki'         : loadPageTemplate('searchwiki'),
-    'searchwikidtml'     : loadDtmlMethod('searchwikidtml'),
-    'useroptions'        : loadPageTemplate('useroptions'),
-    'useroptionsdtml'    : loadDtmlMethod('useroptionsdtml'),
-    'issuetracker'       : loadPageTemplate('issuetracker'),
-    'issuetrackerdtml'   : loadDtmlMethod('issuetrackerdtml'),
-    'filterissues'       : loadPageTemplate('filterissues'),
-    'filterissuesdtml'   : loadDtmlMethod('filterissuesdtml'),
-    'issuebrowser'       : loadPageTemplate('issuebrowser'),
-    'issuebrowserdtml'   : loadDtmlMethod('issuebrowserdtml'),
-    'stylesheet'         : loadStylesheetFile('stylesheet.css'),
-    'subtopics_outline'  : loadDtmlMethod('subtopics_outline'),
-    'subtopics_board'    : loadDtmlMethod('subtopics_board'),
-    }
 
 
 class UIUtils:
@@ -354,18 +366,20 @@ class GeneralForms:
         """
         return self.render(REQUEST=REQUEST,RESPONSE=RESPONSE)
 
+    security.declareProtected(Permissions.View, 'wikipage_template')
+    def wikipage_template(self, REQUEST=None):
+        """
+        Get the main wikipage template without evaluating.
+
+        Like the below. Should it be wikipage ? Or would that
+        be inconsistent with the template-evaluating UI methods ?
+        """
+        return self.getSkinTemplate('wikipage')
+
     # backwards compatibility
     wikipage_view = wikipage
-           
-    security.declareProtected(Permissions.View, 'wikipage_macros')
-    def wikipage_macros(self, REQUEST=None):
-        """
-        Get the wikipage_macros page template (without evaluating).
-
-        Template-customizable.
-        """
-        return self.getSkinTemplate('wikipage_macros')
-           
+    wikipage_macros = wikipage_template
+    
     security.declareProtected(Permissions.View, 'stylesheet')
     def stylesheet(self, REQUEST=None):
         """

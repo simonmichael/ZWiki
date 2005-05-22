@@ -23,19 +23,20 @@
       wiki_url   here/wikiUrl;
       rows       python:request.get('zwiki_height',20);
       uploaddir  python:getattr(container,'uploads',container);
-      macros     python:here.wikipage_macros(request).macros;
+      macros     python:here.wikipage_template(request).macros;
       "
       onload="document.forms[0].text.focus();"
       >
+
   <head metal:use-macro="macros/head">
-    <title tal:content="title" metal:fill-slot="title" ></title>
-    <meta name="robots" content="noindex,nofollow" metal:fill-slot="noindex" />
-    <meta http-equiv="pragma" content="no-cache">
-    <dummy tal:attributes="dummy python:
-           request.RESPONSE.setHeader('pragma','no-cache')" />
+    <title metal:fill-slot="title" tal:content="title" />
+    <meta metal:fill-slot="noindex" name="robots" content="noindex,nofollow" />
+    <meta metal:fill-slot="extra" http-equiv="pragma" content="no-cache"
+          tal:define="dummy python:request.RESPONSE.setHeader('pragma','no-cache')" />
   </head>
+
   <body bgcolor="#ffffff">
-    <div metal:use-macro="macros/linkpanel"></div>
+    <div metal:use-macro="macros/linkpanel" />
 
     <table tal:condition="python:0" 
            width="100%" border="0" cellspacing="0" cellpadding="3" >
