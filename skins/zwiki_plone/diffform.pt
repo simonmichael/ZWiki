@@ -50,7 +50,7 @@
            tal:condition="python:user.has_permission('Zwiki: Edit pages', here)" 
            type="submit" 
            name="revert:method" 
-           value="Revert to this" 
+           value="Revert this and later changes" 
            i18n:attributes="value"
            />
            

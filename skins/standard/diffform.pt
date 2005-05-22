@@ -57,7 +57,7 @@ src="/misc_/ZWiki/ZWikiPage_icon.gif" height="48" width="48" border="0" alt="hom
 <input tal:condition="python:not(revA > 1)" disabled="1" type="submit" name="nextDiff:method" 
  value="next edit &gt;&gt;"  i18n:attributes="value" accesskey="n" />
 <input tal:condition="python:user.has_permission('Zwiki: Edit pages', here)" 
-    type="submit" name="revert:method" value="Revert this change and all successive changes" 
+    type="submit" name="revert:method" value="Revert this and later changes" 
     i18n:attributes="value" />
 <input type="submit" name="return" value="Return to page" i18n:attributes="value"/>
 <input type="hidden" name="currentRevision" tal:attributes="value revA" />
