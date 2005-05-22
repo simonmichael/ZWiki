@@ -752,6 +752,8 @@ class OutlineRenderingMixin:
     def navlinks(self):
         """
         Return HTML for my next/previous/up links.
+
+        XXX not used ?
         """
         none = 'none'
         t = ''
