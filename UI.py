@@ -174,22 +174,38 @@ class UIUtils:
         if not REQUEST: REQUEST = self.REQUEST
         return REQUEST.get('zwiki_displaymode',self.defaultDisplayMode())
 
-    def getSkinTemplate(self,name): #,default=None):
+    def hasSkinTemplate(self,name):
+        """
+        Does the named skin template exist ?
+        """
+        template = getattr(self.folder(),name,None)
+        return ((template is not None) and
+                (isPageTemplate(template) or isDtmlMethod(template)))
+        
+    def getSkinTemplate(self,name):
         """
         Get the named skin template from the ZODB or filesystem.
 
         This will find either a Page Template or DTML Method, preferring
         the former, and return it wrapped in this page's context.  If the
-        template is not found in this page's acquisition context we'll
-        get it from the filesystem (ZWiki/skins/standard).
+        template is not found in this page's acquisition context we'll get
+        it from the filesystem (ZWiki/skins/standard/). Or if it doesn't
+        exist, return a standard error template.
         """
-        form = getattr(self.folder(),
+        template = getattr(self.folder(),
                        name,
                        DEFAULT_TEMPLATES.get(name,
                                              DEFAULT_TEMPLATES['badtemplate']))
-        if not (isPageTemplate(form) or isDtmlMethod(form)):
-            form = DEFAULT_TEMPLATES['badtemplate']
-        return form.__of__(self)
+        if not (isPageTemplate(template) or isDtmlMethod(template)):
+            template = DEFAULT_TEMPLATES['badtemplate']
+        return template.__of__(self)
+
+    def getSkinTemplateWithDefault(self,name,default=None):
+        """
+        Return the named skin template if it exists, or the provided default.
+        """
+        return self.hasSkinTemplate(name) and self.getSkinTemplate(name) \
+               or default
 
     security.declareProtected(Permissions.View, 'addSkinTo')
     def addSkinTo(self,body,**kw):
