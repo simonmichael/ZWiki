@@ -20,45 +20,6 @@ from Utils import BLATHER,formattedTraceback
 from Regexps import htmlheaderexpr, htmlfooterexpr, htmlbodyexpr
 from I18nSupport import _, DTMLFile, HTMLFile
 
-DEFAULT_TEMPLATES = {
-    'badtemplate'        : loadPageTemplate('badtemplate'),
-
-    #main page view
-    #wikipage defines macros used by most other templates
-    'wikipage'           : loadPageTemplate('wikipage'),
-    'stylesheet'         : loadStylesheetFile('stylesheet.css'),
-
-    #secondary page views/forms
-    #these omit the pageheading
-    'backlinks'          : loadPageTemplate('backlinks'),
-    'editform'           : loadPageTemplate('editform'),
-    'diffform'           : loadPageTemplate('diffform'),
-    'subscribeform'      : loadPageTemplate('subscribeform'),
-
-    #wiki views/forms
-    #contentspage defines a wikiformheading,
-    #used by all the rest except useroptions
-    'contentspage'       : loadPageTemplate('contentspage'),
-    'recentchanges'      : loadPageTemplate('recentchanges'),
-    'recentchangesdtml'  : loadDtmlMethod('recentchangesdtml'),
-    'searchwiki'         : loadPageTemplate('searchwiki'),
-    'searchwikidtml'     : loadDtmlMethod('searchwikidtml'),
-    'useroptions'        : loadPageTemplate('useroptions'),
-    'useroptionsdtml'    : loadDtmlMethod('useroptionsdtml'),
-    'issuetracker'       : loadPageTemplate('issuetracker'),
-    'issuetrackerdtml'   : loadDtmlMethod('issuetrackerdtml'),
-    'issuebrowser'       : loadPageTemplate('issuebrowser'),
-    'issuebrowserdtml'   : loadDtmlMethod('issuebrowserdtml'),
-    'filterissues'       : loadPageTemplate('filterissues'),
-    'filterissuesdtml'   : loadDtmlMethod('filterissuesdtml'),
-
-    #fragments
-    'subtopics_outline'  : loadDtmlMethod('subtopics_outline'),
-    'subtopics_board'    : loadDtmlMethod('subtopics_board'),
-    # ratingform           : loadPageTemplate('ratingform'),
-    # issuepropertiesform : loadDtmlMethod('issuepropertiesform'),
-    }
-
 
 # utilities
 
@@ -109,8 +70,7 @@ def loadStylesheetFile(name,dir='skins/standard'):
         mtime = os.path.getmtime(filepath)
     finally: fp.close()
     file = File('stylesheet','',data,content_type='text/css')
-    # fix b_m_t which will otherwise be current time
-    # why doesn't that lambda need a self argument ?
+    # fix bobobase_mod_time which will otherwise be current time
     file.bobobase_modification_time = lambda:mtime
     return file
 
@@ -153,6 +113,46 @@ def onlyBodyFrom(t):
 
 def addErrorTo(text,error):
     return """<div class="error">%s</div>\n%s""" % (error,text)
+
+
+DEFAULT_TEMPLATES = {
+    'badtemplate'        : loadPageTemplate('badtemplate'),
+
+    #main page view
+    #wikipage defines macros used by most other templates
+    'wikipage'           : loadPageTemplate('wikipage'),
+    'stylesheet'         : loadStylesheetFile('stylesheet.css'),
+
+    #secondary page views/forms
+    #these omit the pageheading
+    'backlinks'          : loadPageTemplate('backlinks'),
+    'editform'           : loadPageTemplate('editform'),
+    'diffform'           : loadPageTemplate('diffform'),
+    'subscribeform'      : loadPageTemplate('subscribeform'),
+
+    #wiki views/forms
+    #contentspage defines a wikiformheading,
+    #used by all the rest except useroptions
+    'contentspage'       : loadPageTemplate('contentspage'),
+    'recentchanges'      : loadPageTemplate('recentchanges'),
+    'recentchangesdtml'  : loadDtmlMethod('recentchangesdtml'),
+    'searchwiki'         : loadPageTemplate('searchwiki'),
+    'searchwikidtml'     : loadDtmlMethod('searchwikidtml'),
+    'useroptions'        : loadPageTemplate('useroptions'),
+    'useroptionsdtml'    : loadDtmlMethod('useroptionsdtml'),
+    'issuetracker'       : loadPageTemplate('issuetracker'),
+    'issuetrackerdtml'   : loadDtmlMethod('issuetrackerdtml'),
+    'issuebrowser'       : loadPageTemplate('issuebrowser'),
+    'issuebrowserdtml'   : loadDtmlMethod('issuebrowserdtml'),
+    'filterissues'       : loadPageTemplate('filterissues'),
+    'filterissuesdtml'   : loadDtmlMethod('filterissuesdtml'),
+
+    #fragments
+    'subtopics_outline'  : loadDtmlMethod('subtopics_outline'),
+    'subtopics_board'    : loadDtmlMethod('subtopics_board'),
+    # ratingform           : loadPageTemplate('ratingform'),
+    # issuepropertiesform  : loadDtmlMethod('issuepropertiesform'),
+    }
 
 
 class UIUtils:
