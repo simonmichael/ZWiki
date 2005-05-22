@@ -736,13 +736,16 @@ class OutlineRenderingMixin:
     def subtopics(self, REQUEST=None):
         """
         Render my subtopics as a HTML fragment, using a template.
+
+        Allows the template to be selected by subtopics_style folder
+        property. If there is no property or the specified template
+        does not exist, uses the built-in subtopics_outline.
+        Some overlap with the show_subtopics property.
         """
-        styles = (
-            'outline',
-            'board',
-            )
+        DEFAULTSTYLE = 'outline'
         style = getattr(self.folder(),'subtopics_style',None)
-        if style not in styles: style = styles[0]
+        if not (style and self.hasSkinTemplate('subtopics_'+style)):
+            style = DEFAULTSTYLE
         return self.getSkinTemplate('subtopics_'+style)(self,REQUEST)
 
     security.declareProtected(Permissions.View, 'navlinks')
