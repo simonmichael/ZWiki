@@ -1,0 +1,635 @@
+# Portuguese Portuguese translation for ZWiki
+# João Villa-Lobos <jeoaovlb@gmail.com>, 2005
+msgid ""
+msgstr ""
+"Project-Id-Version: ZWiki 0.41.0\n"
+"POT-Creation-Date: Sat May  21 16:14:00 2005\n"
+"PO-Revision-Date: 2004-05-11 17:00-0200E\n"
+"Last-Translator: João Villa-Lobos <joaovlb@gmail.com>\n"
+"Language-Team: João Villa-Lobos <joaovlb@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-code: pt\n"
+"Language-name: Português\n"
+"Preferred-encodings: utf-8\n"
+"Domain: zwiki\n"
+
+#: i/Admin.py:102
+msgid "You are not authorized to upgrade all pages."
+msgstr "Não está autorizado a actualizar todas as páginas."
+
+#: i/Admin.py:103
+msgid "(folder -> Manage properties)"
+msgstr "(pasta -> Gerir propriedades)"
+
+#: i/Editing.py:290
+msgid ""
+"You are not authorized to reparent or change subtopics links on this ZWiki "
+"Page."
+msgstr ""
+"Não está autorizado a perfilhar ou alterar subtópicos linkados nesta "
+"página ZWiki."
+
+#: i/Editing.py:312
+msgid "You are not authorized to change this ZWiki Page's type."
+msgstr "Não está autorizado a alterar o tipo desta página ZWiki."
+
+#: i/Editing.py:345 i/Editing.py:368
+msgid "You are not authorized to edit this ZWiki Page."
+msgstr "Não está autorizado a editar esta página ZWiki."
+
+#: i/Editing.py:371 i/Editing.py:412
+msgid "You are not authorized to delete this ZWiki Page."
+msgstr "Não está autorizado a apagar esta página ZWiki."
+
+#: i/Editing.py:478
+msgid "You are not authorized to rename this ZWiki Page."
+msgstr "Não está autorizado a renomear esta página ZWiki."
+
+#: i/Editing.py:522
+msgid ""
+"This page was renamed to %s. You can delete this one if no longer needed.\n"
+msgstr ""
+"Esta página foi renomeada para %s. Pode apaga-la caso já não seja necessária.\n"
+
+#: i/Editing.py:618
+msgid "You are not authorized to upload files here."
+msgstr "Não está autorizado a transferir arquivos aqui."
+
+#: i/Editing.py:622
+msgid "You are not authorized to add a link on this ZWiki Page."
+msgstr "Não está autorizado a adicionar um link nesta Página ZWiki."
+
+#: i/UI.py:488
+msgid "Edit conflict"
+msgstr "Editar conflito"
+
+#: i/UI.py:508
+msgid "Someone else has saved this page while you were editing"
+msgstr "Alguém gravou esta página enquanto a editava"
+
+#: i/UI.py:509
+msgid "To resolve the conflict, do this"
+msgstr "Para resolver o conflito, faça o seguinte"
+
+#: i/UI.py:510
+msgid "Click your browser's back button"
+msgstr "Clique no botão voltar do seu navegador"
+
+#: i/UI.py:511
+msgid "Copy your recent edits to the clipboard"
+msgstr "Copiar suas edições recentes para o clipboard"
+
+#: i/UI.py:512
+msgid "Click your browser's refresh button"
+msgstr "Clique no botão actualizar do seu navegador"
+
+#: i/UI.py:513
+msgid "Paste in your edits again, being mindful of the latest changes"
+msgstr ""
+"Cole novamente as suas edições, mantendo em mente as últimas alterações"
+
+#: i/UI.py:514
+msgid "Click the Change button again"
+msgstr "Clique novamente no botão Alterar"
+
+#: i/UI.py:515 i/skins/standard/editform.pt:197
+msgid "or"
+msgstr "ou"
+
+#: i/UI.py:516
+msgid "To discard your changes and start again, click OK"
+msgstr "Para descartar as suas alterações e começar de novo, clique em OK"
+
+#: i/UI.py:525
+msgid "Page is locked"
+msgstr "A página está bloqueada"
+
+#: i/UI.py:536
+msgid ""
+"\n"
+"            This page has a webDAV lock. Someone is probably editing it\n"
+"            with an external editor.  You'll need to wait until they've\n"
+"            finished and then try again.  If you've just made some changes,\n"
+"            you may want to back up and copy your version of the text for\n"
+"            reference.\n"
+"            "
+msgstr ""
+"\n"
+"            Esta página está bloqueada por webDAV. Provavelmente alguém está "
+"editando-a\n"
+"            com um editor externo. Aguarde até que a outra pessoa acabe\n"
+"            e tente novamente. Caso tenha feito alguma alteração,\n"
+"            guarde a sua versão do texto como referência e aceda novamente à\n"
+"            página.\n"
+"            "
+
+#: i/UI.py:543
+msgid "To discard your changes and try again, click OK."
+msgstr "Para descartar suas alterações e tentar novamente, clique em OK."
+
+# Default: ""
+# "You can change this page's parent(s) to place it within the overall page\n"
+# "hierarchy.  Check the boxes or enter a new page name and click Reparent.\n"
+# "A single parent is usually sufficient."
+#: i/skins/standard/backlinks.pt:103
+msgid "backlinks_reparent_help"
+msgstr ""
+"Pode alterar o(s) pai(s) desta página de modo a colocá-la dentro da hierarquia geral "
+"das páginas.\n"
+" Seleccione a caixa ou insira um novo nome de página e clique "
+"em Perfilhar.\n"
+"Regra geral, ter apenas um pai é suficiente."
+
+#: i/skins/standard/backlinks.pt:46
+msgid "is a top-level topic."
+msgstr "é um tópico principal."
+
+#: i/skins/standard/backlinks.pt:47
+msgid "is a subtopic of:"
+msgstr "é um subtópico de:"
+
+#: i/skins/standard/backlinks.pt:69
+msgid "Here are the pages which link to it:"
+msgstr "Aqui estão as páginas que apontam para esta:"
+
+#: i/skins/standard/badtemplate.pt:12
+msgid ""
+"There was a problem with one of this wiki's skin templates. There may be an "
+"object with a skin template ID that is not a Page Template or DTML Method, "
+"or the template may be missing."
+msgstr ""
+"Ocorreu um problema com um destes templates de aspecto do wiki. Talvez exista um "
+"objecto com um ID de um template de aspecto que não é um Page Template ou DTML "
+"Method, ou o template pode estar danificado."
+
+#: i/skins/standard/contentspage.pt:29
+msgid "Contents"
+msgstr "Conteúdos"
+
+#: i/skins/standard/diffform.pt:31
+msgid "Diffs for"
+msgstr "Diferenças para"
+
+#: i/skins/standard/diffform.pt:48
+msgid "<< previous edit"
+msgstr "<< edição anterior"
+
+#: i/skins/standard/diffform.pt:50
+msgid "next edit >>"
+msgstr "próxima edição >>"
+
+#: i/skins/standard/diffform.pt:52
+msgid "cancel"
+msgstr "cancelar"
+
+#: i/skins/standard/editform.pt:139
+msgid "Optional change note"
+msgstr "Nota de alteração opcional"
+
+#: i/skins/standard/editform.pt:157
+msgid "Upload a file or image"
+msgstr "Transferir um arquivo ou imagem"
+
+#: i/skins/standard/editform.pt:168
+msgid "Show subtopics on this page & below ?"
+msgstr "Mostrar subtópicos nesta página e filhas?"
+
+#: i/skins/standard/editform.pt:174
+msgid "default"
+msgstr "padrão"
+
+#: i/skins/standard/editform.pt:179
+msgid "never"
+msgstr "nunca"
+
+#: i/skins/standard/editform.pt:184
+msgid "always"
+msgstr "sempre"
+
+#: i/skins/standard/editform.pt:191
+msgid "For editing help, see"
+msgstr "Para ajuda na edição, veja"
+
+#: i/skins/standard/editform.pt:69
+msgid "Page name"
+msgstr "Nome da página"
+
+#: i/skins/standard/editform.pt:79
+msgid "type"
+msgstr "tipo"
+
+#: i/skins/standard/wikipage_macros.pt:137
+msgid "show all features"
+msgstr "mostrar todas as funcionalidades"
+
+#: i/skins/standard/wikipage_macros.pt:144
+msgid "show basic features"
+msgstr "mostrar funcionalidades básicas"
+
+#: i/skins/standard/wikipage_macros.pt:151
+msgid "show only essential features"
+msgstr "mostrar apenas funcionalidades essenciais"
+
+#: i/skins/standard/wikipage_macros.pt:164
+msgid "configure email subscription to this page or site"
+msgstr "configurar a subscrição por email para esta página ou site"
+
+#: i/skins/standard/wikipage_macros.pt:172
+msgid "which pages link to this one ?"
+msgstr "que páginas que apontam para esta ?"
+
+#: i/skins/standard/wikipage_macros.pt:179
+msgid "show this page's change history"
+msgstr "mostrar o historial relativo a alterações desta página"
+
+#: i/skins/standard/wikipage_macros.pt:195
+msgid "edit using external editor"
+msgstr "editar utilizando um editor externo"
+
+#: i/skins/standard/wikipage_macros.pt:215
+msgid "go to home page"
+msgstr "ir para a página inicial"
+
+#: i/skins/standard/wikipage_macros.pt:244
+#: i/skins/standard/wikipage_macros.pt:283
+msgid "show wiki contents"
+msgstr "mostrar o conteúdo da wiki"
+
+#: i/skins/standard/wikipage_macros.pt:348
+msgid "a subject helps clarify threads and RecentChanges"
+msgstr "um assunto ajuda a clarificar discussões e AlteracoesRecentes"
+
+#: i/skins/standard/wikipage_macros.pt:348
+msgid "subject"
+msgstr "assunto"
+
+#: i/skins/standard/wikipage_macros.pt:355
+msgid "to comment (and cc any subscribers) enter text here and click add"
+msgstr ""
+"para comentar (e contactar via cc quaisquer subscritores) introduza texto aqui e clique "
+"adicionar"
+
+#: i/skins/standard/wikipage_macros.pt:383
+msgid "add a comment"
+msgstr "adicionar um comentário"
+
+# Default: "new parent, name or replacement"
+#: i/skins/standard/wikipage_macros.pt:404
+msgid "parent_name_replace"
+msgstr ""
+"novo pai, nome ou substituto"
+
+#: i/skins/standard/wikipage_macros.pt:411
+msgid "reparent this page under the page you have entered"
+msgstr "perfilhe esta página em relação à página que introduziu"
+
+#: i/skins/standard/wikipage_macros.pt:417
+msgid "rename this page to the name you have entered, updating all links"
+msgstr "renomeie esta página para o nome dado por si, actualizando todos os links"
+
+#: i/skins/standard/wikipage_macros.pt:423
+msgid ""
+"move this page to the recycle bin, and relink to the name you have entered."
+msgstr ""
+"envie esta página para o recycle bin e altere o link para o nome que introduziu."
+
+#: i/skins/zwiki_plone/backlinks.pt:14 i/skins/standard/backlinks.pt:29
+msgid "Backlinks for"
+msgstr "Links para"
+
+#: i/skins/zwiki_plone/backlinks.pt:21
+#, fuzzy
+msgid "Here are the pages which link to"
+msgstr "Aqui estão as páginas que apontam para esta:"
+
+# Default: ""
+# "You can also set this page's <em>parent(s)</em>, to locate it within the\n"
+# "    contents hierarchy.  Check the boxes or enter a new page name and click\n"
+# "    Reparent.  A single parent is usually sufficient."
+#: i/skins/zwiki_plone/backlinks.pt:30
+msgid "box_zwiki_showhierarchy"
+msgstr ""
+"Pode também definir o(s) <em>pai(s)</em> desta página de modo a colocá-la dentro da\n"
+" hierarquia de conteúdo. Seleccione as caixas ou introduza o nome de uma nova página e clique\n"
+" Perfilhar. Regra geral apenas um pai é suficiente."
+
+#: i/skins/zwiki_plone/backlinks.pt:71 i/skins/standard/backlinks.pt:99
+msgid "Other parent"
+msgstr "Outro pai"
+
+#: i/skins/zwiki_plone/backlinks.pt:72 i/skins/standard/backlinks.pt:101
+msgid "Reparent"
+msgstr "Perfilhar"
+
+#: i/skins/zwiki_plone/contentspage.pt:14
+#, fuzzy
+msgid "Wiki contents"
+msgstr "Conteúdo da Wiki"
+
+#: i/skins/zwiki_plone/contentspage.pt:20 i/skins/standard/contentspage.pt:40
+msgid "Singletons"
+msgstr "Simples"
+
+#: i/skins/zwiki_plone/contentspage.pt:22
+#, fuzzy
+msgid "singleton_desc"
+msgstr "Simples"
+
+#: i/skins/zwiki_plone/diffform.pt:15
+#, fuzzy
+msgid "History for"
+msgstr "Historial para"
+
+#: i/skins/zwiki_plone/diffform.pt:23 i/skins/standard/diffform.pt:46
+msgid "full history"
+msgstr "história completa"
+
+#: i/skins/zwiki_plone/diffform.pt:31
+#, fuzzy
+msgid "&laquo; previous edit"
+msgstr "<< edição anterior"
+
+#: i/skins/zwiki_plone/diffform.pt:39
+#, fuzzy
+msgid "next edit &raquo;"
+msgstr "próxima edição >>"
+
+#: i/skins/zwiki_plone/diffform.pt:47
+msgid "return to page"
+msgstr "voltar à página"
+
+# Default: "Body text"
+#: i/skins/zwiki_plone/editform.pt:117
+msgid "label_body_text"
+msgstr "Corpo do texto"
+
+# Default: ""
+# "In a Wiki page, you use [square brackets] to create links. When you save the page, the contents\n"
+# "            of the square brackets will have a small <code>?</code> link next to it, which you click to create\n"
+# "            a new page with that name."
+#: i/skins/zwiki_plone/editform.pt:119
+msgid "help_wikibody"
+msgstr ""
+"Numa página Wiki, utilizam-se [parêntesis rectos] para criar links. Quando "
+"a página é gravada, o conteúdo introduzido\n"
+"            dentro dos parêntesis rectos terá um pequeno link <code>?</code> à sua frente"
+" que pode ser utilizado para criar\n"
+"            uma nova página com esse nome."
+
+# Default: ""
+# "In a Wiki page, you use [square brackets] to create links. When you save the page, the contents\n"
+# "            of the square brackets will have a small <code>?</code> link next to it, which you click to create\n"
+# "            a new page with that name."
+#: i/skins/zwiki_plone/editform.pt:147
+#, fuzzy
+msgid "help_wikiwords"
+msgstr ""
+"Numa página Wiki, utilizam-se [parêntesis rectos] para criar links. Quando "
+"a página é gravada, o conteúdo introduzido\n"
+"            dentro dos parêntesis rectos terá um pequeno link <code>?</code> à sua frente"
+" que pode ser utilizado para criar\n"
+"            uma nova página com esse nome."
+
+# Default: "Note for the page history (optional)"
+#: i/skins/zwiki_plone/editform.pt:158
+msgid "label_note"
+msgstr "Nota para a história da página (opcional)"
+
+# Default: "A short description of your changes."
+#: i/skins/zwiki_plone/editform.pt:160
+msgid "help_wikinote"
+msgstr "Uma curta descrição de suas alterações."
+
+# Default: "Upload file or image (optional)"
+#: i/skins/zwiki_plone/editform.pt:182
+msgid "label_upload_contents_optional"
+msgstr "Transferir um arquivo ou imagem (opcional)"
+
+# Default: "Attaches a file or an image to this wiki page."
+#: i/skins/zwiki_plone/editform.pt:184
+msgid "help_wikiupload"
+msgstr "Anexar um arquivo ou uma imagem para esta página wiki."
+
+# Default: "Page Format"
+#: i/skins/zwiki_plone/editform.pt:202
+msgid "label_format"
+msgstr "Formato da página"
+
+# Default: ""
+# "If you are unsure of which format to use, just select Plain\n"
+# "            Text and type the document as you usually do."
+#: i/skins/zwiki_plone/editform.pt:204
+msgid "help_format"
+msgstr ""
+"Se está incerto sobre qual formato usar, simplesmente seleccione Texto\n"
+"            Simples e escreva o texto como faz normalmente."
+
+# Default: ""
+#: i/skins/zwiki_plone/editform.pt:236
+msgid "pagetype"
+msgstr "Tipo da página"
+
+# Default: ""
+# "Edit\n"
+# "        ${itemtype} \n"
+# "\n"
+# "        \"${pagename}\""
+#: i/skins/zwiki_plone/editform.pt:42 i/skins/zwiki_plone/editform.pt:54
+msgid "heading_edit_wiki_page"
+msgstr ""
+"Editar\n"
+"        ${itemtype} \n"
+"\n"
+"        \"${pagename}\""
+
+# Default: "A Wiki Page allows you to create richly interconnected pages."
+#: i/skins/zwiki_plone/editform.pt:58
+msgid "description_edit_wiki_page"
+msgstr ""
+"Uma página Wiki permite-lhe criar páginas ricamente interligadas."
+
+# Default: "Wiki Page Details"
+#: i/skins/zwiki_plone/editform.pt:69
+msgid "legend_wiki_page_details"
+msgstr "Detalhes da Página Wiki"
+
+# Default: "Page name"
+#: i/skins/zwiki_plone/editform.pt:92
+msgid "label_pagename"
+msgstr "Nome da página"
+
+# Default: "(Required)"
+#: i/skins/zwiki_plone/editform.pt:94
+msgid "label_required"
+msgstr "(Obrigatório)"
+
+#: i/skins/zwiki_plone/editform.pt:94
+msgid "Required"
+msgstr "Obraigatório"
+
+# Default: "Note: Renaming a page in a large wiki may be slow. Other pages will be updated if possible."
+#: i/skins/zwiki_plone/editform.pt:98
+msgid "help_shortname"
+msgstr ""
+"Nota: Renomear uma página numa grande wiki pode ser lento. Outras páginas serão "
+"actualizadas se possível."
+
+# Default: "Filter issues"
+#: i/skins/zwiki_plone/filterissues.pt:12
+msgid "heading_wiki_filter_issues"
+msgstr "Filtro de assuntos"
+
+# Default: "Issue tracker"
+#: i/skins/zwiki_plone/issuetracker.pt:12
+msgid "heading_wiki_issue_tracker"
+msgstr ""
+
+# Default: "Recent changes"
+#: i/skins/zwiki_plone/recentchanges.pt:12
+msgid "heading_wiki_recent_changes"
+msgstr "Alterações recentes"
+
+# Default: "Search this wiki"
+#: i/skins/zwiki_plone/searchwiki.pt:12
+msgid "heading_wiki_search_wiki"
+msgstr "Procurar nesta wiki"
+
+# Default: ""
+# "You are currently subscribed<br />\n"
+# "                to the whole wiki."
+#: i/skins/zwiki_plone/subscribeform.pt:100
+msgid "subscribed_wiki_ok"
+msgstr ""
+"Encontra-se subscrito <br /n>\n"
+"à totalidade da wiki"
+
+# Default: ""
+# "You are currently not subscribed<br />\n"
+# "                to the whole wiki."
+#: i/skins/zwiki_plone/subscribeform.pt:104
+msgid "subscribed_wiki_no"
+msgstr ""
+"Não se encontra subscrito <br /n>\n"
+"à totalidade da wiki"
+
+
+#: i/skins/zwiki_plone/subscribeform.pt:108
+msgid "Unsubscribe from whole wiki"
+msgstr "Anular a subscrição da wiki na sua totalidade"
+
+#: i/skins/zwiki_plone/subscribeform.pt:115
+msgid "Subscribe to whole wiki"
+msgstr "Subscrever a wiki na sua totalidade"
+
+# Default: "You are subscribed to these other pages"
+#: i/skins/zwiki_plone/subscribeform.pt:126
+msgid "other_page_subscribed"
+msgstr "Está subscrito a estas outras páginas"
+
+#: i/skins/zwiki_plone/subscribeform.pt:13
+msgid "Mail subscription"
+msgstr "Subscrição por email"
+
+#: i/skins/zwiki_plone/subscribeform.pt:143
+msgid "Page subscribers"
+msgstr "Subscritores da página"
+
+#: i/skins/zwiki_plone/subscribeform.pt:151
+msgid "Wiki subscribers"
+msgstr "Subscritores da Wiki"
+
+# Default: ""
+# "You can subscribe to this page or to the whole wiki.\n"
+# "          Subscribers receive a copy of comments via email\n"
+# "          (but not general edits, unless enabled by the site admin).\n"
+# "          Or return to"
+#: i/skins/zwiki_plone/subscribeform.pt:35
+msgid "subscribe_desc"
+msgstr ""
+"Pode tornar-se subscritor desta página ou da wiki na sua totalidade.\n"
+"Os subscritores recebem uma cópia dos comentários via email\n"
+"(mas não das edições feitas à página, a não ser que o administrador do site o possibilite).\n"
+"Ou envie para"
+
+#: i/skins/zwiki_plone/subscribeform.pt:49
+msgid "Your email address"
+msgstr "O seu endereço de email"
+
+# Default: "To subscribe, please configure your email address."
+#: i/skins/zwiki_plone/subscribeform.pt:60
+msgid "subscribe_no_email"
+msgstr "Para subscrever, por favor introduza o endereço de email."
+
+# Default: ""
+# "You are currently subscribed<br />\n"
+# "                to this page."
+#: i/skins/zwiki_plone/subscribeform.pt:70
+msgid "subscribed_page_ok"
+msgstr ""
+"Encontra-se subscrito<br />\n"
+"a esta página."
+
+# Default: ""
+# "You are currently not subscribed<br />\n"
+# "                to this page."
+#: i/skins/zwiki_plone/subscribeform.pt:74
+msgid "subscribed_page_no"
+msgstr ""
+"Não se encontra subscrito<br />\n"
+"a esta página."
+
+#: i/skins/zwiki_plone/uploaded.pt:14
+msgid "File Uploads"
+msgstr "Transferência de Ficheiros"
+
+# Default: "This page lists all uploads in this Wiki."
+#: i/skins/zwiki_plone/uploaded.pt:16
+msgid "uploads_desc"
+msgstr "Esta página mostra todas as transferências efectuadas nesta Wiki."
+
+
+#: i/skins/zwiki_plone/uploaded.pt:25
+msgid "View"
+msgstr "Visualizar"
+
+#: i/skins/zwiki_plone/uploaded.pt:25 i/skins/zwiki_plone/editform.pt:251
+msgid "Save"
+msgstr "Gravar"
+
+# Default: "No files have been uploaded."
+#: i/skins/zwiki_plone/uploaded.pt:29
+msgid "no_files_uploaded"
+msgstr "Não foram transferidos ficheiros."
+
+# Default: "User options"
+#: i/skins/zwiki_plone/useroptions.pt:12
+msgid "heading_wiki_user_options"
+msgstr "Opções do utilizador"
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:15
+msgid "Edit"
+msgstr "Editar"
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:25
+msgid "Title"
+msgstr "Título"
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:35
+msgid "Description"
+msgstr "Descrição"
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:43
+#: i/skins/zwiki_plone/subscribeform.pt:52
+msgid "Change"
+msgstr "Altere"
+
+#: i/skins/zwiki_plone/wikifolder_edit_form.pt:50
+msgid "Change and View"
+msgstr "Altere e Visualize"
+
+# Default: "Wiki Navigation"
+#: i/skins/zwiki_plone/wikinav_portlet.pt:15
+msgid "box_wiki_navigation"
+msgstr "Navegação da Wiki"
