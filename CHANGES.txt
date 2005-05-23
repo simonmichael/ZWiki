@@ -1,3 +1,36 @@
+    Summary
+
+        Skin cleanups
+
+    Upgrade notes
+
+        Skin macros have been moved from wikipage_macros to wikipage, and
+	some have been renamed. Customised skin templates should continue
+	to work normally for now. If you have custom templates, please
+	replace any macro-related occurrences of the following strings:
+	
+	- wikipage_macros -> wikipage_template
+	- quickaccesskeys -> accesskeys
+	- quicklinks      -> wikilinks
+	- editlinks       -> pagelinks
+	- pagename        -> pagenameonly
+
+	I expect to remove the backwards compatibility support for old
+	macros in the next release or three.
+
+	The following CSS class has been renamed, you'll need to update
+	any customised zwiki stylesheets accordingly:
+
+	- quicklinks      -> wikilinks
+
+	Also a few macros and classes that no-one was using have been
+	removed.
+	
+    Changes
+
+
+
+
 Zwiki 0.41.0 2005/05/01
 
     Summary
