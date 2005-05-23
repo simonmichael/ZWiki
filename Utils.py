@@ -257,12 +257,15 @@ class Utils:
             return mailin_name or authenticated_name or cookie_name or ip_addr
 
     security.declareProtected(Permissions.View, 'requestHasSomeId')
-    def requestHasSomeId(self,REQUEST):
+    def requestHasSomeId(self,REQUEST=None):
         """
         Check REQUEST has either a non-anonymous user or a username cookie.
         """
+        REQUEST = REQUEST or self.REQUEST
         username = self.usernameFrom(REQUEST)
         return (username and username != REQUEST.REMOTE_ADDR)
+
+    userIsIdentified = requestHasSomeId
 
     def __repr__(self):
         return ("<%s %s at 0x%s>"
