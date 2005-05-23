@@ -1,16 +1,13 @@
-/* colours */
+/************************************************************-*-c-*-
+ zwiki stylesheet                                            
+ *******************************************************************/
+
+/* colours and general styles */
 
 /* default gray */
 .shade1                  {color:gray; background: #dddddd;}
 .shade1 a:link           {color:gray;}
 .shade1 a:visited        {color:#aaaaaa;}
-
-/* background shade of form fields */
-/* this would be cleaner but changes buttons too (not file upload buttons) */
-/* can select with input[type=submit] but not in IE */
-/*input,textarea,select    {background: #f0f0f0;} */
-.formfield               {background: #f0f0f0;}
-
 .dimtext                 {font-size: 80%; color: gray;}
 .commentsheading         {color:gray; font-weight:bold;}
 .subscribed              {} /* for subscribeform */
@@ -26,31 +23,21 @@
 .commentform             {color:gray;}
 .linkpanel td, .linkpanel_minimal td {color: gray;}
 .navpanel                {color: gray;}
-
-
-/* pink */
-/*.shade1                  {background: #ffeeee; color: #ddaaaa;}*/
-/*.shade1 a:link           {color: #ddaaaa;}*/
-/*.shade1 a:visited        {color: #ee8888;}*/
-/*.formfield               {background: #fff0f0;}*/
-/*.dimtext                 {color: gray;}*/
-/*.searchbox a:link        {color: #ddaaaa;}*/
-/*.searchbox a:visited     {color: #ee8888;}*/
-/*.lasteditor              {color:#ddaaaa;}*/
-/*.subtopicspanel          {color:#ddaaaa; border-top:thin solid #ddaaaa;}*/
-/*.commentform             {color:#ddaaaa;}*/
-
-
-/* general styles */
+/* background shade of form fields 
+ * input,textarea,select {} would be cleaner but changes buttons too
+ * (except file upload buttons)
+ * can select with input[type=submit] but not in IE 
+ */
+.formfield               {background: #f0f0f0;}
 
 body {
-  margin:0; padding:0;
-  font-family:sans, verdana, arial, helvetica, sans-serif; 
-  /*font-size:90%;*/
-  color: black;
-  background-color: white;
+ margin:0; 
+ padding:0;
+ font-family:sans, verdana, arial, helvetica, sans-serif; 
+ color: black;
+ background-color: white;
 }
-body h2 {
+h2 {
   margin-top: 1.5em;
   font-size: 130%;
   border-bottom: 1px solid #99c;
@@ -64,35 +51,23 @@ pre, code {
   /* more whitespace.. adjust left margin to approx. logo width */
   /*margin-left:64px; margin-right:32px;*/
 } 
+td.content {
+ border: 1px solid #EEEEEE;
+}
 .formcontent {
  margin:8px;
 } 
-.logo_full, .logo_simple {
- padding:4px;
+input,select {
+  font-size:inherit;
 }
-.pageheading ul {
-  margin-top:0px; margin-bottom:0px; margin-left:6px; padding-left:6px;
+.error { 
+ color:red; background-color:#ffdddd; border:thin solid red; 
 }
-.subtopicspanel ul {
-  margin-top:0px; margin-bottom:0px; margin-left:12px; padding-left:12px;
-}
-.pageheading li, .subtopicspanel li {
-  list-style:none;
-}
-.subtopicspanel td ul {
-  font-weight:bold;
-}
-.subtopicspanel td ul ul {
-  font-weight:normal; font-size:0.9em;
-}
-.linkpanel {
-}
-.linkpanel_minimal {
-}
+
+/* top stuff */
+
 .linkpanel td, .linkpanel_minimal td {
   font-size: 80%;
-}
-.pagemanagement { /* no class/id like this seems to be generated */
 }
 .quicklinks {
   font-weight: normal;
@@ -101,12 +76,14 @@ pre, code {
 .otherlinks {
   vertical-align: middle;
 }
-.otherlinks_minimal { /* no class/id like this seems to be generated */
-  vertical-align: top;
-  padding: 0px;
-}
 .navpanel {
   font-size: 80%;
+}
+.pageheading ul {
+  margin-top:0px; margin-bottom:0px; margin-left:6px; padding-left:6px;
+}
+.pageheading li, .subtopicspanel li {
+  list-style:none;
 }
 .logo_full { /*td*/
   padding-top: 0.5em;
@@ -124,20 +101,7 @@ pre, code {
  padding: 0;
  vertical-align: middle;
 }
-.pagenameand_X { /*td*/
- padding: 1.15em 3em;
- vertical-align: middle;
-}
-.pagenameand_linear { /*td*/
- padding: 1.15em;
- vertical-align: middle;
-}
 .pagenameonly { /*td*/
-  font-size: xx-large;
-  font-weight: bold;
-  vertical-align: bottom;
-}
-.pagename_minimal {
   font-size: xx-large;
   font-weight: bold;
   vertical-align: bottom;
@@ -153,16 +117,26 @@ pre, code {
 .lasteditor {
   font-style: italic;
 }
+
+/* middle stuff */
+
+.subtopicspanel ul {
+  margin-top:0px; margin-bottom:0px; margin-left:12px; padding-left:12px;
+}
+.subtopicspanel td ul {
+  font-weight:bold;
+}
+.subtopicspanel td ul ul {
+  font-weight:normal; font-size:0.9em;
+}
+
+/* bottom stuff */
+
 .commentform {
 }
 
-input,select {font-size:inherit;}
+/* misc stuff */
 
-.error { color:red; background-color:#ffdddd; border:thin solid red; }
-
-td.content {
-	border: 1px solid #EEEEEE;
-}
 /* handy for displaying completion status */
 .incomplete {color: red;}
 .semicomplete {color: black;}
@@ -179,3 +153,16 @@ td.content {
 .eightypercent {color: green;}
 .ninetypercent {color: green;}
 .onehundredpercent {color: green;}
+
+/*
+.link-external {
+  background: transparent url(http://plone.zwiki.org/link_icon.gif) 0px 1px no-repeat;
+  padding: 1px 0px 1px 16px;
+}
+*/
+/*
+.preview {
+  border:4px; width:100%; padding:10px; background-color:#ffffaa;
+}
+*/
+
