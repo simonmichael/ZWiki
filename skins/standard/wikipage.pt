@@ -16,7 +16,7 @@
                       'Content-Type','text/html;; charset='+charset);"
           tal:attributes="content string:text/html;;charset=${charset}" />
 
-    <span metal:define-slot="noindex" 
+    <span metal:define-slot="searchtags" 
           tal:omit-tag="" 
           tal:define="indexdelay python:24">
       <span tal:condition="python:here.lastEditIntervalInHours() >= indexdelay"

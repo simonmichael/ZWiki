@@ -9,7 +9,7 @@
                   ">
   <head metal:use-macro="macros/head">
     <title metal:fill-slot="title" tal:content="title" />
-    <meta metal:fill-slot="noindex" name="robots" content="noindex,nofollow" />
+    <meta metal:fill-slot="searchtags" name="robots" content="noindex,nofollow" />
   </head>
   <body bgcolor="#ffffff">
     <div metal:use-macro="macros/linkpanel" />

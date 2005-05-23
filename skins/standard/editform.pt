@@ -30,7 +30,7 @@
 
   <head metal:use-macro="macros/head">
     <title metal:fill-slot="title" tal:content="title" />
-    <meta metal:fill-slot="noindex" name="robots" content="noindex,nofollow" />
+    <meta metal:fill-slot="searchtags" name="robots" content="noindex,nofollow" />
     <meta metal:fill-slot="extra" http-equiv="pragma" content="no-cache"
           tal:define="dummy python:request.RESPONSE.setHeader('pragma','no-cache')" />
   </head>

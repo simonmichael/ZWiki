@@ -6,7 +6,7 @@
                   macros2 python:here.getSkinTemplate('contentspage').macros;
                   ">
   <head metal:use-macro="macros/head">
-    <meta metal:fill-slot="noindex" name="robots" content="noindex,nofollow" />
+    <meta metal:fill-slot="searchtags" name="robots" content="noindex,nofollow" />
     <title metal:fill-slot="title" i18n:translate="">Issue tracker</title>
   </head>
 

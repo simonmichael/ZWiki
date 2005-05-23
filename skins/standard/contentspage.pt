@@ -8,7 +8,7 @@
     <title metal:fill-slot="title" 
            tal:content="string:${container/title} wiki contents" 
            i18n:translate="" />
-    <meta metal:fill-slot="noindex" name="robots" content="noindex,nofollow" />
+    <meta metal:fill-slot="searchtags" name="robots" content="noindex,nofollow" />
   </head>
 
   <body bgcolor="#ffffff">
