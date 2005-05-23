@@ -28,18 +28,18 @@ CLEAN=perl -p -e "s/(?s)^\#parents:.*?\n//;"
 dtml:
 	@echo regenerating dtml-based skin templates from pages
 	$(CLEAN) content/dtml/RecentChanges.stxdtml \
-	  >skins/standard/recentchangesdtml.dtml
+	  >skins/zwiki_standard/recentchangesdtml.dtml
 	$(CLEAN) content/dtml/SearchPage.stxdtml \
-	  >skins/standard/searchwikidtml.dtml
+	  >skins/zwiki_standard/searchwikidtml.dtml
 	$(CLEAN) content/dtml/UserOptions.stxdtml \
-	  >skins/standard/useroptionsdtml.dtml
+	  >skins/zwiki_standard/useroptionsdtml.dtml
 	$(CLEAN) plugins/tracker/IssueTracker.stxdtml \
-	  >skins/standard/issuetrackerdtml.dtml
+	  >skins/zwiki_standard/issuetrackerdtml.dtml
 	$(CLEAN) plugins/tracker/FilterIssues.stxdtml \
-	  >skins/standard/filterissuesdtml.dtml
+	  >skins/zwiki_standard/filterissuesdtml.dtml
 	$(CLEAN) plugins/tracker/IssueBrowser.stxdtml \
-	  >skins/standard/issuebrowserdtml.dtml
-	cp skins/standard/{recentchanges,searchwiki,useroptions,issuetracker,filterissues,issuebrowser}dtml.dtml skins/zwiki_plone
+	  >skins/zwiki_standard/issuebrowserdtml.dtml
+	cp skins/zwiki_standard/{recentchanges,searchwiki,useroptions,issuetracker,filterissues,issuebrowser}dtml.dtml skins/zwiki_plone
 
 epydoc:
 	PYTHONPATH=/zope/lib/python \

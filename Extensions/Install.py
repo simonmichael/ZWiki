@@ -111,7 +111,7 @@ def install(self):
             or None)
         if path: # just in case
             path = map(string.strip, string.split(path,','))
-            path.insert(path.index('zwiki_plone'),'standard')
+            path.insert(path.index('zwiki_plone'),'zwiki_standard')
             path = string.join(path, ', ')
             skinstool.addSkinSelection('Zwiki',path)
 

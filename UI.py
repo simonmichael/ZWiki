@@ -23,7 +23,7 @@ from I18nSupport import _, DTMLFile, HTMLFile
 
 # utilities
 
-def loadPageTemplate(name,dir='skins/standard'):
+def loadPageTemplate(name,dir='skins/zwiki_standard'):
     """
     Load the named page template from the filesystem.
     """
@@ -46,7 +46,7 @@ def loadPageTemplate(name,dir='skins/standard'):
     pt._cook_check() # ensure _text is there, we peek at it below    
     return pt
 
-def loadDtmlMethod(name,dir='skins/standard'):
+def loadDtmlMethod(name,dir='skins/zwiki_standard'):
     """
     Load the named DTML method from the filesystem.
     """
@@ -57,7 +57,7 @@ def loadDtmlMethod(name,dir='skins/standard'):
     if not hasattr(dm,'meta_type'): dm.meta_type = 'DTML Method (File)'
     return dm
 
-def loadStylesheetFile(name,dir='skins/standard'):
+def loadStylesheetFile(name,dir='skins/zwiki_standard'):
     """
     Load the stylesheet File from the filesystem. Also fix a mod. time bug.
     """
@@ -201,7 +201,7 @@ class UIUtils:
         This will find either a Page Template or DTML Method, preferring
         the former, and return it wrapped in this page's context.  If the
         template is not found in this page's acquisition context we'll get
-        it from the filesystem (ZWiki/skins/standard/). Or if it doesn't
+        it from the filesystem (ZWiki/skins/zwiki_standard/). Or if it doesn't
         exist, return a standard error template.
         """
         template = getattr(self.folder(),
@@ -326,7 +326,7 @@ class UIUtils:
         skin can be either a display mode of Zwiki's standard skin - full,
         simple, minimal - or the name of a CMF/Plone skin, or just plone.
         (standard skin modes can work in cmf/plone, if there is a skin
-        named "Zwiki" with the "standard" layer above "zwiki_plone".)
+        named "Zwiki" with the "zwiki_standard" layer above "zwiki_plone".)
 
         Calling this with no arguments will select the standard skin's
         simple mode, or the Plone Default skin if you are in CMF.
