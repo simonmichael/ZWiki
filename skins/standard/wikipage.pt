@@ -59,7 +59,7 @@
                      ">
 
       <!-- always-available quick access keys -->
-      <span metal:define-macro="quickaccesskeys" tal:omit-tag="">
+      <span metal:define-macro="accesskeys" tal:omit-tag="">
         <a tal:attributes="href string:${here/pageUrl}/src" accesskey="q"></a>
         <a tal:condition="nothing" tal:attributes="href string:${here/pageUrl}/clearCache" accesskey="w"></a>
         <a tal:attributes="href here/homeUrl" accesskey="f"></a>

@@ -35,7 +35,7 @@ UI.py:editform() calls us with these options:
 
 <div metal:fill-slot="main">
 
-    <span metal:use-macro="python:here.wikipage_template().macros['quickaccesskeys']" />
+    <span metal:use-macro="python:here.wikipage_template().macros['accesskeys']" />
 
     <h1 i18n:translate="heading_edit_wiki_page" tal:condition="python:action!='Create'">
     Edit

@@ -7,7 +7,7 @@
 <div metal:fill-slot="main">
 
   <div class="hiddenStructure">
-    <span metal:use-macro="python:here.wikipage_template().macros['quickaccesskeys']" />
+    <span metal:use-macro="python:here.wikipage_template().macros['accesskeys']" />
   </div>
 
     <small class="visualNoPrint">
