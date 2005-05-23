@@ -1,9 +1,0 @@
-<tal:comment>
-I thought I'd use this for "things common to all zwiki views", but
-- I'm wary of unnecessarily adding template invocations
-- it didn't work
-</tal:comment>
-
-<div i18n:domain="zwiki">
-<span metal:use-macro="python:here.wikipage_template().macros['accesskeys']" />
-</div>
