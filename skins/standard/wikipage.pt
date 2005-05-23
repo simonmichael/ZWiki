@@ -98,10 +98,10 @@
         <table class="shade1" width="100%" border="0" cellspacing="0"
                tal:attributes="class python: not minimalmode and 'shade1' or nothing">
           <tr>
-            <td class="quicklinks" align="left" tal:condition="not: minimalmode">    
+            <td class="wikilinks" align="left">
 
-              <!-- site navigation links -->
-              <span metal:define-macro="quicklinks" tal:omit-tag="">
+              <!-- wiki navigation links -->
+              <span metal:define-macro="wikilinks" tal:omit-tag="">
                 <a href="" tal:attributes="href here/homeUrl" 
                    accesskey="f"
                    title="show front page"
