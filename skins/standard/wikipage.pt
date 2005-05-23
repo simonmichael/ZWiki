@@ -33,13 +33,12 @@
     <span metal:define-slot="extra" tal:omit-tag="" />
 
     <link rel="stylesheet" type="text/css" href="" 
-          tal:attributes="href python:here.defaultPageUrl()+'/stylesheet'
-            #if we use id() here instead, stylesheets will be per-page - useful
-            #for a dynamic stylesheet, but excessive loading for a static one"
-          />
+          tal:attributes="href string:${here/defaultPageUrl}/stylesheet" />
 
     <title metal:define-slot="title"
-           tal:content="string:${container/title} ${here/pageName}" >title..</title>
+           tal:content="string:${container/title} ${here/pageName}" >
+      page title
+    </title>
 
   </head>
 
