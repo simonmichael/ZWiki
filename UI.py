@@ -369,12 +369,38 @@ class GeneralForms:
     security.declareProtected(Permissions.View, 'wikipage_template')
     def wikipage_template(self, REQUEST=None):
         """
-        Get the main wikipage template without evaluating.
+        Get the standard wikipage template, unevaluated, for macro access.
 
-        Like the below. Should it be wikipage ? Or would that
-        be inconsistent with the template-evaluating UI methods ?
+        This will always return the standard skin's wikipage as
+        zwiki_plone's doesn't have the macros. Provides macro aliases
+        for backwards compatibility.
         """
-        return self.getSkinTemplate('wikipage')
+        standard_wikipage = DEFAULT_TEMPLATES['wikipage'].__of__(self)
+        if self.inCMF(): template = standard_wikipage
+        else: template = self.getSkinTemplate('wikipage')
+        #return template
+        # backwards compatibility ? 
+        # make sure old customised templates still find the various
+        # macros, one way or another. Keep on humming little wikis.
+        # XXX at least for a few months; this is called a lot, but
+        # shouldn't be noticeable.
+        def alias(old,new):
+            template.macros[old] = template.macros.get(
+                new,
+                standard_wikipage.macros[new])
+        alias("head","head")
+        alias("linkpanel","linkpanel")
+        alias("navpanel","navpanel")
+        alias("quickaccesskeys","accesskeys")
+        alias("quicklinks","wikilinks")
+        alias("displaymodes","displaymodes")
+        alias("editlinks","pagelinks")
+        alias("logolink","logolink")
+        alias("pagenameand","pagenameand")
+        alias("pagename","pagenameonly")
+        alias("commentform","commentform")
+        alias("pagemanagement","pagemanagement")
+        return template
 
     # backwards compatibility
     wikipage_view = wikipage
