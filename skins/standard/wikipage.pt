@@ -6,7 +6,6 @@
                   minimalmode   python: displaymode=='minimal';
                   simplemode    python: displaymode=='simple';
                   fullmode      python: displaymode=='full';
-                  showhierarchy python: not minimalmode;
                   ">
   <head metal:define-macro="head">
 
@@ -50,7 +49,14 @@
 
 
     <!--  access keys and main links bar -->
-    <div metal:define-macro="linkpanel" tal:omit-tag="">
+    <div metal:define-macro="linkpanel" tal:omit-tag=""
+         tal:define="
+                     displaymode   python: here.displayMode();
+                     minimalmode   python: displaymode=='minimal';
+                     simplemode    python: displaymode=='simple';
+                     fullmode      python: displaymode=='full'
+                     # had to define these again here for macro callers;
+                     ">
 
       <!-- always-available quick access keys -->
       <span metal:define-macro="quickaccesskeys" tal:omit-tag="">
@@ -277,6 +283,10 @@
                         page python:here.pageWithName(pagename);
                         pagehasdtml python:page and page.dtmlAllowed() and page.hasDynamicContent();
                         url python:(pagehasdtml and page.id()) or (here.defaultPageId()+'/'+methodname);
+                        displaymode   python: here.displayMode();
+                        minimalmode   python: displaymode=='minimal';
+                        simplemode    python: displaymode=='simple';
+                        fullmode      python: displaymode=='full';
                         "
             tal:attributes="action python:here.wiki_url()+'/'+url;"
             action="">
