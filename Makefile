@@ -79,6 +79,7 @@ pot: dtmlextract
 	               r'\1\"Language-code: xx\\\n\"\n\"Language-name: X\\\n\"\n\"Preferred-encodings: utf-8 latin1\\\n\"\n\"Domain: zwiki\\\n\"\n', \
 	               t); \
 	    open('i18n/zwiki.pot','w').write(t)"
+	rm -f skins/dtmlmessages.pt
 
 # a dtml extraction hack, should integrate with i18nextract
 dtmlextract: 
