@@ -3,12 +3,11 @@
       i18n:domain="zwiki"
       tal:define="
                   displaymode   python: here.displayMode();
-                  minimal       python: displaymode=='minimal';
-                  simple        python: displaymode=='simple';
-                  full          python: displaymode=='full';
-                  showhierarchy python: not minimal;
+                  minimalmode   python: displaymode=='minimal';
+                  simplemode    python: displaymode=='simple';
+                  fullmode      python: displaymode=='full';
+                  showhierarchy python: not minimalmode;
                   ">
-
   <head metal:define-macro="head">
 
     <meta http-equiv="Content-Type" content="" 
@@ -50,11 +49,11 @@
     <div tal:condition="here/site_header|nothing" tal:replace="site_header" />
 
 
+    <!--  access keys and main links bar -->
     <div metal:define-macro="linkpanel" tal:omit-tag="">
-      <!--  main site navigation & page actions bar -->
 
+      <!-- always-available quick access keys -->
       <span metal:define-macro="quickaccesskeys" tal:omit-tag="">
-        <!-- always-available quick access keys -->
         <a tal:attributes="href string:${here/pageUrl}/src" accesskey="q"></a>
         <a tal:condition="nothing" tal:attributes="href string:${here/pageUrl}/clearCache" accesskey="w"></a>
         <a tal:attributes="href here/homeUrl" accesskey="f"></a>
@@ -88,84 +87,61 @@
         <a tal:attributes="href string:${here/pageUrl}/showAccessKeys" accesskey="0"></a>
       </span>
 
-      <div class="linkpanel"
-           tal:define="
-                       displaymode python: here.displayMode();
-                       minimal     python: displaymode=='minimal';
-                       simple      python: displaymode=='simple';
-                       full        python: displaymode=='full';
-                       "
-           tal:condition="not: minimal"
-           tal:attributes="class python: minimal and 'linkpanel_minimal' or 'linkpanel';"
-           ><!-- twk: no link panel if minimal (otherlinks now embedded in minimal pageheader) -->
+      <!-- main links bar -->
+      <div tal:condition="not: minimalmode" class="linkpanel">
         <table class="shade1" width="100%" border="0" cellspacing="0"
-               tal:attributes="class python: not minimal and 'shade1' or nothing">
+               tal:attributes="class python: not minimalmode and 'shade1' or nothing">
           <tr>
-            <td class="quicklinks" align="left" tal:condition="not: minimal">    
+            <td class="quicklinks" align="left" tal:condition="not: minimalmode">    
 
+              <!-- site navigation links -->
               <span metal:define-macro="quicklinks" tal:omit-tag="">
-                <!-- site navigation links -->
-
                 <a href="" tal:attributes="href here/homeUrl" 
                    accesskey="f"
                    title="show front page"
                    i18n:attributes="title">
                 <span i18n:translate="">home</span></a>
-
                 <a href="" tal:attributes="href here/contentsUrl" 
                    accesskey="c"
                    title="show wiki contents"
                    i18n:attributes="title">
                 <span i18n:translate="">contents</span></a>
-
                 <a href="" tal:attributes="href here/changesUrl" 
                    accesskey="r"
                    title="show wiki recent changes"
                    i18n:attributes="title">
                 <span i18n:translate="">changes</span></a>
-
                 <a href="" tal:attributes="href here/discussionUrl" 
                    tal:condition="here/discussionUrl"
                    title="show discussion page"
                    i18n:attributes="title">
                 <span i18n:translate="">discussion</span></a>
-
                 <a href="" tal:attributes="href here/trackerUrl" 
                    tal:condition="here/hasIssues"
                    title="show issue tracker"
                    i18n:attributes="title">
                 <span i18n:translate="">issues</span></a>
-
                 <a tal:attributes="href here/indexUrl" accesskey="i" 
                    tal:condition="here/indexUrl"
                    title="show wiki index"
                    i18n:attributes="title">
                 <span i18n:translate="">index</span></a>
-
                 <a href="" tal:attributes="href here/uploadsUrl" 
                    tal:condition="here/uploadsUrl"
                    title="show upload page"
                    i18n:attributes="title">
                 <span i18n:translate="">uploads</span></a>
-
                 <a tal:attributes="href here/preferencesUrl" 
                    accesskey="o"
                    title="show wiki options"
                    i18n:attributes="title">
                 <span i18n:translate="">options</span></a>
-
                 <a tal:attributes="href here/helpUrl" 
                    accesskey="h" 
                    tal:condition="here/helpUrl"
                    title="show help page"
                    i18n:attributes="title">
                 <span i18n:translate="">help</span></a>
-
-                <span tal:define="bmarks request/zwiki_bookmarks|nothing"
-                      tal:content="structure python:here.wikilink(bmarks)"
-                      tal:condition="python:0 #minimal"
-                      tal:on-error="nothing">
-                </span>
                 &nbsp;&nbsp;
               </span>
 
@@ -173,13 +149,7 @@
             <td class="otherlinks" align="right">
 
               <!-- display mode links -->
-              <span metal:define-macro="displaymodes"
-                    tal:define="
-                                displaymode python: here.displayMode();
-                                minimal     python: displaymode=='minimal';
-                                simple      python: displaymode=='simple';
-                                full        python: displaymode=='full';
-                                ">
+              <span metal:define-macro="displaymodes">
                 <span tal:condition="here/inCMF">
                 <a accesskey="+" href="" 
                    title="show plone skin" i18n:attributes="title"
@@ -187,18 +157,24 @@
                   ><span i18n:translate="">plone</span></a
                 >/</span><a accesskey="=" href="" 
                    title="show all features" i18n:attributes="title"
-                   tal:attributes="style python:[nothing,'font-weight:bold'][full];
-                                   href python:here.pageUrl()+'/setskin?skin=full';"
+                   tal:attributes="
+                     href python:here.pageUrl()+'/setskin?skin=full';
+                     style python:(fullmode and 'font-weight:bold') or nothing;
+                     "
                   ><span i18n:translate="">full</span></a
                 >/<a accesskey="_" href=""
                    title="show basic features" i18n:attributes="title"
-                   tal:attributes="style python:[nothing,'font-weight:bold'][simple];
-                                   href python:here.pageUrl()+'/setskin?skin=simple';"
+                   tal:attributes="
+                     href python:here.pageUrl()+'/setskin?skin=simple';
+                     style python:(simplemode and 'font-weight:bold') or nothing;
+                     "
                   ><span i18n:translate="">simple</span></a
                 >/<a accesskey="-" href="" 
                    title="show only essential features" i18n:attributes="title"
-                   tal:attributes="style python:[nothing,'font-weight:bold'][minimal];
-                                   href python:here.pageUrl()+'/setskin?skin=minimal';"
+                   tal:attributes="
+                     href python:here.pageUrl()+'/setskin?skin=minimal';
+                     style python:(minimalmode and 'font-weight:bold') or nothing;
+                     "
                   ><span i18n:translate="">minimal</span></a>
               </span> 
 
@@ -261,25 +237,27 @@
     </div> 
 
 
+    <!-- hierarchy navigation bar -->
     <div metal:define-macro="navpanel" tal:omit-tag="">
-      <!-- hierarchy navigation bar -->
-
-      <div class="navpanel" tal:condition="full">
+      <div class="navpanel" tal:condition="fullmode">
         <table class="shade1" width="100%" border="0" cellspacing="0">
           <tr valign="top">
             <td align="left" width="33%">
               <a tal:condition="here/previousPage" tal:attributes="href here/previousPageUrl"
                  access_key='P' tal:content="python:'&lt;&lt;'+here.previousPage()" />
+              << PreviousPage
             </td>
             <td align="center" width="33%">
               <a tal:condition="here/primaryParentName" 
                  tal:attributes="href here/upUrl"
                  access_key='U' 
                  tal:content="python:'^^'+(here.primaryParentName() or 'wiki contents')" />
+              ^^ParentPage
             </td>
             <td align="right" width="33%">
               <a tal:condition="here/nextPage" tal:attributes="href here/nextPageUrl"
                  access_key='N' tal:content="python:here.nextPage()+'&gt;&gt;'" />
+              >>NextPage
             </td>
           </tr>
         </table>
@@ -287,6 +265,7 @@
     </div>
 
 
+    <!-- page heading, full/simple and minimal versions -->
     <div class="pageheading">
       <form method="GET" 
             tal:define="
@@ -300,12 +279,10 @@
             action="">
 
         <!-- page heading in full & simple mode -->
-        <table tal:condition="not: minimal"
-               width="100%" border="0" cellspacing="0"
-               tal:attributes="class python: nothing #not minimal and 'shade1' or nothing">
+        <table tal:condition="not: minimalmode" width="100%" border="0" cellspacing="0">
           <tr>
             <td id="logo" width="1%" valign="top"
-                tal:attributes="class python: full and 'logo_full' or 'logo_simple'">
+                tal:attributes="class python: fullmode and 'logo_full' or 'logo_simple'">
               <span metal:define-macro="logolink" tal:omit-tag="">
                 <!-- logo -->
                 <a tal:condition="python:request.get('zwiki_showlogo',1)"
@@ -323,8 +300,7 @@
               <span metal:define-macro="pagenameand" tal:omit-tag="">
                 <ul tal:replace="structure 
                                  python:here.context(request,enlarge_current=1)">
-                  <li>context
-                  <ul><li><big><big><big>page name</big></big></big></li></ul></li>
+                  <li>context<ul><li><big><big><big>page name</big></big></big></li></ul></li>
                 </ul>
               </span>
             </td>
@@ -343,7 +319,7 @@
         </table>
 
         <!-- page heading in minimal mode -->
-        <table tal:condition="minimal" width="100%" border="0" cellspacing="0">
+        <table tal:condition="minimalmode" width="100%" border="0" cellspacing="0">
           <tr>
             <td class="logo_minimal" width="1%" valign="middle">
               <span metal:use-macro="template/macros/logolink" />
@@ -371,7 +347,8 @@
                      tal:condition="showsearch" />
               <span class="lasteditor" 
                     tal:content="structure python:here.linkTitle(prettyprint=1)+' '" />
-              <!-- XXX hacks: width 95% keeps moz from chopping off right end 
+              <!-- XXX hacks: 
+                   width 95% keeps moz from chopping off right end 
                    with 1px borders; trailing space to prevent text chop -->
             </td>
           </tr>
@@ -392,6 +369,7 @@
 
     <!-- page content -->
     <div class="content">
+
       <div tal:replace="structure options/body">
         page body
       </div>
@@ -399,11 +377,11 @@
       <a name="bottom"></a>
       <br />
 
+      <!-- comment form -->
       <div tal:condition="python:user.has_permission('Zwiki: Add comments',here)">
         <br />
         <br />
         <div metal:define-macro="commentform">
-          <!-- comment form -->
           <form method="post" enctype="multipart/form-data"
                 class="commentform" style="margin-top:0;margin-bottom:0"
                 tal:attributes="action here/pageUrl">
@@ -413,15 +391,11 @@
                    tal:attributes="value here/id" />
             <table width="100%" border="0" cellspacing="0" cellpadding="0"
                    bgcolor="" class=""
-                   tal:condition="python:user.has_permission('Zwiki: Add comments',here)"
-                   >
-
+                   tal:condition="python:user.has_permission('Zwiki: Add comments',here)">
               <!-- subject row -->
               <tr>
                 <td align="left" valign="middle" nowrap="nowrap" colspan="2"
-                    tal:attributes="
-                                    bgcolor python:nothing# not minimal and '#dddddd') or '';
-                                    ">
+                    tal:attributes="bgcolor python:nothing# not minimalmode and '#dddddd') or '';">
                   <small>
                     <span i18n:translate="">subject</span>: 
                     <input type="text" name="subject_heading" value="" 
@@ -436,7 +410,6 @@
                   </small>
                 </td>
               </tr>
-
               <!-- comment row -->
               <tr>
                 <td align="center" valign="bottom" bgcolor="" colspan="2">
@@ -447,7 +420,6 @@
                   </textarea>
                 </td>
               </tr>
-
               <!-- add row -->
               <tr>
                 <td align="left" valign="middle">
@@ -474,7 +446,6 @@
                          i18n:attributes="value add-comment"
                          style="font-weight:bold" /></td>
               </tr>
-
             </table>
           </form>
         </div>
@@ -483,17 +454,17 @@
     </div>
 
 
+    <!-- page management form -->
     <div tal:condition="python:
-           full and
+           fullmode and
            (user.has_permission('Zwiki: Add pages',here) or
            user.has_permission('Zwiki: Rename pages',here) or
            user.has_permission('Zwiki: Reparent pages',here) or
            user.has_permission('Zwiki: Delete pages',here))
-           #and (user.has_role('Authenticated') or request.get('zwiki_username',''))
+           #and here.userIsIdentified()
            ">
       <br />
       <div metal:define-macro="pagemanagement" tal:omit-tag="">
-        <!-- page management panel -->
         <form method="post" action="" enctype="multipart/form-data"
               tal:attributes="action here/page_url" 
               style="margin-top:0;margin-bottom:0">

@@ -1,12 +1,11 @@
 Skin templates for the standard (non-CMF) skin.
 
-Warning - don't edit filterissuesdtml, issuetrackerdtml,
-recentchangesdtml, searchwikidtml, useroptionsdtml here, they are
-auto-generated. Edit the master copies in content/dtml instead.
+Warning - filterissuesdtml, issuetrackerdtml, recentchangesdtml,
+searchwikidtml, and useroptionsdtml are generated files, don't edit them.
+Edit the master copies in ../../content/dtml and "make dtml" instead.
 
-Why are we still using DTML in here ? These forms originated as
-DTML-scripted wiki pages and it's easier to evolve them that way.  So we
-are still using that code, wrapped in a page template for consistent
-handling.
+Why are we still using DTML in here ? Forms often originate as DTML
+embedded in wiki pages and it's sometimes easier to evolve them that way.
+Sometimes we hide the dtml behind a page template for consistency.
 
-More notes in UI.py.
+See also UI.py.

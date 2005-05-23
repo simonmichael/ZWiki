@@ -130,6 +130,12 @@ input,select {
   font-weight:normal; font-size:0.9em;
 }
 
+/*
+.preview {
+  border:4px; width:100%; padding:10px; background-color:#ffffaa;
+}
+*/
+
 /* bottom stuff */
 
 .commentform {
@@ -139,9 +145,6 @@ input,select {
 
 /* handy for displaying completion status */
 .incomplete {color: red;}
-.semicomplete {color: black;}
-.complete {color: green;}
-.unknownpercent {color: red;}
 .zeropercent {color: red;}
 .tenpercent {color: red;}
 .twentypercent {color: red;}
@@ -153,6 +156,7 @@ input,select {
 .eightypercent {color: green;}
 .ninetypercent {color: green;}
 .onehundredpercent {color: green;}
+.complete {color: green;}
 
 /*
 .link-external {
@@ -160,9 +164,9 @@ input,select {
   padding: 1px 0px 1px 16px;
 }
 */
-/*
-.preview {
-  border:4px; width:100%; padding:10px; background-color:#ffffaa;
-}
-*/
+
+
+/*******************************************************************
+ add customizations below
+ *******************************************************************/
 
