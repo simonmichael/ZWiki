@@ -244,20 +244,23 @@
           <tr valign="top">
             <td align="left" width="33%">
               <a tal:condition="here/previousPage" tal:attributes="href here/previousPageUrl"
-                 access_key='P' tal:content="python:'&lt;&lt;'+here.previousPage()" />
-              << PreviousPage
+                 access_key='P' tal:content="python:'&lt;&lt;'+here.previousPage()">
+                << PreviousPage
+              </a>
             </td>
             <td align="center" width="33%">
               <a tal:condition="here/primaryParentName" 
                  tal:attributes="href here/upUrl"
                  access_key='U' 
-                 tal:content="python:'^^'+(here.primaryParentName() or 'wiki contents')" />
-              ^^ParentPage
+                 tal:content="python:'^^'+(here.primaryParentName() or 'wiki contents')">
+                ^^ParentPage
+              </a>
             </td>
             <td align="right" width="33%">
               <a tal:condition="here/nextPage" tal:attributes="href here/nextPageUrl"
-                 access_key='N' tal:content="python:here.nextPage()+'&gt;&gt;'" />
-              >>NextPage
+                 access_key='N' tal:content="python:here.nextPage()+'&gt;&gt;'">
+                >>NextPage
+              </a>
             </td>
           </tr>
         </table>
