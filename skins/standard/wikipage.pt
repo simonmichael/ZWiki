@@ -337,7 +337,7 @@
               <span metal:use-macro="template/macros/logolink" />
             </td>
             <td class="pagenameonly" align="left" width="79%">
-              <span metal:define-macro="pagename">
+              <span metal:define-macro="pagenameonly">
                 <a tal:attributes="
                                    href python:here.page_url() + '/backlinks';
                                    title python:'show backlinks for this page ('+here.linkTitle()+')'"
