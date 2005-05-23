@@ -184,7 +184,7 @@
               </span> 
 
               <!-- page action links -->
-              <span metal:define-macro="editlinks">
+              <span metal:define-macro="pagelinks">
                 <a tal:condition="python:here.isMailoutEnabled()"
                    tal:attributes="href python:here.page_url() + '/subscribeform'"
                    href="page_url/subscribeform" 
@@ -351,7 +351,7 @@
             <td class="searchbox" width="20%" align="right" nowrap=""
                 tal:define="showsearch python:request.get('zwiki_showsearch',1)">
               <span metal:use-macro="template/macros/displaymodes" />
-              <span metal:use-macro="template/macros/editlinks" />
+              <span metal:use-macro="template/macros/pagelinks" />
               <br />
               <input id="searchinput" class="formfield" tal:condition="showsearch"
                      name="expr" type="text" size="20" maxlength="100" value="" 
