@@ -383,7 +383,7 @@
     <div class="content">
 
       <div tal:replace="structure options/body">
-        page body
+        page body, subtopics, comments
       </div>
 
       <a name="bottom"></a>
@@ -401,9 +401,7 @@
                    tal:attributes="value here/editTimestamp" />
             <input name="page" type="hidden" value="id" 
                    tal:attributes="value here/id" />
-            <table width="100%" border="0" cellspacing="0" cellpadding="0"
-                   bgcolor="" class=""
-                   tal:condition="python:user.has_permission('Zwiki: Add comments',here)">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="">
               <!-- subject row -->
               <tr>
                 <td align="left" valign="middle" nowrap="nowrap" colspan="2"
@@ -485,6 +483,7 @@
                  >
             <tr>
               <td align="left" valign="top">
+                <!-- help text -->
                 <span i18n:translate="">new</span> 
                 <span i18n:translate=""
                       tal:condition="python:user.has_permission('Zwiki: Reparent pages',here)" 
@@ -499,9 +498,10 @@
                       tal:condition="python:user.has_permission('Zwiki: Add pages',container)"
                       >subtopic</span
                       ><span tal:condition="not:here/inCMF" tal:omit-tag="">:</span>
-                <span tal:condition="here/inCMF" tal:omit-tag=""
-                      comment="hack! cmf/plone layout hint"><span i18n:translate="">for this page</span>:<br />
+                <span tal:condition="here/inCMF" tal:omit-tag="" comment="cmf/plone layout hint"
+                      ><span i18n:translate="">for this page</span>:<br />
                 </span>
+                <!-- multi-purpose input field and buttons -->
                 <input name="pagename" type="text" size="25" maxlength="100" value="" 
                        class="formfield"
                        title="enter a page name and click buttons to the right (mouse over for help)"
