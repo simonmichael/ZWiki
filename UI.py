@@ -399,7 +399,7 @@ class GeneralForms:
         alias("pagenameand","pagenameand")
         alias("pagename","pagenameonly")
         alias("commentform","commentform")
-        alias("pagemanagement","pagemanagement")
+        alias("pagemanagement","pagemanagementform")
         return template
 
     # backwards compatibility

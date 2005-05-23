@@ -476,7 +476,7 @@
            #and here.userIsIdentified()
            ">
       <br />
-      <div metal:define-macro="pagemanagement" tal:omit-tag="">
+      <div metal:define-macro="pagemanagementform" tal:omit-tag="">
         <form method="post" action="" enctype="multipart/form-data"
               tal:attributes="action here/page_url" 
               style="margin-top:0;margin-bottom:0">
