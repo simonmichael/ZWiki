@@ -25,6 +25,12 @@
 
 	Also a few macros and classes that no-one was using have been
 	removed.
+
+	The standard skin directory has been renamed to zwiki_standard.
+	In CMF/Plone sites, you should uninstall and re-install Zwiki in
+	plone setup (the upgrade link may not work) so that zwiki_standard
+	appears in the portal_skins tool. You can then delete
+	portal_skins/standard and portal_skins/zmi.
 	
     Changes
 
