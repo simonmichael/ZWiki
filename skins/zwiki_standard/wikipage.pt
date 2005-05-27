@@ -59,9 +59,9 @@
                      ">
 
       <!-- always-available quick access keys -->
-      <span metal:define-macro="accesskeys" tal:omit-tag=""
-            tal:define="pageurl here/pageUrl;"
-            >
+      <div metal:define-macro="accesskeys" class="hiddenStructure"
+           tal:define="pageurl here/pageUrl;"
+           >
         <a tal:attributes="href string:${pageurl}/src" accesskey="q"></a>
         <a tal:condition="nothing" tal:attributes="href string:${pageurl}/clearCache" accesskey="w"></a>
         <a tal:attributes="href here/homeUrl" accesskey="f"></a>
@@ -93,7 +93,7 @@
         <a tal:attributes="href python:here.previousPageUrl() or here.lastPageUrl()" accesskey="p"></a>
         <a tal:attributes="href here/upUrl" accesskey="u"></a>
         <a tal:attributes="href string:${pageurl}/showAccessKeys" accesskey="0"></a>
-      </span>
+      </div>
 
       <!-- main links bar -->
       <div tal:condition="not: minimalmode" class="linkpanel">

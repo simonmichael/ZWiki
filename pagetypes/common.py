@@ -188,7 +188,7 @@ class AbstractHtmlPageType(AbstractPageType):
         if message_id:
             # use the message id for linking, but strip the <>
             # and leave it unquoted, browsers can handle it
-            heading += '<a name="msg%s"></a>\n' % \
+            heading += '<a class="visualNoPrint" name="msg%s"></a>\n' % \
                        re.sub(r'^<(.*)>$',r'\1',message_id)
         if page.inCMF():
             heading += \
@@ -208,7 +208,7 @@ class AbstractHtmlPageType(AbstractPageType):
         #             % (page.page_url(),quote(subject or ''),inreplytobit)) +
         #             + _("reply") + '</a>' )
         
-        heading += ' <a href="%s?subject=%s%s#bottom">reply</a>'\
+        heading += ' <a class="visualNoPrint" href="%s?subject=%s%s#bottom">reply</a>'\
                    % (page.page_url(),quote(subject or ''),inreplytobit)
 
                      

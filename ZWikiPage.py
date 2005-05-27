@@ -649,7 +649,7 @@ class ZWikiPage(
                       self.formatWikiname(linkorig))
 
         # otherwise, provide a creation link
-        return ('%s<a class="new" href="%s/%s/createform?page=%s" title="%s">?</a>') \
+        return ('%s<a class="new visualNoPrint" href="%s/%s/createform?page=%s" title="%s">?</a>') \
                % (self.formatWikiname(linkorig), self.wiki_url(),
                   quote(self.id()), quote(linknobrackets),
                   _("create this page"))
