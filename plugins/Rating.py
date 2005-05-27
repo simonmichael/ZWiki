@@ -86,7 +86,13 @@ class RatingSupport:
                 BLATHER("%s: recorded %s vote for %s" % (self.pageName(),vote,username))
             self.setVotes(votes)
             self.index_object() # XXX only need update votes fields
-            if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1']) #+'#ratingform')
+            if REQUEST:
+                REQUEST.RESPONSE.redirect(
+                    # redirect to the page they came on.. might be some
+                    # other page, eg a list of rated pages. Is this robust ?
+                    #REQUEST.URL1
+                    REQUEST.HTTP_REFERER
+                    )
 
     security.declareProtected(Permissions.Rate, 'rate')
     def unvote(self,REQUEST=None):
