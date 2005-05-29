@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ZWiki-0-40-0\n"
+"Project-Id-Version: ZWiki-0-41-0\n"
 "POT-Creation-Date: Sun May 22 15:04:16 2005\n"
 "PO-Revision-Date: 2005-04-29 12:18+0800\n"
 "Last-Translator: T.C. Chou <tcchou-at-tcchou-dot-org>\n"
@@ -218,14 +218,15 @@ msgstr "您没有权力在此页增加连接."
 msgid ""
 "There was a problem: %s. Please contact the site administrator for help."
 msgstr ""
+"发生一个问题: %s. 请联系管理者, 帮忙处理这问题."
 
 #: i/Editing.py:819
 msgid "banned_links match"
-msgstr ""
+msgstr "发现被拒绝的连结"
 
 #: i/Editing.py:820
 msgid "your edit contained a banned link pattern"
-msgstr ""
+msgstr "您所编辑的内容, 含有一个被拒绝出现的连结"
 
 #: i/Editing.py:831
 msgid "exceeded max_anonymous_links"
@@ -558,16 +559,14 @@ msgid "File"
 msgstr "档案"
 
 #: i/skins/dtmlmessages.pt:147
-#, fuzzy
 msgid "Topic"
-msgstr "子页面"
+msgstr "主题"
 
 #: i/skins/dtmlmessages.pt:148
 msgid "Last updated"
-msgstr ""
+msgstr "最近更新"
 
 #: i/skins/dtmlmessages.pt:149
-#, fuzzy
 msgid "Comments"
 msgstr "留言"
 
@@ -576,26 +575,24 @@ msgid "Add"
 msgstr "新增"
 
 #: i/skins/dtmlmessages.pt:150
-#, fuzzy
 msgid "Views"
 msgstr "检视"
 
 #: i/skins/dtmlmessages.pt:151
-#, fuzzy
 msgid "Created"
 msgstr "建立"
 
 #: i/skins/dtmlmessages.pt:152 i/skins/dtmlmessages.pt:154
 msgid "by"
-msgstr ""
+msgstr "作者"
 
 #: i/skins/dtmlmessages.pt:153
 msgid "<dtml-var lasteditinterval> ago</dtml-var>"
-msgstr ""
+msgstr "<dtml-var lasteditinterval> 之前</dtml-var>"
 
 #: i/skins/dtmlmessages.pt:155
 msgid "on"
-msgstr ""
+msgstr "在"
 
 #: i/skins/dtmlmessages.pt:156
 msgid "Submitted by"
@@ -622,14 +619,12 @@ msgid "Status"
 msgstr "状态"
 
 #: i/skins/dtmlmessages.pt:161
-#, fuzzy
 msgid "Optional subject"
-msgstr "变更注记(选项)"
+msgstr "标题(选项)"
 
 #: i/skins/dtmlmessages.pt:162
-#, fuzzy
 msgid "Optional comment"
-msgstr "变更注记(选项)"
+msgstr "留言(选项)"
 
 #: i/skins/dtmlmessages.pt:17 i/skins/dtmlmessages.pt:82
 #: i/skins/dtmlmessages.pt:163
@@ -995,24 +990,20 @@ msgid "select the formatting and rendering style for this page"
 msgstr "选择这页的格式与表现方式"
 
 #: i/skins/standard/issuebrowser.pt:10 i/skins/standard/issuebrowser.pt:16
-#, fuzzy
 msgid "Issue browser"
-msgstr "事例追踪"
+msgstr "事例浏览"
 
 #: i/skins/standard/issuetracker.pt:10 i/skins/standard/issuetracker.pt:16
-#, fuzzy
 msgid "Issue tracker"
 msgstr "事例追踪"
 
 #: i/skins/standard/recentchanges.pt:10 i/skins/standard/recentchanges.pt:16
-#, fuzzy
 msgid "Recent changes"
-msgstr "显示快纪最近变更"
+msgstr "最近变更"
 
 #: i/skins/standard/searchwiki.pt:10 i/skins/standard/searchwiki.pt:16
-#, fuzzy
 msgid "Search this wiki"
-msgstr "建立这快纪页面"
+msgstr "搜寻这快纪页面"
 
 #: i/skins/standard/subscribeform.pt:90
 msgid " Unsubscribe from this page "
@@ -1307,7 +1298,6 @@ msgid "next edit >>"
 msgstr "下一版 >>"
 
 #: i/skins/zwiki_plone/diffform.pt:49 i/skins/standard/diffform.pt:36
-#, fuzzy
 msgid "Revert this and later changes"
 msgstr "回溯到这个版本及相关变更"
 
