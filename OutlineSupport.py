@@ -743,7 +743,7 @@ class OutlineRenderingMixin:
         Some overlap with the show_subtopics property.
         """
         DEFAULTSTYLE = 'outline'
-        style = getattr(self.folder(),'subtopics_style',None)
+        style = getattr(self,'subtopics_style',None)
         if not (style and self.hasSkinTemplate('subtopics_'+style)):
             style = DEFAULTSTYLE
         return self.getSkinTemplate('subtopics_'+style)(self,REQUEST)
