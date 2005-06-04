@@ -1,13 +1,17 @@
     Summary
 
-        Skin cleanups
+        Skin templates cleanup, message-board-style subtopics display,
+	miscellaneous fixes, new portuguese translation and russian/german
+	updates.
 
     Upgrade notes
 
         Skin macros have been moved from wikipage_macros to wikipage, and
-	some have been renamed. Customised skin templates should continue
-	to work normally for now. If you have custom templates, please
-	replace any macro-related occurrences of the following strings:
+	some have been renamed. Also some CSS classes have been renamed.
+
+	Customised skin templates should continue to work normally for
+	now. If you have any, please replace any macro-related occurrences
+	of the following strings in your templates:
 	
 	- wikipage_macros -> wikipage_template
 	- quickaccesskeys -> accesskeys
@@ -15,25 +19,125 @@
 	- editlinks       -> pagelinks
 	- pagename        -> pagenameonly
 
-	I expect to remove the backwards compatibility support for old
-	macros in the next release or three.
-
 	The following CSS class has been renamed, you'll need to update
 	any customised zwiki stylesheets accordingly:
 
 	- quicklinks      -> wikilinks
 
 	Also a few macros and classes that no-one was using have been
-	removed.
+	removed.  I expect to remove the backwards compatibility support
+	for old macros in the next release or three.
 
 	The standard skin directory has been renamed to zwiki_standard.
 	In CMF/Plone sites, you should uninstall and re-install Zwiki in
 	plone setup (the upgrade link may not work) so that zwiki_standard
 	appears in the portal_skins tool. You can then delete
-	portal_skins/standard and portal_skins/zmi.
+	portal_skins/standard and portal_skins/zmi in the ZMI.
 	
     Changes
 
+      Configuring
+
+      Browsing
+
+      Editing
+
+        * be more robust when saving a page with undated comments (#1103)
+
+        * after voting, redirect to the referer instead of the rated page
+
+      Page hierarchy
+
+        * make subtopics template-driven, selectable via subtopics_style
+	property, and dtml-aware. Two styles are now included: "outline"
+	and "board". The latter shows view counts if mxmCounter is
+	installed. See admin guide.
+
+      Mail
+
+        * also recognise a MaildropHost as mailhost
+
+        * allow mail properties to be configured on a per-page basis
+
+      Issue tracking
+
+        * add a full comment form to the issue properties form
+
+      General - i18n
+
+        * russian translation updates for the standard skin (Michael Krishtopa)
+
+        * german translation updates (Jens Nachtigall)
+
+        * new portuguese translation (João Villa-Lobos)
+
+        * update pot and po files
+
+	* misc i18n fixes
+
+      General - skins
+
+        * merge wikipage_macros into wikipage template
+
+        * macro & stylesheet cleanups; use macro for form headings
+
+        * inline macros in zwiki_plone's wikipage template, remove
+	wikipage_header and wikipage_footer
+
+        * rename issuepropertiesformdtml.dtml to issuepropertiesform.dtml 
+
+        * rename noindex slot to searchtags
+
+        * rename quickaccesskeys macro to accesskeys
+
+        * rename quicklinks macro and CSS class to wikilinks
+
+        * rename editlinks macro to pagelinks
+
+        * rename pagename macro to pagenameonly
+
+        * rename pagemanagement macro to pagemanagementform
+
+        * rename standard/ to zwiki_standard/ to be more plone-friendly
+
+        * move skins/zmi/* to skins/zwiki_standard/ to be more plone-friendly
+
+        * change to upper case for View _h_istory (Jens Nachtigall, #1081)
+
+        * add "Revert to this" button in plone diff form as in standard
+	skin (Jens Nachtigall)
+
+        * clarify revert button wording in both skins
+
+        * don't call pageUrl so many times in wikipage
+	  Bob was able to measure some speedup from doing this. I've
+	  redone his patch for the cleaned up template. However I believe
+	  it's necessary to define pageurl again in each macro where it's
+	  used, so it's in scope for other templates using the macro, so
+	  it's still called a few times per page view. (Bob McElrath,
+	  Simon Michael)
+
+        * hide some urls and things when pages are printed, (anonymous, #1110)
+
+        * add a pagesByType pythonscript to content/misc
+
+      General
+	
+        * fix and update broken/failing tests, make all tests pass again
+	(#1104, #1049)
+
+        * fix a TypeError and AttributeError when CMFMember is used
+	  (Jens Nachtigall)
+
+        * another robustness fix for isEmailAddress and emailAddressFrom
+
+        * make pageType and pageTypeId public, for troubleshooting
+
+        * remove no longer used (and broken) wikiOutlineFromParents
+
+        * remove _createFileOrImage's unused parent argument
+
+        * tweak requestHasSomeId, add userIsIdentified alias
 
 
 
@@ -710,7 +814,7 @@ Zwiki 0.34.0 2004/09/02
 
         * add utf-8 content-type header to mail-outs
 
-        * new hungarian translation (JÃ³zsef JÃ¡roli)
+        * new hungarian translation (JÃÂ³zsef JÃÂ¡roli)
 
         * german translation updates (Andreas Mayer)
 
@@ -3414,7 +3518,7 @@ Zwiki 0.10.0rc1 2002-08-25
         * fix ZMI add zwiki page (IssueNo0187), make it equivalent to wiki
         page creation
 
-        * spanish translation of initial i18n strings (J. David IbÃƒÂ¡ÃƒÂ±ez)
+        * spanish translation of initial i18n strings (J. David IbÃï¿½¡ÂÃï¿½±ez)
 
         * canadian french translation of initial i18n strings (JoannePlouffe)
 
