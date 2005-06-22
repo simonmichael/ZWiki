@@ -194,19 +194,118 @@
                 </td>
               </tr>
 
-            </table>
-          </div>
-        </form>
-        <div tal:condition="previewing">
-          <!-- preview -->
-          <table border="0" width="100%" class="dimtext"><tr>
-            <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
-            <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
-            <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
-            <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
-            <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
-          </tr></table>
-          <table border="4" width="100%" cellpadding="10" class="preview">
+  <body bgcolor="#ffffff">
+    <div metal:use-macro="macros/linkpanel" />
+
+    <table tal:condition="python:0" 
+           width="100%" border="0" cellspacing="0" cellpadding="3" >
+      <tr>
+        <td width="1%" valign="middle">
+          <a tal:condition="python:request.get('zwiki_showlogo',1)"
+             tal:attributes="href here/wiki_url"
+             href="wiki_url" title="go to home page" accesskey="f" i18n:attributes="title">
+            <img tal:replace="structure container/site_logo|default"
+                 src="misc_/ZWiki/ZWikiPage_icon.gif" height="48" width="48" 
+                 border="0" alt="home" i18n:attributes="alt"/>
+          </a>
+        </td>
+        <td valign="middle">
+          <h1 tal:content="string:${actioning} ${page}">
+            Creating/Editing Pagename
+          </h1>
+        </td>
+      </tr>
+    </table>
+    <!-- end of header -->
+
+    <div class="formcontent">
+      <form method="post" enctype="multipart/form-data" action="" 
+            tal:attributes="action string:${here/page_url}">
+        <input name="timeStamp" type="hidden" value="" 
+               tal:attributes="value timestamp" />
+        <input name="page" type="hidden" value="page"
+               tal:attributes="value page" />
+        <input name="leaveplaceholder" value="" type="hidden"
+               tal:condition="python:creating #no placeholder when creating" />
+        <div align="center">
+          <table width="100%" border="0" cellspacing="0" cellpadding="3">
+            
+            <!-- page name & type -->
+            <tr>
+              <td valign="middle" align="left" bgcolor="#dddddd">
+                <span tal:condition="python:
+                      user.has_permission('Zwiki: Rename pages',here)">
+                  <span i18n:translate="">Page name</span>: 
+                  <input name="title" size="30" maxlength="100" value="" 
+                         title="the name of this wiki page (changing this may be slow!)"                          
+                         tabindex="" class="formfield" style="font-weight:bold;"
+			 i18n:attributes="title"
+                         tal:attributes="value python:newname;" />
+                </span>
+              </td>
+              <td valign="middle" align="right" bgcolor="#dddddd">
+                <span tal:condition="python:
+                      user.has_permission('Zwiki: Change page types',here)">
+                  <span i18n:translate="">type</span>:
+                  <select name="type" tabindex="" class="formfield"
+                          title="select the formatting and rendering style for this page"
+			  i18n:attributes="title" >
+                    <tal:options tal:repeat="t pagetypes">
+                      <option value="type"
+                              tal:define="
+                              dtmlallowed python:
+                                t in ('stx','html') and
+                                here.dtmlAllowed()
+                                #here.lookupPageType(t).supportsDtml() and 
+                                #here.dtmlAllowed();
+                              extrasuffix python:
+                              dtmlallowed and ' (+ DTML)' or ''; "
+                              tal:attributes="
+                              value python:t; 
+                              selected python:t==type"
+                              tal:content="python:
+                              here.PAGE_TYPES.get(t,t) + extrasuffix">
+                        type
+                      </option>
+                    </tal:options>
+                  </select>
+                </span>
+              </td>
+            </tr>
+            
+            <!-- edit area -->
+            <tr>
+              <td colspan="2" align="center" bgcolor="#dddddd">
+                <textarea tal:condition="not:here/supportsEpoz"
+                          wrap="virtual" name="text" rows="20" cols="60"
+                          style="width:100%; background-color:#f0f0f0" 
+                          tabindex=""
+                          tal:attributes="rows rows;"
+                          tal:content="text">text...</textarea>
+                <span tal:condition="here/supportsEpoz"
+                      tal:replace="structure python:
+                      here.Epoz(
+                      'text',
+                      data=text,
+                      style='background:white;border:thin solid black;
+                             width:100%;height:'+str(rows)+'em;',
+                             css=here.defaultPageUrl()+'/stylesheet',
+                          )"></span>
+              </td>
+            </tr>
+
+            <!-- better-positioned epoz source-mode checkbox -->
+            <tr tal:condition="python:0 #here/supportsEpoz">
+              <td valign="top" align="right" bgcolor="#dddddd" colspan="2"
+                  ><input id="EpozViewMode" type="checkbox" class="formfield"
+                  onclick="SwitchViewMode(this.checked)" 
+                  title="toggle source/WYSIWYG mode" 
+		  i18n:attributes="title"
+                  tabindex=""
+              /></td>
+            </tr>
+
+            <!-- optional note -->
             <tr>
               <td tal:content="structure python:here.renderText(
                                text,type,REQUEST=request,RESPONSE=request.RESPONSE)"></td>
