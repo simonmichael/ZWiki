@@ -1,3 +1,24 @@
+    Summary
+
+        Spanish and chinese translation updates, and a small fix for setupDtmlMethods.
+
+    Upgrade notes
+
+  	To get fuzzy urls working in (public) plone zwikis, visit
+	SomePage/setupDtmlMethods after this upgrade.
+	
+    Changes
+
+      Configuring
+
+        * make setupDtmlMethods create a standard_error_message in plone (#1117).
+
+      General - i18n
+
+        * Updated zh-TW & zh-CN po files (T.C. Chou)
+
+        * spanish translation updates (Gaspar Quiles)
+
 Zwiki 0.42.0 2005/06/04
 
     Summary
