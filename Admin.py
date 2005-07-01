@@ -326,17 +326,25 @@ class AdminSupport:
     security.declareProtected('Manage properties', 'setupDtmlMethods')
     def setupDtmlMethods(self,REQUEST=None):
         """
-        Install some default DTML methods to make (non-CMF) wikis work better.
+        Install some default DTML methods to make wikis work better.
+
+        These include:
+        index_html - redirects to the wiki's front page
+        standard_error_message - handles 404s to enable fuzzy urls etc.
+
+        Existing objects with the same name won't be overwritten.
         """
-        # copied from ZWikiWeb.py
-        dir = package_home(globals()) + os.sep + 'content' + os.sep + 'basic'
-        filenames = os.listdir(dir)
-        for filename in filenames:
-            name, suffix = filename[:-5], filename[-5:]
-            if (suffix == '.dtml' and
-                not hasattr(self.folder().aq_base,name)):
-                _addDTMLMethod(self.folder(),name,title='',
-                               file=open(dir+os.sep+filename,'r').read())
+        d = os.path.join(package_home(globals()),'content','basic')
+        dtmlmethods = [f[:-5] for f in os.listdir(d) if f.endswith('.dtml')]
+        ids = self.folder().objectIds()
+        for m in dtmlmethods:
+            # avoid acquisition.. self.folder().aq_base won't work
+            if m not in ids:
+                _addDTMLMethod(
+                    self.folder(),
+                    m,
+                    title='',
+                    file=open(os.path.join(d,m+'.dtml'),'r').read())
         if REQUEST:
             REQUEST.RESPONSE.redirect(self.page_url())
 
