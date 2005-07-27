@@ -2,15 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
       i18n:domain="zwiki"
       >
-  <head metal:define-macro="head">
 
+  <head metal:define-macro="head">
     <meta http-equiv="Content-Type" content="" 
           tal:define="
             charset python:'utf-8';
             dummy   python:request.RESPONSE.setHeader(
                       'Content-Type','text/html;; charset='+charset);"
-          tal:attributes="content string:text/html;;charset=${charset}" />
-
+          tal:attributes="content string:text/html;;charset=${charset}" 
+          />
     <span metal:define-slot="searchtags" 
           tal:omit-tag="" 
           tal:define="indexdelay python:24">
@@ -21,34 +21,31 @@
         <meta metal:define-slot="description" name="description" content=""
               tal:attributes="content here/summary;" />
       </span>
-      <meta tal:condition="python:here.lastEditIntervalInHours() < indexdelay"
-            name="robots" content="noindex" />
+      <span tal:condition="python:here.lastEditIntervalInHours() < indexdelay"
+            tal:omit-tag="">
+        <meta name="robots" content="noindex" />
+      </span>
     </span>
-
-    <span metal:define-slot="extra" tal:omit-tag="" />
-
+    <span metal:define-slot="extra" tal:omit-tag="" 
+          />
     <link rel="stylesheet" type="text/css" href="" 
-          tal:attributes="href string:${here/defaultPageUrl}/stylesheet" />
-
-    <!-- blank pages in IE 6.0
-        script src="aqtree3clickable.js" type="text/javascript" / -->
-
+          tal:attributes="href string:${here/defaultPageUrl}/stylesheet" 
+          />
     <title metal:define-slot="title"
-           tal:content="string:${container/title} ${here/pageName}" >
+           tal:content="string:${container/title} ${here/pageName}">
       page title
     </title>
-
   </head>
 
   <body style="/*background-image:url(background.jpg);background-repeat:no-repeat;*/">
 
+    <!--  optional extra site heading -->
     <div tal:condition="here/site_header|nothing" tal:replace="site_header" />
 
 
-    <!--  access keys and main links bar -->
     <div metal:define-macro="linkpanel" tal:omit-tag="">
 
-      <!-- always-available quick access keys -->
+      <!-- always-available zwiki access keys -->
       <span metal:define-macro="accesskeys" tal:omit-tag="">
         <a tal:attributes="href string:${here/pageUrl}/src" accesskey="q"></a>
         <a tal:condition="nothing" tal:attributes="href string:${here/pageUrl}/clearCache" accesskey="w"></a>
@@ -86,7 +83,7 @@
           <tr>
             <td class="otherlinks" align="right">
 
-              <!-- wiki navigation links -->
+              <!-- wiki navigation -->
               <span metal:define-macro="wikilinks" tal:omit-tag="">
                 <a href="" tal:attributes="href here/homeUrl" 
                    accesskey="f"
@@ -136,7 +133,7 @@
                 <span i18n:translate="">help</span></a>
               </span>
               -
-              <!-- page action links -->
+              <!-- page actions -->
               <span metal:define-macro="pagelinks">
                 <a tal:condition="python:0"
                    tal:attributes="href python:here.pageUrl() + '/backlinks';"
@@ -195,7 +192,7 @@
     </div> 
 
 
-    <!-- hierarchy navigation bar -->
+    <!-- hierarchy navigation bar - off by default -->
     <div metal:define-macro="navpanel" tal:omit-tag="" tal:condition="python:0">
       <div class="navpanel">
         <table class="shade1" width="100%" border="0" cellspacing="0">
@@ -240,6 +237,7 @@
             action="">
         <table width="100%" border="0" cellspacing="0">
           <tr>
+            <!-- logo -->
             <td id="logo" width="1%" valign="top" class="logo_full">
               <span metal:define-macro="logolink" tal:omit-tag="">
                 <a tal:attributes="href here/wiki_url"
@@ -251,6 +249,7 @@
                        tal:replace="structure here/site_logo|default" /></a>
               </span>
             </td>
+            <!-- page name (and parents) -->
             <td class="pagenameand" align="left" width="79%">
               <span metal:define-macro="pagenameand" tal:omit-tag="">
                 <ul tal:replace="structure 
@@ -259,6 +258,7 @@
                 </ul>
               </span>
             </td>
+            <!-- search form & page info -->
             <td class="searchbox" width="20%" align="right">
               <input id="searchinput" class="formfield" 
                      name="expr" type="text" size="20" maxlength="100" value="" 
@@ -273,8 +273,7 @@
       </form>
     </div>
 
-
-    <!-- rating form -->
+    <!-- rating form (should be part of page info) -->
     <div align="right">  
       <span tal:condition="python:user.has_permission('Zwiki: Rate pages',here)" 
             tal:replace="structure here/ratingform">
@@ -283,15 +282,13 @@
     </div>
 
 
-    <!-- page content -->
     <div class="content">
 
+      <!-- page content (main text, subtopics links, comments) -->
       <div tal:replace="structure options/body">
         page body, subtopics, comments
       </div>
-
-      <a name="bottom"></a>
-      <br />
+      <a name="bottom"></a><br />
 
       <!-- comment form -->
       <div tal:condition="python:user.has_permission('Zwiki: Add comments',here)">
@@ -306,7 +303,6 @@
             <input name="page" type="hidden" value="id" 
                    tal:attributes="value here/id" />
             <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="">
-              <!-- subject row -->
               <tr>
                 <td align="left" valign="middle" nowrap="nowrap" colspan="2">
                   <small>
@@ -323,7 +319,6 @@
                   </small>
                 </td>
               </tr>
-              <!-- comment row -->
               <tr>
                 <td align="center" valign="bottom" bgcolor="" colspan="2">
                   <textarea wrap="virtual" name="text" rows="3" cols="60" 
@@ -333,7 +328,6 @@
                   ></textarea>
                 </td>
               </tr>
-              <!-- add row -->
               <tr>
                 <td align="left" valign="middle">
                   &nbsp;
@@ -436,6 +430,7 @@
         </form>
       </div>
     </div>
+
     
   </body>
 </html>
