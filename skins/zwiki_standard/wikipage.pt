@@ -35,6 +35,9 @@
     <link rel="stylesheet" type="text/css" href="" 
           tal:attributes="href string:${here/defaultPageUrl}/stylesheet" />
 
+    <!-- blank pages in IE 6.0
+        script src="aqtree3clickable.js" type="text/javascript" / -->
+
     <title metal:define-slot="title"
            tal:content="string:${container/title} ${here/pageName}" >
       page title
@@ -42,7 +45,7 @@
 
   </head>
 
-  <body>
+  <body style="/*background-image:url(background.jpg);background-repeat:no-repeat;*/">
 
     <div tal:condition="here/site_header|nothing" tal:replace="site_header" />
 
@@ -50,20 +53,17 @@
     <!--  access keys and main links bar -->
     <div metal:define-macro="linkpanel" tal:omit-tag=""
          tal:define="
-                     pageurl       here/pageUrl;
                      displaymode   python: here.displayMode();
                      minimalmode   python: displaymode=='minimal';
                      simplemode    python: displaymode=='simple';
                      fullmode      python: displaymode=='full'
-                     # define here to make these available to macro callers;
+                     # had to define these again here for macro callers;
                      ">
 
       <!-- always-available quick access keys -->
-      <div metal:define-macro="accesskeys" class="hiddenStructure"
-           tal:define="pageurl here/pageUrl;"
-           >
-        <a tal:attributes="href string:${pageurl}/src" accesskey="q"></a>
-        <a tal:condition="nothing" tal:attributes="href string:${pageurl}/clearCache" accesskey="w"></a>
+      <span metal:define-macro="accesskeys" tal:omit-tag="">
+        <a tal:attributes="href string:${here/pageUrl}/src" accesskey="q"></a>
+        <a tal:condition="nothing" tal:attributes="href string:${here/pageUrl}/clearCache" accesskey="w"></a>
         <a tal:attributes="href here/homeUrl" accesskey="f"></a>
         <a tal:attributes="href here/contentsUrl" accesskey="c"></a>
         <a tal:attributes="href here/changesUrl" accesskey="r"></a>
@@ -73,34 +73,33 @@
         <a tal:attributes="href here/uploadsUrl" accesskey="" tal:condition="python:0 #here/uploadsUrl"></a>
         <a tal:attributes="href here/preferencesUrl" accesskey="o"></a>
         <a tal:attributes="href here/helpUrl" accesskey="h" tal:condition="here/helpUrl"></a>
-        <a tal:attributes="href python:pageurl+'/setskin?skin=plone'" accesskey="+" tal:condition="here/inCMF"></a>
-        <a tal:attributes="href python:pageurl+'/setskin?skin=full'" accesskey="+" tal:condition="not:here/inCMF"></a>
-        <a tal:attributes="href python:pageurl+'/setskin?skin=full'" accesskey="="></a>
-        <a tal:attributes="href python:pageurl+'/setskin?skin=simple'" accesskey="_"></a>
-        <a tal:attributes="href python:pageurl+'/setskin?skin=minimal'" accesskey="-"></a>
-        <a tal:attributes="href pageurl" accesskey="v"></a>
-        <a tal:attributes="href string:${pageurl}/subscribeform" accesskey="m"></a>
-        <a tal:attributes="href string:${pageurl}/backlinks" accesskey="b"></a>
-        <a tal:attributes="href string:${pageurl}/diff" accesskey="d"></a>
-        <a tal:attributes="href string:${pageurl}/manage_change_history_page" accesskey="y"></a>
-        <a tal:attributes="href string:${pageurl}/editform" accesskey="e"></a>
+        <a tal:attributes="href python:here.pageUrl()+'/setskin?skin=plone'" accesskey="+" tal:condition="here/inCMF"></a>
+        <a tal:attributes="href python:here.pageUrl()+'/setskin?skin=full'" accesskey="+" tal:condition="not:here/inCMF"></a>
+        <a tal:attributes="href python:here.pageUrl()+'/setskin?skin=full'" accesskey="="></a>
+        <a tal:attributes="href python:here.pageUrl()+'/setskin?skin=simple'" accesskey="_"></a>
+        <a tal:attributes="href python:here.pageUrl()+'/setskin?skin=minimal'" accesskey="-"></a>
+        <a tal:attributes="href here/pageUrl" accesskey="v"></a>
+        <a tal:attributes="href string:${here/pageUrl}/subscribeform" accesskey="m"></a>
+        <a tal:attributes="href string:${here/pageUrl}/backlinks" accesskey="b"></a>
+        <a tal:attributes="href string:${here/pageUrl}/diff" accesskey="d"></a>
+        <a tal:attributes="href string:${here/pageUrl}/manage_change_history_page" accesskey="y"></a>
+        <a tal:attributes="href string:${here/pageUrl}/editform" accesskey="e"></a>
         <a tal:attributes="href python:here.wikiUrl() + '/externalEdit_/' +
                            modules['Products.PythonScripts.standard'].url_quote(here.id()) +
                            '?borrow_lock=1'" accesskey="x"></a>
-        <a tal:condition="nothing" tal:attributes="href string:${pageurl}/print" accesskey=""></a>
+        <a tal:condition="nothing" tal:attributes="href string:${here/pageUrl}/print" accesskey=""></a>
         <a tal:attributes="href string:#subtopics" accesskey=""></a>
         <a tal:attributes="href python:here.nextPageUrl() or here.firstPageUrl()" accesskey="n"></a>
         <a tal:attributes="href python:here.previousPageUrl() or here.lastPageUrl()" accesskey="p"></a>
         <a tal:attributes="href here/upUrl" accesskey="u"></a>
-        <a tal:attributes="href string:${pageurl}/showAccessKeys" accesskey="0"></a>
-      </div>
+        <a tal:attributes="href string:${here/pageUrl}/showAccessKeys" accesskey="0"></a>
+      </span>
 
       <!-- main links bar -->
       <div tal:condition="not: minimalmode" class="linkpanel">
-        <table class="shade1" width="100%" border="0" cellspacing="0"
-               tal:attributes="class python: not minimalmode and 'shade1' or nothing">
+        <table class="shade1" width="100%" border="0" cellspacing="0">
           <tr>
-            <td class="wikilinks" align="left">
+            <td class="otherlinks" align="right">
 
               <!-- wiki navigation links -->
               <span metal:define-macro="wikilinks" tal:omit-tag="">
@@ -109,11 +108,6 @@
                    title="show front page"
                    i18n:attributes="title">
                 <span i18n:translate="">home</span></a>
-                <a href="" tal:attributes="href here/contentsUrl" 
-                   accesskey="c"
-                   title="show wiki contents"
-                   i18n:attributes="title">
-                <span i18n:translate="">contents</span></a>
                 <a href="" tal:attributes="href here/changesUrl" 
                    accesskey="r"
                    title="show wiki recent changes"
@@ -129,6 +123,11 @@
                    title="show issue tracker"
                    i18n:attributes="title">
                 <span i18n:translate="">issues</span></a>
+                <a href="" tal:attributes="href here/contentsUrl" 
+                   accesskey="c"
+                   title="show wiki contents"
+                   i18n:attributes="title">
+                <span i18n:translate="">contents</span></a>
                 <a tal:attributes="href here/indexUrl" accesskey="i" 
                    tal:condition="here/indexUrl"
                    title="show wiki index"
@@ -150,50 +149,42 @@
                    title="show help page"
                    i18n:attributes="title">
                 <span i18n:translate="">help</span></a>
-                &nbsp;&nbsp;
               </span>
-
-            </td>
-            <td class="otherlinks" align="right">
-
+              -
               <!-- display mode links -->
-              <span metal:define-macro="displaymodes"
-                    tal:define="pageurl here/pageUrl;"
-                    >
+              <span metal:define-macro="displaymodes" tal:condition="nothing">
                 <span tal:condition="here/inCMF">
                 <a accesskey="+" href="" 
                    title="show plone skin" i18n:attributes="title"
-                   tal:attributes="href python:pageurl+'/setskin';"
+                   tal:attributes="href python:here.pageUrl()+'/setskin';"
                   ><span i18n:translate="">plone</span></a
                 >/</span><a accesskey="=" href="" 
                    title="show all features" i18n:attributes="title"
                    tal:attributes="
-                     href python:pageurl+'/setskin?skin=full';
+                     href python:here.pageUrl()+'/setskin?skin=full';
                      style python:(fullmode and 'font-weight:bold') or nothing;
                      "
                   ><span i18n:translate="">full</span></a
                 >/<a accesskey="_" href=""
                    title="show basic features" i18n:attributes="title"
                    tal:attributes="
-                     href python:pageurl+'/setskin?skin=simple';
+                     href python:here.pageUrl()+'/setskin?skin=simple';
                      style python:(simplemode and 'font-weight:bold') or nothing;
                      "
                   ><span i18n:translate="">simple</span></a
                 >/<a accesskey="-" href="" 
                    title="show only essential features" i18n:attributes="title"
                    tal:attributes="
-                     href python:pageurl+'/setskin?skin=minimal';
+                     href python:here.pageUrl()+'/setskin?skin=minimal';
                      style python:(minimalmode and 'font-weight:bold') or nothing;
                      "
                   ><span i18n:translate="">minimal</span></a>
               </span> 
 
               <!-- page action links -->
-              <span metal:define-macro="pagelinks"
-                    tal:define="pageurl here/pageUrl;"
-                    >
+              <span metal:define-macro="pagelinks">
                 <a tal:condition="python:here.isMailoutEnabled()"
-                   tal:attributes="href python:pageurl + '/subscribeform'"
+                   tal:attributes="href python:here.page_url() + '/subscribeform'"
                    href="page_url/subscribeform" 
                    accesskey="m"
                    title="configure email subscription to this page or site" 
@@ -203,15 +194,15 @@
                               #here.allSubscriptionsFor(request.get('email',''))
                               #show subscription status - too expensive " >(un)</span >
                   <span i18n:translate="">subscribe</span></a>
-                <a tal:condition="python:0 #user.has_permission('Zwiki: Edit pages',here)"
-                   tal:attributes="href python:pageurl + '/backlinks';"
+                <a tal:condition="python:1"
+                   tal:attributes="href python:here.pageUrl() + '/backlinks';"
                    href="" 
                    title="which pages link to this one ?" 
                    i18n:attributes="title"
                    accesskey="b"
                    ><span i18n:translate="">backlinks</span></a>
                 <a tal:condition="python:0 #user.has_permission('Zwiki: Edit pages',here)"
-                   tal:attributes="href python:pageurl + '/diff';"
+                   tal:attributes="href python:here.pageUrl() + '/diff';"
                    href="" 
                    title="show this page's change history" 
                    i18n:attributes="title"
@@ -219,7 +210,7 @@
                    ><span i18n:translate="">diff</span></a>
                 <a tal:condition="python:user.has_permission('Zwiki: Edit pages',here)"
                    tal:attributes="
-                    href python:pageurl + '/editform';
+                    href python:here.page_url() + '/editform';
                     title python: here.translateHelper('edit-page') + ' (' + here.linkTitle() + ')'"
                    href="page_url/editform" 
                    title="edit this page (last edited n days ago by so-and-so)"
@@ -250,8 +241,8 @@
 
 
     <!-- hierarchy navigation bar -->
-    <div metal:define-macro="navpanel" tal:omit-tag="">
-      <div class="navpanel" tal:condition="fullmode">
+    <div metal:define-macro="navpanel" tal:omit-tag="" tal:condition="python:0">
+      <div class="navpanel">
         <table class="shade1" width="100%" border="0" cellspacing="0">
           <tr valign="top">
             <td align="left" width="33%">
@@ -280,7 +271,7 @@
     </div>
 
 
-    <!-- page heading, full/simple and minimal versions -->
+    <!-- page heading -->
     <div class="pageheading">
       <form method="GET" 
             tal:define="
@@ -296,17 +287,11 @@
                         "
             tal:attributes="action python:here.wiki_url()+'/'+url;"
             action="">
-
-        <!-- page heading in full & simple mode -->
         <table tal:condition="not: minimalmode" width="100%" border="0" cellspacing="0">
           <tr>
-            <td id="logo" width="1%" valign="top"
-                tal:attributes="class python: fullmode and 'logo_full' or 'logo_simple'">
+            <td id="logo" width="1%" valign="top" class="logo_full">
               <span metal:define-macro="logolink" tal:omit-tag="">
-                <!-- logo -->
-                <a tal:condition="python:request.get('zwiki_showlogo',1)"
-                   tal:attributes="href here/wiki_url"
-                   href="wiki_url" 
+                <a tal:attributes="href here/wiki_url"
                    title="go to home page" 
                    i18n:attributes="title"
                    accesskey="f">
@@ -323,12 +308,10 @@
                 </ul>
               </span>
             </td>
-            <td class="searchbox" width="20%" align="right"
-                tal:define="showsearch python:request.get('zwiki_showsearch',1)">
-              <input id="searchinput" class="formfield" tal:condition="showsearch"
+            <td class="searchbox" width="20%" align="right">
+              <input id="searchinput" class="formfield" 
                      name="expr" type="text" size="20" maxlength="100" value="" 
-                     title="search all pages" accesskey="s" i18n:attributes="title" /><br 
-                     tal:condition="showsearch" />
+                     title="search all pages" accesskey="s" i18n:attributes="title" /><br />
               <span class="lasteditor" 
                     tal:content="structure python:here.linkTitle(prettyprint=1)">
                 last edited n days ago by by so-and-so
@@ -336,43 +319,6 @@
             </td>
           </tr>
         </table>
-
-        <!-- page heading in minimal mode -->
-        <table tal:condition="minimalmode" width="100%" border="0" cellspacing="0">
-          <tr>
-            <td class="logo_minimal" width="1%" valign="middle">
-              <span metal:use-macro="template/macros/logolink" />
-            </td>
-            <td class="pagenameonly" align="left" width="79%">
-              <span metal:define-macro="pagenameonly">
-                <a tal:attributes="
-                                   href python:here.page_url() + '/backlinks';
-                                   title python:'show backlinks for this page ('+here.linkTitle()+')'"
-                   tal:content="here/formattedPageName"
-                   href="page_url/backlinks" 
-                   title="show backlinks for this page (last edited n days ago by so-and-so)" 
-                   accesskey="b"
-                   >page name</a>
-              </span>
-            </td>
-            <td class="searchbox" width="20%" align="right" nowrap=""
-                tal:define="showsearch python:request.get('zwiki_showsearch',1)">
-              <span metal:use-macro="template/macros/displaymodes" />
-              <span metal:use-macro="template/macros/pagelinks" />
-              <br />
-              <input id="searchinput" class="formfield" tal:condition="showsearch"
-                     name="expr" type="text" size="20" maxlength="100" value="" 
-                     title="search all pages" accesskey="s" style="width: 95%" /><br 
-                     tal:condition="showsearch" />
-              <span class="lasteditor" 
-                    tal:content="structure python:here.linkTitle(prettyprint=1)+' '" />
-              <!-- XXX hacks: 
-                   width 95% keeps moz from chopping off right end 
-                   with 1px borders; trailing space to prevent text chop -->
-            </td>
-          </tr>
-        </table>
-        
       </form>
     </div>
 
@@ -473,7 +419,6 @@
 
     <!-- page management form -->
     <div tal:condition="python:
-           fullmode and
            (user.has_permission('Zwiki: Add pages',here) or
            user.has_permission('Zwiki: Rename pages',here) or
            user.has_permission('Zwiki: Reparent pages',here) or
@@ -493,13 +438,13 @@
                 <!-- help text -->
                 <span i18n:translate="">new</span> 
                 <span i18n:translate=""
-                      tal:condition="python:user.has_permission('Zwiki: Reparent pages',here)" 
+                      tal:condition="python:user.has_permission('Zwiki: Reparent pages',here) and here.userIsIdentified()" 
                       >parent, </span>
                 <span i18n:translate=""
-                      tal:condition="python:user.has_permission('Zwiki: Rename pages',here)" 
+                      tal:condition="python:user.has_permission('Zwiki: Rename pages',here) and here.userIsIdentified()" 
                       >name, </span>
                 <span i18n:translate=""
-                      tal:condition="python:user.has_permission('Zwiki: Delete pages',here)" 
+                      tal:condition="python:user.has_permission('Zwiki: Delete pages',here) and here.userIsIdentified()" 
                       >replacement, </span>
                 <span i18n:translate=""
                       tal:condition="python:user.has_permission('Zwiki: Add pages',container)"
@@ -518,17 +463,17 @@
                         style="font-weight:normal;"
                         title="make this page a subtopic of the page you have entered"
                         i18n:attributes="value title"
-                        tal:condition="python:user.has_permission('Zwiki: Reparent pages',here)" 
+                        tal:condition="python:user.has_permission('Zwiki: Reparent pages',here) and here.userIsIdentified()" 
                 /><input type="submit" name="rename:method" value="rename" 
                          style="font-weight:normal" 
                          title="rename this page to the name you have entered, updating all links"
                          i18n:attributes="value title"
-                         tal:condition="python:user.has_permission('Zwiki: Rename pages',here)" 
+                         tal:condition="python:user.has_permission('Zwiki: Rename pages',here) and here.userIsIdentified()" 
                 /><input type="submit" name="delete:method" value="delete!" 
                          style="font-weight:normal"
                          title="delete this page, and redirect links to the page you have entered, if any"
                          i18n:attributes="value title"
-                         tal:condition="python:user.has_permission('Zwiki: Delete pages',here)" 
+                         tal:condition="python:user.has_permission('Zwiki: Delete pages',here) and here.userIsIdentified()" 
                 /><input type="submit" name="createform:method" value="create" 
                          style="font-weight:normal"
                          title="create a page with the name you have entered, as a subtopic of this one"
