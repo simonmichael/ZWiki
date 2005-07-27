@@ -97,7 +97,7 @@ class ZWikiPage(
     AdminSupport,
     Utils,
     RSSMixin,
-    PLUGINS[0],     # runtime mixins hack, see plugins
+    PLUGINS[0],     # runtime mixins hack, see plugins/
     PLUGINS[1],
     PLUGINS[2],
     PLUGINS[3],

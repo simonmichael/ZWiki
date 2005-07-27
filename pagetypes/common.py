@@ -21,7 +21,7 @@ def no(self): return 0
 
 class AbstractPageType:
     """
-    I encapsulate behaviour which is specific to different zwiki page types.
+    I encapsulate wiki page behaviour which varies according to page type.
 
     I'm an abstract class providing a number of methods which are
     page-type-specific, with default implementations. Override me and

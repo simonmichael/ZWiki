@@ -178,7 +178,6 @@ htmlbodyexpr = r'(?si)^.*?<body[^>]*?>(.*)</body[^>]*?>.*?$'
 
 # sgml tags, including those containing dtml/python and multi-line
 # XXX needs more work, does not match all tags
-#
 # one badass regexp
 #
 #r'(?s)<((".*?")|[^">]+)*>'          # takes exponential time
