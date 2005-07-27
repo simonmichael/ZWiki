@@ -37,7 +37,9 @@
     </title>
   </head>
 
-  <body style="/*background-image:url(background.jpg);background-repeat:no-repeat;*/">
+  <body tal:attributes="style python:hasattr(here,'background.jpg') and 
+        'background-image:url(background.jpg);;background-repeat:no-repeat;;'
+        or nothing;">
 
     <!--  optional extra site heading -->
     <div tal:condition="here/site_header|nothing" tal:replace="site_header" />
