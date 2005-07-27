@@ -397,7 +397,7 @@ class GeneralForms:
         alias("editlinks","pagelinks")
         alias("logolink","logolink")
         alias("pagenameand","pagenameand")
-        alias("pagename","pagenameonly")
+        alias("pagename","pagenameand")
         alias("commentform","commentform")
         alias("pagemanagement","pagemanagementform")
         return template
