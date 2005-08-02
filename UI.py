@@ -309,7 +309,7 @@ class UIUtils:
         # does the named skin exist ?
         def hasSkin(s): return portal_skins.getSkinPath(s) != s
         if not hasSkin(skin): return
-        # is the user logged in ? 
+        # is the user logged in ? if not, return harmlessly
         member = portal_membership.getAuthenticatedMember()
         if not hasattr(member,'setProperties'): return
         # change their skin preference and reload page
@@ -318,29 +318,39 @@ class UIUtils:
         portal_skins.updateSkinCookie()
         REQUEST.RESPONSE.redirect(REQUEST.get('URL1'))
 
-    security.declareProtected(Permissions.View, 'setSkin')
+    security.declareProtected(Permissions.View, 'setskin')
     def setskin(self,REQUEST,skin=None):
         """
-        Change the user's skin, or skin display mode.
+        Change the user's cmf/plone skin or standard skin display mode.
 
-        skin can be either a display mode of Zwiki's standard skin - full,
-        simple, minimal - or the name of a CMF/Plone skin, or just plone.
-        (standard skin modes can work in cmf/plone, if there is a skin
-        named "Zwiki" with the "zwiki_standard" layer above "zwiki_plone".)
+        This can be used to select a different CMF/Plone skin - primarily
+        used for switching to the standard zwiki skin inside a plone site.
+        To enable this you need to copy the default skin in portal_skins,
+        name it "Zwiki", and add the "zwiki_standard" layer at the top, above
+        "zwiki_plone". Cf http://zwiki.org/HowToUseTheStandardSkinInPlone .
 
-        Calling this with no arguments will select the standard skin's
-        simple mode, or the Plone Default skin if you are in CMF.
+        It can also change the full/simple/minimal display mode of the
+        standard skin, like setSkinMode. This was perhaps a mistake and it
+        remains here only for backwards compatibility, to support
+        customized skins with the old full/simple/minimal links.
+
+        skin can be any of: full, simple, minimal, Zwiki, standard, the
+        name of a CMF/Plone skin, plone, cmf, or None (the last three are
+        an alias for "Plone Default", standard is an alias for "Zwiki").
+
+        I might have impaired this a bit in the post-0.43 cleanup.
         """
-        # convenient defaults:
-        if not skin or skin in ['plone','cmf']:
-            if self.inCMF(): skin = 'Plone Default'
-            else: skin = 'simple'
         RESPONSE = REQUEST.RESPONSE
         if skin in ['full','simple','minimal']:
             self.setSkinMode(REQUEST,skin)
-            self.setCMFSkin(REQUEST,'Zwiki')
-        else:
-            self.setCMFSkin(REQUEST,skin)
+            skin = 'Zwiki'
+        if not self.inCMF(): return
+        if skin == 'standard':
+            skin = 'Zwiki'
+        if not skin or skin in ['plone','cmf']:
+            skin = 'Plone Default'
+        self.setCMFSkin(REQUEST,skin)
+
 
 InitializeClass(UIUtils)
 
