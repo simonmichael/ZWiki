@@ -37,7 +37,7 @@
     </title>
   </head>
 
-  <body tal:attributes="style python:hasattr(here,'background.jpg') and 
+  <body tal:attributes="style python:nothing #hasattr(here,'background.jpg') and 
         'background-image:url(background.jpg);;background-repeat:no-repeat;;'
         or nothing;">
 
