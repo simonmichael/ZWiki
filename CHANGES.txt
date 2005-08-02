@@ -1,3 +1,43 @@
+    Summary
+
+	Drop full/simple/minimal and simplify the standard skin, more
+	robust wiki contents.
+
+    Upgrade notes
+
+	Customized skins which use the old wikipage_macros template will
+	stop working with this release, as discussed in the 0.42 upgrade 
+	notes. If this affects you, you'll need to make the changes 
+	described there now.
+	
+    Changes
+
+      Page hierarchy
+
+        * clarify updateWikiOutline and call it on every page view to
+	avoid out of date contents and hopefully avoid the need to call it
+	manually
+	
+      General - i18n
+
+      General - skins
+
+	* drop full/simple/minimal modes from the standard skin. 
+	  (cf http://zwiki.org/UserDiscussion#msg20050726150738-0700@zwiki.org)
+
+	* drop backwards compatibility support for pre-0.42 wikipage_macros
+
+	* drop the background colour in top and bottom bars
+
+	* wikipage template cleanups
+
+        * rewrote and redocumented setskin, fixed permission declaration
+	  not sure I accomplished much.
+
+	* (commented out) if a "background.jpg" object is present, use it as 
+	  the body background image (for the main page view only)
+
+
 Zwiki 0.43.0 2005/07/01
 
     Summary
