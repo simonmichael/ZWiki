@@ -268,8 +268,11 @@ class AdminSupport:
 
         self.upgradeComments(REQUEST)
                 
-        # finally, MailSupport does a bit more (merge here ?)
+        # MailSupport does a bit more (merge here ?)
         self._upgradeSubscribers()
+
+        # also make sure there is an up-to-date outline cache
+        self.wikiOutline()
 
     security.declareProtected('Manage properties', 'setupPages')
     def setupPages(self,REQUEST=None):

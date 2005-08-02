@@ -197,6 +197,30 @@ class OutlineManagerMixin:
 
     # mutators
 
+    def wikiOutline(self):
+        """
+        Get the outline cache which holds details of the wiki's page hierarchy.
+
+        We'll generate it if needed, ie if it's missing or if it's one of
+        the older types which get lost during a folder rename or when
+        moving pages to a new folder.
+
+        There have been three types of outline cache: folder attribute,
+        non-SimpleItem-based PersistentOutline object, and
+        SimpleItem-based PersistentOutline object.  The first should get
+        regenerated; the second should automatically become
+        SimpleItem-enabled, no action needed there I think. We'll see.
+
+        This is called by any method which requires the outline cache, and
+        also by upgrade() on each page view, to ensure that renaming or
+        moving an old wiki just works without requiring the user to
+        manually updateWikiOutline.
+        """
+        if (not hasattr(self.folder().aq_base,'outline')
+            or not self.folder().outline):
+            self.updateWikiOutline()
+        return self.folder().outline
+
     security.declareProtected(Permissions.View, 'updateWikiOutline')
     def updateWikiOutline(self):
         """
@@ -234,7 +258,7 @@ class OutlineManagerMixin:
         # update the childmap (without losing subtopics order) and nesting
         self.folder().outline.update()
 
-    # easier alias ?
+    # easier-to-type alias ? XXX remove soon
     updatecontents = updateWikiOutline
         
     security.declareProtected(Permissions.Reparent, 'reparent')
@@ -293,17 +317,6 @@ class OutlineManagerMixin:
         if REQUEST is not None: REQUEST.RESPONSE.redirect(REQUEST['URL1']+'/backlinks')
 
     # queries
-
-    def wikiOutline(self):
-        """
-        Get the outline object representing the wiki's page hierarchy.
-
-        We'll generate it if needed.
-        """
-        if (not hasattr(self.folder().aq_base,'outline')
-            or not self.folder().outline):
-            self.updateWikiOutline()
-        return self.folder().outline
 
     def primaryParentName(self):
         """
