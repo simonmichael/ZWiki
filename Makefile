@@ -9,8 +9,8 @@
 # update CHANGES.txt from darcs changes (XXX automate brief changes listing)
 # update version.txt
 # make Release
-# update FrontPage,KnownIssues,OldKnownIssues,ReleaseNotes,UserDiscussion,#zwiki
-# final: mail to zwiki@zwiki.org, zope(-announce)@zope.org
+# update KnownIssues,OldKnownIssues,#zwiki
+# mail announcement to zwiki@zwiki.org, zope-announce@zope.org
 
 PRODUCT=ZWiki
 HOST=zwiki.org
