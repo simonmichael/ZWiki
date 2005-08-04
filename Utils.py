@@ -261,7 +261,7 @@ class Utils:
         """
         Check REQUEST has either a non-anonymous user or a username cookie.
         """
-        REQUEST = REQUEST or self.REQUEST
+        REQUEST = REQUEST or getattr(self,'REQUEST',None)
         username = self.usernameFrom(REQUEST)
         return (username and username != REQUEST.REMOTE_ADDR)
 
