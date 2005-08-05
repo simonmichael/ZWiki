@@ -325,12 +325,15 @@ class Utils:
     security.declareProtected(Permissions.View, 'contentsUrl')
     def contentsUrl(self):
         """
-        Return the url of the SiteMap page or wiki contents method.
+        Return the url of zwiki's contents method.
         
         We used to put the current page name as a target and scroll there,
         but in a large public wiki that generates a lot of unique
         expensive urls for robots. I'm assuming robots are too dumb
         not to crawl both url#target1 and url#target2.
+
+        Pre 0.45 we allowed a wiki page named SiteMap to override Zwiki's
+        contents view, now we don't bother.
 
         Perhaps the contents method could check HTTP_REFERER and do a
         redirect, only if you are a human with a cookie ? brrr, confusing..
@@ -340,14 +343,9 @@ class Utils:
         """
         if SHOW_CURRENT_PAGE_IN_CONTENTS:
             quotedname = quote(self.pageName())
-            if self.pageWithId('SiteMap'): 
-                return '%s/SiteMap?here=%s#%s' \
-                % (self.wiki_url(),quotedname,quotedname)
-            else: 
-                return '%s/contents#%s' % (self.page_url(),quotedname)
+            return '%s/contents#%s' % (self.page_url(),quotedname)
         else:
-            if self.pageWithId('SiteMap'): return self.wikiUrl() + '/SiteMap'
-            else: return self.defaultPageUrl() + '/contents'
+            return self.defaultPageUrl() + '/contents'
 
     security.declareProtected(Permissions.View, 'changesUrl')
     def changesUrl(self):
