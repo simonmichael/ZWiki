@@ -556,6 +556,7 @@ class ZWikiPage(
         - from re.sub via thunk substituter (state will be a dictionary) (old)
         """
         # preliminaries
+        if not link: return ''
         if type(link) == StringType:
             text = self.preRendered()
         elif state == None:
