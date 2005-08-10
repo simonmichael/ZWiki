@@ -121,6 +121,7 @@ class ZWikiPage(
     wiki-building, email, issue tracking, etc.  Mixins are used to
     organize functionality into modules.
     """
+    __implements__ = CMFAwareness.__implements__
     security = ClassSecurityInfo()
     security.declareObjectProtected('View')
     security.declareProtected(Permissions.Edit, 'revert')

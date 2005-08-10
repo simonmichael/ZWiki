@@ -39,6 +39,8 @@ try:
         We use our own similar attributes..
         XXX maybe we can always use dublin core and simplify.
         """
+        __implements__ = DefaultDublinCoreImpl.__implements__ 
+
         security = ClassSecurityInfo()
         security.declarePrivate('setModificationDate')
         def setModificationDate(self, modification_date=None):
@@ -81,6 +83,9 @@ try:
         """
         Mix-in class for CMF support
         """
+        __implements__ = ZwikiDublinCoreImpl.__implements__ + \
+                         PortalContent.__implements__
+   
         portal_type = PAGE_PORTALTYPE
         # provide this so DublinCore.Format works with old instances
         format = 'text/html'
@@ -121,11 +126,10 @@ try:
         def SearchableText(self):
             return self.text()
 
-        security.declareProtected(Permissions.View, 'Subject')
-        def Subject(self):
-            #creates too many keywords (#1059)
-            #return self.spacedPageName()
-            return ''
+        # Disabled so we can set the subject from Plone's Metadata view
+        #security.declareProtected(Permissions.View, 'Subject')
+        #def Subject(self):
+        #    return self.spacedPageName()
 
         security.declareProtected(Permissions.View, 'Description')
         def Description(self):

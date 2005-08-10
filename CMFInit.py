@@ -136,6 +136,12 @@ factory_type_information = (
                   'category': 'object_actions',
                   'visible': 0,
                   },
+                  {'id': 'metadata',
+                   'name': 'Metadata',
+                   'action': 'string:${object_url}/metadata_edit_form',
+                   'permissions': (Permissions.Edit,),
+                   'category': 'object',
+                  },
                  ),
      },
     )
