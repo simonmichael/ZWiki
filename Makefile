@@ -246,6 +246,7 @@ tags:
 	  -o -name contrib -prune -type f \
 	  -o -name misc    -prune -type f \
 	  -o -name old     -prune -type f \
+	  -o -name .doxygen -prune -type f \
 	  | xargs etags
 
 getzope:
