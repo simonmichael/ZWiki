@@ -881,6 +881,15 @@ class EditingSupport:
             self.last_editor = ''
         self.last_edit_time = DateTime(time.time()).ISO()
 
+    def hasCreatorInfo(self):
+        """
+        True if this page already has creator attributes.
+        """
+        return (hasattr(self,'creator') and
+                hasattr(self,'creation_time') and
+                hasattr(self,'creator_ip'))
+                
+
     def setCreator(self, REQUEST=None):
         """
         record my creator, creator_ip & creation_time

@@ -138,13 +138,19 @@ def initialize(context):
 # set up catalog awareness for ZMI operations, do it here to avoid import loop
 # XXX warning, manage_renameObject will lose parentage in the wiki outline
 def manage_afterAdd(self, item, container):
-    self.setCreator(getattr(self,'REQUEST',None)) # save creation info
+    # record the creator and creation time if this is 
+    # a new page, but not if renaming, importing, etc.
+    if not self.hasCreatorInfo():
+        self.setCreator(getattr(self,'REQUEST',None)) 
     self.wikiOutline().add(self.pageName()) # update the wiki outline
     self.index_object()
 ZWikiPage.ZWikiPage.manage_afterAdd = manage_afterAdd
 
 def manage_afterClone(self, item):
-    self.setCreator(getattr(self,'REQUEST',None)) # save creation info
+    # record the creator and creation time if this is 
+    # a new page, but not if renaming, importing, etc.
+    if not self.hasCreatorInfo():
+        self.setCreator(getattr(self,'REQUEST',None))
     self.wikiOutline().add(self.pageName()) # update the wiki outline
     self.index_object()
 ZWikiPage.ZWikiPage.manage_afterClone = manage_afterClone
