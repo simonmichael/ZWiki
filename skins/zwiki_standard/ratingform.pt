@@ -24,7 +24,6 @@
         "
       tal:attributes="
         action string:${here/pageUrl}/vote;
-        class here/ratingStyle;
         "
       >
   <input tal:condition="python:0 #leaves whitespace between; use css/table ?"
