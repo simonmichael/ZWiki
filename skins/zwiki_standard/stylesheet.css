@@ -8,21 +8,31 @@
 .shade1                  {color:gray;}
 .shade1 a:link           {color:gray;}
 .shade1 a:visited        {color:#aaaaaa;}
+
 .dimtext                 {font-size: 80%; color: gray;}
+
 .linkpanel td, .linkpanel_minimal td {color: gray;}
+
 .navpanel                {color: gray;}
+
 .searchbox a:link        {color: gray;}
 .searchbox a:visited     {color: #aaaaaa;}
+
 .lasteditor              {color:gray;}
+
 /* can't get these to combine with dimtext for some reason */
 .highrated               {font-size: 80%; color: green} 
 .neutralrated            {font-size: 80%; color: gray}
 .lowrated                {font-size: 80%; color: red}
+
 .subtopicspanel          {color: gray; /*background: #dddddd;*/ }
+
 .commentsheading         {color:gray; font-weight:bold;}
 .commentform             {color:gray;}
+
 .subscribed              {} /* for subscribeform */
 .notsubscribed           {}
+
 /* background shade of form fields 
  * input,textarea,select {} would be cleaner but changes buttons too
  * (except file upload buttons)
