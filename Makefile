@@ -27,7 +27,7 @@ epydoc:
 	PYTHONPATH=/zope/lib/python \
 	 epydoc --docformat restructuredtext \
 	        --output /var/www/zopewiki.org/epydoc  \
-	        /zope/lib/python/Products/* /zope1/Products/*
+	        /zope/lib/python/Products/* /zope2/Products/*
 
 epydoc2:
 	PYTHONPATH=. \
@@ -115,25 +115,25 @@ testresults:
 
 # all tests, gui
 gtest:
-	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope1 \
+	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope2 \
 	  python /zope/test.py -m --libdir .
 
 # a single test module in one of the tests directories
 testpl%:
-	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope1 \
+	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope2 \
 	  python plugins/tests/test$*.py
 
 testpt%:
-	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope1 \
+	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope2 \
 	  python pagetypes/tests/test$*.py
 
 test%:
-	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope1 \
+	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope2 \
 	  python tests/test$*.py
 
 # test with argument(s)
 #test%:
-#	export PYTHONPATH=/zope/lib/python:/zope1; \
+#	export PYTHONPATH=/zope/lib/python:/zope2; \
 #	  python test.py -v --libdir $$PWD/tests $*
 
 #XXX currently broken
@@ -233,31 +233,28 @@ tags:
 	  -o -name .doxygen -prune -type f \
 	  | xargs etags
 
-getzope:
-	cd /zope; svn update
-
 zopetags:
 	cd /zope/lib/python; \
 	  ~/bin/eptags.py `find $$PWD/ -name '*.py' -o  -name '*.dtml' -o -name '*.pt' \
 	     -o -name old     -prune -type f `
 
 getproducts:
-	cd /zope1/Products; \
-	  rsync -rl --progress --exclude="*.pyc" zwiki.org:/zope1/Products . 
+	cd /zope2/Products; \
+	  rsync -rl --progress --exclude="*.pyc" zwiki.org:/zope2/Products . 
 
 producttags:
-	cd /zope1/Products; \
+	cd /zope2/Products; \
 	  ~/bin/eptags.py `find $$PWD/ -name '*.py' -o  -name '*.dtml' -o -name '*.pt' \
 	     -o -name old -o -name .old    -prune -type f ` 
 
 plonetags:
-	cd /zope1/Products/CMFPlone; \
+	cd /zope2/Products/CMFPlone; \
 	  ~/bin/eptags.py \
 	  `find $$PWD/ -name '*.py' -o -name '*.dtml' -o -name '*.pt' \
 	     -o -name old     -prune -type f `
 
 alltags: tags producttags zopetags
-	cat TAGS /zope1/Products/TAGS /zope/lib/python/TAGS >TAGS.all
+	cat TAGS /zope2/Products/TAGS /zope/lib/python/TAGS >TAGS.all
 
 clean:
 	rm -f .*~ *~ *.tgz *.bak `find . -name "*.pyc"`
