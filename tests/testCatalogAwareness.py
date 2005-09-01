@@ -12,7 +12,7 @@ class CatalogingTests(unittest.TestCase):
     #
     # these assume a default catalog is present and being used
     # beware of existing catalog data screwing things up, maybe
-    # we can create our own (& set SITE_CATALOG) in zc
+    # we can create our own in zc
 
     def setUp(self):
         pass

@@ -32,26 +32,17 @@ class CatalogAwareness:
         """
         Return the catalog object used by this page, if any.
 
-        By default, Zwiki looks for an object named 'Catalog' in this wiki
-        folder[1] (will not acquire) or a 'portal_catalog' (can acquire).
-
-        If a SITE_CATALOG property exists (can acquire), Zwiki will look
-        for an object by that name (can acquire); if no such object
-        exists, or SITE_CATALOG is blank, no catalog will be used.
-
-        [1].. We'll poke the Catalog object a bit to make sure it is
-        really is some kind of catalog.
+        By default, Zwiki looks for a catalog named 'Catalog' in this
+        folder (will not acquire) or a 'portal_catalog' in this folder
+        or above (will acquire).
         """
         folder = self.folder()
         folderaqbase = getattr(folder,'aq_base',
                                folder) # make tests work
-        if not hasattr(self,'SITE_CATALOG'):
-            if hasattr(folderaqbase,'Catalog') and hasattr(folderaqbase.Catalog,'indexes'):
-                return folder.Catalog
-            else:
-                return getattr(folder,'portal_catalog',None)
+        if hasattr(folderaqbase,'Catalog') and hasattr(folderaqbase.Catalog,'indexes'):
+            return folder.Catalog
         else:
-            return getattr(folder,self.SITE_CATALOG,None)
+            return getattr(folder,'portal_catalog',None)
 
     security.declareProtected(Permissions.View, 'hasCatalog')
     def hasCatalog(self):

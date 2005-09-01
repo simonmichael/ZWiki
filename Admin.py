@@ -408,11 +408,7 @@ class AdminSupport:
         #XXX during unit testing, somehow a non-None catalog is false
         #if not self.catalog():
         if self.catalogId() == 'NONE':
-            # should we still support SITE_CATALOG ? for now, if it exists
-            # give the new catalog that name so we will find it
-            folder = self.folder()
-            id = getattr(folder,'SITE_CATALOG','Catalog')
-            folder.manage_addProduct['ZCatalog'].manage_addZCatalog(id,'')
+            self.folder().manage_addProduct['ZCatalog'].manage_addZCatalog('Catalog','')
         catalog = self.catalog()
         catalogindexes, catalogmetadata = catalog.indexes(), catalog.schema()
         PluginIndexes = catalog.manage_addProduct['PluginIndexes']
