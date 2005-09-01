@@ -24,7 +24,7 @@ registerPageType. Quick start:
 
 """
 
-from Products.ZWiki.Utils import BLATHER
+from Products.ZWiki.Utils import BLATHER, formattedTraceback
 
 # global page type registry
 #XXX print "__init__.py: setting PAGETYPES to []"
@@ -129,7 +129,11 @@ for mod in firstmods:
         pass
 for file in modules:
     file = os.path.splitext(os.path.basename(file))[0]
-    __import__('Products.ZWiki.pagetypes.%s' % file)
+    try:
+        __import__('Products.ZWiki.pagetypes.%s' % file)
+    except:
+        BLATHER('could not install %s page type, skipping it (traceback follows)\n%s' % (
+            file, formattedTraceback()))
 
 # XXX backwards compatibility
 # keep the classes here for a bit to stop warnings

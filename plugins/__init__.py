@@ -19,7 +19,7 @@
 # page types are another kind of "plugin", residing in their own pagetypes
 # package. 
 
-from Products.ZWiki.Utils import BLATHER
+from Products.ZWiki.Utils import BLATHER, formattedTraceback
 
 # a nasty way to subclass a runtime list of classes, since we can't modify
 # __bases__ of an extension class - ZWikiPage.ZWikiPage must subclass each
@@ -66,4 +66,8 @@ modules = glob.glob(__path__[0] + os.sep + '*.py')
 modules.remove(__path__[0] + os.sep + '__init__.py')
 for file in modules:
     file = os.path.splitext(os.path.basename(file))[0]
-    __import__('Products.ZWiki.plugins.%s' % file)
+    try:
+        __import__('Products.ZWiki.plugins.%s' % file)
+    except:
+        BLATHER('could not install %s plugin, skipping it (traceback follows)\n%s' % (
+            file, formattedTraceback()))
