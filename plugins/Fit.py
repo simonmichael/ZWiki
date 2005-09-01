@@ -9,9 +9,8 @@ from OFS.DTMLDocument import DTMLDocument
 from Products.ZWiki import Permissions
 from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Defaults import registerPageMetaData
-from Products.ZWiki.Utils import Popen3, formattedTraceback
+from Products.ZWiki.Utils import Popen3, formattedTraceback, BLATHER
 from Products.ZWiki.UI import addErrorTo
-from Products.ZWiki.Utils import BLATHER
 
 # from tests/support.py:
 def pdir(path): return os.path.split(path)[0]
@@ -26,6 +25,8 @@ def hasFitTests(self):
     return re.search(r'([Ff]ixtures|\bfit)\.\w',self.read()
                      ) is not None
 
+# fit may not be installed, but we need to provide a stub class at least
+# (will not be installed.. should this be mothballed ?
 try:
     from fit.Parse import Parse
     from fit.Parse import ParseException
@@ -97,7 +98,7 @@ try:
 
 
 except ImportError:
-    BLATHER('unable to enable fit support\n%s' % formattedTraceback())
+    BLATHER('did not find fit in the PYTHONPATH, fit support not enabled')
     class FitSupport:
         security = ClassSecurityInfo()
         security.declareProtected(Permissions.View, 'hasFitTests')
