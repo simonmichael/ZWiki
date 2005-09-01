@@ -157,23 +157,28 @@ def initialize(context):
 #            #XXX log it
 #            pass
 
-# set up catalog awareness for ZMI operations, do it here to avoid import loop
-# XXX warning, manage_renameObject will lose parentage in the wiki outline
+# set up hooks for ZMI operations on zwiki objects, for:
+#
+# 1. setting zwiki creator information
+# We do this for a newly-added page object, but not one
+# that has just been renamed or imported.
+#
+# 2. updating the wiki outline cache
+# Note: manage_renameObject will lose parentage in the wiki outline (?)
+#
+# 3. catalog awareness
+
 def manage_afterAdd(self, item, container):
-    # record the creator and creation time if this is 
-    # a new page, but not if renaming, importing, etc.
     if not self.hasCreatorInfo():
         self.setCreator(getattr(self,'REQUEST',None)) 
-    self.wikiOutline().add(self.pageName()) # update the wiki outline
+    self.wikiOutline().add(self.pageName())
     self.index_object()
 ZWikiPage.ZWikiPage.manage_afterAdd = manage_afterAdd
 
 def manage_afterClone(self, item):
-    # record the creator and creation time if this is 
-    # a new page, but not if renaming, importing, etc.
     if not self.hasCreatorInfo():
         self.setCreator(getattr(self,'REQUEST',None))
-    self.wikiOutline().add(self.pageName()) # update the wiki outline
+    self.wikiOutline().add(self.pageName())
     self.index_object()
 ZWikiPage.ZWikiPage.manage_afterClone = manage_afterClone
 
@@ -183,15 +188,6 @@ def manage_beforeDelete(self, item, container):
     except KeyError: pass
     self.unindex_object()
 ZWikiPage.ZWikiPage.manage_beforeDelete = manage_beforeDelete
-
-#original_edit = ZWikiPage.ZWikiPage.manage_edit
-#def manage_edit(self,data,title,SUBMIT='Change',dtpref_cols='50',
-#                dtpref_rows='20',REQUEST=None):
-#    """Edit object and reindex"""
-#    r = original_edit(self,data,title,SUBMIT,dtpref_cols,dtpref_rows,REQUEST)
-#    self.reindex_object()
-#    return r
-#ZWikiPage.ZWikiPage.manage_edit = manage_edit
 
 original_addProperty = ZWikiPage.ZWikiPage.manage_addProperty
 def manage_addProperty(self, id, value, type, REQUEST=None):
@@ -212,7 +208,6 @@ ZWikiPage.ZWikiPage.manage_delProperties = manage_delProperties
 original_changeProperties = ZWikiPage.ZWikiPage.manage_changeProperties
 def manage_changeProperties(self, REQUEST=None, **kw):
     """Update properties and reindex"""
-    #r = original_changeProperties(self, REQUEST, **kw)
     r = apply(original_changeProperties,(self, REQUEST), kw)
     self.reindex_object()
     return r
