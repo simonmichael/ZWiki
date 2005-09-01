@@ -8,8 +8,9 @@ __version__='0.44.0'
 import os, re
 from os import path
 import Globals, OFS.Folder
-#XXX import pagetypes
-import ZWikiPage, ZWikiWeb, Permissions, Defaults
+from Globals import MessageDialog
+import ZWikiPage, ZWikiWeb, Permissions, Defaults, OutlineSupport
+from I18nSupport import _
 
 misc_ = {
     'ZWikiPage_icon': Globals.ImageFile(path.join('images','ZWikiPage_icon.gif'),
@@ -19,6 +20,18 @@ misc_ = {
     'blank_star_icon': Globals.ImageFile(path.join('images','blank_star.png'),
                                    globals()),
     }
+
+def dummyOutlineConstructor(self):
+    """Stub so we can get PersistentOutline registered with ZMI.
+
+    The real constructor is a zwikipage method and is called automatically.
+    """
+    return MessageDialog(
+        title=_("No need to add a Zwiki Outline Cache"),
+        message=_("""Zwiki Outline Cache appears in the ZMI Add menu
+        for implementation reasons, but should not be added directly.
+        Zwiki will create it for you as needed.
+        """))
 
 def initialize(context): 
     """Initialize the ZWiki product.
@@ -36,10 +49,19 @@ def initialize(context):
                 ZWikiPage.manage_addZWikiPage,
                 ),
             )
-        # allow zclass subclassing
+        # allow zclass subclassing ?
         #context.createZClassForBase(ZWikiPage.ZWikiPage,
         #                              globals(),
         #                              nice_name=None)
+        # and the PersistentOutline class, so it's zmi-manageable
+        context.registerClass(
+            OutlineSupport.PersistentOutline,
+            permission=Permissions.manage_properties,
+            #icon = 'images/ZWikiPage_icon.gif',
+            constructors = (
+                dummyOutlineConstructor,
+                ),
+            )
         # set up an "add wiki" menu item
         context.registerClass(
             OFS.Folder.Folder,

@@ -86,7 +86,11 @@ class PersistentOutline(Outline.Outline, SimpleItem):
     if name not in pchildren: pchildren.append(name)
     childmap[parent] = pchildren
     """
-    pass
+    meta_type = 'Zwiki Outline Cache'
+    id = 'outline'
+
+InitializeClass(PersistentOutline)
+
 
 class ParentsPropertyMixin:
     """
