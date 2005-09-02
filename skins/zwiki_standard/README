@@ -1,11 +1,3 @@
-Skin templates for the standard (non-CMF) skin. Also two ZMI forms.
-
-Warning - filterissuesdtml, issuetrackerdtml, recentchangesdtml,
-searchwikidtml, and useroptionsdtml are generated files, don't edit them.
-Edit the master copies in ../../content/dtml and "make dtml" instead.
-
-Why are we still using DTML in here ? Forms often originate as DTML
-embedded in wiki pages and it's sometimes easier to evolve them that way.
-Sometimes we hide the dtml behind a page template for consistency.
+Skin templates for the standard zope (non-CMF) skin. Also two ZMI forms.
 
 See also UI.py.
