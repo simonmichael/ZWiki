@@ -212,13 +212,6 @@ class UIUtils:
             template = DEFAULT_TEMPLATES['badtemplate']
         return template.__of__(self)
 
-    def getSkinTemplateWithDefault(self,name,default=None):
-        """
-        Return the named skin template if it exists, or the provided default.
-        """
-        return self.hasSkinTemplate(name) and self.getSkinTemplate(name) \
-               or default
-
     security.declareProtected(Permissions.View, 'addSkinTo')
     def addSkinTo(self,body,**kw):
         """
