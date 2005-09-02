@@ -37,12 +37,18 @@ class CatalogAwareness:
         or above (will acquire).
         """
         folder = self.folder()
+        #if not folder: return None ?
         folderaqbase = getattr(folder,'aq_base',
                                folder) # make tests work
         if hasattr(folderaqbase,'Catalog') and hasattr(folderaqbase.Catalog,'indexes'):
             return folder.Catalog
         else:
-            return getattr(folder,'portal_catalog',None)
+            try:
+                # acquisition wrapper is explicit in plone 2.1/ATCT or
+                # zope 2.8.1 (#1137)
+                return folder.aq_acquire('portal_catalog')
+            except:
+                return getattr(folder,'portal_catalog',None)
 
     security.declareProtected(Permissions.View, 'hasCatalog')
     def hasCatalog(self):
