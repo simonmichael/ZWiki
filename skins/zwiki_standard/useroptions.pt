@@ -14,7 +14,7 @@
     <div metal:use-macro="macros/linkpanel" />
 
     <div class="formcontent" tal:content="structure 
-	python:here.getSkinTemplate('UserOptions')(here,request);">
+	python:here.getSkinTemplate('UserOptions')(here,request)">
 	content goes here..
     </div>
 

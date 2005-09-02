@@ -13,7 +13,7 @@
       User options
     </h1>
  
-    <span tal:replace="structure python:here.getSkinTemplate('UserOptions')(here,request);">
+    <span tal:replace="structure python:here.getSkinTemplate('UserOptions')(here,request)">
       content goes here..
     </span>
     
