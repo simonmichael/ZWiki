@@ -262,7 +262,6 @@ class ZWikiPage(
         XXX I think this happens anyway.
         """
         if clear_cache: self.clearCache()
-        get_transaction().note('prerender')
         self.setPreRendered(self.pageType().preRender(self))
 
     def renderText(self, text, type, **kw):
