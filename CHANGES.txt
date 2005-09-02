@@ -1,3 +1,92 @@
+    Summary
+
+	Robustness fixes, Plone 2.1 compatibility fixes, simplifications,
+	CMF metadata support.
+
+    Upgrade notes
+
+	You might want to delete the "outline" object using the ZMI,
+	allowing Zwiki to create a more ZMI-compliant one. Note this will
+	lose any manual re-ordering of subtopics you may have done.
+
+	The default colour for "serious" issues is lighter. This will take
+	effect for each issue page as it is edited. To make all pages show
+	the correct colour right away, visit SomePage/upgradeAll in your
+	browser.
+	
+    Changes
+
+      Installing
+
+        * make the outline cache replaceable to avoid errors during
+	  migration of plone 2.1rc<3 sites (#1143, SM, alecm)
+
+        * make catalog lookup more robust when there is another object
+	  named Catalog (#1132, SM, Tim Olsen)
+
+        * catch errors when importing page types and plugins at startup
+	  (#809, #1148)
+
+        * make fit import error at startup less verbose (#1054)
+
+      Configuring
+
+        * make the outline cache object fully ZMI-manageable (#1144)
+
+        * drop support for alternate catalog names via SITE_CATALOG property
+        
+        * drop support for overriding the contents view with a SiteMap page
+
+	* don't update page creation times when moving/renaming/importing
+	  in the ZMI
+
+      Browsing
+
+      Editing
+
+        * fix page creation/editing breakage in plone 2.1 due to explicit
+	  acquisition (#1137, SM, alecm)
+
+        * enable CMF/Plone document metadata support (jbb)
+
+      Page hierarchy
+
+      Mail
+
+      Issue tracking
+
+        * make the serious issue default colour lighter
+	
+        * allow issues without numbers (with at least a "status" property)
+
+      General - i18n
+
+        * remove unnecessary -en po files
+
+        * add missing headers for german po
+
+        * drop unnecessary -PT for pt po files
+
+        * fix space-separated i18n attributes to avoid deprecation warnings on startup
+
+      General - skins
+
+        * make hasSkinTemplate check filesystem templates, such as the
+	  alternate subtopics template (#1113, Mark Ferrell, SM)
+
+        * drop the special style for ratings, for now
+
+      General
+	
+        * allow create to work without a request, for debugging
+
+        * merge moin_support.py with moin.py for easier handling
+
+        * don't bother noting pre-renders in the transaction log (#948)
+
+        * drop unused getSkinTemplateWithDefault method
+
+
 Zwiki 0.44.0 2005/08/02
 
     Summary
