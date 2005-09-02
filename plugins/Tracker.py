@@ -38,7 +38,7 @@ ISSUE_STATUSES = [
 # will be used.
 ISSUE_COLOURS = [
     ',open,critical ,#ff2222',
-    ',open,serious  ,#ff6060',
+    ',open,serious  ,#ff9090',
     ',open,normal   ,#ffbbbb',
     ',open,minor    ,#ffdddd',
     ',open,wishlist ,#e0e0e0',
