@@ -1,5 +1,5 @@
 """ 
-zwikiimport.py - import files/directories into a zwiki. A ZEO script.
+zwikiimport.py - import files/directories into a zwiki.
 
 (c) 2004 SKWM, GNU GPL.
 
@@ -17,7 +17,7 @@ Options:
   --replace      When objects already exist, replace them.
   --delete       Delete existing objects instead of importing.
 
-Notes/stories:
+Notes/stories/todos:
 -zope root folder or root page is specified as an argument
 -we walk the current directory
 -each text file becomes a wiki page by the same name
