@@ -188,9 +188,9 @@ class UIUtils:
 
     def hasSkinTemplate(self,name):
         """
-        Does the named skin template exist ?
+        Is the named skin template acquireable or in the filesystem defaults ?
         """
-        template = getattr(self.folder(),name,None)
+        template = getattr(self.folder(),name,DEFAULT_TEMPLATES.get(name,None))
         return ((template is not None) and
                 (isPageTemplate(template) or isDtmlMethod(template)))
         
@@ -201,8 +201,8 @@ class UIUtils:
         This will find either a Page Template or DTML Method, preferring
         the former, and return it wrapped in this page's context.  If the
         template is not found in this page's acquisition context we'll get
-        it from the filesystem (ZWiki/skins/zwiki_standard/). Or if it doesn't
-        exist, return a standard error template.
+        it from the filesystem (ZWiki/skins/zwiki_standard/). Or if it can't
+        be found, return a standard error template.
         """
         template = getattr(self.folder(),
                        name,
