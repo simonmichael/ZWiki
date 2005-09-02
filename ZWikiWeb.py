@@ -96,7 +96,7 @@ def addZWikiWebFromFs(self, new_id, title='', wiki_type='zwikidotorg',
         ob.title=str(title)
         id = self._setObject(ob.id, ob)
         ob = getattr(self, id)
-    dir = package_home(globals()) + os.sep + 'content' + os.sep + wiki_type
+    dir = package_home(globals()) + os.sep + 'pages' + os.sep + wiki_type
     filenames = os.listdir(dir)
     # hmm auto-cataloging is really slowing this down!
     for filename in filenames:
@@ -198,10 +198,7 @@ def listFsWikis(self):
     list the wiki templates available in the filesystem
     """
     try:
-        list = os.listdir(package_home(globals()) + os.sep + 'content')
-        # developers may have content/CVS.. assume wiki templates
-        # will never be called that:
-        if 'CVS' in list: list.remove('CVS')
+        list = os.listdir(package_home(globals()) + os.sep + 'pages')
         # likewise for Subversion
         if '.svn' in list: list.remove('.svn')
         if 'tracker' in list: list.remove('tracker') #XXX temp
