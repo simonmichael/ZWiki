@@ -11,10 +11,10 @@ class UITests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
         zwikiAfterSetUp(self)
 
-    def test_DEFAULT_TEMPLATES(self):
-        DEFAULT_TEMPLATES = ZWiki.UI.DEFAULT_TEMPLATES
+    def test_STANDARD_TEMPLATES(self):
+        STANDARD_TEMPLATES = ZWiki.UI.STANDARD_TEMPLATES
         # do all default templates have meta_types ? this has been fragile
-        self.failIf(filter(lambda x:not hasattr(x,'meta_type'),DEFAULT_TEMPLATES.values()))
+        self.failIf(filter(lambda x:not hasattr(x,'meta_type'),STANDARD_TEMPLATES.values()))
 
 if __name__ == '__main__':
     framework(descriptions=1, verbosity=2)

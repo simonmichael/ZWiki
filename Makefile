@@ -66,7 +66,7 @@ EXTRACT=PYTHONPATH=$(ZOPE3SRC) python /usr/local/src/Zope3/utilities/i18nextract
 
 pot: dtmlextract
 	$(EXTRACT) -d zwiki -p . -o ./i18n \
-	    -x _darcs -x old -x misc -x ftests 
+	    -x _darcs -x .old -x misc -x ftests 
 	tail +12 i18n/zwiki-manual.pot >>i18n/zwiki.pot
 	python \
 	-c "import re; \
@@ -245,7 +245,7 @@ tags:
 	  -o -name _darcs  -prune -type f \
 	  -o -name contrib -prune -type f \
 	  -o -name misc    -prune -type f \
-	  -o -name old     -prune -type f \
+	  -o -name .old     -prune -type f \
 	  -o -name .doxygen -prune -type f \
 	  | xargs etags
 
@@ -264,7 +264,7 @@ getproducts:
 producttags:
 	cd /zope1/Products; \
 	  ~/bin/eptags.py `find $$PWD/ -name '*.py' -o  -name '*.dtml' -o -name '*.pt' \
-	     -o -name old     -prune -type f ` 
+	     -o -name old -o -name .old    -prune -type f ` 
 
 plonetags:
 	cd /zope1/Products/CMFPlone; \

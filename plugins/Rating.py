@@ -11,9 +11,11 @@ from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER
-from Products.ZWiki.UI import loadPageTemplate, onlyBodyFrom, DEFAULT_TEMPLATES
+from Products.ZWiki.UI import loadPageTemplate, onlyBodyFrom, STANDARD_TEMPLATES
 
-DEFAULT_TEMPLATES['ratingform'] = loadPageTemplate('ratingform')
+STANDARD_TEMPLATES.update({
+    'ratingform': loadPageTemplate('ratingform','plugins/rating'),
+    })
 
 RATING_METADATA = [
     'voteCount',

@@ -7,16 +7,19 @@
                   ">
   <head metal:use-macro="macros/head">
     <meta metal:fill-slot="searchtags" name="robots" content="noindex,nofollow" />
-    <title metal:fill-slot="title" i18n:translate="">Issue tracker</title>
+    <title metal:fill-slot="title" i18n:translate="">Issue browser</title>
   </head>
 
   <body bgcolor="#ffffff">
     <div metal:use-macro="macros/linkpanel" />
     <div metal:use-macro="macros2/wikiformheading">
-      <h1 metal:fill-slot="title" i18n:translate="">Issue tracker</h1>
+      <h1 metal:fill-slot="title" i18n:translate="">Issue browser</h1>
     </div>
 
-    <div class="formcontent" tal:content="structure options/body">content..</div>
+    <div class="formcontent" tal:content="structure 
+	python:here.getSkinTemplate('IssueBrowser')(here,request);">
+	content goes here..
+    </div>
 
   </body>
 </html>

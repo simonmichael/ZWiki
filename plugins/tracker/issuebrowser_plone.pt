@@ -9,11 +9,11 @@
 
     <span metal:use-macro="python:here.wikipage_template().macros['accesskeys']" />
 
-    <h1 i18n:translate="heading_wiki_filter_issues">
-      Filter issues
+    <h1 i18n:translate="heading_wiki_issue_browser">
+      Issue browser
     </h1>
  
-    <span tal:replace="structure here/filterissuesdtml">
+    <span tal:replace="structure python:here.getSkinTemplate('FilterIssues')(here,request);">
       content goes here..
     </span>
     

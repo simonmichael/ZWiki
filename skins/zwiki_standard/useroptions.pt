@@ -13,7 +13,10 @@
   <body bgcolor="#ffffff">
     <div metal:use-macro="macros/linkpanel" />
 
-<div class="formcontent" tal:content="structure options/body">content..</div>
+    <div class="formcontent" tal:content="structure 
+	python:here.getSkinTemplate('UserOptions')(here,request);">
+	content goes here..
+    </div>
 
 </body>
 </html>

@@ -13,7 +13,7 @@
       Search this wiki
     </h1>
  
-    <span tal:replace="structure here/searchwikidtml">
+    <span tal:replace="structure python:here.getSkinTemplate('SearchPage')(here,request);">
       content goes here..
     </span>
     

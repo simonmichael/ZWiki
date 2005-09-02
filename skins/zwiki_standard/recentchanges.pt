@@ -16,7 +16,10 @@
       <h1 metal:fill-slot="title" i18n:translate="">Recent changes</h1>
     </div>
 
-    <div class="formcontent" tal:content="structure options/body">content..</div>
+    <div class="formcontent" tal:content="structure 
+	python:here.getSkinTemplate('RecentChanges')(here,request);">
+	content goes here..
+    </div>
 
   </body>
 </html>

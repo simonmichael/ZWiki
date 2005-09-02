@@ -13,9 +13,24 @@ from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER,formattedTraceback
-from Products.ZWiki.UI import DEFAULT_TEMPLATES, loadDtmlMethod, loadPageTemplate#, onlyBodyFrom
+from Products.ZWiki.UI import loadDtmlMethod, loadPageTemplate, \
+     STANDARD_TEMPLATES, PLONE_TEMPLATES
 
-DEFAULT_TEMPLATES['issuepropertiesform'] = loadDtmlMethod('issuepropertiesform')
+STANDARD_TEMPLATES.update({
+    'issuepropertiesform': loadDtmlMethod('issuepropertiesform','plugins/tracker'),
+    'issuetracker'       : loadPageTemplate('issuetracker','plugins/tracker'),
+    'issuebrowser'       : loadPageTemplate('issuebrowser','plugins/tracker'),
+    'filterissues'       : loadPageTemplate('filterissues','plugins/tracker'),
+    # dtml versions which the above will usually use
+    'IssueTracker'       : loadDtmlMethod('IssueTracker','plugins/tracker'),
+    'IssueBrowser'       : loadDtmlMethod('IssueBrowser','plugins/tracker'),
+    'FilterIssues'       : loadDtmlMethod('FilterIssues','plugins/tracker'),
+    })
+PLONE_TEMPLATES.update({
+    'issuetracker'       : loadPageTemplate('issuetracker_plone','plugins/tracker'),
+    'issuebrowser'       : loadPageTemplate('issuebrowser_plone','plugins/tracker'),
+    'filterissues'       : loadPageTemplate('filterissues_plone','plugins/tracker'),
+    })
 
 # issue tracker defaults, will be installed as folder properties
 ISSUE_CATEGORIES = [

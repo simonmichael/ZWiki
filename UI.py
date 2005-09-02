@@ -91,6 +91,9 @@ def isDtmlMethod(obj):
         'DTML Document (File)',
         )
 
+def isTemplate(obj):
+    return isPageTemplate(obj) or isDtmlMethod(obj)
+
 def isFile(obj):
     return getattr(obj,'meta_type',None) in (
         'File',
@@ -115,7 +118,7 @@ def addErrorTo(text,error):
     return """<div class="error">%s</div>\n%s""" % (error,text)
 
 
-DEFAULT_TEMPLATES = {
+STANDARD_TEMPLATES = {
     'badtemplate'        : loadPageTemplate('badtemplate'),
 
     #main page view
@@ -131,27 +134,23 @@ DEFAULT_TEMPLATES = {
     'subscribeform'      : loadPageTemplate('subscribeform'),
 
     #wiki views/forms
-    #contentspage defines a wikiformheading,
-    #used by all the rest except useroptions
+    #contentspage defines a wikiformheading macro used by all the rest
+    #except useroptions
     'contentspage'       : loadPageTemplate('contentspage'),
     'recentchanges'      : loadPageTemplate('recentchanges'),
-    'recentchangesdtml'  : loadDtmlMethod('recentchangesdtml'),
     'searchwiki'         : loadPageTemplate('searchwiki'),
-    'searchwikidtml'     : loadDtmlMethod('searchwikidtml'),
     'useroptions'        : loadPageTemplate('useroptions'),
-    'useroptionsdtml'    : loadDtmlMethod('useroptionsdtml'),
-    'issuetracker'       : loadPageTemplate('issuetracker'),
-    'issuetrackerdtml'   : loadDtmlMethod('issuetrackerdtml'),
-    'issuebrowser'       : loadPageTemplate('issuebrowser'),
-    'issuebrowserdtml'   : loadDtmlMethod('issuebrowserdtml'),
-    'filterissues'       : loadPageTemplate('filterissues'),
-    'filterissuesdtml'   : loadDtmlMethod('filterissuesdtml'),
+    # dtml versions which the above will usually use
+    'RecentChanges'      : loadDtmlMethod('RecentChanges','skins/zwiki_dtml'),
+    'SearchPage'         : loadDtmlMethod('SearchPage','skins/zwiki_dtml'),
+    'UserOptions'        : loadDtmlMethod('UserOptions','skins/zwiki_dtml'),
 
     #fragments
     'subtopics_outline'  : loadDtmlMethod('subtopics_outline'),
     'subtopics_board'    : loadDtmlMethod('subtopics_board'),
-    # ratingform           : loadPageTemplate('ratingform'),
-    # issuepropertiesform  : loadDtmlMethod('issuepropertiesform'),
+    }
+
+PLONE_TEMPLATES = {
     }
 
 
@@ -188,28 +187,40 @@ class UIUtils:
 
     def hasSkinTemplate(self,name):
         """
-        Is the named skin template acquireable or in the filesystem defaults ?
+        Does the named skin template exist in the aq context or filesystem ?
         """
-        template = getattr(self.folder(),name,DEFAULT_TEMPLATES.get(name,None))
-        return ((template is not None) and
-                (isPageTemplate(template) or isDtmlMethod(template)))
+        return self.getSkinTemplate(name) is not STANDARD_TEMPLATES['badtemplate']
         
     def getSkinTemplate(self,name):
         """
         Get the named skin template from the ZODB or filesystem.
 
-        This will find either a Page Template or DTML Method, preferring
-        the former, and return it wrapped in this page's context.  If the
-        template is not found in this page's acquisition context we'll get
-        it from the filesystem (ZWiki/skins/zwiki_standard/). Or if it can't
-        be found, return a standard error template.
+        This will find either a Page Template or DTML Method with the
+        specified name, preferring the former, and return it wrapped
+        in the current page's context.
+
+        We look first in the ZODB acquisition context; then in the
+        skins/* layers on the filesystem, looking in zwiki_standard or
+        zwiki_plone first depending on whether we're in a CMF site. 
+        If the template can't be found, return a standard error template.
+
+        This is basically duplicating the CMF skin mechanism, but in a
+        way that works everywhere, and with some extra error-handling
+        to help skin customizers. Still evolving, it will all shake
+        out in the end.
         """
-        template = getattr(self.folder(),
-                       name,
-                       DEFAULT_TEMPLATES.get(name,
-                                             DEFAULT_TEMPLATES['badtemplate']))
-        if not (isPageTemplate(template) or isDtmlMethod(template)):
-            template = DEFAULT_TEMPLATES['badtemplate']
+        if not self.inCMF():
+            template = getattr(self.folder(), name,
+                       STANDARD_TEMPLATES.get(name,
+                       PLONE_TEMPLATES.get(name,
+                       STANDARD_TEMPLATES['badtemplate'])))
+        else:
+            template = getattr(self.folder(), name,
+                       PLONE_TEMPLATES.get(name,
+                       STANDARD_TEMPLATES.get(name,
+                       STANDARD_TEMPLATES['badtemplate'])))
+        if not isTemplate(template):
+            template = STANDARD_TEMPLATES['badtemplate']
         return template.__of__(self)
 
     security.declareProtected(Permissions.View, 'addSkinTo')
@@ -247,7 +258,7 @@ class UIUtils:
             #       body + \
             #       self.standard_wiki_footer(REQUEST)
         else:
-            return DEFAULT_TEMPLATES['wikipage'].__of__(self)(self,REQUEST,
+            return STANDARD_TEMPLATES['wikipage'].__of__(self)(self,REQUEST,
                                                               body=body,**kw)
 
     # XXX
@@ -378,7 +389,7 @@ class GeneralForms:
         zwiki_plone's doesn't have the macros. Provides macro aliases
         for backwards compatibility.
         """
-        standard_wikipage = DEFAULT_TEMPLATES['wikipage'].__of__(self)
+        standard_wikipage = STANDARD_TEMPLATES['wikipage'].__of__(self)
         if self.inCMF(): template = standard_wikipage
         else: template = self.getSkinTemplate('wikipage')
         return template
@@ -427,7 +438,7 @@ class GeneralForms:
         #XXX self.getSkinTemplate('stylesheet')
         form = getattr(self.folder(),'stylesheet',
                        getattr(self.folder(),'stylesheet.css',
-                               DEFAULT_TEMPLATES['stylesheet']
+                               STANDARD_TEMPLATES['stylesheet']
                                ))
         if isPageTemplate(form) or isDtmlMethod(form):
             return form.__of__(self)(self,REQUEST)
@@ -534,36 +545,17 @@ class GeneralForms:
     def recentchanges(self, REQUEST=None):
         """
         Render the recentchanges form (template-customizable).
-
-        The default page template calls a DTML helper template,
-        for ease of syncing with the evolving wiki-page-based version.
         """
-        form = self.getSkinTemplate('recentchanges')
-        dtmlpart = self.getSkinTemplate('recentchangesdtml')
-        # XXX kludge - a customized template may not require our dtml part
-        if re.search(r'"structure options/body',form.read()):
-            return form(self,REQUEST,body=dtmlpart(self,REQUEST))
-        else:
-            return form(self,REQUEST)
+        return self.getSkinTemplate('recentchanges')(self,REQUEST)
 
-    # searchpage would be consistent with the page version, but not logical
-    # search and searchform are too like existing cmf/plone objects
-    # for now we'll call it searchwiki and provide a searchpage alias
+    # we call this searchwiki, not searchpage, and provide an alias
+    # change it back ?
     security.declareProtected(Permissions.View, 'searchwiki')
     def searchwiki(self, REQUEST=None):
         """
         Render the searchwiki form (template-customizable).
-
-        The default page template calls a DTML helper template,
-        for ease of syncing with the evolving wiki-page-based version.
         """
-        form = self.getSkinTemplate('searchwiki')
-        dtmlpart = self.getSkinTemplate('searchwikidtml')
-        # XXX kludge - a customized template may not require our dtml part
-        if re.search(r'"structure options/body',form.read()):
-            return form(self,REQUEST,body=dtmlpart(self,REQUEST))
-        else:
-            return form(self,REQUEST)
+        return self.getSkinTemplate('searchwiki')(self,REQUEST)
 
     searchpage = searchwiki
 
@@ -571,65 +563,29 @@ class GeneralForms:
     def useroptions(self, REQUEST=None):
         """
         Render the useroptions form (template-customizable).
-
-        The default page template calls a DTML helper template,
-        for ease of syncing with the evolving wiki-page-based version.
         """
-        form = self.getSkinTemplate('useroptions')
-        dtmlpart = self.getSkinTemplate('useroptionsdtml')
-        # XXX kludge - a customized template may not require our dtml part
-        if re.search(r'"structure options/body',form.read()):
-            return form(self,REQUEST,body=dtmlpart(self,REQUEST))
-        else:
-            return form(self,REQUEST)
+        return self.getSkinTemplate('useroptions')(self,REQUEST)
 
     security.declareProtected(Permissions.View, 'issuetracker')
     def issuetracker(self, REQUEST=None):
         """
         Render the issuetracker form (template-customizable).
-
-        The default page template calls a DTML helper template,
-        for ease of syncing with the evolving wiki-page-based version.
         """
-        form = self.getSkinTemplate('issuetracker')
-        dtmlpart = self.getSkinTemplate('issuetrackerdtml')
-        # XXX kludge - a customized template may not require our dtml part
-        if re.search(r'"structure options/body',form.read()):
-            return form(self,REQUEST,body=dtmlpart(self,REQUEST))
-        else:
-            return form(self,REQUEST)
+        return self.getSkinTemplate('issuetracker')(self,REQUEST)
 
     security.declareProtected(Permissions.View, 'filterissues')
     def filterissues(self, REQUEST=None):
         """
         Render the filterissues form (template-customizable).
-
-        The default page template calls a DTML helper template,
-        for ease of syncing with the evolving wiki-page-based version.
         """
-        form = self.getSkinTemplate('filterissues')
-        dtmlpart = self.getSkinTemplate('filterissuesdtml')
-        # XXX kludge - a customized template may not require our dtml part
-        if re.search(r'"structure options/body',form.read()):
-            return form(self,REQUEST,body=dtmlpart(self,REQUEST))
-        else:
-            return form(self,REQUEST)
+        return self.getSkinTemplate('filterissues')(self,REQUEST)
 
     security.declareProtected(Permissions.View, 'issuebrowser')
     def issuebrowser(self, REQUEST=None):
         """
         Render the issuebrowser form (template-customizable).
-
-        The default page template calls a DTML helper template,
-        for ease of syncing with the evolving wiki-page-based version.
         """
-        form = self.getSkinTemplate('issuebrowser')
-        dtmlpart = self.getSkinTemplate('issuebrowserdtml')
-        # XXX kludge - a customized template may not require our dtml part
-        if re.search(r'"structure options/body',form.read()):
-            return form(self,REQUEST,body=dtmlpart(self,REQUEST))
-        else:
-            return form(self,REQUEST)
+        return self.getSkinTemplate('issuebrowser')(self,REQUEST)
 
     security.declareProtected(Permissions.View, 'editConflictDialog')
     def editConflictDialog(self):

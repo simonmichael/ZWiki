@@ -280,7 +280,7 @@ class AdminSupport:
         Install some default wiki pages to help get a wiki started.
         """
         # copied from ZWikiWeb.py
-        dir = package_home(globals()) + os.sep + 'content' + os.sep + 'basic'
+        dir = package_home(globals()) + os.sep + 'wikis' + os.sep + 'basic'
         filenames = os.listdir(dir)
         for filename in filenames:
             if filename[-5:] == '.dtml': pass
@@ -303,26 +303,25 @@ class AdminSupport:
     def setupDtmlPages(self,REQUEST=None):
         """
         Install the DTML page implementations of some standard views.
+
         This facilitates easy tweaking and development.
+        It doesn't check if dtml is enabled in the wiki, just
+        creates the pages with the default page type.
         """
-        # copied from ZWikiWeb.py
-        # XXX extract
-        dir = package_home(globals()) + os.sep + 'content' + os.sep + 'dtml'
+        dir = package_home(globals()) + os.sep + 'skins' + os.sep + 'zwiki_dtml'
         filenames = os.listdir(dir)
         for filename in filenames:
-            if filename[-5:] == '.dtml': pass
-            else:
-                m = re.search(r'(.+)\.(.+)',filename)
-                if m:
-                    name, type = m.group(1), m.group(2)
-                    if not self.pageWithName(name):
-                        text=open(dir+os.sep+filename,'r').read()
-                        # parse optional parents list
-                        m = re.match(r'(?si)(^#parents:(.*?)\n)?(.*)',text)
-                        if m.group(2): parents = split(strip(m.group(2)),',')
-                        else: parents = []
-                        text = m.group(3)
-                        self.create(name,text=text)
+            m = re.search(r'(.+)\.(.+)',filename)
+            if m:
+                name, type = m.group(1), m.group(2)
+                if not self.pageWithName(name):
+                    text=open(dir+os.sep+filename,'r').read()
+                    # parse optional parents list
+                    m = re.match(r'(?si)(^#parents:(.*?)\n)?(.*)',text)
+                    if m.group(2): parents = split(strip(m.group(2)),',')
+                    else: parents = []
+                    text = m.group(3)
+                    self.create(name,text=text)
         if REQUEST:
             REQUEST.RESPONSE.redirect(self.page_url())
 
@@ -337,7 +336,7 @@ class AdminSupport:
 
         Existing objects with the same name won't be overwritten.
         """
-        d = os.path.join(package_home(globals()),'content','basic')
+        d = os.path.join(package_home(globals()),'wikis','basic')
         dtmlmethods = [f[:-5] for f in os.listdir(d) if f.endswith('.dtml')]
         ids = self.folder().objectIds()
         for m in dtmlmethods:
