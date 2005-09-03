@@ -361,6 +361,27 @@ class TrackerSupport:
 
     # UI methods
 
+    security.declareProtected(Permissions.View, 'issuetracker')
+    def issuetracker(self, REQUEST=None):
+        """
+        Render the issuetracker form (template-customizable).
+        """
+        return self.getSkinTemplate('issuetracker')(self,REQUEST)
+
+    security.declareProtected(Permissions.View, 'filterissues')
+    def filterissues(self, REQUEST=None):
+        """
+        Render the filterissues form (template-customizable).
+        """
+        return self.getSkinTemplate('filterissues')(self,REQUEST)
+
+    security.declareProtected(Permissions.View, 'issuebrowser')
+    def issuebrowser(self, REQUEST=None):
+        """
+        Render the issuebrowser form (template-customizable).
+        """
+        return self.getSkinTemplate('issuebrowser')(self,REQUEST)
+
     security.declareProtected(Permissions.View, 'addIssueFormTo')
     def addIssueFormTo(self,body):
         """

@@ -1,6 +1,4 @@
 # UI-related methods and utilities
-#
-# the GeneralForms should perhaps be moved to their respective modules
 
 from __future__ import nested_scopes
 import os, sys, re, string, time, math
@@ -150,40 +148,18 @@ STANDARD_TEMPLATES = {
     'subtopics_board'    : loadDtmlMethod('subtopics_board'),
     }
 
+# don't need to pre-load these, normal cmf skin lookup will find them
 PLONE_TEMPLATES = {
     }
 
 
-class UIUtils:
-    """ 
-    This mixin provides a generic CMF/non-CMF skin mechanism and UI utilities.
+class SkinUtils:
+    """
+    This mixin provides a CMF-like skin lookup mechanism.
 
-    Zwiki has a set of known "skin methods" (views) built in, which may be
-    overridden by "skin templates" (page templates, dtml methods, or
-    occasionally a File) of the same name. The main point of all this is 
-    to provide defaults for these views when they don't exist in the ZODB.
-    
+    This allows us to find views regardless of where we are.
     """
     security = ClassSecurityInfo()
-
-    def defaultDisplayMode(self,REQUEST=None):
-        """
-        Tell the default display mode for this wiki. See displayMode.
-        """
-        return getattr(self.folder(),'default_displaymode',DEFAULT_DISPLAYMODE)
-
-    def displayMode(self,REQUEST=None):
-        """
-        Tell the user's current display mode - full, simple, or minimal.
-
-        This affects the standard skin's appearance; it's not used in CMF/Plone.
-        This is either
-        - user's zwiki_displaymode cookie, set by clicking full/simple/minimal
-        - or the folder's default_displaymode string property (can acquire)
-        - or DEFAULT_DISPLAYMODE
-        """
-        if not REQUEST: REQUEST = self.REQUEST
-        return REQUEST.get('zwiki_displaymode',self.defaultDisplayMode())
 
     def hasSkinTemplate(self,name):
         """
@@ -197,12 +173,11 @@ class UIUtils:
 
         This will find either a Page Template or DTML Method with the
         specified name, preferring the former, and return it wrapped
-        in the current page's context.
-
-        We look first in the ZODB acquisition context; then in the
-        skins/* layers on the filesystem, looking in zwiki_standard or
-        zwiki_plone first depending on whether we're in a CMF site. 
-        If the template can't be found, return a standard error template.
+        in the current page's context.  We look first in the ZODB
+        acquisition context; then in the skins/* layers on the
+        filesystem, looking in zwiki_standard or zwiki_plone first
+        depending on whether we're in a CMF site.  If the template
+        can't be found, return a standard error template.
 
         This is basically duplicating the CMF skin mechanism, but in a
         way that works everywhere, and with some extra error-handling
@@ -213,16 +188,17 @@ class UIUtils:
             template = getattr(self.folder(), name,
                        STANDARD_TEMPLATES.get(name,
                        PLONE_TEMPLATES.get(name,
-                       STANDARD_TEMPLATES['badtemplate'])))
+                       None)))
         else:
             template = getattr(self.folder(), name,
                        PLONE_TEMPLATES.get(name,
                        STANDARD_TEMPLATES.get(name,
-                       STANDARD_TEMPLATES['badtemplate'])))
+                       None)))
         if not isTemplate(template):
             template = STANDARD_TEMPLATES['badtemplate']
         return template.__of__(self)
 
+    # XXX
     security.declareProtected(Permissions.View, 'addSkinTo')
     def addSkinTo(self,body,**kw):
         """
@@ -254,38 +230,42 @@ class UIUtils:
             return self.getSkinTemplate('standard_wiki_header')(self,REQUEST)+\
                    body + \
                    self.getSkinTemplate('standard_wiki_footer')(self,REQUEST)
-            #return self.standard_wiki_header(REQUEST) + \
-            #       body + \
-            #       self.standard_wiki_footer(REQUEST)
         else:
             return STANDARD_TEMPLATES['wikipage'].__of__(self)(self,REQUEST,
                                                               body=body,**kw)
 
-    # XXX
-    #security.declareProtected(Permissions.View, 'standard_wiki_header')
-    #def standard_wiki_header(self, REQUEST=None):
-    #    """
-    #    Return the custom standard_wiki_header or a warning.
-    #    """
-    #    if (hasattr(self.folder(),'standard_wiki_header') and
-    #        isDtmlMethod(self.folder().standard_wiki_header)):
-    #        return self.folder().standard_wiki_header(self,REQUEST)
-    #    else:
-    #        return '<html>\n<body>\nThis wiki has a custom standard_wiki_footer but no corresponding standard_wiki_header. Suggestion: remove it.\n'
-    #
-    #security.declareProtected(Permissions.View, 'standard_wiki_footer')
-    #def standard_wiki_footer(self, REQUEST=None):
-    #    """
-    #    Return the custom standard_wiki_footer or a warning.
-    #    """
-    #    if (hasattr(self.folder(),'standard_wiki_footer') and
-    #        isDtmlMethod(self.folder().standard_wiki_footer)):
-    #        return self.folder().standard_wiki_footer(self,REQUEST)
-    #    else:
-    #        return '<p>This wiki has a custom standard_wiki_header but no corresponding standard_wiki_footer. Suggestion: remove it.</body></html>'
+InitializeClass(SkinUtils)
 
-    security.declareProtected(Permissions.View, 'setSkinMode')
-    def setSkinMode(self,REQUEST,mode):
+
+class SkinSwitchingUtils:
+    """
+    This mixin provides methods for switching between alternate skins.
+    """
+    security = ClassSecurityInfo()
+
+    def displayMode(self,REQUEST=None):
+        """
+        Tell the user's current display mode - full, simple, or minimal.
+
+        This affects the standard skin's appearance; it's not used in CMF/Plone.
+        This is either
+        - user's zwiki_displaymode cookie, set by clicking full/simple/minimal
+        - or the folder's default_displaymode string property (can acquire)
+        - or DEFAULT_DISPLAYMODE
+
+        This is kept for backwards compatibility with old zwiki skins.
+        """
+        if not REQUEST: REQUEST = self.REQUEST
+        return REQUEST.get('zwiki_displaymode',self.defaultDisplayMode())
+
+    def defaultDisplayMode(self,REQUEST=None):
+        """
+        Tell the default display mode for this wiki. See displayMode.
+        """
+        return getattr(self.folder(),'default_displaymode',DEFAULT_DISPLAYMODE)
+
+    security.declareProtected(Permissions.View, 'setDisplayMode')
+    def setDisplayMode(self,REQUEST,mode):
         """
         Change the user's display mode cookie for the standard skin.
         
@@ -300,6 +280,8 @@ class UIUtils:
                            path='/',
                            expires=(self.ZopeTime() + 365).rfc822()) # 1 year
         REQUEST.RESPONSE.redirect(REQUEST.get('URL1'))
+
+    setSkinMode = setDisplayMode #backwards compatibility
 
     security.declareProtected(Permissions.View, 'setCMFSkin')
     def setCMFSkin(self,REQUEST,skin):
@@ -330,13 +312,13 @@ class UIUtils:
         This can be used to select a different CMF/Plone skin - primarily
         used for switching to the standard zwiki skin inside a plone site.
         To enable this you need to copy the default skin in portal_skins,
-        name it "Zwiki", and add the "zwiki_standard" layer at the top, above
+        name it "Zwiki", and add the "zwiki_standard" layer above
         "zwiki_plone". Cf http://zwiki.org/HowToUseTheStandardSkinInPlone .
 
         It can also change the full/simple/minimal display mode of the
-        standard skin, like setSkinMode. This was perhaps a mistake and it
-        remains here only for backwards compatibility, to support
-        customized skins with the old full/simple/minimal links.
+        standard skin. This feature has been retired from the standard
+        skin, it remains here for backwards compatibility with old
+        wikis.
 
         skin can be any of: full, simple, minimal, Zwiki, standard, the
         name of a CMF/Plone skin, plone, cmf, or None (the last three are
@@ -355,15 +337,16 @@ class UIUtils:
             skin = 'Plone Default'
         self.setCMFSkin(REQUEST,skin)
 
+InitializeClass(SkinSwitchingUtils)
 
-InitializeClass(UIUtils)
 
-
-class GeneralForms:
+class SkinViews:
     """ 
-    This mixin provides most of the main UI forms/views.
+    This mixin provides methods for accessing the main UI views.
 
-    Perhaps these should move to their respective modules.
+    These methods may be overridden by ZODB skin templates (page
+    templates, dtml methods, sometimes a File) of the same name,
+    otherwise will use the defaults on the filesystem.
     """
     security = ClassSecurityInfo()
 
@@ -393,27 +376,6 @@ class GeneralForms:
         if self.inCMF(): template = standard_wikipage
         else: template = self.getSkinTemplate('wikipage')
         return template
-        # backwards compatibility ? 
-        # make sure old customised templates still find the various
-        # macros, one way or another. Keep on humming little wikis.
-        # XXX at least for a few months; this is called a lot, but
-        # shouldn't be noticeable.
-        #def alias(old,new):
-        #    template.macros[old] = template.macros.get(
-        #        new,
-        #        standard_wikipage.macros[new])
-        #alias("head","head")
-        #alias("linkpanel","linkpanel")
-        #alias("navpanel","navpanel")
-        #alias("quickaccesskeys","accesskeys")
-        #alias("quicklinks","wikilinks")
-        #alias("editlinks","pagelinks")
-        #alias("logolink","logolink")
-        #alias("pagenameand","pagenameand")
-        #alias("pagename","pagenameand")
-        #alias("commentform","commentform")
-        #alias("pagemanagement","pagemanagementform")
-        #return template
 
     # backwards compatibility
     wikipage_view = wikipage
@@ -531,9 +493,6 @@ class GeneralForms:
         return self.editform(REQUEST,page or pagename,text,action='Create')
     
 
-#    security.declareProtected(Permissions.Edit,'xedit')
-#    def xedit(self): pass
-
     security.declareProtected(Permissions.View, 'subscribeform')
     def subscribeform(self, REQUEST=None):
         """
@@ -548,8 +507,7 @@ class GeneralForms:
         """
         return self.getSkinTemplate('recentchanges')(self,REQUEST)
 
-    # we call this searchwiki, not searchpage, and provide an alias
-    # change it back ?
+    # we call this searchwiki, not searchpage, for clarity
     security.declareProtected(Permissions.View, 'searchwiki')
     def searchwiki(self, REQUEST=None):
         """
@@ -557,7 +515,7 @@ class GeneralForms:
         """
         return self.getSkinTemplate('searchwiki')(self,REQUEST)
 
-    searchpage = searchwiki
+    searchpage = searchwiki # alias
 
     security.declareProtected(Permissions.View, 'useroptions')
     def useroptions(self, REQUEST=None):
@@ -565,27 +523,6 @@ class GeneralForms:
         Render the useroptions form (template-customizable).
         """
         return self.getSkinTemplate('useroptions')(self,REQUEST)
-
-    security.declareProtected(Permissions.View, 'issuetracker')
-    def issuetracker(self, REQUEST=None):
-        """
-        Render the issuetracker form (template-customizable).
-        """
-        return self.getSkinTemplate('issuetracker')(self,REQUEST)
-
-    security.declareProtected(Permissions.View, 'filterissues')
-    def filterissues(self, REQUEST=None):
-        """
-        Render the filterissues form (template-customizable).
-        """
-        return self.getSkinTemplate('filterissues')(self,REQUEST)
-
-    security.declareProtected(Permissions.View, 'issuebrowser')
-    def issuebrowser(self, REQUEST=None):
-        """
-        Render the issuebrowser form (template-customizable).
-        """
-        return self.getSkinTemplate('issuebrowser')(self,REQUEST)
 
     security.declareProtected(Permissions.View, 'editConflictDialog')
     def editConflictDialog(self):
@@ -709,10 +646,12 @@ class GeneralForms:
         p    previous edit
         """)
     
-InitializeClass(GeneralForms)
+InitializeClass(SkinViews)
 
 
 class UI(
-    UIUtils,
-    GeneralForms):
+    SkinUtils,
+    SkinSwitchingUtils,
+    SkinViews,
+    ):
     pass
