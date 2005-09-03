@@ -184,19 +184,20 @@ class SkinUtils:
         to help skin customizers. Still evolving, it will all shake
         out in the end.
         """
-        if not self.inCMF():
-            template = getattr(self.folder(), name,
-                       STANDARD_TEMPLATES.get(name,
-                       PLONE_TEMPLATES.get(name,
-                       None)))
-        else:
-            template = getattr(self.folder(), name,
-                       PLONE_TEMPLATES.get(name,
-                       STANDARD_TEMPLATES.get(name,
-                       None)))
-        if not isTemplate(template):
-            template = STANDARD_TEMPLATES['badtemplate']
-        return template.__of__(self)
+        # nb don't let a non-template shadow a template
+        obj = getattr(self.folder(), name, None)
+        if not isTemplate(obj):
+            if not self.inCMF():
+                obj = STANDARD_TEMPLATES.get(name,
+                      PLONE_TEMPLATES.get(name,
+                      None))
+            else:
+                obj = PLONE_TEMPLATES.get(name,
+                      STANDARD_TEMPLATES.get(name,
+                      None))
+        if not isTemplate(obj):
+            obj = STANDARD_TEMPLATES['badtemplate']
+        return obj.__of__(self)
 
     # XXX
     security.declareProtected(Permissions.View, 'addSkinTo')
