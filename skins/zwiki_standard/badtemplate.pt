@@ -2,18 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US" 
       i18n:domain="zwiki"
       tal:define="
-      title   string:${container/title} ${here/title_or_id};
-      macros  python:here.wikipage_template(request).macros;
-      ">
+                  title   string:${container/title} ${here/title_or_id};
+                  macros  python:here.wikipage_template(request).macros;
+                  ">
   <head metal:use-macro="macros/head">
     <title metal:fill-slot="title" tal:content="title" />
     <meta metal:fill-slot="searchtags" name="robots" content="noindex,nofollow" />
   </head>
-  <body bgcolor="#ffffff" i18n:translate="">
 
-There was a problem with one of this wiki's skin templates. There may be
-an object with a skin template ID that is not a Page Template or DTML
-Method, or the template may be missing.
+  <body bgcolor="#ffffff">
+    <p i18n:translate="">
+      There was a problem locating one of this wiki's skin templates.
+      There may be a page or other non-page-template/non-dtml-method object
+      with the same ID, obscuring the template. Or the template may be
+      missing on the filesystem (an incomplete Zwiki installation).
+    </p>
+  </body>
 
-</body>
 </html>
