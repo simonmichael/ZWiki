@@ -308,7 +308,7 @@ class AdminSupport:
         It doesn't check if dtml is enabled in the wiki, just
         creates the pages with the default page type.
         """
-        dir = package_home(globals()) + os.sep + 'skins' + os.sep + 'zwiki_dtml'
+        dir = package_home(globals()) + os.sep + 'skins' + os.sep + 'zwiki_standard'
         filenames = os.listdir(dir)
         for filename in filenames:
             m = re.search(r'(.+)\.(.+)',filename)

@@ -139,9 +139,9 @@ STANDARD_TEMPLATES = {
     'searchwiki'         : loadPageTemplate('searchwiki'),
     'useroptions'        : loadPageTemplate('useroptions'),
     # dtml versions which the above will usually use
-    'RecentChanges'      : loadDtmlMethod('RecentChanges','skins/zwiki_dtml'),
-    'SearchPage'         : loadDtmlMethod('SearchPage','skins/zwiki_dtml'),
-    'UserOptions'        : loadDtmlMethod('UserOptions','skins/zwiki_dtml'),
+    'RecentChanges'      : loadDtmlMethod('RecentChanges'),
+    'SearchPage'         : loadDtmlMethod('SearchPage'),
+    'UserOptions'        : loadDtmlMethod('UserOptions'),
 
     #fragments
     'subtopics_outline'  : loadDtmlMethod('subtopics_outline'),
