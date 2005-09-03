@@ -56,18 +56,21 @@ def registerPlugin(c):
     for i in range(len(PLUGINS)):
         if PLUGINS[i] == Null:
             PLUGINS[i] = c
-            BLATHER('registered plugin: %s' % name)
+            #BLATHER('registered %s plugin' % name)
             return
-    BLATHER('could not register plugin: %s, need more plugin slots!' % name)
+    BLATHER('could not register %s plugin, need more plugin slots!' % name)
 
-# import all modules in this directory so that each will register its plugin
-import os,glob
-modules = glob.glob(__path__[0] + os.sep + '*.py')
-modules.remove(__path__[0] + os.sep + '__init__.py')
-for file in modules:
-    file = os.path.splitext(os.path.basename(file))[0]
+# load plugins
+# import all modules and packages in this directory, each will register itself
+import os, re
+BLATHER('loading plugins:')
+plugins = [re.sub('.py$','',p) for p in os.listdir(__path__[0])
+           if not p.endswith('.pyc') 
+           and not p in ('__init__.py','README')]
+for p in plugins:
     try:
-        __import__('Products.ZWiki.plugins.%s' % file)
+        __import__('Products.ZWiki.plugins.%s' % p)
+        BLATHER('loaded %s plugin' % p)
     except:
-        BLATHER('could not install %s plugin, skipping it (traceback follows)\n%s' % (
-            file, formattedTraceback()))
+        BLATHER('could not load %s plugin, skipping (traceback follows)\n%s' % (
+            p, formattedTraceback()))
