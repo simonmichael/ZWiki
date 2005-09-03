@@ -84,11 +84,19 @@ def install(self):
     # Now we need to go through the skin configurations and insert
     # 'zwiki_plone'.  Preferably, this should be right before where
     # 'content' is placed.  Otherwise, we append it to the end.
+
+    # NB zwiki sometimes uses its built-in skin lookup to find helper
+    # templates, searching both zwiki_ layers regardless of what's in
+    # portal_skins - possible source of confusion for customizers
+    # here. Should we add zwiki_standard to portal_skins for clarity ?
+    # I guess so (but after zwiki_plone if already there, not custom)
+    #XXX for dir in ('zwiki_standard','zwiki_plone'):
+    
     skins = skinstool.getSkinSelections()
     for skin in skins:
         path = skinstool.getSkinPath(skin)
         path = map(string.strip, string.split(path,','))
-        for dir in ('zwiki_plone',):
+        for dir in ('zwiki_plone'):
             if not dir in path:
                 try:
                     idx = path.index('custom')
