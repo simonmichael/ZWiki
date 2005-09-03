@@ -4,7 +4,7 @@ from urllib import quote, unquote
 
 from Products.ZWiki.Utils import BLATHER, html_quote, html_unquote, formattedTraceback, \
      ZOPEVERSION
-from Products.ZWiki.plugins.PurpleNumbers import add_purple_numbers_to
+from Products.ZWiki.plugins.purplenumbers import add_purple_numbers_to
 from Products.ZWiki.Regexps import dtmlorsgmlexpr, footnoteexpr
 from Products.ZWiki.I18nSupport import _
 

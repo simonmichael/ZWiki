@@ -204,6 +204,6 @@ dtmlorsgmlexpr = r'(%s|%s|%s)' % (dtmltag,simplesgmltag,dtmlentity)
 fromlineexpr = r'(?m)(?:^|\n\n)From \s*[^\s]+\s+\w\w\w\s+\w\w\w\s+\d?\d\s+\d?\d:\d\d(:\d\d)?(\s+[^\s]+)?\s+\d\d\d\d\s*$'
 
 # NIDs embedded in page source
-# used in PurpleNumbers.py
+# used in purplenumbers.py
 nidexpr = r'\s*({nid (?P<nid>[0-9A-z]+?)})'
 

@@ -1,5 +1,5 @@
 from Products.ZWiki.tests.support import *
-from Products.ZWiki.plugins.PurpleNumbers import nidexpr
+from Products.ZWiki.plugins.purplenumbers import nidexpr
 
 class PurpleNumbersTests(unittest.TestCase):
     def setUp(self):

@@ -25,8 +25,8 @@ def hasFitTests(self):
     return re.search(r'([Ff]ixtures|\bfit)\.\w',self.read()
                      ) is not None
 
-# fit may not be installed, but we need to provide a stub class at least
-# (will not be installed.. should this be mothballed ?
+# fit may not be installed, but we need to provide a stub class 
+# for the moment IIRC
 try:
     from fit.Parse import Parse
     from fit.Parse import ParseException
