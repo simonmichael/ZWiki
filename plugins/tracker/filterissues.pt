@@ -17,7 +17,7 @@
     </div>
 
     <div class="formcontent" tal:content="structure 
-	python:here.getSkinTemplate('FilterIssues')(here,request);">
+	python:here.getSkinTemplate('FilterIssues')(here,request)">
 	content goes here..
     </div>
 
