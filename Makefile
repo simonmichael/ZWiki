@@ -23,24 +23,6 @@ CURL=curl -o.curllog -sS -n
 
 default: test
 
-# regenerate dtml-based templates
-CLEAN=perl -p -e "s/(?s)^\#parents:.*?\n//;"
-dtml:
-	@echo regenerating dtml-based skin templates from pages
-	$(CLEAN) content/dtml/RecentChanges.stxdtml \
-	  >skins/zwiki_standard/recentchangesdtml.dtml
-	$(CLEAN) content/dtml/SearchPage.stxdtml \
-	  >skins/zwiki_standard/searchwikidtml.dtml
-	$(CLEAN) content/dtml/UserOptions.stxdtml \
-	  >skins/zwiki_standard/useroptionsdtml.dtml
-	$(CLEAN) plugins/tracker/IssueTracker.stxdtml \
-	  >skins/zwiki_standard/issuetrackerdtml.dtml
-	$(CLEAN) plugins/tracker/FilterIssues.stxdtml \
-	  >skins/zwiki_standard/filterissuesdtml.dtml
-	$(CLEAN) plugins/tracker/IssueBrowser.stxdtml \
-	  >skins/zwiki_standard/issuebrowserdtml.dtml
-	cp skins/zwiki_standard/{recentchanges,searchwiki,useroptions,issuetracker,filterissues,issuebrowser}dtml.dtml skins/zwiki_plone
-
 epydoc:
 	PYTHONPATH=/zope/lib/python \
 	 epydoc --docformat restructuredtext \
