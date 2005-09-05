@@ -1,7 +1,7 @@
 # TrackerSupport mixin
 
 from __future__ import nested_scopes
-import os, string, re
+import os, string, re, os.path
 from string import join, split, strip
 from types import *
 
@@ -508,11 +508,11 @@ class TrackerSupport:
         self.upgradeFolderIssueProperties()
         # dtml pages,
         if pages:
-            dir = package_home(globals())+os.sep+'tracker'+os.sep
+            dir = package_home(globals())
             for page in ['IssueTracker','FilterIssues','IssueBrowser']:
                 if not self.pageWithName(page):
                     self.create(page,
-                                text=open(dir+page+'.stxdtml','r').read(),
+                                text=open(os.path.join(dir,page+'.dtml'),'r').read(),
                                 sendmail=0)
             # also, disable subtopics display under IssueTracker
             self.IssueTracker.setSubtopicsPropertyStatus(0)
