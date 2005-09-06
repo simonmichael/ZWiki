@@ -22,7 +22,7 @@
 <form method="GET" action="http://www.google.com/custom">
   google search this wiki:<br />
   <input type="hidden" name="sitesearch"  value="<dtml-var "wikiUrl().split('/')[2]">" />
-  <input type="hidden" name="cof" VALUE="L:&dtml-SERVER_URL;/misc_/ZWiki/ZWikiPage_icon.gif"" />
+  <input type="hidden" name="cof" VALUE="L:&dtml-SERVER_URL;misc_/ZWiki/ZWikiPage_icon.gif"" />
   <input type="hidden" name="site" value="<dtml-var "wikiUrl().split('/')[2]">" />
   <input type="text" size="20" name="q" value="<dtml-var expr html_quote missing>" 
   /><input type="submit" VALUE="Search" />

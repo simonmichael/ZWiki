@@ -33,8 +33,8 @@
            value repeat/vote;
            name  repeat/vote;
            alt   repeat/vote;
-           src   python:(rating>=vote) and '/misc_/ZWiki/star_icon' 
-                                        or '/misc_/ZWiki/blank_star_icon';
+           src   python:(rating>=vote) and 'misc_/ZWiki/star_icon' 
+                                        or 'misc_/ZWiki/blank_star_icon';
            ">
    <input 
        type="image" name="vote0" value="0" alt="0"  class="rating"
@@ -43,28 +43,28 @@
                        title python:mouseovertitle('0');"
    /><input 
        type="image" name="vote1" value="1" alt="1"  class="rating"
-       tal:attributes="src python:(rating >= 1) and '/misc_/ZWiki/star_icon' 
-                                                  or '/misc_/ZWiki/blank_star_icon';
+       tal:attributes="src python:(rating >= 1) and 'misc_/ZWiki/star_icon' 
+                                                  or 'misc_/ZWiki/blank_star_icon';
                        title python:mouseovertitle('1');"
    /><input 
        type="image" name="vote2" value="2" alt="2"  class="rating"
-       tal:attributes="src python:(rating >= 2) and '/misc_/ZWiki/star_icon' 
-                                                 or '/misc_/ZWiki/blank_star_icon';
+       tal:attributes="src python:(rating >= 2) and 'misc_/ZWiki/star_icon' 
+                                                 or 'misc_/ZWiki/blank_star_icon';
                        title python:mouseovertitle('2');"
    /><input 
        type="image" name="vote3" value="3" alt="3" class="rating"
-       tal:attributes="src python:(rating >= 3) and '/misc_/ZWiki/star_icon' 
-                                                 or '/misc_/ZWiki/blank_star_icon';
+       tal:attributes="src python:(rating >= 3) and 'misc_/ZWiki/star_icon' 
+                                                 or 'misc_/ZWiki/blank_star_icon';
                        title python:mouseovertitle('3');"
    /><input 
        type="image" name="vote4" value="4" alt="4" class="rating"
-       tal:attributes="src python:(rating >= 4) and '/misc_/ZWiki/star_icon' 
-                                                 or '/misc_/ZWiki/blank_star_icon';
+       tal:attributes="src python:(rating >= 4) and 'misc_/ZWiki/star_icon' 
+                                                 or 'misc_/ZWiki/blank_star_icon';
                        title python:mouseovertitle('4');"
    /><input 
        type="image" name="vote5" value="5" alt="5" class="rating"
-       tal:attributes="src python:(rating >= 5) and '/misc_/ZWiki/star_icon' 
-                                                 or '/misc_/ZWiki/blank_star_icon';
+       tal:attributes="src python:(rating >= 5) and 'misc_/ZWiki/star_icon' 
+                                                 or 'misc_/ZWiki/blank_star_icon';
                        title python:mouseovertitle('5');"
    />
 </form>
