@@ -1,7 +1,7 @@
 ######################################################################
 # create wikis from templates
 
-import os, re, string, urllib
+import os, os.path, re, string, urllib
 
 from Globals import package_home
 from OFS.Folder import Folder
@@ -83,22 +83,22 @@ def addZWikiWebFromZodb(self,new_id, new_title='', wiki_type='zwikidotorg',
 def addZWikiWebFromFs(self, new_id, title='', wiki_type='zwikidotorg',
                       REQUEST=None):
     """
-    Create a new zwiki web from the specified template on the filesystem
-
+    Create a new zwiki web from the specified template on the filesystem.
     """
-    try:
-        from BTreeFolder2.BTreeFolder2 import manage_addBTreeFolder
-        self.manage_addBTreeFolder(str(new_id),str(title))
-        ob = self[new_id]
-    except:
-        ob = Folder()
-        ob.id=str(new_id)
-        ob.title=str(title)
-        id = self._setObject(ob.id, ob)
-        ob = getattr(self, id)
-    dir = package_home(globals()) + os.sep + 'wikis' + os.sep + wiki_type
+    parent = self.Destination()
+    # Go with a BTreeFolder from the start to avoid hassle with large
+    # wikis on low-memory hosted servers. The standard folder's UI is more
+    # useful while the wiki is small, alas.
+    # f = Folder()
+    # f.id, f.title = str(new_id), str(title)
+    # new_id = parent._setObject(f.id, f)
+    parent.manage_addProduct['BTreeFolder2'].manage_addBTreeFolder(
+        str(new_id),str(title))
+    f = parent[new_id]
+    # add objects from wiki template
+    # cataloging really slows this down!
+    dir = os.path.join(package_home(globals()),'wikis',wiki_type)
     filenames = os.listdir(dir)
-    # hmm auto-cataloging is really slowing this down!
     for filename in filenames:
         if re.match(r'(?:\..*|CVS|_darcs)', filename): continue
         m = re.search(r'(.+)\.(.+)',filename)
@@ -106,23 +106,23 @@ def addZWikiWebFromFs(self, new_id, title='', wiki_type='zwikidotorg',
         if m: id, type = m.groups()
         text = open(dir + os.sep + filename, 'r').read()
         if type == 'dtml':
-            _addDTMLMethod(ob, filename[:-5], title='', file=text)
+            _addDTMLMethod(f, filename[:-5], title='', file=text)
         elif re.match(r'(?:(?:stx|html|latex)(?:dtml)?|txt)', type):
-            _addZWikiPage(ob,id,title='',page_type=type,file=text)
+            _addZWikiPage(f,id,title='',page_type=type,file=text)
         elif type == 'pt':
-            ob._setObject(id, ZopePageTemplate(id, text, 'text/html'))
+            f._setObject(id, ZopePageTemplate(id, text, 'text/html'))
         elif type == 'py':
-            ob._setObject(id, PythonScript(id))
-            ob._getOb(id).write(text)
+            f._setObject(id, PythonScript(id))
+            f._getOb(id).write(text)
         elif type == 'zexp' or type == 'xml':
             connection = self.getPhysicalRoot()._p_jar
-            ob._setObject(id, connection.importFile(dir + os.sep + filename, 
+            f._setObject(id, connection.importFile(dir + os.sep + filename, 
                 customImporters=customImporters))
             #self._getOb(id).manage_changeOwnershipType(explicit=0)
         elif re.match(r'(?:jpe?g|gif|png)', type):
-            ob._setObject(id, Image(id, '', text))
+            f._setObject(id, Image(id, '', text))
         else:
-            ob._setObject(id, File(id, '', text))
+            f._setObject(id, File(id, '', text))
 
 def _addDTMLMethod(self, id, title='', file=''):
     id=str(id)
