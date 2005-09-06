@@ -8,9 +8,10 @@ from string import split,join,find,lower,rfind,atoi,strip
 from App.Common import rfc1123_date
 from AccessControl import getSecurityManager, ClassSecurityInfo
 import Permissions
+from OFS.Image import File
 from Globals import InitializeClass, MessageDialog
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from OFS.Image import File
+from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from Products.PageTemplates.Expressions import SecureModuleImporter
 
 from Defaults import PAGE_METATYPE, DEFAULT_DISPLAYMODE
@@ -21,13 +22,18 @@ from I18nSupport import _, DTMLFile, HTMLFile
 
 # utilities
 
+THISDIR = os.path.split(os.path.abspath(__file__))[0]
+
 def loadPageTemplate(name,dir='skins/zwiki_standard'):
     """
     Load the named page template from the filesystem.
     """
-    return PageTemplateFile(os.path.join(dir,'%s.pt'%name),
-                            globals(),
-                            __name__=name)
+    return ZopePageTemplate(
+        name,
+        open(os.path.join(THISDIR,dir,'%s.pt'%name),'r').read())
+    #return PageTemplateFile(os.path.join(dir,'%s.pt'%name),
+    #                        globals(),
+    #                        __name__=name)
 
 def loadDtmlMethod(name,dir='skins/zwiki_standard'):
     """
@@ -44,8 +50,7 @@ def loadStylesheetFile(name,dir='skins/zwiki_standard'):
     """
     Load the stylesheet File from the filesystem. Also fix a mod. time bug.
     """
-    thisdir = os.path.split(os.path.abspath(__file__))[0]
-    filepath = os.path.join(thisdir,dir,name)
+    filepath = os.path.join(THISDIR,dir,name)
     data,mtime = '',0
     try:
         fp = open(filepath,'rb')
