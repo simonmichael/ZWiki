@@ -96,7 +96,7 @@ def install(self):
     for skin in skins:
         path = skinstool.getSkinPath(skin)
         path = map(string.strip, string.split(path,','))
-        for dir in ('zwiki_plone'):
+        for dir in ['zwiki_plone']:
             if not dir in path:
                 try:
                     idx = path.index('custom')
