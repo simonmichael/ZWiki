@@ -13,7 +13,7 @@
       Issue browser
     </h1>
  
-    <span tal:replace="structure python:here.getSkinTemplate('FilterIssues')(here,request)">
+    <span tal:replace="structure python:here.getSkinTemplate('IssueBrowser')(here,request)">
       content goes here..
     </span>
     
