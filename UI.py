@@ -25,24 +25,9 @@ def loadPageTemplate(name,dir='skins/zwiki_standard'):
     """
     Load the named page template from the filesystem.
     """
-    # hack PageTemplateFile templates to see the folder as their container,
-    # like their zodb counterparts do. Some simpler way to do this ?
-    class MyPTFile(PageTemplateFile):
-        def pt_getContext(self):
-            root = self.getPhysicalRoot()
-            c = {'template': self,
-                 'here': self.aq_inner.aq_parent,
-                 'container': self.aq_inner.aq_parent.aq_parent,
-                 'nothing': None,
-                 'options': {},
-                 'root': root,
-                 'request': getattr(root, 'REQUEST', None),
-                 'modules': SecureModuleImporter,
-                 }
-            return c
-    pt = MyPTFile(os.path.join(dir,'%s.pt'%name), globals(), __name__=name)
-    pt._cook_check() # ensure _text is there, we peek at it below    
-    return pt
+    return PageTemplateFile(os.path.join(dir,'%s.pt'%name),
+                            globals(),
+                            __name__=name)
 
 def loadDtmlMethod(name,dir='skins/zwiki_standard'):
     """
