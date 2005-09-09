@@ -9,7 +9,6 @@ from AccessControl import getSecurityManager, ClassSecurityInfo
 from Globals import package_home, InitializeClass
 from OFS.CopySupport import CopyError
 from OFS.DTMLMethod import DTMLMethod
-from App.Common import absattr
 from DateTime import DateTime
 
 from I18nSupport import _

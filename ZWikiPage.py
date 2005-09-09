@@ -82,6 +82,7 @@ from pagetypes.common import MIDSECTIONMARKER
 from pagetypes.stx import ZwikiStxPageType
 from plugins import PLUGINS
 
+DEFAULT_PAGETYPE = PAGETYPES[0]
 
 class ZWikiPage(
     EditingSupport, # use our ftp/dav methods, not DTMLDocument's
@@ -169,26 +170,31 @@ class ZWikiPage(
     last_edit_time = ''
     last_log = ''
     PAGE_TYPES = PAGE_TYPES # used by skin templates
-    
     # page_type used to be a string used to select a render method. 
     # As of 0.25 it is an object which encapsulates the page's formatting
     # behaviour. It will return the old id string when called, which
     # should keep existing catalogs working.
-    page_type = PAGETYPES[0]()
+    page_type = DEFAULT_PAGETYPE()
+
     # XXX page_type's are separate instances - use class or singleton instance ?
     def setPageType(self,id=None): self.page_type = self.lookupPageType(id)()
     security.declarePublic('pageType') # useful for troubleshooting
     def pageType(self):
         """Return this page's page type object."""
+        # check for page type problems
+        # I'd rather do this in upgrade(), but need to make
+        # sure the page is always viewable
+        # old-style page type string ?
         if type(self.page_type) == StringType:
-            # I'd rather do this check in upgrade(), but someone 
-            # might need this before the page gets viewed
             BLATHER('upgraded page_type attribute of '+self.id())
             self.setPageType(self.page_type)
+        # page type whose plugin is no longer installed ?
+        elif not hasattr(self.page_type,'render'):
+            self.setPageType(DEFAULT_PAGETYPE)
         return self.page_type
     def lookupPageType(self,id=None):
         match = filter(lambda x:x._id==id,PAGETYPES)
-        return (match and match[0]) or PAGETYPES[0]
+        return (match and match[0]) or DEFAULT_PAGETYPE
     security.declarePublic('pageType') # useful for troubleshooting
     def pageTypeId(self):
         """Return the short id for this page's page type."""
