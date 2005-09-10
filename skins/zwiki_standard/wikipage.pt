@@ -31,6 +31,10 @@
     <link rel="stylesheet" type="text/css" href="" 
           tal:attributes="href string:${here/defaultPageUrl}/stylesheet" 
           />
+    <span metal:define-macro="favicon" tal:condition="container/favicon|nothing" tal:omit-tag="">
+    <link rel="shortcut icon" href="favicon"/>
+    <link rel="icon" href="favicon"/>
+    </span>
     <title metal:define-slot="title"
            tal:content="string:${container/title} ${here/pageName}">
       page title
