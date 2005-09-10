@@ -476,7 +476,7 @@ class OutlineManagerMixin:
 
     # queries returning nestings (lists-of-lists) - a low-level
     # representation of all or part of the wiki outline, which can be
-    # processed by certain render methods. See also renderNestingX's
+    # processed by certain render methods. See also nestingAsRenderList's
     # docstring.
 
     def ancestorsNesting(self):
@@ -637,7 +637,6 @@ class OutlineRenderingMixin:
         here = (here and unquote(here)) or self.pageName()
         return self.contentspage(
             self.renderNesting(combos, here),
-            #self.renderNestingX(combos, here),  # dan's skinnable version
             singletons,
             REQUEST=REQUEST)
 
@@ -695,29 +694,19 @@ class OutlineRenderingMixin:
     security.declareProtected(Permissions.View, 'contextX')
     def contextX(self, REQUEST=None, with_siblings=0):
         """
-        Return this page's context as nesting structure in a dictionary.
+        Return this page's context information as a skin-renderable structure.
 
-        Like context, but allows a skin template to control the rendering,
+        Like context, but allows a skin template to control the rendering.
+        See nestingAsRenderList.
         """
-        # get the nesting structure
-        here = self.pageName()
         if with_siblings:
-            #nesting = WikiNesting(self.folder()).get_up_and_back(here)
             nesting = self.ancestorsAndChildrenNesting()
         else:
-            # why does the above require a nesting and not this one ?
-            # nesting = self.get_ancestors()
-            #nesting = WikiNesting(self.folder()).get_ancestors(here,self)
             nesting = self.ancestorsNesting()
-            # XXX looks like cruft
-            #if (len(nesting) == 0  or
-            #    (len(nesting) == 1 and len(nesting[0]) == 1)):
-            #    return {'contentsUrl':self.contentsUrl(),
-            #        'hierarchy':{}}
 
-        # format and link it
         # backwards compatibility: in case of an old editform template
         # which shows context, include the new page name at the bottom (unlinked)
+        here = self.pageName()
         if REQUEST.has_key('page') and REQUEST['page'] is not here:
             here = REQUEST['page']
             nesting = deepappend(nesting, here)
@@ -725,17 +714,15 @@ class OutlineRenderingMixin:
         else:
             suppress_hyperlink=0
 
-        hierarchy = self.renderNestingX( nesting, here )
-            
+        # convert to a render list
+        renderlist = self.nestingAsRenderList(nesting, here)
         # special case: if parent seems to be missing, reset XXX
-        if len(hierarchy) == 2 :
+        if len(renderlist) == 2 :
             self.setParents([])
             self.index_object()
-            hierarchy = self.renderNestingX(
-                nesting, here)
-                
-        # if a SiteMap page exists, point the contents link there
-        return {'contentsUrl':self.contentsUrl(), 'hierarchy':hierarchy}
+            renderlist = self.nestingAsRenderList(nesting, here)
+
+        return {'contentsUrl':self.contentsUrl(), 'hierarchy':renderlist}
 
     security.declareProtected(Permissions.View, 'children')
     def children(self):
@@ -817,10 +804,13 @@ class OutlineRenderingMixin:
           (backwards compatibility for old editforms)
         - if suppress_current is true, here will not be shown at all
         - did, got & indent are for recursion, callers should not use
-
+        
+        Do we need all this complicated code, can't we do it in the skin
+        template ? I think so, except for two issues: for very large
+        nestings the python version might be perceptibly quicker; and,
+        it's easier to recurse with python. See also nestingAsRenderList. 
         """
         #XXX cleanup
-        
         if suppress_current and nesting[0] == here: # a single childless page
             return ''
         if did is None: did = []
@@ -889,8 +879,9 @@ class OutlineRenderingMixin:
         """
         Convert a nesting structure to a skin-renderable intermediate form.
 
-        I'll call it a render list.  This was renderNestingX in Dan
-        McMullen's skin refactoring (http://zwiki.org/WikipageX).
+        This was renderNestingX in Dan McMullen's skin refactoring
+        (http://zwiki.org/WikipageX). The intermediate form is a flat list
+        which a skin template can render without needing recursion.
 
         Example: a chunk of page hierarchy like::
 
@@ -921,7 +912,6 @@ class OutlineRenderingMixin:
         which can be rendered by some TAL like::
 
           <span tal:define="ctx python: here.contextX(request)">
-          <small>
             <a href="contentsUrl" title="show wiki contents" accesskey="c"
               tal:attributes="href ctx/contentsUrl"
               tal:content="python: container.title + ' contents'">contents</a>
@@ -945,10 +935,9 @@ class OutlineRenderingMixin:
               <span tal:condition="python: '-' in ii['type']"
                 tal:replace="structure string:</ul>">ultag</span>
             </span>
-          </small>
           </span>
-        
         """
+
         if suppress_current and nesting[0] == here: # a single childless page
             return []
         if did is None: did = []
@@ -967,7 +956,7 @@ class OutlineRenderingMixin:
                         got.append( {'type':'+'} )
                     for i in n[1:]:
                         if type(i) == ListType:
-                            got = self.renderNestingX(
+                            got = self.nestingAsRenderList(
                                 [i],here,did=did,got=got,indent=indent+' ')
                         else:
                             t = (i==here and '=!' or '=')
