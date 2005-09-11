@@ -62,18 +62,33 @@ class Utils:
 
     def summary(self,size=200,paragraphs=1):
         """
-        Give a short summary of this page's content.
+        Give a short plaintext summary of this page's content.
 
-        Take the first N paragraphs of the document part; cut to size
-        characters & replace the last word with ellipsis if necessary.
+        We generate this by excerpting the first paragraph.
+        Specifically, we take the page's document part, strip html tags,
+        and return up to the specified number of characters or paragraphs,
+        replacing the last word with an ellipsis if we had to truncate.
         """
         size, paragraphs = int(size), int(paragraphs)
         t = self.documentPart()
+        t = re.sub(r'<(?=\S)[^>]+>','',t).strip() # strip html tags
         if paragraphs: t = join(split(t,'\n\n')[:paragraphs],'\n\n')
         if len(t) > size:
             t = t[:size]
             t = re.sub(r'\w*$',r'',t) + '...'
         return html_quote(t)
+
+    def renderedSummary(self,size=500,paragraphs=1):
+        """
+        Give a summary of this page's content, as rendered html.
+
+        Similar to summary(), but this one tries to apply the page's
+        formatting rules and do wiki linking. We remove any enclosing <p>.
+        """
+        return re.sub(r'(?si)^<p>(.*)</p>\n?$', r'\1',
+            self.renderLinksIn(
+            self.pageType().format(
+            self.summary(size=size, paragraphs=paragraphs))))
 
     security.declareProtected(Permissions.View, 'excerptAt')
     def excerptAt(self, expr, size=100, highlight=1, text=None):
