@@ -34,7 +34,7 @@ class ZwikiMoinPageType(AbstractPageType):
         t = text or (page.document()+'\n'+MIDSECTIONMARKER+\
                      self.preRenderMessages(page))
         t = page.applyWikiLinkLineEscapesIn(t)
-        t = self.renderMoinIn(t)
+        t = self.format(t)
         if page.usingPurpleNumbers(): t = page.renderPurpleNumbersIn(t)
         t = page.markLinksIn(t)
         t = self.protectEmailAddresses(page,t)
@@ -50,7 +50,7 @@ class ZwikiMoinPageType(AbstractPageType):
         t = page.addSkinTo(t,**kw)
         return t
 
-    def renderMoinIn(self,t):
+    def format(self,t):
         # moin assumes utf-8 everwhere, like zwiki (except where we can't,
         # see moin_support)
         return render_moin_markup(unicode(t,'utf-8')).encode('utf-8')

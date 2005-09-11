@@ -16,9 +16,9 @@ class ZwikiStxPageType(AbstractHtmlPageType):
     supportsHtml = yes
     supportsDtml = yes
 
-    def renderStxIn(self,page,t):
+    def format(self,t):
         """
-        Render some Structured Text into HTML, with our customizations.
+        Render some Structured Text as HTML, and apply some fixups.
         """
         t = str(t)        
         if ZOPEVERSION < (2,4):
@@ -47,8 +47,10 @@ class ZwikiStxPageType(AbstractHtmlPageType):
                     MyDocumentWithImages(StructuredText.Basic(t)),
                     level=2)
         except:
-            BLATHER('Structured Text rendering failed on page %s: %s' \
-                 % (page.id(),formattedTraceback()))
+            #BLATHER('Structured Text rendering failed on page %s: %s' \
+            #     % (page.id(),formattedTraceback()))
+            BLATHER('Structured Text rendering failed: %s' \
+                 % (formattedTraceback()))
             return '<pre>Structured Text rendering failed:\n%s</pre>' \
                    % (formattedTraceback())
         # clean up
@@ -72,7 +74,7 @@ class ZwikiStxPageType(AbstractHtmlPageType):
         t = text or (page.document()+'\n'+MIDSECTIONMARKER+ \
                      self.preRenderMessages(page))
         t = page.applyWikiLinkLineEscapesIn(t)
-        t = self.renderStxIn(page, t)
+        t = self.format(t)
         if page.usingPurpleNumbers(): t = page.renderPurpleNumbersIn(t)
         t = page.markLinksIn(t)
         t = self.protectEmailAddresses(page,t)

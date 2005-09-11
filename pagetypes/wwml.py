@@ -11,11 +11,14 @@ class ZwikiWwmlPageType(AbstractPageType):
     supportsWwml = yes
     supportsWikiLinks = yes
 
+    def format(self,t):
+        return translate_WWML(html_quote(t))
+
     def preRender(self, page, text=None):
         t = text or (page.document()+'\n'+MIDSECTIONMARKER+\
                      self.preRenderMessages(page))
         t = page.applyWikiLinkLineEscapesIn(t)
-        t = self.renderWwmlIn(t)
+        t = self.format(t)
         if page.usingPurpleNumbers(): t = page.renderPurpleNumbersIn(t)
         t = page.markLinksIn(t)
         t = self.protectEmailAddresses(page,t)
@@ -30,9 +33,6 @@ class ZwikiWwmlPageType(AbstractPageType):
         t = page.renderMidsectionIn(t,**kw)
         t = page.addSkinTo(t,**kw)
         return t
-
-    def renderWwmlIn(self,t):
-        return translate_WWML(html_quote(t))
 
 
 class WWMLTranslator :

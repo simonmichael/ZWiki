@@ -1242,23 +1242,23 @@ class ZWikiPage(
     ######################################################################
     # backwards compatibility
 
-    # CMF compatibility
-    view = __call__
-    SearchableText = EditingSupport.text
-    # old API methods for skin templates
-    # are security declarations necessary here ?
+    # API methods for old skin templates
+    # need security declarations here ?
     security.declareProtected(Permissions.View, 'quickcomment')
     quickcomment = slowcomment = EditingSupport.comment
     security.declareProtected(Permissions.View, 'stxToHtml')
-    def stxToHtml(self,t): return ZwikiStxPageType().renderStxIn(self,t)
+    stxToHtml = ZwikiStxPageType().format
     src = EditingSupport.text
     editTimestamp = EditingSupport.timeStamp
     checkEditTimeStamp = EditingSupport.checkEditConflict
-    #security.declareProtected(Permissions.View, 'wiki_page_url') # XXX need ?
     wiki_page_url = Utils.page_url
     wiki_base_url = Utils.wiki_url
     zwiki_username_or_ip = Utils.usernameFrom
     applyLineEscapesIn = applyWikiLinkLineEscapesIn 
+
+    # CMF compatibility
+    view = __call__
+    SearchableText = EditingSupport.text
 
 
 InitializeClass(ZWikiPage)

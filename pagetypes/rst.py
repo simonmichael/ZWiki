@@ -26,9 +26,9 @@ class ZwikiRstPageType(AbstractPageType):
     supportsRst = yes
     supportsWikiLinks = yes
 
-    def renderRstIn(self, t, rst_report_level=RST_REPORT_LEVEL):
+    def format(self, t):
         if reStructuredText:
-            return reStructuredText.HTML(t,report_level=rst_report_level)
+            return reStructuredText.HTML(t,report_level=RST_REPORT_LEVEL)
         else:
             return "<pre>Error: could not import reStructuredText</pre>\n"+t
 
@@ -36,10 +36,7 @@ class ZwikiRstPageType(AbstractPageType):
         t = text or (page.document()+'\n'+MIDSECTIONMARKER+ \
                      self.preRenderMessages(page))
         t = page.applyWikiLinkLineEscapesIn(t)
-        # the next two lines would make the rst_report_level customizable per folder:
-        #rst_report_level = getattr(page.folder(),"rst_report_level",0)
-        #t = self.renderRstIn(t,rst_report_level)
-        t = self.renderRstIn(t)
+        t = self.format(t)
         if page.usingPurpleNumbers(): t = page.renderPurpleNumbersIn(t)
         t = page.markLinksIn(t)
         t = self.protectEmailAddresses(page,t)

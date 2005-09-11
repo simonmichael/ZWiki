@@ -6,12 +6,12 @@ class ZwikiPlaintextPageType(AbstractPageType):
     _id = 'plaintext'
     _name = 'Plain text'
 
-    def renderPlaintextIn(self,t):
+    def format(self,t):
         return "<pre>\n%s\n</pre>\n" % html_quote(t)
 
     def preRender(self, page, text=None):
         t = text or page.read()
-        t = self.renderPlaintextIn(t)
+        t = self.format(t)
         if not text: t += '\n'+MIDSECTIONMARKER
         t = self.protectEmailAddresses(page,t)
         return t

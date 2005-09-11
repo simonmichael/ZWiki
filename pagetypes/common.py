@@ -49,11 +49,19 @@ class AbstractPageType:
                                            self.name(),
                                            hex(id(self))[2:])
 
+    def format(self,text):
+        """
+        Apply the text formatting rules of this page type, if any.
+
+        Eg for the stx page type, apply the structured text rules.
+        """
+        return text
+
     def preRender(self,page,text=None):
         """
         Do all the pre-rendering we can for page, or for a piece of text.
         """
-        return text or page.read()
+        return self.format(text or page.read())
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):
         """
