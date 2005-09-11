@@ -84,10 +84,10 @@ def initialize(context):
             CMFInit.initialize(context)
         except ImportError:
             pass
-        # also register skin dirs with FileSystemSite if installed
+        # register skin as customizable dir if FileSystemSite is installed
         try:
             from Products.FileSystemSite.DirectoryView import registerDirectory
-            registerDirectory('skins', globals())
+            registerDirectory('skins/zwiki_standard', globals())
         except ImportError:
             pass
         # auto-install extra wiki templates to zodb
