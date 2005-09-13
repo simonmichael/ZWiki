@@ -58,7 +58,7 @@ from OFS.SimpleItem import SimpleItem
 
 import Permissions
 from Utils import flatten, BLATHER
-from Defaults import PAGE_METATYPE, SHOW_CURRENT_PAGE_IN_CONTENTS
+from Defaults import PAGE_METATYPE
 from Regexps import bracketedexpr
 import Outline
 
@@ -857,7 +857,8 @@ class OutlineRenderingMixin:
                                _("which pages link to this one ?"),
                                self.formatWikiname(self.pageName())),
                            t)
-            elif SHOW_CURRENT_PAGE_IN_CONTENTS:
+            else:
+                # highlight current page
                 t = re.sub(r'(\[%s\])' % re.escape(here),
                            r'\1 <b><-- %s.</b>' % _("You are here"),
                            t)

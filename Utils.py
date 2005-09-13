@@ -25,8 +25,7 @@ except:
     ZOPEVERSION = (9,9,9) # (cvs)
 
 from Products.ZWiki import __version__
-from Defaults import PREFER_USERNAME_COOKIE, PAGE_METADATA, \
-     SHOW_CURRENT_PAGE_IN_CONTENTS
+from Defaults import PREFER_USERNAME_COOKIE, PAGE_METADATA
 import Permissions
 from I18nSupport import _
 
@@ -313,29 +312,17 @@ class Utils:
         return self.urlForPageOrDefault('FrontPage',self.wikiUrl())
 
     security.declareProtected(Permissions.View, 'contentsUrl')
-    def contentsUrl(self):
+    def contentsUrl(self, scroll=1):
         """
         Return the url of zwiki's contents method.
         
-        We used to put the current page name as a target and scroll there,
-        but in a large public wiki that generates a lot of unique
-        expensive urls for robots. I'm assuming robots are too dumb
-        not to crawl both url#target1 and url#target2.
-
-        Pre 0.45 we allowed a wiki page named SiteMap to override Zwiki's
-        contents view, now we don't bother.
-
-        Perhaps the contents method could check HTTP_REFERER and do a
-        redirect, only if you are a human with a cookie ? brrr, confusing..
-        There's something to be said for not having the contents scroll
-        out from under you anyhow. Try without it for a bit.
-        
+        By default we put the current page name as a target and scroll
+        there, note in a large public wiki that generates a lot of unique
+        urls for robots, if robots are dumb enough to crawl both
+        url#target1 and url#target2.
         """
-        if SHOW_CURRENT_PAGE_IN_CONTENTS:
-            quotedname = quote(self.pageName())
-            return '%s/contents#%s' % (self.page_url(),quotedname)
-        else:
-            return self.defaultPageUrl() + '/contents'
+        return self.defaultPageUrl() + '/contents' + \
+               (scroll and ('#%s' % quote(self.pageName())) or '')
 
     security.declareProtected(Permissions.View, 'changesUrl')
     def changesUrl(self):
