@@ -9,11 +9,12 @@
     num="_.len(issue_categories)"
     itemsbeginningwith="lambda x:[i for i in _['items'] if i.startswith(x)]"
     colvalues="[itemsbeginningwith(i) for i in cols]"
+    numcols="_.len(cols)"
     longest="max([_.len(col) for col in colvalues])"
     >
 <table width="100%" border=0 cellpadding="0" cellspacing="0"
   <tr>
-    <td colspan="<dtml-var "_.len(cols)">" align="center">
+    <td colspan="&dtml-numcols;" align="center">
       <em>
 issue categories sized and coloured according to open issues
 (also
