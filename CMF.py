@@ -140,6 +140,7 @@ try:
 
 except ImportError:
     class CMFAwareness:
+        __implements__ = ()
         def supportsCMF(self): return 0
         def inCMF(self): return 0
 
