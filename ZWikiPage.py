@@ -819,14 +819,14 @@ class ZWikiPage(
         Convert a free-form page name to a canonical url- and zope-safe id.
 
         Constraints for zwiki page ids:
-        - it needs to be a legal zope object id
-        - to avoid gross acquisition problems, it needs to avoid certain names
-        - to simplify linking, we will require it to be a valid url
+        - it must be a legal zope object id
+        - it should be legal in urls
         - it should be unique for a given name (ignoring whitespace)
         - we'd like it to be as similar to the name and as simple to read
           and work with as possible
         - we'd like to encourage serendipitous linking between free-form
           and wikiname links & pages
+        - it must avoid certain zope-significant names, to avoid breakage
 
         So, we
         - discard non-word-separating punctuation (')
@@ -834,8 +834,7 @@ class ZWikiPage(
         - capitalize and join whitespace-separated words into a wikiname
         - convert any non-zope-and-url-safe characters and _ to _hexvalue
         - if this results in an id that begins with _ (illegal), prepend X
-        - or if we have a legal id but it's one of the delicate IDS_TO_AVOID
-          (REQUEST, epoz, etc), append X
+        - or if it's one of the delicate IDS_TO_AVOID (eg REQUEST), append X
           Note these last break the uniqueness property. Better ideas welcome.
 
         performance-sensitive
