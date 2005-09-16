@@ -333,18 +333,6 @@ class Utils:
         p = self.pageWithName('UserDiscussion') or self.pageWithName('GeneralDiscussion')
         return (p and p.pageUrl()) or ''
 
-    security.declareProtected(Permissions.View, 'trackerUrl')
-    def trackerUrl(self):
-        return self.urlForDtmlPageOrMethod('IssueTracker','issuetracker')
-
-    security.declareProtected(Permissions.View, 'filterUrl')
-    def filterUrl(self):
-        return self.urlForDtmlPageOrMethod('FilterIssues','filterissues')
-
-    security.declareProtected(Permissions.View, 'filterUrl')
-    def issueBrowserUrl(self):
-        return self.urlForDtmlPageOrMethod('IssueBrowser','issuebrowser')
-
     security.declareProtected(Permissions.View, 'indexUrl')
     def indexUrl(self):
         return self.urlForDtmlPageOrMethod('AllPages','') #'allpages')

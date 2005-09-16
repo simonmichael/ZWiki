@@ -449,6 +449,18 @@ class TrackerSupport:
         #return onlyBodyFrom(
         return self.getSkinTemplate('issuepropertiesform')(self,REQUEST)
 
+    security.declareProtected(Permissions.View, 'trackerUrl')
+    def trackerUrl(self):
+        return self.urlForDtmlPageOrMethod('IssueTracker','issuetracker')
+
+    security.declareProtected(Permissions.View, 'filterUrl')
+    def filterUrl(self):
+        return self.urlForDtmlPageOrMethod('FilterIssues','filterissues')
+
+    security.declareProtected(Permissions.View, 'filterUrl')
+    def issueBrowserUrl(self):
+        return self.urlForDtmlPageOrMethod('IssueBrowser','issuebrowser')
+
     # setup methods
 
     security.declareProtected('Manage properties', 'setupTracker')
