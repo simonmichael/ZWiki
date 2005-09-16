@@ -85,19 +85,6 @@ from plugins import PLUGINS
 DEFAULT_PAGETYPE = PAGETYPES[0]
 
 class ZWikiPage(
-    EditingSupport, # use our ftp/dav methods, not DTMLDocument's
-    DTMLDocument,   # should DD go last ?
-    UI,
-    OutlineSupport,
-    DiffSupport,
-    MailSupport,
-    SubscriberManagerMixin,
-    CatalogAwareness,
-    CMFAwareness,
-    CommentsSupport,
-    AdminSupport,
-    Utils,
-    RSSMixin,
     PLUGINS[0],     # runtime mixins hack, see plugins/
     PLUGINS[1],
     PLUGINS[2],
@@ -114,6 +101,19 @@ class ZWikiPage(
     PLUGINS[13],
     PLUGINS[14],
     PLUGINS[15],
+    EditingSupport, # use our ftp/dav methods, not DTMLDocument's
+    DTMLDocument,   # should DD go last ?
+    UI,
+    OutlineSupport,
+    DiffSupport,
+    MailSupport,
+    SubscriberManagerMixin,
+    CatalogAwareness,
+    CMFAwareness,
+    CommentsSupport,
+    AdminSupport,
+    Utils,
+    RSSMixin,
     ):
     """
     A ZWikiPage is essentially a DTML Document which knows how to render
