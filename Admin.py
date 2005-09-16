@@ -13,9 +13,10 @@ from DateTime import DateTime
 
 from I18nSupport import _
 import Permissions
-from Utils import BLATHER,formattedTraceback, DateTimeSyntaxError
+from Utils import BLATHER, formattedTraceback, DateTimeSyntaxError, callHooks
 from pagetypes import PAGE_TYPE_UPGRADES
 from Defaults import PAGE_METADATA
+
 
 # copied from ZWikiWeb.py
 def _addDTMLMethod(self, id, title='', file=''):

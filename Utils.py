@@ -724,3 +724,58 @@ def isUsername(s):
     """
     return not isEmailAddress(s)
 
+# utilities for managing lists of callable actions, "hooks" as they're
+# called in emacs.  Certain core zwiki methods allow themselves to be
+# extended at run-time by "hooking in" additional methods/fns, usually by
+# plugins.  Cf aspect-oriented programming, method annotations, ...
+#
+# Declare a hook list before a method like this:
+#
+#   # allow extra actions to be added to this method
+#   global methodname_hooks
+#   methodname_hooks = []
+#
+# and have the method call the hooks like this:
+#
+#   callHooks(methodname_hooks, self)
+#
+# then other code can add a hook like this:
+#
+#   from Products.ZWiki.Utils import addHook
+#   from Products.ZWiki.Modulename import methodname_hooks
+#   addHook(methodname_hooks, hookmethod)
+#
+# the hook needs to accept the type of argument callHooks gives it.
+# see eg Admin.py:upgrade and plugins/tracker/__init__.py
+
+#def declareHook(method):
+#    """
+#    Declare a hook list for method, to allow extra actions to be registered.
+#    """
+#    import exec
+#    exec (method+'_hooks = []')
+#    exec ('global '+method+'_hooks')
+
+def addHook(hooks, fn):
+    """
+    Add a function to a list of hook actions to be called.
+    """
+    hooks.append(fn)
+    
+def callHooks(hooks, arg):
+    """
+    Call each of a list of functions with arg, returning any error code.
+
+    Hook functions are called with one argument.  We catch and log any
+    exceptions, and return the last non-null return code if any.
+    """
+    err = None
+    for hook in hooks:
+        try:
+            err = hook(arg) or err
+        except:
+            BLATHER(
+                'could not call hook, skipping (traceback follows)\n%s' % (
+                formattedTraceback()))
+    return err
+

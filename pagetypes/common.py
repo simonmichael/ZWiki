@@ -4,7 +4,8 @@ from urllib import quote, unquote
 
 from Products.ZWiki.Utils import BLATHER, html_quote, html_unquote, formattedTraceback, \
      ZOPEVERSION
-from Products.ZWiki.plugins.purplenumbers import add_purple_numbers_to
+#XXX avoid import loop
+#from Products.ZWiki.plugins.purplenumbers import add_purple_numbers_to
 from Products.ZWiki.Regexps import dtmlorsgmlexpr, footnoteexpr
 from Products.ZWiki.I18nSupport import _
 
@@ -140,8 +141,8 @@ class AbstractPageType:
     def discussionSeparator(self,page):
         return '\n------------------------------------------------------------\n'
 
-    def addPurpleNumbersTo(self,page,t):
-        return add_purple_numbers_to(t,page)
+#    def addPurpleNumbersTo(self,page,t):
+#        return add_purple_numbers_to(t,page)
 
     def inlineImage(self, page, id, path):
         return '\n\nimage: %s/%s\n' % (page.pageUrl(),path)
