@@ -12,7 +12,7 @@ from Globals import InitializeClass, package_home
 from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki import Permissions
-from Products.ZWiki.Utils import BLATHER,formattedTraceback
+from Products.ZWiki.Utils import BLATHER, formattedTraceback, addHook
 from Products.ZWiki.UI import loadDtmlMethod, loadPageTemplate, \
      STANDARD_TEMPLATES, PLONE_TEMPLATES
 
@@ -583,3 +583,17 @@ class TrackerSupport:
 
 InitializeClass(TrackerSupport)
 registerPlugin(TrackerSupport)
+
+# register some upgrade hooks
+from Products.ZWiki.Admin import upgrade_hooks, upgradeId_hooks
+
+# install issue properties if missing, eg if this page is being
+# viewed as an issue for the first time
+addHook(upgrade_hooks, TrackerSupport.upgradeIssueProperties)
+
+# convert old-style IssueNNNN ... page names to #NNNN ...
+# when checking page id. Leaves non-issue page names unchanged.
+addHook(upgradeId_hooks,
+        lambda self:
+        self.pageNameFromIssueNumberAndName(self.issueNumber(),
+                                            self.issueName()))

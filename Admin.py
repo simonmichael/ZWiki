@@ -91,38 +91,46 @@ class AdminSupport:
         BLATHER('upgrade complete, %d pages processed in %fs, %f pages/s' \
                 %(n, endtime-starttime, n/(endtime-starttime)))
 
+    # allow extra actions to be added to this method
+    # upgradeId hooks return a page name that should be used
+    # as the basis for setting the id (tracker uses this)
+    global upgradeId_hooks
+    upgradeId_hooks = []
+
     security.declareProtected(Permissions.View, 'upgradeId')
     def upgradeId(self,REQUEST=None):
         """
-        Make sure a page's id conforms with it's title (cf canonicalIdFrom).
+        Make sure a page's id conforms with its title (may also change title!)
 
+        See also canonicalIdFrom, http://zwiki.org/HowZwikiTitleAndIdWorks .
         Does not leave a placeholder, so may break incoming links.  Does
         update backlinks, because it's less work than fixing up links by
         hand afterward. This makes it too slow to use in auto-upgrade,
         though, so people must call this manually or more usually via
         upgradeAll.
 
-        This will also rename old IssueNoNNNN pages to the new #NNNN.style,
-        if enabled.
-
         With legacy pages (or manually renamed pages), it may happen that
         there's a clash between two similarly-named pages mapping to the
         same canonical id. In this case we just log the error and move on.
+
+        The tracker plugin modifies this to also rename old IssueNoNNNN
+        pages to the new #NNNN style.
         """
-        # we can just call rename, it will do what's necessary
-        # XXX should we do it and have rename call us ?
-        # XXX move to tracker plugin somehow ?
-        if self.isIssue():
-            name = self.pageNameFromIssueNumberAndName(self.issueNumber(),
-                                                       self.issueName())
-        else:
-            name = self.pageName()
+        # let plugins influence the new title & id..
+        name = callHooks(upgradeId_hooks, self) or self.pageName()
+        # now we can just call rename, it will do what's necessary
         try:
             self.rename(name,updatebacklinks=1,sendmail=0,REQUEST=REQUEST)
         except CopyError:
             BLATHER(
                 'upgradeId for "%s" (%s) failed - does %s already exist ?' \
                 % (self.pageName(),self.getId(),self.canonicalIdFrom(name)))
+
+    # allow extra actions to be added to this method
+    # upgrade hooks return non-null if the page object was changed
+    # they should be fast as upgrade is called on each page view
+    global upgrade_hooks
+    upgrade_hooks = []
 
     # performance-sensitive ?
     security.declareProtected(Permissions.View, 'upgrade')
@@ -254,9 +262,8 @@ class AdminSupport:
         # ensure parents property is a list
         changed = self.ensureParentsPropertyIsList()
 
-        # install issue properties if needed, ie if this page is being
-        # viewed as an issue for the first time
-        if self.isIssue(): changed = self.upgradeIssueProperties()
+        # call any extra upgrade actions eg from plugins
+        if callHooks(upgrade_hooks, self): changed = 1
 
         if changed:
             # do a commit now so the current render will have the correct

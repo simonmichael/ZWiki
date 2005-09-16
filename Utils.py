@@ -761,7 +761,7 @@ def addHook(hooks, fn):
     Add a function to a list of hook actions to be called.
     """
     hooks.append(fn)
-    
+
 def callHooks(hooks, arg):
     """
     Call each of a list of functions with arg, returning any error code.
