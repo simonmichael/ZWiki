@@ -98,7 +98,7 @@ try:
 
 
 except ImportError:
-    BLATHER('did not find fit in the PYTHONPATH, fit support not enabled')
+    BLATHER('did not find fit in the PYTHONPATH, skipping')
     class FitSupport:
         security = ClassSecurityInfo()
         security.declareProtected(Permissions.View, 'hasFitTests')
