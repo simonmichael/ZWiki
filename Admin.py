@@ -260,7 +260,7 @@ class AdminSupport:
                 changed = 1
 
         # ensure parents property is a list
-        changed = self.ensureParentsPropertyIsList()
+        if self.ensureParentsPropertyIsList(): changed = 1
 
         # call any extra upgrade actions eg from plugins
         if callHooks(upgrade_hooks, self): changed = 1
