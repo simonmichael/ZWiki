@@ -1,29 +1,39 @@
-# experimental package for non-core plugin modules
-#
-# A Zwiki plugin is a module (file) providing a mixin class that extends
-# ZWikiPage, thereby adding extra features to all wiki pages at startup.
-# A true plugin (a) can be removed without ill effect aside from disabling
-# the feature it provides, and (b) could be provided by a separate
-# product.
-# 
-# Mixins which used to be in the main ZWiki package are gradually being
-# moved here and pluginised. Some of them still have dependencies in other
-# parts of the code, eg
-#
-# - Editing calls purple numbers when setting text
-# 
-# - some page types call purple numbers during rendering
-#
-# - dependencies in the standard and plone skins - what do we do here ?
-#
-# page types are another kind of "plugin", residing in their own pagetypes
-# package. 
+"""
+The plugins package, containing plugins providing non-core functionality.
+
+A Zwiki plugin is a module or package that extends Zwiki's functionality,
+usually by providing a mixin for ZWikiPage, thereby adding extra features
+to all wiki pages at startup.  A true plugin can (a) be removed without
+any ill effects aside from disabling the feature it provides, and (b) be
+provided by a separate product.
+
+Page types are another kind of plugin, residing in their own pagetypes
+package. It seems helpful to keep them separate for the moment.
+
+Non-core features which used to be in the main ZWiki package are
+gradually being moved here and pluginised. Some of them still have
+hard-coded dependencies in other parts of the code, such as:
+
+- dependencies in the Admin upgrade methods - resolved ?
+- edit calls purple numbers when setting text
+- some page types call purple numbers during rendering
+- issue tracker access key and link in wikipage template
+- tracker action in CMFInit fti
+- tracker hotkey in showAccessKeys
+- issue linking and link colouring in renderLink
+- isIssue arg support in pages
+- issue creation in mailin
+- show_issueproperties=0 in pagetypes/common renderText
+- issue properties form rendering in page types
+
+"""
 
 from Products.ZWiki.Utils import BLATHER, formattedTraceback
 
-# a nasty way to subclass a runtime list of classes, since we can't modify
-# __bases__ of an extension class - ZWikiPage.ZWikiPage must subclass each
-# of these slots explicitly
+# a kludge to subclass a runtime list of classes, since we can't modify
+# __bases__ of an extension class. ZWikiPage subclasses each of these
+# slots. We could also subclass a class whose __bases__ we can modify,
+# see http://zwiki.org/1034Pluginization
 class Null: pass
 PLUGINS = [
     Null,

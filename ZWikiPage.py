@@ -85,7 +85,8 @@ from plugins import PLUGINS
 DEFAULT_PAGETYPE = PAGETYPES[0]
 
 class ZWikiPage(
-    PLUGINS[0],     # runtime mixins hack, see plugins/
+    # see plugins/__init__.py
+    PLUGINS[0],     
     PLUGINS[1],
     PLUGINS[2],
     PLUGINS[3],
