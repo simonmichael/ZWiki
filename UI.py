@@ -607,11 +607,9 @@ class SkinViews:
         s    go to search field
         
         page functions:
-        +    view pages in plone/cmf skin (in a plone/cmf site)
-        =    view pages in standard skin, full mode
-        _    view pages in standard skin, simple mode
-        -    view pages in standard skin, minimal mode
-        v    view page without changing display mode
+        +    (in a plone/cmf site with skin switching set up) use zwiki's plone/cmf skin
+        -    (in a plone/cmf site with skin switching set up) use zwiki's standard skin
+        v    view page
         m    mail subscription
         b    show backlinks (links to this page)
         d    show diffs (page edit history)
