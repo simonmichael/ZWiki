@@ -164,23 +164,26 @@ class SubscriberManagerMixin:
     ## page subscription api #############################################
 
     # XXX rename to subscribers() & wikiSubscribers() ?
-    def subscriberList(self, parent=0):
+    def subscriberList(self, parent=0, edits=0):
         """
         Return a list of this page's subscribers.
 
         With parent flag, manage the parent folder's subscriber list instead.
+        With edits flag, show only subscribers who have requested all edits.
         """
-        return stripList(self._getSubscribers(parent))
+        return [s for s in stripList(self._getSubscribers(parent)) \
+                if s.endswith(':edits') or not edits]
 
-    def subscriberCount(self, parent=0):
+    def subscriberCount(self, parent=0, edits=0):
         """
-        Return the number of subscribers currently subscribed to this page
-        With parent flag, count the parent folder's subscriber list
-        instead.
-        """
-        return len(self.subscriberList(parent))
+        Return the number of subscribers currently subscribed to this page.
 
-    def isSubscriber(self,email,parent=0):
+        With parent flag, count the parent folder's subscriber list instead.
+        With edits flag, count only subscribers who have requested all edits.
+        """
+        return len(self.subscriberList(parent,edits))
+
+    def isSubscriber(self, email, parent=0):
         """
         Is this email address or member id subscribed to this page ?
 
@@ -192,7 +195,6 @@ class SubscriberManagerMixin:
         subscriber = email
         if subscriber:
             email = self.emailAddressFrom(subscriber)
-            if email: email = string.lower(email)
             usernames = self.usernamesFrom(subscriber)
             for sub in self.subscriberList(parent):
                 if not sub: continue
@@ -201,17 +203,22 @@ class SubscriberManagerMixin:
                     return 1
         return 0
                
-    def subscribe(self, email, REQUEST=None, parent=0):
+    def subscribe(self, email, REQUEST=None, parent=0, edits=0):
         """
-        Add email as a subscriber to this page.  With parent flag, add to
-        the parent folder's subscriber list instead.
+        Add an email subscriber to this page.
+
+        subscriber may be an email address or a CMF member id.
+        With parent flag, add to the parent folder's subscriber list instead.
+        With edits flag, mark this subscriber as one who wants
+        notification of all edits.
         """
         subscriber = email
         if subscriber:
             if not self.isSubscriber(subscriber,parent):
-                BLATHER('subscribed',subscriber,'to',self.id())
+                BLATHER('subscribed',subscriber,'to',self.id(),
+                        edits and '(all edits)' or '')
                 subs = self._getSubscribers(parent)
-                subs.append(subscriber)
+                subs.append(subscriber + (edits and ':edits' or ''))
                 self._setSubscribers(subs,parent)
                 if not parent: self.index_object()
         if REQUEST:
@@ -221,10 +228,11 @@ class SubscriberManagerMixin:
 
     def unsubscribe(self, email, REQUEST=None, parent=0):
         """
-        Remove email from this page's subscriber list.  With parent
-        flag, remove from the parent folder's subscriber list instead.
-        Does not attempt to look up the username from an email address
-        or vice-versa, so you must unsubscribe the correct one.
+        Remove email from this page's subscriber list.
+
+        With parent flag, remove from the parent folder's subscriber list
+        instead.  Does not attempt to look up the username from an email
+        address or vice-versa, so you must unsubscribe the correct one.
         """
         subscriber = email
         if self.isSubscriber(subscriber,parent):
@@ -242,21 +250,21 @@ class SubscriberManagerMixin:
 
     ## folder subscription api ###########################################
 
-    def wikiSubscriberList(self):
+    def wikiSubscriberList(self, edits=0):
         """whole-wiki version of subscriberList"""
-        return self.subscriberList(parent=1)
+        return self.subscriberList(parent=1,edits=edits)
 
-    def wikiSubscriberCount(self):
+    def wikiSubscriberCount(self, edits=0):
         """whole-wiki version of subscriberCount"""
-        return self.subscriberCount(parent=1)
+        return self.subscriberCount(parent=1,edits=edits)
 
     def isWikiSubscriber(self,email):
         """whole-wiki version of isSubscriber"""
         return self.isSubscriber(email,parent=1)
 
-    def wikiSubscribe(self, email, REQUEST=None):
+    def wikiSubscribe(self, email, REQUEST=None, edits=0):
         """whole-wiki version of subscribe"""
-        return self.subscribe(email,REQUEST,parent=1)
+        return self.subscribe(email,REQUEST,parent=1,edits=edits)
 
     def wikiUnsubscribe(self, email, REQUEST=None):
         """whole-wiki version of unsubscribe"""
@@ -289,7 +297,6 @@ class SubscriberManagerMixin:
         # subscriber may be an email address or a member id, and
         # they may be subscribed as either
         email = self.emailAddressFrom(subscriber)
-        if email: email = string.lower(email)
         usernames = self.usernamesFrom(subscriber)
 
         if not (email or usernames):
@@ -350,12 +357,12 @@ class SubscriberManagerMixin:
 
     def emailAddressFrom(self,subscriber):
         """
-        Convert an email address or CMF member id to an email address.
-
-        If subscriber is an email address, return as-is.
-
-        Otherwise assume it's a member id and if we are in a CMF site
-        look up the member's email address.
+        Convert a zwiki subscriber list entry to an email address.
+        
+        A zwiki subscriber list entry can be: an email address, an email
+        address with ':edits' modifier appended, or a CMF member id (if we
+        are in a CMF/Plone site). We figure out the bare email address and
+        return it (lower-cased), or if we can't, return None.
 
         Note to avoid a tricky incompatibility with subscribeform &
         useroptions, we handle the special case of a user acquired
@@ -363,15 +370,13 @@ class SubscriberManagerMixin:
         portal_memberdata all the same. Since we don't know how to get
         hold of this user object, dig out the member data by id which
         is damned ugly, but can't burn any more time on this right now.
-
-        If we can't get an email address, return None.
-
         """
-        if not subscriber:
+        if not (subscriber and type(subscriber) == StringType):
             return None
-        elif isEmailAddress(subscriber):
-            return subscriber
-        elif self.inCMF() and not self.portal_membership.isAnonymousUser():
+        subscriber = re.sub(r':edits$','',subscriber)
+        if isEmailAddress(subscriber):
+            return string.lower(subscriber)
+        elif self.inCMF() and not self.portal_membership.isAnonymousUser():#XXX ?
             from Products.CMFCore.utils import getToolByName
             mtool = getToolByName(self, 'portal_membership')
             member = mtool.getMemberById(subscriber)
@@ -387,8 +392,8 @@ class SubscriberManagerMixin:
         Convert a list of subscribers to a list of email addresses.
 
         Any of these which are usernames for which we can't find an
-        address are converted to an obvious bogus address (rather than
-        just quietly dropping recipients).
+        address are converted to an obvious bogus address to help
+        troubleshooting.
         """
         emails = []
         for s in subscribers:
@@ -611,9 +616,9 @@ class MailSupport:
         Send mail to this page's subscribers, if any.
         
         If a mailhost and mail_from property have been configured and
-        there are subscribers to this page, email text to them.  S as not
-        to prevent page edits, catch any mail-sending errors (and log and
-        try to forward them to an admin).
+        there are subscribers to this page, email text to them.  So as not
+        to prevent page edits, catch any mail-sending errors (and log them
+        and try to mail them to an admin).
 
         As a special case, if text is empty we'll do nothing, to help
         wikimail signal-to-noise ratio.
@@ -634,6 +639,44 @@ class MailSupport:
                         message_id=message_id,
                         in_reply_to=in_reply_to,
                         exclude_address=exclude_address)
+
+    def sendMailToEditSubscribers(self, text, REQUEST, subjectSuffix='',
+                                  subject='',message_id=None,in_reply_to=None,
+                                  exclude_address=None):
+        """
+        Send mail to this page's "all edits" subscribers, if any.
+        
+        Like sendMailToSubscribers, but sends only to the subscribers who
+        have requested notification of all edits. A mailout_policy
+        property with value "edits" on the wiki folder will force this
+        for all subscribers (backwards compatibility).
+        """
+        # XXX some duplication here
+        if not text: return
+        to = None
+
+        if self.mailoutPolicy() == 'edits':
+            recipients = self.subscriberList()
+        else:
+            recipients = self.subscriberList(edits=1)
+
+        if not self.title_or_id() in self.quietPages():
+            if self.mailoutPolicy() == 'edits':
+                recipients += self.wikiSubscriberList()
+            else:
+                recipients += self.wikiSubscriberList(edits=1)
+            to = ';'
+        recipients = self.emailAddressesFrom(recipients)
+
+        self.sendMailTo(recipients,
+                        text,
+                        REQUEST,
+                        subjectSuffix=subjectSuffix,
+                        subject=subject,
+                        message_id=message_id,
+                        in_reply_to=in_reply_to,
+                        exclude_address=exclude_address)
+        
 
     def sendMailTo(self, recipients, text, REQUEST,
                    subjectSuffix='',
