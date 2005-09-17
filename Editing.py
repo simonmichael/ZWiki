@@ -371,12 +371,11 @@ class EditingSupport:
             self.setLastEditor(REQUEST)
             self.setLastLog(log)
 
-            # if mailout policy is all edits, do it here
-            if getattr(self,'mailout_policy','') == 'edits':
-                self.sendMailToSubscribers(
-                    self.textDiff(a=old,b=self.read()),
-                    REQUEST=REQUEST,
-                    subject=log)
+            # send mail if appropriate
+            self.sendMailToEditSubscribers(
+                self.textDiff(a=old,b=self.read()),
+                REQUEST=REQUEST,
+                subject=log)
 
     def handleDeleteMe(self,text,REQUEST=None,log=''):
         if not text or not re.match('(?m)^DeleteMe', text):
@@ -442,12 +441,11 @@ class EditingSupport:
         # unindex (and remove from outline) and move to the recycle bin folder
         self.recycle(REQUEST)
         # notify subscribers if appropriate
-        if getattr(self,'mailout_policy','') == 'edits':
-            self.sendMailToSubscribers(
-                'This page was deleted.\n',
-                REQUEST=REQUEST,
-                subjectSuffix='',
-                subject='(deleted)')
+        self.sendMailToEditSubscribers(
+            'This page was deleted.\n',
+            REQUEST=REQUEST,
+            subjectSuffix='',
+            subject='(deleted)')
         if REQUEST: REQUEST.RESPONSE.redirect(redirecturl)
 
     def ensureRecycleBin(self):
@@ -554,9 +552,8 @@ class EditingSupport:
             except BadRequestException: pass
 
         # notify subscribers if appropriate
-        if (getattr(self,'mailout_policy','') == 'edits' and
-            sendmail and newname != oldname):
-            self.sendMailToSubscribers(
+        if sendmail and newname != oldname:
+            self.sendMailToEditSubscribers(
                 'This page was renamed from %s to %s.\n'%(oldname,newname),
                 REQUEST=REQUEST,
                 subjectSuffix='',
