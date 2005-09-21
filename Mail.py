@@ -198,7 +198,7 @@ class SubscriberManagerMixin:
             usernames = self.usernamesFrom(subscriber)
             for sub in self.subscriberList(parent):
                 if not sub: continue
-                if ((email and (string.lower(sub) == email)) or
+                if ((email and (self.emailAddressFrom(sub) == email)) or
                     (usernames and (sub in usernames))):
                     return 1
         return 0
