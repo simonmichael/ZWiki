@@ -285,6 +285,7 @@ class OutlineManagerMixin:
         Page names may be ids, or fuzzy, even partial. Any which do not
         resolve to an existing page or are duplicates will be ignored.
         """
+        oldparents = self.getParents()
         # clean the arguments carefully to avoid parenting anomalies
         # page mgmt form must use pagename field:
         if pagename:
@@ -310,6 +311,13 @@ class OutlineManagerMixin:
         self.setParents(uniqueparents) 
         self.wikiOutline().reparent(self.pageName(),uniqueparents)
         self.index_object()
+
+        # send mail if appropriate
+        self.sendMailToEditSubscribers(
+            '%s was reparented from %s to %s.' % (
+              self.pageName(), oldparents, uniqueparents),
+            REQUEST=REQUEST,
+            subject='(reparented)')
 
         if REQUEST is not None: REQUEST.RESPONSE.redirect(REQUEST['URL1'])
 
