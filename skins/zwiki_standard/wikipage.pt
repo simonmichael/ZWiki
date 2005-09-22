@@ -400,9 +400,6 @@
                       tal:condition="python:user.has_permission('Zwiki: Add pages',container)"
                       >page</span
                       ><span tal:condition="not:here/inCMF" tal:omit-tag="">:</span>
-                <span tal:condition="here/inCMF" tal:omit-tag="" comment="cmf/plone layout hint"
-                      ><span i18n:translate="">for this page</span>:<br />
-                </span>
                 <!-- multi-purpose input field and buttons -->
                 <input name="pagename" type="text" size="25" maxlength="100" value="" 
                        class="formfield"
