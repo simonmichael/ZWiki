@@ -87,4 +87,4 @@ except (ImportError, NameError):
         __call__=render
     from DocumentTemplate.DT_String import String
     String.commands['translate'] = DummyTranslateTag
-    BLATHER('using no i18n')
+    BLATHER('did not find PlacelessTranslationService, the Zwiki skin will not be localized')
