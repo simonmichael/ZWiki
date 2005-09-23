@@ -234,11 +234,11 @@ class SubscriberManagerMixin:
         instead.  Does not attempt to look up the username from an email
         address or vice-versa, so you must unsubscribe the correct one.
         """
-        subscriber = email
+        subscriber = string.lower(email)
         if self.isSubscriber(subscriber,parent):
             sl = self.subscriberList(parent)
             for s in sl:
-                if string.lower(s) == string.lower(subscriber):
+                if self.emailAddressFrom(s) == subscriber:
                     BLATHER('unsubscribed',subscriber,'from',self.id())
                     sl.remove(s)
             self._setSubscribers(sl,parent)
