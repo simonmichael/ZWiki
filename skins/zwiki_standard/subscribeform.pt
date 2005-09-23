@@ -101,6 +101,13 @@
                      value=" Subscribe to this page " 
 	             i18n:attributes="value"
                      />
+              <span tal:condition="not:pagesubscriber">
+              &nbsp;&nbsp;<span i18n:translate="">all edits</span>:
+              <input type="checkbox" 
+                     name="edits" 
+                     value="1" 
+                     />
+              </span>
             </td>
             <td valign="top" width="50%"
                 tal:attributes="class python:
@@ -128,6 +135,13 @@
                      value="Subscribe to whole wiki" 
 		     i18n:attributes="value"
                      />
+              <span tal:condition="not:wikisubscriber">
+              &nbsp;&nbsp;<span i18n:translate="">all edits</span>:
+              <input type="checkbox" 
+                     name="edits" 
+                     value="1" 
+                     />
+              </span>
             </td>
           </tr>
           <tr tal:condition="python:email and othersubscriptions">
