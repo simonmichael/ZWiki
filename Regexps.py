@@ -1,47 +1,33 @@
 ######################################################################
-# regular expressions used by ZWiki
+# regular expressions used by Zwiki
 #
 # Some people, when confronted with a problem, think 'I know, I'll use
 # regular expressions.' Now they have two problems. --Jamie Zawinski
 #
 # Be brave. Read on.
+#
+# don't bother trying to keep to 80 char lines, here
 
 import re, string
 
 import Defaults
-from Utils import BLATHER
+from Utils import BLATHER, formattedTraceback
 
 # URLs/URIs (better regexps in urllib/urlparse ?)
-urlchars         = r'[A-Za-z0-9/:;@_%~#=&\.\-\?\+\$,]+'
-url              = r'["=]?((about|gopher|http|https|ftp|mailto|file):%s)' % \
-                   (urlchars)
+urlchars = r'[A-Za-z0-9/:;@_%~#=&\.\-\?\+\$,]+'
+url      = r'["=]?((about|gopher|http|https|ftp|mailto|file):%s)' % (urlchars)
 
 # valid characters for zwiki page ids
 # These are the characters which are used to form safe page ids for both
 # free-form names and wiki names.  They are the characters legal in both
-# zope ids and urls, excluding _ which we use for quoting. (See
-# canonicalIdFrom).
-# You have a choice here -
-# 1. Don't allow international characters in ids.
+# zope ids and urls, excluding _ which we use for quoting. See also
+# http://zwiki.org/HowZwikiTitleAndIdWorks . NB it is possible to hack
+# zope (OFS.ObjectManager.py bad_id) and adjust the below to enable
+# single-byte non-ascii letters in ids, but your urls would be illegal so
+# it's probably not worthwhile
 zwikiidcharsexpr = re.compile(r'[a-zA-Z0-9.-]')
-# 2. Allow (single-byte) international characters in page ids.
-# You also need to hack zope's OFS.ObjectManager.bad_id, eg:
-## bad_id = re.compile(r'[^\xC0-\xFFa-zA-Z0-9-_~,.$# ]').search
-# what's the thread-safety issue noted there ?
-# extract zopeidchars from bad_id - hacky:
-#from OFS.ObjectManager import bad_id
-#try:
-#    zopeidchars = re.sub(r'\^',r'',bad_id.__self__.pattern)
-#    zopeidchars = re.sub(r'\\\(',r'(',zopeidchars)
-#    zopeidchars = re.sub(r'\\\)',r')',zopeidchars)
-#except AttributeError:
-#    # older zope uses ts_regex
-#    zopeidchars = re.sub(r'\^',r'',bad_id.im_self.givenpat)
-#    zopeidchars = re.sub(r'\\\,',r',',zopeidchars)
-#    zopeidchars = re.sub(r'\\\.',r'.',zopeidchars)
-#zwikiidcharsexpr = re.compile(re.sub(r'[_~,$()# ]',r'',zopeidchars))
 
-# also used in generating page ids
+# used in generating page ids
 # XXX NB this is affected by locale - may not be what we want
 spaceandlowerexpr = re.compile(r'\s+([%s])'%(string.lowercase))
 
@@ -54,108 +40,120 @@ spaceandlowerexpr = re.compile(r'\s+([%s])'%(string.lowercase))
 bracketedexpr    = r'\[\[?([^\n\]]+)\]\]?'
 doublebracketedexpr = r'\[\[([^\n\]]+)\]\]'
 
-# tracker support
-simplehashnumberexpr = r'\#[0-9]+'
-
 # bare wiki links
 #
-# Zwiki's bare wiki links are standard CamelCase, but also allow words of
-# a single letter (APage, PageA) and trailing digits (PageVersion002).
+# Zwiki's bare wiki links are standard CamelCase plus the following
+# additions:
 #
-# They can also contain international characters defined by your locale,
-# or a default set if no locale is defined.
-# XXX isn't this limiting ? Can we allow all international characters,
-# regardless of locale ? How far should we go ? Are regexps getting slow ?
+# - words of a single letter are allowed (APage, PageA)
+#
+# - trailing digits are allowed (PageVersion22, but not Page22Version)
+#
+# - non-ascii letters defined by the system locale are allowed
+#   This means we must include the upper- and lower-case letters for this
+#   locale in our regexps. We get them from string.uppercase and
+#   string.lowercase, but we need them utf8-encoded since zwiki text is
+#   always stored utf8-encoded. So we convert them from the system's
+#   default encoding to unicode and re-encode as utf8. It's hard to see
+#   how to do this robustly on all systems and it has been the cause of
+#   many zwiki startup problems; we must be careful not to let any error
+#   stop product initialisation (#769, #1158). Other notes: don't rely on
+#   python 2.3's getpreferredencoding, gives wrong answer; work around a
+#   python bug with some locales (#392).
+#
+# - or, a default set of non-ascii letters are allowed if no system locale
+#   is defined
+#   On the assumption that many international users won't have the locale
+#   defined on their system, we jump through some hoops to make at least
+#   some of them happy by supporting a number of non-ascii letters common
+#   in latin and other languages.
+#
+# The aim of this non-ascii stuff is to work as international users would
+# expect out of the box whenever possible, and to never fail product
+# initialisation regardless of python version, locale setting, platform
+# etc. Better, simpler, more robust, more correct ideas are welcome.
 
-# find the system's character encoding
-# don't rely on python 2.3's getpreferredencoding, which gives wrong
-# answer, and work around a python bug with some locales (zwiki #392)
-import locale
+# we'll set up the following strings, using the system locale if possible:
+# U:  'A|B|C|... '
+# L:  'a|b|c|...'
+# Ub: '[ABC...]'
+# Lb: '[abc...]'
+# where A, b etc. are the utf8-encoded upper & lower-case letters.
+# Then we'll use them to build the bare wikiname regexps.
+#
+# For reference, the old non-utf8 regexps were:
+#U = string.uppercase
+#L = string.lowercase
+#wikiname1 = r'(?L)\b[%s]+[%s]+[%s][%s]*[0-9]*' % (U,L,U,U+L)
+#wikiname2 = r'(?L)\b[%s][%s]+[%s][%s]*[0-9]*'  % (U,U,L,U+L)
+#U = 'A-Z\xc0-\xdf'
+#L = 'a-z\xe0-\xff'
+#b = '(?<![%s0-9])' % (U+L) # emulate \b
+#wikiname1 = r'(?L)%s[%s]+[%s]+[%s][%s]*[0-9]*' % (b,U,L,U,U+L)
+#wikiname2 = r'(?L)%s[%s][%s]+[%s][%s]*[0-9]*'  % (b,U,U,L,U+L)
+
 try:
+    import locale
     lang, encoding = locale.getlocale()
-except ValueError:
-    lang, encoding = None, None
-    WARN('Warning: getlocale() ValueError, wiki names will not be locale-aware (issue #392)')
+    U = '|'.join([c.encode('utf8') for c in unicode(string.uppercase, encoding)])
+    L = '|'.join([c.encode('utf8') for c in unicode(string.lowercase, encoding)])
+    Ubr = '[%s]' % ''.join([c.encode('utf8') for c in unicode(string.uppercase, encoding)])
+    Lbr = '[%s]' % ''.join([c.encode('utf8') for c in unicode(string.lowercase, encoding)])
+    localesensitive = r'(?L)'
+    wordboundary = r'\b'
+except:
+    # no locale is set or there was a problem detecting it or a problem
+    # decoding string.upper/lowercase
+    BLATHER('system locale is not set or gave a problem, so bare WikiNames will not be locale-aware (traceback follows)\n%s' % formattedTraceback())
+    # define a useful default set of non-ascii letters to recognize even
+    # with no locale configured, mainly european letters from
+    # http://zwiki.org/InternationalCharacterExamples
+    # XXX more have been added to that page (latvian, polish).. how far
+    # should we go with this ?  Could we make it recognise all non-ascii
+    # letters regardless of locale ?  Are regexps getting slow ?
+    uppercase = string.uppercase + '\xc3\x80\xc3\x81\xc3\x82\xc3\x83\xc3\x84\xc3\x85\xc3\x86\xc3\x88\xc3\x89\xc3\x8a\xc3\x8b\xc3\x8c\xc3\x8d\xc3\x8e\xc3\x8f\xc3\x92\xc3\x93\xc3\x94\xc3\x95\xc3\x96\xc3\x98\xc3\x99\xc3\x9a\xc3\x9b\xc3\x9c\xc3\x9d\xc3\x87\xc3\x90\xc3\x91\xc3\x9e'
+    lowercase = string.lowercase + '\xc3\xa0\xc3\xa1\xc3\xa2\xc3\xa3\xc3\xa4\xc3\xa5\xc3\xa6\xc3\xa8\xc3\xa9\xc3\xaa\xc3\xab\xc3\xac\xc3\xad\xc3\xae\xc3\xaf\xc3\xb2\xc3\xb3\xc3\xb4\xc3\xb5\xc3\xb6\xc3\xb8\xc3\xb9\xc3\xba\xc3\xbb\xc3\xbc\xc3\xbd\xc3\xbf\xc2\xb5\xc3\x9f\xc3\xa7\xc3\xb0\xc3\xb1\xc3\xbe'
+    U='|'.join([c.encode('utf8') for c in unicode(uppercase,'utf-8')])
+    L='|'.join([c.encode('utf8') for c in unicode(lowercase,'utf-8')])
+    Ubr = '[%s]' % ''.join([c.encode('utf8') for c in unicode(uppercase,'utf-8')])
+    Lbr = '[%s]' % ''.join([c.encode('utf8') for c in unicode(lowercase,'utf-8')])
+    localesensitive = ''
+    # make \b a little more accurate with the above
+    # XXX needs work, see links at  http://zwiki.org/InternationalCharactersInPageNames
+    wordboundary = '(?<![A-Za-z0-9\x80-\xff])' 
 
-if encoding:
-    # recognize this locale's upper and lower-case characters
-    # old single-byte regexps:
-    #U = string.uppercase
-    #L = string.lowercase
-    #wikiname1 = r'(?L)\b[%s]+[%s]+[%s][%s]*[0-9]*' % (U,L,U,U+L)
-    #wikiname2 = r'(?L)\b[%s][%s]+[%s][%s]*[0-9]*'  % (U,U,L,U+L)
-    # utf-8-aware regexps:
-    # XXX work around a python bug (?) (IssueNo0769)
-    try:
-        uppercase_uc = unicode(string.uppercase,encoding)
-        lowercase_uc = unicode(string.lowercase,encoding)
-    except LookupError:
-        uppercase_uc = unicode(string.uppercase)
-        lowercase_uc = unicode(string.lowercase)
-        BLATHER('Warning: unicode() LookupError for encoding %s, WikiNames will not use the system locale' % encoding)
-    U = '|'.join([x.encode('utf8') for x in uppercase_uc])
-    L = '|'.join([x.encode('utf8') for x in lowercase_uc])
-    Ub = '[%s]' % ''.join([x.encode('utf8') for x in uppercase_uc])
-    Lb = '[%s]' % ''.join([x.encode('utf8') for x in lowercase_uc])
-    wikiname1 = r'(?L)\b(?:%s)+(?:%s)+(?:%s)(?:%s|%s)*[0-9]*' % (U,L,U,U,L)
-    wikiname2 = r'(?L)\b(?:%s)(?:%s)+(?:%s)(?:%s|%s)*[0-9]*'  % (U,U,L,U,L)
-else:
-    # it looks like no locale is set, or we could not detect it; we'll try
-    # to recognize a default set of international characters.
-    # In this case we emulate \b and word boundaries may not be quite as
-    # accurate.
-    # single-byte regexps:
-    #U = 'A-Z\xc0-\xdf'
-    #L = 'a-z\xe0-\xff'
-    #b = '(?<![%s0-9])' % (U+L)
-    #wikiname1 = r'(?L)%s[%s]+[%s]+[%s][%s]*[0-9]*' % (b,U,L,U,U+L)
-    #wikiname2 = r'(?L)%s[%s][%s]+[%s][%s]*[0-9]*'  % (b,U,U,L,U+L)
-    # utf-8.. not so easy..
-    # default set includes european chars from InternationalCharacterExamples
-    # not latvian, polish, etc. as I don't have a complete list
-    # XXX they are there now.. how many chars should we recognize here
-    uppercase = string.uppercase + \
-        '\xc3\x80\xc3\x81\xc3\x82\xc3\x83\xc3\x84\xc3\x85\xc3\x86\xc3\x88\xc3\x89\xc3\x8a\xc3\x8b\xc3\x8c\xc3\x8d\xc3\x8e\xc3\x8f\xc3\x92\xc3\x93\xc3\x94\xc3\x95\xc3\x96\xc3\x98\xc3\x99\xc3\x9a\xc3\x9b\xc3\x9c\xc3\x9d\xc3\x87\xc3\x90\xc3\x91\xc3\x9e'
-    lowercase = string.lowercase + \
-        '\xc3\xa0\xc3\xa1\xc3\xa2\xc3\xa3\xc3\xa4\xc3\xa5\xc3\xa6\xc3\xa8\xc3\xa9\xc3\xaa\xc3\xab\xc3\xac\xc3\xad\xc3\xae\xc3\xaf\xc3\xb2\xc3\xb3\xc3\xb4\xc3\xb5\xc3\xb6\xc3\xb8\xc3\xb9\xc3\xba\xc3\xbb\xc3\xbc\xc3\xbd\xc3\xbf\xc2\xb5\xc3\x9f\xc3\xa7\xc3\xb0\xc3\xb1\xc3\xbe'
-    U='|'.join([x.encode('utf8') for x in unicode(uppercase,'utf-8')])
-    L='|'.join([x.encode('utf8') for x in unicode(lowercase,'utf-8')])
-    Ub = '[%s]' % ''.join([x.encode('utf8') for x in unicode(uppercase,'utf-8')])
-    Lb = '[%s]' % ''.join([x.encode('utf8') for x in unicode(lowercase,'utf-8')])
-    # can't easily emulate \b.. look-behind must be fixed-width.
-    # this should work in a lot of cases:
-    #b = '(?<![A-Za-z0-9\x80\x81\x82\x83\x84\x85\x86\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x92\x93\x94\x95\x96\x98\x99\x9a\x9b\x9c\x9d\x87\x90\x91\x9e\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb2\xb3\xb4\xb5\xb6\xb8\xb9\xba\xbb\xbc\xbd\xbf\xc2\xb5\x9f\xa7\xb0\xb1\xbe])' 
-    # try this: accept a lot of weird stuff (too much?) as a word boundary:
-    b = '(?<![A-Za-z0-9\x80-\xff])' 
-    wikiname1 = r'%s(?:%s)+(?:%s)+(?:%s)(?:%s|%s)*[0-9]*' % (b,U,L,U,U,L)
-    wikiname2 = r'%s(?:%s)(?:%s)+(?:%s)(?:%s|%s)*[0-9]*'  % (b,U,U,L,U,L)
+# the basic bare wikiname regexps
+wikiname1 = r'%s%s(?:%s)+(?:%s)+(?:%s)(?:%s|%s)*[0-9]*' % (localesensitive,wordboundary,U,L,U,U,L)
+wikiname2 = r'%s%s(?:%s)(?:%s)+(?:%s)(?:%s|%s)*[0-9]*' % (localesensitive,wordboundary,U,U,L,U,L)
 
-# are we having fun yet..
+# are we having fun yet ?
+
 # don't match things like &RightArrow;
 # could also do this in markLinksIn and make it per-pagetype ?
 wikiname3        = r'(?:%s|%s)' % (wikiname1, wikiname2)
+
 # is there a reason for the following re ?
 # I think no ampersand before or an ampersand but no char/; behind is enough
 # cautiously commented  --StefanRank
 # more trouble: the XML spec also allows &---WikiName---;
-#wikiname4        = r'(?:(?<!&)%s|(?<=&)%s(?![%s;]))' \
-#                   % (wikiname3, wikiname3, U+L)
-wikiname4        = r'(?:(?<!&)%s(?![%s])|(?<=&)%s(?![%s;]))' \
-                   % (wikiname3, U+L, wikiname3, U+L)
+#wikiname4        = r'(?:(?<!&)%s|(?<=&)%s(?![%s;]))' % (wikiname3, wikiname3, U+L)
+wikiname4        = r'(?:(?<!&)%s(?![%s])|(?<=&)%s(?![%s;]))' % (wikiname3, U+L, wikiname3, U+L)
+
 wikiname         = r'!?(%s)' %(wikiname4)
-# tracker support (+ character reference lookbehind/-ahead to avoid &#123;)
-hashnumberexpr   = r'(?:(?<!&)%s|(?<=&)%s(?![0-9;]))' \
-                   % (simplehashnumberexpr, simplehashnumberexpr)
+
+# issue number links XXX should be in the tracker plugin ?
+simplehashnumber = r'\#[0-9]+'
+# avoid html entities like &#123;
+hashnumberexpr   = r'(?:(?<!&)%s|(?<=&)%s(?![0-9;]))' % (simplehashnumber, simplehashnumber)
+                   
 wikilink         = r'!?(%s|%s|%s|%s)' % (wikiname4,bracketedexpr,url,hashnumberexpr)
 localwikilink1   = r'(?:%s|%s|%s)' % (wikiname4,bracketedexpr,hashnumberexpr)
 localwikilink    = r'!?(%s)' % (localwikilink1)
-interwikilink    = r'!?((?P<local>%s):(?P<remote>%s))' \
-                   % (localwikilink1, urlchars)
+interwikilink    = r'!?((?P<local>%s):(?P<remote>%s))' % (localwikilink1,urlchars)
 anywikilinkexpr  = re.compile(r'(%s|%s)' % (interwikilink,wikilink))
 markedwikilinkexpr  = re.compile(r'<zwiki>(.*?)</zwiki>')
-untitledwikilinkexpr = \
-          re.compile(r'<a href="([^"/]*/)*(?P<page>[^/"]*)" title="">.*?</a>')
-wikinamewords    = r'((%s(?!%s))+|%s%s+|[0-9]+)'%(Ub,Lb,Ub,Lb)
+untitledwikilinkexpr = re.compile(r'<a href="([^"/]*/)*(?P<page>[^/"]*)" title="">.*?</a>')
+wikinamewords    = r'((%s(?!%s))+|%s%s+|[0-9]+)'%(Ubr,Lbr,Ubr,Lbr)
 remotewikiurl    = r'(?mi)RemoteWikiURL[:\s]+(?P<remoteurl>[^\s]*)\s*$'
 protected_line   = r'(?m)^!(.*)$'
 
@@ -176,9 +174,10 @@ htmlfooterexpr = r'(?si)</body.*?>\s*</html.*?>\s*$'
 # better ? safe ?
 htmlbodyexpr = r'(?si)^.*?<body[^>]*?>(.*)</body[^>]*?>.*?$'
 
-# sgml tags, including those containing dtml/python and multi-line
-# XXX needs more work, does not match all tags
-# one badass regexp
+# and if you're still not having fun, here's one badass regexp:
+
+# sgml tags, including tags containing dtml & python expressions and multiline
+# XXX needs more work, does not match all tags.. but usually good enough
 #
 #r'(?s)<((".*?")|[^">]+)*>'          # takes exponential time
 #r'(?s)<((".*?")|[^">]+(?![^">]))*>' # avoids backtracking (see perlre)
@@ -189,8 +188,7 @@ htmlbodyexpr = r'(?si)^.*?<body[^>]*?>(.*)</body[^>]*?>.*?$'
 try: # work with different zope versions                                  
     # copied from doc_sgml()
     import StructuredText
-    simpletagchars = \
-      r'[%s0-9\.\=\'\"\:\/\-\#\+\s\*\;\!\&\-]' % StructuredText.STletters.letters
+    simpletagchars = r'[%s0-9\.\=\'\"\:\/\-\#\+\s\*\;\!\&\-]' % StructuredText.STletters.letters
 except AttributeError: # older zope
     simpletagchars = r'[A-z0-9\.\=\'\"\:\/\-\#\+\s\*\;\!\&\-]'
 dtmltag = r'(?si)<[-/! ]*dtml((".*?")|[^">]+(?![^">]))*>'
@@ -199,11 +197,11 @@ dtmlentity = r'(?i)&dtml.*?;'
 simplesgmltag = r'<((".*?")|(%s)|%s+(?!%s))>' % (dtmltag,simpletagchars,simpletagchars)
 dtmlorsgmlexpr = r'(%s|%s|%s)' % (dtmltag,simplesgmltag,dtmlentity)
 
+
 # From_ separator used to recognize rfc2822 messages - regexp from mailbox.py
-# used in Messages.py
+# used in Comments.py
 fromlineexpr = r'(?m)(?:^|\n\n)From \s*[^\s]+\s+\w\w\w\s+\w\w\w\s+\d?\d\s+\d?\d:\d\d(:\d\d)?(\s+[^\s]+)?\s+\d\d\d\d\s*$'
 
-# NIDs embedded in page source
-# used in purplenumbers.py
+# purple numbers NIDs XXX should be in purplenumbers plugin ?
 nidexpr = r'\s*({nid (?P<nid>[0-9A-z]+?)})'
 
