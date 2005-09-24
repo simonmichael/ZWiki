@@ -91,7 +91,7 @@ try:
     L =           '|'.join([c.encode('utf8') for c in unicode(string.lowercase, encoding)])
     Ubr = '[%s]' % ''.join([c.encode('utf8') for c in unicode(string.uppercase, encoding)])
     Lbr = '[%s]' % ''.join([c.encode('utf8') for c in unicode(string.lowercase, encoding)])
-    localesensitive = r'(?L)'
+    relocaleflag = r'(?L)'
     wordboundary = r'\b'
 except:
     # no locale is set, or there was a problem detecting it or a problem
@@ -103,21 +103,20 @@ except:
     # XXX more have been added to that page (latvian, polish).. how far
     # should we go with this ?  Could we make it always recognise all non-ascii
     # letters and forget locale sensitivity ?  Are regexps getting slow ?
-    # XXX needs more work, see links at
+    # XXX needs more work, see failing links at
     # http://zwiki.org/InternationalCharactersInPageNames
     uppercase = string.uppercase + '\xc3\x80\xc3\x81\xc3\x82\xc3\x83\xc3\x84\xc3\x85\xc3\x86\xc3\x88\xc3\x89\xc3\x8a\xc3\x8b\xc3\x8c\xc3\x8d\xc3\x8e\xc3\x8f\xc3\x92\xc3\x93\xc3\x94\xc3\x95\xc3\x96\xc3\x98\xc3\x99\xc3\x9a\xc3\x9b\xc3\x9c\xc3\x9d\xc3\x87\xc3\x90\xc3\x91\xc3\x9e'
     lowercase = string.lowercase + '\xc3\xa0\xc3\xa1\xc3\xa2\xc3\xa3\xc3\xa4\xc3\xa5\xc3\xa6\xc3\xa8\xc3\xa9\xc3\xaa\xc3\xab\xc3\xac\xc3\xad\xc3\xae\xc3\xaf\xc3\xb2\xc3\xb3\xc3\xb4\xc3\xb5\xc3\xb6\xc3\xb8\xc3\xb9\xc3\xba\xc3\xbb\xc3\xbc\xc3\xbd\xc3\xbf\xc2\xb5\xc3\x9f\xc3\xa7\xc3\xb0\xc3\xb1\xc3\xbe'
-    U=            '|'.join([c.encode('utf8') for c in unicode(uppercase,'utf-8')])
-    L=            '|'.join([c.encode('utf8') for c in unicode(lowercase,'utf-8')])
+    U =           '|'.join([c.encode('utf8') for c in unicode(uppercase,'utf-8')])
+    L =           '|'.join([c.encode('utf8') for c in unicode(lowercase,'utf-8')])
     Ubr = '[%s]' % ''.join([c.encode('utf8') for c in unicode(uppercase,'utf-8')])
     Lbr = '[%s]' % ''.join([c.encode('utf8') for c in unicode(lowercase,'utf-8')])
-    localesensitive = ''
-    # make \b a little more accurate
+    relocaleflag = ''
     wordboundary = '(?<![A-Za-z0-9\x80-\xff])' 
 
 # the basic bare wikiname regexps
-wikiname1 = r'%s%s(?:%s)+(?:%s)+(?:%s)(?:%s|%s)*[0-9]*' % (localesensitive,wordboundary,U,L,U,U,L)
-wikiname2 = r'%s%s(?:%s)(?:%s)+(?:%s)(?:%s|%s)*[0-9]*'  % (localesensitive,wordboundary,U,U,L,U,L)
+wikiname1 = r'%s%s(?:%s)+(?:%s)+(?:%s)(?:%s|%s)*[0-9]*' % (relocaleflag,wordboundary,U,L,U,U,L)
+wikiname2 = r'%s%s(?:%s)(?:%s)+(?:%s)(?:%s|%s)*[0-9]*'  % (relocaleflag,wordboundary,U,U,L,U,L)
 
 # are we having fun yet ?
 
