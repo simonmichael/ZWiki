@@ -62,11 +62,10 @@ doublebracketedexpr = r'\[\[([^\n\]]+)\]\]'
 #   python bug with some locales (#392).
 #
 # - or, a default set of non-ascii letters are allowed if no system locale
-#   is defined
-#   On the assumption that many international users won't have the locale
-#   defined on their system, we jump through some hoops to make at least
-#   some of them happy by supporting a number of non-ascii letters common
-#   in latin and other languages.
+#   is configured
+#   On systems without a locale configured, we jump through some hoops to
+#   support a number of non-ascii letters common in latin and other
+#   languages so things are more likely to "just work" for more users.
 #
 # The aim of this non-ascii stuff is to work as international users would
 # expect out of the box whenever possible, and to never fail product
