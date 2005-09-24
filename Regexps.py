@@ -79,18 +79,6 @@ doublebracketedexpr = r'\[\[([^\n\]]+)\]\]'
 # Lb: '[abc...]'
 # where A, b etc. are the utf8-encoded upper & lower-case letters.
 # Then we'll use them to build the bare wikiname regexps.
-#
-# For reference, the old non-utf8 regexps were:
-#U = string.uppercase
-#L = string.lowercase
-#wikiname1 = r'(?L)\b[%s]+[%s]+[%s][%s]*[0-9]*' % (U,L,U,U+L)
-#wikiname2 = r'(?L)\b[%s][%s]+[%s][%s]*[0-9]*'  % (U,U,L,U+L)
-#U = 'A-Z\xc0-\xdf'
-#L = 'a-z\xe0-\xff'
-#b = '(?<![%s0-9])' % (U+L) # emulate \b
-#wikiname1 = r'(?L)%s[%s]+[%s]+[%s][%s]*[0-9]*' % (b,U,L,U,U+L)
-#wikiname2 = r'(?L)%s[%s][%s]+[%s][%s]*[0-9]*'  % (b,U,U,L,U+L)
-
 try:
     import locale
     lang, encoding = locale.getlocale()
