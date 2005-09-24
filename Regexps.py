@@ -40,36 +40,42 @@ spaceandlowerexpr = re.compile(r'\s+([%s])'%(string.lowercase))
 bracketedexpr    = r'\[\[?([^\n\]]+)\]\]?'
 doublebracketedexpr = r'\[\[([^\n\]]+)\]\]'
 
-# bare wiki links
+# bare wikinames
 #
-# Zwiki's bare wikiname links are standard c2.com-style CamelCase plus the
-# following additions:
+# "bare wikinames" here means page names which will be automatically
+# wiki-linked without needing to be enclosed in brackets. Zwiki's
+# wikinames are standard c2.com-style CamelCase plus the following
+# additions:
 #
 # - words of a single letter are allowed (APage, PageA)
 #
 # - trailing digits are allowed (PageVersion22, but not Page22Version)
+#   (XXX for simplicity and to reduce accidental wikilinking - change this ?)
 #
-# Also, non-ascii letters are allowed. We aim to as far as possible work
-# as international users would expect, out of the box and regardless of
-# python version, locale setting, platform etc. Better ideas are welcome:
+# - non-ascii letters are allowed. We aim to as far as possible work as
+#   international users would expect, out of the box and regardless of
+#   python version, locale setting, platform etc. Better ideas are
+#   welcome. One of two possible setups is chosen at startup:
 #
-# - if a system locale is configured, the locale's letters are allowed
+#   1. if a system locale is configured, the locale's letters are allowed
 #
-#   We must include these in our regexps below. We need them utf8-encoded
-#   since zwiki text is always stored utf8-encoded. So we convert them
-#   from the system's default encoding to unicode and re-encode as utf8.
-#   It's hard to see how to do this robustly on all systems and it has
-#   been the cause of many zwiki startup problems, so we must be careful
-#   not to let any error stop product initialisation (#769, #1158). Other
-#   notes: don't rely on python 2.3's getpreferredencoding, gives wrong
-#   answer; work around a python bug with some locales (#392).
+#      We must include these in our regexps below. We need them
+#      utf8-encoded since zwiki text is always stored utf8-encoded. So we
+#      convert them from the system's default encoding to unicode and
+#      re-encode as utf8.  It's hard to see how to do this robustly on all
+#      systems and it has been the cause of many zwiki startup problems,
+#      so we must be careful not to let any error stop product
+#      initialisation (#769, #1158). Other notes: don't rely on python
+#      2.3's getpreferredencoding, gives wrong answer; work around a
+#      python bug with some locales (#392).
 #
-# - if no system locale is configured, a default set of non-ascii letters
-#   are allowed
+#   2. if no system locale is configured or there was an error during the
+#      above, a default set of non-ascii letters are allowed
 #
-#   On systems without a locale configured, we jump through some hoops to
-#   support a number of non-ascii letters common in latin and other
-#   languages so things are more likely to "just work" for more users.
+#      On systems where we can't detect the locale's characters, we jump
+#      through some hoops to support a number of non-ascii letters common
+#      in latin and other languages so things are more likely to "just
+#      work" for more users.
 
 # we'll set up the following strings, using the system locale if possible:
 # U:  'A|B|C|... '
