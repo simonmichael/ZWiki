@@ -60,15 +60,15 @@ doublebracketedexpr = r'\[\[([^\n\]]+)\]\]'
 #
 #   1. if a system locale is configured, the locale's letters are allowed
 #
-#      We must include these in our regexps below. We need them
-#      utf8-encoded since zwiki text is always stored utf8-encoded. So we
-#      convert them from the system's default encoding to unicode and
-#      re-encode as utf8.  It's hard to see how to do this robustly on all
-#      systems and it has been the cause of many zwiki startup problems,
-#      so we must be careful not to let any error stop product
-#      initialisation (#769, #1158). Other notes: don't rely on python
-#      2.3's getpreferredencoding, gives wrong answer; work around a
-#      python bug with some locales (#392).
+#      We include these in our regexps below. We need them utf8-encoded
+#      since zwiki text is always stored utf8-encoded. So we convert them
+#      from the system's default encoding to unicode and re-encode as
+#      utf8.  It's hard to see how to do this robustly on all systems and
+#      it has been the cause of many zwiki startup problems, so we must be
+#      careful not to let any error stop product initialisation (#769,
+#      #1158). Other notes: don't rely on python 2.3's
+#      getpreferredencoding, gives wrong answer; work around a python bug
+#      with some locales (#392).
 #
 #   2. if no system locale is configured or there was an error during the
 #      above, a default set of non-ascii letters are allowed
@@ -177,15 +177,15 @@ htmlbodyexpr = r'(?si)^.*?<body[^>]*?>(.*)</body[^>]*?>.*?$'
 # recognizing that stuff like <!-- dtml-var ...> & </dtml ...> is also dtml
 # and that a simple sgml tag may contain a dtml tag
 # put dtml pattern first, longest match does not apply with (|) I think
-try: # work with different zope versions                                  
+try:
     # copied from doc_sgml()
     import StructuredText
     simpletagchars = r'[%s0-9\.\=\'\"\:\/\-\#\+\s\*\;\!\&\-]' % StructuredText.STletters.letters
-except AttributeError: # older zope
+except AttributeError:
+    # support older zope, probably no longer needed
     simpletagchars = r'[A-z0-9\.\=\'\"\:\/\-\#\+\s\*\;\!\&\-]'
 dtmltag = r'(?si)<[-/! ]*dtml((".*?")|[^">]+(?![^">]))*>'
 dtmlentity = r'(?i)&dtml.*?;'
-#simplesgmltag = r'<((".*?")|%s+)>' % simpletagchars
 simplesgmltag = r'<((".*?")|(%s)|%s+(?!%s))>' % (dtmltag,simpletagchars,simpletagchars)
 dtmlorsgmlexpr = r'(%s|%s|%s)' % (dtmltag,simplesgmltag,dtmlentity)
 
