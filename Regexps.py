@@ -67,10 +67,10 @@ doublebracketedexpr = r'\[\[([^\n\]]+)\]\]'
 #   support a number of non-ascii letters common in latin and other
 #   languages so things are more likely to "just work" for more users.
 #
-# The aim of this non-ascii stuff is to work as international users would
-# expect out of the box whenever possible, and to never fail product
-# initialisation regardless of python version, locale setting, platform
-# etc. Better, simpler, more robust, more correct ideas are welcome.
+# The aim of this non-ascii stuff is to as far as possible work as
+# international users would expect, out of the box and regardless of
+# python version, locale setting, platform etc. Better, simpler, more
+# robust, more correct ideas are welcome.
 
 # we'll set up the following strings, using the system locale if possible:
 # U:  'A|B|C|... '
@@ -124,7 +124,7 @@ except:
 
 # the basic bare wikiname regexps
 wikiname1 = r'%s%s(?:%s)+(?:%s)+(?:%s)(?:%s|%s)*[0-9]*' % (localesensitive,wordboundary,U,L,U,U,L)
-wikiname2 = r'%s%s(?:%s)(?:%s)+(?:%s)(?:%s|%s)*[0-9]*' % (localesensitive,wordboundary,U,U,L,U,L)
+wikiname2 = r'%s%s(?:%s)(?:%s)+(?:%s)(?:%s|%s)*[0-9]*'  % (localesensitive,wordboundary,U,U,L,U,L)
 
 # are we having fun yet ?
 
@@ -132,7 +132,7 @@ wikiname2 = r'%s%s(?:%s)(?:%s)+(?:%s)(?:%s|%s)*[0-9]*' % (localesensitive,wordbo
 # could also do this in markLinksIn and make it per-pagetype ?
 wikiname3        = r'(?:%s|%s)' % (wikiname1, wikiname2)
 
-# is there a reason for the following re ?
+# is there a reason for the following regexp ?
 # I think no ampersand before or an ampersand but no char/; behind is enough
 # cautiously commented  --StefanRank
 # more trouble: the XML spec also allows &---WikiName---;
