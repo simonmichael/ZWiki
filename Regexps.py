@@ -18,13 +18,12 @@ urlchars = r'[A-Za-z0-9/:;@_%~#=&\.\-\?\+\$,]+'
 url      = r'["=]?((about|gopher|http|https|ftp|mailto|file):%s)' % (urlchars)
 
 # valid characters for zwiki page ids
-# These are the characters which are used to form safe page ids for both
-# free-form names and wiki names.  They are the characters legal in both
-# zope ids and urls, excluding _ which we use for quoting. See also
-# http://zwiki.org/HowZwikiTitleAndIdWorks . NB it is possible to hack
-# zope (OFS.ObjectManager.py bad_id) and adjust the below to enable
-# single-byte non-ascii letters in ids, but your urls would be illegal so
-# it's probably not worthwhile
+# These are the characters which are used to form the ids of zwiki page
+# objects.  They must be legal in both zope ids and urls, and exclude _
+# which is used for quoting. Cf http://zwiki.org/HowZwikiTitleAndIdWorks .
+# It is possible to enable single-byte non-ascii letters in page ids here
+# if you also hack bad_id in zope's OFS/ObjectManager.py, but then your
+# urls would be illegal.
 zwikiidcharsexpr = re.compile(r'[a-zA-Z0-9.-]')
 
 # used in generating page ids
@@ -95,14 +94,14 @@ try:
     wordboundary = r'\b'
 except:
     # no locale is set, or there was a problem detecting it or a problem
-    # decoding string.uppercase/lowercase; uncomment this to see which:
+    # decoding its letters; uncomment this to see which:
     #BLATHER(formattedTraceback())
     BLATHER('the system locale gave a problem in Regexps.py, so WikiNames will not be locale-aware')
     # define a useful default set of non-ascii letters, mainly european letters
     # from http://zwiki.org/InternationalCharacterExamples
     # XXX more have been added to that page (latvian, polish).. how far
-    # should we go with this ?  Could we make it always recognise all non-ascii
-    # letters and forget locale sensitivity ?  Are regexps getting slow ?
+    # should we go with this ?  Could we make it always recognise all
+    # letters and forget locale awareness ?  Are regexps getting slow ?
     # XXX needs more work, see failing links at
     # http://zwiki.org/InternationalCharactersInPageNames
     uppercase = string.uppercase + '\xc3\x80\xc3\x81\xc3\x82\xc3\x83\xc3\x84\xc3\x85\xc3\x86\xc3\x88\xc3\x89\xc3\x8a\xc3\x8b\xc3\x8c\xc3\x8d\xc3\x8e\xc3\x8f\xc3\x92\xc3\x93\xc3\x94\xc3\x95\xc3\x96\xc3\x98\xc3\x99\xc3\x9a\xc3\x9b\xc3\x9c\xc3\x9d\xc3\x87\xc3\x90\xc3\x91\xc3\x9e'
