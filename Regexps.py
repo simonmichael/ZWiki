@@ -42,35 +42,34 @@ doublebracketedexpr = r'\[\[([^\n\]]+)\]\]'
 
 # bare wiki links
 #
-# Zwiki's bare wiki links are standard CamelCase plus the following
-# additions:
+# Zwiki's bare wikiname links are standard c2.com-style CamelCase plus the
+# following additions:
 #
 # - words of a single letter are allowed (APage, PageA)
 #
 # - trailing digits are allowed (PageVersion22, but not Page22Version)
 #
-# - non-ascii letters defined by the system locale are allowed
-#   This means we must include the upper- and lower-case letters for this
-#   locale in our regexps. We get them from string.uppercase and
-#   string.lowercase, but we need them utf8-encoded since zwiki text is
-#   always stored utf8-encoded. So we convert them from the system's
-#   default encoding to unicode and re-encode as utf8. It's hard to see
-#   how to do this robustly on all systems and it has been the cause of
-#   many zwiki startup problems; we must be careful not to let any error
-#   stop product initialisation (#769, #1158). Other notes: don't rely on
-#   python 2.3's getpreferredencoding, gives wrong answer; work around a
-#   python bug with some locales (#392).
+# Also, non-ascii letters are allowed. We aim to as far as possible work
+# as international users would expect, out of the box and regardless of
+# python version, locale setting, platform etc. Better ideas are welcome:
 #
-# - or, a default set of non-ascii letters are allowed if no system locale
-#   is configured
+# - if a system locale is configured, the locale's letters are allowed
+#
+#   We must include these in our regexps below. We need them utf8-encoded
+#   since zwiki text is always stored utf8-encoded. So we convert them
+#   from the system's default encoding to unicode and re-encode as utf8.
+#   It's hard to see how to do this robustly on all systems and it has
+#   been the cause of many zwiki startup problems, so we must be careful
+#   not to let any error stop product initialisation (#769, #1158). Other
+#   notes: don't rely on python 2.3's getpreferredencoding, gives wrong
+#   answer; work around a python bug with some locales (#392).
+#
+# - if no system locale is configured, a default set of non-ascii letters
+#   are allowed
+#
 #   On systems without a locale configured, we jump through some hoops to
 #   support a number of non-ascii letters common in latin and other
 #   languages so things are more likely to "just work" for more users.
-#
-# The aim of this non-ascii stuff is to as far as possible work as
-# international users would expect, out of the box and regardless of
-# python version, locale setting, platform etc. Better, simpler, more
-# robust, more correct ideas are welcome.
 
 # we'll set up the following strings, using the system locale if possible:
 # U:  'A|B|C|... '
