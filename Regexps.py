@@ -115,6 +115,7 @@ except:
     wordboundary = '(?<![A-Za-z0-9\x80-\xff])' 
 
 # the basic bare wikiname regexps
+# ?: means "don't remember", apparently a performance optimization
 wikiname1 = r'%s%s(?:%s)+(?:%s)+(?:%s)(?:%s|%s)*[0-9]*' % (relocaleflag,wordboundary,U,L,U,U,L)
 wikiname2 = r'%s%s(?:%s)(?:%s)+(?:%s)(?:%s|%s)*[0-9]*'  % (relocaleflag,wordboundary,U,U,L,U,L)
 
@@ -166,28 +167,21 @@ htmlfooterexpr = r'(?si)</body.*?>\s*</html.*?>\s*$'
 # better ? safe ?
 htmlbodyexpr = r'(?si)^.*?<body[^>]*?>(.*)</body[^>]*?>.*?$'
 
-# and if you're still not having fun, here's one badass regexp:
-
-# sgml tags, including tags containing dtml & python expressions and multiline
-# XXX needs more work, does not match all tags.. but usually good enough
-#
-#r'(?s)<((".*?")|[^">]+)*>'          # takes exponential time
-#r'(?s)<((".*?")|[^">]+(?![^">]))*>' # avoids backtracking (see perlre)
-# to avoid matching casual angle bracket use, treat dtml separately
-# recognizing that stuff like <!-- dtml-var ...> & </dtml ...> is also dtml
-# and that a simple sgml tag may contain a dtml tag
-# put dtml pattern first, longest match does not apply with (|) I think
-try:
-    # copied from doc_sgml()
-    import StructuredText
-    simpletagchars = r'[%s0-9\.\=\'\"\:\/\-\#\+\s\*\;\!\&\-]' % StructuredText.STletters.letters
-except AttributeError:
-    # support older zope, probably no longer needed
-    simpletagchars = r'[A-z0-9\.\=\'\"\:\/\-\#\+\s\*\;\!\&\-]'
-dtmltag = r'(?si)<[-/! ]*dtml((".*?")|[^">]+(?![^">]))*>'
-dtmlentity = r'(?i)&dtml.*?;'
-simplesgmltag = r'<((".*?")|(%s)|%s+(?!%s))>' % (dtmltag,simpletagchars,simpletagchars)
-dtmlorsgmlexpr = r'(%s|%s|%s)' % (dtmltag,simplesgmltag,dtmlentity)
+# one more badass regexp:
+# sgml tags, including ones containing dtml & python expressions and multiline
+# Notes:
+# - r'(?s)<((".*?")|[^">]+)*>' takes exponential time
+# - r'(?s)<((".*?")|[^">]+(?![^">]))*>' avoids backtracking (see perlre)
+# - to avoid matching casual angle bracket use, treat dtml separately
+# - recognising that stuff like <!-- dtml-var ...> & </dtml ...> is also dtml
+# - and that a simple sgml tag may contain a dtml tag
+# - put dtml pattern first, longest match does not apply with (|) I think
+# - not perfect, but seems to match everything in practice
+dtmlentity =     r'(?i)&dtml.*?;'
+dtmltag =        r'(?si)<[-/! ]*dtml((".*?")|[^">]+(?![^">]))*>'
+tagchars =       r'[%s0-9\.\=\'\"\:\/\-\#\+\s\*\;\!\&\-]' % string.letters
+sgmltag =        r'<((".*?")|(%s)|%s+(?!%s))>' % (dtmltag,tagchars,tagchars)
+dtmlorsgmlexpr = r'(%s|%s|%s)' % (dtmltag,sgmltag,dtmlentity)
 
 
 # From_ separator used to recognize rfc2822 messages - regexp from mailbox.py
