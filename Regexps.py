@@ -82,7 +82,6 @@ doublebracketedexpr = r'\[\[([^\n\]]+)\]\]'
 try:
     import locale
     lang, encoding = locale.getlocale()
-    encoding = encoding or 'ascii'
     U = '|'.join([c.encode('utf8') for c in unicode(string.uppercase, encoding)])
     L = '|'.join([c.encode('utf8') for c in unicode(string.lowercase, encoding)])
     Ubr = '[%s]' % ''.join([c.encode('utf8') for c in unicode(string.uppercase, encoding)])
@@ -90,9 +89,10 @@ try:
     localesensitive = r'(?L)'
     wordboundary = r'\b'
 except:
-    # no locale is set or there was a problem detecting it or a problem
-    # decoding string.upper/lowercase
-    BLATHER('the system locale gave a problem in Regexps.py, so bare WikiNames will not be locale-aware (traceback follows)\n%s' % formattedTraceback())
+    # no locale is set, or there was a problem detecting it or a problem
+    # decoding string.uppercase/lowercase; uncomment this to see which:
+    #BLATHER(formattedTraceback())
+    BLATHER('the system locale gave a problem in Regexps.py, so bare WikiNames will not be locale-aware')
     # define a useful default set of non-ascii letters to recognize even
     # with no locale configured, mainly european letters from
     # http://zwiki.org/InternationalCharacterExamples
@@ -107,7 +107,8 @@ except:
     Lbr = '[%s]' % ''.join([c.encode('utf8') for c in unicode(lowercase,'utf-8')])
     localesensitive = ''
     # make \b a little more accurate with the above
-    # XXX needs work, see links at  http://zwiki.org/InternationalCharactersInPageNames
+    # XXX needs more work, see links at
+    # http://zwiki.org/InternationalCharactersInPageNames
     wordboundary = '(?<![A-Za-z0-9\x80-\xff])' 
 
 # the basic bare wikiname regexps
