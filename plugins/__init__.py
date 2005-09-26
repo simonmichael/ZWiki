@@ -73,7 +73,6 @@ def registerPlugin(c):
 # load plugins
 # import all modules and packages in this directory, each will register itself
 import os, re
-BLATHER('loading plugins:')
 plugins = [re.sub('.py$','',p) for p in os.listdir(__path__[0])
            if not p.endswith('.pyc') 
            and not p in ('__init__.py','README')]
