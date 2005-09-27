@@ -478,7 +478,7 @@ class Utils:
         if p: return p(bare=1,REQUEST=REQUEST, **kw)
         else: return ''
         
-    def isBoringPage(self):
+    def isBoring(self):
         """
         Is this page one which should be quieter, eg test pages ?
 

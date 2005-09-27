@@ -620,7 +620,7 @@ class MailSupport:
         """
         if not text: return
         recipients = self.subscriberList()
-        if not self.isBoringPage():
+        if not self.isBoring():
             recipients += self.wikiSubscriberList()
         recipients = self.emailAddressesFrom(recipients)
 
@@ -652,7 +652,7 @@ class MailSupport:
         else:
             recipients = self.subscriberList(edits=1)
 
-        if not self.isBoringPage():
+        if not self.isBoring():
             if self.mailoutPolicy() == 'edits':
                 recipients += self.wikiSubscriberList()
             else:
