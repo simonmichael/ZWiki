@@ -452,23 +452,6 @@ class MailSupport:
         """
         return getattr(self,'mailout_policy','comments')
 
-    def isBoringPage(self):
-        """
-        Is this page one of those which should send less mail ?
-
-        Boring pages are pages which we don't want to get mail from unless
-        subscribed directly, typically TestPage, SandBox and their children.
-        """
-        #getattr(self.folder(),'mail_boring_pages',[])
-        BORING_PAGES = ['TestPage','SandBox'] #XXX i18n ?
-        if self.pageName() in BORING_PAGES:
-            return 1
-        ancestors = self.ancestorsAsList()
-        for q in BORING_PAGES:
-            if q in ancestors:
-                return 1
-        return 0
-
     def fromProperty(self):
         """
         Give the mail_from property for this page.
