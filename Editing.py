@@ -445,7 +445,7 @@ class EditingSupport:
         if REQUEST: REQUEST.RESPONSE.redirect(redirecturl)
 
     def ensureRecycleBin(self):
-        if not hasattr(self.folder(),'recycle_bin'):
+        if not hasattr(self.folder().aq_base,'recycle_bin'):
             self.folder().manage_addFolder('recycle_bin', 'deleted wiki pages')
 
     def recycle(self, REQUEST=None):
