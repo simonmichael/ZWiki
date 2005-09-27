@@ -452,12 +452,22 @@ class MailSupport:
         """
         return getattr(self,'mailout_policy','comments')
 
-    def quietPages(self):
+    def isBoringPage(self):
         """
-        Names of pages which should send mail only to direct page subscribers.
+        Is this page one of those which should send less mail ?
+
+        Boring pages are pages which we don't want to get mail from unless
+        subscribed directly, typically TestPage, SandBox and their children.
         """
-        #return getattr(self.folder(),'mail_quiet_pages',
-        return (['TestPage','SandBox']) #i18n
+        #getattr(self.folder(),'mail_boring_pages',[])
+        BORING_PAGES = ['TestPage','SandBox'] #XXX i18n ?
+        if self.pageName() in BORING_PAGES:
+            return 1
+        ancestors = self.ancestorsAsList()
+        for q in BORING_PAGES:
+            if q in ancestors:
+                return 1
+        return 0
 
     def fromProperty(self):
         """
@@ -620,13 +630,15 @@ class MailSupport:
         to prevent page edits, catch any mail-sending errors (and log them
         and try to mail them to an admin).
 
-        As a special case, if text is empty we'll do nothing, to help
-        wikimail signal-to-noise ratio.
+        To reduce junk we apply a few special cases:
+        - send no mail if text is empty
+        - send mail only to direct page subscribers if this is one of the
+          boring pages (TestPage, Sandbox, their children etc.)
         """
         if not text: return
         to = None
         recipients = self.subscriberList()
-        if not self.title_or_id() in self.quietPages():
+        if not self.isBoringPage():
             recipients += self.wikiSubscriberList()
             to = ';'
         recipients = self.emailAddressesFrom(recipients)
@@ -660,7 +672,7 @@ class MailSupport:
         else:
             recipients = self.subscriberList(edits=1)
 
-        if not self.title_or_id() in self.quietPages():
+        if not self.isBoringPage():
             if self.mailoutPolicy() == 'edits':
                 recipients += self.wikiSubscriberList()
             else:
