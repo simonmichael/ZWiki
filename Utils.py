@@ -25,7 +25,7 @@ except:
     ZOPEVERSION = (9,9,9) # (cvs)
 
 from Products.ZWiki import __version__
-from Defaults import PREFER_USERNAME_COOKIE, PAGE_METADATA
+from Defaults import PREFER_USERNAME_COOKIE, PAGE_METADATA, BORING_PAGES
 import Permissions
 from I18nSupport import _
 
@@ -486,13 +486,12 @@ class Utils:
         listings, rss feeds etc. (?) or hear mail from unless subscribed
         directly. Typically these are TestPage, SandBox and their children.
         """
-        #getattr(self.folder(),'boring_pages',[])
-        BORING_PAGES = ['TestPage','SandBox'] #XXX i18n ?
-        if self.pageName() in BORING_PAGES:
+        boring = getattr(self,'boring_pages', BORING_PAGES)
+        if self.pageName() in boring:
             return 1
         ancestors = self.ancestorsAsList()
-        for q in BORING_PAGES:
-            if q in ancestors:
+        for p in boring:
+            if p in ancestors:
                 return 1
         return 0
 

@@ -17,7 +17,7 @@ PAGE_METATYPE =      'ZWiki Page' # meta_type of ZWikiPage objects
 PAGE_PORTALTYPE =    'Wiki Page'  # content type used in CMF/Plone
 WIKI_ADD_MENU_NAME = 'ZWiki'      # items in ZMI add menu.. 
 PAGE_ADD_MENU_NAME = 'ZWiki Page' # (this one must match PAGE_METATYPE)
-
+BORING_PAGES = ['TestPage','SandBox'] # pages we don't want to see/hear much
 IDS_TO_AVOID = ['RESPONSE','REQUEST','Epoz','epoz','URL','outline','recycle_bin']
 
 # Standard metadata fields which Zwiki will expect in page brain objects.
