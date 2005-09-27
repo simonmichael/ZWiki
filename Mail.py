@@ -619,11 +619,9 @@ class MailSupport:
           boring pages (TestPage, Sandbox, their children etc.)
         """
         if not text: return
-        to = None
         recipients = self.subscriberList()
         if not self.isBoringPage():
             recipients += self.wikiSubscriberList()
-            to = ';'
         recipients = self.emailAddressesFrom(recipients)
 
         self.sendMailTo(recipients,
@@ -648,7 +646,6 @@ class MailSupport:
         """
         # XXX some duplication here
         if not text: return
-        to = None
 
         if self.mailoutPolicy() == 'edits':
             recipients = self.subscriberList()
@@ -660,7 +657,6 @@ class MailSupport:
                 recipients += self.wikiSubscriberList()
             else:
                 recipients += self.wikiSubscriberList(edits=1)
-            to = ';'
         recipients = self.emailAddressesFrom(recipients)
 
         self.sendMailTo(recipients,
@@ -704,9 +700,6 @@ class MailSupport:
         try: recipients.remove(exclude_address)
         except ValueError: pass
 
-        # 
-
-
         if not recipients: return
         
 	# some lists may deliver duplicated addresses twice; try to avoid
@@ -716,7 +709,6 @@ class MailSupport:
         #    if not r in unique:
         #        unique.append(r)
         #if self.toProperty() in unique: unique.remove(self.toProperty())
-        
 
         msg = """\
 From: %s
