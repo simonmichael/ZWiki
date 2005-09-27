@@ -426,10 +426,6 @@ class EditingSupport:
 
         XXX no it won't ? also, need a flag to disable reparenting
         """
-        if not (self.checkPermission(Permissions.Delete, self) and
-                self.requestHasSomeId(REQUEST)):
-            raise 'Unauthorized', (
-                _('You are not authorized to delete this ZWiki Page.'))
         oldname, oldid = self.pageName(), self.getId()
         # update parents attributes to avoid orphans
         self.moveMyChildrenTo(self.primaryParentName())
@@ -492,11 +488,6 @@ class EditingSupport:
         oldname, oldid = self.pageName(), self.getId()
         newname, newid = pagename, self.canonicalIdFrom(pagename)
         if not newname or (newname == oldname and newid == oldid): return 
-
-        # require a username as well as rename permission for renaming
-        if not self.requestHasSomeId(REQUEST):
-            raise 'Unauthorized', (
-                _('You are not authorized to rename this ZWiki Page.'))
 
         BLATHER('renaming %s (%s) to %s (%s)...'%(oldname,oldid,newname,newid))
 
