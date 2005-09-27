@@ -15,8 +15,8 @@ from I18nSupport import _
 import Permissions
 from Utils import BLATHER, formattedTraceback, DateTimeSyntaxError, callHooks
 from pagetypes import PAGE_TYPE_UPGRADES
-from Defaults import PAGE_METADATA
-
+from Defaults import PAGE_METADATA, \
+     TEXTINDEXES, FIELDINDEXES, KEYWORDINDEXES, DATEINDEXES, PATHINDEXES
 
 # copied from ZWikiWeb.py
 def _addDTMLMethod(self, id, title='', file=''):
@@ -382,35 +382,7 @@ class AdminSupport:
         Safe to call more than once; will ignore any already existing
         items. For simplicity we install all metadata for plugins (like
         Tracker) here as well.
-        """
-        TextIndexes = [
-            'Title',
-            'text',
-            ]
-        #XXX correct choice of FieldIndexes vs. KeywordIndexes ?
-        FieldIndexes = [
-            'creation_time',
-            'creator',
-            'id',
-            'last_edit_time',
-            'last_editor',
-            'meta_type',
-            'page_type',
-            'rating',
-            'voteCount',
-            ]
-        KeywordIndexes = [
-            'canonicalLinks',
-            #'links', # XXX problems for epoz/plone, not needed ?
-            'parents',
-            ]
-        DateIndexes = [
-            'creationTime',
-            'lastEditTime',
-            ]
-        PathIndexes = [
-            'path',
-            ]
+        """                
         #XXX during unit testing, somehow a non-None catalog is false
         #if not self.catalog():
         if self.catalogId() == 'NONE':
@@ -418,19 +390,19 @@ class AdminSupport:
         catalog = self.catalog()
         catalogindexes, catalogmetadata = catalog.indexes(), catalog.schema()
         PluginIndexes = catalog.manage_addProduct['PluginIndexes']
-        for i in TextIndexes:
+        for i in TEXTINDEXES:
             # XXX should choose a TING2 or ZCTI here and set up appropriately
             # a TextIndex is case sensitive, exact word matches only
             # a ZCTextIndex can be case insensitive and do right-side wildcards
             # a TextIndexNG2 can be case insensitive and do both wildcards
             if not i in catalogindexes: PluginIndexes.manage_addTextIndex(i)
-        for i in FieldIndexes:
+        for i in FIELDINDEXES:
             if not i in catalogindexes: PluginIndexes.manage_addFieldIndex(i)
-        for i in KeywordIndexes:
+        for i in KEYWORDINDEXES:
             if not i in catalogindexes: PluginIndexes.manage_addKeywordIndex(i)
-        for i in DateIndexes:
+        for i in DATEINDEXES:
             if not i in catalogindexes: PluginIndexes.manage_addDateIndex(i)
-        for i in PathIndexes:
+        for i in PATHINDEXES:
             if not i in catalogindexes: PluginIndexes.manage_addPathIndex(i)
         for m in PAGE_METADATA:
             if not m in catalogmetadata: catalog.manage_addColumn(m)

@@ -55,3 +55,37 @@ def registerPageMetaData(t):
     PAGE_METADATA.append(t)
     #BLATHER('registered standard metadata field: %s'%t)
 
+
+# standard catalog indexes which should be present for best performance.
+# setupCatalog will install these. Included here so they are easy to find.
+
+TEXTINDEXES = [
+    'Title',
+    'text',
+    ]
+#XXX are these correct choice of FieldIndexes vs. KeywordIndexes ?
+FIELDINDEXES = [
+    'isBoring',
+    'creation_time',
+    'creator',
+    'id',
+    'last_edit_time',
+    'last_editor',
+    'meta_type',
+    'page_type',
+    'rating',
+    'voteCount',
+    ]
+KEYWORDINDEXES = [
+    'canonicalLinks',
+    #'links', # XXX problems for epoz/plone, not needed ?
+    'parents',
+    ]
+DATEINDEXES = [
+    'creationTime',
+    'lastEditTime',
+    ]
+PATHINDEXES = [
+    'path',
+    ]
+
