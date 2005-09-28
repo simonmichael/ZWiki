@@ -21,31 +21,16 @@ class RSSMixin:
     security = ClassSecurityInfo()
 
     security.declareProtected(Permissions.View, 'pages_rss')
-    def pages_rss(self):
+    def pages_rss(self, num=10, REQUEST=None):
         """
         Provide an RSS feed showing this wiki's recently created pages.
         """
-        container = context = self.folder()
-        # the rest of this method is hopefully like the python script version
-        # aside from print
-
-        feedtitle = context.title_or_id() + ' new pages'
+        feedtitle = self.folder().title_or_id() + ' new pages'
         feeddescription = feedtitle
         feedlanguage = 'en'
-        feeddate =  'Fri, 7 Jan 2005 22:00:00 PST' #script.modificationDate()
-
-        request = container.REQUEST
-        RESPONSE =  request.RESPONSE
-        workingpage = context.objectValues(spec='ZWiki Page')[0]
-        wikiurl = workingpage.wikiUrl()
-        pages = []
-        for p in workingpage.pages(
-            sort_on='creation_time', sort_order='reverse'
-            )[:request.get('num',15)]:
-            if not('SandBox' in p.getObject().ancestorsAsList()):
-                pages.append(p)
-
-        RESPONSE.setHeader('Content-Type','text/xml')
+        feeddate = str(self.folder().bobobase_modification_time()) #XXX ?
+        wikiurl = self.wikiUrl()
+        REQUEST.RESPONSE.setHeader('Content-Type','text/xml')
         t = """\
         <rss version="2.0">
           <channel>
@@ -61,7 +46,10 @@ class RSSMixin:
             'feedlanguage':feedlanguage,
             'feeddate':feeddate,
             }
-        for p in pages:
+        for p in self.pages(sort_on='creation_time',
+                            sort_order='reverse',
+                            sort_limit=num,
+                            isBoring=0):
             t += """\
             <item>
               <title>%(title)s</title>
@@ -84,33 +72,18 @@ class RSSMixin:
         return t
 
     security.declareProtected(Permissions.View, 'changes_rss')
-    def changes_rss(self):
+    def changes_rss(self, num=10, REQUEST=None):
         """
         Provide an RSS feed showing this wiki's recently edited pages.
 
         This is not the same as all recent edits.
         """
-        container = context = self.folder()
-        # the rest of this method is hopefully like the python script version
-        # aside from print
-
-        feedtitle = context.title_or_id() + ' changed pages'
+        feedtitle = self.folder().title_or_id() + ' changed pages'
         feeddescription = feedtitle
         feedlanguage = 'en'
-        feeddate =  'Fri, 7 Jan 2005 22:00:00 PST' #script.modificationDate()
-
-        request = container.REQUEST
-        RESPONSE =  request.RESPONSE
-        workingpage = context.objectValues(spec='ZWiki Page')[0]
-        wikiurl = workingpage.wikiUrl()
-        pages = []
-        for p in workingpage.pages(
-            sort_on='last_edit_time', sort_order='reverse'
-            )[:request.get('num',15)]:
-            if not('SandBox' in p.getObject().ancestorsAsList()):
-                pages.append(p)
-
-        RESPONSE.setHeader('Content-Type','text/xml')
+        feeddate = str(self.folder().bobobase_modification_time()) #XXX ?
+        wikiurl = self.wikiUrl()
+        REQUEST.RESPONSE.setHeader('Content-Type','text/xml')
         t = """\
         <rss version="2.0">
           <channel>
@@ -126,7 +99,10 @@ class RSSMixin:
             'feedlanguage':feedlanguage,
             'feeddate':feeddate,
             }
-        for p in pages:
+        for p in self.pages(sort_on='last_edit_time',
+                            sort_order='reverse',
+                            sort_limit=num,
+                            isBoring=0):
             t += """\
             <item>
               <title>%(title)s</title>
