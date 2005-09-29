@@ -331,12 +331,22 @@ class TrackerSupport:
                 self.manage_changeProperties(status=status)
         if text:
             comment += '\n' + text
-        if log or (comment != ''):
-            log = log or 'property change'
-            self.comment(text=comment, subject_heading=log, REQUEST=REQUEST)
-            self.setLastEditor(REQUEST)
-            self.reindex_object()
-        if REQUEST: REQUEST.RESPONSE.redirect(self.page_url())
+
+        if comment:
+            # there was a change, note it on the page and via mail
+            # fine detail: don't say (property change) if there wasn't
+            subject = ''
+            if '=>' in comment: subject += '(%s) ' % _('property change')
+            if log: subject += log
+            self.comment(
+                text=comment,
+                subject_heading=subject,
+                REQUEST=REQUEST)
+            # comment takes care of this I believe
+            #self.setLastEditor(REQUEST)
+            #self.reindex_object()
+        if REQUEST:
+            REQUEST.RESPONSE.redirect(self.page_url())
 
     def category_index(self):
         """helper method to facilitate sorting catalog results"""
