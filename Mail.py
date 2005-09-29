@@ -606,67 +606,65 @@ class MailSupport:
                               subject='',message_id=None,in_reply_to=None,
                               exclude_address=None):
         """
-        Send mail to this page's subscribers, if any.
+        Send mail to this page's and the wiki's subscribers, if any.
         
         If a mailhost and mail_from property have been configured and
         there are subscribers to this page, email text to them.  So as not
         to prevent page edits, catch any mail-sending errors (and log them
         and try to mail them to an admin).
 
-        To reduce junk we apply a few special cases:
-        - send no mail if text is empty
-        - send mail only to direct page subscribers if this is one of the
-          boring pages (TestPage, Sandbox, their children etc.)
+        This is used for sending things of interest to all subscribers,
+        like comments and page creations. To reduce noise we apply a few
+        special cases:
+        - if text is empty, don't send
+        - if this is a boring page, don't send to wiki subscribers unless
+          they've requested all edits
         """
-        if not text: return
-        recipients = self.subscriberList()
-        if not self.isBoring():
-            recipients += self.wikiSubscriberList()
-        recipients = self.emailAddressesFrom(recipients)
-
-        self.sendMailTo(recipients,
-                        text,
-                        REQUEST,
-                        subjectSuffix=subjectSuffix,
-                        subject=subject,
-                        message_id=message_id,
-                        in_reply_to=in_reply_to,
-                        exclude_address=exclude_address)
+        if text:
+            self.sendMailTo(
+                self.emailAddressesFrom(
+                    self.subscriberList() + \
+                    self.wikiSubscriberList(edits=self.isBoring())),
+                text,
+                REQUEST,
+                subjectSuffix=subjectSuffix,
+                subject=subject,
+                message_id=message_id,
+                in_reply_to=in_reply_to,
+                exclude_address=exclude_address)
 
     def sendMailToEditSubscribers(self, text, REQUEST, subjectSuffix='',
                                   subject='',message_id=None,in_reply_to=None,
                                   exclude_address=None):
         """
-        Send mail to this page's "all edits" subscribers, if any.
+        Send mail to this page's and the wiki's all edits subscribers, if any.
         
         Like sendMailToSubscribers, but sends only to the subscribers who
-        have requested notification of all edits. A mailout_policy
-        property with value "edits" on the wiki folder will force this
-        for all subscribers (backwards compatibility).
+        have requested notification of all edits. If text is empty, send
+        nothing.
+
+        For backwards compatibility, a mailout_policy property with value
+        edits on the wiki folder will override this and send to all
+        subscribers.  I think that needs to go away as it makes the user's
+        choice on subscribeform useless. During upgrade we could remove it
+        and convert all subscribers to edits subscribers.
         """
-        # XXX some duplication here
         if not text: return
-
-        if self.mailoutPolicy() == 'edits':
-            recipients = self.subscriberList()
+        if self.mailoutPolicy() == 'edits':        #XXX deprecate
+            recipients = self.subscriberList() + \
+                         self.wikiSubscriberList()
         else:
-            recipients = self.subscriberList(edits=1)
-
-        if not self.isBoring():
-            if self.mailoutPolicy() == 'edits':
-                recipients += self.wikiSubscriberList()
-            else:
-                recipients += self.wikiSubscriberList(edits=1)
-        recipients = self.emailAddressesFrom(recipients)
-
-        self.sendMailTo(recipients,
-                        text,
-                        REQUEST,
-                        subjectSuffix=subjectSuffix,
-                        subject=subject,
-                        message_id=message_id,
-                        in_reply_to=in_reply_to,
-                        exclude_address=exclude_address)
+            recipients = self.subscriberList(edits=1) + \
+                         self.wikiSubscriberList(edits=1)
+        self.sendMailTo(
+            self.emailAddressesFrom(recipients),
+            text,
+            REQUEST,
+            subjectSuffix=subjectSuffix,
+            subject=subject,
+            message_id=message_id,
+            in_reply_to=in_reply_to,
+            exclude_address=exclude_address)
         
 
     def sendMailTo(self, recipients, text, REQUEST,
