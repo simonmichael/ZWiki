@@ -106,7 +106,7 @@ class EditingSupport:
                 p.read(),
                 REQUEST=REQUEST,
                 subjectSuffix='',
-                subject='(%s) %s' % (_('new'),log),
+                subject=log,
                 message_id=self.messageIdFromTime(p.creationTime())
                 )
         # and move on
@@ -375,7 +375,7 @@ class EditingSupport:
             self.sendMailToEditSubscribers(
                 self.textDiff(a=old,b=self.read()),
                 REQUEST=REQUEST,
-                subject=log)
+                subject='(%s) %s' % (_('edit'),log))
 
     def handleDeleteMe(self,text,REQUEST=None,log=''):
         if not text or not re.match('(?m)^DeleteMe', text):
