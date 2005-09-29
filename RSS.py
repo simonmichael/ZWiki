@@ -111,10 +111,10 @@ class RSSMixin:
               <pubDate>%(last_edit_time)s</pubDate>
             </item>
         """ % {
-            'title':p.Title,
+            'title':'[%s] %s' % (p.Title,html_quote(p.last_log)),
             'wikiurl':wikiurl,
             'id':p.id,
-            'last_log':html_quote(p.last_log),
+            'last_log':html_quote(p.getObject().textDiff()),
             'last_edit_time':p.lastEditTime.rfc822(),
             }
         t += """\
