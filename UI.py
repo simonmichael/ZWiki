@@ -155,7 +155,8 @@ class SkinUtils:
         """
         Does the named skin template exist in the aq context or filesystem ?
         """
-        return self.getSkinTemplate(name) is not STANDARD_TEMPLATES['badtemplate']
+        # != ignores any acquisition wrapper
+        return self.getSkinTemplate(name) != STANDARD_TEMPLATES['badtemplate']
         
     def getSkinTemplate(self,name):
         """
