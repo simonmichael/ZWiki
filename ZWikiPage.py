@@ -595,7 +595,8 @@ class ZWikiPage(
         if not self.isWikiName(link):
             # yes - use fuzzy matching to match an existing page if possible.
             # strip brackets/parentheses
-            link = re.sub(r'^(\[\[|\[|\(\()(.*?)(\]\]|\]|\)\))$',r'\2',link)
+            link = linkorig = re.sub(
+                r'^(\[\[|\[|\(\()(.*?)(\]\]|\]|\)\))$',r'\2',linkorig)
             p = self.pageWithFuzzyName(link)
             if p:
                 try: link = p.getId() # XXX poor caching
