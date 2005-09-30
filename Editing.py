@@ -613,7 +613,7 @@ class EditingSupport:
         newpat = (self.isWikiName(newlink) and newlink) or '[%s]' % newlink
         self.edit(text=re.sub(oldpat, newpat, self.read()),
                   REQUEST=REQUEST,
-                  log='links updated after rename')
+                  log='links updated')
 
     def handleFileUpload(self,REQUEST,log=''):
         # is there a file upload ?
