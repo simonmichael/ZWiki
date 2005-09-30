@@ -312,7 +312,7 @@ class SubscriberManagerMixin:
             for page in pages:
                 for sub in page.subscriber_list:
                     if not sub: continue
-                    if ((email and (string.lower(sub) == email)) or
+                    if ((email and (self.emailAddressFrom(sub) == email)) or
                         (usernames and (sub in usernames))):
                         subscriptions.append(page.id)
         else:
