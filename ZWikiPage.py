@@ -59,12 +59,14 @@ from OFS.DTMLDocument import DTMLDocument
 
 import Permissions
 from Defaults import AUTO_UPGRADE, IDS_TO_AVOID, \
-     PAGE_METATYPE, LINK_TO_ALL_CATALOGED, LINK_TO_ALL_OBJECTS
-from Regexps import url, bracketedexpr, doublebracketedexpr, \
-     wikiname, wikilink, interwikilink, remotewikiurl, \
-     protected_line, zwikiidcharsexpr, anywikilinkexpr, \
-     markedwikilinkexpr, localwikilink, spaceandlowerexpr, \
-     dtmlorsgmlexpr, wikinamewords, hashnumberexpr
+     PAGE_METATYPE, LINK_TO_ALL_CATALOGED, LINK_TO_ALL_OBJECTS, \
+     WIKINAME_LINKS, BRACKET_LINKS, DOUBLE_BRACKET_LINKS, \
+     DOUBLE_PARENTHESIS_LINKS
+from Regexps import url, bracketedexpr, singlebracketedexpr, \
+     doublebracketedexpr, doubleparenthesisexpr, wikiname, wikilink, \
+     interwikilink, remotewikiurl, protected_line, zwikiidcharsexpr, \
+     anywikilinkexpr, markedwikilinkexpr, localwikilink, \
+     spaceandlowerexpr, dtmlorsgmlexpr, wikinamewords, hashnumberexpr
 from Utils import Utils, BLATHER
 from UI import UI
 from OutlineSupport import OutlineSupport
@@ -416,35 +418,39 @@ class ZWikiPage(
     ######################################################################
     # link rendering and handling
 
+    def wikinameLinksAllowed(self):
+        """Are wikinames linked in this wiki ?"""
+        return getattr(self,'use_wikiname_links',WIKINAME_LINKS)
+
+    def bracketLinksAllowed(self):
+        """Are bracketed freeform names linked in this wiki ?"""
+        return getattr(self,'use_bracket_links',BRACKET_LINKS)
+
+    def doubleBracketLinksAllowed(self):
+        """Are wikipedia-style double bracketed names linked in this wiki ?"""
+        return getattr(self,'use_double_bracket_links',DOUBLE_BRACKET_LINKS)
+
+    def doubleParenthesisLinksAllowed(self):
+        """Are wicked-style double parenthesis names linked in this wiki ?"""
+        return getattr(
+            self,'use_double_parenthesis_links',DOUBLE_PARENTHESIS_LINKS)
+
     def isWikiName(self,name):
         """Is name a WikiName ?"""
         return re.match('^%s$' % wikiname,name) is not None
 
-    def wikinameLinksAllowed(self):
-        """Are wikinames linked in this wiki ?"""
-        return getattr(self,'use_wikiname_links',1)
-
-    def bracketLinksAllowed(self):
-        """Are bracketed freeform names linked in this wiki ?"""
-        return getattr(self,'use_bracket_links',1)
-
-    def doublebracketLinksAllowed(self):
-        """Are wikipedia-style double bracketed names linked in this wiki ?"""
-        return getattr(self,'use_doublebracket_links',1)
-
-    def hasAllowedLinkSyntax(self,link):
-        if (re.match(url,link) or
-            re.match(hashnumberexpr,link) or
-            (self.wikinameLinksAllowed() and
-             re.match(wikiname,link)) or
-            (self.bracketLinksAllowed() and
-             re.match(bracketedexpr,link) and
-             not re.match(doublebracketedexpr,link)) or
-            (self.doublebracketLinksAllowed() and
-             re.match(doublebracketedexpr,link))):
-            return 1
-        else:
-            return 0
+    def isValidWikiLinkSyntax(self,link):
+        """Does link look a valid wiki link syntax for this wiki ?
+        """
+        return ((
+            self.wikinameLinksAllowed() and
+                re.match(wikiname,link)
+            or (self.bracketLinksAllowed() and
+                re.match(singlebracketedexpr,link))
+            or (self.doubleBracketLinksAllowed() and
+                re.match(doublebracketedexpr,link))
+            or (self.doubleParenthesisLinksAllowed() and
+                re.match(doubleparenthesisexpr,link))) and 1)
 
     def markLinksIn(self,text):
         """
@@ -455,25 +461,25 @@ class ZWikiPage(
         make them easy to find again.  Tries to be smart about finding
         links only where you want it to.
         """
-        #get_transaction().note('findlinks')
         markedtext = ''
         state = {'lastend':0,'inpre':0,'incode':0,'intag':0,'inanchor':0}
         lastpos = 0
         while 1:
             m = anywikilinkexpr.search(text,lastpos)
             if m:
+                # found some sort of link pattern - check if we should link it
                 link = m.group()
                 linkstart,linkend = m.span()
-                if (link[0]=='!' or
-                    not self.hasAllowedLinkSyntax(link) or
-                    within_literal(linkstart,linkend-1,state,text) or
-                    withinSgmlOrDtml((linkstart,linkend),text)):
-                    # found the link pattern but it's escaped or disallowed or
-                    # inside a STX quote or SGML tag - ignore (and strip the !)
-                    if link[0] == '!': link=link[1:]
+                if (link[0]=='!'
+                    or not (self.isValidWikiLinkSyntax(link) or re.match(url,link))
+                    or within_literal(linkstart,linkend-1,state,text) # XXX these
+                    or withinSgmlOrDtml((linkstart,linkend),text)):   # overlap ?
+                    # no - ignore it (and strip the !)
+                    if link[0] == '!':
+                        link=link[1:]
                     markedtext += text[lastpos:linkstart] + link
                 else:
-                    # a link! mark it and save it
+                    # yes - mark it for later
                     markedtext += '%s<zwiki>%s</zwiki>' \
                                   % (text[lastpos:linkstart],link)
                 lastpos = linkend
@@ -492,70 +498,32 @@ class ZWikiPage(
 
     def renderLinksIn(self,text):
         """
-        Find and render all links in one step, without marking.
+        Find and render all links in text in one step.
+
+        An alternative to the more usual markLinksIn + renderMarkedLinksIn.
         """
         t = self.applyWikiLinkLineEscapesIn(text)
-        t = re.sub(anywikilinkexpr,
-                   thunk_substituter(self.renderLink, t, 1),
-                   t)
-        return t
+        # ken's clever thunk_substituter helps provide context (or something)
+        return re.sub(anywikilinkexpr,
+                      thunk_substituter(self.renderLink, t, 1),
+                      t)
 
-    security.declareProtected(Permissions.View, 'wikilink')
-    wikilink = renderLinksIn # api alias
+    wikilink = renderLinksIn # convenience alias
 
     security.declareProtected(Permissions.View, 'applyWikiLinkLineEscapesIn')
     def applyWikiLinkLineEscapesIn(self, text):
         """
-        implement wikilink-escaping in lines in text which begin with !
+        Escape all wikilinks in lines in text which begin with !.
         """
-        return re.sub(protected_line, self.protectLine, text)
+        return re.sub(
+            protected_line,
+            lambda m:re.sub(wikilink, r'!\1', m.group(1)),
+            text)
         
-    def protectLine(self, match):
-        """
-        return the string represented by match with all it's wikilinks escaped
-        """
-        return re.sub(wikilink, r'!\1', match.group(1))
-
-    security.declareProtected(Permissions.View, 'spacedWikinamesEnabled')
-    def spacedWikinamesEnabled(self):
-        """Should all wikinames be displayed with spaces in this wiki ?"""
-        return getattr(self.folder(),'space_wikinames',0) and 1
-
-    security.declareProtected(Permissions.View, 'spacedNameFrom')
-    def spacedNameFrom(self,pagename):
-        """
-        Return pagename with spaces inserted if it's a WikiName, or unchanged.
-
-        Tries to be conformant with the wikiname regexp wrt. i18n, etc.
-        """
-        #spaced = pagename[0]
-        #for c in pagename[1:]:
-        #    if c in string.uppercase: spaced += ' '
-        #    spaced += c
-        #return spaced
-        if re.match('^%s$' % wikiname, pagename):
-            words = [x[0] for x in re.findall(wikinamewords,pagename)]
-            return ' '.join(words)
-        else:
-            return pagename
-
-    security.declareProtected(Permissions.View, 'formatWikiname')
-    def formatWikiname(self,wikiname):
-        """
-        Convert a wikiname to this wiki's standard display format.
-
-        Ie, leave it be or add ungodly spaces depending on the
-        'space_wikinames' property.
-        """
-        if self.spacedWikinamesEnabled():
-            return self.spacedNameFrom(wikiname)
-        else: 
-            return wikiname
-
     def renderLink(self,link,allowed=0,state=None,text='',
                    link_title=None,access_key=None):
         """
-        Render a link depending on current wiki state.
+        Render various kinds of hyperlink, based on page and wiki state.
 
         Can be called three ways:
         - directly (link should be a string)
@@ -578,90 +546,119 @@ class ZWikiPage(
             if (within_literal(match.start(),match.end()-1,state,text) or
                 withinSgmlOrDtml(match.span(),text)):
                 return link
-        linkorig = link = re.sub(markedwikilinkexpr, r'\1', link)
-        linknobrackets = re.sub(bracketedexpr, r'\1', link)
+        link = linkorig = re.sub(markedwikilinkexpr, r'\1', link)
 
+        # here we go
         # is this link escaped ?
-        if link[0] == '!': return link[1:]
+        if link[0] == '!':
+            return link[1:]
 
         # is it an interwiki link ?
-        if re.match(interwikilink,link): return self.renderInterwikiLink(link)
+        if re.match(interwikilink,link):
+            return self.renderInterwikiLink(link)
 
-        # is it something in brackets ?
-        if re.match(bracketedexpr,link):
-            # a STX footnote ? check for matching named anchor in the page text
-            if re.search(r'(?s)<a name="ref%s"' % (re.escape(linknobrackets)),
-                         text):
-                return '<a href="%s#ref%s" title="footnote %s">[%s]</a>' \
-                       % (self.page_url(),linknobrackets,
-                          linknobrackets,linknobrackets)
-            # or, an allowed bracketed freeform link syntax for this wiki ?
-            if ((re.match(doublebracketedexpr,link) and
-                 self.doublebracketLinksAllowed()) or
-                (not re.match(doublebracketedexpr,link) and
-                 self.bracketLinksAllowed())):
-                # yes - convert to the id of an existing page if possible,
-                # using fuzzy matching, and continue. 
-                p = self.pageWithFuzzyName(linknobrackets)
-                    #or self.issuePageWithNumber(self.issueNumberFrom(linknobrackets))
-                    #keep freeform links to old IssueNo pages working, no longer needed
-                if p:
-                    try: link = p.getId() # XXX poor caching
-                    except: link = p.id # all-brains
-        
+        # is it a STX footnote ? check for matching named anchor in the page text
+        if re.match(singlebracketedexpr,link):
+            linknobrackets = re.sub(singlebracketedexpr, r'\1', link)
+            if re.search(
+                r'(?s)<a name="ref%s"' % (re.escape(linknobrackets)),text):
+                return '<a href="%s#ref%s" title="footnote %s">[%s]</a>' % (
+                    self.page_url(),linknobrackets,
+                    linknobrackets,linknobrackets)
+
         # is it a bare URL ?
         if re.match(url,link):
             return '<a href="%s">%s</a>' % (link, link)
 
-        # is it a hash number (#123) ?
+        # is it a hash number issue link (#123) ?
         if re.match(hashnumberexpr,link):
             # yes - convert to the id of the issue page with that number
             # and continue; if we can't, don't bother linking
             p = self.issuePageWithNumber(self.issueNumberFrom(link))
             if p:
                 try: link = p.getId() # XXX poor caching
-                except: link = p.id # all-brains
+                except: link = p.id   # all-brains
+                return self.renderLinkToPage(link,
+                                             linkorig=linkorig,
+                                             link_title=link_title,
+                                             access_key=access_key)
             else:
-                return link
+                return linkorig
 
-        # it must be a wikiname - are wikiname links allowed in this wiki ?
-        if not (self.wikinameLinksAllowed() or
-                re.match(bracketedexpr,linkorig)): #was processed above
-            return link
+        # is it a wiki link, of a kind that's allowed in this wiki ?
+        # (bare, bracketed, double bracketed, double parenthesis)
+        if not self.isValidWikiLinkSyntax(link):
+            # no - we have exhausted our linking arsenal, give up
+            return linkorig
 
-        # we have a wiki link! Does a matching page exist in this wiki ?
-        if self.pageWithNameOrId(link):
-            # the wikiname might not be the page id if international
-            # characters have been enabled in wiki names but not page ids
-            if not self.pageWithId(link):
-                try: link = self.pageWithNameOrId(link).getId() # XXX poor caching
-                except: link = self.pageWithNameOrId(link).id # all-brains
-            linktitle = link_title or '' #self.pageWithId(link).linkTitle()
+        # is it a freeform wiki link ?
+        if not self.isWikiName(link):
+            # yes - use fuzzy matching to match an existing page if possible.
+            # strip brackets/parentheses
+            link = re.sub(r'^(\[\[|\[|\(\()(.*?)(\]\]|\]|\)\))$',r'\2',link)
+            p = self.pageWithFuzzyName(link)
+            if p:
+                try: link = p.getId() # XXX poor caching
+                except: link = p.id   # all-brains
+                # and fall through
+            
+        # must be either a WikiName link, or an existing page's id from above
+        return self.renderLinkToPage(link,
+                                     linkorig=linkorig,
+                                     link_title=link_title,
+                                     access_key=access_key)
+
+    # XXX helper for above
+    def renderLinkToPage(self,page,linkorig=None,link_title=None,access_key=None):
+                         
+        """
+        Render a wiki link to page, which may or may not exist.
+
+        page is renderLink's best guess at the id or name of the page
+        intended.
+        """
+        # does page exist in this wiki ?
+        p = self.pageWithNameOrId(page)
+        if p:
+            # yes - link to it
+            # make sure we have the page's id
+            if not self.pageWithId(page): # XXX this check helps avoid zodb loads ?
+                try: page = p.getId() # XXX poor caching
+                except: page = p.id   # all-brains
+            linktitle = link_title or '' #self.pageWithId(page).linkTitle()
             accesskey = (access_key and ' accesskey="%s"' % access_key) or ''
-            try: style=' style="background-color:%s;"' \
-                   % self.pageWithNameOrId(link).issueColour() # poor caching
-            except: style=' style="background-color:%s;"' \
-                   % self.pageWithNameOrId(link).issueColour # all-brains
-            return '<a href="%s/%s" title="%s"%s%s>%s</a>' \
-                   % (self.wiki_url(),quote(link),linktitle,accesskey,
-                      style,self.formatWikiname(linknobrackets))
-
+            try:
+                style=' style="background-color:%s;"' % p.issueColour() # poor caching
+            except:
+                style=' style="background-color:%s;"' % p.issueColour # all-brains
+            return (
+                '<a href="%s/%s" title="%s"%s%s>%s</a>' % (
+                self.wikiUrl(),
+                quote(page),
+                linktitle,
+                accesskey,
+                style,
+                self.formatWikiname(linkorig)))
+        else:
+            # no - provide a creation link
+            return (
+                '%s<a class="new visualNoPrint" href="%s/%s/createform?page=%s" title="%s">?</a>' % (
+                self.formatWikiname(linkorig or page),
+                self.wikiUrl(),
+                quote(self.id()),
+                quote(page),
+                _("create this page")))
+                  
         # subwiki support: or does a matching page exist in the parent folder ?
         # XXX this is dumber than the above; doesn't handle i18n
         # characters, freeform names
-        if (hasattr(self.folder(),'aq_parent') and
-              hasattr(self.folder().aq_parent, link) and
-              self.isZwikiPage(getattr(self.folder().aq_parent,link))): #XXX poor caching
-            return '<a href="%s/../%s" title="%s">../%s</a>'\
-                   % (self.wiki_url(),quote(link),_("page in parent wiki"),
-                      self.formatWikiname(linkorig))
+        #if (hasattr(self.folder(),'aq_parent') and
+        #      hasattr(self.folder().aq_parent, page) and
+        #      self.isZwikiPage(getattr(self.folder().aq_parent,page))): #XXX poor caching
+        #    return '<a href="%s/../%s" title="%s">../%s</a>'\
+        #           % (self.wiki_url(),quote(page),_("page in parent wiki"),
+        #              self.formatWikiname(linkorig))
 
-        # otherwise, provide a creation link
-        return ('%s<a class="new visualNoPrint" href="%s/%s/createform?page=%s" title="%s">?</a>') \
-               % (self.formatWikiname(linkorig), self.wiki_url(),
-                  quote(self.id()), quote(linknobrackets),
-                  _("create this page"))
-                  
 
     def renderInterwikiLink(self, link):
         """
@@ -671,8 +668,8 @@ class ZWikiPage(
         m = re.match(interwikilink,link)
         local, remote  = m.group('local'), m.group('remote')
         # check local is an allowed link syntax for this wiki
-        if not self.hasAllowedLinkSyntax(local): return link
-        local = re.sub(bracketedexpr, r'\1', local)
+        if not self.isValidWikiLinkSyntax(local): return link
+        local = re.sub(bracketedexpr, r'\1', local) #XXX should support ((..))
         # look for a RemoteWikiURL definition
         if hasattr(self.folder(), local): 
             m = re.search(remotewikiurl,getattr(self.folder(),local).text())
@@ -682,6 +679,42 @@ class ZWikiPage(
                        #XXX old html_unquote needed ? I don't think so
         # otherwise return unchanged
         return link
+
+    security.declareProtected(Permissions.View, 'formatWikiname')
+    def formatWikiname(self,wikiname):
+        """
+        Convert a wikiname to this wiki's standard display format.
+
+        Ie, leave it be or add ungodly spaces depending on the
+        'space_wikinames' property.
+        """
+        if self.spacedWikinamesEnabled():
+            return self.spacedNameFrom(wikiname)
+        else: 
+            return wikiname
+
+    security.declareProtected(Permissions.View, 'spacedNameFrom')
+    def spacedNameFrom(self,pagename):
+        """
+        Return pagename with spaces inserted if it's a WikiName, or unchanged.
+
+        Tries to be conformant with the wikiname regexp wrt. i18n, etc.
+        """
+        #spaced = pagename[0]
+        #for c in pagename[1:]:
+        #    if c in string.uppercase: spaced += ' '
+        #    spaced += c
+        #return spaced
+        if re.match('^%s$' % wikiname, pagename):
+            words = [x[0] for x in re.findall(wikinamewords,pagename)]
+            return ' '.join(words)
+        else:
+            return pagename
+
+    security.declareProtected(Permissions.View, 'spacedWikinamesEnabled')
+    def spacedWikinamesEnabled(self):
+        """Should all wikinames be displayed with spaces in this wiki ?"""
+        return getattr(self.folder(),'space_wikinames',0) and 1
 
     security.declareProtected(Permissions.View, 'links')
     def links(self):

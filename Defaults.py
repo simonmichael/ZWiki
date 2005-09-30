@@ -2,21 +2,25 @@
 # global flags and constants for ZWiki
 # see also plugins/*
 
+PAGE_METATYPE =      'ZWiki Page' # meta_type of ZWikiPage objects
+PAGE_PORTALTYPE =    'Wiki Page'  # content type used in CMF/Plone
+WIKI_ADD_MENU_NAME = 'ZWiki'      # items in ZMI add menu.. 
+PAGE_ADD_MENU_NAME = 'ZWiki Page' # (this one must match PAGE_METATYPE)
+
+AUTO_UPGRADE = 1             # upgrade old pages when viewed
 DISABLE_JAVASCRIPT = 1       # disable javascript, etc. in edits ?
 PREFER_USERNAME_COOKIE = 0   # prefer cookie to authenticated name ?
 MAX_NEW_LINES_DISPLAY = 200  # truncate each diff (and mailout)
 MAX_OLD_LINES_DISPLAY = 20   # at this number of lines
 LINK_TO_ALL_CATALOGED = 0    # link to all pages in the catalog ? unimplemented
 LINK_TO_ALL_OBJECTS = 0      # link to non-wiki page objects ? unimplemented
-AUTO_UPGRADE = 1             # upgrade old pages when viewed
 LARGE_FILE_SIZE = 1024*1024  # images larger than this will not be inlined
 LEAVE_PLACEHOLDER = 0        # leave a placeholder page when renaming ?
 DEFAULT_DISPLAYMODE = 'minimal'   # default display mode for the standard skin
-
-PAGE_METATYPE =      'ZWiki Page' # meta_type of ZWikiPage objects
-PAGE_PORTALTYPE =    'Wiki Page'  # content type used in CMF/Plone
-WIKI_ADD_MENU_NAME = 'ZWiki'      # items in ZMI add menu.. 
-PAGE_ADD_MENU_NAME = 'ZWiki Page' # (this one must match PAGE_METATYPE)
+WIKINAME_LINKS = 1           # enable/disable various wiki link syntaxes 
+BRACKET_LINKS = 1            # by default
+DOUBLE_BRACKET_LINKS = 1
+DOUBLE_PARENTHESIS_LINKS = 0
 BORING_PAGES = ['TestPage','SandBox'] # pages we don't want to see/hear much
 IDS_TO_AVOID = ['RESPONSE','REQUEST','Epoz','epoz','URL','outline','recycle_bin']
 

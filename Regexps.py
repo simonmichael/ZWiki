@@ -31,13 +31,21 @@ zwikiidcharsexpr = re.compile(r'[a-zA-Z0-9.-]')
 spaceandlowerexpr = re.compile(r'\s+([%s])'%(string.lowercase))
 
 # free-form wiki links
-# zwiki uses [...] to link to free-form page names. These can be almost
-# anything (on a single line).
-# group 1 should be what's inside the brackets
-# new: allow wikipedia-style double brackets.. cheat a bit,
-# don't require them to be balanced.
-bracketedexpr    = r'\[\[?([^\n\]]+)\]\]?'
+# zwiki uses three kinds of delimiters to enclose free-form wiki page names:
+
+# single bracketed phrases (only) [...]
+# what's inside the brackets should be group 1
+singlebracketedexpr = r'\[(?:(?!\[))([^\n\]]+)\]'
+
+# wikipedia-style double brackets [[...]]
 doublebracketedexpr = r'\[\[([^\n\]]+)\]\]'
+
+# wicked-style double parentheses ((...)), for international users whose
+# keyboards make brackets hard to type
+doubleparenthesisexpr = r'\(\(([^\n\]]+)\)\)'
+
+# match either single or double brackets, to simplify later regexps a little
+bracketedexpr       = r'\[\[?([^\n\]]+)\]\]?'
 
 # bare wikinames
 #
@@ -138,8 +146,8 @@ simplehashnumber = r'\#[0-9]+'
 # avoid html entities like &#123;
 hashnumberexpr   = r'(?:(?<!&)%s|(?<=&)%s(?![0-9;]))' % (simplehashnumber, simplehashnumber)
                    
-wikilink         = r'!?(%s|%s|%s|%s)' % (wikiname4,bracketedexpr,url,hashnumberexpr)
-localwikilink1   = r'(?:%s|%s|%s)' % (wikiname4,bracketedexpr,hashnumberexpr)
+wikilink         = r'!?(%s|%s|%s|%s|%s)' % (wikiname4,bracketedexpr,doubleparenthesisexpr,url,hashnumberexpr)
+localwikilink1   = r'(?:%s|%s|%s|%s)' % (wikiname4,bracketedexpr,doubleparenthesisexpr,hashnumberexpr)
 localwikilink    = r'!?(%s)' % (localwikilink1)
 interwikilink    = r'!?((?P<local>%s):(?P<remote>%s))' % (localwikilink1,urlchars)
 anywikilinkexpr  = re.compile(r'(%s|%s)' % (interwikilink,wikilink))

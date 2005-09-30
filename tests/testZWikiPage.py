@@ -116,24 +116,22 @@ class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
         self.assert_(not p.isWikiName('Wikiname'))
         self.assert_(not p.isWikiName('Wiki2Name'))
 
-    def test_hasAllowedLinkSyntax(self):
-        self.assertEquals(self.p.hasAllowedLinkSyntax('http://foo'),1)
-        self.assertEquals(self.p.hasAllowedLinkSyntax('#42'),1)
-        self.assertEquals(self.p.hasAllowedLinkSyntax('WikiName'),1)
+    def test_isValidWikiLinkSyntax(self):
+        self.assertEquals(self.p.isValidWikiLinkSyntax('WikiName'),1)
         self.p.use_wikiname_links = 0
-        self.assertEquals(self.p.hasAllowedLinkSyntax('WikiName'),0)
+        self.assertEquals(self.p.isValidWikiLinkSyntax('WikiName'),0)
         self.p.use_wikiname_links = 1
-        self.assertEquals(self.p.hasAllowedLinkSyntax('WikiName'),1)
-        self.assertEquals(self.p.hasAllowedLinkSyntax('[freeform name]'),1)
+        self.assertEquals(self.p.isValidWikiLinkSyntax('WikiName'),1)
+        self.assertEquals(self.p.isValidWikiLinkSyntax('[freeform name]'),1)
         self.p.use_bracket_links = 0
-        self.assertEquals(self.p.hasAllowedLinkSyntax('[freeform name]'),0)
+        self.assertEquals(self.p.isValidWikiLinkSyntax('[freeform name]'),0)
         self.p.use_bracket_links = 1
-        self.assertEquals(self.p.hasAllowedLinkSyntax('[freeform name]'),1)
-        self.assertEquals(self.p.hasAllowedLinkSyntax('[[double brackets]]'),1)
-        self.p.use_doublebracket_links = 0
-        self.assertEquals(self.p.hasAllowedLinkSyntax('[[double brackets]]'),0)
-        self.p.use_doublebracket_links = 1
-        self.assertEquals(self.p.hasAllowedLinkSyntax('[[double brackets]]'),1)
+        self.assertEquals(self.p.isValidWikiLinkSyntax('[freeform name]'),1)
+        self.assertEquals(self.p.isValidWikiLinkSyntax('[[double brackets]]'),1)
+        self.p.use_double_bracket_links = 0
+        self.assertEquals(self.p.isValidWikiLinkSyntax('[[double brackets]]'),0)
+        self.p.use_double_bracket_links = 1
+        self.assertEquals(self.p.isValidWikiLinkSyntax('[[double brackets]]'),1)
 
     def test_markLinksIn(self):
         self.assertEquals(self.p.markLinksIn('test'),'test')
@@ -141,15 +139,16 @@ class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
                           '<zwiki>http://url</zwiki>')
         self.assertEquals(
             self.p.markLinksIn(
-            'WikiName, [freeform name], [[double brackets]]'),
-            '<zwiki>WikiName</zwiki>, <zwiki>[freeform name]</zwiki>, <zwiki>[[double brackets]]</zwiki>')
+            'WikiName, [freeform name], [[double brackets]], ((double parentheses))'),
+            '<zwiki>WikiName</zwiki>, <zwiki>[freeform name]</zwiki>, <zwiki>[[double brackets]]</zwiki>, ((double parentheses))')
         self.p.use_wikiname_links = 0
         self.p.use_bracket_links = 0
-        self.p.use_doublebracket_links = 0
+        self.p.use_double_bracket_links = 0
+        self.p.use_double_parenthesis_links = 1
         self.assertEquals(
             self.p.markLinksIn(
-            'WikiName, [freeform name], [[double brackets]]'),
-            'WikiName, [freeform name], [[double brackets]]')
+            'WikiName, [freeform name], [[double brackets]], ((double parentheses))'),
+            'WikiName, [freeform name], [[double brackets]], <zwiki>((double parentheses))</zwiki>')
 
     def test_formatWikiname(self):
         self.assertEquals(self.p.formatWikiname('CamelCase'),'CamelCase')
