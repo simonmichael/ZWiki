@@ -35,8 +35,8 @@ class EditingSupport:
         return getSecurityManager().checkPermission(permission,object)
 
     security.declareProtected(Permissions.Add, 'create') 
-    def create(self,page,text='',type=None,title='',REQUEST=None,log='',
-               sendmail=1, parents=None, subtopics=None):
+    def create(self,page=None,text='',type=None,title='',REQUEST=None,log='',
+               sendmail=1, parents=None, subtopics=None, pagename=None):
         """
         Create a new wiki page, with optional extras.
 
@@ -45,7 +45,9 @@ class EditingSupport:
         We assume the page name comes url-quoted. If it's not a url-safe
         name, we will create the page with a similar url-safe id, which we
         assume won't match any existing page (or zwiki would have linked
-        instead of offering to create). Other features:
+        instead of offering to create). Also it allows the alternate pagename
+        argument, to support the page management form (XXX temporary).
+        Other features:
 
         - can upload a file at the same time.  
 
@@ -57,7 +59,7 @@ class EditingSupport:
         - redirects to the new page if appropriate
 
         """
-        name = unquote(page)
+        name = unquote(page or pagename)
         id = self.canonicalIdFrom(name)
 
         # here goes.. sequence is delicate here
