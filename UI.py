@@ -437,7 +437,8 @@ class SkinViews:
         """
         Render the edit form (template-customizable).
 
-        For new pages, initial text may be specified.
+        This is usually called by createform also, and can handle both
+        editing and creating. The form's textarea contents may be specified.
         """
         if ((not page or page == self.pageName()) and
             hasattr(self,'wl_isLocked') and self.wl_isLocked()):
@@ -448,7 +449,6 @@ class SkinViews:
             # no page specified - editing the current page
             page = self.title_or_id()
             text = self.read()
-        #elif hasattr(self.folder(), page):
         elif self.pageWithName(page):
             # editing a different page
             text = self.pageWithName(page).read()
@@ -476,14 +476,18 @@ class SkinViews:
         """
         Render the create form (template-customizable).
 
-        This is just editform protected by a different permission.
-        The new page name and initial text may be specified. 
-
-        XXX pagename is a temporary alternate argument so the page
-        management form can call this.
+        This usually just calls editform; it is protected by a
+        different permission and also allows an alternate pagename
+        argument to support the page management form (XXX temporary).
+        It may also be customized by a createform skin template, in
+        which case page creation and page editing forms are different.
         """
-        return self.editform(REQUEST,page or pagename,text,action='Create')
-    
+        if self.hasSkinTemplate('createform'):
+            return self.getSkinTemplate('createform')(
+                REQUEST, page or pagename, text)
+        else:
+            return self.editform(
+                REQUEST, page or pagename, text, action='Create')
 
     security.declareProtected(Permissions.View, 'subscribeform')
     def subscribeform(self, REQUEST=None):
