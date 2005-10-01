@@ -116,8 +116,8 @@ class MailIn:
         This perhaps should do the isJunk test up front to avoid
         unnecessary resource usage.
         """
-        #BLATHER('mailin.py processing incoming message:\n%s' % message)
-        BLATHER('mailin.py processing incoming message')
+        BLATHER('mailin.py processing incoming message:\n%s' % message)
+        #BLATHER('mailin.py processing incoming message')
         self.context = context
         self.original = message
         self.msg = email.message_from_string(self.original)

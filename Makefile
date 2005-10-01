@@ -43,8 +43,8 @@ epydoc2:
 # using zope 3's i18nextract.py with zopewiki/ZopeInternationalization patches
 
 LANGUAGES=en es fr-CA fr ga it zh-TW pt-BR zh-CN pl nl de hu fi he ru ja pt-PT
-ZOPE3SRC=/usr/local/src/Zope3/src
-EXTRACT=PYTHONPATH=$(ZOPE3SRC) python /usr/local/src/Zope3/utilities/i18nextract.py
+ZOPE3=/usr/local/src/Zope3.1
+EXTRACT=PYTHONPATH=$(ZOPE3)/src python $(ZOPE3)/utilities/i18nextract.py
 
 pot: dtmlextract
 	$(EXTRACT) -d zwiki -p . -o ./i18n \
