@@ -91,6 +91,7 @@
 
               <!-- wiki navigation -->
               <span metal:define-macro="wikilinks" tal:omit-tag="">
+                <span tal:condition="python:0">
                 <a href="" tal:attributes="href here/homeUrl" 
                    accesskey="f"
                    title="show front page"
@@ -126,19 +127,19 @@
                    title="show upload page"
                    i18n:attributes="title">
                 <span i18n:translate="">uploads</span></a>
-                <a tal:attributes="href here/preferencesUrl" 
-                   accesskey="o"
-                   title="show wiki options"
-                   i18n:attributes="title">
-                <span i18n:translate="">options</span></a>
+              </span>
                 <a tal:attributes="href here/helpUrl" 
                    accesskey="h" 
                    tal:condition="here/helpUrl"
                    title="show help page"
                    i18n:attributes="title">
                 <span i18n:translate="">help</span></a>
+                <a tal:attributes="href here/preferencesUrl" 
+                   accesskey="o"
+                   title="show wiki options"
+                   i18n:attributes="title">
+                <span i18n:translate="">options</span></a>
               </span>
-              -
               <!-- page actions -->
               <span metal:define-macro="pagelinks">
                 <a tal:condition="python:0"
