@@ -485,6 +485,8 @@ class EditingSupport:
         - notify subscribers
         - if called with the existing name, ensures that id conforms to
         canonicalId(title).
+
+        XXX the sendmail argument doesn't stop mailouts from updating backlinks
         """
         # anything to do ?
         oldname, oldid = self.pageName(), self.getId()
