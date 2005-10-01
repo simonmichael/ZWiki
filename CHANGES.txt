@@ -1,3 +1,137 @@
+    Summary
+
+        Per-user mailout policy, skins reorganization, plugin architecture
+	enhancements, support for boring pages, wicked link syntax,
+	favicons and separate create form, better logging, many code
+	cleanups & bugfixes.
+
+    Upgrade notes
+
+	To make your rss feeds and zwiki.org-style blog listings less
+	junky, do SomePage/setupCatalog to add the new isBoring index.
+
+	An mailout_policy folder property with value "edits" overrides the
+	per-user policy (see below), but this may be dropped in a future
+	release.
+	
+    Changes
+
+      Installing
+
+        * fix __implements__ attribute error when CMF is not installed (#1149, Warren)
+
+        * make Zwiki startup more robust with strange locales/strange pythons (#1158)
+
+        * make zmi add wiki form use a btreefolder
+
+	* don't break when adding a wiki with id home (#591)
+
+        * drop unnecessary loading plugins message at startup
+
+        * don't log a warning at startup when the system locale is None
+
+        * clarify missing PTS warning at startup
+
+        * make fit import failure warning at startup less troubling
+
+        * fix a case where a page upgrade wouldn't get logged
+
+        * don't break when displaying a page whose page type has been uninstalled
+
+      Configuring
+
+        * wiki subscriber mail-out, rss feeds and blog listings will
+	ignore boring pages TestPage, SandBox and their offspring, by
+	default. You can configure different pages in a boring_pages lines
+	folder property, one per line. An isBoring index has been added to
+	the standard catalog fields, run /setupCatalog to add it.
+
+        * set a true use_double_parenthesis_links property to enable
+	Wicked-style double parenthesis syntax for freeform wiki links.
+	This is for world users who can't easily type [].
+
+        * rename and delete no longer check for a username in addition to
+	the permissions (though the skin may still hide them without a
+	username.)
+
+      Browsing
+
+        * the /changes_rss feed now shows the edit diff
+
+        * misc_/* image paths are now relative to be more robust with vhosting (#689)
+
+      Editing
+
+        * be sure to create our own recycle_bin even if the parent folder has one
+
+	* purple numbers now disabled by default
+
+        * allow create to be called directly by page management form
+	
+      Mail
+
+        * add "all edits" checkboxes to subscribeform. Zwiki can now send
+	comments to some, edits to others.
+
+        * reparent now also sends a mailout
+
+        * remove (new), add (edit) in mailout subjects for clarity
+
+        * just say "links updated" in rename mailout subject
+	
+      Issue tracking
+
+        * use more consistent (property change) in issue mailouts, and don't say it if no property changed
+
+        * /issuebrowser was showing filter issues form
+
+      General - skins
+
+        * big skins reorganization to reduce duplication
+
+        * use a separate createform skin template for creating pages if present
+
+        * hide most of the wiki action links by default in standard skin
+
+        * tweak page management form layout in standard skin
+
+        * drop unnecessary extra text from page management form in cmf/plone
+
+        * remove old _ and = access keys from /showAccessKeys
+
+        * register just the zwiki_standard skin with FilesystemSiteDirectory when installed
+
+        * italicise log notes in recent changes
+
+        * if a 'favicon' object is present, set it as the page icon in the standard skin
+
+        * don't let recentchanges break when a page type has been uninstalled
+
+        * use the word "page" instead of "subtopic" in the page management form
+
+        * don't let non-template objects with the same id hide our skin templates; improve bad template error
+
+        * remove the h2 bottom border style
+
+        * remove stray commas in page templates causing log warnings
+
+        * drop uploaded and wikinav_portlet templates from plone skin
+
+      General
+        
+        * split content/ into wikis/ and scripts/
+
+        * strip html tags in the page summary, and add renderedSummary which does formatting and linking
+
+        * rename all pagetypes' renderXIn methods to format
+
+        * plugins can now be packages or files
+
+        * plugins can now override any method in the product core
+
+        * add support for emacs-style "hooks" for customization by plugins
+
+
 Zwiki 0.45.0 2005/09/01
 
     Summary
