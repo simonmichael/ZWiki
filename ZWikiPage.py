@@ -86,6 +86,11 @@ from plugins import PLUGINS
 
 DEFAULT_PAGETYPE = PAGETYPES[0]
 
+def stripDelimitersFrom(link):
+    """Strip a wiki link's enclosing [], [[]] or (())."""
+    return re.sub(r'^(\[\[|\[|\(\()(.*?)(\]\]|\]|\)\))$',r'\2',link)
+
+
 class ZWikiPage(
     # see plugins/__init__.py
     PLUGINS[0],     
@@ -595,8 +600,7 @@ class ZWikiPage(
         if not self.isWikiName(link):
             # yes - use fuzzy matching to match an existing page if possible.
             # strip brackets/parentheses
-            link = linkorig = re.sub(
-                r'^(\[\[|\[|\(\()(.*?)(\]\]|\]|\)\))$',r'\2',linkorig)
+            link = stripDelimitersFrom(linkorig)
             p = self.pageWithFuzzyName(link)
             if p:
                 try: link = p.getId() # XXX poor caching
@@ -639,7 +643,7 @@ class ZWikiPage(
                 linktitle,
                 accesskey,
                 style,
-                self.formatWikiname(linkorig)))
+                self.formatWikiname(stripDelimitersFrom(linkorig))))
         else:
             # no - provide a creation link
             return (
