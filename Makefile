@@ -42,7 +42,7 @@ epydoc2:
 # remember: 1. merge source files 2. make pot 3. replace po files 4. make po
 # using zope 3's i18nextract.py with zopewiki/ZopeInternationalization patches
 
-LANGUAGES=en es fr-CA fr ga it zh-TW pt-BR zh-CN pl nl de hu fi he ru ja pt-PT
+LANGUAGES=en es fr-CA fr ga it zh-TW pt-BR zh-CN pl nl de hu fi he ru ja pt
 ZOPE3=/usr/local/src/Zope3.1
 EXTRACT=PYTHONPATH=$(ZOPE3)/src python $(ZOPE3)/utilities/i18nextract.py
 
