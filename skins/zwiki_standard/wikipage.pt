@@ -381,8 +381,10 @@
         <form method="post" action="" enctype="multipart/form-data"
               tal:attributes="action here/page_url" 
               style="margin-top:0;margin-bottom:0">
-          <table border="0" cellspacing="0" cellpadding="1" align="center"
-                 class="shade1" width="100%" style="font-size:90%;"
+          <table border="0" cellspacing="0" cellpadding="1" 
+                 class="shade1" align="center"
+                 style="font-size:90%; border-top: thin solid #aaaaaa; 
+                        border-bottom: thin solid #aaaaaa;"
                  >
             <tr>
               <td align="left" valign="top">
