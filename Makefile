@@ -5,7 +5,7 @@
 # check for unrecorded changes
 # check tests pass
 # check for late tracker issues
-# check showAccessKeys,README,content/,skins/,zwiki.org HelpPage,QuickReference
+# check showAccessKeys,README,wikis/,skins/,zwiki.org HelpPage,QuickReference
 # update CHANGES.txt from darcs changes (XXX automate brief changes listing)
 # update version.txt
 # make Release
@@ -66,7 +66,7 @@ pot: dtmlextract
 # a dtml extraction hack, should integrate with i18nextract
 dtmlextract: 
 	echo '<div i18n:domain="zwiki">' >skins/dtmlmessages.pt
-	find skins content -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt
+	find skins wikis -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt
 	echo '</div>' >>skins/dtmlmessages.pt
 
 po:
@@ -202,9 +202,9 @@ version:
 	@perl -pi -e "s/__version__='.*?'/__version__='$(VERSIONNO)'/" \
 	  __init__.py
 	@perl -pi -e "s/Zwiki version [0-9a-z.-]+/Zwiki version $(VERSIONNO)/"\
-	  content/basic/HelpPage.stx
+	  wikis/basic/HelpPage.stx
 	@darcs record -am 'bump version to $(VERSIONNO)' \
-	  version.txt CHANGES.txt __init__.py content/basic/HelpPage.stx
+	  version.txt CHANGES.txt __init__.py wikis/basic/HelpPage.stx
 
 releasetag:
 	@echo tagging release-$(VERSION)
@@ -263,17 +263,7 @@ Clean: clean
 	rm -f i18n/*.mo skins/dtmlmessages.pt
 
 
-## old stuff
-
-# server control
-
-revert: 
-	@echo reverting $(HOST) $(PRODUCT) to standard darcs version
-	@ssh $(HOST) 'cd zwiki;darcs revert -a'
-
-restart:
-	@echo restarting zope on $(HOST)
-	ssh $(HOST) 'zopectl restart'
+# misc automation examples
 
 refresh-%.po:
 	@echo refreshing $(PRODUCT) $*.po file on $(HOST)
@@ -295,15 +285,6 @@ lrefresh-%:
 	@echo refreshing product $* on $(LHOST)
 	curl -n -sS -o.curllog 'http://$(LHOST)/Control_Panel/Products/$*/manage_performRefresh'
 
-# misc automation
-
-#cvschangelog:
-#	cvs2cl --follow trunk --day-of-week
-#	cvs commit -m 'latest' ChangeLog
-
-#analyzezodb:
-#	ssh zwiki.org 'export ZOPEVERSION=2.6.1; export ZOPEHOME=/usr/local/zope/$$ZOPEVERSION; export INSTANCE_HOME=/usr/local/zope/instance; export SOFTWARE_HOME=$$ZOPEHOME/lib/python; export PYTHONPATH=$$SOFTWARE_HOME:$$ZOPEHOME:$$INSTANCE_HOME; /usr/local/bin/ZODBAnalyze.py ~simon/var/Data.fs >~simon/ZWiki/zodb_report.txt'
-
 #fixissuepermissions:
 #	for ISSUE in 0001 0002 0003 0004 0005 0006 0007 0008 0009 0010; do \
 #	  echo "$(HOST): fixing permissions for IssueNo$$ISSUE" ;\
@@ -324,276 +305,3 @@ lrefresh-%:
 #updatecatalog:
 #	@echo updating Catalog on $(HOST)
 #	@$(CURL) "http://$(HOST)/Catalog/manage_catalogReindex"
-#
-#clearcatalog:
-#	@echo clearing Catalog on $(HOST)
-#	@$(CURL) "http://$(HOST)/Catalog/manage_catalogClear"
-
-# zope.org upkeep
-
-PRODUCTURL=http://zope.org/Members/simon/Zwiki
-PLATFORM=All
-MATURITY=Development
-LICENSE=GPL
-INFOURL=http://zwiki.org
-CHANGESURL=http://zwiki.org/ReleaseNotes
-LICENSEURL=http://zwiki.org/ZwikiLicense
-INSTALLATIONURL=http://zwiki.org/InstallationGuide
-LANGUAGE=en
-#SUBJECTS="Collector,Community,Content Object,DTML,Editors,Educational,Email,ExternalEditor,FTP,Files,HTML,Images,Open Source,Page Templates,Software,Structured Text,Zope Product"
-# have to do it this way for curl to my knowledge
-SUBJECTS=\
- -Fpredefined_subjects:list="Collector" \
- -Fpredefined_subjects:list="Community" \
- -Fpredefined_subjects:list="Content Object" \
- -Fpredefined_subjects:list="DTML" \
- -Fpredefined_subjects:list="Editors" \
- -Fpredefined_subjects:list="Educational" \
- -Fpredefined_subjects:list="Email" \
- -Fpredefined_subjects:list="ExternalEditor" \
- -Fpredefined_subjects:list="FTP" \
- -Fpredefined_subjects:list="Files" \
- -Fpredefined_subjects:list="HTML" \
- -Fpredefined_subjects:list="Images" \
- -Fpredefined_subjects:list="Open Source" \
- -Fpredefined_subjects:list="Page Templates" \
- -Fpredefined_subjects:list="Software" \
- -Fpredefined_subjects:list="Structured Text" \
- -Fpredefined_subjects:list="Zope Product"
-NEWSITEM=$(PRODUCT)-$(VERSION)-released
-
-zdo-release: zdo-swrelease zdo-swreleasefile
-
-#zdo-newsitem: 
-
-zdo-swrelease: zdo-swrelease-create zdo-swrelease-edit \
-	zdo-swrelease-metadata zdo-swrelease-publish
-
-zdo-swreleasefile: zdo-swreleasefile-create zdo-swreleasefile-edit \
-	zdo-swreleasefile-metadata zdo-swreleasefile-publish
-
-#zdo-swpackage-create:
-#	@echo creating the $(PRODUCT) Software Package on zope.org
-#	@curl -nsS \
-#	 -Fid=$(VERSIONNO)
-#	 -Ftitle=''
-#	 -Ffile=@$(HOME)/zwiki/releases/$(FILE)
-#	 $(PRODUCTURL)/manage_addProduct/ZopeSite/Release_factory/Release_add
-
-zdo-swpackage-update-latest-release-warning:
-	make zdo-swpackage-retract
-	@echo updating the current release link on zope.org
-	@echo edit at $(PRODUCTURL)/swpackage_edit_form
-#	curl -nsS \
-#	 -Fname=$(VERSIONNO) \
-#	 -Fversion=$(VERSIONNO) \
-#	 -Fmaturity=$(MATURITY) \
-#	 -Flicense=$(LICENSE) \
-#	 -Finfo_url=$(INFOURL) \
-#	 -Fchanges_url=$(CHANGESURL) \
-#	 -Flicense_url=$(LICENSEURL) \
-#	 -Finstallation_url=$(INSTALLATIONURL) \
-#	 $(PRODUCTURL)/swpackage_edit
-	make zdo-swpackage-publish
-
-#zdo-swpackage-edit:
-#	@echo configuring the $(PRODUCT) Software Package on zope.org
-#	curl -nsS \
-#	 -Fname=$(VERSIONNO) \
-#	 -Fversion=$(VERSIONNO) \
-#	 -Fmaturity=$(MATURITY) \
-#	 -Flicense=$(LICENSE) \
-#	 -Finfo_url=$(INFOURL) \
-#	 -Fchanges_url=$(CHANGESURL) \
-#	 -Flicense_url=$(LICENSEURL) \
-#	 -Finstallation_url=$(INSTALLATIONURL) \
-#	 $(PRODUCTURL)/swpackage_edit
-#	@echo
-
-zdo-swpackage-publish:
-	@echo publishing the $(PRODUCT) Software Package on zope.org
-	curl -nsS \
-	 -Feffective_date= \
-	 -Fexpiration_date= \
-	 -Fcomment= \
-	 -Fworkflow_action=submit \
-	 -Fworkflow_action_submit=Save \
-	 -Fform_submitted=content_status_history \
-	 $(PRODUCTURL)/portal_form/content_status_history
-	@echo
-
-zdo-swpackage-retract:
-	@echo retracting the $(PRODUCT) Software Package on zope.org
-	curl -nsS \
-	 -Feffective_date= \
-	 -Fexpiration_date= \
-	 -Fcomment= \
-	 -Fworkflow_action=retract \
-	 -Fworkflow_action_submit=Save \
-	 -Fform_submitted=content_status_history \
-	 $(PRODUCTURL)/portal_form/content_status_history
-	@echo
-
-zdo-swrelease-create:
-	@echo creating the $(VERSIONNO) Software Release on zope.org
-	@curl -nsS \
-	 -Fid=$(VERSIONNO) \
-	 -Ftype_name='Software Release' \
-	 $(PRODUCTURL)/createObject
-	@echo
-
-zdo-swrelease-edit:
-	@echo configuring the $(VERSIONNO) Software Release on zope.org
-	curl -nsS \
-	 -Fname=$(VERSIONNO) \
-	 -Fversion=$(VERSIONNO) \
-	 -Fmaturity=$(MATURITY) \
-	 -Flicense=$(LICENSE) \
-	 -Finfo_url=$(INFOURL) \
-	 -Fchanges_url=$(CHANGESURL) \
-	 -Flicense_url=$(LICENSEURL) \
-	 -Finstallation_url=$(INSTALLATIONURL) \
-	 $(PRODUCTURL)/$(VERSIONNO)/swrelease_edit
-	@echo
-
-zdo-swrelease-metadata:
-	@echo configuring metadata for the $(VERSIONNO) Software Release on zope.org
-	curl -nsS \
-	 -FallowDiscussion=default \
-	 $(SUBJECTS) \
-	 -Feffective_date= \
-	 -Fexpiration_date= \
-	 -Fformat=application/x-gtar \
-	 -Flanguage=$(LANGUAGE) \
-	 -Frights= \
-	 -Fcontributors:lines= \
-	 $(PRODUCTURL)/$(VERSIONNO)/metadata_edit
-	@echo
-
-zdo-swrelease-publish:
-	@echo publishing the $(VERSIONNO) Software Release on zope.org
-	curl -nsS \
-	 -Feffective_date= \
-	 -Fexpiration_date= \
-	 -Fcomment= \
-	 -Fworkflow_action=submit \
-	 -Fworkflow_action_submit=Save \
-	 -Fform_submitted=content_status_history \
-	 $(PRODUCTURL)/$(VERSIONNO)/portal_form/content_status_history
-	@echo
-
-zdo-swrelease-retract:
-	@echo retracting the $(VERSIONNO) Software Release on zope.org
-	curl -nsS \
-	 -Feffective_date= \
-	 -Fexpiration_date= \
-	 -Fcomment= \
-	 -Fworkflow_action=retract \
-	 -Fworkflow_action_submit=Save \
-	 -Fform_submitted=content_status_history \
-	 $(PRODUCTURL)/$(VERSIONNO)/portal_form/content_status_history
-	@echo
-
-zdo-swreleasefile-create:
-	@echo creating the $(FILE) Software Release File on zope.org
-	@curl -nsS \
-	 -Fid=$(FILE) \
-	 -Ftype_name='Software Release File' \
-	 $(PRODUCTURL)/$(VERSIONNO)/createObject
-	@echo
-
-zdo-swreleasefile-edit:
-	@echo uploading to the $(FILE) Software Release File on zope.org
-	curl -nsS \
-	 -Ffilename=$(FILE) \
-	 -Fplatform=$(PLATFORM) \
-	 -Ffile=@$(HOME)/zwiki/releases/$(FILE) \
-	 $(PRODUCTURL)/$(VERSIONNO)/$(FILE)/swreleasefile_edit
-	@echo
-
-# NB - need to set content_type in manage_propertiesForm manually, zdo bug
-zdo-swreleasefile-metadata:
-	@echo configuring metadata for the $(FILE) Software Release File on zope.org
-	curl -nsS \
-	 -Fname=$(VERSIONNO) \
-	 -FallowDiscussion=default \
-	 $(SUBJECTS) \
-	 -Feffective_date= \
-	 -Fexpiration_date= \
-	 -Fformat=application/x-gtar \
-	 -Flanguage=$(LANGUAGE) \
-	 -Frights= \
-	 -Fcontributors:lines= \
-	 $(PRODUCTURL)/$(VERSIONNO)/$(FILE)/metadata_edit
-	@echo
-
-zdo-swreleasefile-publish:
-	@echo publishing the $(FILE) Software Release File on zope.org
-	curl -nsS \
-	 -Feffective_date= \
-	 -Fexpiration_date= \
-	 -Fcomment= \
-	 -Fworkflow_action=submit \
-	 -Fworkflow_action_submit=Save \
-	 -Fform_submitted=content_status_history \
-	 $(PRODUCTURL)/$(VERSIONNO)/$(FILE)/portal_form/content_status_history
-	@echo
-
-zdo-swreleasefile-retract:
-	@echo retracting the $(FILE) Software Release File on zope.org
-	curl -nsS \
-	 -Feffective_date= \
-	 -Fexpiration_date= \
-	 -Fcomment= \
-	 -Fworkflow_action=retract \
-	 -Fworkflow_action_submit=Save \
-	 -Fform_submitted=content_status_history \
-	 $(PRODUCTURL)/$(VERSIONNO)/$(FILE)/portal_form/content_status_history
-	@echo
-
-#zdo-newsitem-create:
-#	@echo creating the $(VERSIONNO) News Item on zope.org
-#	@curl -nsS \
-#	 -Fid=$(VERSIONNO)
-#	 -Ftitle=''
-#	 -Ffile=@$(HOME)/zwiki/releases/$(FILE)
-#	 $(PRODUCTURL)/manage_addProduct/ZopeSite/Release_factory/Release_add
-#
-#zdoannounce-create:
-#	@echo creating $(NEWSITEM) news item on zope.org
-#	@curl -nsSo.curllog -Fid=$(NEWSITEM) -Ftitle="" -Ftext="" -F"submit= Add " $(PRODUCTURL)/manage_addProduct/ZopeSite/fNewsItem/addNewsItem
-#
-#zdo-newsitem-configure:
-#	@echo configuring the $(VERSIONNO) News Item on zope.org
-#	curl -nsSo.curllog \
-#	 -Fname=$(VERSIONNO) \
-#	 -Finfo_url=$(INFOURL) \
-#	 -Fchanges_url=$(CHANGESURL) \
-#	 -Flicense_url=$(LICENSEURL) \
-#	 -Finstallation_url=$(INSTALLATIONURL) \
-#	 $(PRODUCTURL)/$(VERSIONNO)/newsitem_edit
-#
-#zdoannounce-configure:
-#	@echo configuring $(NEWSITEM) properties
-#	(echo -e \
-#	'Zwiki version $(VERSIONNO) has been released.\n\
-#	\n\
-#	Download: \n\
-#	"http://zwiki.org/releases/$(FILE)":http://zwiki.org/releases/$(FILE) or\n\
-#	"http://zope.org/Members/simon/ZWiki/$(FILE)":http://zope.org/Members/simon/ZWiki/$(FILE)\n\
-#	\n\
-#	More information: \n\
-#	"http://zwiki.org":http://zwiki.org \n\
-#	"http://zwiki.org/KnownIssues":http://zwiki.org/KnownIssues \n\
-#	'; \
-#	echo "/^\(\w.*\)\?$(VERSIONNO)/;/^\w/-1p" | ed -s CHANGES.txt \
-#	) | curl -nsSo.curllog -F'text=<-' -Ftitle="$(PRODUCT) $(VERSIONNO) released" -FNewsItem_topics=Announcement -F"format=Structured Text" $(PRODUCTURL)/$(NEWSITEM)/editItem
-#
-#zdo-newsitem-publish:
-#	@echo publishing the $(VERSIONNO) News Item on zope.org
-#	curl -nsS \
-#
-#zdo-newsitem-retract:
-#	@echo retracting the $(VERSIONNO) News Item on zope.org
-
-
