@@ -1338,7 +1338,7 @@ def within_literal(upto, after, state, text,
     text = lower(text)
     
     # Check whether '<pre>' is currently (possibly, still) prevailing.
-    opening = rfind(text, '<pre>', lastend, upto)
+    opening = rfind(text, '<pre', lastend, upto)
     if (opening != -1) or inpre:
         if opening != -1: opening = opening + 4
         else: opening = lastend
@@ -1347,7 +1347,7 @@ def within_literal(upto, after, state, text,
     state['inpre'] = newinpre
 
     # Check whether '<code>' is currently (possibly, still) prevailing.
-    opening = rfind(text, '<code>', lastend, upto)
+    opening = rfind(text, '<code', lastend, upto)
     if (opening != -1) or incode:
         if opening != -1: opening = opening + 5
         # We must already be incode, start at beginning of this segment:
