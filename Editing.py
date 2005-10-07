@@ -377,7 +377,7 @@ class EditingSupport:
             self.sendMailToEditSubscribers(
                 self.textDiff(a=old,b=self.read()),
                 REQUEST=REQUEST,
-                subject='(%s) %s' % (_('edit'),log))
+                subject='(edit) %s' % log)
 
     def handleDeleteMe(self,text,REQUEST=None,log=''):
         if not text or not re.match('(?m)^DeleteMe', text):

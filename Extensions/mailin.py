@@ -255,7 +255,7 @@ class MailIn:
                         [],
                         log,
                         None,
-                        subject='banned_links updated',
+                        subject='(banned_links updated)',
                         to=admin)
 
     def cleanupBody(self,body):
