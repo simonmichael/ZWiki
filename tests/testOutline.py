@@ -118,6 +118,10 @@ class OutlineTests(unittest.TestCase):
                           [['ChildPage','GrandChildPage']])
         self.assertEquals(o.offspring(['GrandChildPage']),
                           ['GrandChildPage'])
+        self.assertEquals(o.offspring(['RootPage'],depth=1),
+                          [['RootPage','ChildPage']])
+        self.assertEquals(o.offspring(['RootPage'],depth=2),
+                          [['RootPage',['ChildPage','GrandChildPage']]])
     
     def test_parents(self):
         o = self.outline

@@ -1,5 +1,8 @@
 <dtml-call "REQUEST.RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
-<dtml-let subtopics="offspring(exclude_self=1)">
+<dtml-let 
+ depth="_.has_key('depth') and _['depth'] or None #how is this supposed to work"
+ subtopics="offspring(exclude_self=1,depth=depth)"
+>
 <dtml-if subtopics>
 <a name="subtopics"><br /></a>
 <p>

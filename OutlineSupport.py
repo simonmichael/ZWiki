@@ -511,11 +511,12 @@ class OutlineManagerMixin:
         """
         return self.wikiOutline().children(self.pageName())
 
-    def offspringNesting(self):
+    def offspringNesting(self, depth=None):
         """
         Return a nesting representing this page's descendants.
         """
-        return self.wikiOutline().offspring([self.pageName()])
+        return self.wikiOutline().offspring([self.pageName()],
+                                            depth=depth)
 
 InitializeClass(OutlineManagerMixin)
 
@@ -744,18 +745,18 @@ class OutlineRenderingMixin:
             return ''
 
     security.declareProtected(Permissions.View, 'offspring')
-    def offspring(self, REQUEST=None, info=None, exclude_self=0):
+    def offspring(self, REQUEST=None, info=None, exclude_self=0, depth=None):
         """
         Return HTML displaying all my offspring.
         """
         here = self.pageName()
         return self.renderNesting(
-            self.offspringNesting(),
+            self.offspringNesting(depth=depth),
             here,
             suppress_current=exclude_self)
 
     security.declareProtected(Permissions.View, 'subtopics')
-    def subtopics(self, REQUEST=None):
+    def subtopics(self, REQUEST=None, **kw):
         """
         Render my subtopics as a HTML fragment, using a template.
 
@@ -763,12 +764,14 @@ class OutlineRenderingMixin:
         property. If there is no property or the specified template
         does not exist, uses the built-in subtopics_outline.
         Some overlap with the show_subtopics property.
+
+        Pass any arguments, like max depth, through to the template.
         """
         DEFAULTSTYLE = 'outline'
         style = getattr(self,'subtopics_style',None)
         if not (style and self.hasSkinTemplate('subtopics_'+style)):
             style = DEFAULTSTYLE
-        return self.getSkinTemplate('subtopics_'+style)(self,REQUEST)
+        return self.getSkinTemplate('subtopics_'+style)(self,REQUEST,**kw)
 
     security.declareProtected(Permissions.View, 'navlinks')
     def navlinks(self):
