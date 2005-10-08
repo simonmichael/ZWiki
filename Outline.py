@@ -322,7 +322,7 @@ class Outline:
         if self.hasNode(node): return self.childmap()[node][:]
         elif not node: return self.roots()
         else: return []
-    def offspring(self,nodes,depth=None,did=None):
+    def offspring(self,nodes,did=None,depth=None):
         """
         Return a nesting representing all descendants of all specified nodes.
 
