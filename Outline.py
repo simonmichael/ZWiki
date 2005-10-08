@@ -322,25 +322,32 @@ class Outline:
         if self.hasNode(node): return self.childmap()[node][:]
         elif not node: return self.roots()
         else: return []
-    def offspring(self,nodes,did=None):
+    def offspring(self,nodes,depth=None,did=None):
         """
         Return a nesting representing all descendants of all specified nodes.
 
         nodes is a list of nodes; these will be included in the nesting.
         did is used only for recursion.
+
+        If depth is specified, descendendants beyond that depth will be
+        ignored.
+        XXX this is better done in the view layer, remove it.
+        
         """
         if did is None: did = {}
         got = []
         for n in nodes:
             been_there = did.has_key(n)
             did[n] = None
-            if self.childmap().has_key(n):
+            if self.childmap().has_key(n) and not depth==0:
                 children = self.childmap()[n]
                 if children:
                     subgot = [n]
                     if not been_there:
-                        subgot.extend(self.offspring(children,
-                                                     did=did))
+                        subgot.extend(
+                            self.offspring(children,
+                                           depth=(depth and depth-1),
+                                           did=did))
                     got.append(subgot)
                 else:
                     got.append(n)
