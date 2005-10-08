@@ -511,12 +511,11 @@ class OutlineManagerMixin:
         """
         return self.wikiOutline().children(self.pageName())
 
-    def offspringNesting(self, depth=None):
+    def offspringNesting(self):
         """
         Return a nesting representing this page's descendants.
         """
-        return self.wikiOutline().offspring([self.pageName()],
-                                            depth=depth)
+        return self.wikiOutline().offspring([self.pageName()])
 
 InitializeClass(OutlineManagerMixin)
 
@@ -751,9 +750,7 @@ class OutlineRenderingMixin:
         """
         here = self.pageName()
         return self.renderNesting(
-            self.offspringNesting(depth=depth),
-            here,
-            suppress_current=exclude_self)
+            self.offspringNesting(),here,suppress_current=exclude_self)
 
     security.declareProtected(Permissions.View, 'subtopics')
     def subtopics(self, REQUEST=None, **kw):
