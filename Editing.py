@@ -614,8 +614,7 @@ class EditingSupport:
                      % (re.escape(oldlink), self.canonicalIdFrom(oldlink))
         newpat = (self.isWikiName(newlink) and newlink) or '[%s]' % newlink
         self.edit(text=re.sub(oldpat, newpat, self.read()),
-                  REQUEST=REQUEST,
-                  log='links updated')
+                  REQUEST=REQUEST)
 
     def handleFileUpload(self,REQUEST,log=''):
         # is there a file upload ?
