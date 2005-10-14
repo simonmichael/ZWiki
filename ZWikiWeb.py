@@ -87,13 +87,14 @@ def addZWikiWebFromFs(self, new_id, title='', wiki_type='zwikidotorg',
     """
     parent = self.Destination()
     # Go with a BTreeFolder from the start to avoid hassle with large
-    # wikis on low-memory hosted servers. The standard folder's UI is more
-    # useful while the wiki is small, alas.
-    # f = Folder()
-    # f.id, f.title = str(new_id), str(title)
-    # new_id = parent._setObject(f.id, f)
-    parent.manage_addProduct['BTreeFolder2'].manage_addBTreeFolder(
-        str(new_id),str(title))
+    # wikis on low-memory hosted servers ?
+    #parent.manage_addProduct['BTreeFolder2'].manage_addBTreeFolder(
+    #str(new_id),str(title))
+    # No - the standard folder's UI is more useful for small wikis,
+    # and more importantly BTreeFolder2 isn't standard until 2.8.0b2
+    f = Folder()
+    f.id, f.title = str(new_id), str(title)
+    new_id = parent._setObject(f.id, f)
     f = parent[new_id]
     # add objects from wiki template
     # cataloging really slows this down!
