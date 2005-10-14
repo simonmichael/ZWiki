@@ -509,6 +509,11 @@ def WARN(*args):
     for arg in args: tmp.append(str(arg))
     zLOG.LOG('ZWiki',zLOG.WARNING,' '.join(tmp))
 
+def DEBUG(*args):
+    tmp = []
+    for arg in args: tmp.append(str(arg))
+    zLOG.LOG('ZWiki',zLOG.DEBUG,' '.join(tmp))
+
 def formattedTraceback():
     type,val,tb = sys.exc_info()
     try:     return join(traceback.format_exception(type,val,tb),'')
