@@ -11,7 +11,7 @@
 import re, string
 
 import Defaults
-from Utils import BLATHER, formattedTraceback
+from Utils import BLATHER, DEBUG, formattedTraceback
 
 # URLs/URIs (better regexps in urllib/urlparse ?)
 urlchars = r'[A-Za-z0-9/:;@_%~#=&\.\-\?\+\$,]+'
@@ -101,10 +101,16 @@ try:
     relocaleflag = r'(?L)'
     wordboundary = r'\b'
 except:
-    # no locale is set, or there was a problem detecting it or a problem
-    # decoding its letters; uncomment this to see which:
-    #BLATHER(formattedTraceback())
-    BLATHER('the system locale gave a problem in Regexps.py, so WikiNames will not be locale-aware')
+    # no locale is set, or there was a problem detecting it or a
+    # problem decoding its letters.
+    # XXX must be a less ugly way to do this:
+    # if it's just that there's no locale, don't log a warning
+    try: lang, encoding = locale.getlocale()
+    except: lang, encoding = -1,-1
+    if (lang, encoding) == (None, None): pass
+    else:
+        BLATHER('the system locale gave a problem in Regexps.py, so WikiNames will not be locale-aware')
+        DEBUG(formattedTraceback())
     # define a useful default set of non-ascii letters, mainly european letters
     # from http://zwiki.org/InternationalCharacterExamples
     # XXX more have been added to that page (latvian, polish).. how far
