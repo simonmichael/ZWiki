@@ -13,7 +13,9 @@
                      ">
 
       <!-- always-available quick access keys -->
-      <span metal:use-macro="macros/accesskeys" tal:omit-tag="" />
+      <div class="hiddenStructure">
+        <span metal:use-macro="macros/accesskeys" tal:omit-tag="" />
+      </div>
 
 
       <!-- page heading -->
