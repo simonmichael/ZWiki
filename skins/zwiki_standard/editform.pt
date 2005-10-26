@@ -64,7 +64,7 @@
             tal:attributes="action string:${here/page_url}">
         <input name="timeStamp" type="hidden" value="" 
                tal:attributes="value timestamp" />
-        <input name="page" type=hidden value="page"
+        <input name="page" type="hidden" value="page"
                tal:attributes="value page" />
         <input name="leaveplaceholder" value="" type="hidden"
                tal:condition="python:creating #no placeholder when creating" />

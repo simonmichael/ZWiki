@@ -66,7 +66,7 @@ pot: dtmlextract
 # a dtml extraction hack, should integrate with i18nextract
 dtmlextract: 
 	echo '<div i18n:domain="zwiki">' >skins/dtmlmessages.pt
-	find skins wikis -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt
+	find plugins skins wikis -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt
 	echo '</div>' >>skins/dtmlmessages.pt
 
 po:

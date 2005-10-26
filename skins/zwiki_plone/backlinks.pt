@@ -42,9 +42,9 @@ sortedparents python:thisparents #sequence.sort(thisparents);
 ">
 <li tal:repeat="parent sortedparents"> 
 <span tal:omit-tag="">
-<input type="checkbox" name="parents" value="parent" checked class="formfield"
-tal:attributes="value parent;"
-tal:condition="canreparent" />
+<input type="checkbox" name="parents" value="parent" checked="checked" class="formfield"
+       tal:attributes="value parent;"
+       tal:condition="canreparent" />
 <a href="" title=""
 tal:attributes="href python:here.wiki_url()+'/'+here.canonicalIdFrom(parent);
                 title nothing;"

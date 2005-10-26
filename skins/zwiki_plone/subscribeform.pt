@@ -53,7 +53,7 @@
         </div>
         <div tal:condition="not:inCMFandLoggedIn">
           <span i18n:translate="" tal:omit-tag="">Your email address</span>:
-          <input name="email" type="text" size=30 value="email" 
+          <input name="email" type="text" size="30" value="email" 
                  tal:attributes="value email" class="formfield" />
           <input name="emailchanged" type="hidden" value="1" />
           <input class="context"
