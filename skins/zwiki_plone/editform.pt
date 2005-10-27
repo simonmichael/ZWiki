@@ -76,7 +76,7 @@ UI.py:editform() calls us with these options:
 
             <input name="timeStamp" 
                    type="hidden" 
-    	       value=""
+    	             value=""
                    tal:attributes="value here/editTimestamp|nothing" />
                  
             <input name="page" 
