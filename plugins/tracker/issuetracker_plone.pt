@@ -7,12 +7,14 @@
 
   <div metal:fill-slot="main">
 
-    <span metal:use-macro="python:here.wikipage_template().macros['accesskeys']" />
+    <div class="hiddenStructure">
+      <span metal:use-macro="python:here.wikipage_template().macros['accesskeys']" />
+    </div>
 
     <h1 i18n:translate="heading_wiki_issue_tracker">
       Issue tracker
     </h1>
- 
+
     <span tal:replace="structure python:here.getSkinTemplate('IssueTracker')(here,request)">
       content goes here..
     </span>

@@ -7,7 +7,9 @@
 
   <div metal:fill-slot="main">
 
-    <span metal:use-macro="python:here.wikipage_template().macros['accesskeys']" />
+    <div class="hiddenStructure">
+      <span metal:use-macro="python:here.wikipage_template().macros['accesskeys']" />
+    </div>
 
     <h1 i18n:translate="heading_wiki_filter_issues">
       Filter issues

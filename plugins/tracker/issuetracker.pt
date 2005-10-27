@@ -16,9 +16,9 @@
       <h1 metal:fill-slot="title" i18n:translate="">Issue tracker</h1>
     </div>
 
-    <div class="formcontent" tal:content="structure 
-	python:here.getSkinTemplate('IssueTracker')(here,request)">
-	content goes here..
+    <div class="formcontent"
+         tal:content="structure python:here.getSkinTemplate('IssueTracker')(here,request)">
+      content goes here..
     </div>
 
   </body>
