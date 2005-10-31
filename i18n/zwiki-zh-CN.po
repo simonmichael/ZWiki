@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ZWiki-0-41-0\n"
+"Project-Id-Version: ZWiki-0-45-0\n"
 "POT-Creation-Date: Sat Oct  1 07:09:36 2005\n"
-"PO-Revision-Date: 2005-04-29 12:18+0800\n"
+"PO-Revision-Date: 2005-10-31 07:18+0800\n"
 "Last-Translator: T.C. Chou <tcchou-at-tcchou-dot-org>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
 "MIME-Version: 1.0\n"
@@ -88,7 +88,7 @@ msgstr "快纪使用者"
 
 #: /usr/local/src/Zope3.1/src/zwiki/configure.zcml:15
 msgid "Wiki visitors, which can only view and comment on wikis."
-msgstr "快纪访客, 在快纪上只能浏览和留言."
+msgstr "快纪访客，在快纪上只能浏览和留言。"
 
 #: /usr/local/src/Zope3.1/src/zwiki/configure.zcml:152
 #: /usr/local/src/Zope3.1/src/zwiki/browser/configure.zcml:75
@@ -114,7 +114,7 @@ msgstr "快纪编辑器"
 
 #: /usr/local/src/Zope3.1/src/zwiki/configure.zcml:20
 msgid "The Wiki Editor can create and edit wikis."
-msgstr "快纪编辑器可以建立以及编辑快纪."
+msgstr "快纪编辑器可以建立以及编辑快纪。"
 
 #: /usr/local/src/Zope3.1/src/zwiki/configure.zcml:25
 msgid "Wiki Administrator"
@@ -122,7 +122,7 @@ msgstr "快纪管理者"
 
 #: /usr/local/src/Zope3.1/src/zwiki/configure.zcml:25
 msgid "The Wiki Admin can fully manage wiki pages."
-msgstr "快纪管理者可以完全掌控快纪页面."
+msgstr "快纪管理者可以完全掌控快纪页面。"
 
 #: /usr/local/src/Zope3.1/src/zwiki/configure.zcml:30
 msgid "View a Wiki Page"
@@ -167,25 +167,25 @@ msgstr "最小快纪页面容器实作 "
 
 #: i/Admin.py:62
 msgid "You are not authorized to upgrade all pages."
-msgstr "您没有权力升级所有页面."
+msgstr "您没有权力升级所有页面。"
 
 #: i/Admin.py:63
 msgid "(folder -> Manage properties)"
-msgstr "(目录 -> 管理属性)"
+msgstr "（目录 -> 管理性质）"
 
 #: i/Editing.py:307
 msgid ""
 "You are not authorized to reparent or change subtopics links on this ZWiki "
 "Page."
-msgstr "您没有权力在这页更动父页或子主题连结."
+msgstr "您没有权力在这页更动父页或子主题连结。"
 
 #: i/Editing.py:329
 msgid "You are not authorized to change this ZWiki Page's type."
-msgstr "您没有权力变更页面型态."
+msgstr "您没有权力变更页面型态。"
 
 #: i/Editing.py:363 i/Editing.py:390
 msgid "You are not authorized to edit this ZWiki Page."
-msgstr "您没有权力修改此页."
+msgstr "您没有权力修改此页。"
 
 #: i/Editing.py:380 i/skins/zwiki_standard/wikipage.pt:178
 msgid "edit"
@@ -193,25 +193,25 @@ msgstr "修改"
 
 #: i/Editing.py:393
 msgid "You are not authorized to delete this ZWiki Page."
-msgstr "您没有权力删除此页."
+msgstr "您没有权力删除此页。"
 
 #: i/Editing.py:541
 msgid ""
 "This page was renamed to %s. You can delete this one if no longer needed.\n"
-msgstr "这页已被改名为 %s. 如果此页不需要, 您可以删除.\n"
+msgstr "这页已被改名为 %s。如果此页不需要，您可以删除。\n"
 
 #: i/Editing.py:638
 msgid "You are not authorized to upload files here."
-msgstr "您没有权力在这里上传档案."
+msgstr "您没有权力在这里上传档案。"
 
 #: i/Editing.py:642
 msgid "You are not authorized to add a link on this ZWiki Page."
-msgstr "您没有权力在此页增加连接."
+msgstr "您没有权力在此页增加连接。"
 
 #: i/Editing.py:804
 msgid ""
 "There was a problem: %s. Please contact the site administrator for help."
-msgstr "发生一个问题: %s. 请联系管理者, 帮忙处理这问题."
+msgstr "发生一个问题: %s。请联系管理者，协助处理这问题。"
 
 #: i/Editing.py:811
 msgid "banned_links match"
@@ -219,19 +219,19 @@ msgstr "发现被拒绝的连结"
 
 #: i/Editing.py:812
 msgid "your edit contained a banned link pattern"
-msgstr "您所编辑的内容, 含有一个被拒绝出现的连结"
+msgstr "您所编辑的内容，含有一个被拒绝出现的连结"
 
 #: i/Editing.py:823
 msgid "exceeded max_anonymous_links"
 msgstr ""
-"您所编辑的发生一个问题: 它包含一个被阻挡的连结(网址)样式.请连络网站管理者, 以"
-"取得适当协助."
+"您所编辑的发生一个问题：它包含一个被阻挡的连结（网址）样式。请连络网站管理者，"
+"以取得适当协助。"
 
 #: i/Editing.py:824
 msgid "adding of external links by anonymous authors is restricted"
 msgstr ""
-"您所编辑的发生一个问题: 这个网站不允许匿名使用者能够新增对外连结网址.请连络网"
-"站管理者, 以取得适当协助."
+"您所编辑的发生一个问题：这个网站不允许匿名使用者能够新增对外连结网址。请连络"
+"网站管理者，以取得适当协助。"
 
 #: i/Mail.py:490 i/skins/dtmlmessages.pt:34
 msgid "anonymous"
@@ -239,7 +239,7 @@ msgstr "访客"
 
 #: i/OutlineSupport.py:865 i/skins/zwiki_standard/wikipage.pt:145
 msgid "which pages link to this one ?"
-msgstr "那个页面连结到这一页?"
+msgstr "那个页面连结到这一页？"
 
 #: i/OutlineSupport.py:871
 msgid "You are here"
@@ -251,15 +251,15 @@ msgstr "修改冲突"
 
 #: i/UI.py:550
 msgid "Someone else has saved this page while you were editing"
-msgstr "当您修改时, 已经有人存入新的页面"
+msgstr "当您修改时，已经有人存入新的页面"
 
 #: i/UI.py:551
 msgid "To resolve the conflict, do this"
-msgstr "要解决冲突问题, 请按以下步骤"
+msgstr "要解决冲突问题，请按以下步骤"
 
 #: i/UI.py:552
 msgid "Click your browser's back button"
-msgstr "点选您浏览器的上ㄧ页按钮(Back)"
+msgstr "点选您浏览器的上ㄧ页按钮（Back）"
 
 #: i/UI.py:553
 msgid "Copy your recent edits to the clipboard"
@@ -267,15 +267,15 @@ msgstr "复制您最近修改的内容到剪贴簿"
 
 #: i/UI.py:554
 msgid "Click your browser's refresh button"
-msgstr "点选您浏览器更新页面按钮(Refresh)"
+msgstr "点选您浏览器更新页面按钮（Refresh）"
 
 #: i/UI.py:555
 msgid "Paste in your edits again, being mindful of the latest changes"
-msgstr "贴上您所修改的内容, 在最新变更的内容里头"
+msgstr "贴上您所修改的内容，在最新变更的内容里头"
 
 #: i/UI.py:556
 msgid "Click the Change button again"
-msgstr "再按一次变更按钮(Change)"
+msgstr "再按一次变更按钮（Change）"
 
 #: i/UI.py:557 i/skins/zwiki_standard/editform.pt:187
 msgid "or"
@@ -283,7 +283,7 @@ msgstr "或"
 
 #: i/UI.py:558
 msgid "To discard your changes and start again, click OK"
-msgstr "放弃所有您变更的内容, 并重新再读一次, 点选确认按钮(OK)"
+msgstr "放弃所有您变更的内容，并重新再读一次，点选确认按钮（OK）"
 
 #: i/UI.py:567
 msgid "Page is locked"
@@ -300,19 +300,18 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"            此页已被 webDAV 锁住. 某人或许正在用外部编辑器\n"
-"            修改这一页  您必须等到他们完成修改工作, 之后再\n"
-"            试试看.  如果您已经修改一些内容, 您或许得备份下\n"
-"            来, 以文字的方式拷贝, 好做为重新修改的参考.\n"
+"            此页已被 webDAV 锁住。某人或许正在用外部编辑器\n"
+"            修改这一页。您必须等到他们完成修改工作，之后再\n"
+"            试试看。如果您已经修改一些内容，您或许得备份下\n"
+"            来，以文字的方式拷贝，好做为重新修改的参考。\n"
 "            \n"
 "            "
 
 #: i/UI.py:585
 msgid "To discard your changes and try again, click OK."
-msgstr "放弃您变更的内容, 并且再试一次, 点选确认按钮(OK)."
+msgstr "放弃您变更的内容，并且再试一次，点选确认按钮（OK）。"
 
 #: i/UI.py:594
-#, fuzzy
 msgid ""
 "\n"
 "        Access keys can be accessed in mozilla-based browsers by pressing "
@@ -368,15 +367,15 @@ msgid ""
 "        "
 msgstr ""
 "\n"
-"        快速键在mozilla相关浏览器中以 alt-<按键> 方式使用\n"
-"        IE 使用者: 必须加按 enter 键\n"
-"        Mac 使用者: command-<按键>\n"
-"        Opera 使用者: shift-escape-<按键>\n"
-"        如果这些都不管用, 回到前一页然后再试试看.\n"
+"        快速键在 mozilla 相关浏览器以 alt-<按键> 方式使用\n"
+"        IE 使用者：必须加按 enter 键\n"
+"        Mac 使用者：command-<按键>\n"
+"        Opera 使用者：shift-escape-<按键>\n"
+"        如果这些都不管用，回到前一页然后再试试看。\n"
 "\n"
 "        0    显示快速键的配置\n"
 "\n"
-"        Wiki 功能:\n"
+"        wiki 功能：\n"
 "        f    显示首页\n"
 "        c    显示 Wiki 的所有内容 (contents)\n"
 "        r    显示 Wiki 最近的变更\n"
@@ -387,33 +386,31 @@ msgstr ""
 "        h    显示辅助页面\n"
 "        s    跳到搜寻字段\n"
 "        \n"
-"        页面功能:\n"
-"        +    Plone/CMF外观检视页面 (在一Plone/CMF网站)\n"
-"        =    在标准外观检视页面, 全功能模式\n"
-"        _    在标准外观检视页面, 简单模式\n"
-"        -    在标准外观检视页面, 极简模式\n"
+"        页面功能：\n"
+"        +    （plone/cmf 网站外关切换设定）使用 Zwiki plone/cmf 外观\n"
+"        -    （plone/cmf 网站外关切换设定）使用 Zwiki 标准外观\n"
 "        v    检视页面\n"
 "        m    邮件订阅\n"
-"        b    显示回溯连结 (连结到此页面)\n"
-"        d    显示不同比较 (页面修改历史)\n"
-"        y    显示完整历史 (在 ZMI 中)\n"
+"        b    显示回溯连结（连结到此页面）\n"
+"        d    显示不同比较（页面修改历史）\n"
+"        y    显示完整历史（在 ZMI 中）\n"
 "        e    修改这一页面\n"
 "        x    用外部编辑器修改\n"
-"             打印这一页面 (以及子主题)\n"
-"        q    检视页面的源码 (快速检视)\n"
+"             打印这一页面（以及子主题）\n"
+"        q    检视页面的源码（快速检视）\n"
 "             清除并且重新产生这一页面的快取\n"
 "             跳到子主题\n"
-"             跳到留言 (讯息)\n"
-"             如果可能的话, 会跳到这一页面作者的首页\n"
+"             跳到留言（讯息）\n"
+"             如果可能的话，会跳到这一页面作者的首页\n"
 "        n    下一页面\n"
 "        p    上一页面\n"
 "        u    上到父层页面\n"
 "        \n"
-"        在修改表单:\n"
+"        在修改表单：\n"
 "        s    储存变更\n"
 "        p    预览\n"
 "        \n"
-"        当显示版本比较:\n"
+"        当显示版本比较：\n"
 "        n    下一修改\n"
 "        p    前一修改\n"
 "        "
@@ -492,7 +489,7 @@ msgstr "作者 %(editor)s"
 
 #: i/__init__.py:30
 msgid "No need to add a Zwiki Outline Cache"
-msgstr ""
+msgstr "不需要新增 Zwiki 大纲快取"
 
 #: i/__init__.py:31
 msgid ""
@@ -501,6 +498,10 @@ msgid ""
 "        Zwiki will create it for you as needed.\n"
 "        "
 msgstr ""
+"Zwiki 大纲快取因为实作的关系，汇出现在 ZMI 新增选单\n"
+"        里头，但不是用来直接新增。\n"
+"        如果需要，Zwiki 会为你建立。\n"
+"        "
 
 #: i/pagetypes/common.py:233
 msgid "comments"
@@ -547,9 +548,8 @@ msgid "reply"
 msgstr "回复"
 
 #: i/plugins/tracker/__init__.py:339
-#, fuzzy
 msgid "property change"
-msgstr "最近变更"
+msgstr "性质变更"
 
 #: i/plugins/tracker/filterissues.pt:10 i/plugins/tracker/filterissues.pt:16
 msgid "Filter issues"
@@ -581,8 +581,8 @@ msgid ""
 "choose to upload an existing html file from your local computer by clicking "
 "the <i>Browse</i> button."
 msgstr ""
-"您可以用下面的表单建立新的ZWiki页面. 您也可以点选 <i>浏览</i> 按钮\n"
-"上传您计算机中已经存在的 HTML 档案."
+"您可以用下面的表单建立新的ZWiki页面。您也可以点选 <i>浏览</i> 按钮\n"
+"上传您计算机中已经存在的 HTML 档案。"
 
 #: i/skins/dtmlmessages.pt:14
 msgid "File"
@@ -642,7 +642,7 @@ msgstr "最近变更的页面, 包含概略的摘要"
 
 #: i/skins/dtmlmessages.pt:28
 msgid "Show summaries ?"
-msgstr "显示摘要?"
+msgstr "显示摘要？"
 
 #: i/skins/dtmlmessages.pt:29
 msgid "Refresh"
@@ -666,25 +666,25 @@ msgstr "新的"
 
 #: i/skins/dtmlmessages.pt:35
 msgid "Pages marked (NEW) have been created within the last week"
-msgstr "页面注记(新的)表示是在最近一周内所建立的"
+msgstr "页面注记（新的）表示是在最近一周内所建立的"
 
 #: i/skins/dtmlmessages.pt:36
 msgid "Enter a word or phrase and hit enter to search the entire wiki."
-msgstr "输入一个字或一段话, 并且点选 输入 开始搜寻整个wiki."
+msgstr "输入一个字或一段话，并且点选 输入 开始搜寻整个wiki。"
 
 #: i/skins/dtmlmessages.pt:37
 msgid "This is the same as using the search field at top right."
-msgstr "这和在右上角搜寻字段的作用是一样的."
+msgstr "这和在右上角搜寻字段的作用是一样的。"
 
 #: i/skins/dtmlmessages.pt:38
 msgid "Tips: A single word works best for matching page names."
-msgstr "技巧: 使用单独的字, 对于按页面名称搜寻来说最好."
+msgstr "技巧：使用单独的字，对于按页面名称搜寻来说最好。"
 
 #: i/skins/dtmlmessages.pt:39
 msgid ""
 "Case-insensitivity and wildcards may be supported depending on your catalog "
 "configuration."
-msgstr "大小写无关与万用字元, 依您的目录索引设定而定, 也许会被支持."
+msgstr "大小写无关与万用字元，依您的目录索引设定而定，也许会被支持。"
 
 #: i/skins/dtmlmessages.pt:4 i/skins/dtmlmessages.pt:12
 msgid "Id"
@@ -692,7 +692,7 @@ msgstr "名称"
 
 #: i/skins/dtmlmessages.pt:40
 msgid "Leave it blank to list all pages."
-msgstr "如果让它空白的话, 可列出所有页面."
+msgstr "如果让它空白的话，可列出所有页面。"
 
 #: i/skins/dtmlmessages.pt:43
 msgid "Page names matching"
@@ -704,23 +704,23 @@ msgstr "文字相符"
 
 #: i/skins/dtmlmessages.pt:45
 msgid "Thorough (non-catalog) search for text matching"
-msgstr "透过(非编目方式)搜寻得到文字相符"
+msgstr "透过（非编目方式）搜寻得到文字相符"
 
 #: i/skins/dtmlmessages.pt:46
 msgid "Set your preferences for this wiki:"
-msgstr "设定在这个站台个人相关偏好."
+msgstr "设定在这个站台个人相关偏好。"
 
 #: i/skins/dtmlmessages.pt:47
 msgid "User name:"
-msgstr "使用者名称:"
+msgstr "使用者名称："
 
 #: i/skins/dtmlmessages.pt:48
 msgid "(identifies your edits)"
-msgstr "(您编辑文章时的名称)"
+msgstr "（您编辑文章时的名称）"
 
 #: i/skins/dtmlmessages.pt:49
 msgid "Email address:"
-msgstr "电子邮件:"
+msgstr "电子邮件："
 
 #: i/skins/dtmlmessages.pt:5 i/skins/dtmlmessages.pt:13
 msgid "Title"
@@ -728,23 +728,23 @@ msgstr "标题"
 
 #: i/skins/dtmlmessages.pt:50
 msgid "(allows mail subscription)"
-msgstr "(得以订阅邮件)"
+msgstr "（得以订阅邮件）"
 
 #: i/skins/dtmlmessages.pt:51
 msgid "Your time zone:"
-msgstr "您所在时区:"
+msgstr "您所在时区："
 
 #: i/skins/dtmlmessages.pt:52
 msgid "(localizes most times)"
-msgstr "(选择接近的时间)"
+msgstr "（选择接近的时间）"
 
 #: i/skins/dtmlmessages.pt:53
 msgid "Edit form height:"
-msgstr "修改字段高度:"
+msgstr "修改字段高度："
 
 #: i/skins/dtmlmessages.pt:54
 msgid "(adjusts form size)"
-msgstr "(调整表格大小)"
+msgstr "（调整表格大小）"
 
 #: i/skins/dtmlmessages.pt:55
 msgid "Save options"
@@ -778,12 +778,12 @@ msgstr "子页面"
 #: i/skins/zwiki_plone/backlinks.pt:112
 #: i/skins/zwiki_standard/backlinks.pt:115
 msgid "Here are it's subtopics:"
-msgstr "这是它的子页面:"
+msgstr "这是它的子页面："
 
 #: i/skins/zwiki_plone/backlinks.pt:113
 #: i/skins/zwiki_standard/backlinks.pt:116
 msgid "This page has no subtopics."
-msgstr "这页没有任何子页面."
+msgstr "这页没有任何子页面。"
 
 #: i/skins/zwiki_plone/backlinks.pt:14
 msgid "Backlinks for"
@@ -792,15 +792,15 @@ msgstr "回溯连结"
 #: i/skins/zwiki_plone/backlinks.pt:140
 #: i/skins/zwiki_standard/backlinks.pt:143
 msgid "You can change the order of subtopics by clicking the ^ buttons."
-msgstr "您可以透过点选 ^ 按钮, 变更子页面顺序."
+msgstr "您可以透过点选 ^ 按钮，变更子页面顺序。"
 
 #: i/skins/zwiki_plone/backlinks.pt:35 i/skins/zwiki_standard/backlinks.pt:38
 msgid "is a top-level topic."
-msgstr "是最顶层主题."
+msgstr "是最顶层主题。"
 
 #: i/skins/zwiki_plone/backlinks.pt:36 i/skins/zwiki_standard/backlinks.pt:39
 msgid "is a subtopic of:"
-msgstr "子主题上层为:"
+msgstr "子主题上层为："
 
 #: i/skins/zwiki_plone/backlinks.pt:60 i/skins/zwiki_standard/backlinks.pt:63
 msgid "Backlinks"
@@ -808,25 +808,25 @@ msgstr "回溯"
 
 #: i/skins/zwiki_plone/backlinks.pt:61 i/skins/zwiki_standard/backlinks.pt:64
 msgid "Here are the pages which link to it:"
-msgstr "底下是相关连结到的页面:"
+msgstr "底下是相关连结到的页面："
 
 #: i/skins/zwiki_plone/backlinks.pt:62 i/skins/zwiki_standard/backlinks.pt:65
 msgid "No other pages link to this one."
-msgstr "没有任何其它页面连到这一页."
+msgstr "没有任何其它页面连到这一页。"
 
 #: i/skins/zwiki_plone/backlinks.pt:88 i/skins/zwiki_standard/backlinks.pt:91
 msgid "backlinks_reparent_help"
 msgstr ""
-"您可变更这页往上的连结, 安排在所有页面阶层里头.\\n\n"
-"做好检查或输入一页面名称, 并且按下『变更父页面』.\\n\n"
-"通常只要一个父页面就够了."
+"您可变更这页往上的连结，安排在所有页面阶层里头。\\n\n"
+"做好检查或输入一页面名称，并且按下“变更父页面”。\\n\n"
+"通常只要一个父页面就够了。"
 
 #: i/skins/zwiki_plone/backlinks.pt:95 i/skins/zwiki_standard/backlinks.pt:98
 msgid "backlinks_reparent_help2"
 msgstr ""
-"您可变更这页的父层, 安排在所有页面阶层里头.\\n\n"
-"做好检查或输入一页面名称, 并且按下『变更父页面』.\\n\n"
-"通常只要一个父页面就够了."
+"您可变更这页的父层，安排在所有页面阶层里头。\\n\n"
+"做好检查或输入一页面名称，并且按下“变更父页面”。\\n\n"
+"通常只要一个父页面就够了。"
 
 #: i/skins/zwiki_plone/backlinks.pt:99 i/skins/zwiki_standard/backlinks.pt:102
 msgid "Reparent"
@@ -875,8 +875,8 @@ msgstr "回到页面"
 #: i/skins/zwiki_plone/editform.pt:103
 msgid "help_shortname"
 msgstr ""
-"注意: 在一个有很多内容的Wiki页面, 变更名称将会非常慢. 因为其它页面有可能都需"
-"要更新."
+"注意: 在一个有很多内容的Wiki页面，变更名称将会非常慢。因为其它页面"
+"有可能都需要更新。"
 
 #: i/skins/zwiki_plone/editform.pt:122
 msgid "label_body_text"
@@ -885,20 +885,20 @@ msgstr "主体内容"
 #: i/skins/zwiki_plone/editform.pt:124
 msgid "help_wikibody"
 msgstr ""
-"在Wiki页面中, 您可用 [方括号] 建立连接. 当您储存页面时, 方括号里头的\n"
-"            名称将会跟随小小的 <code>?</code> 连接. 当您点选时, 则依\n"
-"            该名称建立一新页面."
+"在Wiki页面中，您可用 [方括号] 建立连接。当您储存页面时，方括号里头的\n"
+"            名称将会跟随小小的 <code>?</code> 连接。当您点选时，则依\n"
+"            该名称建立一新页面。"
 
 #: i/skins/zwiki_plone/editform.pt:151
 msgid "help_wikiwords"
 msgstr ""
-"在Wiki页面中, 您可用 [方括号] 建立连接. 当您储存页面时, 方括号里头的\n"
-"            名称将会跟随小小的 <code>?</code> 连接. 当您点选时, 则依\n"
-"            该名称建立一新页面."
+"在Wiki页面中，您可用 [方括号] 建立连接。当您储存页面时，方括号里头的\n"
+"            名称将会跟随小小的 <code>?</code> 连接。当您点选时，则依\n"
+"            该名称建立一新页面。"
 
 #: i/skins/zwiki_plone/editform.pt:162
 msgid "label_note"
-msgstr "页面历史的注释说明(选择性项目)"
+msgstr "页面历史的注释说明（选择性项目）"
 
 #: i/skins/zwiki_plone/editform.pt:164
 msgid "help_wikinote"
@@ -906,11 +906,11 @@ msgstr "简短描述您的变更."
 
 #: i/skins/zwiki_plone/editform.pt:186
 msgid "label_upload_contents_optional"
-msgstr "上传档案或是图档(选择性项目)"
+msgstr "上传档案或是图档（选择性项目）"
 
 #: i/skins/zwiki_plone/editform.pt:188
 msgid "help_wikiupload"
-msgstr "在此页添加附档或是图档."
+msgstr "在此页添加附档或是图档。"
 
 #: i/skins/zwiki_plone/editform.pt:207
 msgid "label_format"
@@ -919,8 +919,8 @@ msgstr "页面格式"
 #: i/skins/zwiki_plone/editform.pt:209
 msgid "help_format"
 msgstr ""
-"如果您不确定要使用何种格式, 就选 Plain Text\n"
-"             , 并且按照一般方式输入您的文件."
+"如果您不确定要使用何种格式，就选 Plain Text\n"
+"             ，并且按照一般方式输入您的文件。"
 
 #: i/skins/zwiki_plone/editform.pt:264
 msgid "Save"
@@ -932,11 +932,11 @@ msgstr "预览"
 
 #: i/skins/zwiki_plone/editform.pt:273 i/skins/zwiki_standard/editform.pt:202
 msgid "preview this edit"
-msgstr "前一版"
+msgstr "预览这份编辑文件"
 
 #: i/skins/zwiki_plone/editform.pt:282 i/skins/zwiki_standard/editform.pt:207
 msgid "cancel this edit and return to the page"
-msgstr "取消这页的编辑, 回到原先页面"
+msgstr "取消这页的编辑，回到原先页面"
 
 #: i/skins/zwiki_plone/editform.pt:282 i/skins/zwiki_standard/editform.pt:207
 msgid "Cancel"
@@ -958,7 +958,7 @@ msgstr "取消"
 #: i/skins/zwiki_standard/editform.pt:243
 #: i/skins/zwiki_standard/editform.pt:244
 msgid "label_preview"
-msgstr "(必须)"
+msgstr "【预览】"
 
 #: i/skins/zwiki_plone/editform.pt:48 i/skins/zwiki_plone/editform.pt:60
 msgid "heading_edit_wiki_page"
@@ -970,7 +970,7 @@ msgstr ""
 
 #: i/skins/zwiki_plone/editform.pt:64
 msgid "description_edit_wiki_page"
-msgstr "快纪页面准许您建立许多的互连页面."
+msgstr "快纪页面可让您建立许多相互关连的页面。"
 
 #: i/skins/zwiki_plone/editform.pt:75
 msgid "legend_wiki_page_details"
@@ -1000,29 +1000,28 @@ msgstr "搜寻快纪"
 #: i/skins/zwiki_plone/subscribeform.pt:134
 #: i/skins/zwiki_standard/subscribeform.pt:105
 #: i/skins/zwiki_standard/subscribeform.pt:139
-#, fuzzy
 msgid "all edits"
-msgstr "修改"
+msgstr "全部修改"
 
 #: i/skins/zwiki_plone/subscribeform.pt:111
 #: i/skins/zwiki_standard/subscribeform.pt:116
 msgid "subscribed_wiki_ok"
-msgstr "您现在已经订阅整个快纪."
+msgstr "您现在已经订阅整个快纪。"
 
 #: i/skins/zwiki_plone/subscribeform.pt:115
 #: i/skins/zwiki_standard/subscribeform.pt:120
 msgid "subscribed_wiki_no"
-msgstr "您现在没有订阅整个快纪."
+msgstr "您现在没有订阅整个快纪。"
 
 #: i/skins/zwiki_plone/subscribeform.pt:119
 #: i/skins/zwiki_standard/subscribeform.pt:124
 msgid "Unsubscribe from whole wiki"
-msgstr "取消订阅整个快纪."
+msgstr "取消订阅整个快纪。"
 
 #: i/skins/zwiki_plone/subscribeform.pt:126
 #: i/skins/zwiki_standard/subscribeform.pt:131
 msgid "Subscribe to whole wiki"
-msgstr "订阅整个快纪."
+msgstr "订阅整个快纪。"
 
 #: i/skins/zwiki_plone/subscribeform.pt:13
 #: i/skins/zwiki_standard/subscribeform.pt:19
@@ -1048,19 +1047,17 @@ msgstr "Wiki订阅者"
 #: i/skins/zwiki_standard/subscribeform.pt:42
 msgid "subscribe_desc_comments"
 msgstr ""
-"您可以订阅这一页面或是整个快纪.\n"
-"     订阅者会透过电子邮件收到一份份的使用者留言\n"
-"     (但不是一般页面修订,除非网站管理者开放). \n"
-"     或回到"
+"您可以订阅这一页面或是整个快纪。\n"
+"     订阅者会透过电子邮件收到相关留言\n"
+"     或者回到"
 
 #: i/skins/zwiki_plone/subscribeform.pt:42
 #: i/skins/zwiki_standard/subscribeform.pt:47
 msgid "subscribe_desc_edits"
 msgstr ""
-"您可以订阅这一页面或是整个快纪.\n"
-"     订阅者会透过电子邮件收到一份份的使用者留言\n"
-"     (但不是一般页面修订,除非网站管理者开放). \n"
-"     或回到"
+"您可以订阅这一页面或是整个快纪。\n"
+"     订阅者会透过电子邮件收到相关修改\n"
+"     或者回到"
 
 #: i/skins/zwiki_plone/subscribeform.pt:55
 #: i/skins/zwiki_standard/subscribeform.pt:60
@@ -1075,21 +1072,21 @@ msgstr "变更"
 #: i/skins/zwiki_plone/subscribeform.pt:67
 #: i/skins/zwiki_standard/subscribeform.pt:72
 msgid "subscribe_no_email"
-msgstr "如果要订阅, 请设定您的电子邮件信箱."
+msgstr "如果要订阅，请设定您的电子邮件信箱。"
 
 #: i/skins/zwiki_plone/subscribeform.pt:77
 #: i/skins/zwiki_standard/subscribeform.pt:82
 msgid "subscribed_page_ok"
-msgstr "您目前订阅这一页面."
+msgstr "您目前订阅这一页面。"
 
 #: i/skins/zwiki_plone/subscribeform.pt:81
 #: i/skins/zwiki_standard/subscribeform.pt:86
 msgid "subscribed_page_no"
-msgstr "您目前没有订阅这一页面."
+msgstr "您目前没有订阅这一页面。"
 
 #: i/skins/zwiki_plone/subscribeform.pt:85
 msgid "Unsubscribe from this page"
-msgstr "取消订阅这个Wiki页面"
+msgstr "取消订阅这个页面"
 
 #: i/skins/zwiki_plone/subscribeform.pt:92
 msgid "Subscribe to this page"
@@ -1125,30 +1122,27 @@ msgstr "名称, "
 
 #: i/skins/zwiki_plone/wikipage.pt:160 i/skins/zwiki_standard/wikipage.pt:399
 msgid "replacement,"
-msgstr "删除, "
+msgstr "取代, "
 
 #: i/skins/zwiki_plone/wikipage.pt:163 i/skins/zwiki_standard/wikipage.pt:402
-#, fuzzy
 msgid "page"
-msgstr "建立"
+msgstr "页面"
 
 #: i/skins/zwiki_plone/wikipage.pt:168 i/skins/zwiki_standard/wikipage.pt:407
 msgid "enter a page name and click buttons to the right (mouse over for help)"
-msgstr "输入一页面名称并点选右边按钮(光标停留有相关讯息)"
+msgstr "输入一页面名称并点选右边按钮（光标停驻出现相关讯息）"
 
 #: i/skins/zwiki_plone/wikipage.pt:173 i/skins/zwiki_standard/wikipage.pt:412
-#, fuzzy
 msgid "make this page a subtopic of the page you have entered"
-msgstr "变更这个页面的父页, 让它在已有页面之下"
+msgstr "变更这个页面成为你进入页面之下的子主题页面"
 
 #: i/skins/zwiki_plone/wikipage.pt:173 i/skins/zwiki_standard/wikipage.pt:412
-#, fuzzy
 msgid "reparent"
 msgstr "变更父层"
 
 #: i/skins/zwiki_plone/wikipage.pt:178 i/skins/zwiki_standard/wikipage.pt:417
 msgid "rename this page to the name you have entered, updating all links"
-msgstr "变更这页面名称为您已输入的, 更新所有连结"
+msgstr "变更这页面名称为您已输入的，更新所有连结"
 
 #: i/skins/zwiki_plone/wikipage.pt:178 i/skins/zwiki_standard/wikipage.pt:417
 msgid "rename"
@@ -1159,15 +1153,13 @@ msgid "delete!"
 msgstr "删除!"
 
 #: i/skins/zwiki_plone/wikipage.pt:183 i/skins/zwiki_standard/wikipage.pt:422
-#, fuzzy
 msgid ""
 "delete this page, and redirect links to the page you have entered, if any"
-msgstr "变更这个页面的父页, 让它在已有页面之下"
+msgstr "删除这个页面，如果存在你所输入的页面名称，将会转址进入"
 
 #: i/skins/zwiki_plone/wikipage.pt:188 i/skins/zwiki_standard/wikipage.pt:427
-#, fuzzy
 msgid "create a page with the name you have entered, as a subtopic of this one"
-msgstr "变更这页面名称为您已输入的, 更新所有连结"
+msgstr "建立你输入名称的页面，并会成为这个页面的子主题"
 
 #: i/skins/zwiki_plone/wikipage.pt:188 i/skins/zwiki_standard/wikipage.pt:427
 msgid "create"
@@ -1188,22 +1180,21 @@ msgstr "回复"
 #: i/skins/zwiki_plone/wikipage.pt:96 i/skins/zwiki_standard/wikipage.pt:331
 msgid "to comment (and cc any subscribers) enter text here and click add"
 msgstr ""
-"想写留言 (并且 cc 给所有订阅者) 请在这里输入文字然后点选 新增(add) 按钮"
+"想写留言（并且给所有订阅者邮件复本）请在这里输入文字然后点选 新增（add）按钮"
 
 #: i/skins/zwiki_standard/badtemplate.pt:14
-#, fuzzy
 msgid ""
 "There was a problem locating one of this wiki's skin templates. There may be "
 "a page or other non-page-template/non-dtml-method object with the same ID, "
 "obscuring the template. Or the template may be missing on the filesystem (an "
 "incomplete Zwiki installation)."
 msgstr ""
-"这 Wiki 的风格 (skin) 样板有些问题. 也许对映到的风格样板, 并不是 ZPT 或是 "
-"DTML Method, 或者样版根本不存在. 请检查看看. "
+"这 Wiki 的风格（skin）样板有些问题。也许有页面或其它非 ZPT / 非 DTML 方法的对象有"
+"相同 ID，隐藏在样板里头。也或许是样板在档案系统中遗漏了（安装 Zwiki 不完全造成的）。"
 
 #: i/skins/zwiki_standard/diffform.pt:22
 msgid "log_note"
-msgstr "历史注记:"
+msgstr "历史注记："
 
 #: i/skins/zwiki_standard/diffform.pt:39
 msgid "Return to page"
@@ -1215,11 +1206,11 @@ msgstr "切换 源码/所见即所得 模式"
 
 #: i/skins/zwiki_standard/editform.pt:153
 msgid "Optional change note"
-msgstr "变更注记(选项)"
+msgstr "变更注记（选项）"
 
 #: i/skins/zwiki_standard/editform.pt:154
 msgid "a note makes RecentChanges more useful"
-msgstr "写个注记对浏览变更(RecentChanges)很有帮助"
+msgstr "写个注记对浏览变更（RecentChanges）很有帮助"
 
 #: i/skins/zwiki_standard/editform.pt:169
 msgid "Upload a file or image"
@@ -1227,11 +1218,11 @@ msgstr "上传档案或图档"
 
 #: i/skins/zwiki_standard/editform.pt:170
 msgid "upload a file and link it on this page ?"
-msgstr "在这页上传档案并连结它?"
+msgstr "在这页上传档案并连结它？"
 
 #: i/skins/zwiki_standard/editform.pt:181
 msgid "For editing help, see"
-msgstr "相关编辑说明, 请参考"
+msgstr "相关编辑说明，请参考"
 
 #: i/skins/zwiki_standard/editform.pt:183
 msgid "HelpPage"
@@ -1243,7 +1234,7 @@ msgstr "文字格式规则"
 
 #: i/skins/zwiki_standard/editform.pt:194
 msgid "${DYNAMIC_CONTENT}"
-msgstr ""
+msgstr "${DYNAMIC_CONTENT}"
 
 #: i/skins/zwiki_standard/editform.pt:215
 msgid "Create"
@@ -1264,7 +1255,7 @@ msgstr "页面名称"
 
 #: i/skins/zwiki_standard/editform.pt:80
 msgid "the name of this wiki page (changing this may be slow!)"
-msgstr "这页快纪的名称 (进行变更也许很慢!)"
+msgstr "这页快纪的名称（进行变更也许很慢！）"
 
 #: i/skins/zwiki_standard/editform.pt:90
 msgid "type"
@@ -1338,7 +1329,7 @@ msgstr "显示上传页面"
 
 #: i/skins/zwiki_standard/wikipage.pt:129
 msgid "uploads"
-msgstr "这一页面列出所有在这快纪里上传的档案."
+msgstr "上传档案"
 
 #: i/skins/zwiki_standard/wikipage.pt:131
 msgid "show help page"
@@ -1358,7 +1349,7 @@ msgstr "选项"
 
 #: i/skins/zwiki_standard/wikipage.pt:151
 msgid "backlinks"
-msgstr "回溯"
+msgstr "回溯连结"
 
 #: i/skins/zwiki_standard/wikipage.pt:152
 msgid "configure email subscription to this page or site"
@@ -1382,7 +1373,7 @@ msgstr "使用外部编辑器修改"
 
 #: i/skins/zwiki_standard/wikipage.pt:191
 msgid "(external edit)"
-msgstr "(外部编辑器修改)"
+msgstr "（外部编辑器修改）"
 
 #: i/skins/zwiki_standard/wikipage.pt:270
 msgid "search all pages"
@@ -1395,286 +1386,3 @@ msgstr "显示首页"
 #: i/skins/zwiki_standard/wikipage.pt:99
 msgid "home"
 msgstr "首页"
-
-#~ msgid "You are not authorized to rename this ZWiki Page."
-#~ msgstr "您没有权力变更页面名称."
-
-#~ msgid "page in parent wiki"
-#~ msgstr "同在父层的页面"
-
-#~ msgid "Submitted by"
-#~ msgstr "提出者"
-
-#~ msgid "Name"
-#~ msgstr "页面名称"
-
-#~ msgid "Category"
-#~ msgstr "分类"
-
-#~ msgid "Severity"
-#~ msgstr "程度"
-
-#~ msgid "Status"
-#~ msgstr "状态"
-
-#~ msgid "Optional subject"
-#~ msgstr "标题(选项)"
-
-#~ msgid "Optional comment"
-#~ msgstr "留言(选项)"
-
-#~ msgid "Here are the wiki's issue pages."
-#~ msgstr "这里是Wiki事例追踪页面."
-
-#~ msgid "Enter a search term, or click the numbers to the right, or"
-#~ msgstr "输入搜寻的字词, 或点选右边的数字, 或"
-
-#~ msgid "filter issues"
-#~ msgstr "过滤事例"
-
-#~ msgid "search issues"
-#~ msgstr "搜寻事例"
-
-#~ msgid "recent"
-#~ msgstr "最近的"
-
-#~ msgid "all"
-#~ msgstr "全部"
-
-#~ msgid "#"
-#~ msgstr "#"
-
-#~ msgid "category"
-#~ msgstr "分类"
-
-#~ msgid "severity"
-#~ msgstr "程度"
-
-#~ msgid "status"
-#~ msgstr "状态"
-
-#~ msgid "modified"
-#~ msgstr "变更"
-
-#~ msgid "Add a new issue:"
-#~ msgstr "新增一则事例:"
-
-#~ msgid "Name:"
-#~ msgstr "名称:"
-
-#~ msgid "Category:"
-#~ msgstr "分类:"
-
-#~ msgid "Severity:"
-#~ msgstr "程度:"
-
-#~ msgid "Status:"
-#~ msgstr "状态:"
-
-#~ msgid "Details:"
-#~ msgstr "细节:"
-
-#~ msgid "add issue"
-#~ msgstr "新增事例"
-
-#~ msgid "More advanced"
-#~ msgstr "更多进阶的"
-
-#~ msgid "issue tracker"
-#~ msgstr "事例追踪"
-
-#~ msgid "search options"
-#~ msgstr "搜寻选项"
-
-#~ msgid "Name contains any of:"
-#~ msgstr "页面名称包含任意的:"
-
-#~ msgid "Page text contains any of:"
-#~ msgstr "页面文字包含任意的:"
-
-#~ msgid "Categories:"
-#~ msgstr "分类:"
-
-#~ msgid "Severities:"
-#~ msgstr "程度:"
-
-#~ msgid "Statuses:"
-#~ msgstr "状态:"
-
-#~ msgid "show plone skin"
-#~ msgstr "显示Plone外观"
-
-#~ msgid "plone"
-#~ msgstr "页面的历史注记(选项)"
-
-#~ msgid "show all features"
-#~ msgstr "显示所有功能"
-
-#~ msgid "full"
-#~ msgstr "完全"
-
-#~ msgid "show basic features"
-#~ msgstr "显示基本功能"
-
-#~ msgid "simple"
-#~ msgstr "简单"
-
-#~ msgid "show only essential features"
-#~ msgstr "只显示必要功能"
-
-#~ msgid "minimal"
-#~ msgstr "极简"
-
-#~ msgid "subtopic"
-#~ msgstr "子页面"
-
-#~ msgid "for this page"
-#~ msgstr "为这个页面"
-
-#~ msgid "title"
-#~ msgstr "标题"
-
-#~ msgid "XXX"
-#~ msgstr "XXX"
-
-#~ msgid "File Uploads"
-#~ msgstr "档案上传"
-
-#~ msgid "uploads_desc"
-#~ msgstr "这一页面列出所有在这快纪里上传的档案."
-
-#~ msgid "save"
-#~ msgstr "储存"
-
-#~ msgid "view"
-#~ msgstr "检视"
-
-#~ msgid "no_files_uploaded"
-#~ msgstr "没有任何档案被上传."
-
-#~ msgid "box_wiki_navigation"
-#~ msgstr "快纪浏览"
-
-#~ msgid "enter comments here and click add; or, click edit"
-#~ msgstr "在这里输入留言并且点选 新增(add) 按钮, 或点选 修改(edit) 按钮."
-
-#~ msgid "Details & comments"
-#~ msgstr "细节与留言"
-
-#~ msgid "hits"
-#~ msgstr "点击"
-
-#~ msgid ""
-#~ "no catalog or the catalog search gave an error, a brute-force search was "
-#~ "used"
-#~ msgstr "没有目录索引 或 目录索引搜寻发生问题, 使用暴力搜寻方式"
-
-#~ msgid "Contents"
-#~ msgstr "内容"
-
-#~ msgid "Diffs for"
-#~ msgstr "不同于"
-
-#~ msgid "name"
-#~ msgstr "名称"
-
-#~ msgid "page rating"
-#~ msgstr "页面评价"
-
-#~ msgid "rating_score"
-#~ msgstr "${score} 共 ${nb_votes} 人次投票"
-
-#~ msgid "click to rate"
-#~ msgstr "点选评价"
-
-#~ msgid "voting as"
-#~ msgstr "来自"
-
-#~ msgid "Here are the pages which link to"
-#~ msgstr "有相关连结的页面"
-
-#~ msgid "box_canreparent"
-#~ msgstr ""
-#~ "您可设定此页的<em>父层</em>, 也就是安排主题的阶层结构.\n"
-#~ "点选这个项目, 或输入新的页面名称并点选变更父层. 一般而\n"
-#~ "言, 单一父层就足够了."
-
-#~ msgid "Other parent"
-#~ msgstr "不同的父层页面"
-
-#~ msgid "You may also click the full, simple, minimal links if provided."
-#~ msgstr "您也可以点选 完全, 简单, 极简 连结 (如果有的话)."
-
-#~ msgid "for subscribing"
-#~ msgstr "使用在订阅页面"
-
-#~ msgid "width"
-#~ msgstr "宽"
-
-#~ msgid "height"
-#~ msgstr "高"
-
-#~ msgid "textarea dimensions; width will be 100% if supported"
-#~ msgstr "文字编辑区范围; 宽 将会是 100% (如果可能的话)"
-
-#~ msgid "Your local time is"
-#~ msgstr "您当地时间是"
-
-#~ msgid "Show logo ?"
-#~ msgstr "呈现标志图案?"
-
-#~ msgid "No"
-#~ msgstr "否"
-
-#~ msgid "Yes"
-#~ msgstr "是"
-
-#~ msgid "Show page hierarchy ?"
-#~ msgstr "显示页面阶层?"
-
-#~ msgid "This wiki keeps a page hierarchy, which you can use or ignore."
-#~ msgstr "这 Wiki 系统有页面阶层关系, 您可选择使用或忽略."
-
-#~ msgid "Show search field ?"
-#~ msgstr "显示搜寻字段?"
-
-#~ msgid "except in minimal mode"
-#~ msgstr "除了在极简模式外"
-
-#~ msgid "Show AnnoyingQuote ?"
-#~ msgstr "显示 AnnoyingQuote 吗?"
-
-#~ msgid "in full mode"
-#~ msgstr "在完全模式"
-
-#~ msgid "Show page management form ?"
-#~ msgstr "显示页面的管理表单?"
-
-#~ msgid "You must also configure a username or be logged in."
-#~ msgstr "您必须设定 个人名称(上面) 或 登入系统."
-
-#~ msgid "no subscribers"
-#~ msgstr "没有人订阅"
-
-#~ msgid "parent_name_replace"
-#~ msgstr "新父层, 页面或替代名称"
-
-#~ msgid ""
-#~ "enter a new parent, new name, replacement page (if any) or subtopic name"
-#~ msgstr "输入新父层, 页面名称, 或替代名称(如果有的话) 或 子主题名称"
-
-#~ msgid "box_zwiki_showhierarchy"
-#~ msgstr ""
-#~ "您可设定页面的 <em>父层</em>, 安排Wiki内容的阶层关系. \n"
-#~ "点取选项或输入名称并且点选 变更父层 按钮. \n"
-#~ "通常单一父层就够了."
-
-#~ msgid ""
-#~ "move this page to the recycle bin, and relink to the name you have entered"
-#~ msgstr "把这一页面搬移到垃圾桶, 并且重新连结到您已输入的名称."
-
-#~ msgid "create a new subtopic of this page"
-#~ msgstr "为这页面建立新的子主题吗?"
-
-#~ msgid "cancel"
-#~ msgstr "取消"
