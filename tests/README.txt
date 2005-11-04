@@ -1,6 +1,5 @@
 The Zwiki unit tests. 
 
-These have not been tested with versions other than Zope 2.7 recently.
 See http://zopewiki.org/TestingZope for help with running these.
 They require
 - the ZopeTestCase package, installed under SOFTWARE_HOME/lib/python/Testing
