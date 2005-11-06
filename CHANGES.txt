@@ -1,3 +1,76 @@
+    Summary
+
+	Allow limited-depth hierarchy display, translation updates,
+	bugfixes.
+
+    Upgrade notes
+
+	If you have some #NNN issue links which are not working, the #1179
+	bugfix will take effect when you edit that page (or visit
+	PAGE/clearCache).
+	
+    Changes
+
+      Installing
+
+        * fix Add ZWiki failure on older zopes due to attempted use of
+	btree folders - just always use ordinary folders (#1185)
+
+        * don't warn about Regexps.py when there is no locale configured;
+	log any locale/regexp-related problems at DEBUG level
+
+      Editing
+
+        * prevent wiki-linking in reST literal blocks, like STX
+
+        * don't add "links updated" log note everywhere during renames
+
+      Page hierarchy
+
+        * subtopics() and offspring() can now take a depth argument to
+	display hierarchy only to a certain depth
+	
+        * be a little smarter about not showing subtopics twice when
+	displayed with dtml
+
+      Mail
+
+        * don't translate "(edit)" in mailout subjects
+	
+      Issue tracking
+
+        * make #NNN issue links work again (#1179)
+
+      General - i18n
+
+        * update pot and po files
+
+	* remove stray zope 3 messages from pot and po files (#1188)
+
+	* replace defaults in po files (#1190)
+
+        * update make rules for i18n
+
+        * zh-CN/zh-TW translations updated (T.C. Chou)
+
+        * update french translation up to 0.46.0 (Encolpe Degoute)
+
+        * dutch translation update (Frank Laurijssens)
+
+        * german translation update (Jens Nachtigall)
+
+      General - skins
+
+        * Hide access keys when printing (Encolpe Degoute)
+
+        * page template cleanups and syntax fixes (Encolpe Degoute)
+
+      General
+	
+        * add a DEBUG logging function
+
+
+
 Zwiki 0.46.0 2005/10/01
 
     Summary
