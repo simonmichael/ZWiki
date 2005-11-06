@@ -39,16 +39,16 @@ epydoc2:
 
 
 ## i18n
-# remember: 1. merge source files 2. make pot 3. replace po files 4. make po
-# using zope 3's i18nextract.py with zopewiki/ZopeInternationalization patches
+# remember: 
+# 0f. you need zope 3's i18nextract with http://zopewiki.org/I18nextract patches
+# 1. apply source updates 2. make pot 3. apply po updates 4. make po
 
-LANGUAGES=en es fr-CA fr ga it zh-TW pt-BR zh-CN pl nl de hu fi he ru ja pt
-ZOPE3=/usr/local/src/Zope3.1
-EXTRACT=PYTHONPATH=$(ZOPE3)/src python $(ZOPE3)/utilities/i18nextract.py
+LANGUAGES=es fr-CA fr ga it zh-TW pt-BR zh-CN pl nl de hu fi he ru ja pt
+I18NEXTRACT=/zope3.1/bin/i18nextract
 
 pot: dtmlextract
-	$(EXTRACT) -d zwiki -p . -o ./i18n \
-	    -x _darcs -x .old -x misc -x ftests 
+	$(I18NEXTRACT) -d zwiki -p . -o ./i18n \
+	    -x _darcs -x .old -x misc -x ftests  -x .doxygen
 	tail +12 i18n/zwiki-manual.pot >>i18n/zwiki.pot
 	python \
 	-c "import re; \
