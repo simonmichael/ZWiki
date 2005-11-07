@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zwiki-fr\n"
 "POT-Creation-Date: Sun Nov  6 09:10:14 2005\n"
-"PO-Revision-Date: 2005-10-26 14:56+0200\n"
+"PO-Revision-Date: 2005-11-07 19:19+0100\n"
 "Last-Translator: Encolpe DEGOUTE <encolpe.degoute@ingeniweb.com>\n"
 "Language-Team: French <support@ingeniweb.com>\n"
 "MIME-Version: 1.0\n"
@@ -46,24 +46,21 @@ msgid "You are not authorized to delete this ZWiki Page."
 msgstr "Vous n'êtes pas autorisé à supprimer cette page ZWiki."
 
 #: i/Editing.py:541
-msgid ""
-"This page was renamed to %s. You can delete this one if no longer needed.\n"
+msgid "This page was renamed to %s. You can delete this one if no longer needed.\n"
 msgstr ""
 "Cette page a été renommée en «%s». Vous pouvez supprimer celle-ci si elle "
 "n'est plus requise.\n"
 
 #: i/Editing.py:637
 msgid "You are not authorized to upload files here."
-msgstr ""
-"Vous n'êtes pas autorisé à transférer de fichiers vers cette destination."
+msgstr "Vous n'êtes pas autorisé à transférer de fichiers vers cette destination."
 
 #: i/Editing.py:641
 msgid "You are not authorized to add a link on this ZWiki Page."
 msgstr "Vous n'êtes pas autorisé à ajouter de lien sur cette page ZWiki."
 
 #: i/Editing.py:803
-msgid ""
-"There was a problem: %s. Please contact the site administrator for help."
+msgid "There was a problem: %s. Please contact the site administrator for help."
 msgstr ""
 "Il y a un problème %s. Veuillez contacter le gestionnaire du site pour "
 "obtenir de l'aide."
@@ -237,7 +234,7 @@ msgstr ""
 "        c    afficher le contenu du Wiki\n"
 "        r    afficher les changements récents dans le Wiki\n"
 "             afficher la page de discussion\n"
-"        t    afficher la page de suivi des problèmes\n"
+"        t    afficher la page de suivi des controverses\n"
 "        i    afficher l'index du Wiki\n"
 "        o    afficher la page d'options du Wiki (préférences)\n"
 "        h    afficher la page d'aide\n"
@@ -389,8 +386,7 @@ msgstr "Édition du dessin « %(filename)s »"
 
 #: i/pagetypes/moin.py:731
 msgid "Expected \"%(wanted)s\" after \"%(key)s\", got \"%(token)s\""
-msgstr ""
-"« %(wanted)s » est attendu après « %(key)s », à la place de « %(token)s »"
+msgstr "« %(wanted)s » est attendu après « %(key)s », à la place de « %(token)s »"
 
 #: i/pagetypes/moin.py:737
 msgid "Expected an integer \"%(key)s\" before \"%(token)s\""
@@ -415,156 +411,146 @@ msgstr "propriété modifiée"
 #: i/plugins/tracker/filterissues.pt:10 i/plugins/tracker/filterissues.pt:16
 #: i/skins/dtmlmessages.pt:29
 msgid "Filter issues"
-msgstr "Filtrer les problèmes"
+msgstr "Filtrer les controverses"
 
 #. Default: "Filter issues"
 #: i/plugins/tracker/filterissues_plone.pt:14
 msgid "heading_wiki_filter_issues"
-msgstr "Filtrer les problèmes"
+msgstr "Filtrer les controverses"
 
 #: i/plugins/tracker/issuebrowser.pt:10 i/plugins/tracker/issuebrowser.pt:16
 msgid "Issue browser"
-msgstr "navigateur de problèmes"
+msgstr "navigateur de controverses"
 
 #. Default: "Issue browser"
 #: i/plugins/tracker/issuebrowser_plone.pt:14
 msgid "heading_wiki_issue_browser"
-msgstr "Suivi des problèmes"
+msgstr "Suivi des controverses"
 
 #: i/plugins/tracker/issuetracker.pt:10 i/plugins/tracker/issuetracker.pt:16
 msgid "Issue tracker"
-msgstr "suivi des problèmes"
+msgstr "suivi des controverses"
 
 #. Default: "Issue tracker"
 #: i/plugins/tracker/issuetracker_plone.pt:14
 msgid "heading_wiki_issue_tracker"
-msgstr "Suivi des problèmes"
+msgstr "Suivi des controverses"
 
 #: i/skins/dtmlmessages.pt:10 i/skins/dtmlmessages.pt:32
 msgid "severity"
-msgstr ""
+msgstr "sévérité"
 
 #: i/skins/dtmlmessages.pt:11 i/skins/dtmlmessages.pt:33
 msgid "status"
-msgstr ""
+msgstr "statut"
 
 #: i/skins/dtmlmessages.pt:12 i/skins/dtmlmessages.pt:34
-#, fuzzy
 msgid "age"
-msgstr "page"
+msgstr "âge"
 
 #: i/skins/dtmlmessages.pt:13 i/skins/dtmlmessages.pt:35
 msgid "modified"
-msgstr ""
+msgstr "modifié"
 
 #: i/skins/dtmlmessages.pt:14
 msgid "Add a new issue:"
-msgstr ""
+msgstr "Ajouter une nouvelle controverse :"
 
 #: i/skins/dtmlmessages.pt:15
-#, fuzzy
 msgid "Name:"
-msgstr "nom,"
+msgstr "Nom :"
 
 #: i/skins/dtmlmessages.pt:16
 msgid "Category:"
-msgstr ""
+msgstr "Catégorie :"
 
 #: i/skins/dtmlmessages.pt:17
 msgid "Severity:"
-msgstr ""
+msgstr "Sévérité :"
 
 #: i/skins/dtmlmessages.pt:18
 msgid "Status:"
-msgstr ""
+msgstr "Statut :"
 
 #: i/skins/dtmlmessages.pt:19
 msgid "Details:"
-msgstr ""
+msgstr "Détails :"
 
 #: i/skins/dtmlmessages.pt:2
-#, fuzzy
 msgid "Here are the wiki's issue pages."
-msgstr "créer cette page wiki"
+msgstr "Voici les pages de controverses du wiki."
 
 #: i/skins/dtmlmessages.pt:20
-#, fuzzy
 msgid "add issue"
-msgstr "problèmes"
+msgstr "ajouter une controverse"
 
 #: i/skins/dtmlmessages.pt:21
 msgid "More advanced"
-msgstr ""
+msgstr "Plus d'options avancées"
 
 #: i/skins/dtmlmessages.pt:22
-#, fuzzy
 msgid "issue tracker"
-msgstr "suivi des problèmes"
+msgstr "suivi des controverses"
 
 #: i/skins/dtmlmessages.pt:23
-#, fuzzy
 msgid "search options"
-msgstr "Enregistrer ces options"
+msgstr "options de recherche"
 
 #: i/skins/dtmlmessages.pt:24
 msgid "Name contains any of:"
-msgstr ""
+msgstr "Nom contenant :"
 
 #: i/skins/dtmlmessages.pt:25
 msgid "Page text contains any of:"
-msgstr ""
+msgstr "Texte de la page contenant :"
 
 #: i/skins/dtmlmessages.pt:26
 msgid "Categories:"
-msgstr ""
+msgstr "Catégories :"
 
 #: i/skins/dtmlmessages.pt:27
 msgid "Severities:"
-msgstr ""
+msgstr "Sévérités :"
 
 #: i/skins/dtmlmessages.pt:28
 msgid "Statuses:"
-msgstr ""
+msgstr "Statuts :"
 
 #: i/skins/dtmlmessages.pt:3
 msgid "Enter a search term, or click the numbers to the right, or"
-msgstr ""
+msgstr "Entrez un terme de recherche, ou cliquez sur les nombres à droite, ou"
 
 #: i/skins/dtmlmessages.pt:36
 msgid "Submitted by"
-msgstr ""
+msgstr "Soumis par :"
 
 #: i/skins/dtmlmessages.pt:37
-#, fuzzy
 msgid "Name"
-msgstr "nom,"
+msgstr "Nom"
 
 #: i/skins/dtmlmessages.pt:38
 msgid "Category"
-msgstr ""
+msgstr "Catégorie"
 
 #: i/skins/dtmlmessages.pt:39
 msgid "Severity"
-msgstr ""
+msgstr "Sévérité"
 
 #: i/skins/dtmlmessages.pt:4
-#, fuzzy
 msgid "filter issues"
-msgstr "Filtrer les problèmes"
+msgstr "Filtrer les controverses"
 
 #: i/skins/dtmlmessages.pt:40
 msgid "Status"
-msgstr ""
+msgstr "Statut"
 
 #: i/skins/dtmlmessages.pt:41
-#, fuzzy
 msgid "Optional subject"
-msgstr "Commentaire optionnel sur ce changement"
+msgstr "Sujet optionnel"
 
 #: i/skins/dtmlmessages.pt:42
-#, fuzzy
 msgid "Optional comment"
-msgstr "Commentaire optionnel sur ce changement"
+msgstr "Commentaire optionnel"
 
 #: i/skins/dtmlmessages.pt:43 i/skins/dtmlmessages.pt:44
 msgid "Add a ZWiki web"
@@ -591,9 +577,8 @@ msgid "and enter"
 msgstr "et entrer"
 
 #: i/skins/dtmlmessages.pt:5
-#, fuzzy
 msgid "search issues"
-msgstr "Filtrer les problèmes"
+msgstr "Rechercher des controverses"
 
 #: i/skins/dtmlmessages.pt:50
 msgid "Pages changed in the last"
@@ -632,9 +617,8 @@ msgid "Pages marked (NEW) have been created within the last week"
 msgstr "Les pages marquées (NOUVEAU) ont été créées il y a moins d'une semaine"
 
 #: i/skins/dtmlmessages.pt:6
-#, fuzzy
 msgid "recent"
-msgstr "Ré-hiérarchiser"
+msgstr "récent"
 
 #: i/skins/dtmlmessages.pt:60
 msgid "Enter a word or phrase and hit enter to search the entire wiki."
@@ -685,7 +669,7 @@ msgstr "Recherche complète, sans le catalogue, pour la correspondance de texte"
 
 #: i/skins/dtmlmessages.pt:7
 msgid "all"
-msgstr ""
+msgstr "tous"
 
 #: i/skins/dtmlmessages.pt:70
 msgid "Set your preferences for this wiki:"
@@ -729,7 +713,7 @@ msgstr "Enregistrer ces options"
 
 #: i/skins/dtmlmessages.pt:8 i/skins/dtmlmessages.pt:30
 msgid "#"
-msgstr ""
+msgstr "#"
 
 #: i/skins/dtmlmessages.pt:80
 msgid "Forget options"
@@ -768,7 +752,7 @@ msgstr "Rubrique"
 
 #: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:31
 msgid "category"
-msgstr ""
+msgstr "catégorie"
 
 #: i/skins/dtmlmessages.pt:90
 msgid "Last updated"
@@ -1034,8 +1018,7 @@ msgstr ""
 #. Default: "A Wiki Page allows you to create richly interconnected pages."
 #: i/skins/zwiki_plone/editform.pt:64
 msgid "description_edit_wiki_page"
-msgstr ""
-"Une page Wiki vous permet de créer des pages richement interconnectées."
+msgstr "Une page Wiki vous permet de créer des pages richement interconnectées."
 
 #. Default: "Wiki Page Details"
 #: i/skins/zwiki_plone/editform.pt:75
@@ -1265,8 +1248,7 @@ msgid "delete!"
 msgstr "supprimer"
 
 #: i/skins/zwiki_plone/wikipage.pt:185 i/skins/zwiki_standard/wikipage.pt:422
-msgid ""
-"delete this page, and redirect links to the page you have entered, if any"
+msgid "delete this page, and redirect links to the page you have entered, if any"
 msgstr ""
 "Supprimer cette page et rediriger les liens de vers la page que vous avez "
 "entré, s'il y en a une"
@@ -1418,11 +1400,11 @@ msgstr "discussion"
 
 #: i/skins/zwiki_standard/wikipage.pt:110
 msgid "show issue tracker"
-msgstr "afficher la page de suivi des problèmes"
+msgstr "afficher la page de suivi des controverses"
 
 #: i/skins/zwiki_standard/wikipage.pt:114
 msgid "issues"
-msgstr "problèmes"
+msgstr "controverses"
 
 #: i/skins/zwiki_standard/wikipage.pt:115
 msgid "show wiki contents"
@@ -1514,100 +1496,3 @@ msgstr "afficher la page d'accueil"
 msgid "home"
 msgstr "accueil"
 
-#~ msgid "View"
-#~ msgstr "Voir"
-
-#~ msgid "Comment"
-#~ msgstr "Commentaire"
-
-#~ msgid "A Comment"
-#~ msgstr "Un Commentaire"
-
-#~ msgid "Menu for Wiki Page related actions."
-#~ msgstr "Menu pour les actions relatives aux Page Wiki"
-
-#~ msgid "A Wiki"
-#~ msgstr "Un Wiki"
-
-#~ msgid "Wiki"
-#~ msgstr "Wiki"
-
-#~ msgid "Table of Contents"
-#~ msgstr "Table des contenus"
-
-#~ msgid "TOC"
-#~ msgstr "TOC"
-
-#~ msgid "Subscriptions"
-#~ msgstr "Abonnements"
-
-#~ msgid "Add Wiki"
-#~ msgstr "Ajouter un Wiki"
-
-#~ msgid "Change Wiki Page"
-#~ msgstr "Modifier une Page Wiki"
-
-#~ msgid "Edit"
-#~ msgstr "Éditer"
-
-#~ msgid "Wiki User"
-#~ msgstr "Utilisateur du Wiki"
-
-#~ msgid "Wiki visitors, which can only view and comment on wikis."
-#~ msgstr ""
-#~ "Visiteur Wiki qui ne peut que voir et poser des commentaires sur les "
-#~ "Wikis."
-
-#~ msgid "A Wiki Page"
-#~ msgstr "Une Page Wiki"
-
-#~ msgid "Wiki Page"
-#~ msgstr "Page Wiki"
-
-#~ msgid "A Wiki Page Comment"
-#~ msgstr "Un Commentaire de Page Wiki"
-
-#~ msgid "Wiki Page Comment"
-#~ msgstr "Ajouter un Commentaire de Page Wiki"
-
-#~ msgid "Wiki Editor"
-#~ msgstr "Éditeur de Wikis"
-
-#~ msgid "The Wiki Editor can create and edit wikis."
-#~ msgstr "L'Éditeur de Wikis peut créer et modifier des Wikis."
-
-#~ msgid "Wiki Administrator"
-#~ msgstr "Gestionnaire de Wikis"
-
-#~ msgid "The Wiki Admin can fully manage wiki pages."
-#~ msgstr "Le Gestionnaire de Wikis a le contrôle complet des Pages Wiki."
-
-#~ msgid "View a Wiki Page"
-#~ msgstr "Voir une Page Wiki"
-
-#~ msgid "View Wiki Page"
-#~ msgstr "Voir une Page Wiki"
-
-#~ msgid "Comment on Wiki Page"
-#~ msgstr "Commentaire sur une Page Wiki"
-
-#~ msgid "Make a comment on Wiki Page"
-#~ msgstr "Commenter une Page Wiki"
-
-#~ msgid "Add Wiki Page"
-#~ msgstr "Ajouter une Page Wiki"
-
-#~ msgid "Edit Wiki Page"
-#~ msgstr "Éditer une Page Wiki"
-
-#~ msgid "Delete Wiki Page"
-#~ msgstr "Supprimer une Page Wiki"
-
-#~ msgid "Reparent a Wiki Page"
-#~ msgstr "Re-hiérarchiser une Page Wiki"
-
-#~ msgid "Reparent Wiki Page"
-#~ msgstr "Re-hiérarchiser une Page Wiki"
-
-#~ msgid "Minimal Wiki Page Container implementation "
-#~ msgstr "Implémentation minimale d'un Conteneur de Page Wiki"
