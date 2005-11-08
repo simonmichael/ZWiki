@@ -23,8 +23,10 @@ try:
         # in unit tests. Performance problem ?
         #_ = lambda s:str(MessageIDFactory('zwiki')(s))
         def _(s):
-            try:return str(MessageIDFactory('zwiki')(s))
-            except AttributeError: return str(s)
+            try:
+                return str(MessageIDFactory('zwiki')(s))
+            except AttributeError:
+                return str(s)
         # this hack forced proper utf-8 header with PTS, but I seem not to
         # need it any more.. possibly since zope 2.7.2 or some other upgrade ?
         # reenable if utf-8 encoding is broken, and please report at zwiki.org
