@@ -1,5 +1,5 @@
 <!-- category box and font sizes adjusted for number of open issues --> 
-<a name="categories" />
+<a name="categories"></a>
 <dtml-let 
     cols="['user','admin','general','site','other']
           #replace with prefixes of issue categories to be grouped in a column"
@@ -77,7 +77,7 @@ issue categories sized and coloured according to open issues
 </table>
 </dtml-let>
 <dtml-if "REQUEST.get('category','')">
-<a name="issues" />
+<a name="issues"></a>
 <hr class="issuebrowser" style="border:1px black solid" />
 <dtml-let 
     category="REQUEST.get('category')"
@@ -123,7 +123,7 @@ issue categories sized and coloured according to open issues
 </dtml-let>
 </dtml-if>
 <dtml-if "REQUEST.get('issue','')">
-<a name="issue" />
+<a name="issue"></a>
 <hr class="issuebrowser" style="border:1px black solid" />
 <dtml-var "include(REQUEST.get('issue'))">
 
