@@ -1,0 +1,31 @@
+Policies for the main ZWiki repository
+======================================
+
+In this code repository we follow and recommend the following policies:
+
+- This is the official Zwiki project "trunk" repo, used for the
+  monthly Zwiki product releases and for running zwiki.org. The url is
+  http://zwiki.org/repos/ZWiki . A darcsweb interface is available at
+  http://joyful.com/darcsweb/darcsweb.cgi?r=ZWiki;a=summary .
+
+- Contributors to this repo should read and sign CONTRIBUTORS.txt,
+  which describes this repo's copyright and license policy. (Summary:
+  no copyright assignment required, contributions may be GPL or
+  compatible, the project manager may relicense to track future
+  license versions.)
+
+- To submit patches, use darcs send (or if you need the full url:
+  darcs send http://zwiki.org/repos/ZWiki). Patches are forwarded to
+  Simon Michael for approval.
+
+- (when I get this working..) Patches digitally signed by approved
+  committers are applied immediately.
+
+- (when I get this working..) Patches which would cause unit tests to
+  fail are rejected.
+
+- New changes in this repo should be in line with
+  http://zwiki.org/RoadMap2005, ie aimed at increasing stability,
+  polish and performance. Big impactful changes must first be
+  demonstrated to avoid regressions.
+
