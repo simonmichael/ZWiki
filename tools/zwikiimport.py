@@ -1,12 +1,12 @@
 """ 
 zwikiimport.py - import files/directories into a zwiki.
 
-(c) 2004 SKWM, GNU GPL.
+(c) 2004-2005 SKWM, GNU GPL.
 
 Usage:
 
    cd directorycontainingfiles
-   zopectl run .../Products/ZWiki/tools/zwikiimport.py [options] /path/to/wikipage
+   zopectl run .../ZWiki/tools/zwikiimport.py [opts] /path/to/wikipageorfolder
 
 Options:
 
@@ -53,6 +53,37 @@ from sys import stdin, stdout
 from ZPublisher.HTTPRequest import HTTPRequest
 from ZPublisher.HTTPResponse import HTTPResponse
 from ZPublisher.BaseRequest import RequestContainer
+
+options = args = None
+
+def parseArgs():
+    """Parse command-line options."""
+    global options, args
+    parser = OptionParser()
+    parser.add_option('-n', '--dry-run', action='store_true',dest='dryrun',
+                      help="Don't actually import anything (may be inaccurate)")
+    parser.add_option('-v', '--verbose', action='store_true',
+                      help="Be more verbose")
+    parser.add_option('--debug', action='store_true',
+                      help="Print additional debug information")
+    #parser.add_option('--ignore', action='store_true',
+    #                  help="When objects already exist, ignore and continue")
+    parser.add_option('--replace', action='store_true',
+                      help="When objects already exist, replace them")
+    parser.add_option('--delete', action='store_true',
+                      help="Delete existing objects instead of importing")
+    #parser.add_option('-u','--user',
+    #                  help="user:password for authentication")
+    options,args = parser.parse_args()
+    # to facilitate calling authentication-requiring API methods,
+    # set up a dummy request with the provided credentials
+    #if options.user:
+    #    user, password = options.user.split(':')
+    #    options.request = makerequest(app,user,password)
+    #else:
+    #    options.request = None
+    # XXX doesn't work yet
+    options.request = None
 
 # XXX doesn't work yet
 def makerequest(app,user,password):
@@ -235,37 +266,6 @@ def pageFromPath(path):
         return obj
     else:
         return None
-
-options = args = None
-
-def parseArgs():
-    """Parse command-line options."""
-    global options, args
-    parser = OptionParser()
-    parser.add_option('-n', '--dry-run', action='store_true',dest='dryrun',
-                      help="Don't actually import anything (may be inaccurate)")
-    parser.add_option('-v', '--verbose', action='store_true',
-                      help="Be more verbose")
-    parser.add_option('--debug', action='store_true',
-                      help="Print additional debug information")
-    #parser.add_option('--ignore', action='store_true',
-    #                  help="When objects already exist, ignore and continue")
-    parser.add_option('--replace', action='store_true',
-                      help="When objects already exist, replace them")
-    parser.add_option('--delete', action='store_true',
-                      help="Delete existing objects instead of importing")
-    #parser.add_option('-u','--user',
-    #                  help="user:password for authentication")
-    options,args = parser.parse_args()
-    # to facilitate calling authentication-requiring API methods,
-    # set up a dummy request with the provided credentials
-    #if options.user:
-    #    user, password = options.user.split(':')
-    #    options.request = makerequest(app,user,password)
-    #else:
-    #    options.request = None
-    # XXX doesn't work yet
-    options.request = None
 
 def main():
     """Main procedure."""
