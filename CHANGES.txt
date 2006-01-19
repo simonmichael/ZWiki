@@ -1,3 +1,40 @@
+    Summary
+
+	A new copyright/license policy and contributor list; Plone 2.1 and
+	mail fixes.
+
+    Upgrade notes
+
+	You should upgrade to this release if you're using Plone 2.1.
+	
+    Changes
+
+      Browsing
+
+        * make the green border & tabs appear in Plone 2.1, and indeed
+	force it always on, for now (#1187)
+
+      Mail
+
+        * make authenticated/unauthenticated subscriptions in CMF/Plone
+	more interchangeable so things just work (#1199, Simon Michael,
+	John Riley)
+
+        * subscriberList was returning a stray :edits, causing trouble eg
+	in lotus notes (#1197, John Riley, Simon Michael)
+
+        * also accept Secure Mailhosts, fixing mailout in Plone 2.1
+	(#1197, Tracy Reed, Simon Michael)
+
+      General - i18n
+
+        * minor fix, one line hadn't been translated (Frank Laurijssens)
+
+      General
+	
+        * add new contributors agreement & repo policy
+
+
 Zwiki 0.48.0 2005/12/01
 
     Summary
