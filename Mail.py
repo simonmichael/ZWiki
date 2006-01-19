@@ -361,10 +361,11 @@ class SubscriberManagerMixin:
         """
         Convert a zwiki subscriber list entry to an email address.
         
-        A zwiki subscriber list entry can be: an email address, an email
-        address with ':edits' modifier appended, or a CMF member id (if we
-        are in a CMF/Plone site). We figure out the bare email address and
-        return it (lower-cased), or if we can't, return None.
+        A zwiki subscriber list entry can be: an email address, or a
+        CMF member id (if we are in a CMF/Plone site), or either of
+        those with the ':edits' modifier appended.  We figure out the
+        bare email address and return it (lower-cased), or if we
+        can't, return None.
 
         Note to avoid a tricky incompatibility with subscribeform &
         useroptions, we handle the special case of a user acquired
