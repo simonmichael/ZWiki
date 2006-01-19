@@ -231,16 +231,16 @@ class SubscriberManagerMixin:
         """
         Remove email from this page's subscriber list.
 
-        With parent flag, remove it from the parent folder's
-        subscriber list instead.  Does not attempt to look up the
-        username from an email address or vice-versa, so you must
-        specify the correct one.
+        With parent flag, remove it from the parent folder's subscriber
+        list instead.  Tries to convert CMF usernames to email addresses
+        as per emailAddressFrom.
         """
         subscriber = string.lower(email)
         if self.isSubscriber(subscriber,parent):
             sl = self.subscriberList(parent)
             for s in sl:
-                if s == subscriber or self.emailAddressFrom(s) == subscriber:
+                if (self.emailAddressFrom(s) ==
+                    self.emailAddressFrom(subscriber)):
                     BLATHER('unsubscribed',subscriber,'from',self.id())
                     sl.remove(s)
             self._setSubscribers(sl,parent)
@@ -361,32 +361,31 @@ class SubscriberManagerMixin:
         """
         Convert a zwiki subscriber list entry to an email address.
         
-        A zwiki subscriber list entry can be: an email address, or a
-        CMF member id (if we are in a CMF/Plone site), or either of
-        those with the ':edits' modifier appended.  We figure out the
-        bare email address and return it (lower-cased), or if we
-        can't, return None.
-
-        Note to avoid a tricky incompatibility with subscribeform &
-        useroptions, we handle the special case of a user acquired
-        from above who is a non-member but has an email address in
-        portal_memberdata all the same. Since we don't know how to get
-        hold of this user object, dig out the member data by id which
-        is damned ugly, but can't burn any more time on this right now.
+        A zwiki subscriber list entry can be: an email address, or a CMF
+        member id (if we are in a CMF/Plone site), or either of those with
+        ':edits' appended.  We figure out the bare email address and
+        return it (lower-cased), or if we can't, return None.
         """
         if not (subscriber and type(subscriber) == StringType):
             return None
         subscriber = re.sub(r':edits$','',subscriber)
         if isEmailAddress(subscriber):
             return string.lower(subscriber)
-        elif self.inCMF() and not self.portal_membership.isAnonymousUser():#XXX ?
+        elif (self.inCMF()
+              # don't look up member email addresses if user is anonymous ?
+              #and not self.portal_membership.isAnonymousUser()
+              # No I think it's better to minimise confusion due to
+              # authenticated vs. unauthenticated (un)subscriptions, even
+              # if an anonymous visitor can unsubscribe a member whose
+              # address they know.
+              ):
             from Products.CMFCore.utils import getToolByName
-            mtool = getToolByName(self, 'portal_membership')
-            member = mtool.getMemberById(subscriber)
-            if not member:
-                mdata = getToolByName(self, 'portal_memberdata')
-                member = mdata._members.get(subscriber,None)
-            return getattr(member,'email',None)
+            return getattr(
+                (getToolByName(self,'portal_membership').getMemberById(subscriber) or
+                 # also check for a pseudo-member (acquired from above)
+                 getToolByName(self,'portal_memberdata')._members.get(subscriber,None)),
+                'email',
+                None)
         else:
             return None
 
@@ -411,10 +410,8 @@ class SubscriberManagerMixin:
         Ie if subscriber is a username, return that username; if
         subscriber is an email address, return the usernames of any CMF
         members with that email address.
-
-        XXX too expensive; on plone.org with 7k members, this maxed out
-        cpu for 10 minutes. Refactor.
-        
+        XXX too expensive, disabled; on plone.org with 7k members, this
+        maxed out cpu for 10 minutes. Refactor.
         """
         if isUsername(subscriber):
             return [subscriber]
