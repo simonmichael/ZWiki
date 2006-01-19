@@ -171,7 +171,8 @@ class SubscriberManagerMixin:
         With parent flag, manage the parent folder's subscriber list instead.
         With edits flag, show only subscribers who have requested all edits.
         """
-        return [s for s in stripList(self._getSubscribers(parent)) \
+        return [s.rstrip(':edits')
+                for s in stripList(self._getSubscribers(parent))
                 if s.endswith(':edits') or not edits]
 
     def subscriberCount(self, parent=0, edits=0):
