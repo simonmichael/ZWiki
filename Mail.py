@@ -553,11 +553,13 @@ class MailSupport:
         When sending a mail-out, we put the subscribers in Bcc for privacy.
         Something is needed in To, what should we use ?
         1. if there is a mail_to property, use that
-        2. if there is a mail_replyto or mail_from property, use that;
-           sends a copy back to the wiki which may be the cause of
-           conflict-related intermittent slow comments
-        3. or use ";" which is a legal "nowhere" but causes messy cc header
-           in replies
+        2. if there is a mail_replyto or mail_from property, use that.
+           NB if you use a real address and also subscribe with it you may
+           get duplicates; also when using the wiki mailin address a copy
+           is sent quickly back to the wiki, possible cause of conflicts
+           leading to slow comments ? Not recently.
+        3. or use ";" which is a legal "nowhere" address but causes messy cc
+           header in replies
         """
         return (self.toProperty() or
                 self.replyToProperty() or
