@@ -231,15 +231,16 @@ class SubscriberManagerMixin:
         """
         Remove email from this page's subscriber list.
 
-        With parent flag, remove from the parent folder's subscriber list
-        instead.  Does not attempt to look up the username from an email
-        address or vice-versa, so you must unsubscribe the correct one.
+        With parent flag, remove it from the parent folder's
+        subscriber list instead.  Does not attempt to look up the
+        username from an email address or vice-versa, so you must
+        specify the correct one.
         """
         subscriber = string.lower(email)
         if self.isSubscriber(subscriber,parent):
             sl = self.subscriberList(parent)
             for s in sl:
-                if self.emailAddressFrom(s) == subscriber:
+                if s == subscriber or self.emailAddressFrom(s) == subscriber:
                     BLATHER('unsubscribed',subscriber,'from',self.id())
                     sl.remove(s)
             self._setSubscribers(sl,parent)
