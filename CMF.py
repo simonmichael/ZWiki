@@ -20,6 +20,7 @@ try:
     from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
     from AccessControl import getSecurityManager, ClassSecurityInfo
     from DateTime import DateTime
+    from Products.CMFCore.permissions import ModifyPortalContent
     import Permissions
     from Defaults import PAGE_PORTALTYPE
 
@@ -137,6 +138,22 @@ try:
 
         def wiki_context(self, REQUEST=None, with_siblings=0):
             return self.context(REQUEST, with_siblings)
+
+        # Zwiki pages are different from other portal content; for one
+        # thing, we follow the Zwiki: * permissions (ignoring eg Modify
+        # portal content) so we need to reflect those. Also because we
+        # have some key UI functions up there in the edit border (history,
+        # backlinks, subscription), we will almost always need to show it.
+        # Which is a pity, as (a) pages look nicer without it, and (b) in
+        # the plone UI it signifies edit access, and we might not be
+        # permitting that.  Better ideas welcome. For now we will just
+        # force it always on.
+        # Also note Plone 2.1.0 unconditionally hides the green border for
+        # anonymous users, which is a bug. In future they will probably
+        # check for the modify portal content and review permissions first.
+        def showEditableBorder(self,**args):
+            """Always show the green border; Zwiki's current UI needs it."""
+            return 1
 
 except ImportError:
     class CMFAwareness:
