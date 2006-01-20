@@ -161,21 +161,21 @@
             <td valign="top" width="50%" tal:define="subs here/subscriberList">
               <br />
               <span i18n:translate="" tal:omit-tag="">Page subscribers</span>:
+	      (<span tal:replace="python:len(subs)" />)
               <br />
               <span tal:repeat="sub subs" tal:omit-tag="">
                 <span tal:replace="python:split(sub,'@')[0]"></span><br />
               </span>
-	      (<span tal:replace="python:len(subs)" />)
             </td>
             <td valign="top" width="50%" tal:define="subs here/wikiSubscriberList">
               <br />
               <span i18n:translate="" tal:omit-tag="">Wiki subscribers</span>:
+	      (<span tal:replace="python:len(subs)" />)
               <br />
               <span tal:repeat="sub subs" tal:omit-tag="">
                 <span tal:replace="python:split(sub,'@')[0]"></span>
                 <br />
               </span>
-	      (<span tal:replace="python:len(subs)" />)
             </td>
           </tr>
 
