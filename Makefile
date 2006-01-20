@@ -215,7 +215,7 @@ releasetag:
 tarball: clean
 	@echo building $(FILE) tarball
 	@cp -r _darcs/current $(PRODUCT)
-	@tar -czvf $(HOME)/zwiki/releases/$(FILE) --exclude Makefile $(PRODUCT)
+	@tar -czvf releases/$(FILE) --exclude Makefile $(PRODUCT)
 	@rm -rf $(PRODUCT)
 
 
