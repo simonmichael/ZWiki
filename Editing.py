@@ -59,6 +59,11 @@ class EditingSupport:
         - redirects to the new page if appropriate
 
         """
+        # XXX require at least a username cookie to edit
+        if not self.requestHasSomeId(REQUEST):
+            raise 'Unauthorized', (
+                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
+
         name = unquote(page or pagename)
         id = self.canonicalIdFrom(name)
 
@@ -139,6 +144,10 @@ class EditingSupport:
         zope subject attribute.  note and use_heading are not used and
         kept only for backwards compatibility.
         """
+        if not self.requestHasSomeId(REQUEST):
+            raise 'Unauthorized', (
+                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
+
         if self.isDavLocked(): return self.davLockDialog()
 
         # gather various bits and pieces
@@ -275,9 +284,9 @@ class EditingSupport:
                 return self.davLockDialog()
 
         # XXX require at least a username cookie to edit
-        #if not self.requestHasSomeId(REQUEST):
-        #    raise 'Unauthorized', (
-        #        _('Sorry, this wiki requires that you configure a username to edit; please back up and visit options first.'))
+        if not self.requestHasSomeId(REQUEST):
+            raise 'Unauthorized', (
+                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
 
         # ok, changing p. We may do several things at once; each of these
         # handlers checks permissions and does the necessary.
