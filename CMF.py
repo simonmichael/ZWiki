@@ -4,14 +4,26 @@
 # for PUT_factory ?). 
 # move CMFInstall into the skin ?
 
-# fails when running unit tests
-# keep the try out of ZWikiPage.py to help imenu
+from Globals import InitializeClass
+
 try:
+    from Products import CMFCore
+    HAS_CMF = 1
+except ImportError:
+    HAS_CMF = 0
+
+# XXX also need to skip when running unit tests ?
+if not HAS_CMF:    
+    class CMFAwareness:
+        __implements__ = ()
+        def supportsCMF(self): return 0
+        def inCMF(self): return 0
+
+else:
     from types import *
     import string, re, os
     from AccessControl import ClassSecurityInfo
     from Acquisition import aq_base, aq_inner, aq_parent
-    from Globals import InitializeClass
     from OFS.DTMLDocument import DTMLDocument
     from Products.CMFCore.PortalContent import PortalContent
     from Products.CMFCore.utils import _getViewFor
@@ -20,7 +32,6 @@ try:
     from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
     from AccessControl import getSecurityManager, ClassSecurityInfo
     from DateTime import DateTime
-    from Products.CMFCore.permissions import ModifyPortalContent
     import Permissions
     from Defaults import PAGE_PORTALTYPE
 
@@ -154,12 +165,6 @@ try:
         def showEditableBorder(self,**args):
             """Always show the green border; Zwiki's current UI needs it."""
             return 1
-
-except ImportError:
-    class CMFAwareness:
-        __implements__ = ()
-        def supportsCMF(self): return 0
-        def inCMF(self): return 0
 
 InitializeClass(CMFAwareness)
 
