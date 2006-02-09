@@ -41,7 +41,7 @@
     </title>
   </head>
 
-  <body tal:attributes="style python:nothing #hasattr(here,'background.jpg') and 
+  <body tal:attributes="style python:0 #hasattr(here,'background.jpg') and 
         'background-image:url(background.jpg);;background-repeat:no-repeat;;'
         or nothing;">
 
@@ -53,8 +53,6 @@
 
       <!-- always-available zwiki access keys -->
       <span metal:define-macro="accesskeys" tal:omit-tag="">
-        <a tal:attributes="href string:${here/pageUrl}/src" accesskey="q"></a>
-        <a tal:condition="nothing" tal:attributes="href string:${here/pageUrl}/clearCache" accesskey="w"></a>
         <a tal:attributes="href here/homeUrl" accesskey="f"></a>
         <a tal:attributes="href here/contentsUrl" accesskey="c"></a>
         <a tal:attributes="href here/changesUrl" accesskey="r"></a>
@@ -75,8 +73,6 @@
         <a tal:attributes="href python:here.wikiUrl() + '/externalEdit_/' +
                            modules['Products.PythonScripts.standard'].url_quote(here.id()) +
                            '?borrow_lock=1'" accesskey="x"></a>
-        <a tal:condition="nothing" tal:attributes="href string:${here/pageUrl}/print" accesskey=""></a>
-        <a tal:attributes="href string:#subtopics" accesskey=""></a>
         <a tal:attributes="href python:here.nextPageUrl() or here.firstPageUrl()" accesskey="n"></a>
         <a tal:attributes="href python:here.previousPageUrl() or here.lastPageUrl()" accesskey="p"></a>
         <a tal:attributes="href here/upUrl" accesskey="u"></a>
