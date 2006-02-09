@@ -99,10 +99,7 @@ mo:
 WHICH_TESTS=''
 
 test:
-	zopectl test --libdir . -v $(WHICH_TESTS)
-
-testd:
-	zopectl test --libdir . -v -D $(WHICH_TESTS)
+	zopectl test -m Products.ZWiki -v
 
 # silliness to properly capture output of a test run
 testresults:
@@ -110,42 +107,6 @@ testresults:
 	make -s test >>.testresults 2>.stderr
 	cat .stderr >>.testresults
 	rm -f .stderr
-
-# old:
-
-# all tests, gui
-gtest:
-	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope2 \
-	  python /zope/test.py -m --libdir .
-
-# a single test module in one of the tests directories
-testpl%:
-	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope2 \
-	  python plugins/tests/test$*.py
-
-testpt%:
-	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope2 \
-	  python pagetypes/tests/test$*.py
-
-test%:
-	PYTHONPATH=/zope/lib/python SOFTWARE_HOME=/zope/lib/python INSTANCE_HOME=/zope2 \
-	  python tests/test$*.py
-
-# test with argument(s)
-#test%:
-#	export PYTHONPATH=/zope/lib/python:/zope2; \
-#	  python test.py -v --libdir $$PWD/tests $*
-
-#XXX currently broken
-rtest:
-	ssh $(HOST) 'cd zwiki; make test'
-
-rtest%:
-	ssh $(HOST) "cd zwiki; make rtest$*"
-
-#ftest:
-#	ssh zwiki.org /usr/local/zope/instance/Products/ZWiki/functionaltests/run_tests -v zwiki
-
 
 ## upload (rsync and darcs)
 
