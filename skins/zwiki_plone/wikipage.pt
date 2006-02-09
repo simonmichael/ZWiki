@@ -129,7 +129,7 @@
 
       <!-- page management form -->
       <div tal:condition="python:
-                          (user.has_permission('Zwiki: Add pages',here) or
+                          (user.has_permission('Zwiki: Add pages',container) or
                           user.has_permission('Zwiki: Rename pages',here) or
                           user.has_permission('Zwiki: Reparent pages',here) or
                           user.has_permission('Zwiki: Delete pages',here))
