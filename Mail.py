@@ -534,10 +534,15 @@ class MailSupport:
 
         - adds a prefix if configured in mail_subject_prefix;
         - includes page name in brackets unless disabled with mail_page_name
+        - abbreviates issue tracker page names to just the number
         - appends subjectSuffix if provided
         """
         if getattr(self.folder(),'mail_page_name',1):
-            pagename = '[%s] ' % self.title_or_id()
+            #if self.isIssue(): # we do support numberless "issue" pages
+            if self.issueNumber():
+                pagename = '[#%s] ' % self.issueNumber()
+            else:
+                pagename = '[%s] ' % self.pageName()
         else:
             pagename = ''
         return (
