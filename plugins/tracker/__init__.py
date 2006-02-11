@@ -100,7 +100,7 @@ class TrackerSupport:
     security.declareProtected(Permissions.View, 'isIssue')
     def isIssue(self,pagename=None):
         """
-        True if this page (or the named page) represents a tracker issue.
+        True if this page (or another named page) represents a tracker issue.
         """
         return (
             self.issueNumberFrom(pagename or self.pageName()) or
