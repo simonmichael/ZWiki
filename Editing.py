@@ -285,8 +285,11 @@ class EditingSupport:
 
         # XXX require at least a username cookie to edit
         if not self.requestHasSomeId(REQUEST):
-            raise 'Unauthorized', (
-                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
+            #raise 'Unauthorized', (
+            #    _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
+            return self.denied(
+                "Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first.")
+                #_("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
 
         # ok, changing p. We may do several things at once; each of these
         # handlers checks permissions and does the necessary.

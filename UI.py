@@ -108,6 +108,7 @@ def addErrorTo(text,error):
 
 STANDARD_TEMPLATES = {
     'badtemplate'        : loadPageTemplate('badtemplate'),
+    'denied'             : loadPageTemplate('denied'),
 
     #main page view
     #wikipage defines macros used by most other templates
@@ -529,6 +530,13 @@ class SkinViews:
         Render the useroptions form (template-customizable).
         """
         return self.getSkinTemplate('useroptions')(self,REQUEST)
+
+    security.declarePublic('denied')
+    def denied(self, reason=None, REQUEST=None):
+        """
+        Render the denied form (template-customizable).
+        """
+        return self.getSkinTemplate('denied')(self,REQUEST,reason=reason)
 
     security.declareProtected(Permissions.View, 'editConflictDialog')
     def editConflictDialog(self):
