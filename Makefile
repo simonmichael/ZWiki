@@ -125,7 +125,7 @@ push:
 push-exp:
 	darcs push -v -a $(HOST):/repos/$(PRODUCT)-exp
 
-pull-simon: 
+pull-simon pull: 
 	darcs pull --interactive -v http://zwiki.org/repos/ZWiki
 
 pull-lele: 
