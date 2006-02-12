@@ -27,7 +27,7 @@ else:
     # ? CMF still covered adequately ?
     from Products.CMFPlone.tests import PloneTestCase
 
-    from testEditing import test_rename
+    from Editing_tests import test_rename
 
     def cmf_install_zwiki(site):
         site.manage_addProduct['ExternalMethod'].manage_addExternalMethod(
@@ -111,5 +111,5 @@ else:
         suite = unittest.TestSuite()
         suite.addTest(unittest.makeSuite(CMFPloneInstallTests))
         suite.addTest(unittest.makeSuite(CMFPloneSpecificTests))
-        #suite.level = 3
+        suite.level = 2
         return suite
