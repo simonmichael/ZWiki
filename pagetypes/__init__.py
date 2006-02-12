@@ -93,13 +93,11 @@ def registerPageType(t,prepend=0):
     >>> registerPageType(MyPageTypeClass)
 
     """
-    #XXX print "CALLING registerPageType"""  # XXX
     if prepend: pos = 0
     else: pos = len(PAGETYPES)
     PAGETYPES.insert(pos,t)
     PAGE_TYPES[t._id] = t._name
-    BLATHER('registered page type: %s (%s)'%(t._id,t._name))
-    #XXX print "PAGETYPES:",PAGETYPES        # XXX
+    BLATHER('loaded page type: %s (%s)'%(t._id,t._name))
 
 def registerPageTypeUpgrade(old,new):
     """
@@ -111,34 +109,37 @@ def registerPageTypeUpgrade(old,new):
     """
     PAGE_TYPE_UPGRADES[old] = new
 
-# import all modules in this directory so that each will register its page type
-import os,glob
-modules = glob.glob(__path__[0] + os.sep + '*.py')
-modules.remove(__path__[0] + os.sep + '__init__.py')
-modules.remove(__path__[0] + os.sep + 'pagetypes_tests.py')
-modules.remove(__path__[0] + os.sep + 'common_tests.py')
-# force the usual ordering of standard page types in the editform
-# FIXME this is not robust against new page types, or the removal of a page
-# type.  Instead the ZWikiWeb install should add the folder property
+# import pagetype modules/packages in this directory, each will register itself
+import os, re
+modules = [re.sub('.py$','',f) for f in os.listdir(__path__[0])
+           if os.path.isdir(os.path.join(__path__[0], f))
+           or (f.endswith('.py')
+               and not f.endswith('_tests.py')
+               and not f == '__init__.py'
+               )
+           ]
+# ensure the standard ordering of page types in the editform
+# XXX FIXME this is not robust against new page types, or the removal of a
+# page type.  Instead the ZWikiWeb install should add the folder property
 # 'allowed_page_types' which specifies an order.
-firstmods = ['stx.py','rst.py','wwml.py','html.py','plaintext.py']
+firstmods = ['stx','rst','wwml','html','plaintext']
 firstmods.reverse()
 for mod in firstmods:
     try:
-        modules.remove(__path__[0] + os.sep + mod)
-        modules.insert(0,__path__[0] + os.sep + mod)
+        modules.remove(mod)
+        modules.insert(0, mod)
     except ValueError:
         pass
-for file in modules:
-    file = os.path.splitext(os.path.basename(file))[0]
+# and import
+for m in modules:
     try:
-        __import__('Products.ZWiki.pagetypes.%s' % file)
+        __import__('Products.ZWiki.pagetypes.%s' % m)
     except:
-        BLATHER('could not install %s page type, skipping it (traceback follows)\n%s' % (
-            file, formattedTraceback()))
+        BLATHER('could not load %s page type, skipping (traceback follows)\n%s' % (
+            m, formattedTraceback()))
 
-# XXX backwards compatibility
-# keep the classes here for a bit to stop warnings
+
+# backwards compatibility - keep these here to keep old wikis happy (XXX ?)
 from plaintext import ZwikiPlaintextPageType
 from html import ZwikiHtmlPageType
 from stx import ZwikiStxPageType
