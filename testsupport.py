@@ -1,8 +1,13 @@
 # common initialization and support classes for zwiki unit tests
 
-import string, re, os, sys, pdb
-import unittest
-from Testing.makerequest import makerequest
+import sys, re, unittest
+import OFS, DateTime
+#from Testing.makerequest import makerequest
+from ZPublisher.HTTPRequest import HTTPRequest
+from ZPublisher.HTTPResponse import HTTPResponse
+from Products.ZWiki.ZWikiPage import ZWikiPage
+from Products import ZWiki
+
 
 def zwikiAfterSetUp(self):
     """
@@ -41,19 +46,11 @@ def zwikiAfterSetUp(self):
     # our mock request seems a bit more useful than ZTC's
     #self.request = self.app.REQUEST
     self.request = self.page.REQUEST = MockRequest()
-    #disableI18nForUnitTesting()
+    self.request.cookies['zwiki_username'] = 'test'
 
-
-
-# more non-ZTC tests support:
-
-# needs to be imported early to set up Persistence.Persistent
-import ZODB
 
 # mock objects
 
-from ZPublisher.HTTPRequest import HTTPRequest
-from ZPublisher.HTTPResponse import HTTPResponse
 class MockRequest(HTTPRequest):
     """
     a mock HTTPRequest object for use in testing.
@@ -83,11 +80,23 @@ class MockUser:
     def getUserName(self):
         return self.username
 
-#import OFS.ObjectManager, AccessControl.User
-import OFS, DateTime
-from Products import ZWiki
-from Products.ZWiki.ZWikiPage import ZWikiPage
-from Products.ZWiki.Mail import MailSupport
+class MockZWikiPage(ZWikiPage):
+    """
+    A mock ZWikiPage object for use in testing.
+
+    Notes:
+    - use mockPage() to instantiate these with a real acquisition context
+    - some zopish things don't work and are too much work to mock
+    - much time wasted debugging obscure mockup-related problems
+    """
+    def __init__(self, source_string='', mapping=None, __name__='TestPage'):
+        apply(ZWikiPage.__init__,(self,source_string,mapping,__name__))
+        self.REQUEST = MockRequest()
+    def checkPermission(self, permission, object):
+        return 1
+    def cb_isMoveable(self):
+        return 1
+    ZopeTime = DateTime.DateTime
 
 def mockPage(source_string='', mapping=None, __name__='TestPage', folder=None):
     """
@@ -106,38 +115,17 @@ def mockPage(source_string='', mapping=None, __name__='TestPage', folder=None):
     folder.REQUEST = page.REQUEST
     return folder[id]
 
-class MockZWikiPage(ZWikiPage):
-    """
-    A mock ZWikiPage object for use in testing.
 
-    Notes:
-    - use mockPage() to instantiate these with a real acquisition context
-    - some zopish things don't work and are too much work to mock
-    - much time wasted debugging obscure mockup-related problems
-    """
-    def __init__(self, source_string='', mapping=None, __name__='TestPage'):
-        apply(ZWikiPage.__init__,(self,source_string,mapping,__name__))
-        self.REQUEST = MockRequest()
-
-    def checkPermission(self, permission, object): return 1
-
-    def cb_isMoveable(self): return 1
-        
-    ZopeTime = DateTime.DateTime
-
-
-# disable PTS to let tests run.. I18n_tests.py will test it specifically
-def disableI18nForUnitTesting(): 
-    try:
-        from Products.PlacelessTranslationService.PlacelessTranslationService \
-             import PlacelessTranslationService
-        PlacelessTranslationService._getContext = \
-            lambda self,context: MockRequest()
-        PlacelessTranslationService.negotiate_language = \
-            lambda self,context,domain: 'en'
-        #from Products.ZWiki import I18nSupport
-        #I18nSupport._ = lambda s:str(s)
-    except ImportError:
-        pass
-
-disableI18nForUnitTesting()
+# if PTS is installed, disabled it to let tests run.. I18n_tests.py will
+# test it directly
+try:
+    from Products.PlacelessTranslationService.PlacelessTranslationService \
+         import PlacelessTranslationService
+    PlacelessTranslationService._getContext = \
+        lambda self,context: MockRequest()
+    PlacelessTranslationService.negotiate_language = \
+        lambda self,context,domain: 'en'
+    #from Products.ZWiki import I18nSupport
+    #I18nSupport._ = lambda s:str(s)
+except ImportError:
+    pass
