@@ -1,6 +1,6 @@
 # unit tests for the mailin external method
 
-from testsupport import *
+from Products.ZWiki.testsupport import *
 import sys
 Extensions_dir = os.path.join(os.path.dirname(ZWiki.__file__),'Extensions')
 sys.path.append(Extensions_dir)
