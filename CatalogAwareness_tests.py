@@ -1,4 +1,4 @@
-from support import *
+from testsupport import *
 #from ZCatalog import ZCatalog,Vocabulary
 #from ZCatalog.Catalog import Catalog,CatalogError
 

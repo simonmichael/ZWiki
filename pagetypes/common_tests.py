@@ -1,9 +1,6 @@
-# pagetypes/common.py tests.. 
-
 import os, sys, string
-if __name__ == '__main__': execfile(os.path.join(sys.path[0], 'framework.py'))
 from Testing import ZopeTestCase
-from support import *
+from Products.ZWiki.testsupport import *
 ZopeTestCase.installProduct('ZWiki')
 
 class Tests(ZopeTestCase.ZopeTestCase):
@@ -27,11 +24,9 @@ class Tests(ZopeTestCase.ZopeTestCase):
         test('>> a\n',
              '<blockquote type="cite">\n<blockquote type="cite">\na</blockquote>\n</blockquote>\n')
 
-if __name__ == '__main__':
-    framework(descriptions=1, verbosity=2)
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(Tests))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    suite.level = 2
+    return suite

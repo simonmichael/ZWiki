@@ -1,8 +1,7 @@
 import unittest
 import os, sys
-if __name__ == '__main__': execfile(os.path.join(sys.path[0], 'framework.py'))
 from Testing import ZopeTestCase
-from Products.ZWiki.tests.support import *
+from Products.ZWiki.testsupport import *
 
 ZopeTestCase.installProduct('ZWiki')
 ZopeTestCase.installProduct('ZCatalog')
@@ -106,12 +105,10 @@ class TrackerTests(ZopeTestCase.ZopeTestCase):
         self.assertEquals(link('#9'),         '#9')
         self.assertEquals(link('#987')[-8:],  '#987</a>')
 
-if __name__ == '__main__':
-    framework(descriptions=1, verbosity=2)
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(TrackerSetupTests))
-        suite.addTest(unittest.makeSuite(TrackerTests))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TrackerSetupTests))
+    suite.addTest(unittest.makeSuite(TrackerTests))
+    suite.level = 2
+    return suite

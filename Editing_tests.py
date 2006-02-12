@@ -1,7 +1,6 @@
 import os, sys
-if __name__ == '__main__': execfile(os.path.join(sys.path[0], 'framework.py'))
 from Testing import ZopeTestCase
-from support import *
+from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 
@@ -597,11 +596,8 @@ long citations
 
 
 
-if __name__ == '__main__':
-    framework(descriptions=1, verbosity=2)
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(EditingTests))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(EditingTests))
+    return suite

@@ -1,4 +1,4 @@
-from support import *
+from testsupport import *
 
 class MailoutTests(unittest.TestCase):
     def setUp(self):

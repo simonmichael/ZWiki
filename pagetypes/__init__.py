@@ -115,6 +115,8 @@ def registerPageTypeUpgrade(old,new):
 import os,glob
 modules = glob.glob(__path__[0] + os.sep + '*.py')
 modules.remove(__path__[0] + os.sep + '__init__.py')
+modules.remove(__path__[0] + os.sep + 'pagetypes_tests.py')
+modules.remove(__path__[0] + os.sep + 'common_tests.py')
 # force the usual ordering of standard page types in the editform
 # FIXME this is not robust against new page types, or the removal of a page
 # type.  Instead the ZWikiWeb install should add the folder property

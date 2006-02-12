@@ -12,7 +12,7 @@ from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki.Utils import Popen3, formattedTraceback, BLATHER
 from Products.ZWiki.UI import addErrorTo
 
-# from tests/support.py:
+# from testsupport.py:
 def pdir(path): return os.path.split(path)[0]
 ZWIKIDIR = pdir(os.path.abspath(__file__))
 

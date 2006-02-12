@@ -4,18 +4,6 @@ import string, re, os, sys, pdb
 import unittest
 from Testing.makerequest import makerequest
 
-# allow INSTANCE_HOME products to be imported from Products
-# ZopeTestCase also claims to do this, but it doesn't
-# work with normal zope, testrunner, python testModule.py, python1.5, python2..
-# Unfortunately testrunner clobbers INSTANCE_HOME, so we'll assume it's
-# the grandparent of the current directory. But this gets confused by
-# symbolic links.
-import os
-def pdir(path): return os.path.split(path)[0]
-thisProductsDir = pdir(pdir(pdir(os.path.abspath(__file__))))
-import Products
-Products.__path__.insert(0,thisProductsDir)
-
 def zwikiAfterSetUp(self):
     """
     Do common setup for our ZopeTestCase-based unit tests.
@@ -30,7 +18,7 @@ def zwikiAfterSetUp(self):
     """
     # grant all zwiki permissions by default
     from Products.ZWiki import Permissions
-    from Products.CMFCore import CMFCorePermissions
+    #from Products.CMFCore import CMFCorePermissions
     self.setPermissions([
         Permissions.AddWiki,
         Permissions.Add,
@@ -43,7 +31,7 @@ def zwikiAfterSetUp(self):
         Permissions.Reparent,
         Permissions.Upload,
         Permissions.FTP,
-        CMFCorePermissions.AddPortalContent,
+        #CMFCorePermissions.AddPortalContent,
         ])
     # set up a wiki in a subfolder, with one page
     self.folder.manage_addFolder('wiki',title='')
@@ -54,18 +42,6 @@ def zwikiAfterSetUp(self):
     #self.request = self.app.REQUEST
     self.request = self.page.REQUEST = MockRequest()
     #disableI18nForUnitTesting()
-
-# can we go further and do this here:
-#import os, sys
-#if __name__ == '__main__': execfile(os.path.join(sys.path[0], 'framework.py'))
-#ZopeTestCase.installProduct('ZCatalog')
-#ZopeTestCase.installProduct('ZWiki')
-#from Testing import ZopeTestCase
-#class ZwikiTestCase(ZopeTestCase.ZopeTestCase):
-#    def afterSetUp(self):
-#        zwikiAfterSetUp(self)
-# and then:
-#class Tests(ZwikiTestCase):
 
 
 
@@ -151,17 +127,17 @@ class MockZWikiPage(ZWikiPage):
 
 
 # neutralize PTS to get most tests working.. see also testI18n.py
-def disableI18nForUnitTesting(): 
-    try:
-        from Products.PlacelessTranslationService.PlacelessTranslationService \
-             import PlacelessTranslationService
-        PlacelessTranslationService._getContext = \
-            lambda self,context: MockRequest()
-        PlacelessTranslationService.negotiate_language = \
-            lambda self,context,domain: 'en'
-        #from Products.ZWiki import I18nSupport
-        #I18nSupport._ = lambda s:str(s)
-    except ImportError:
-        pass
-
-disableI18nForUnitTesting()
+#def disableI18nForUnitTesting(): 
+#    try:
+#        from Products.PlacelessTranslationService.PlacelessTranslationService \
+#             import PlacelessTranslationService
+#        PlacelessTranslationService._getContext = \
+#            lambda self,context: MockRequest()
+#        PlacelessTranslationService.negotiate_language = \
+#            lambda self,context,domain: 'en'
+#        #from Products.ZWiki import I18nSupport
+#        #I18nSupport._ = lambda s:str(s)
+#    except ImportError:
+#        pass
+#
+#disableI18nForUnitTesting()

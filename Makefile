@@ -98,8 +98,14 @@ mo:
 # avoid mailin tests hanging due to #1104
 WHICH_TESTS=''
 
+# for quicker testing, you may want to use a zope instance with minimal
+# products installed. Also note the testrunner will run code from
+# zopectl's INSTANCE_HOME, regardless of your current dir or testrunner
+# args.
+QUICKZOPE=/zope1/bin/zopectl
+
 test:
-	zopectl test -m Products.ZWiki -v
+	$(QUICKZOPE) test --tests-pattern='_tests$$' --test-file-pattern='_tests$$' -m Products.ZWiki -vv -a 1
 
 # silliness to properly capture output of a test run
 testresults:

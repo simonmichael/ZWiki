@@ -1,8 +1,7 @@
 import unittest
 import os, sys
-if __name__ == '__main__': execfile(os.path.join(sys.path[0], 'framework.py'))
 from Testing import ZopeTestCase
-from support import *
+from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 from Products.ZWiki.Outline import Outline
@@ -205,11 +204,8 @@ class OutlineTests(unittest.TestCase):
         o.reparent('ChildPage',['TestPage'])
         self.assertEquals(o.parents('ChildPage'),['TestPage'])
 
-if __name__ == '__main__':
-    framework(descriptions=1, verbosity=2)
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(OutlineTests))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(OutlineTests))
+    return suite

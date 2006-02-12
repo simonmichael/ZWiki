@@ -1,4 +1,5 @@
-from Products.ZWiki.tests.support import *
+level = 2
+from Products.ZWiki.testsupport import *
 from Products.ZWiki.plugins.purplenumbers import nidexpr
 
 class PurpleNumbersTests(unittest.TestCase):
@@ -112,10 +113,5 @@ body {nid 1}''')
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(PurpleNumbersTests))
+    suite.level = 2
     return suite
-
-def main():
-    unittest.TextTestRunner().run(test_suite())
-
-if __name__ == '__main__':
-    main()

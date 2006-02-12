@@ -1,8 +1,7 @@
 import unittest
 import os, sys
-if __name__ == '__main__': execfile(os.path.join(sys.path[0], 'framework.py'))
 from Testing import ZopeTestCase
-from Products.ZWiki.tests.support import *
+from Products.ZWiki.testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 
@@ -34,11 +33,9 @@ class RatingTests(ZopeTestCase.ZopeTestCase):
         self.assert_(p.voteCount() == 2)
 
 
-if __name__ == '__main__':
-    framework(descriptions=1, verbosity=2)
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(RatingTests))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(RatingTests))
+    suite.level = 2
+    return suite

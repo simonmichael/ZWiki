@@ -1,8 +1,7 @@
 import unittest
 import os, sys
-if __name__ == '__main__': execfile(os.path.join(sys.path[0], 'framework.py'))
 from Testing import ZopeTestCase
-from support import *
+from testsupport import *
 
 ZopeTestCase.installProduct('ZWiki')
 
@@ -16,11 +15,8 @@ class UITests(ZopeTestCase.ZopeTestCase):
         # do all default templates have meta_types ? this has been fragile
         self.failIf(filter(lambda x:not hasattr(x,'meta_type'),STANDARD_TEMPLATES.values()))
 
-if __name__ == '__main__':
-    framework(descriptions=1, verbosity=2)
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(UITests))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(UITests))
+    return suite

@@ -1,6 +1,6 @@
 # unit tests for wiki templates
 
-from support import *
+from testsupport import *
 
 
 class ZWikiWebsTests(unittest.TestCase):

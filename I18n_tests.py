@@ -20,9 +20,8 @@
 
 import unittest
 import os, sys
-if __name__ == '__main__': execfile(os.path.join(sys.path[0], 'framework.py'))
 from Testing import ZopeTestCase
-from support import *
+from testsupport import *
 
 ZopeTestCase.installProduct('ZWiki')
 ZopeTestCase.installProduct('PlacelessTranslationService')
@@ -111,11 +110,9 @@ class Tests(ZopeTestCase.ZopeTestCase):
         self.assert_(re.search('Enter a word IT', self.p(bare=1)))
 
 
-if __name__ == '__main__':
-    framework(descriptions=1, verbosity=2)
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        #XXX DISABLE non-running tests XXX# suite.addTest(unittest.makeSuite(Tests))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    suite.level = 3 #XXX broken tests
+    return suite

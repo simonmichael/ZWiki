@@ -4,9 +4,8 @@
 # to write a generic test elsewhere if possible.
 
 import os, sys
-if __name__ == '__main__': execfile(os.path.join(sys.path[0], 'framework.py'))
 from Testing import ZopeTestCase
-from support import *
+from testsupport import *
 ZopeTestCase.installProduct('ZWiki')
 ZopeTestCase.installProduct('TextIndexNG2')
 
@@ -96,12 +95,10 @@ class CMFPloneSpecificTests(PloneTestCase.PloneTestCase):
 
     testPageRenaming = test_rename
 
-if __name__ == '__main__':
-    framework(descriptions=1, verbosity=2)
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(CMFPloneInstallTests))
-        suite.addTest(unittest.makeSuite(CMFPloneSpecificTests))
-        return suite
+import unittest
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(CMFPloneInstallTests))
+    suite.addTest(unittest.makeSuite(CMFPloneSpecificTests))
+    suite.level = 3
+    return suite
