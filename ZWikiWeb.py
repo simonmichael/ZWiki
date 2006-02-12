@@ -3,7 +3,7 @@
 
 import os, os.path, re, string, urllib
 
-from Globals import package_home
+from Globals import package_home, MessageDialog
 from OFS.Folder import Folder
 from OFS.DTMLMethod import DTMLMethod
 from AccessControl import getSecurityManager
@@ -11,9 +11,8 @@ from OFS.Image import Image, File
 from OFS.ObjectManager import customImporters
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from Products.PythonScripts.PythonScript import PythonScript
-from ZWikiPage import ZWikiPage
-from pagetypes import PAGETYPES
-from I18nSupport import DTMLFile
+from pagetypes import PAGETYPES, PAGE_TYPES
+from I18nSupport import DTMLFile, _
 
 
 # ZMI wiki creation form
@@ -44,7 +43,11 @@ def manage_addZWikiWeb(self, new_id, new_title='', wiki_type='zwikidotorg',
         elif wiki_type in self.listZodbWikis():
             self.addZWikiWebFromZodb(new_id,new_title,wiki_type,REQUEST)
         else:
-            messageDialog('unknown wiki type')
+            return MessageDialog(
+                title=_('Unknown wiki type'),
+                message='',
+                action=''
+                )
 
         if REQUEST is not None:
             folder = getattr(self, new_id)
@@ -142,7 +145,6 @@ def _addZWikiPage(self, id, title='',
 
     # choose page type based on file suffix
     # must match ids in PageTypes.py
-    from ZWikiPage import PAGE_TYPES
     if page_type == 'stxdtml': page_type = PAGE_TYPES['stx']
     elif page_type == 'stx': page_type = PAGE_TYPES['stx']
     elif page_type == 'htmldtml': page_type = PAGE_TYPES['html']
@@ -154,8 +156,7 @@ def _addZWikiPage(self, id, title='',
         parents = string.split(string.strip(m.group(2)),',')
     else:
         parents = []
-    file = m.group(3)
-    text = file
+    text = m.group(3)
 
     # create zwiki page in this folder
     ob = ZWikiPage(source_string=text, __name__=id)
@@ -180,11 +181,11 @@ def listWikis(self):
     """
     list all wiki templates available in the filesystem or zodb
     """
-    list = self.listFsWikis()
+    wikis = self.listFsWikis()
     for w in self.listZodbWikis():
-        if not w in list: list.append(w)
-    list.sort()
-    return list
+        if not w in wikis: wikis.append(w)
+    wikis.sort()
+    return wikis
 
 def listZodbWikis(self):
     """
