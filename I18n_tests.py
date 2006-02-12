@@ -18,101 +18,111 @@
 #
 # 5. these tests test PTS-based i18n, not generic i18n
 
+try:
+    from Products import PlacelessTranslationService
+    HAS_PTS = 1
+except ImportError:
+    HAS_PTS = 0
+
 import unittest
-import os, sys
-from Testing import ZopeTestCase
-from testsupport import *
+if not HAS_PTS:
+    def test_suite():
+        return unittest.TestSuite()
 
-ZopeTestCase.installProduct('ZWiki')
-ZopeTestCase.installProduct('PlacelessTranslationService')
+else:
+    import os, sys
+    from Testing import ZopeTestCase
+    from testsupport import *
 
-from Products.ZWiki.I18nSupport import _
-from Products.ZWiki.UI import loadDtmlMethod
+    ZopeTestCase.installProduct('ZWiki')
+    ZopeTestCase.installProduct('PlacelessTranslationService')
 
-class Tests(ZopeTestCase.ZopeTestCase):
-    """
-    Unit tests for Zwiki i18n, aka "blood, sweat and tears".
-    
-    Tips for MockZWikiPage, MockRequest, PTS etc.:
-    - use a fresh request to avoid PTS language caching
-    - the REQUEST argument is often required
-    - set a page's REQUEST attribute as well
-    - bare=1 can also help get pages rendering
+    from Products.ZWiki.I18nSupport import _
+    from Products.ZWiki.UI import loadDtmlMethod
 
-    """
-    def afterSetUp(self):
-        zwikiAfterSetUp(self)
+    class Tests(ZopeTestCase.ZopeTestCase):
+        """
+        Unit tests for Zwiki i18n, aka "blood, sweat and tears".
 
-    def assertTranslation(self,string,expected,language='en'):
+        Tips for MockZWikiPage, MockRequest, PTS etc.:
+        - use a fresh request to avoid PTS language caching
+        - the REQUEST argument is often required
+        - set a page's REQUEST attribute as well
+        - bare=1 can also help get pages rendering
+
+        """
+        def afterSetUp(self):
+            zwikiAfterSetUp(self)
+
+        def assertTranslation(self,string,expected,language='en'):
+            # see ISSUES
+            ## mock up stuff to get language control. The usual Pain.
+            #from Products.PlacelessTranslationService.PlacelessTranslationService \
+            #     import PlacelessTranslationService
+            ## leave negotiation intact for later tests
+            #try:
+            #    save1 = PlacelessTranslationService._getContext
+            #    save2 = PlacelessTranslationService.negotiate_language
+            #    PlacelessTranslationService._getContext = \
+            #        lambda self,context: MockRequest()
+            #    PlacelessTranslationService.negotiate_language = \
+            #        lambda self,context,domain: language
+            #    translation = _(string)
+            #finally:
+            #    PlacelessTranslationService._getContext = save1
+            #    PlacelessTranslationService.negotiate_language = save2
+            translation = _(string)
+            self.assertEqual(translation,expected)
+
+        def test_python_i18n(self):
+            self.assertTranslation('Page is locked','Page is locked')
+            self.assertTranslation('Page is locked','La pagina è bloccata','it')
+
+        #def test_pt_i18n(self):
+
+        def test_dtml_translate_tag(self):
+            self.p.allow_dtml = 1
+            self.p.edit(
+                text='<dtml-translate domain=zwiki>test</dtml-translate>')
+            self.assert_(re.search('test', self.p(bare=1)))
+
+        def test_addwikipageform(self):
+            from DocumentTemplate.DT_Util import ParseError
+            form = loadDtmlMethod('addwikipageform')
+            try: form(REQUEST=MockRequest(),RESPONSE=MockRequest().RESPONSE)
+            except NameError: self.fail()
+            except KeyError: pass
+
         # see ISSUES
-        ## mock up stuff to get language control. The usual Pain.
-        #from Products.PlacelessTranslationService.PlacelessTranslationService \
-        #     import PlacelessTranslationService
-        ## leave negotiation intact for later tests
-        #try:
-        #    save1 = PlacelessTranslationService._getContext
-        #    save2 = PlacelessTranslationService.negotiate_language
-        #    PlacelessTranslationService._getContext = \
-        #        lambda self,context: MockRequest()
-        #    PlacelessTranslationService.negotiate_language = \
-        #        lambda self,context,domain: language
-        #    translation = _(string)
-        #finally:
-        #    PlacelessTranslationService._getContext = save1
-        #    PlacelessTranslationService.negotiate_language = save2
-        translation = _(string)
-        self.assertEqual(translation,expected)
 
-    def test_python_i18n(self):
-        self.assertTranslation('Page is locked','Page is locked')
-        self.assertTranslation('Page is locked','La pagina è bloccata','it')
+        def test_zmi_dtml_i18n(self):
+            form = loadDtmlMethod('addwikipageform')
+            self.assert_(re.search('Add ZWiki Page',
+                                   form(REQUEST=MockRequest())))
+            self.assert_(re.search('Add ZWiki Page IT',
+                                   form(REQUEST=MockRequest(language='it'))))
 
-    #def test_pt_i18n(self):
+        def test_skin_dtml_i18n(self):
+            # the searchwiki form includes searchwikidtml
+            t = self.p.searchwiki(REQUEST=MockRequest())
+            self.assert_(re.search('Enter a word',t))
 
-    def test_dtml_translate_tag(self):
-        self.p.allow_dtml = 1
-        self.p.edit(
-            text='<dtml-translate domain=zwiki>test</dtml-translate>')
-        self.assert_(re.search('test', self.p(bare=1)))
+            self.p.REQUEST = MockRequest(language='it')
+            t = self.p.searchwiki(REQUEST=self.p.REQUEST)
+            self.assert_(re.search(r'Enter a word IT',t))
 
-    def test_addwikipageform(self):
-        from DocumentTemplate.DT_Util import ParseError
-        form = loadDtmlMethod('addwikipageform','skins/zmi')
-        try: form(REQUEST=MockRequest())
-        except NameError: self.fail()
-        except KeyError: pass
+        def test_page_dtml_i18n(self):
+            self.p.allow_dtml = 1
+            self.p.edit(
+                text='<dtml-translate domain=zwiki>Enter a word</dtml-translate>')
+            self.assert_(re.search('Enter a word', self.p(bare=1)))
 
-    # see ISSUES
-
-    def test_zmi_dtml_i18n(self):
-        form = loadDtmlMethod('addwikipageform','skins/zmi')
-        self.assert_(re.search('Add ZWiki Page',
-                               form(REQUEST=MockRequest())))
-        self.assert_(re.search('Add ZWiki Page IT',
-                               form(REQUEST=MockRequest(language='it'))))
-    
-    def test_skin_dtml_i18n(self):
-        # the searchwiki form includes searchwikidtml
-        t = self.p.searchwiki(REQUEST=MockRequest())
-        self.assert_(re.search('Enter a word',t))
-        
-        self.p.REQUEST = MockRequest(language='it')
-        t = self.p.searchwiki(REQUEST=self.p.REQUEST)
-        self.assert_(re.search(r'Enter a word IT',t))
-    
-    def test_page_dtml_i18n(self):
-        self.p.allow_dtml = 1
-        self.p.edit(
-            text='<dtml-translate domain=zwiki>Enter a word</dtml-translate>')
-        self.assert_(re.search('Enter a word', self.p(bare=1)))
-
-        self.p.REQUEST = MockRequest(language='it')
-        self.assert_(re.search('Enter a word IT', self.p(bare=1)))
+            self.p.REQUEST = MockRequest(language='it')
+            self.assert_(re.search('Enter a word IT', self.p(bare=1)))
 
 
-import unittest
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(Tests))
-    suite.level = 3 #XXX broken tests
-    return suite
+    def test_suite():
+        suite = unittest.TestSuite()
+        suite.addTest(unittest.makeSuite(Tests))
+        suite.level = 3 #XXX broken tests
+        return suite
