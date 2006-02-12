@@ -14,7 +14,7 @@ class RatingTests(ZopeTestCase.ZopeTestCase):
 
     def test_rating(self):
         p = self.p
-        self.assert_(p.rating() == 0)
+        self.assert_(p.rating() == 1)
         p.vote(2)
         self.assert_(p.rating() == 2)
         self.p.REQUEST.REMOTE_ADDR = 'another'
