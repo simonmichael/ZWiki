@@ -21,7 +21,7 @@ CURL=curl -o.curllog -sS -n
 
 ## misc
 
-default: test
+default: testq
 
 epydoc:
 	PYTHONPATH=/zope/lib/python \
@@ -103,9 +103,14 @@ WHICH_TESTS=''
 # zopectl's INSTANCE_HOME, regardless of your current dir or testrunner
 # args.
 QUICKZOPE=/zope1/bin/zopectl
+ZWIKITESTS=$(QUICKZOPE) test --tests-pattern='_tests$$' --test-file-pattern='_tests$$' -m Products.ZWiki
 
 test:
-	$(QUICKZOPE) test --tests-pattern='_tests$$' --test-file-pattern='_tests$$' -m Products.ZWiki -vv
+	$(ZWIKITESTS) -vv
+
+testq:
+	@$(ZWIKITESTS) -q
+
 # silliness to properly capture output of a test run
 testresults:
 	date >.testresults 
