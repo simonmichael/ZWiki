@@ -43,6 +43,7 @@ class ZwikiStxPageType(AbstractHtmlPageType):
                 t = str(StructuredText.HTML(t,level=2))
             else:
                 # with a few more tweaks for STX NG
+                # XXX slow!!
                 t = StructuredText.HTMLWithImages(
                     MyDocumentWithImages(StructuredText.Basic(t)),
                     level=2)
