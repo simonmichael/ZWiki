@@ -173,7 +173,7 @@ class TrackerSupport:
         if m: return (int(m.group(1)), m.group(2).strip())
         else: return (None,pagename.strip())
 
-    security.declareProtected(Permissions.View, 'issueNumberAndName')
+    security.declareProtected(Permissions.View, 'pageNameFromIssueNumberAndName')
     def pageNameFromIssueNumberAndName(self, number, name):
         """
         Make a page name from an issue number and issue name.

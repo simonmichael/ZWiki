@@ -55,7 +55,7 @@ class CatalogAwareness:
         """Is this page keeping itself indexed in a catalog ?"""
         return self.catalog() != None
 
-    security.declareProtected(Permissions.View, 'catalogid')
+    security.declareProtected(Permissions.View, 'catalogId')
     def catalogId(self):
         """
         Give the id of the catalog used by this page, or "NONE".

@@ -57,7 +57,7 @@ class RatingSupport:
 
     # api methods
     
-    security.declareProtected(Permissions.Rate, 'rate')
+    security.declareProtected(Permissions.Rate, 'vote')
     def vote(self,vote=None,REQUEST=None):
         """
         Record a user's vote for this page (or unrecord it).
@@ -96,7 +96,7 @@ class RatingSupport:
                     REQUEST.HTTP_REFERER
                     )
 
-    security.declareProtected(Permissions.Rate, 'rate')
+    security.declareProtected(Permissions.Rate, 'unvote')
     def unvote(self,REQUEST=None):
         """
         Unrecord a user's vote for this page.
