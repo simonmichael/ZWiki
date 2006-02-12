@@ -29,6 +29,8 @@ class TrackerSetupTests(ZopeTestCase.ZopeTestCase):
     def test_issueParentageWithPageBasedTracker(self):
         # with a tracker page, issues are parented under that
         f = self.p.folder()
+        # make html pages, as making 3 stx pages takes a second or more each!
+        f.allowed_page_types = ['html']
         self.p.setupTracker(pages=1)
         self.assertEqual(f['1FirstIssue'].parents,['IssueTracker'])
         f['1FirstIssue'].createNextIssue('test')
