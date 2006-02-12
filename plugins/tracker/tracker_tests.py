@@ -22,17 +22,17 @@ class TrackerSetupTests(ZopeTestCase.ZopeTestCase):
         f = self.p.folder()
         self.p.setupTracker()
         # without a tracker page, issues are parented under the creating page
-        self.assertEqual(f.IssueNo0001FirstIssue.parents,[])
-        f.IssueNo0001FirstIssue.createNextIssue('test')
-        self.assertEqual(f.IssueNo0002Test.parents,[])
+        self.assertEqual(f['1FirstIssue'].parents,[])
+        f['1FirstIssue'].createNextIssue('test')
+        self.assertEqual(f['2Test'].parents,[])
         
     def test_issueParentageWithPageBasedTracker(self):
         # with a tracker page, issues are parented under that
         f = self.p.folder()
         self.p.setupTracker(pages=1)
-        self.assertEqual(f.IssueNo0001FirstIssue.parents,['IssueTracker'])
-        f.IssueNo0001FirstIssue.createNextIssue('test')
-        self.assertEqual(f.IssueNo0002Test.parents,['IssueTracker'])
+        self.assertEqual(f['1FirstIssue'].parents,['IssueTracker'])
+        f['1FirstIssue'].createNextIssue('test')
+        self.assertEqual(f['2Test'].parents,['IssueTracker'])
 
     def test_upgradeIssueProperties(self):
         self.p.create('IssueNo0001')
@@ -54,35 +54,24 @@ class TrackerTests(ZopeTestCase.ZopeTestCase):
         self.assert_(not isIssue('1'))
         self.assert_(not isIssue('IssueNo'))
         self.assert_(    isIssue('IssueNo1'))
-        self.assert_(not isIssue('#1'))
-        self.p.folder().short_issue_names = 1
-        self.assert_(    isIssue('IssueNo1'))
         self.assert_(    isIssue('#1'))
         
     def test_issueNumberFrom(self):
         issueNumberFrom = self.p.issueNumberFrom
-        self.failIf(issueNumberFrom('#1 blah'))
         self.assertEqual(issueNumberFrom('IssueNo1'),1)
         self.assertEqual(issueNumberFrom('IssueNo1 blah'),1)
-        self.p.folder().short_issue_names = 1
-        self.assertEqual(issueNumberFrom('IssueNo1'),1)
+        self.assertEqual(issueNumberFrom('#2'),2)
         self.assertEqual(issueNumberFrom('#2 blah'),2)
 
     def test_createNextIssue(self):
         self.p.createNextIssue('b')
-        self.assert_(self.p.pageWithName('IssueNo0002 b'))
-        self.p.folder().short_issue_names = 1
-        self.p.createNextIssue('c')
-        self.assert_(self.p.pageWithName('#3 c'))
-        self.assertEqual(self.p.issueCount(),3)
+        self.assert_(self.p.pageWithName('#2 b'))
+        self.assertEqual(self.p.issueCount(),2)
 
     def test_nextIssueNumber(self):
         self.assertEqual(self.p.nextIssueNumber(),2)
         self.p.createNextIssue('b')
         self.assertEqual(self.p.nextIssueNumber(),3)
-        self.p.folder().short_issue_names = 1
-        self.p.createNextIssue('c')
-        self.assertEqual(self.p.nextIssueNumber(),4)
 
     def test_issuePageWithNumber(self):
         self.assert_(self.p.issuePageWithNumber(1))
@@ -92,18 +81,18 @@ class TrackerTests(ZopeTestCase.ZopeTestCase):
         self.assert_(not self.p.issuePageWithNumber(4567))
         self.assert_(self.p.issuePageWithNumber(456))
 
-    def test_short_issue_links(self):
+    def test_issue_links(self):
         # test the full two-step linking procedure
         link = lambda t: self.p.renderMarkedLinksIn(self.p.markLinksIn(t))
-        self.p.folder().short_issue_names = 1
+        # #1 links to issue 1
         self.assertEquals(link('#1')[-6:],  '#1</a>')
-        self.p.createNextIssue('b')
-        self.assertEquals(link('[#2]')[-6:],  '#2</a>')
+        # [#1] doesn't (should ?)
+        self.assertEquals(link('[#1]')[-6:],  '>?</a>')
+        # an issue name part doesn't matter
         self.p.createIssue('#987 test')
-        self.assertEquals(link('[#9]')[-6:],  '>?</a>')
-        self.assertEquals(link('[#987]')[-8:],'#987</a>')
-        self.assertEquals(link('#9'),         '#9')
-        self.assertEquals(link('#987')[-8:],  '#987</a>')
+        self.assertEquals(link('#987')[-8:],'#987</a>')
+        # all digits are required
+        self.failIf(link('#9')[-6:].endswith('</a>'))
 
 import unittest
 def test_suite():
