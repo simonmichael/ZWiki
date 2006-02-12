@@ -47,6 +47,8 @@ from zExceptions import *
 import OFS.Image
 from OFS.content_types import guess_content_type
 
+try: from transaction import get as get_transaction
+except ImportError: pass
 
 from os import environ
 from sys import stdin, stdout

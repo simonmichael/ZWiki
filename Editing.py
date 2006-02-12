@@ -23,7 +23,7 @@ from pagetypes import PAGETYPES
 from Defaults import DISABLE_JAVASCRIPT, LARGE_FILE_SIZE, LEAVE_PLACEHOLDER
 import Permissions
 from Regexps import javascriptexpr, htmlheaderexpr, htmlfooterexpr
-from Utils import BLATHER, parseHeadersBody
+from Utils import get_transaction, BLATHER, parseHeadersBody
 from UI import onlyBodyFrom
 from I18nSupport import _
 

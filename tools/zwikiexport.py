@@ -34,6 +34,9 @@ from optparse import OptionParser
 from zExceptions import *
 from OFS.content_types import guess_content_type
 
+try: from transaction import get as get_transaction
+except ImportError: pass
+
 
 options = args = None
 

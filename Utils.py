@@ -29,6 +29,10 @@ from Defaults import PREFER_USERNAME_COOKIE, PAGE_METADATA, BORING_PAGES
 import Permissions
 from I18nSupport import _
 
+# adapt zope 2.9 transaction api
+try: from transaction import get as get_transaction
+except ImportError: pass
+
 
 class Utils:
     """

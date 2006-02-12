@@ -13,7 +13,7 @@ from DateTime import DateTime
 
 from I18nSupport import _
 import Permissions
-from Utils import BLATHER, formattedTraceback, DateTimeSyntaxError, callHooks
+from Utils import get_transaction, BLATHER, formattedTraceback, DateTimeSyntaxError, callHooks
 from pagetypes import PAGE_TYPE_UPGRADES
 from Defaults import PAGE_METADATA, \
      TEXTINDEXES, FIELDINDEXES, KEYWORDINDEXES, DATEINDEXES, PATHINDEXES
