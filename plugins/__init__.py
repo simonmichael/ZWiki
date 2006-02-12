@@ -66,7 +66,7 @@ def registerPlugin(c):
     for i in range(len(PLUGINS)):
         if PLUGINS[i] == Null:
             PLUGINS[i] = c
-            BLATHER('loaded %s plugin' % name)
+            BLATHER('loaded plugin: %s' % name)
             return
     BLATHER('could not register %s plugin, need more plugin slots!' % name)
 
