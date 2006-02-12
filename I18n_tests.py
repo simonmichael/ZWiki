@@ -124,5 +124,5 @@ else:
     def test_suite():
         suite = unittest.TestSuite()
         suite.addTest(unittest.makeSuite(Tests))
-        suite.level = 3 #XXX broken tests
+        #suite.level = 3
         return suite

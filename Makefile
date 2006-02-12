@@ -105,8 +105,7 @@ WHICH_TESTS=''
 QUICKZOPE=/zope1/bin/zopectl
 
 test:
-	$(QUICKZOPE) test --tests-pattern='_tests$$' --test-file-pattern='_tests$$' -m Products.ZWiki -vv -a 1
-
+	$(QUICKZOPE) test --tests-pattern='_tests$$' --test-file-pattern='_tests$$' -m Products.ZWiki -vv
 # silliness to properly capture output of a test run
 testresults:
 	date >.testresults 

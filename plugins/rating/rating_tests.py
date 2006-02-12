@@ -37,5 +37,4 @@ import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(RatingTests))
-    suite.level = 2
     return suite

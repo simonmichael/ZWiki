@@ -111,5 +111,5 @@ else:
         suite = unittest.TestSuite()
         suite.addTest(unittest.makeSuite(CMFPloneInstallTests))
         suite.addTest(unittest.makeSuite(CMFPloneSpecificTests))
-        suite.level = 3
+        #suite.level = 3
         return suite

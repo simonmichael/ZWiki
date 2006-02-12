@@ -99,5 +99,4 @@ def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TrackerSetupTests))
     suite.addTest(unittest.makeSuite(TrackerTests))
-    suite.level = 2
     return suite

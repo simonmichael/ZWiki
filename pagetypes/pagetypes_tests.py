@@ -131,5 +131,4 @@ import unittest
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(PageTypesTests))
-    suite.level = 2
     return suite
