@@ -103,16 +103,22 @@ WHICH_TESTS=''
 # zopectl's INSTANCE_HOME, regardless of your current dir or testrunner
 # args.
 QUICKZOPE=/zope1/bin/zopectl
-ZWIKITESTS=$(QUICKZOPE) test --tests-pattern='_tests$$' --test-file-pattern='_tests$$' -m Products.ZWiki
+FULLZOPE=/zope2/bin/zopectl
+TESTARGS=test --tests-pattern='_tests$$' --test-file-pattern='_tests$$' -m Products.ZWiki
+QUICKTEST=$(QUICKZOPE) $(TESTARGS)
+FULLTEST=$(FULLZOPE) $(TESTARGS) -a 3
 
 test:
-	$(ZWIKITESTS) -q
+	$(QUICKTEST) -q
 
 testv:
-	@$(ZWIKITESTS) -v
+	@$(QUICKTEST) -v
 
 testvv:
-	@$(ZWIKITESTS) -vv
+	@$(QUICKTEST) -vv
+
+testall:
+	@$(FULLTEST) -vv
 
 # silliness to properly capture output of a test run
 testresults:
