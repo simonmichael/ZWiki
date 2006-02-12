@@ -21,7 +21,7 @@ CURL=curl -o.curllog -sS -n
 
 ## misc
 
-default: testq
+default: test
 
 epydoc:
 	PYTHONPATH=/zope/lib/python \
@@ -106,10 +106,13 @@ QUICKZOPE=/zope1/bin/zopectl
 ZWIKITESTS=$(QUICKZOPE) test --tests-pattern='_tests$$' --test-file-pattern='_tests$$' -m Products.ZWiki
 
 test:
-	$(ZWIKITESTS) -vv
+	$(ZWIKITESTS) -q
 
-testq:
-	@$(ZWIKITESTS) -q
+testv:
+	@$(ZWIKITESTS) -v
+
+testvv:
+	@$(ZWIKITESTS) -vv
 
 # silliness to properly capture output of a test run
 testresults:
