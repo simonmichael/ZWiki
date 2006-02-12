@@ -126,18 +126,18 @@ class MockZWikiPage(ZWikiPage):
     ZopeTime = DateTime.DateTime
 
 
-# neutralize PTS to get most tests working.. see also testI18n.py
-#def disableI18nForUnitTesting(): 
-#    try:
-#        from Products.PlacelessTranslationService.PlacelessTranslationService \
-#             import PlacelessTranslationService
-#        PlacelessTranslationService._getContext = \
-#            lambda self,context: MockRequest()
-#        PlacelessTranslationService.negotiate_language = \
-#            lambda self,context,domain: 'en'
-#        #from Products.ZWiki import I18nSupport
-#        #I18nSupport._ = lambda s:str(s)
-#    except ImportError:
-#        pass
-#
-#disableI18nForUnitTesting()
+# disable PTS to let tests run.. I18n_tests.py will test it specifically
+def disableI18nForUnitTesting(): 
+    try:
+        from Products.PlacelessTranslationService.PlacelessTranslationService \
+             import PlacelessTranslationService
+        PlacelessTranslationService._getContext = \
+            lambda self,context: MockRequest()
+        PlacelessTranslationService.negotiate_language = \
+            lambda self,context,domain: 'en'
+        #from Products.ZWiki import I18nSupport
+        #I18nSupport._ = lambda s:str(s)
+    except ImportError:
+        pass
+
+disableI18nForUnitTesting()

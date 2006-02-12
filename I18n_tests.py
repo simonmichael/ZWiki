@@ -98,9 +98,11 @@ else:
         def test_zmi_dtml_i18n(self):
             form = loadDtmlMethod('addwikipageform')
             self.assert_(re.search('Add ZWiki Page',
-                                   form(REQUEST=MockRequest())))
+                                   form(REQUEST=MockRequest(),
+                                        RESPONSE=MockRequest().RESPONSE)))
             self.assert_(re.search('Add ZWiki Page IT',
-                                   form(REQUEST=MockRequest(language='it'))))
+                                   form(REQUEST=MockRequest(language='it'),
+                                        RESPONSE=MockRequest().RESPONSE)))
 
         def test_skin_dtml_i18n(self):
             # the searchwiki form includes searchwikidtml
@@ -124,5 +126,5 @@ else:
     def test_suite():
         suite = unittest.TestSuite()
         suite.addTest(unittest.makeSuite(Tests))
-        #suite.level = 3
+        suite.level = 2
         return suite
