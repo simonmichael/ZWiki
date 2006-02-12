@@ -75,7 +75,6 @@ class ZwikiStxPageType(AbstractHtmlPageType):
                      self.preRenderMessages(page))
         t = page.applyWikiLinkLineEscapesIn(t)
         t = self.format(t)
-        if page.usingPurpleNumbers(): t = page.renderPurpleNumbersIn(t)
         t = page.markLinksIn(t)
         t = self.protectEmailAddresses(page,t)
         return t

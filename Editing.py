@@ -187,7 +187,6 @@ class EditingSupport:
         # add to source, in standard rfc2822 format:
         t = str(m)
         self.checkForSpam(t)
-        if self.usingPurpleNumbers(): t = self.addPurpleNumbersTo(t,self)
         t = '\n\n' + t
         self.raw += t
         # add to html cache, rendered:
@@ -787,8 +786,6 @@ class EditingSupport:
         Also inserts purple number NIDs if appropriate.
         """
         self.raw = self.cleanupText(text)
-        if self.usingPurpleNumbers(): 
-            self.raw = self.addPurpleNumbersTo(self.raw,self)
         self.preRender(clear_cache=1)
         # re-cook DTML's cached parse data if necessary
         # will prevent edit if DTML can't parse.. hopefully no auth trouble
