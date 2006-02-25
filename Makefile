@@ -109,16 +109,16 @@ QUICKTEST=$(QUICKZOPE) $(TESTARGS)
 FULLTEST=$(FULLZOPE) $(TESTARGS) -a 3
 
 test:
-	@$(QUICKTEST) -q
+	$(QUICKTEST) -q
 
 testv:
-	@$(QUICKTEST) -v
+	$(QUICKTEST) -v
 
 testvv:
-	@$(QUICKTEST) -vv
+	$(QUICKTEST) -vv
 
 testall:
-	@$(FULLTEST) -vv
+	$(FULLTEST) -vv
 
 # silliness to properly capture output of a test run
 testresults:
