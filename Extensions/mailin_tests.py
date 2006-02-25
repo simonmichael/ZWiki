@@ -1,11 +1,7 @@
-# unit tests for the mailin external method
-
-import sys
 from Products.ZWiki.testsupport import *
 from Products.ZWiki.Extensions import mailin
 
 THISPAGE    = 'TestPage'
-
 TESTSENDER  = 'sender'
 TESTTO      = 'recipient'
 TESTDATE    = 'date'
@@ -14,6 +10,10 @@ TESTBODY    = 'mailin comment\n'
 LONGSUBJECT = """\
 a long long long long long long long long long long long long long subject"""
 
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
 
 class TestMessage:
     def __init__(self,sender=TESTSENDER,to=TESTTO,cc='',bcc='',
@@ -43,7 +43,7 @@ Subject: %s
 TESTMSG = str(TestMessage())
 
 
-class MailinTests(unittest.TestCase):
+class Tests(unittest.TestCase):
 
     def setUp(self):
         self.p = mockPage(__name__=THISPAGE)
@@ -334,15 +334,3 @@ blah'''),
  --
 blah''')
 
-
-        
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(MailinTests))
-    return suite
-
-def main():
-    unittest.TextTestRunner().run(test_suite())
-
-if __name__ == '__main__':
-    main()

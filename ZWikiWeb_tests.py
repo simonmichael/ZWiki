@@ -1,7 +1,11 @@
 from testsupport import *
 
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
 
-class ZWikiWebsTests(unittest.TestCase):
+class Tests(unittest.TestCase):
 
     TEMPLATES = (
         ('zwikidotorg',
@@ -79,14 +83,3 @@ class ZWikiWebsTests(unittest.TestCase):
 #                assert zc[wikitype][page].pageTypeId() == type, \
 #                       wikitype+"/"+page+"'s type is not "+type
 
-
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(ZWikiWebsTests))
-    return suite
-
-def main():
-    unittest.TextTestRunner().run(test_suite())
-
-if __name__ == '__main__':
-    main()

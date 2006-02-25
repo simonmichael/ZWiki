@@ -2,7 +2,12 @@ from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 
-class DiffTests(ZopeTestCase.ZopeTestCase):
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
+
+class Tests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
         zwikiAfterSetUp(self)
 
@@ -50,9 +55,3 @@ class DiffTests(ZopeTestCase.ZopeTestCase):
 12</span>
 ''')
 
-
-import unittest
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(DiffTests))
-    return suite

@@ -2,15 +2,21 @@
 # a place for general CMF/Plone tests and may as well gather them here.
 # Only tests specific to CMF and/or Plone should go in here; it's better
 # to write a generic test elsewhere if possible.
+#
+# We can no longer set up a test plone ourselves with plone 2 - rely on
+# PloneTestCase instead.
+#
+# Skip these tests if plone 2 & all required products are not present
+# XXX CMF still covered adequately ?
 
 try:
-    from Products import CMFCore
-    HAS_CMF = 1
+    from Products import CMFPlone
+    HAS_PLONE = 1
 except ImportError:
-    HAS_CMF = 0
+    HAS_PLONE = 0
 
 import unittest
-if not HAS_CMF:
+if not HAS_PLONE:
     def test_suite():
         return unittest.TestSuite()
 
@@ -19,13 +25,15 @@ else:
     ZopeTestCase.installProduct('ZWiki')
     ZopeTestCase.installProduct('TextIndexNG2')
 
-    # we can no longer set up a test plone ourselves with plone 2 - rely on
-    # PloneTestCase instead.
-    # XXX Skip these tests if plone 2 & all required products are not present
-    # ? CMF still covered adequately ?
     from Products.CMFPlone.tests import PloneTestCase
 
     from Editing_tests import test_rename
+
+    def test_suite():
+        suite = unittest.TestSuite()
+        suite.addTest(unittest.makeSuite(CMFPloneInstallTests))
+        suite.addTest(unittest.makeSuite(CMFPloneSpecificTests))
+        return suite
 
     def cmf_install_zwiki(site):
         site.manage_addProduct['ExternalMethod'].manage_addExternalMethod(
@@ -105,9 +113,3 @@ else:
 
         testPageRenaming = test_rename
 
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(CMFPloneInstallTests))
-        suite.addTest(unittest.makeSuite(CMFPloneSpecificTests))
-        suite.level = 2
-        return suite

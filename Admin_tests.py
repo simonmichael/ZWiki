@@ -2,7 +2,12 @@ from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 
-class AdminTests(ZopeTestCase.ZopeTestCase):
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
+
+class Tests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
         zwikiAfterSetUp(self)
 
@@ -53,8 +58,3 @@ class AdminTests(ZopeTestCase.ZopeTestCase):
         self.assert_(self.page.catalog() is not None)
         self.assertEqual(len(self.page.pages()),3)
 
-import unittest
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(AdminTests))
-    return suite

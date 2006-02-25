@@ -2,7 +2,12 @@ from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 
-# defined separately so it can be re-used in plone tests
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
+
+# defined in module scope for easier reuse in plone tests XXX ?
 def test_rename(self):
     # rename needs some identification
     #self.login() # no effect ?
@@ -39,7 +44,7 @@ def test_rename(self):
                  self.wiki.outline.parents('NewNameChildRenamed'))
     
 
-class EditingTests(ZopeTestCase.ZopeTestCase):
+class Tests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
         zwikiAfterSetUp(self)
 
@@ -593,10 +598,3 @@ long citations
         self.assertEquals(len(re.findall(r'(?i)<html',text)),1)
         self.assertEquals(len(re.findall(r'(?i)<body',text)),1)
 
-
-
-import unittest
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(EditingTests))
-    return suite

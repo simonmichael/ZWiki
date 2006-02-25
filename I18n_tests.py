@@ -37,6 +37,12 @@ else:
     from Products.ZWiki.I18nSupport import _
     from Products.ZWiki.UI import loadDtmlMethod
 
+    def test_suite():
+        suite = unittest.TestSuite()
+        suite.addTest(unittest.makeSuite(Tests))
+        suite.level = 2
+        return suite
+
     class Tests(ZopeTestCase.ZopeTestCase):
         """
         Unit tests for Zwiki i18n, aka "blood, sweat and tears".
@@ -119,9 +125,3 @@ else:
             self.p.REQUEST = MockRequest(language='it')
             self.assert_(re.search('Enter a word IT', self.p(bare=1)))
 
-
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(Tests))
-        suite.level = 2
-        return suite

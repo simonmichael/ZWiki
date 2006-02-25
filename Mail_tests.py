@@ -1,5 +1,11 @@
 from testsupport import *
 
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(MailoutTests))
+    suite.addTest(unittest.makeSuite(SubscriptionTests))
+    return suite
+
 class MailoutTests(unittest.TestCase):
     def setUp(self):
         self.p = mockPage()
@@ -138,12 +144,3 @@ class SubscriptionTests(unittest.TestCase):
         thatpage.wikiSubscribe('me')
         self.assertEquals(thispage.otherPageSubscriptionsFor('me'),['ThatPage'])
         
-
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(MailoutTests))
-    suite.addTest(unittest.makeSuite(SubscriptionTests))
-    return suite
-
-if __name__ == '__main__':
-    unittest.TextTestRunner().run(test_suite())

@@ -1,7 +1,10 @@
-import os, sys, string
-from Testing import ZopeTestCase
 from Products.ZWiki.testsupport import *
 ZopeTestCase.installProduct('ZWiki')
+
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
 
 class Tests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
@@ -24,8 +27,3 @@ class Tests(ZopeTestCase.ZopeTestCase):
         test('>> a\n',
              '<blockquote type="cite">\n<blockquote type="cite">\na</blockquote>\n</blockquote>\n')
 
-import unittest
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(Tests))
-    return suite

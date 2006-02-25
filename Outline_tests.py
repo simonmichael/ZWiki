@@ -5,9 +5,12 @@ from Products.ZWiki.Outline import Outline
 #or to test it alone, just set up your pythonpath and do
 #from Outline import Outline
 
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
 
-
-class OutlineTests(unittest.TestCase):
+class Tests(unittest.TestCase):
     def setUp(self):
         self.outline = Outline(
             {
@@ -201,8 +204,3 @@ class OutlineTests(unittest.TestCase):
         o.reparent('ChildPage',['TestPage'])
         self.assertEquals(o.parents('ChildPage'),['TestPage'])
 
-import unittest
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(OutlineTests))
-    return suite

@@ -1,11 +1,12 @@
-import unittest
-import os, sys
-from Testing import ZopeTestCase
 from Products.ZWiki.testsupport import *
-
 ZopeTestCase.installProduct('ZWiki')
 ZopeTestCase.installProduct('ZCatalog')
 
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(TrackerSetupTests))
+    suite.addTest(unittest.makeSuite(TrackerTests))
+    return suite
 
 class TrackerSetupTests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
@@ -96,9 +97,3 @@ class TrackerTests(ZopeTestCase.ZopeTestCase):
         # all digits are required
         self.failIf(link('#9')[-6:].endswith('</a>'))
 
-import unittest
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TrackerSetupTests))
-    suite.addTest(unittest.makeSuite(TrackerTests))
-    return suite

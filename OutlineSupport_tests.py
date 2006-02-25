@@ -4,8 +4,12 @@ ZopeTestCase.installProduct('ZWiki')
 
 from Products.ZWiki.Outline import Outline
 
-def setupPageHierarchy(self):
-    # set up some hierarchy
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
+
+def setupSomePageHierarchy(self):
     self.page.create('RootPage')
     self.wiki.RootPage.reparent(REQUEST=self.request)
     self.wiki.RootPage.create('ChildPage')
@@ -13,10 +17,10 @@ def setupPageHierarchy(self):
     self.page.create('SingletonPage')
     self.wiki.SingletonPage.reparent(REQUEST=self.request)
 
-class OutlineSupportTests(ZopeTestCase.ZopeTestCase):
+class Tests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
         zwikiAfterSetUp(self)
-        setupPageHierarchy(self)
+        setupSomePageHierarchy(self)
 
     def beforeTearDown(self):
         # this usually gets generated.. clear it so next tests
@@ -98,8 +102,3 @@ class OutlineSupportTests(ZopeTestCase.ZopeTestCase):
         self.assertEquals(self.wiki.GrandChildPage.offspringIdsAsList(),
                           [])
 
-import unittest
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(OutlineSupportTests))
-    return suite

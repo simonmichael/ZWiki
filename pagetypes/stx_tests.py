@@ -1,8 +1,11 @@
-import os, sys
-from Testing import ZopeTestCase
 from Products.ZWiki.testsupport import *
 #ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
+
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
 
 class Tests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
@@ -13,9 +16,3 @@ class Tests(ZopeTestCase.ZopeTestCase):
         self.assertEquals(self.p.render(bare=1),
                           '<p> PageOne PageTwo</p>\n<p>\n</p>\n')
 
-
-import unittest
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(Tests))
-    return suite

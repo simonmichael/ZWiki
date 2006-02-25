@@ -1,8 +1,11 @@
-import os, sys
-from Testing import ZopeTestCase
 from Products.ZWiki.testsupport import *
 #ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
+
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
 
 class Tests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
@@ -15,10 +18,3 @@ class Tests(ZopeTestCase.ZopeTestCase):
                           '<pre>\n! PageOne PageTwo\n\n</pre>\n\n\n')
         del self.p.folder().allowed_page_types
 
-
-
-import unittest
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(Tests))
-    return suite

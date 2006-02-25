@@ -1,12 +1,13 @@
-import unittest
-import os, sys
-from Testing import ZopeTestCase
 from Products.ZWiki.testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
 
-class RatingTests(ZopeTestCase.ZopeTestCase):
+class Tests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
         zwikiAfterSetUp(self)
         self.p.REQUEST.REMOTE_ADDR = '1'
@@ -32,9 +33,3 @@ class RatingTests(ZopeTestCase.ZopeTestCase):
         p.vote(1)
         self.assert_(p.voteCount() == 2)
 
-
-import unittest
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(RatingTests))
-    return suite

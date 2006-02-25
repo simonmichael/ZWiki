@@ -1,8 +1,11 @@
-import os, sys
-from Testing import ZopeTestCase
 from Products.ZWiki.testsupport import *
 #ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
+
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
 
 class Tests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
@@ -16,9 +19,3 @@ class Tests(ZopeTestCase.ZopeTestCase):
             self.p.render(bare=1),
             'PageOne<a class="new visualNoPrint" href="http://nohost/test_folder_1_/wiki/TestPage/createform?page=PageOne" title="create this page">?</a>\n\n\n')
 
-
-import unittest
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(Tests))
-    return suite

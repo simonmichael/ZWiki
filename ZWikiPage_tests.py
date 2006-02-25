@@ -2,7 +2,12 @@ from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 
-class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
+
+class Tests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
         zwikiAfterSetUp(self)
 
@@ -221,9 +226,3 @@ class ZWikiPageTests(ZopeTestCase.ZopeTestCase):
         self.p.edit(text='&dtml-subtopics')
         self.failUnless(self.p.displaysSubtopicsWithDtml())
 
-
-import unittest
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(ZWikiPageTests))
-    return suite

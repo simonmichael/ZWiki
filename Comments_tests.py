@@ -3,7 +3,12 @@ from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 
-class CommentsTests(ZopeTestCase.ZopeTestCase):
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
+
+class Tests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
         zwikiAfterSetUp(self)
 
@@ -22,8 +27,3 @@ class CommentsTests(ZopeTestCase.ZopeTestCase):
         self.assertEqual(p.commentCount(),1)
         self.assertEqual(p.comments()[-1].get_payload(),u)
 
-import unittest
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(CommentsTests))
-    return suite

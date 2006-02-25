@@ -2,8 +2,12 @@ from testsupport import *
 #from ZCatalog import ZCatalog,Vocabulary
 #from ZCatalog.Catalog import Catalog,CatalogError
 
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
 
-class CatalogingTests(unittest.TestCase):
+class Tests(unittest.TestCase):
     # cf /usr/lib/zope/lib/python/Products/ZCatalog/tests/testCatalog.py
     #
     # we have various ZMI and zwiki methods
@@ -52,10 +56,3 @@ class CatalogingTests(unittest.TestCase):
 #        assert not zc.Catalog(id='CatalogTestPage'), \
 #               'page still found in catalog after DeleteMe edit'
         
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(CatalogingTests))
-    return suite
-
-if __name__ == '__main__':
-    unittest.TextTestRunner().run(test_suite())

@@ -1,9 +1,12 @@
 from testsupport import *
-
 ZopeTestCase.installProduct('ZWiki')
 
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
 
-class UITests(ZopeTestCase.ZopeTestCase):
+class Tests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
         zwikiAfterSetUp(self)
 
@@ -11,9 +14,3 @@ class UITests(ZopeTestCase.ZopeTestCase):
         STANDARD_TEMPLATES = ZWiki.UI.STANDARD_TEMPLATES
         # do all default templates have meta_types ? this has been fragile
         self.failIf(filter(lambda x:not hasattr(x,'meta_type'),STANDARD_TEMPLATES.values()))
-
-import unittest
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(UITests))
-    return suite

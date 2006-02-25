@@ -1,8 +1,11 @@
-import os, sys
-from Testing import ZopeTestCase
 from Products.ZWiki.testsupport import *
 #ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
+
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
 
 class Tests(ZopeTestCase.ZopeTestCase):
     def afterSetUp(self):
@@ -99,9 +102,3 @@ That should have produced a horizontal rule.</p>
 </p>
 """)
 
-
-import unittest
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(Tests))
-    return suite
