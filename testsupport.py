@@ -48,7 +48,7 @@ class ZwikiTests(ZopeTestCase.ZopeTestCase):
         # our mock request seems a bit more useful than ZTC's
         #self.request = self.app.REQUEST
         self.request = self.page.REQUEST = MockRequest()
-        self.request.cookies['zwiki_username'] = 'test'
+        #self.request.cookies['zwiki_username'] = 'test'
 
 
 # mock objects
