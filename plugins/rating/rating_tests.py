@@ -17,7 +17,7 @@ class RatingTests(ZopeTestCase.ZopeTestCase):
         self.assert_(p.rating() == 1)
         p.vote(2)
         self.assert_(p.rating() == 2)
-        self.p.REQUEST.REMOTE_ADDR = 'another'
+        self.p.REQUEST.cookies['zwiki_username'] = 'someoneelse'
         p.vote(0)
         self.assert_(p.rating() == 1)
 
@@ -28,7 +28,7 @@ class RatingTests(ZopeTestCase.ZopeTestCase):
         self.assert_(p.voteCount() == 1)
         p.vote(1)
         self.assert_(p.voteCount() == 1)
-        self.p.REQUEST.REMOTE_ADDR = 'another'
+        self.p.REQUEST.cookies['zwiki_username'] = 'someoneelse'
         p.vote(1)
         self.assert_(p.voteCount() == 2)
 
