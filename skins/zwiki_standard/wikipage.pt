@@ -369,8 +369,8 @@
            (user.has_permission('Zwiki: Add pages',container) or
            user.has_permission('Zwiki: Rename pages',here) or
            user.has_permission('Zwiki: Reparent pages',here) or
-           user.has_permission('Zwiki: Delete pages',here))
-           #and here.userIsIdentified()
+           user.has_permission('Zwiki: Delete pages',here)
+           and here.checkSufficientId(request))
            ">
       <br />
       <div metal:define-macro="pagemanagementform" tal:omit-tag="">
@@ -387,13 +387,13 @@
                 <!-- help text -->
                 <span i18n:translate="">new</span> 
                 <span i18n:translate=""
-                      tal:condition="python:user.has_permission('Zwiki: Reparent pages',here) and here.userIsIdentified()" 
+                      tal:condition="python:user.has_permission('Zwiki: Reparent pages',here) and here.checkSufficientId(request)" 
                       >parent, </span>
                 <span i18n:translate=""
-                      tal:condition="python:user.has_permission('Zwiki: Rename pages',here) and here.userIsIdentified()" 
+                      tal:condition="python:user.has_permission('Zwiki: Rename pages',here) and here.checkSufficientId(request)" 
                       >name, </span>
                 <span i18n:translate=""
-                      tal:condition="python:user.has_permission('Zwiki: Delete pages',here) and here.userIsIdentified()" 
+                      tal:condition="python:user.has_permission('Zwiki: Delete pages',here) and here.checkSufficientId(request)" 
                       >replacement, </span>
                 <span i18n:translate=""
                       tal:condition="python:user.has_permission('Zwiki: Add pages',container)"
@@ -409,17 +409,17 @@
                         style="font-weight:normal;"
                         title="make this page a subtopic of the page you have entered"
                         i18n:attributes="value; title"
-                        tal:condition="python:user.has_permission('Zwiki: Reparent pages',here) and here.userIsIdentified()" 
+                        tal:condition="python:user.has_permission('Zwiki: Reparent pages',here) and here.checkSufficientId(request)" 
                 /><input type="submit" name="rename:method" value="rename" 
                          style="font-weight:normal" 
                          title="rename this page to the name you have entered, updating all links"
                          i18n:attributes="value; title"
-                         tal:condition="python:user.has_permission('Zwiki: Rename pages',here) and here.userIsIdentified()" 
+                         tal:condition="python:user.has_permission('Zwiki: Rename pages',here) and here.checkSufficientId(request)" 
                 /><input type="submit" name="delete:method" value="delete!" 
                          style="font-weight:normal"
                          title="delete this page, and redirect links to the page you have entered, if any"
                          i18n:attributes="value; title"
-                         tal:condition="python:user.has_permission('Zwiki: Delete pages',here) and here.userIsIdentified()" 
+                         tal:condition="python:user.has_permission('Zwiki: Delete pages',here) and here.checkSufficientId(request)"
                 /><input type="submit" name="createform:method" value="create" 
                          style="font-weight:normal"
                          title="create a page with the name you have entered, as a subtopic of this one"
