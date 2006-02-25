@@ -1,5 +1,3 @@
-import os, sys
-from Testing import ZopeTestCase
 from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')

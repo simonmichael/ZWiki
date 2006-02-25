@@ -3,6 +3,7 @@
 import sys, re, unittest
 import OFS, DateTime
 #from Testing.makerequest import makerequest
+from Testing import ZopeTestCase
 from ZPublisher.HTTPRequest import HTTPRequest
 from ZPublisher.HTTPResponse import HTTPResponse
 from Products.ZWiki.ZWikiPage import ZWikiPage

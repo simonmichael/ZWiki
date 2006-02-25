@@ -1,5 +1,4 @@
-import os, sys, string
-from Testing import ZopeTestCase
+import string
 from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')

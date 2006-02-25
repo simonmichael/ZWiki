@@ -30,10 +30,7 @@ if not HAS_PTS:
         return unittest.TestSuite()
 
 else:
-    import os, sys
-    from Testing import ZopeTestCase
     from testsupport import *
-
     ZopeTestCase.installProduct('ZWiki')
     ZopeTestCase.installProduct('PlacelessTranslationService')
 

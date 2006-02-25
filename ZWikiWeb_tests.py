@@ -1,5 +1,3 @@
-# unit tests for wiki templates
-
 from testsupport import *
 
 
