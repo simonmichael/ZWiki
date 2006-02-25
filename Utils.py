@@ -49,9 +49,14 @@ class Utils:
 
     # Zwiki implements a little extra access control in addition to Zope's
     # permissions, to allow more lightweight security based on cookies etc.
-    def checkSufficientId(self, REQUEST):
+    def checkSufficientId(self, REQUEST=None):
+        REQUEST = REQUEST or getattr(self,'REQUEST',None)
         return (self.requestHasUsername(REQUEST) or
                 not getattr(self,'edits_need_username',0))
+
+    # used this in standard templates for while, so we must keep it for
+    # backwards compatibility
+    userIsIdentified = checkSufficientId
 
     def requestHasUsername(self,REQUEST=None):
         """
