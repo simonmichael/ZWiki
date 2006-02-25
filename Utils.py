@@ -29,7 +29,7 @@ from Defaults import PREFER_USERNAME_COOKIE, PAGE_METADATA, BORING_PAGES
 import Permissions
 from I18nSupport import _
 
-# adapt zope 2.9 transaction api
+# adapt to zope 2.9 transaction api
 try: from transaction import get as get_transaction
 except ImportError: pass
 
@@ -40,8 +40,64 @@ class Utils:
     """
     security = ClassSecurityInfo()
     security.declareObjectProtected('View')
+
+    ######################################################################
+    # misc security utilities
+    
     def checkPermission(self, permission, object):
         return getSecurityManager().checkPermission(permission,object)
+
+    # Zwiki implements a little extra access control in addition to Zope's
+    # permissions, to allow more lightweight security based on cookies etc.
+    def checkSufficientId(self, REQUEST):
+        return (self.requestHasUsername(REQUEST) or
+                not getattr(self,'edits_need_username',0))
+
+    def requestHasUsername(self,REQUEST=None):
+        """
+        Check REQUEST has either an authenticated user or a username cookie.
+        """
+        REQUEST = REQUEST or getattr(self,'REQUEST',None)
+        username = self.usernameFrom(REQUEST)
+        return (username and username != REQUEST.REMOTE_ADDR)
+
+    def usernameFrom(self, REQUEST=None, ip_address=1):
+        """
+        Get the best available user id from the current visitor's REQUEST.
+
+        We use the first of:
+        - a MAILIN_USERNAME set by mailin.py
+        - an authenticated username
+        - a zwiki_username cookie
+        - the client's IP address, unless disabled
+
+        Or, if PREFER_USERNAME_COOKIE in Defaults.py is true, we'll let
+        the cookie take precedence. This means an authenticated user could
+        pretend to be someone else by setting the cookie, but it's useful
+        for this case: a simple community wiki protected by a single
+        common login, multiple users distinguished by their
+        zwiki_username.
+
+        We'll find REQUEST ourself if necessary (helps backwards compatibility
+        with old skin templates).
+        """
+        REQUEST = REQUEST or getattr(self,'REQUEST',None)
+        if not REQUEST: return ''
+        authenticated_name = None
+        user = REQUEST.get('AUTHENTICATED_USER')
+        if user:
+            authenticated_name = user.getUserName()
+            if authenticated_name == str(user.acl_users._nobody):
+                authenticated_name = None
+        cookie_name = REQUEST.cookies.get('zwiki_username',None)
+        mailin_name = REQUEST.get('MAILIN_USERNAME',None)
+        ip_addr = ip_address and REQUEST.REMOTE_ADDR or ''
+        if PREFER_USERNAME_COOKIE:
+            return mailin_name or cookie_name or authenticated_name or ip_addr
+        else:
+            return mailin_name or authenticated_name or cookie_name or ip_addr
+
+    ######################################################################
 
     def size(self):
         """
@@ -206,59 +262,6 @@ class Utils:
     security.declareProtected(Permissions.View, 'urlunquote')
     def urlunquote(self, text):
         return unquote(text)
-
-    security.declareProtected(Permissions.View, 'usernameFrom')
-    def usernameFrom(self, REQUEST=None, ip_address=1):
-        """
-        Get the best available user id from the current visitor's REQUEST.
-
-        We use the first of:
-        - a MAILIN_USERNAME set by mailin.py
-        #- an authenticated CMF user's fullname property #XXX check old code
-        - an authenticated username
-        - a zwiki_username cookie
-        - the client's IP address, unless disabled
-
-        Or, if PREFER_USERNAME_COOKIE in Defaults.py is true, we'll let
-        the cookie take precedence. This means an authenticated user could
-        pretend to be someone else by setting the cookie, but it's useful
-        for this case: a simple community wiki protected by a single
-        common login, multiple users distinguished by their
-        zwiki_username.
-
-        We'll find REQUEST ourself if necessary (helps backwards compatibility
-        with old skin templates).
-        """
-        REQUEST = REQUEST or getattr(self,'REQUEST',None)
-        if not REQUEST: return ''
-        authenticated_name = None
-        user = REQUEST.get('AUTHENTICATED_USER')
-        if user:
-            #if self.inCMF():
-            #  authenticated_name = self.folder().portal_membership.getMemberById(user.getUserName()).fullname or ''
-            #else:
-            authenticated_name = user.getUserName()
-            
-            if authenticated_name == str(user.acl_users._nobody):
-                authenticated_name = None
-        cookie_name = REQUEST.cookies.get('zwiki_username',None)
-        mailin_name = REQUEST.get('MAILIN_USERNAME',None)
-        ip_addr = ip_address and REQUEST.REMOTE_ADDR or ''
-        if PREFER_USERNAME_COOKIE:
-            return mailin_name or cookie_name or authenticated_name or ip_addr
-        else:
-            return mailin_name or authenticated_name or cookie_name or ip_addr
-
-    security.declareProtected(Permissions.View, 'requestHasSomeId')
-    def requestHasSomeId(self,REQUEST=None):
-        """
-        Check REQUEST has either a non-anonymous user or a username cookie.
-        """
-        REQUEST = REQUEST or getattr(self,'REQUEST',None)
-        username = self.usernameFrom(REQUEST)
-        return (username and username != REQUEST.REMOTE_ADDR)
-
-    userIsIdentified = requestHasSomeId
 
     def __repr__(self):
         return ("<%s %s at 0x%s>"

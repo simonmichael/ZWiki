@@ -62,10 +62,7 @@ class EditingSupport:
         - redirects to the new page if appropriate
 
         """
-        # XXX require at least a username cookie to edit
-        if not self.requestHasSomeId(REQUEST):
-            #raise 'Unauthorized', (
-            #    _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
+        if not self.checkSufficientId(REQUEST):
             return self.denied(
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
 
@@ -149,8 +146,8 @@ class EditingSupport:
         zope subject attribute.  note and use_heading are not used and
         kept only for backwards compatibility.
         """
-        if not self.requestHasSomeId(REQUEST):
-            raise 'Unauthorized', (
+        if not self.checkSufficientId(REQUEST):
+            return self.denied(
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
 
         if self.isDavLocked(): return self.davLockDialog()
@@ -281,18 +278,16 @@ class EditingSupport:
                                REQUEST,
                                log,
                                subtopics=subtopics) # creating a page
+
+        if not self.checkSufficientId(REQUEST):
+            return self.denied(
+                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
+
         if check_conflict:
             if self.checkEditConflict(timeStamp, REQUEST):
                 return self.editConflictDialog()
             if self.isDavLocked():
                 return self.davLockDialog()
-
-        # XXX require at least a username cookie to edit
-        if not self.requestHasSomeId(REQUEST):
-            #raise 'Unauthorized', (
-            #    _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
-            return self.denied(
-                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
 
         # ok, changing p. We may do several things at once; each of these
         # handlers checks permissions and does the necessary.
@@ -826,7 +821,7 @@ class EditingSupport:
         # anonymous edit with too many urls ?
         prop = 'max_anonymous_links'
         # we'll handle either an int or string property
-        if (not self.requestHasSomeId(REQUEST) and
+        if (not self.requestHasUsername(REQUEST) and
             hasattr(self.folder(), prop)):
             try: max = int(getattr(self.folder(), prop))
             except ValueError: max = None

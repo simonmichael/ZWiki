@@ -441,9 +441,8 @@ class SkinViews:
         This is usually called by createform also, and can handle both
         editing and creating. The form's textarea contents may be specified.
         """
-        # XXX require at least a username cookie to edit
-        if not self.requestHasSomeId(REQUEST):
-            raise 'Unauthorized', (
+        if not self.checkSufficientId(REQUEST):
+            return self.denied(
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
         
         if ((not page or page == self.pageName()) and
@@ -488,9 +487,8 @@ class SkinViews:
         It may also be customized by a createform skin template, in
         which case page creation and page editing forms are different.
         """
-        # XXX require at least a username cookie to edit
-        if not self.requestHasSomeId(REQUEST):
-            raise 'Unauthorized', (
+        if not self.checkSufficientId(REQUEST):
+            return self.denied(
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
 
         if self.hasSkinTemplate('createform'):
