@@ -7,9 +7,9 @@ def test_suite():
     suite.addTest(unittest.makeSuite(Tests))
     return suite
 
-class Tests(ZopeTestCase.ZopeTestCase):
+class Tests(ZwikiTests):
     def afterSetUp(self):
-        zwikiAfterSetUp(self)
+        ZwikiTests.afterSetUp(self)
         self.p.REQUEST.REMOTE_ADDR = '1'
         self.p.resetVotes()
 

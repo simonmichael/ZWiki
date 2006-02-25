@@ -44,9 +44,7 @@ def test_rename(self):
                  self.wiki.outline.parents('NewNameChildRenamed'))
     
 
-class Tests(ZopeTestCase.ZopeTestCase):
-    def afterSetUp(self):
-        zwikiAfterSetUp(self)
+class Tests(ZwikiTests):
 
     def test_manage_addZWikiPage(self):
         from Products.ZWiki.ZWikiPage import manage_addZWikiPage

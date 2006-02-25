@@ -6,9 +6,7 @@ def test_suite():
     suite.addTest(unittest.makeSuite(Tests))
     return suite
 
-class Tests(ZopeTestCase.ZopeTestCase):
-    def afterSetUp(self):
-        zwikiAfterSetUp(self)
+class Tests(ZwikiTests):
 
     def test_STANDARD_TEMPLATES(self):
         STANDARD_TEMPLATES = ZWiki.UI.STANDARD_TEMPLATES

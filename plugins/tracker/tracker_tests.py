@@ -4,13 +4,11 @@ ZopeTestCase.installProduct('ZCatalog')
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TrackerSetupTests))
+    suite.addTest(unittest.makeSuite(SetupTests))
     suite.addTest(unittest.makeSuite(TrackerTests))
     return suite
 
-class TrackerSetupTests(ZopeTestCase.ZopeTestCase):
-    def afterSetUp(self):
-        zwikiAfterSetUp(self)
+class SetupTests(ZwikiTests):
 
     def test_setupTracker(self):
         p = self.p
@@ -46,9 +44,9 @@ class TrackerSetupTests(ZopeTestCase.ZopeTestCase):
         self.assertEqual(p.severity,'normal')
 
 
-class TrackerTests(ZopeTestCase.ZopeTestCase):
+class TrackerTests(ZwikiTests):
     def afterSetUp(self):
-        zwikiAfterSetUp(self)
+        ZwikiTests.afterSetUp(self)
         self.p.setupTracker()
 
     def test_isIssue(self):

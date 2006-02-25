@@ -7,9 +7,7 @@ def test_suite():
     suite.addTest(unittest.makeSuite(Tests))
     return suite
 
-class Tests(ZopeTestCase.ZopeTestCase):
-    def afterSetUp(self):
-        zwikiAfterSetUp(self)
+class Tests(ZwikiTests):
 
     def test_html_page_type(self):
         self.p.edit(text='! PageOne PageTwo\n',type='html')

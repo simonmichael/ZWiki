@@ -7,9 +7,7 @@ def test_suite():
     suite.addTest(unittest.makeSuite(Tests))
     return suite
 
-class Tests(ZopeTestCase.ZopeTestCase):
-    def afterSetUp(self):
-        zwikiAfterSetUp(self)
+class Tests(ZwikiTests):
 
     def test_ZwikiPlaintextPageType(self):
         self.p.folder().allowed_page_types = ['plaintext']

@@ -43,7 +43,7 @@ else:
         suite.level = 2
         return suite
 
-    class Tests(ZopeTestCase.ZopeTestCase):
+    class Tests(ZwikiTests):
         """
         Unit tests for Zwiki i18n, aka "blood, sweat and tears".
 
@@ -54,9 +54,6 @@ else:
         - bare=1 can also help get pages rendering
 
         """
-        def afterSetUp(self):
-            zwikiAfterSetUp(self)
-
         def assertTranslation(self,string,expected,language='en'):
             # see ISSUES
             ## mock up stuff to get language control. The usual Pain.
