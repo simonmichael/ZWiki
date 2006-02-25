@@ -233,6 +233,7 @@ class EditingTests(ZopeTestCase.ZopeTestCase):
         p.last_editor = '-'
 
         # if no username available, IP address should be recorded
+        del p.REQUEST.cookies['zwiki_username']
         p.REQUEST.set('REMOTE_ADDR', '1.2.3.4')
         p.append(text='.',REQUEST=p.REQUEST)
         self.assertEqual(p.last_editor,'1.2.3.4')
