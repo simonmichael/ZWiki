@@ -12,9 +12,11 @@
 
   <body bgcolor="#ffffff">
     <h2 i18n:translate="">Not permitted</h2>
-    <p >
-      Sorry, you are not allowed to do that on this wiki.
-      Perhaps you need to set a username in options, or log in ?
+    <p align="center">
+      Sorry, you need more identification to do that on this wiki.
+      Perhaps you need to set a username in 
+      <a tal:attributes="href here/preferencesUrl;">options</a>
+      or log in ?
     </p>
   </body>
 
