@@ -12,7 +12,7 @@
    'default':3}[period]"
  newdays="7"
  now=ZopeTime
- results="pages(lastEditTime={'query': now-days, 'range':'min'})"
+ results="pages(lastEditTime={'query': now-days, 'range':'min'},sort_on='lastEditTime',sort_order='reverse')"
  number="_.len(results)"
  >
 <form action="&dtml-URL;" method="GET">
@@ -48,7 +48,13 @@
     <th align="left"><dtml-translate domain=zwiki>Time</dtml-translate></th>
   </tr>
   <tr><td colspan=3></td></tr>
-  <dtml-in results sort=lastEditTime reverse prefix=x>
+  <dtml-comment>
+    < dtml-in results sort=lastEditTime reverse prefix=x>
+    had to use the catalog for sorting due to issue #1145 which breaks
+    this in zope 2.8/2.9. As a result sorting no longer works when there
+    is no catalog.
+  </dtml-comment>
+  <dtml-in results prefix=x>
   <tr valign="top" <dtml-var "(x_sequence_odd and 'bgcolor=#f0f0f0') or ''">>
     <td>
       <a href="&dtml-wikiurl;/&dtml.url_quote-id;" 
