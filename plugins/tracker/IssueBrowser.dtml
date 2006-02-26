@@ -87,7 +87,7 @@ issue categories sized and coloured according to open issues
     items=openissues
     href="lambda x:'&dtml-URL;?category=&dtml.url_quote-%s;&sort_on=status_index'%x"
     num="_.len(items)"
-    cols="_.max(2,_.min(_.int(_.math.sqrt(num)),6))"
+    cols="_.max(2,_.min(_.int(_.round(_.math.sqrt(num))),6))"
     rows="num/cols + ((num%cols) and 1)"
     >
 <table width="100%" border=0>  
