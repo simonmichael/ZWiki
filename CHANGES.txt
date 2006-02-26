@@ -1,3 +1,64 @@
+    Summary
+
+        Testgeddon! Also plone 2.0 support and other bugfixes; a new
+        option useful to discourage random and spam edits; briefer issue
+        page mailout subjects.
+
+    Upgrade notes
+
+        If you have a customised wikipage template, your page management
+        form will not be sensitive to the new edits_need_username
+        property until you update (or remove) your template.
+
+    Changes
+
+      Installing
+
+        * fix a bad import which broke CMF 1.4/Plone 2.0 support (#1211)
+
+      Configuring
+
+        * new 'edits_need_username' option can be used to block unidentified
+          edits (anonymous visitors with no username cookie). Off by default.
+
+      Browsing
+
+        * fix partial display of pagemanagement form due to inconsistent
+          permission checking (#1172, Frank Laurijssen, Simon Michael)
+
+      Editing
+
+        * friendlier access denied messages in certain situations (eg when
+          edits_need_username is enabled)
+
+        * remove purple numbers plugin
+
+      Page hierarchy
+
+      Mail
+
+        * abbreviate issue page names to just the number in mailout
+          subjects, unless overridden by a 'mail_issue_names' boolean
+          property (Simon Michael, Frank Laurijssens)
+
+      Issue tracking
+
+      Translations
+
+      General
+
+        * testgeddon! 
+          - move tests/* up to *_tests.py
+          - update all tests for zope 2.9 testrunner
+          - make all tests pass
+          - make tests run faster
+          - run cmf/i18n tests only when the necessary products are present
+
+        * fix deprecation and bad security declaration warnings reported by zope 2.9
+
+        * remove /src access key & link to get cleaner google results for zwikis (#1174)
+
+
 Zwiki 0.50.0 2006/02/01
 
     Summary
