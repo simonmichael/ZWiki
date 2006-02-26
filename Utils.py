@@ -36,7 +36,7 @@ except ImportError: pass
 
 class Utils:
     """
-    Miscellaneous utilities mixin for ZWikiPage.
+    Miscellaneous utility methods for zwiki pages.
     """
     security = ClassSecurityInfo()
     security.declareObjectProtected('View')
@@ -800,4 +800,3 @@ def callHooks(hooks, arg):
                 'could not call hook, skipping (traceback follows)\n%s' % (
                 formattedTraceback()))
     return err
-

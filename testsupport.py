@@ -10,47 +10,50 @@ from Products.ZWiki.ZWikiPage import ZWikiPage
 from Products import ZWiki
 
 
+# defined in module scope for reuse by ZwikiPloneTests
+def afterSetUp(self):
+    """
+    Do common setup for our ZopeTestCase-based unit tests.
+
+    self is a ZopeTestCase instance; this should be called from it's
+    afterSetUp method.
+
+    WARNING: this sets self.page.request at the beginning of the test.
+    If you replace it with a new one, be sure to set page.request again
+    and not just past REQUEST as an argument to avoid confusing DTML.
+
+    """
+    # grant all zwiki permissions by default
+    from Products.ZWiki import Permissions
+    #from Products.CMFCore import CMFCorePermissions
+    self.setPermissions([
+        Permissions.AddWiki,
+        Permissions.Add,
+        Permissions.Comment,
+        Permissions.Edit,
+        Permissions.ChangeType,
+        Permissions.Delete,
+        Permissions.Rate,
+        Permissions.Rename,
+        Permissions.Reparent,
+        Permissions.Upload,
+        Permissions.FTP,
+        #CMFCorePermissions.AddPortalContent,
+        ])
+    # set up a wiki in a subfolder, with one page
+    self.folder.manage_addFolder('wiki',title='')
+    self.wiki = self.folder.wiki
+    self.wiki.manage_addProduct['ZWiki'].manage_addZWikiPage('TestPage')
+    self.p = self.page = self.wiki.TestPage
+    # our mock request seems a bit more useful than ZTC's
+    #self.request = self.app.REQUEST
+    self.request = self.page.REQUEST = MockRequest()
+    #self.request.cookies['zwiki_username'] = 'test'
+
 class ZwikiTests(ZopeTestCase.ZopeTestCase):
-    def afterSetUp(self):
-        """
-        Do common setup for our ZopeTestCase-based unit tests.
+    afterSetUp = afterSetUp
 
-        self is a ZopeTestCase instance; this should be called from it's
-        afterSetUp method.
-
-        WARNING: this sets self.page.request at the beginning of the test.
-        If you replace it with a new one, be sure to set page.request again
-        and not just past REQUEST as an argument to avoid confusing DTML.
-
-        """
-        # grant all zwiki permissions by default
-        from Products.ZWiki import Permissions
-        #from Products.CMFCore import CMFCorePermissions
-        self.setPermissions([
-            Permissions.AddWiki,
-            Permissions.Add,
-            Permissions.Comment,
-            Permissions.Edit,
-            Permissions.ChangeType,
-            Permissions.Delete,
-            Permissions.Rate,
-            Permissions.Rename,
-            Permissions.Reparent,
-            Permissions.Upload,
-            Permissions.FTP,
-            #CMFCorePermissions.AddPortalContent,
-            ])
-        # set up a wiki in a subfolder, with one page
-        self.folder.manage_addFolder('wiki',title='')
-        self.wiki = self.folder.wiki
-        self.wiki.manage_addProduct['ZWiki'].manage_addZWikiPage('TestPage')
-        self.p = self.page = self.wiki.TestPage
-        # our mock request seems a bit more useful than ZTC's
-        #self.request = self.app.REQUEST
-        self.request = self.page.REQUEST = MockRequest()
-        #self.request.cookies['zwiki_username'] = 'test'
-
-
+    
 # mock objects
 
 class MockRequest(HTTPRequest):

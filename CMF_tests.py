@@ -15,8 +15,9 @@ try:
 except ImportError:
     HAS_PLONE = 0
 
-import unittest
 if not HAS_PLONE:
+    # dummy test suite
+    import unittest
     def test_suite():
         return unittest.TestSuite()
 
@@ -31,8 +32,8 @@ else:
 
     def test_suite():
         suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(CMFPloneInstallTests))
-        suite.addTest(unittest.makeSuite(CMFPloneSpecificTests))
+        suite.addTest(unittest.makeSuite(InstallTests))
+        suite.addTest(unittest.makeSuite(Tests))
         return suite
 
     def cmf_install_zwiki(site):
@@ -41,9 +42,8 @@ else:
         site.cmf_install_zwiki()
 
     # this fixture provides a plone site without zwiki installed
-    class CMFPloneInstallTests(PloneTestCase.PloneTestCase):
-        def afterSetUp(self):
-            zwikiAfterSetUp(self)
+    class InstallTests(PloneTestCase.PloneTestCase):
+        afterSetUp = afterSetUp
 
         def testInstallViaExternalMethod(self):
             cmf_install_zwiki(self.portal)
@@ -52,9 +52,9 @@ else:
         #def testInstallViaQuickInstaller(self):
 
     # and this one comes with zwiki installed
-    class CMFPloneSpecificTests(PloneTestCase.PloneTestCase):
+    class Tests(PloneTestCase.PloneTestCase):
         def afterSetUp(self):
-            zwikiAfterSetUp(self)
+            afterSetUp(self)
             # install zwiki and set the site up as our one-page test wiki
             # probably don't need to do this every time now
             cmf_install_zwiki(self.portal)
