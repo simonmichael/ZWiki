@@ -38,20 +38,41 @@ epydoc2:
 	AccessControl/ App BDBStorage/ DateTime/ DBTab/ DocumentTemplate/ HelpSys/ OFS/ Persistence/ SearchIndex/ Shared/ Signals/ StructuredText/ TAL/ webdav/ ZClasses/ ZConfig/ zExceptions/ zLOG/ Zope ZopeUndo/ ZPublisher/ ZServer/ ZTUtils/ PageTemplates ExternalMethod Mailhost MIMETools OFSP PluginIndexes PythonScripts Sessions SiteAccess SiteErrorLog
 
 
+
+
 ## i18n
-# remember: 
-# 0f. you need zope 3's i18nextract with http://zopewiki.org/I18nextract patches
-# 1. apply source updates 2. make pot 3. apply po updates 4. make po
 
-LANGUAGES=es fr-CA fr ga it zh-TW pt-BR zh-CN pl nl de hu fi he ru ja pt
-I18NEXTRACT=/zope3.1/bin/i18nextract
+# OLD WAY - all in darcs repo. Each month:
+# 1. record code changes
+# 2. accept/apply any pending darcs/diff patches to po files
+# 3. update pot and po files from code (make pot po) and record
+#
+# NEW WAY - syncing back & forth with http://launchpad.net/rosetta
+# why update in rosetta ? we get translations we wouldn't otherwise get
+# why update in repo ? we have to update from the latest code there
+# Each month:
+# 1. record code changes
+# 2. accept/apply any pending darcs/diff patches to po files
+# 3. download latest good po files from rosetta, merge with above and record
+# 4. add any new translations to makefile's language list
+# 5. update pot and po files from code (make pot po) and record
+# 6. re-upload all to rosetta
 
-pot: dtmlextract
+LANGUAGES=af ar de en-GB es et fi fr he hu it ja nl pl pt pt-BR ro ru sv tr zh-CN zh-TW 
+LANGUAGES_DISABLED=fr-CA ga
+
+I18NEXTRACT=/zope3/bin/i18nextract # still need to patch this, see zopewiki
+
+pot:
+	echo '<div i18n:domain="zwiki">' >skins/dtmlmessages.pt # dtml extraction hack
+	find plugins skins wikis -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt
+	echo '</div>' >>skins/dtmlmessages.pt
+
 	$(I18NEXTRACT) -d zwiki -p . -o ./i18n \
 	    -x _darcs -x .old -x misc -x ftests  -x .doxygen
 	tail +12 i18n/zwiki-manual.pot >>i18n/zwiki.pot
-	python \
-	-c "import re; \
+	python -c \
+	   "import re; \
 	    t = open('i18n/zwiki.pot').read(); \
 	    t = re.sub(r'(?s)^.*?msgid',r'msgid',t); \
 	    t = re.sub(r'Zope 3 Developers <zope3-dev@zope.org>',\
@@ -60,14 +81,8 @@ pot: dtmlextract
 	    t = re.sub(r'(?s)(\"Generated-By:.*?\n)', \
 	               r'\1\"Language-code: xx\\\n\"\n\"Language-name: X\\\n\"\n\"Preferred-encodings: utf-8 latin1\\\n\"\n\"Domain: zwiki\\\n\"\n', \
 	               t); \
-	    open('i18n/zwiki.pot','w').write(t)"
+	    open('i18n/zwiki.pot','w').write(t)"  #one more for font-lock: "
 	rm -f skins/dtmlmessages.pt
-
-# a dtml extraction hack, should integrate with i18nextract
-dtmlextract: 
-	echo '<div i18n:domain="zwiki">' >skins/dtmlmessages.pt
-	find plugins skins wikis -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt
-	echo '</div>' >>skins/dtmlmessages.pt
 
 po:
 	cd i18n; \
@@ -76,7 +91,7 @@ po:
 	 msgmerge -U zwiki-plone-$$L.po zwiki-plone.pot; \
 	 done
 
-# PTS generates these, this is just for additional checking and stats
+# PTS auto-generates these, this is here just for sanity checking and stats
 mo:
 	cd i18n; \
 	for L in $(LANGUAGES); do \
@@ -86,7 +101,12 @@ mo:
 	 done; \
 	rm -f *.mo
 
+
+
+
+
 ## testing
+
 # to run Zwiki unit tests, you probably need:
 # Zope 2.7.3 or greater
 # ZopeTestCase, linked under .../lib/python/Testing
