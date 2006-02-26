@@ -54,8 +54,8 @@ class Utils:
         return (self.requestHasUsername(REQUEST) or
                 not getattr(self,'edits_need_username',0))
 
-    # used this in standard templates for while, so we must keep it for
-    # backwards compatibility
+    # used this in standard templates for while, so must keep it for
+    # backwards compatibility. The name is no longer accurate.
     userIsIdentified = checkSufficientId
 
     def requestHasUsername(self,REQUEST=None):
