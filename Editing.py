@@ -500,6 +500,8 @@ class EditingSupport:
         """
         # anything to do ?
         oldname, oldid = self.pageName(), self.getId()
+        # newlines would cause glitches later..
+        pagename = re.sub(r'[\r\n]','',pagename)
         newname, newid = pagename, self.canonicalIdFrom(pagename)
         if not newname or (newname == oldname and newid == oldid): return 
 
