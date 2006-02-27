@@ -101,7 +101,13 @@ mo:
 	 done; \
 	rm -f *.mo
 
-
+potarball:
+	cd i18n; \
+	tar cvf zwiki.tar zwiki.pot; \
+	for L in $(LANGUAGES); do tar rvf zwiki.tar zwiki-$$L.po; done; \
+	tar cvf zwiki-plone.tar zwiki-plone.pot; \
+	for L in $(LANGUAGES); do tar rvf zwiki-plone.tar zwiki-plone-$$L.po; done; \
+	gzip -f zwiki.tar zwiki-plone.tar
 
 
 
