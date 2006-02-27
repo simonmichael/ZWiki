@@ -13,6 +13,7 @@ from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from Products.PythonScripts.PythonScript import PythonScript
 from pagetypes import PAGETYPES, PAGE_TYPES
 from I18nSupport import DTMLFile, _
+from ZWikiPage import ZWikiPage
 
 
 # ZMI wiki creation form
