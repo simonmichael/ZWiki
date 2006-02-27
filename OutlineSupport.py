@@ -818,6 +818,36 @@ class OutlineRenderingMixin:
         nestings the python version might be perceptibly quicker; and,
         it's easier to recurse with python. See also nestingAsRenderList. 
         """
+        # XXX oh yeah.. kludgorama
+        def renderContentsLink(page):
+            """Render a link to page, suitable for contents or context."""
+            # quicker than renderLinkToPage, since we know it exists:
+            wikiurl = self.wiki_url()
+            def quicklink(page):
+                return '<a href="%s/%s" name="%s">%s</a>' \
+                       % (wikiurl,self.canonicalIdFrom(page),quote(page),
+                          self.formatWikiname(page))
+            if here and page == here: 
+                if enlarge_current:
+                    # just assume we are in the page header, and link to
+                    # backlinks as well as enlarging
+                    return '<big><big><big><big><strong>%s</strong></big></big></big></big>' % \
+                           ('<a href="%s/%s/backlinks" title="%s" name="%s">%s</a>' % \
+                            (wikiurl,
+                             self.canonicalIdFrom(page),
+                             _("which pages link to this one ?"),
+                             page,
+                             self.formatWikiname(page)))
+                else:
+                    # just highlight "here"
+                    return '%s <b><-- %s.</b>' % \
+                           ((suppress_hyperlink and page) # another special case
+                            or quicklink(page),
+                            _("You are here"))
+            else:
+                #return self.renderLinkToPage(page,name=page)
+                return quicklink(page)
+            
         #XXX cleanup
         if suppress_current and nesting[0] == here: # a single childless page
             return ''
@@ -830,16 +860,23 @@ class OutlineRenderingMixin:
         for n in nesting:
             if type(n) == ListType:
                 if not (n[0]==here and suppress_current): #XXX temp
-                    got.append('%s <li>[%s]' % (indent,n[0]))
+                    got.append('%s <li>%s' % (indent,renderContentsLink(n[0])))
                 if len(n) > 1:
                     if not (n[0]==here and suppress_current): #XXX temp
                         got.append('<ul>')
                     for i in n[1:]:
                         if type(i) == ListType:
                             got = self.renderNesting(
-                                [i],here,did=did,got=got,indent=indent+' ')
+                                [i],
+                                here=here,
+                                enlarge_current=enlarge_current,
+                                suppress_hyperlink=suppress_hyperlink,
+                                suppress_current=suppress_current,
+                                did=did,
+                                got=got,
+                                indent=indent+' ')
                         else:
-                            got.append('%s <li>[%s]</li>' % (indent,i))
+                            got.append('%s <li>%s</li>' % (indent,renderContentsLink(i)))
                     if not (n[0]==here and suppress_current): #XXX temp
                         got.append("</ul>")
                 else:
@@ -847,40 +884,13 @@ class OutlineRenderingMixin:
                 if not (n[0]==here and suppress_current):
                     got.append('%s </li>' % indent)
             else:
-                got.append('%s <li>[%s]</li>' % (indent,n))
-        if recursing: return got
+                got.append('%s <li>%s</li>' % (indent,renderContentsLink(n)))
 
-        # finish up, do pretty printing options and wiki links
-        got.append("</ul>")
-        t = join(got, "\n")
-        if here:
-            if enlarge_current:
-                t = re.sub(r'(\[%s\])' % re.escape(here),
-                           r'<big><big><big><big><strong>\1</strong></big></big></big></big>',
-                           t)
-                # XXX temporary kludge.. assume we are in the page header here
-                t = re.sub(r'(\[%s\])' % re.escape(self.pageName()),
-                           '<a href="%s/backlinks" title="%s">%s</a>' % (
-                               self.page_url(),
-                               _("which pages link to this one ?"),
-                               self.formatWikiname(self.pageName())),
-                           t)
-            else:
-                # highlight current page
-                t = re.sub(r'(\[%s\])' % re.escape(here),
-                           r'\1 <b><-- %s.</b>' % _("You are here"),
-                           t)
-            if suppress_hyperlink:
-                t = re.sub(r'(\[%s\])' % re.escape(here), r'!\1', t)
-        #t = self.renderLinksIn(t) # too expensive for now.. do it on the cheap
-        wikiurl = self.wiki_url()
-        def quicklink(match):
-            page = match.group(1)
-            return '<a href="%s/%s" name="%s">%s</a>' \
-                   % (wikiurl,self.canonicalIdFrom(page),quote(page),
-                      self.formatWikiname(page))
-        t = re.sub(bracketedexpr,quicklink,t)
-        return t
+        if recursing:
+            return got
+        else:
+            got.append("</ul>")
+            return join(got, "\n")
 
     security.declareProtected(Permissions.View, 'nestingAsRenderList')
     def nestingAsRenderList(self, nesting, here=None, suppress_current=0,

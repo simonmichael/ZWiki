@@ -619,7 +619,8 @@ class ZWikiPage(
                                      access_key=access_key)
 
     # XXX helper for above
-    def renderLinkToPage(self,page,linkorig=None,link_title=None,access_key=None):
+    def renderLinkToPage(self,page,linkorig=None,link_title=None,
+                         access_key=None,name=None):
                          
         """
         Render a wiki link to page, which may or may not exist.
@@ -635,20 +636,26 @@ class ZWikiPage(
             if not self.pageWithId(page): # XXX this check helps avoid zodb loads ?
                 try: page = p.getId() # XXX poor caching
                 except: page = p.id   # all-brains
-            linktitle = link_title or '' #self.pageWithId(page).linkTitle()
+            title     = (link_title and ' title="%s"' % link_title) or '' #' title="%s"' % self.pageWithId(page).linkTitle()
+            name      = (name and ' name="%s"' % name) or ''
             accesskey = (access_key and ' accesskey="%s"' % access_key) or ''
-            try:
-                style=' style="background-color:%s;"' % p.issueColour() # poor caching
-            except:
-                style=' style="background-color:%s;"' % p.issueColour # all-brains
-            return (
-                '<a href="%s/%s" title="%s"%s%s>%s</a>' % (
+            # XXX tracker plugin dependency
+            if p.isIssue():
+                try:
+                    style=' style="background-color:%s;"' % p.issueColour() # poor caching
+                except:
+                    style=' style="background-color:%s;"' % p.issueColour # all-brains
+            else:
+                style = ''
+            link      = stripDelimitersFrom(linkorig or page)
+            return '<a href="%s/%s"%s%s%s%s>%s</a>' % (
                 self.wikiUrl(),
                 quote(page),
-                linktitle,
+                title,
+                name,
                 accesskey,
                 style,
-                self.formatWikiname(stripDelimitersFrom(linkorig))))
+                self.formatWikiname(link))
         else:
             # no - provide a creation link
             return (

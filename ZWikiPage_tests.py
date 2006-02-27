@@ -173,7 +173,7 @@ class Tests(ZwikiTests):
                           '<a href="mailto://a@b.c">mailto://a@b.c</a>')
         #import pdb; pdb.set_trace()
         self.assertEquals(self.p.renderLinksIn('TestPage'),
-                          '<a href="http://nohost/test_folder_1_/wiki/TestPage" title="" style="background-color:;">TestPage</a>')
+                          '<a href="http://nohost/test_folder_1_/wiki/TestPage">TestPage</a>')
 #                          '<a href="/test_folder_1_/wiki/TestPage" title="" style="background-color:;">TestPage</a>')
         self.assertEquals(self.p.renderLinksIn('NewTestPage'),
                           'NewTestPage<a class="new visualNoPrint" href="http://nohost/test_folder_1_/wiki/TestPage/createform?page=NewTestPage" title="create this page">?</a>')
