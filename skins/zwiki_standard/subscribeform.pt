@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
       i18n:domain="zwiki"
       tal:define="
-                  title   string:${container/title} ${here/title_or_id} subscription;
+                  title   string:${container/title} ${here/pageName} subscription;
                   macros  python:here.wikipage_template(request).macros;
       ">
   <head metal:use-macro="macros/head">
@@ -50,7 +50,7 @@
           Or return to
 	  </span>
           <a href="page_url" tal:attributes="href here/page_url" 
-             tal:content="here/title_or_id">Page name</a>.
+             tal:content="here/pageName">Page name</a>.
         </p>
 
         <div tal:condition="here/inCMF">
@@ -153,7 +153,7 @@
                  tal:attributes="href python:
                  '%s/%s/subscribeform?email=%s' % (
                  here.wiki_url(),pageid,here.urlquote(email))"
-                 tal:content="python:here.pageWithId(pageid).title_or_id()"
+                 tal:content="python:here.pageWithId(pageid).pageName()"
                 >pagename</a>
               </span>
             </td>

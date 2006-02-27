@@ -1,6 +1,6 @@
 <HTML>
 <HEAD>
-<TITLE><dtml-var "aq_parent.title"><dtml-var title_or_id></TITLE>
+<TITLE><dtml-var "aq_parent.title"><dtml-var pageName></TITLE>
 <dtml-if standard_wiki_stylesheet><link rel="stylesheet" type="text/css" href="standard_wiki_stylesheet" /></dtml-if>
 <SCRIPT LANGUAGE="JavaScript">
 <!-- Begin
@@ -50,7 +50,7 @@ child pages or
 <table width="100%" border="0" cellspacing="0" cellpadding="3"  
 bgcolor="#f0f0f0"
 ><tr><td>
-<h1><dtml-var "page.title_or_id()"></h1>
+<h1><dtml-var "page.pageName()"></h1>
 </td>
 </tr>
 </table>

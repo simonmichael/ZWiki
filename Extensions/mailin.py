@@ -376,7 +376,7 @@ class MailIn:
 
         if self.contextIsPage():
             self.destpage = self.workingpage = self.context
-            self.destpagename = self.destpage.title_or_id()
+            self.destpagename = self.destpage.pageName()
             self.newpage = self.trackerissue = 0
             self.checkMailinAllowed()
             return
@@ -424,7 +424,7 @@ class MailIn:
         if page:
             # also adjust working page to get right parentage etc.
             self.destpage = self.workingpage = page
-            self.destpagename = self.destpage.title_or_id()
+            self.destpagename = self.destpage.pageName()
         # or we have the name of a new page to create..
         elif self.destpagename:
             self.newpage = 1

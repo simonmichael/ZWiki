@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
       i18n:domain="zwiki"
       tal:define="
-                  title   string:${container/title} ${here/title_or_id} diffs;
+                  title   string:${container/title} ${here/pageName} diffs;
                   macros  python:here.wikipage_template(request).macros;
                   revA options/revA; 
                   difftext options/difftext;

@@ -101,7 +101,7 @@ class EditingSupport:
         # everything gets handled properly.  We must first commit though,
         # to get p.cb_isMoveable(). Renaming will also get us indexed.
         # We never leave a placeholder, always update backlinks.
-        if title and title != p.title_or_id():
+        if title and title != p.pageName():
             get_transaction().note('rename during creation')
             get_transaction().commit()
             p.handleRename(title,0,1,REQUEST,log)

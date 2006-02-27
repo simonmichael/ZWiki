@@ -543,7 +543,7 @@ class MailSupport:
             #if self.isIssue(): # we do support numberless "issue" pages
             if self.issueNumber():
                 if getattr(self.folder(),'mail_issue_name',0):
-                    pagename = '[%s] ' % self.title_or_id()
+                    pagename = '[%s] ' % self.pageName()
                 else:
                     pagename = '[#%s] ' % self.issueNumber()
             else:

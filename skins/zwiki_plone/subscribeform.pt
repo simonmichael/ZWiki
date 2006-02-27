@@ -45,7 +45,7 @@
           Or return to
 	  </span>
           <a href="page_url" tal:attributes="href here/page_url" 
-             tal:content="here/title_or_id">Page name</a>.
+             tal:content="here/pageName">Page name</a>.
         </p>
 
         <div tal:condition="inCMFandLoggedIn">
@@ -148,7 +148,7 @@
                  tal:attributes="href python:
                  '%s/%s/subscribeform?email=%s' % (
                  here.wiki_url(),pageid,here.urlquote(email))"
-                 tal:content="python:here.pageWithId(pageid).title_or_id()"
+                 tal:content="python:here.pageWithId(pageid).pageName()"
                 >pagename</a>
               </span>
             </td>

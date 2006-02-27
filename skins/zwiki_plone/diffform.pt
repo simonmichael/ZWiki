@@ -12,7 +12,7 @@
 
 <span metal:use-macro="python:here.wikipage_template().macros['accesskeys']" />
 
-<h1><span i18n:translate="">History for</span> <span tal:replace="here/title_or_id">Pagename..</span></h1>
+<h1><span i18n:translate="">History for</span> <span tal:replace="here/pageName">Pagename..</span></h1>
 
 <em tal:content="python:here.lastlog(revA-1)">log note..</em>
 

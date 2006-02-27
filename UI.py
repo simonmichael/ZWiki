@@ -452,7 +452,7 @@ class SkinViews:
         # what are we going to do ? set up page, text & action accordingly
         if page is None:
             # no page specified - editing the current page
-            page = self.title_or_id()
+            page = self.pageName()
             text = self.read()
         elif self.pageWithName(page):
             # editing a different page
