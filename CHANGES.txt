@@ -1,8 +1,9 @@
     Summary
 
-        Testgeddon! Also plone 2.0 support and other bugfixes; a new
-        option useful to discourage random and spam edits; briefer issue
-        page mailout subjects.
+        Testgeddon! Much cleanup of unit tests; bugfixes, eg for plone 2.0
+	support; a new option useful to discourage random/spam edits on
+	public sites; briefer issue page mailout subjects; new
+	translations from Rosetta.
 
     Upgrade notes
 
@@ -35,6 +36,8 @@
 
       Page hierarchy
 
+	...
+
       Mail
 
         * abbreviate issue page names to just the number in mailout
@@ -43,11 +46,15 @@
 
       Issue tracking
 
+	...
+
       Translations
+
+	...
 
       General
 
-        * testgeddon! 
+        * testgeddon
           - move tests/* up to *_tests.py
           - update all tests for zope 2.9 testrunner
           - make all tests pass
