@@ -1,16 +1,23 @@
     Summary
 
-        Testgeddon! Much cleanup of unit tests; bugfixes, eg for plone 2.0
-	support; a new option useful to discourage random/spam edits on
-	public sites; briefer issue page mailout subjects; new
-	translations from Rosetta.
+        New partial UI translations from Rosetta: arabic, afrikaans,
+	british english, estonian, romanian, swedish, turkish (welcome!);
+	a number of bugfixes, eg fixing plone 2.0 support; a new option
+	useful to discourage random/spam edits on public sites; briefer
+	issue page mailout subjects; much cleanup of unit tests.
 
     Upgrade notes
 
         If you have a customised wikipage template, your page management
-        form will not be sensitive to the new edits_need_username
-        property until you update (or remove) your template.
+	form will reflect the new edits_need_username property until you
+	update or remove your template.
 
+	If you do not have a catalog configured for your wiki, recent
+	changes will no longer sort properly. You will probably want to
+	add a catalog, by visiting SOMEPAGE/setupTracker as manager.
+
+	Purple numbers are no longer supported out of the box.
+	
     Changes
 
       Installing
@@ -19,15 +26,22 @@
 
       Configuring
 
-        * new 'edits_need_username' option can be used to block unidentified
-          edits (anonymous visitors with no username cookie). Off by default.
+        * new 'edits_need_username' option can be used to block anonymous
+	  editors with no username cookie. Off by default.
 
       Browsing
 
         * fix partial display of pagemanagement form due to inconsistent
           permission checking (#1172, Frank Laurijssen, Simon Michael)
 
+	* work around a zope 2.8/2.9 bug breaking recentchanges by
+	requiring a catalog. RC no longer sorts properly without a catalog
+	(#1145, Simon Michael, Michael Haubenwallner)
+
       Editing
+
+	* fix ExternalEditor webdav locking with Zope >=2.8 (#1194, Phil
+	Schumm, Simon Michael)
 
         * friendlier access denied messages in certain situations (eg when
           edits_need_username is enabled)
@@ -36,21 +50,28 @@
 
       Page hierarchy
 
-	...
+	* make links in contents, eg to pages with brackets in the name,
+	more robust
 
       Mail
 
-        * abbreviate issue page names to just the number in mailout
-          subjects, unless overridden by a 'mail_issue_names' boolean
-          property (Simon Michael, Frank Laurijssens)
+        * mailouts from issue pages - except for the creation mailout -
+	  now just include the issue number, not the full page name, in
+	  the subject. This can be turned off by setting a
+	  'mail_issue_names' boolean property. (Simon Michael, Frank
+	  Laurijssens)
 
       Issue tracking
 
-	...
+	* issuebrowser layout tweaks - reduce columns from 8 to 6
 
       Translations
 
-	...
+        * translation updates from Rosetta at launchpad.net. New
+	translations include: arabic, afrikaans, british english,
+	estonian, romanian, swedish, turkish. Thanks to all translators!
+
+	* rename xx-XX po files to xx_XX
 
       General
 
@@ -61,9 +82,11 @@
           - make tests run faster
           - run cmf/i18n tests only when the necessary products are present
 
-        * fix deprecation and bad security declaration warnings reported by zope 2.9
+        * fix deprecation and bad security declaration warnings reported
+	by zope 2.9
 
-        * remove /src access key & link to get cleaner google results for zwikis (#1174)
+        * remove /src access key & link to clean up google results for
+	zwikis (#1174)
 
 
 Zwiki 0.50.0 2006/02/01
