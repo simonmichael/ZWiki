@@ -1,8 +1,9 @@
 <!-- category box and font sizes adjusted for number of open issues --> 
 <a name="categories"></a>
 <dtml-let 
-    cols="['user','admin','general','site','other']
-          #replace with prefixes of issue categories to be grouped in a column"
+    cols="issue_categories
+          #or, a list of issue category prefixes.. categories with the same prefix
+          #will be grouped in columns"
     items=issue_categories
     barearg="'bare' in QUERY_STRING and '&bare=%s'%REQUEST.get('bare') or ''"
     href="lambda x:'%s?category=%s&sort_on=status_index%s'%(_['URL'],_.this.urlquote(x),_['barearg'])"
