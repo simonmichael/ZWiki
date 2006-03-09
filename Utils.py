@@ -31,7 +31,7 @@ from I18nSupport import _
 
 # adapt to zope 2.9 transaction api
 try: from transaction import get as get_transaction
-except ImportError: pass
+except ImportError: get_transaction = get_transaction
 
 
 class Utils:
