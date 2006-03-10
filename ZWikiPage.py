@@ -1308,7 +1308,6 @@ class ZWikiPage(
 
     # CMF compatibility
     view = __call__
-    SearchableText = EditingSupport.text
 
 
 InitializeClass(ZWikiPage)

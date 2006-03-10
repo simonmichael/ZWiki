@@ -136,7 +136,16 @@ else:
 
         security.declareProtected(Permissions.View, 'SearchableText')
         def SearchableText(self):
-            return self.text()
+         """Return the main searchable fields concatenated for easy indexing.
+
+         Used by eg Plone's livesearch.
+         """
+         # XXX how naive to think this could work.. wait for the unicode errors
+         return '%s\n%s' % (self.pageName(), self.text())
+         #example from AT:
+         #if type_datum is UnicodeType:
+         #    datum = datum.encode(charset)
+         #datum = "%s %s" % (datum, vocab.getValue(datum, ''), )
 
         # Disabled so we can set the subject from Plone's Metadata view
         #security.declareProtected(Permissions.View, 'Subject')
