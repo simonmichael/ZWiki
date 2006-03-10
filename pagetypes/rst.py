@@ -2,20 +2,13 @@ from common import *
 from Products.ZWiki.I18nSupport import _
 from Products.ZWiki.pagetypes import registerPageType
 
-# flag for the restructured text report level (for all zwikis)
-# possible values:  0-4  [debug, info, warning, error, severe]
-RST_REPORT_LEVEL = 2
+# RST verbosity (MORE <- 0 debug, 1 info, 2 warning, 3 error, 4 severe -> LESS) :
+RST_REPORT_LEVEL = 3
+# top-level RST heading will render as this HTML heading:
+RST_INITIAL_HEADER_LEVEL = 2
 
 try:
     import reStructuredText # import this one first
-    try:
-        # start headings at level 2, not 3; will affect all rst clients
-        # XXX not working
-        import docutils.writers.html4zope
-        docutils.writers.html4zope.default_level = 2
-    except ImportError:
-        # new zope 2.7.1, without html4zope
-        pass
 except ImportError:
     reStructuredText = None
     BLATHER('could not import reStructuredText, will not be available')
@@ -28,7 +21,11 @@ class ZwikiRstPageType(AbstractPageType):
 
     def format(self, t):
         if reStructuredText:
-            return reStructuredText.HTML(t,report_level=RST_REPORT_LEVEL)
+            return reStructuredText.HTML(
+                t,
+                report_level=RST_REPORT_LEVEL,
+                initial_header_level=RST_INITIAL_HEADER_LEVEL-1
+                )
         else:
             return "<pre>Error: could not import reStructuredText</pre>\n"+t
 
