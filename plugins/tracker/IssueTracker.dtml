@@ -22,8 +22,9 @@
          <dtml-translate domain=zwiki>Here are the wiki's issue pages.</dtml-translate>
 
 <!-- END OF CUSTOM TEXT -->
-         <dtml-translate domain=zwiki>Enter a search term, or click the numbers to the right, or</dtml-translate>
-          <a href="&dtml-filterUrl;"><dtml-translate domain=zwiki>filter issues</dtml-translate></a>.
+         <dtml-translate domain=zwiki>Enter a search term, click the numbers to the right, </dtml-translate>
+          <a href="&dtml-filterUrl;"><dtml-translate domain=zwiki>filter issues</dtml-translate></a>, 
+          <a href="&dtml-issueBrowserUrl;"><dtml-translate domain=zwiki>browse open issues</dtml-translate></a>.
          <br />
          <b>
            <input type="text" name="textortitle" size="20" maxlength="100" 
