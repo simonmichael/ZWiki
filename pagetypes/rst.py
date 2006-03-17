@@ -66,7 +66,9 @@ class ZwikiRstPageType(AbstractPageType):
         return heading
 
     def discussionSeparator(self,page):
-        return '\n\n-----\n\n'
+        #first comment gives "Document or section may not begin with a transition.", #1233
+        #return '\n\n-----\n\n'
+        return ''
 
     def inlineImage(self, page, id, path):
         return '\n\n.. image:: %s\n' % path
