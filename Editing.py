@@ -191,10 +191,15 @@ class EditingSupport:
         self.checkForSpam(t)
         t = '\n\n' + t
         self.raw += t
-        # add to html cache, rendered:
+        # add to prerendered html:
+        # apply single-message prerendering XXX
         t = self.pageType().preRenderMessage(self,m)
-        if self.messageCount()==1:t=self.pageType().discussionSeparator(self)+t
+        # if it's the first, add appropriate discussion separator
+        if self.messageCount()==1:
+            t=self.pageType().discussionSeparator(self) + t
+        # apply page's standard prerender to the lot XXX
         t = self.pageType().preRender(self,t)
+        # and append to the page's prerendered html
         self.setPreRendered(self.preRendered()+t)
         self.cookDtmlIfNeeded()
 
