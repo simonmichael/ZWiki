@@ -33,13 +33,13 @@ class Tests(unittest.TestCase):
 
 #I think I've had enough
 #
-#    def testAddZwikiWebForm(self):
-#        from Products.ZWiki.ZWikiWeb import *
-#        manage_addZWikiWebForm()#client=zc,
+#    def testAddWikiForm(self):
+#        from Products.ZWiki.Wikis import *
+#        manage_addWikiForm()#client=zc,
 #                               #REQUEST=REQUEST,
 #                               #PARENTS=PARENTS)
 
-#    def testAddZwikiWeb(self):
+#    def testAddWiki(self):
 #        p = mockPage()
 #        f = p.aq_parent
 #        req = p.REQUEST
@@ -49,7 +49,7 @@ class Tests(unittest.TestCase):
 #        req['new_title'] = wikitype + ' wiki'
 #        req['wiki_type'] = wikitype
 #        # req['SERVER_URL'] required
-#        self.root.manage_addProduct['ZWiki'].ZWikiWebAddForm(
+#        self.root.manage_addProduct['ZWiki'].addWikiForm(
 #            client=self.root,\
 #            REQUEST=req)
 
@@ -67,7 +67,7 @@ class Tests(unittest.TestCase):
 #            zc.REQUEST['new_id'] = wikitype
 #            zc.REQUEST['new_title'] = wikitype + ' wiki'
 #            zc.REQUEST['wiki_type'] = wikitype
-#            manage_addZWikiWeb(zc,
+#            manage_addWiki(zc,
 #                               wikitype,
 #                               new_title=wikitype+' wiki',
 #                               wiki_type=wikitype,

@@ -1,4 +1,4 @@
-# TrackerSupport mixin
+# PluginTracker mixin
 
 from __future__ import nested_scopes
 import os, string, re, os.path
@@ -13,9 +13,9 @@ from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER, formattedTraceback, addHook
-from Products.ZWiki.UI import loadDtmlMethod, loadPageTemplate, \
+from Products.ZWiki.Views import loadDtmlMethod, loadPageTemplate, \
      STANDARD_TEMPLATES, PLONE_TEMPLATES
-from Products.ZWiki.I18nSupport import _
+from Products.ZWiki.I18n import _
 
 STANDARD_TEMPLATES.update({
     'issuepropertiesform': loadDtmlMethod('issuepropertiesform','plugins/tracker'),
@@ -76,7 +76,7 @@ TRACKER_METADATA = [
 for a in TRACKER_METADATA: registerPageMetaData(a)
 
 
-class TrackerSupport:
+class PluginTracker:
     """
     This mix-in class adds some methods to ZWikiPage to facilitate
     wiki-based issue trackers.
@@ -604,15 +604,15 @@ class TrackerSupport:
                     changed = 1
         return changed
 
-InitializeClass(TrackerSupport)
-registerPlugin(TrackerSupport)
+InitializeClass(PluginTracker)
+registerPlugin(PluginTracker)
 
 # register some upgrade hooks
 from Products.ZWiki.Admin import upgrade_hooks, upgradeId_hooks
 
 # install issue properties if missing, eg if this page is being
 # viewed as an issue for the first time
-addHook(upgrade_hooks, TrackerSupport.upgradeIssueProperties)
+addHook(upgrade_hooks, PluginTracker.upgradeIssueProperties)
 
 # convert old-style IssueNNNN ... page names to #NNNN ...
 # when checking page id. Leaves non-issue page names unchanged.

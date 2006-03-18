@@ -1,17 +1,17 @@
-# MailSupport mixin
+# PageMailSupport mixin
 
 import string, re, sys
 from string import split,join,find,lower,rfind,atoi,strip,lstrip
 from types import *
 
-from I18nSupport import _
+from I18n import _
 from TextFormatter import TextFormatter
 from Utils import html_unquote,BLATHER,formattedTraceback,stripList, \
      isIpAddress,isEmailAddress,isUsername
 from Defaults import AUTO_UPGRADE, PAGE_METATYPE
 
 
-class SubscriberManagerMixin:
+class PageSubscriptionSupport:
     """
     This mixin class adds subscriber management to a wiki page (and folder).
 
@@ -431,7 +431,7 @@ class SubscriberManagerMixin:
             #return usernames
         
 
-class MailSupport:
+class PageMailSupport:
     """
     This mixin class provides mail-out support and general mail utilities.
     """

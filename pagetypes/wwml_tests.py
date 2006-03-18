@@ -7,9 +7,9 @@ def test_suite():
     suite.addTest(unittest.makeSuite(Tests))
     return suite
 
-class Tests(ZwikiTests):
+class Tests(ZwikiTestCase):
 
-    def test_ZwikiWwmlPageType(self):
+    def test_PageTypeWwml(self):
         self.p.edit(text = """
 This is the first paragraph.  There should be a paragraph marker before it,
 and it should wrap nicely around.

@@ -66,7 +66,7 @@ except (ImportError, NameError):
     def _(s): return s
     from Products.PageTemplates.PageTemplateFile import PageTemplateFile
     from Globals import HTMLFile, DTMLFile
-    class DummyTranslateTag:
+    class MockTranslateTag:
         name='translate'
         blockContinuations=()
         _msgid = None
@@ -88,5 +88,5 @@ except (ImportError, NameError):
             return r + '\n'
         __call__=render
     from DocumentTemplate.DT_String import String
-    String.commands['translate'] = DummyTranslateTag
+    String.commands['translate'] = MockTranslateTag
     BLATHER('did not find PlacelessTranslationService, the Zwiki skin will not be localized')

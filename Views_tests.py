@@ -6,9 +6,9 @@ def test_suite():
     suite.addTest(unittest.makeSuite(Tests))
     return suite
 
-class Tests(ZwikiTests):
+class Tests(ZwikiTestCase):
 
     def test_STANDARD_TEMPLATES(self):
-        STANDARD_TEMPLATES = ZWiki.UI.STANDARD_TEMPLATES
+        STANDARD_TEMPLATES = ZWiki.Views.STANDARD_TEMPLATES
         # do all default templates have meta_types ? this has been fragile
         self.failIf(filter(lambda x:not hasattr(x,'meta_type'),STANDARD_TEMPLATES.values()))

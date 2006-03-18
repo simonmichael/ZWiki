@@ -1,4 +1,4 @@
-# CommentsSupport mixin
+# PageCommentsSupport mixin
 
 import sys, os, string, re, email, email.Errors
 from mailbox import UnixMailbox, PortableUnixMailbox
@@ -16,7 +16,7 @@ from Utils import BLATHER, html_quote, DateTimeSyntaxError, \
   stringBefore, stringBeforeAndIncluding, stringAfter, stringAfterAndIncluding
 
 
-class CommentsSupport:
+class PageCommentsSupport:
     """
     I manage comments stored as rfc2822 messages in a wiki page.
 
@@ -161,5 +161,5 @@ class CommentsSupport:
     messages = comments
     upgradeMessages = upgradeComments
 
-InitializeClass(CommentsSupport)
+InitializeClass(PageCommentsSupport)
 

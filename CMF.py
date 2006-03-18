@@ -14,7 +14,7 @@ except ImportError:
 
 # XXX also need to skip when running unit tests ?
 if not HAS_CMF:    
-    class CMFAwareness:
+    class PageCMFSupport:
         __implements__ = ()
         def supportsCMF(self): return 0
         def inCMF(self): return 0
@@ -91,7 +91,7 @@ else:
 
     InitializeClass(ZwikiDublinCoreImpl)
 
-    class CMFAwareness(PortalContent, ZwikiDublinCoreImpl):
+    class PageCMFSupport(PortalContent, ZwikiDublinCoreImpl):
         """
         Mix-in class for CMF support
         """
@@ -175,5 +175,5 @@ else:
             """Always show the green border; Zwiki's current UI needs it."""
             return 1
 
-InitializeClass(CMFAwareness)
+InitializeClass(PageCMFSupport)
 

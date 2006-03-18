@@ -27,14 +27,14 @@ except:
 from Products.ZWiki import __version__
 from Defaults import PREFER_USERNAME_COOKIE, PAGE_METADATA, BORING_PAGES
 import Permissions
-from I18nSupport import _
+from I18n import _
 
 # adapt to zope 2.9 transaction api
 try: from transaction import get as get_transaction
 except ImportError: get_transaction = get_transaction
 
 
-class Utils:
+class PageUtils:
     """
     Miscellaneous utility methods for zwiki pages.
     """
@@ -507,7 +507,7 @@ class Utils:
                 return 1
         return 0
 
-InitializeClass(Utils)
+InitializeClass(PageUtils)
 
 
 # generic utilities

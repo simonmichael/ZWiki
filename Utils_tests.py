@@ -7,7 +7,7 @@ def test_suite():
     suite.addTest(unittest.makeSuite(Tests))
     return suite
 
-class Tests(ZwikiTests):
+class Tests(ZwikiTestCase):
     def test_checkSufficientId(self):
         p, r = self.page, self.request
         self.failUnless(p.checkSufficientId(r))

@@ -7,9 +7,9 @@ def test_suite():
     suite.addTest(unittest.makeSuite(Tests))
     return suite
 
-class Tests(ZwikiTests):
+class Tests(ZwikiTestCase):
 
-    def test_ZwikiPlaintextPageType(self):
+    def test_PageTypePlaintext(self):
         self.p.folder().allowed_page_types = ['plaintext']
         self.p.edit(text='! PageOne PageTwo\n',type='plaintext')
         self.assertEquals(self.p.render(bare=1),

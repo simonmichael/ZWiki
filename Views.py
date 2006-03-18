@@ -17,7 +17,7 @@ from Products.PageTemplates.Expressions import SecureModuleImporter
 from Defaults import PAGE_METATYPE, DEFAULT_DISPLAYMODE
 from Utils import BLATHER,formattedTraceback
 from Regexps import htmlheaderexpr, htmlfooterexpr, htmlbodyexpr
-from I18nSupport import _, DTMLFile, HTMLFile
+from I18n import _, DTMLFile, HTMLFile
 
 
 # utilities
@@ -659,7 +659,7 @@ class SkinViews:
 InitializeClass(SkinViews)
 
 
-class UI(
+class PageViews(
     SkinUtils,
     SkinSwitchingUtils,
     SkinViews,

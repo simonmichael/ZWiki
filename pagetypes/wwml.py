@@ -2,10 +2,10 @@
 # contributed by Tres Seaver <tseaver@palladion.com>
 
 from common import *
-from Products.ZWiki.I18nSupport import _
+from Products.ZWiki.I18n import _
 from Products.ZWiki.pagetypes import registerPageType
 
-class ZwikiWwmlPageType(AbstractPageType):
+class PageTypeWwml(PageTypeBase):
     _id = 'wwml'
     _name = 'WikiWikiWeb markup'
     supportsWwml = yes
@@ -378,4 +378,4 @@ def translate_WWML(text) :
     return string.join(WWMLTranslator()(str(text).split('\n')),'\n')
 
 
-registerPageType(ZwikiWwmlPageType)
+registerPageType(PageTypeWwml)

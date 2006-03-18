@@ -7,7 +7,7 @@ def test_suite():
     suite.addTest(unittest.makeSuite(Tests))
     return suite
 
-class Tests(ZwikiTests):
+class Tests(ZwikiTestCase):
 
     #def test_upgrade(self):
     #    p = mockPage(__name__='SomeId').aq_parent.SomeId

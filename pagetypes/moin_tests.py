@@ -7,7 +7,7 @@ def test_suite():
     suite.addTest(unittest.makeSuite(Tests))
     return suite
 
-class Tests(ZwikiTests):
+class Tests(ZwikiTestCase):
 
     def test_moin_page_type(self):
         self.p.edit(text='! PageOne PageTwo\n',type='moin')

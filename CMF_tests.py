@@ -42,7 +42,7 @@ else:
         site.cmf_install_zwiki()
 
     # this fixture provides a plone site without zwiki installed
-    class InstallTests(PloneTestCase.PloneTestCase):
+    class TestsOfCMFPloneInstall(PloneTestCase.PloneTestCase):
         afterSetUp = afterSetUp
 
         def testInstallViaExternalMethod(self):

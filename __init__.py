@@ -9,8 +9,8 @@ import os, re
 from os import path
 import Globals, OFS.Folder
 from Globals import MessageDialog
-import ZWikiPage, ZWikiWeb, Permissions, Defaults, OutlineSupport
-from I18nSupport import _
+import ZWikiPage, Wikis, Permissions, Defaults, OutlineSupport
+from I18n import _
 
 misc_ = {
     'ZWikiPage_icon': Globals.ImageFile(path.join('images','ZWikiPage_icon.gif'),
@@ -67,15 +67,15 @@ def initialize(context):
             OFS.Folder.Folder,
             meta_type=Defaults.WIKI_ADD_MENU_NAME,
             permission=Permissions.AddWiki,
-            #icon = 'images/ZWikiWeb_icon.gif'
+            #icon = 'images/Wiki_icon.gif'
             constructors = ( 
-                ZWikiWeb.manage_addZWikiWebForm,
-                ZWikiWeb.manage_addZWikiWeb,
-                ZWikiWeb.listWikis,
-                ZWikiWeb.listZodbWikis,
-                ZWikiWeb.listFsWikis,
-                ZWikiWeb.addZWikiWebFromFs,
-                ZWikiWeb.addZWikiWebFromZodb,
+                Wikis.manage_addWikiForm,
+                Wikis.manage_addWiki,
+                Wikis.listWikis,
+                Wikis.listZodbWikis,
+                Wikis.listFsWikis,
+                Wikis.addWikiFromFs,
+                Wikis.addWikiFromZodb,
                 )
             )
         # do CMF initialisation if installed

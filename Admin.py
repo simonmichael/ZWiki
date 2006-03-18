@@ -11,14 +11,14 @@ from OFS.CopySupport import CopyError
 from OFS.DTMLMethod import DTMLMethod
 from DateTime import DateTime
 
-from I18nSupport import _
+from I18n import _
 import Permissions
 from Utils import get_transaction, BLATHER, formattedTraceback, DateTimeSyntaxError, callHooks
 from pagetypes import PAGE_TYPE_UPGRADES
 from Defaults import PAGE_METADATA, \
      TEXTINDEXES, FIELDINDEXES, KEYWORDINDEXES, DATEINDEXES, PATHINDEXES
 
-# copied from ZWikiWeb.py
+# copied from Wikis.py
 def _addDTMLMethod(self, id, title='', file=''):
     id=str(id)
     title=str(title)
@@ -29,7 +29,7 @@ def _addDTMLMethod(self, id, title='', file=''):
     #ob.setSubOwner('both') #?
     self._setObject(id, ob)
 
-class AdminSupport:
+class PageAdminSupport:
     """
     This mix-in class provides some utilities to ease wiki administration.
     """
@@ -275,7 +275,7 @@ class AdminSupport:
 
         self.upgradeComments(REQUEST)
                 
-        # MailSupport does a bit more (merge here ?)
+        # PageMailSupport does a bit more (merge here ?)
         self._upgradeSubscribers()
 
         # also make sure there is an up-to-date outline cache
@@ -286,7 +286,7 @@ class AdminSupport:
         """
         Install some default wiki pages to help get a wiki started.
         """
-        # copied from ZWikiWeb.py
+        # copied from Wikis.py
         dir = package_home(globals()) + os.sep + 'wikis' + os.sep + 'basic'
         filenames = os.listdir(dir)
         for filename in filenames:
@@ -422,4 +422,4 @@ class AdminSupport:
         if REQUEST:
             REQUEST.RESPONSE.redirect(self.page_url())
             
-InitializeClass(AdminSupport)
+InitializeClass(PageAdminSupport)

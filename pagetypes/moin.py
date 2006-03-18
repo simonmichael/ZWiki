@@ -13,18 +13,18 @@ license: GNU GPL, see COPYING for details.
 Modified by Simon Michael for Zwiki moin markup support.
 Copyright 2004-2005 Simon Michael for the Zwiki community 
 
-This is all in one file for convenience of the plugin handling code.
-It is moin 1.3b2's parsers/wiki.py and formatter/text_html.py with
-wiki linking and troublesome bits (macros) hacked out, plus the
-usual Zwiki page type code.
+This is all in one file for convenience of the plugin handling code.  It
+is moin 1.3b2's parsers/wiki.py and formatter/text_html.py with wiki
+linking and troublesome bits (macros) hacked out, Moin prefix added to a
+few classes, plus the usual Zwiki page type class.
 """
 
 import os, re, string
 from common import *
-from Products.ZWiki.I18nSupport import _
+from Products.ZWiki.I18n import _
 from Products.ZWiki.pagetypes import registerPageType
 
-class ZwikiMoinPageType(AbstractPageType):
+class PageTypeMoin(PageTypeBase):
     _id = 'moin'
     _name = 'MoinMoin markup'
     supportsMoin = yes
@@ -90,7 +90,7 @@ class MoinRequest:
     def __unicode__(self): return self.output
     def getPragma(self,a,b): return b
 
-class Parser:
+class MoinParser:
     """
         Object that turns Wiki markup into HTML.
 
@@ -353,7 +353,7 @@ class Parser:
         if inline:
             Parser = wikiutil.getParserForExtension(self.cfg, ext)
             if Parser is not None:
-                colorizer = Parser(open(fpath, 'r').read(), self.request)
+                colorizer = MoinParser(open(fpath, 'r').read(), self.request)
                 colorizer.format(self.formatter)
 
         url = AttachFile.getAttachUrl(pagename, url, self.request)
@@ -1163,7 +1163,7 @@ class Parser:
 
 
 
-class FormatterBase:
+class MoinFormatterBase:
     """ This defines the output interface used all over the rest of the code.
 
         Note that no other means should be used to generate _content_ output,
@@ -1448,7 +1448,7 @@ class FormatterBase:
 
 
 
-class Formatter(FormatterBase):
+class MoinFormatter(MoinFormatterBase):
     """
         Send HTML data.
     """
@@ -1456,7 +1456,7 @@ class Formatter(FormatterBase):
     hardspace = '&nbsp;'
 
     def __init__(self, request, **kw):
-        apply(FormatterBase.__init__, (self, request), kw)
+        apply(MoinFormatterBase.__init__, (self, request), kw)
         self._in_li = 0
         self._in_code = 0
         self._in_code_area = 0
@@ -1527,7 +1527,7 @@ class Formatter(FormatterBase):
 
             See wikiutil.link_tag() for possible keyword parameters.
         """
-        apply(FormatterBase.pagelink, (self, on, pagename), kw)
+        apply(MoinFormatterBase.pagelink, (self, on, pagename), kw)
         page = Page(self.request, pagename, formatter=self);
         
         if self.request.user.show_nonexist_qm and on and not page.exists():
@@ -1631,7 +1631,7 @@ class Formatter(FormatterBase):
         return ['<tt>', '</tt>'][not on]
 
     def preformatted(self, on):
-        FormatterBase.preformatted(self, on)
+        MoinFormatterBase.preformatted(self, on)
         return ['<pre>', '</pre>'][not on]
 
     def small(self, on):
@@ -1739,7 +1739,7 @@ function togglenumber(did,nstart,nstep){
     def paragraph(self, on):
         #if self._terse:
         #    return ''
-        FormatterBase.paragraph(self, on)
+        MoinFormatterBase.paragraph(self, on)
         if self._in_li:
             self._in_li = self._in_li + 1
         result = ['<p%s>' % self._langAttr(), '\n</p>'][not on]
@@ -2024,8 +2024,8 @@ def isPicture(url):
 
 
 
-class WikiUtil: pass
-wikiutil = WikiUtil()
+class MoinWikiUtil: pass
+wikiutil = MoinWikiUtil()
 wikiutil.escape = escape
 wikiutil.parseAttributes = parseAttributes
 wikiutil.isPicture = isPicture
@@ -2035,13 +2035,13 @@ class MoinPage:
 
 def render_moin_markup(text):
     req = MoinRequest()
-    formatter = Formatter(req)
+    formatter = MoinFormatter(req)
     formatter.setPage(MoinPage())
-    Parser(text,req).format(formatter)
+    MoinParser(text,req).format(formatter)
     return unicode(req)
 
 #print render_moin_markup("'''strong'''")
 
 ######################################################################
 
-registerPageType(ZwikiMoinPageType)
+registerPageType(PageTypeMoin)

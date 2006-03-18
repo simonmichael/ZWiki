@@ -10,7 +10,7 @@ import Permissions
 from Utils import BLATHER,formattedTraceback
 
 
-class CatalogAwareness:
+class PageCatalogSupport:
     """
     Holds most of ZWikiPage's catalog awareness code.  Similar to Zope's
     or CMF's catalog awareness with a little extra behaviour.
@@ -125,7 +125,7 @@ class CatalogAwareness:
     updateCatalog = reindex_object = index_object 
 
 
-InitializeClass(CatalogAwareness)
+InitializeClass(PageCatalogSupport)
 
 
 # enable catalog awareness for common ZMI operations - had to be done in

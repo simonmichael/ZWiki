@@ -12,9 +12,9 @@ from Globals import InitializeClass
 import Permissions
 from Utils import BLATHER, html_quote
 
-from I18nSupport import _
+from I18n import _
 
-class RSSMixin:
+class PageRSSSupport:
     """
     I provide various kinds of RSS feed for the page and the whole wiki.
     """
@@ -124,4 +124,4 @@ class RSSMixin:
         return t
 
 
-InitializeClass(RSSMixin) 
+InitializeClass(PageRSSSupport) 

@@ -11,7 +11,7 @@ from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER
-from Products.ZWiki.UI import loadPageTemplate, onlyBodyFrom, STANDARD_TEMPLATES
+from Products.ZWiki.Views import loadPageTemplate, onlyBodyFrom, STANDARD_TEMPLATES
 
 STANDARD_TEMPLATES.update({
     'ratingform': loadPageTemplate('ratingform','plugins/rating'),
@@ -24,7 +24,7 @@ RATING_METADATA = [
 for a in RATING_METADATA: registerPageMetaData(a)
 
 
-class RatingSupport:
+class PluginRating:
     """
     I am a mixin that manages a numeric rating based on user votes.
 
@@ -166,5 +166,5 @@ class RatingSupport:
         if rating == '' or rating == None: rating = self.rating()
         return '<span class="%s">(%s)</span>' % (self.ratingStyle(rating),rating)
 
-InitializeClass(RatingSupport) 
-registerPlugin(RatingSupport)
+InitializeClass(PluginRating) 
+registerPlugin(PluginRating)

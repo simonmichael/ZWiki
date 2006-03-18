@@ -7,7 +7,7 @@ def test_suite():
     suite.addTest(unittest.makeSuite(Tests))
     return suite
 
-class Tests(ZwikiTests):
+class Tests(ZwikiTestCase):
 
     def test_excerptAt(self):
         self.page.edit(text='This is a test of the<br />\n excerptAt method,')

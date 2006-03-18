@@ -17,9 +17,9 @@ def setupSomePageHierarchy(self):
     self.page.create('SingletonPage')
     self.wiki.SingletonPage.reparent(REQUEST=self.request)
 
-class Tests(ZwikiTests):
+class Tests(ZwikiTestCase):
     def afterSetUp(self):
-        ZwikiTests.afterSetUp(self)
+        ZwikiTestCase.afterSetUp(self)
         setupSomePageHierarchy(self)
 
     def beforeTearDown(self):

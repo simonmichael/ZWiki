@@ -1,7 +1,7 @@
 # zwiki page hierarchy functionality
 # based on original code by Ken Manheimer
 #
-# The OutlineSupport mixin manages the wiki's page hierarchy, making use
+# The PageOutlineSupport mixin manages the wiki's page hierarchy, making use
 # of the more generic Outline class.  It is broken into several smaller
 # mixins to help keep things organized.
 #
@@ -35,13 +35,13 @@
 # -keep it synced during reparent
 # -keep it synced during ZMI operations
 # -check mutators for persistence compatibility ?
-# -refactor OutlineSupport
+# -refactor PageOutlineSupport
 # try dropping parents property/index/metadata
 # upgrade process
 # code cleanup/renaming
 # simplify Outline implementation
 # remove Outline/nesting split ?
-# refactor/simplify OutlineRenderingMixin
+# refactor/simplify OutlineRendering
 
 from __future__ import nested_scopes
 import string, re
@@ -62,7 +62,7 @@ from Defaults import PAGE_METATYPE
 from Regexps import bracketedexpr
 import Outline
 
-from I18nSupport import _
+from I18n import _
 
 def deepappend(nesting, page):
     """
@@ -101,7 +101,7 @@ class PersistentOutline(Outline.Outline, SimpleItem):
 InitializeClass(PersistentOutline)
 
 
-class ParentsPropertyMixin:
+class ParentsProperty:
     """
     I provide the parents property, the old way to store page hierarchy.
 
@@ -187,10 +187,96 @@ class ParentsPropertyMixin:
             self.setParents(cleanedupparents)
             self.index_object() #XXX only need to update parents index & metadata
 
-InitializeClass(ParentsPropertyMixin) 
+InitializeClass(ParentsProperty) 
 
 
-class OutlineManagerMixin:
+class ShowSubtopicsProperty:
+    """
+    I determine when to display subtopics on a page.
+    """
+    security = ClassSecurityInfo()
+
+    def subtopicsEnabled(self,**kw):
+        """
+        Decide in a complicated way if this page should display it's subtopics.
+
+        First, if the folder has a show_subtopics property (can acquire)
+        and it's false, we will never show subtopics.  Otherwise look for
+        a show_subtopics property
+        - in REQUEST
+        - on the current page
+        - on our primary ancestor pages, all the way to the top,
+        and return the first one we find. Otherwise return true.
+        """
+        prop = 'show_subtopics'
+        if getattr(self.folder(),prop,1):
+            if kw.has_key(prop):
+                return kw[prop] and 1
+            elif hasattr(self,'REQUEST') and hasattr(self.REQUEST,prop):
+                return getattr(self.REQUEST,prop) and 1
+            elif hasattr(self.aq_base,prop):
+                return getattr(self,prop) and 1
+            elif self.primaryParent():
+                # poor caching
+                try: return self.primaryParent().subtopicsEnabled() 
+                except:
+                    # experimental: support all-brains
+                    try: return self.primaryParent().getObject().subtopicsEnabled() 
+                    except: # XXX still run into errors here, investigate
+                        BLATHER('DEBUG: error in subtopicsEnabled for %s, primaryParent is: %s'\
+                             % (self.id(),`self.primaryParent()`))
+                        return not (getattr(getattr(self,'REQUEST',None),
+                                            'zwiki_displaymode',
+                                            None) == 'minimal')
+            else:
+                #return not (getattr(getattr(self,'REQUEST',None),
+                #                    'zwiki_displaymode',
+                #                    None) == 'minimal')
+                return 1
+        else:
+            return 0
+
+    def subtopicsPropertyStatus(self):
+        """
+        Get the status of the show_subtopics property on this page.
+
+        no property:    -1 ("default")
+        true property:   1 ("always")
+        false property:  0 ("never")
+        """
+        if not hasattr(self.aq_base,'show_subtopics'): return -1
+        else: return self.show_subtopics and 1
+
+    def setSubtopicsPropertyStatus(self,status,REQUEST=None):
+        """
+        Set, clear or remove this page's show_subtopics property.
+
+        Same values as getSubtopicsStatus.
+        """
+        props = map(lambda x:x['id'], self._properties)
+        if status == -1:
+            if 'show_subtopics' in props:
+                self.manage_delProperties(ids=['show_subtopics'],
+                                          REQUEST=REQUEST)
+        elif status:
+            if not 'show_subtopics' in props:
+                self.manage_addProperty('show_subtopics',1,'boolean',
+                                        REQUEST=REQUEST)
+            else:
+                self.manage_changeProperties(show_subtopics=1,
+                                             REQUEST=REQUEST)
+        else:
+            if not 'show_subtopics' in props:
+                self.manage_addProperty('show_subtopics',0,'boolean',
+                                        REQUEST=REQUEST)
+            else:
+                self.manage_changeProperties(show_subtopics=0,
+                                             REQUEST=REQUEST)
+
+InitializeClass(ShowSubtopicsProperty)
+
+
+class OutlineManager:
     """
     I manage and query a cached outline object for the wiki.
 
@@ -517,96 +603,10 @@ class OutlineManagerMixin:
         """
         return self.wikiOutline().offspring([self.pageName()],depth=depth)
 
-InitializeClass(OutlineManagerMixin)
+InitializeClass(OutlineManager)
 
 
-class SubtopicsPropertyMixin:
-    """
-    I determine when to display subtopics on a page.
-    """
-    security = ClassSecurityInfo()
-
-    def subtopicsEnabled(self,**kw):
-        """
-        Decide in a complicated way if this page should display it's subtopics.
-
-        First, if the folder has a show_subtopics property (can acquire)
-        and it's false, we will never show subtopics.  Otherwise look for
-        a show_subtopics property
-        - in REQUEST
-        - on the current page
-        - on our primary ancestor pages, all the way to the top,
-        and return the first one we find. Otherwise return true.
-        """
-        prop = 'show_subtopics'
-        if getattr(self.folder(),prop,1):
-            if kw.has_key(prop):
-                return kw[prop] and 1
-            elif hasattr(self,'REQUEST') and hasattr(self.REQUEST,prop):
-                return getattr(self.REQUEST,prop) and 1
-            elif hasattr(self.aq_base,prop):
-                return getattr(self,prop) and 1
-            elif self.primaryParent():
-                # poor caching
-                try: return self.primaryParent().subtopicsEnabled() 
-                except:
-                    # experimental: support all-brains
-                    try: return self.primaryParent().getObject().subtopicsEnabled() 
-                    except: # XXX still run into errors here, investigate
-                        BLATHER('DEBUG: error in subtopicsEnabled for %s, primaryParent is: %s'\
-                             % (self.id(),`self.primaryParent()`))
-                        return not (getattr(getattr(self,'REQUEST',None),
-                                            'zwiki_displaymode',
-                                            None) == 'minimal')
-            else:
-                #return not (getattr(getattr(self,'REQUEST',None),
-                #                    'zwiki_displaymode',
-                #                    None) == 'minimal')
-                return 1
-        else:
-            return 0
-
-    def subtopicsPropertyStatus(self):
-        """
-        Get the status of the show_subtopics property on this page.
-
-        no property:    -1 ("default")
-        true property:   1 ("always")
-        false property:  0 ("never")
-        """
-        if not hasattr(self.aq_base,'show_subtopics'): return -1
-        else: return self.show_subtopics and 1
-
-    def setSubtopicsPropertyStatus(self,status,REQUEST=None):
-        """
-        Set, clear or remove this page's show_subtopics property.
-
-        Same values as getSubtopicsStatus.
-        """
-        props = map(lambda x:x['id'], self._properties)
-        if status == -1:
-            if 'show_subtopics' in props:
-                self.manage_delProperties(ids=['show_subtopics'],
-                                          REQUEST=REQUEST)
-        elif status:
-            if not 'show_subtopics' in props:
-                self.manage_addProperty('show_subtopics',1,'boolean',
-                                        REQUEST=REQUEST)
-            else:
-                self.manage_changeProperties(show_subtopics=1,
-                                             REQUEST=REQUEST)
-        else:
-            if not 'show_subtopics' in props:
-                self.manage_addProperty('show_subtopics',0,'boolean',
-                                        REQUEST=REQUEST)
-            else:
-                self.manage_changeProperties(show_subtopics=0,
-                                             REQUEST=REQUEST)
-
-InitializeClass(SubtopicsPropertyMixin)
-
-
-class OutlineRenderingMixin:
+class OutlineRendering:
     """
     I present various parts of the wiki outline as HTML.
 
@@ -1004,13 +1004,13 @@ class OutlineRenderingMixin:
     # backwards compatibility
     map = contents
 
-InitializeClass(OutlineRenderingMixin)
+InitializeClass(OutlineRendering)
 
-class OutlineSupport(
-    OutlineManagerMixin, 
-    ParentsPropertyMixin,
-    SubtopicsPropertyMixin,
-    OutlineRenderingMixin
+class PageOutlineSupport(
+    ParentsProperty,
+    ShowSubtopicsProperty,
+    OutlineManager, 
+    OutlineRendering
     ):
     """
     I make a page aware of it's place within the overall wiki outline

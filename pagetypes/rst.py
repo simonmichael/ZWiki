@@ -1,5 +1,5 @@
 from common import *
-from Products.ZWiki.I18nSupport import _
+from Products.ZWiki.I18n import _
 from Products.ZWiki.pagetypes import registerPageType
 
 # RST verbosity (MORE <- 0 debug, 1 info, 2 warning, 3 error, 4 severe -> LESS) :
@@ -13,7 +13,7 @@ except ImportError:
     reStructuredText = None
     BLATHER('could not import reStructuredText, will not be available')
 
-class ZwikiRstPageType(AbstractPageType):
+class PageTypeRst(PageTypeBase):
     _id = 'rst'
     _name = 'reStructured Text'
     supportsRst = yes
@@ -76,4 +76,4 @@ class ZwikiRstPageType(AbstractPageType):
     def linkFile(self, page, id, path):
         return '\n\n!`%s`__\n\n__ %s\n' % (id, path)
 
-registerPageType(ZwikiRstPageType)
+registerPageType(PageTypeRst)

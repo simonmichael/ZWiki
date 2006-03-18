@@ -8,9 +8,9 @@ from Globals import package_home
 from ZWikiPage import ZWikiPage
 import Permissions
 from Defaults import PAGE_METATYPE, PAGE_PORTALTYPE
-from ZWikiWeb import _addDTMLMethod, _addZWikiPage
+from Wikis import _addDTMLMethod, _addZWikiPage
 
-from I18nSupport import _
+from I18n import _
 
 wiki_globals=globals()
 

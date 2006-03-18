@@ -41,7 +41,7 @@ def abbreviate(lines,prefix,maxlines=5):
     return output
 
 
-class DiffSupport:
+class PageDiffSupport:
     """
     I provide methods for browsing revision diffs to ZWikiPage.
     """

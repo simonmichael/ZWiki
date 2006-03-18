@@ -1,8 +1,8 @@
 from common import *
-from Products.ZWiki.I18nSupport import _
+from Products.ZWiki.I18n import _
 from Products.ZWiki.pagetypes import registerPageType
 
-class ZwikiPlaintextPageType(AbstractPageType):
+class PageTypePlaintext(PageTypeBase):
     _id = 'plaintext'
     _name = 'Plain text'
 
@@ -22,4 +22,4 @@ class ZwikiPlaintextPageType(AbstractPageType):
         t = page.addSkinTo(t,**kw)
         return t
 
-registerPageType(ZwikiPlaintextPageType)
+registerPageType(PageTypePlaintext)

@@ -19,7 +19,7 @@ registerPageType. Quick start:
 - restart zope or refresh zwiki; your page type should appear in the editform
 
 - tweak your page type until it does what you want. You can see a list of
-  overrideable page-type-specific methods in common.AbstractPageType.
+  overrideable page-type-specific methods in common.PageTypeBase.
   Don't forget to modify your supports* methods as appropriate.
 
 """
@@ -120,7 +120,7 @@ modules = [re.sub('.py$','',f) for f in os.listdir(__path__[0])
            ]
 # ensure the standard ordering of page types in the editform
 # XXX FIXME this is not robust against new page types, or the removal of a
-# page type.  Instead the ZWikiWeb install should add the folder property
+# page type.  Instead the wiki install should add the folder property
 # 'allowed_page_types' which specifies an order.
 firstmods = ['stx','rst','wwml','html','plaintext']
 firstmods.reverse()
@@ -140,9 +140,9 @@ for m in modules:
 
 
 # backwards compatibility - keep these here to keep old wikis happy (XXX ?)
-from plaintext import ZwikiPlaintextPageType
-from html import ZwikiHtmlPageType
-from stx import ZwikiStxPageType
-from rst import ZwikiRstPageType
-from wwml import ZwikiWwmlPageType
+from plaintext import PageTypePlaintext
+from html import PageTypeHtml
+from stx import PageTypeStx
+from rst import PageTypeRst
+from wwml import PageTypeWwml
 

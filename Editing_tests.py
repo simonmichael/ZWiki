@@ -44,7 +44,7 @@ def test_rename(self):
                  self.wiki.outline.parents('NewNameChildRenamed'))
     
 
-class Tests(ZwikiTests):
+class Tests(ZwikiTestCase):
 
     def test_manage_addZWikiPage(self):
         from Products.ZWiki.ZWikiPage import manage_addZWikiPage
@@ -146,9 +146,9 @@ class Tests(ZwikiTests):
         p.recycle = lambda x: None
         req = MockRequest()
         #req = makerequest(self.app)
-        class MyMockResponse:
+        class MockResponse:
             def redirect(self, url): self.redirectedto = url
-        req.RESPONSE = MyMockResponse()
+        req.RESPONSE = MockResponse()
 
         # redirect to wiki url if no existing parents
         r = p.handleDeleteMe('DeleteMe',REQUEST=req)
@@ -539,7 +539,7 @@ long citations
         SHOULDDIFF2 = "\n\nbah\n\n"
         SHOULDMAILOUT2 = "bah\n"
 
-        from Products.ZWiki.Diff import DiffSupport
+        from Products.ZWiki.Diff import PageDiffSupport
         p = self.page
 
         # test formatting at each stage
@@ -549,7 +549,7 @@ long citations
         text = re.sub(r'Message-ID: <[^>]+>',r'Message-ID: <>',text)
         text = re.sub(r'In-reply-to: <[^>]+>',r'In-reply-to: <>',text)
         self.assertEqual(text,SHOULDWRITE)
-        diff = DiffSupport().textDiff(a=oldtext,b=text,verbose=0)
+        diff = PageDiffSupport().textDiff(a=oldtext,b=text,verbose=0)
         self.assertEqual(diff,SHOULDDIFF)
         #self.assertEqual(p.formatMailout(diff), SHOULDMAILOUT)
 
@@ -560,7 +560,7 @@ long citations
         text = p.read()
         text = re.sub(r'Message-ID: <[^>]+>',r'Message-ID: <>',text)
         text = re.sub(r'In-reply-to: <[^>]+>',r'In-reply-to: <>',text)
-        diff = DiffSupport().textDiff(a=oldtext,b=text,verbose=0)
+        diff = PageDiffSupport().textDiff(a=oldtext,b=text,verbose=0)
         #self.assertEqual(p.formatMailout(diff),
 #                         """\
 #From me Fri Dec 31 00:00:00 +0000 1999 From: me Date: Fri, 31 Dec 1999
@@ -578,7 +578,7 @@ long citations
         text = re.sub(r'Message-ID: <[^>]+>',r'Message-ID: <>',text)
         text = re.sub(r'In-reply-to: <[^>]+>',r'In-reply-to: <>',text)
         self.assertEqual(text,SHOULDWRITE)
-        diff = DiffSupport().textDiff(a=oldtext,b=text,verbose=0)
+        diff = PageDiffSupport().textDiff(a=oldtext,b=text,verbose=0)
         self.assertEqual(diff,SHOULDDIFF)
         #self.assertEqual(p.formatMailout(diff), SHOULDMAILOUT)
 

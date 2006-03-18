@@ -10,7 +10,7 @@ from Products.ZWiki import Permissions
 from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki.Utils import Popen3, formattedTraceback, BLATHER
-from Products.ZWiki.UI import addErrorTo
+from Products.ZWiki.Views import addErrorTo
 
 # from testsupport.py:
 def pdir(path): return os.path.split(path)[0]
@@ -31,7 +31,7 @@ try:
     from fit.Parse import Parse
     from fit.Parse import ParseException
     from fit.Fixture import Fixture
-    class FitSupport:
+    class PluginFit:
         """
         Mix-in class for fit support
         """
@@ -99,11 +99,11 @@ try:
 
 except ImportError:
     BLATHER('did not find fit in the PYTHONPATH, skipping')
-    class FitSupport:
+    class PluginFit:
         security = ClassSecurityInfo()
         security.declareProtected(Permissions.View, 'hasFitTests')
         def hasFitTests(self): return hasFitTests(self)
         def runFitTestsIn(self,text): return text
 
-InitializeClass(FitSupport)
-registerPlugin(FitSupport)
+InitializeClass(PluginFit)
+registerPlugin(PluginFit)

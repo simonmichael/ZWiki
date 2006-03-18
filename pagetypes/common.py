@@ -7,7 +7,7 @@ from Products.ZWiki.Utils import BLATHER, html_quote, html_unquote, formattedTra
 #XXX avoid import loop
 #from Products.ZWiki.plugins.purplenumbers import add_purple_numbers_to
 from Products.ZWiki.Regexps import dtmlorsgmlexpr, footnoteexpr
-from Products.ZWiki.I18nSupport import _
+from Products.ZWiki.I18n import _
 
 # XXX temporary hack, used for placing subtopics in the page. Supposed to
 # be secret, invisible, and never encountered by users. Ha!
@@ -20,7 +20,7 @@ def yes(self): return 1
 def no(self): return 0
 
 
-class AbstractPageType:
+class PageTypeBase:
     """
     I encapsulate wiki page behaviour which varies according to page type.
 
@@ -151,7 +151,7 @@ class AbstractPageType:
         return '\n\nfile: %s/%s\n' % (page.pageUrl(),path)
 
 
-class AbstractHtmlPageType(AbstractPageType):
+class PageTypeBaseHtml(PageTypeBase):
     """
     I am an abstract base class for zwiki page types which support HTML.
 

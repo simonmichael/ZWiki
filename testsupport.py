@@ -50,7 +50,7 @@ def afterSetUp(self):
     self.request = self.page.REQUEST = MockRequest()
     #self.request.cookies['zwiki_username'] = 'test'
 
-class ZwikiTests(ZopeTestCase.ZopeTestCase):
+class ZwikiTestCase(ZopeTestCase.ZopeTestCase):
     afterSetUp = afterSetUp
 
     
@@ -130,7 +130,7 @@ try:
         lambda self,context: MockRequest()
     PlacelessTranslationService.negotiate_language = \
         lambda self,context,domain: 'en'
-    #from Products.ZWiki import I18nSupport
-    #I18nSupport._ = lambda s:str(s)
+    #from Products.ZWiki import I18n
+    #I18n._ = lambda s:str(s)
 except ImportError:
     pass

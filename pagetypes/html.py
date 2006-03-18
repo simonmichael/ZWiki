@@ -1,8 +1,8 @@
 from common import *
-from Products.ZWiki.I18nSupport import _
+from Products.ZWiki.I18n import _
 from Products.ZWiki.pagetypes import registerPageType
 
-class ZwikiHtmlPageType(AbstractHtmlPageType):
+class PageTypeHtml(PageTypeBaseHtml):
     _id = 'html'
     _name = 'HTML'
     supportsHtml = yes
@@ -26,4 +26,4 @@ class ZwikiHtmlPageType(AbstractHtmlPageType):
         t = page.addSkinTo(t,**kw)
         return t
 
-registerPageType(ZwikiHtmlPageType)
+registerPageType(PageTypeHtml)

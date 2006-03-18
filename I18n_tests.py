@@ -54,8 +54,8 @@ else: # NEVER RUN
     ZopeTestCase.installProduct('ZWiki')
     ZopeTestCase.installProduct('PlacelessTranslationService')
 
-    from Products.ZWiki.I18nSupport import _
-    from Products.ZWiki.UI import loadDtmlMethod
+    from Products.ZWiki.I18n import _
+    from Products.ZWiki.Views import loadDtmlMethod
 
     def test_suite():
         suite = unittest.TestSuite()
@@ -63,7 +63,7 @@ else: # NEVER RUN
         suite.level = 2
         return suite
 
-    class Tests(ZwikiTests):
+    class Tests(ZwikiTestCase):
         """
         Unit tests for Zwiki i18n, aka "blood, sweat and tears".
 

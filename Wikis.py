@@ -12,18 +12,18 @@ from OFS.ObjectManager import customImporters
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from Products.PythonScripts.PythonScript import PythonScript
 from pagetypes import PAGETYPES, PAGE_TYPES
-from I18nSupport import DTMLFile, _
+from I18n import DTMLFile, _
 from ZWikiPage import ZWikiPage
 
 
 # ZMI wiki creation form
-manage_addZWikiWebForm = DTMLFile('skins/zwiki_standard/addwikiform', globals())
+manage_addWikiForm = DTMLFile('skins/zwiki_standard/addwikiform', globals())
 
 ######################################################################
 # FUNCTION CATEGORY: wikiweb creation
 ######################################################################
 
-def manage_addZWikiWeb(self, new_id, new_title='', wiki_type='zwikidotorg',
+def manage_addWiki(self, new_id, new_title='', wiki_type='zwikidotorg',
                        REQUEST=None, enter=0):
     """
     Create a new zwiki web of the specified type
@@ -40,9 +40,9 @@ def manage_addZWikiWeb(self, new_id, new_title='', wiki_type='zwikidotorg',
         
     else:
         if wiki_type in self.listFsWikis():
-            self.addZWikiWebFromFs(new_id,new_title,wiki_type,REQUEST)
+            self.addWikiFromFs(new_id,new_title,wiki_type,REQUEST)
         elif wiki_type in self.listZodbWikis():
-            self.addZWikiWebFromZodb(new_id,new_title,wiki_type,REQUEST)
+            self.addWikiFromZodb(new_id,new_title,wiki_type,REQUEST)
         else:
             return MessageDialog(
                 title=_('Unknown wiki type'),
@@ -55,7 +55,7 @@ def manage_addZWikiWeb(self, new_id, new_title='', wiki_type='zwikidotorg',
             if hasattr(folder, 'setup_%s'%(wiki_type)):
                 REQUEST.RESPONSE.redirect(REQUEST['URL3']+'/'+new_id+'/setup_%s'%(wiki_type))
             elif enter:
-                # can't see why this doesn't work after addZWikiWebFromFs
+                # can't see why this doesn't work after addWikiFromFs
                 #REQUEST.RESPONSE.redirect(getattr(self,new_id).absolute_url())
                 REQUEST.RESPONSE.redirect(REQUEST['URL3']+'/'+new_id+'/')
             else:
@@ -66,7 +66,7 @@ def manage_addZWikiWeb(self, new_id, new_title='', wiki_type='zwikidotorg',
         #else:
         #    return ''
 
-def addZWikiWebFromZodb(self,new_id, new_title='', wiki_type='zwikidotorg',
+def addWikiFromZodb(self,new_id, new_title='', wiki_type='zwikidotorg',
                         REQUEST=None):
     """
     Create a new zwiki web by cloning the specified template
@@ -84,7 +84,7 @@ def addZWikiWebFromZodb(self,new_id, new_title='', wiki_type='zwikidotorg',
     # set it to low-privileged "nobody" by default ?
 
 
-def addZWikiWebFromFs(self, new_id, title='', wiki_type='zwikidotorg',
+def addWikiFromFs(self, new_id, title='', wiki_type='zwikidotorg',
                       REQUEST=None):
     """
     Create a new zwiki web from the specified template on the filesystem.

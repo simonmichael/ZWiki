@@ -2,11 +2,11 @@ from testsupport import *
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(MailoutTests))
-    suite.addTest(unittest.makeSuite(SubscriptionTests))
+    suite.addTest(unittest.makeSuite(TestsOfMailout))
+    suite.addTest(unittest.makeSuite(TestsOfSubscription))
     return suite
 
-class MailoutTests(unittest.TestCase):
+class TestsOfMailout(unittest.TestCase):
     def setUp(self):
         self.p = mockPage()
         # mock up and record mail sending
@@ -58,7 +58,7 @@ class MailoutTests(unittest.TestCase):
     # see also testZWikiPage.testCommentFormatting
     #def test_formatMailout(self):
     #    #fmt = self.p.formatMailout
-    #    fmt = MailSupport().formatMailout
+    #    fmt = PageMailSupport().formatMailout
     #    # formatting nothing is ok
     #    self.assertEqual(fmt(' '),'')
     #    # fill paragraphs, strip leading and trailing newlines,
@@ -87,7 +87,7 @@ class MailoutTests(unittest.TestCase):
 #''')
 
 
-class SubscriptionTests(unittest.TestCase):
+class TestsOfSubscription(unittest.TestCase):
     def test_isSubscriber(self):
         sl = mockPage()
         sl._setSubscribers(['a','b'])

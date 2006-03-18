@@ -387,7 +387,7 @@ def descend_ancestors(page, ancestors, did, children):
     got.insert(0, page)
     return got
 
-# copied from ZWiki.Utils to avoid zope dependencies
+# copied from Utils to avoid zope dependencies
 def flatten(recursiveList):
     """
     Flatten a recursive list/tuple structure.

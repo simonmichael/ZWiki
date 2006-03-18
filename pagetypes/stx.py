@@ -1,5 +1,5 @@
 from common import *
-from Products.ZWiki.I18nSupport import _
+from Products.ZWiki.I18n import _
 from Products.ZWiki.pagetypes import registerPageType
 
 from Globals import MessageDialog
@@ -8,7 +8,7 @@ from StructuredText.DocumentWithImages import DocumentWithImages
 try: from StructuredText.DocumentClass import StructuredTextTable
 except ImportError: pass #older zope, won't need it
 
-class ZwikiStxPageType(AbstractHtmlPageType):
+class PageTypeStx(PageTypeBaseHtml):
     _id = 'stx'
     _name = 'Structured Text'
     supportsStx = yes
@@ -45,7 +45,7 @@ class ZwikiStxPageType(AbstractHtmlPageType):
                 # with a few more tweaks for STX NG
                 # XXX slow!!
                 t = StructuredText.HTMLWithImages(
-                    MyDocumentWithImages(StructuredText.Basic(t)),
+                    ZwikiDocumentWithImages(StructuredText.Basic(t)),
                     level=2)
         except:
             #BLATHER('Structured Text rendering failed on page %s: %s' \
@@ -101,7 +101,7 @@ class ZwikiStxPageType(AbstractHtmlPageType):
 
 
 # structured text customizations
-class MyDocumentWithImages(DocumentWithImages):
+class ZwikiDocumentWithImages(DocumentWithImages):
 
     # 1. leave dtml alone (ignore '' within SGML tags)
     def doc_sgml(self,s,expr=re.compile(dtmlorsgmlexpr).search):
@@ -392,6 +392,6 @@ class MyDocumentWithImages(DocumentWithImages):
         except:
             return StructuredTextTable([],'',subs,indent=paragraph.indent)
             
-MyDocumentWithImages = MyDocumentWithImages()
+ZwikiDocumentWithImages = ZwikiDocumentWithImages()
     
-registerPageType(ZwikiStxPageType)
+registerPageType(PageTypeStx)

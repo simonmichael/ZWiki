@@ -68,21 +68,21 @@ from Regexps import url, bracketedexpr, singlebracketedexpr, \
      interwikilink, remotewikiurl, protected_line, zwikiidcharsexpr, \
      anywikilinkexpr, markedwikilinkexpr, localwikilink, \
      spaceandlowerexpr, dtmlorsgmlexpr, wikinamewords, hashnumberexpr
-from Utils import Utils, BLATHER
-from UI import UI
-from OutlineSupport import OutlineSupport
-from Diff import DiffSupport
-from Mail import SubscriberManagerMixin, MailSupport
-from CatalogAwareness import CatalogAwareness
-from CMF import CMFAwareness
-from Comments import CommentsSupport
-from Admin import AdminSupport
-from Editing import EditingSupport
-from RSS import RSSMixin
-from I18nSupport import DTMLFile, _
+from Utils import PageUtils, BLATHER
+from Views import PageViews
+from OutlineSupport import PageOutlineSupport
+from Diff import PageDiffSupport
+from Mail import PageSubscriptionSupport, PageMailSupport
+from Catalog import PageCatalogSupport
+from CMF import PageCMFSupport
+from Comments import PageCommentsSupport
+from Admin import PageAdminSupport
+from Editing import PageEditingSupport
+from RSS import PageRSSSupport
+from I18n import DTMLFile, _
 from pagetypes import PAGETYPES, PAGE_TYPES
 from pagetypes.common import MIDSECTIONMARKER
-from pagetypes.stx import ZwikiStxPageType
+from pagetypes.stx import PageTypeStx
 from plugins import PLUGINS
 
 DEFAULT_PAGETYPE = PAGETYPES[0]
@@ -110,19 +110,19 @@ class ZWikiPage(
     PLUGINS[13],
     PLUGINS[14],
     PLUGINS[15],
-    EditingSupport, # use our ftp/dav methods, not DTMLDocument's
+    PageEditingSupport, # use our ftp/dav methods, not DTMLDocument's
     DTMLDocument,   # should DD go last ?
-    UI,
-    OutlineSupport,
-    DiffSupport,
-    MailSupport,
-    SubscriberManagerMixin,
-    CatalogAwareness,
-    CMFAwareness,
-    CommentsSupport,
-    AdminSupport,
-    Utils,
-    RSSMixin,
+    PageViews,
+    PageOutlineSupport,
+    PageDiffSupport,
+    PageMailSupport,
+    PageSubscriptionSupport,
+    PageCatalogSupport,
+    PageCMFSupport,
+    PageCommentsSupport,
+    PageAdminSupport,
+    PageRSSSupport,
+    PageUtils,
     ):
     """
     A ZWikiPage is essentially a DTML Document which knows how to render
@@ -131,7 +131,7 @@ class ZWikiPage(
     wiki-building, email, issue tracking, etc.  Mixins are used to
     organize functionality into modules.
     """
-    __implements__ = (WriteLockInterface, CMFAwareness.__implements__)
+    __implements__ = (WriteLockInterface, PageCMFSupport.__implements__)
     security = ClassSecurityInfo()
     security.declareObjectProtected('View')
     security.declareProtected(Permissions.Edit, 'revert')
@@ -165,9 +165,9 @@ class ZWikiPage(
         {'id':'last_edit_time', 'type': 'string', 'mode': 'r'},
         {'id':'last_log', 'type': 'string', 'mode': 'r'},
         ) \
-        + OutlineSupport._properties \
-        + SubscriberManagerMixin._properties \
-        + CatalogAwareness._properties
+        + PageOutlineSupport._properties \
+        + PageSubscriptionSupport._properties \
+        + PageCatalogSupport._properties
 
     meta_type = PAGE_METATYPE
     icon      = "misc_/ZWiki/ZWikiPage_icon"
@@ -223,11 +223,11 @@ class ZWikiPage(
         """
         Initialise this instance, including it's CMF data if applicable.
 
-        Ugly, but putting CMFAwareness before DTMLDocument in the
+        Ugly, but putting PageCMFSupport before DTMLDocument in the
         inheritance order creates problems.
         """
         if self.supportsCMF():
-            CMFAwareness.__init__(self,
+            PageCMFSupport.__init__(self,
                                   source_string=source_string,
                                   mapping=mapping,
                                   __name__=__name__,
@@ -258,7 +258,7 @@ class ZWikiPage(
         Also tries to ensure the HTTP content-type (and charset) have an
         appropriate value. These may be set by the page type, or
         overridden by a zwiki_content_type property (LatexWiki support).
-        NB this can also get set in I18nSupport.py.
+        NB this can also get set in I18n.py.
         """
         if not self.preRendered(): self.preRender()
         r = self.pageType().render(self, REQUEST, RESPONSE, **kw)
@@ -1295,15 +1295,15 @@ class ZWikiPage(
     # API methods for old skin templates
     # need security declarations here ?
     security.declareProtected(Permissions.View, 'quickcomment')
-    quickcomment = slowcomment = EditingSupport.comment
+    quickcomment = slowcomment = PageEditingSupport.comment
     security.declareProtected(Permissions.View, 'stxToHtml')
-    stxToHtml = ZwikiStxPageType().format
-    src = EditingSupport.text
-    editTimestamp = EditingSupport.timeStamp
-    checkEditTimeStamp = EditingSupport.checkEditConflict
-    wiki_page_url = Utils.page_url
-    wiki_base_url = Utils.wiki_url
-    zwiki_username_or_ip = Utils.usernameFrom
+    stxToHtml = PageTypeStx().format
+    src = PageEditingSupport.text
+    editTimestamp = PageEditingSupport.timeStamp
+    checkEditTimeStamp = PageEditingSupport.checkEditConflict
+    wiki_page_url = PageUtils.page_url
+    wiki_base_url = PageUtils.wiki_url
+    zwiki_username_or_ip = PageUtils.usernameFrom
     applyLineEscapesIn = applyWikiLinkLineEscapesIn 
 
     # CMF compatibility

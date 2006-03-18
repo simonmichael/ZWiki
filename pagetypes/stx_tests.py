@@ -7,9 +7,9 @@ def test_suite():
     suite.addTest(unittest.makeSuite(Tests))
     return suite
 
-class Tests(ZwikiTests):
+class Tests(ZwikiTestCase):
 
-    def test_ZwikiStxPageType(self):
+    def test_PageTypeStx(self):
         self.p.edit(text='! PageOne PageTwo\n',type='stx')
         self.assertEquals(self.p.render(bare=1),
                           '<p> PageOne PageTwo</p>\n<p>\n</p>\n')
