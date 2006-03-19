@@ -1,5 +1,6 @@
-######################################################################
-# create wikis from templates
+"""
+Creating new wikis, from a list of wiki templates (just one right now).
+"""
 
 import os, os.path, re, string, urllib
 

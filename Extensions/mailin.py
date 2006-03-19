@@ -1,61 +1,21 @@
 """
-zwiki mailin - post an incoming email message to a wiki
+Zwiki's mailin external method - posts an incoming email message to a wiki
 
 This external method receives a message in RFC2822 format and takes
-appropriate action in the wiki where it has been called (usually, posts a
-comment to one of the pages). Typically called by an email alias like::
+appropriate action in the wiki where it has been called (eg, adding a
+comment to one of the pages). This is usually invoked by a mail alias like::
 
- | curl -n -F 'msg=<-' http://mysite/mywikifolder/mailin
+ thewiki: |curl -n -F 'msg=<-' http://mysite/mywikifolder/mailin
 
-See http://zwiki.org/HowToSetUpMailin for more.
+See http://zwiki.org/HowToSetUpMailin for more help. For the delivery
+algorithm, see the MailIn class docs below.
 
-Here are the delivery rules, in essence:
-
-- if the message appears to be a zwiki mailout or from an auto-responder
-  or junk, or it does't have a plain text part, DISCARD.
-
-- if we have been called in a page context (../SOMEPAGE/mailin), POST
-  message as a comment on that page.
-
-- (DISABLED) select virtual host:
-  Intended to allow a single mailin alias to serve many vhosts.  If there
-  is a recipient of the form .*MAILINADDREXP@vhost where vhost matches a
-  virtual host monster entry on this server, use that vhost's folder.
-
-- if there is not at least one zwiki page in the current folder, DISCARD.
-
-- check sender's subscription status:
-  unless the folder's mailin_policy property, possibly acquired, is
-  'open', check that the sender is either subscribed somewhere in the wiki
-  or listed in the mail_accept_nonmembers property, and if not BOUNCE the
-  message.
-
-- if the recipient looks like a spam reporting address (.*SPAMADDREXP),
-  UPDATE SPAM BLOCKING RULES and DISCARD (see updateSpamBlocks).
-
-- if the recipient looks like a tracker mailin address (.*TRACKERADDREXP),
-  CREATE AN ISSUE page.  Otherwise,
-
-- identify destination page name:
-
-  the first [bracketed page name] in the message subject, which may be a
-  fuzzy/partial name; or the folder's default_mailin_page property,
-  possibly acquired; or the first zwiki page in the folder - unless
-  default_mailin_page was blank.
-
-- if no destination page could be found (default_mailin_page is
-  blank/false), DISCARD.
-
-- if no wiki page by that name exists (fuzzy match allowed), CREATE it
-
-- POST message as a comment to that page
-
-
-
-todo:
+TODO:
+friendly non-subscriber bounce messages
 keep refactoring
 size limit
-friendly bounce messages
+html mail ?
+file attachments ?
 
 """
 
@@ -89,11 +49,50 @@ MAX_SIGNATURE_STRIP_SIZE = 500
 
 class MailIn:
     """
-    I represent an incoming mail message being posted to a wiki folder.
+    I represent an incoming mail message being posted to a wiki.
 
     I parse the incoming rfc2822 message string and expose the parts of
-    interest, and (given a wiki context) figure out how to deliver myself
-    as per the zwiki delivery rules above.
+    interest, and (given a wiki context) figure out how to deliver myself.
+    Here are the delivery rules:
+    
+    - if the message appears to be a zwiki mailout or from an auto-responder
+      or junk, or it does't have a plain text part, DISCARD.
+    
+    - if we have been called in a page context (../SOMEPAGE/mailin), POST
+      message as a comment on that page.
+    
+    - (DISABLED: select virtual host:
+      Intended to allow a single mailin alias to serve many vhosts.  If there
+      is a recipient of the form .*MAILINADDREXP@vhost where vhost matches a
+      virtual host monster entry on this server, use that vhost's folder.
+      )
+    
+    - if there is not at least one zwiki page in the current folder, DISCARD.
+    
+    - check sender's subscription status:
+      unless the folder's mailin_policy property, possibly acquired, is
+      'open', check that the sender is either subscribed somewhere in the wiki
+      or listed in the mail_accept_nonmembers property, and if not BOUNCE the
+      message.
+    
+    - if the recipient looks like a spam reporting address (.*SPAMADDREXP),
+      UPDATE SPAM BLOCKING RULES and DISCARD (see updateSpamBlocks).
+    
+    - if the recipient looks like a tracker mailin address (.*TRACKERADDREXP),
+      CREATE AN ISSUE page.  Otherwise,
+    
+    - identify destination page name: the first [bracketed page name] in the
+      message subject, which may be a fuzzy/partial name; or the folder's
+      default_mailin_page property, possibly acquired; or the first zwiki page
+      in the folder - unless default_mailin_page was blank.
+    
+    - if no destination page could be found (default_mailin_page is
+      blank/false), DISCARD.
+    
+    - if no wiki page by that name exists (fuzzy match allowed), CREATE it
+    
+    - POST message as a comment to that page
+    
     """
 
     msg = None
@@ -141,10 +140,10 @@ class MailIn:
         self.recipients = getaddresses(tos + ccs + resent_tos + resent_ccs)
 
         # mailing list support
-	# XXX x-beenthere is mailman-specific - need to support ezmlm & others here
+        # XXX x-beenthere is mailman-specific - need to support ezmlm & others here
         #self.xbeenthere = (self.msg.get('X-BeenThere') or
-	#                   re.search(r'[^\s<]+@[^\s>]+',self.msg.get('Delivered-To')).group())
-	# ..Type Error - configured ezmlm to provide beenthere instead (?)
+        #                   re.search(r'[^\s<]+@[^\s>]+',self.msg.get('Delivered-To')).group())
+        # ..Type Error - configured ezmlm to provide beenthere instead (?)
         self.xbeenthere = self.msg.get('X-BeenThere')
 
         # raises an exception if there's no text part
@@ -158,7 +157,7 @@ class MailIn:
         
     def isJunk(self):
         """
-        Return true if this message should be silently ignored.
+        Return true if this mail message should be silently ignored.
 
         Ideally, this should block mail loops, auto-responders and spam,
         but allow mailing list messages and mailouts from other zwikis.

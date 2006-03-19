@@ -1,4 +1,6 @@
-# UI-related methods and utilities
+"""
+UI-related methods and utilities.
+"""
 
 from __future__ import nested_scopes
 import os, sys, re, string, time, math

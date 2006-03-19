@@ -1,5 +1,6 @@
-######################################################################
-# editing methods
+"""
+Editing methods.
+"""
 
 from __future__ import nested_scopes
 import re, string, time
