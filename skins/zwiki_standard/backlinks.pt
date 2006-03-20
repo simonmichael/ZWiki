@@ -14,141 +14,145 @@
   <body bgcolor="#ffffff">
     <div metal:use-macro="macros/linkpanel" />
 
-<div class="formcontent"
-     tal:define="
-     canreparent python:user.has_permission('Zwiki: Reparent pages',here);
-     thispage here/Title;
-     thisparents here/parents;
-     backlinks python:here.backlinksFor(thispage);
-     sorted_backlinks python:sequence.sort(backlinks, 
-                                           (('Title', 'nocase', 'asc'),));
-     ">
+    <div class="formcontent"
+         tal:define="
+                     canreparent python:user.has_permission('Zwiki: Reparent pages',here);
+                     thispage here/Title;
+                     thisparents here/parents;
+                     backlinks python:here.backlinksFor(thispage);
+                     sorted_backlinks python:sequence.sort(backlinks, 
+                     (('Title', 'nocase', 'asc'),));
+                     ">
 
-<form action="reparent" tal:attributes="action string:${here/pageUrl}/reparent">
-<table border="0" width="100%">
-<tr valign="top">
-<td width="50%">
+      <form action="reparent" tal:attributes="action string:${here/pageUrl}/reparent">
+        <table border="0" width="100%">
+          <tr valign="top">
+            <td width="50%">
 
-<p>
-<b i18n:translate="">Parents</b><br />
-<a href="page_url" title="linkTitle"
-tal:attributes="href here/pageUrl; title here/linkTitle;" 
-tal:content="thispage"
->thispage</a> 
-<span tal:condition="not:here/parents" i18n:translate="">is a top-level topic.</span>
-<span tal:condition="here/parents" i18n:translate="">is a subtopic of:</span>
-</p>
-<ol tal:condition="here/parents"
-tal:define="
-thisparents here/parents;
-sortedparents python:thisparents #sequence.sort(thisparents);
-">
-<li tal:repeat="parent sortedparents"> 
-<span tal:omit-tag="">
-<input type="checkbox" name="parents" value="parent" checked="checked" class="formfield"
-tal:attributes="value parent;"
-tal:condition="canreparent" />
-<a href="" title=""
-tal:attributes="href python:here.wiki_url()+'/'+here.canonicalIdFrom(parent);
-                title nothing;"
-tal:content="parent"
->parent</a>
-<br />
-</span>
-</li>
-</ol>
+              <p>
+                <b i18n:translate="">Parents</b><br />
+                <a href="page_url" title="linkTitle"
+                   tal:attributes="href here/pageUrl; title here/linkTitle;" 
+                   tal:content="thispage"
+                   >thispage</a> 
+                <span tal:condition="not:here/parents" i18n:translate="">is a top-level topic.</span>
+                <span tal:condition="here/parents" i18n:translate="">is a subtopic of:</span>
+              </p>
+              <ol tal:condition="here/parents"
+                  tal:define="
+                              thisparents here/parents;
+                              sortedparents python:thisparents #sequence.sort(thisparents);
+                              ">
+                <li tal:repeat="parent sortedparents"> 
+                  <span tal:omit-tag="">
+                    <input type="checkbox" name="parents" value="parent" checked="checked" class="formfield"
+                           tal:attributes="value parent;"
+                           tal:condition="canreparent" />
+                    <a href="" title=""
+                       tal:attributes="href python:here.wiki_url()+'/'+here.canonicalIdFrom(parent);
+                                       title nothing;"
+                       tal:content="parent"
+                       >parent</a>
+                    <br />
+                  </span>
+                </li>
+              </ol>
 
-<p>
-<br />
-<b i18n:translate="">Backlinks</b><br />
-<span i18n:translate="" tal:condition="backlinks">Here are the pages which link to it:</span>
-<span i18n:translate="" tal:condition="not:backlinks">No other pages link to this one.</span>
-</p>
-<ol>
-<li tal:repeat="bl sorted_backlinks"> 
-<span tal:omit-tag="" tal:define="
-blpage bl/Title;
-blisparent python:(blpage in thisparents);
-">
-<input type="checkbox" name="parents" value="blpage" class="formfield"
-tal:attributes="checked blisparent; value blpage;"
-tal:condition="canreparent" />
-<a href="blurl" title=""
-tal:define="blid bl/id"
-tal:attributes="href python:here.wiki_url()+'/'+blid;
-                title bl/linkTitle|nothing;"
-tal:content="blpage"
->blpage</a>
-<br />
-</span>
-</li>
-</ol>
+              <p>
+                <br />
+                <b i18n:translate="">Backlinks</b><br />
+                <span i18n:translate="" tal:condition="backlinks">Here are the pages which link to it:</span>
+                <span i18n:translate="" tal:condition="not:backlinks">No other pages link to this one.</span>
+              </p>
+              <ol>
+                <li tal:repeat="bl sorted_backlinks"> 
+                  <span tal:omit-tag="" tal:define="
+                                                    blpage bl/Title;
+                                                    blisparent python:(blpage in thisparents);
+                                                    ">
+                    <input type="checkbox" name="parents" value="blpage" class="formfield"
+                           tal:attributes="checked blisparent; value blpage;"
+                           tal:condition="canreparent" />
+                    <a href="blurl" title=""
+                       tal:define="blid bl/id"
+                       tal:attributes="href python:here.wiki_url()+'/'+blid;
+                                       title bl/linkTitle|nothing;"
+                       tal:content="blpage"
+                       >blpage</a>
+                    <br />
+                  </span>
+                </li>
+              </ol>
 
-</td>
-<td width="50%" tal:condition="not:canreparent">&nbsp;</td>
-<td width="50%" tal:condition="canreparent">
-<p>
-<span i18n:translate="backlinks_reparent_help">
-You can set this page's parent(s) to place it within the overall page
-hierarchy. Check one or more checkboxes or enter a page name here:
-</span>
-<br />
-<input type="text" name="parents" class="formfield" size="20" maxlength="100" />
-<br />
-<span i18n:translate="backlinks_reparent_help2">
-and click
-</span>
-<br />
-<strong><input type="submit" value="Reparent" style="font-weight:bold" i18n:attributes="value" /></strong>
-</p>
-</td>
-</tr>
-</table>
-</form>
+            </td>
+            <td width="50%" tal:condition="not:canreparent">&nbsp;</td>
+            <td width="50%" tal:condition="canreparent">
+              <p>
+                <span i18n:translate="">
+                  You can set this page's parent(s) to place it within the overall page hierarchy. 
+                </span>
+                <span i18n:translate="" tal:condition="backlinks">
+                  Check one or more checkboxes or enter a page name here, and click the button.
+                </span>
+                <span i18n:translate="" tal:condition="not:backlinks">
+                  Enter a page name here and click the button.
+                </span>
+                <span i18n:translate="">
+                  You can type just the first few letters, case and punctuation are ignored.
+                </span>
+                <br />
+                <br />
+                <input type="text" name="parents" class="formfield" size="20" maxlength="100" />
+                <br />
+                <strong><input type="submit" value="Reparent" style="font-weight:bold" i18n:attributes="value" /></strong>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </form>
 
-<table border="0" width="100%">
-<tr valign="top">
-<td width="50%">
+      <table border="0" width="100%" tal:define="subtopics here/childrenAsList">
+        <tr valign="top">
+          <td width="50%">
+            <p>
+              <b i18n:translate="">
+                Subtopics
+              </b><br />
+              <span i18n:translate="" tal:condition="not:subtopics">
+                This page has no subtopics.
+              </span>
+              <span i18n:translate="" tal:condition="subtopics">
+                Here are it's subtopics.
+              </span>
+              <span i18n:translate="" tal:condition="python:subtopics and len(subtopics)>1 and canreparent">
+                You can reorder them by clicking the ^ buttons.
+              </span>
+            </p>
+            <ol>
+              <li tal:repeat="cname subtopics"> 
+                <form tal:condition="canreparent" 
+                      tal:attributes="action string:${here/pageUrl}/reorder" 
+                      style="display:inline;" >
+                  <input type="hidden" name="child" tal:attributes="value cname" />
+                  <input type="submit" value="^" style="padding:0px;visibility:hidden;" tal:condition="not:repeat/cname/index" />
+                  <input type="submit" value="^" style="padding:0px;" tal:condition="repeat/cname/index" />
+                </form>
+                <a tal:define="cpage python:here.pageWithName(cname);"
+                   tal:attributes="href cpage/pageUrl;
+                                   title cpage/linkTitle|nothing;"
+                   tal:content="cname"
+                   >cpage</a>
+                <br />
+              </li>
+            </ol>
+          </td>
+          <td width="50%">
+            &nbsp;
+          </td>
+        </tr>
+      </table>
 
-<p>
-<b i18n:translate="">Subtopics</b><br />
-<span i18n:translate="" tal:condition="here/children">Here are it's subtopics:</span>
-<span i18n:translate="" tal:condition="not:here/children">This page has no subtopics.</span>
-</p>
-<ol>
-<li tal:repeat="cname here/childrenAsList"> 
-<span tal:omit-tag="" tal:define="
-cpage python:here.pageWithName(cname);
-">
-<form action="reorder" tal:attributes="action string:${here/pageUrl}/reorder" style="display:inline;"
-      tal:condition="python:canreparent and here.children()" >
-<input type="hidden" name="child" tal:attributes="value cname" />
-<input type="submit" value="^" style="padding:0px;visibility:hidden;" tal:condition="not:repeat/cname/index" />
-<input type="submit" value="^" style="padding:0px;" tal:condition="repeat/cname/index" />
-</form>
-<a href="" title=""
-tal:attributes="href cpage/pageUrl;
-                title cpage/linkTitle|nothing;"
-tal:content="cname"
->cpage</a>
-<br />
-</span>
-</li>
-</ol>
-
-</td>
-<td width="50%" tal:condition="not:python:canreparent and here.children()">&nbsp;</td>
-<td width="50%" tal:condition="python:canreparent and here.children()">
-
-<p i18n:translate="">
-You can change the order of subtopics by clicking the ^ buttons.
-</p>
-
-</td>
-</tr>
-</table>
-
-</div>
+    </div>
 
   </body>
 </html>
