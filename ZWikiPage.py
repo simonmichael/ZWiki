@@ -89,10 +89,6 @@ from plugins import PLUGINS
 
 DEFAULT_PAGETYPE = PAGETYPES[0]
 
-def stripDelimitersFrom(link):
-    """Strip a wiki link's enclosing [], [[]] or (())."""
-    return re.sub(r'^(\[\[|\[|\(\()(.*?)(\]\]|\]|\)\))$',r'\2',link)
-
 
 class ZWikiPage(    
     PLUGINS[0], # see plugins/__init__.py    
@@ -1097,12 +1093,12 @@ class ZWikiPage(
     def defaultPage(self):
         """
         Return this wiki's default/front page object.
-	
-	That is:
+        
+        That is:
         -a page named in the default_page string or lines property
-	-or the page named FrontPage
+        -or the page named FrontPage
         -or the first page object in the folder
-	-or None.
+        -or None.
         """
         # default_page property could be a list, tuple or string
         default_page_names = getattr(self.folder(),'default_page',[])
@@ -1121,13 +1117,9 @@ class ZWikiPage(
     def defaultPageId(self):
         """
         Return this wiki's default page ID.
-	
-	That is the page named in the default_page property,
-	or FrontPage,
-        or the first page object in the folder, 
-	or None.
+        
+        See defaultPage. 
         """
-
         p = self.defaultPage()
         return (p and p.id()) or None
 
@@ -1310,10 +1302,11 @@ class ZWikiPage(
     # CMF compatibility
     view = __call__
 
-
 InitializeClass(ZWikiPage)
 
-# rendering helpers
+
+# rendering helper functions
+
 def thunk_substituter(func, text, allowed):
     """Return a function which takes one arg and passes it with other args
     to passed-in func.
@@ -1418,6 +1411,10 @@ def sgmlAndDtmlSpansIn(text):
             spans.append(s)
             lastpos = s[1]
     return spans
+
+def stripDelimitersFrom(link):
+    """Strip a wiki link's enclosing [], [[]] or (())."""
+    return re.sub(r'^(\[\[|\[|\(\()(.*?)(\]\]|\]|\)\))$',r'\2',link)
 
 
 # ZMI page creation form
