@@ -113,13 +113,15 @@ class ZWikiPage(
     PageMailSupport,
     PageSubscriptionSupport,
     PageCatalogSupport,
-    PageCMFSupport,
     PageCommentsSupport,
     PageAdminSupport,
     PageRSSSupport,
     PageUtils,
     PageViews,
     DTMLDocument,
+    # XXX last to avoid PortalContent.id overriding DTMLDocument.id(),
+    # as older code expects ZWikiPage.id() to be callable.
+    PageCMFSupport,
     ):
     """
     A ZWikiPage is essentially a DTML Document which knows how to render
