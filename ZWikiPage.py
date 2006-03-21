@@ -1037,8 +1037,10 @@ class ZWikiPage(
         If there's junk in the catalog, pages could return a page with id
         None; we guard against that.
         """
-        #return self.folder().objectIds(spec=self.meta_type) # more robust ?
-        return filter(lambda x:x is not None, map(lambda x:x.id,self.pages()))
+        # faster, & more robust
+        return self.folder().objectIds(spec=self.meta_type) 
+        # catalog-driven, so could work across folders (cf ALLBRAINS etc.)
+        #return filter(lambda x:x is not None, map(lambda x:x.id,self.pages())) 
 
     security.declareProtected(Permissions.View, 'pageNames')
     def pageNames(self):
