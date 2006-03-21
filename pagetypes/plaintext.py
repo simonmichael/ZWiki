@@ -23,3 +23,6 @@ class PageTypePlaintext(PageTypeBase):
         return t
 
 registerPageType(PageTypePlaintext)
+
+# backwards compatibility - need this here for old zodb objects
+ZwikiPlaintextPageType = PageTypePlaintext

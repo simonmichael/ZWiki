@@ -2045,3 +2045,6 @@ def render_moin_markup(text):
 ######################################################################
 
 registerPageType(PageTypeMoin)
+
+# backwards compatibility - need this here for old zodb objects
+ZwikiMoinPageType = PageTypeMoin

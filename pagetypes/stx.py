@@ -395,3 +395,6 @@ class ZwikiDocumentWithImages(DocumentWithImages):
 ZwikiDocumentWithImages = ZwikiDocumentWithImages()
     
 registerPageType(PageTypeStx)
+
+# backwards compatibility - need this here for old zodb objects
+ZwikiStxPageType = PageTypeStx

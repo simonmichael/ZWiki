@@ -139,10 +139,10 @@ for m in modules:
             m, formattedTraceback()))
 
 
-# backwards compatibility - keep these here to keep old wikis happy (XXX ?)
-from plaintext import PageTypePlaintext
-from html import PageTypeHtml
-from stx import PageTypeStx
-from rst import PageTypeRst
-from wwml import PageTypeWwml
-
+# backwards compatibility - need these here for old zodb objects
+from html      import ZwikiHtmlPageType
+from moin      import ZwikiMoinPageType
+from plaintext import ZwikiPlaintextPageType
+from rst       import ZwikiRstPageType
+from stx       import ZwikiStxPageType
+from wwml      import ZwikiWwmlPageType

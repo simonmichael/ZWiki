@@ -379,3 +379,6 @@ def translate_WWML(text) :
 
 
 registerPageType(PageTypeWwml)
+
+# backwards compatibility - need this here for old zodb objects
+ZwikiWwmlPageType = PageTypeWwml

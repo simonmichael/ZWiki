@@ -77,3 +77,6 @@ class PageTypeRst(PageTypeBase):
         return '\n\n!`%s`__\n\n__ %s\n' % (id, path)
 
 registerPageType(PageTypeRst)
+
+# backwards compatibility - need this here for old zodb objects
+ZwikiRstPageType = PageTypeRst

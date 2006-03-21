@@ -27,3 +27,6 @@ class PageTypeHtml(PageTypeBaseHtml):
         return t
 
 registerPageType(PageTypeHtml)
+
+# backwards compatibility - need this here for old zodb objects
+ZwikiHtmlPageType = PageTypeHtml
