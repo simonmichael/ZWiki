@@ -87,7 +87,7 @@
   userzone="REQUEST.get('zwiki_timezone',None)"
   userzone="((userzone in timezones) and userzone) or 'GMT'"
   >
-  <select name="zwiki_timezone"
+  <select name="zwiki_timezone">
   <dtml-in timezones prefix=x>
     <option value="&dtml-x_item;"
     <dtml-if "userzone == x_item">selected</dtml-if>
