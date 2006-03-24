@@ -1,44 +1,45 @@
 <dtml-if "error_type=='NotFound'">
 <dtml-comment>
-A custom error handler. This handles NotFound errors (only) by
-redirecting to a similarly-named existing page if possible, 
-otherwise offering create/search buttons.
-Works with either the skin-based searchwiki form or a SearchPage page.
-Assumes at least one zwiki page exists.
+A custom error handler for 404 NotFound errors (only). Redirects to a
+similarly-named existing page if possible, otherwise offers create/search
+buttons.  
+
+Assumes at least one zwiki page exists. It doesn't matter which one we
+work from, except created pages will go under it. picks SandBox if
+available, to reduce mail noise from test pages.
 </dtml-comment>
 <dtml-let 
  here="objectValues(spec='ZWiki Page')[0]"
- here="here.defaultPage()"
- pagename="'SearchPage'"
- skinname="'searchwiki'"
- searchpage="here.pageWithName(pagename)"
- searchpagehasdtml="searchpage and searchpage.dtmlAllowed() and searchpage.hasDynamicContent()"
- searchurl="(searchpagehasdtml and searchpage.pageUrl()) or here.pageUrl()+'/'+skinname"
+ here="here.defaultPage()
+       #here.pageWithName('SandBox') or here.defaultPage()
+       #created pages will go under this working page
+       #if you want less mail from pages created this way, pick SandBox"
  path="URL[_.len(SERVER_URL):]"
  searchexpr="_.string.split(path,'/')[-1]"
  targetpage="here.pageWithFuzzyName(searchexpr,url_quoted=1,
                                     allow_partial=1,ignore_case=1) or
              here.pageWithId(searchexpr,ignore_case=1)"
- targeturl="(targetpage and targetpage.page_url()) or None"
+ targeturl="(targetpage and targetpage.pageUrl()) or None"
  >
 <dtml-if targeturl>
-<dtml-call "RESPONSE.redirect(targeturl,lock=1)">
+  <dtml-call "RESPONSE.redirect(targeturl,lock=1)">
+
 <dtml-else>
 <html>
   <head><meta name="robots" content="noindex,nofollow"></head>
   <body>
     <p>
-      I could not find any likely page matching 
-      "<b><dtml-var "here.urlunquote(searchexpr)" html_quote></b>"
+      I could not find any likely page matching "<b><dtml-var
+      "here.urlunquote(searchexpr)" html_quote></b>"
     </p>
     <p>
       Click here to 
-      <form action="<dtml-var "here.page_url()">/editform"
+      <form action="<dtml-var "here.pageUrl()">/editform"
             method="GET" enctype="multipart/form-data">
         <input type="hidden" name="page" value="&dtml-searchexpr;">
         <input type="submit" value="create this page">
       </form>
-      <form action="&dtml-searchurl;"
+      <form action="<dtml-var "here.searchUrl()">
             method="GET" enctype="multipart/form-data">
         <input type="hidden" name="expr" value="&dtml-searchexpr;">
         <input type="submit" value="search for it">
