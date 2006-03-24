@@ -337,8 +337,8 @@ class PluginTracker:
             # there was a change, note it on the page and via mail
             # fine detail: don't say (property change) if there wasn't
             subject = ''
-            if '=>' in comment: subject += '(%s) ' % _('property change')
             if log: subject += log
+            #if '=>' in comment: subject += ' (%s)' % _('property change')
             self.comment(
                 text=comment,
                 subject_heading=subject,
