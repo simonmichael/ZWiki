@@ -496,7 +496,9 @@ class PageUtils:
 
         Boring pages are pages which we don't usually want to see in blog
         listings, rss feeds etc. (?) or hear mail from unless subscribed
-        directly. Typically these are TestPage, SandBox and their children.
+        directly. These are TestPage, SandBox and their offspring, by
+        default. You can configure different pages in a boring_pages lines
+        folder property, one per line.
         """
         boring = getattr(self,'boring_pages', BORING_PAGES)
         if self.pageName() in boring:
