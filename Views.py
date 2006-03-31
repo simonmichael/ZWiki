@@ -1,5 +1,111 @@
 """
-UI-related methods and utilities.
+Zwiki's main UI views and UI-related utilities.
+
+Zwiki needs to work both outside and inside Plone/CMF, so cannot rely on
+the CMF skin mechanism alone. There is a built-in mechanism which works
+like this:
+
+Overview
+--------
+
+- *view methods* are defined for wiki pages (via mixin class, usually in
+  Views.py). These define the standard views which are always available no
+  matter what kind of site we are in.
+
+- view methods usually call a *view template* of the same name to render
+  the view, sometimes passing data as arguments. These templates can be
+  customized by wiki admins.
+
+- all views use the *stylesheet* method/template to control their
+  appearance by CSS. This allows wiki admins (and users, when installed in
+  a certain way) to customize the wiki's appearance without needing to
+  change view templates.
+
+More about templates
+--------------------
+
+- view methods use getSkinTemplate() to find the template. Usually, it
+  finds the page template of the desired name in STANDARD_TEMPLATES, a
+  dictionary which has been preloaded with the view templates defined in
+  skins/zwiki_standard (and any others added by plugins).
+
+- getSkinTemplate() is quite flexible, here's the full detail: it looks
+  for a page template or a dtml method of the desired name, first in the
+  wiki folder in the ZODB, then elsewhere in the ZODB by acquisition
+  (which includes the CMF skins if we are in a CMF site), then in
+  PLONE_TEMPLATES (from skins/zwiki_plone) if we are in CMF, and finally
+  in STANDARD_TEMPLATES.
+
+- the templates make use of macros, which are defined in a bunch of helper
+  templates (also in zwiki_standard). These macros are preloaded in MACROS
+  and made available as here/macros. This allows the templates to be
+  broken up into manageable chunks (eg the comment form), which can be
+  customized in one place and included where needed.
+
+- Currently all view templates (except those provided by plugins) are
+  defined in zwiki_standard and are designed to work in both standard and
+  CMF/Plone wikis.  The need to be compatible with CMF/Plone's
+  main_template puts certain constraints on Zwiki's templates.
+
+- view templates call the here/main_template/macros/master macro to wrap
+  themselves in the overall site skin. This calls CMF/Plone's main
+  template if we are in CMF, or Zwiki's if we are not. (main_template is a
+  ComputedAttribute on zwiki pages, which calls the maintemplate() method,
+  which calls CMF/Plone's main_template or Zwiki's maintemplate template).
+
+Skin objects recap
+------------------
+
+Aside from the view methods, which are built in to the product code, all
+of these skin objects - view templates, helper templates, dtml methods,
+files, images - may be customized in the ZODB. Here's a review:
+
+**page templates**
+  Zope page templates are the workhorse for making dynamic views. They
+  provide better i18n features than dtml. Zwiki's are well-formed HTML and
+  can be edited in a wysiwyg html editor without damage (untried).
+
+**macros**
+  METAL macros are chunks of page template which can be reused in other
+  page templates. They are more powerful than a simple include mechanism,
+  you could say they are used in one of two ways:
+
+  1. filling - called template fills a space within the caller
+  2. wrapping - called template takes over, and caller fills spaces
+     (slots) within it
+
+**dtml methods**
+  Zope DTML methods are the precursor to page templates. They are a little
+  faster, a little less explicit, not well-formed HTML, a little harder to
+  debug, easier to understand than macros.
+
+**files**
+  Best for chunks of content which do not change much and should be
+  cached. A File object works well when customizing the stylesheet (though
+  see below).
+
+**images**
+  Like files, but better suited to graphics. The zwiki skin includes a
+  couple of icons.
+
+More Zwiki skin notes
+---------------------
+  
+- several Zwiki views (eg recentchanges) are developed iteratively as dtml
+  wiki pages on zwiki.org.  These are reused in the skin as dtml methods
+  (RecentChanges.dtml) embedded within page templates
+  (recentchanges.pt). The page templates may be customized to not use dtml
+  if preferred.
+
+- the stylesheet may be installed in the ZODB as a file object for
+  customization. Here's another configuration which makes it still more
+  customizable: install as a dtml method (stylesheet) which includes the
+  text of a wiki page (StyleSheet). See http://zwiki.org/HowTos.
+
+- the stylesheet view method has a special behavior: in addition to
+  looking for a skin template named ``stylesheet``, it will also accept
+  one called ``stylesheet.css``.
+
 """
 
 from __future__ import nested_scopes
@@ -158,7 +264,6 @@ for t in [
     'links',
     'pageheader',
     'pagemanagementform',
-    'ratingform',
     'siteheader',
     ]:
     MACROS.update(loadMacros(t))
