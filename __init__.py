@@ -13,12 +13,16 @@ import ZWikiPage, Wikis, Permissions, Defaults, OutlineSupport
 from I18n import _
 
 misc_ = {
-    'ZWikiPage_icon': Globals.ImageFile(path.join('images','ZWikiPage_icon.gif'),
-                                   globals()),
-    'star_icon': Globals.ImageFile(path.join('images','star.png'),
-                                   globals()),
-    'blank_star_icon': Globals.ImageFile(path.join('images','blank_star.png'),
-                                   globals()),
+    'ZWikiPage_icon': Globals.ImageFile(
+        path.join('skins','zwiki_standard','wikipage_icon.gif'), globals()),
+    # backwards compatibility
+    'ZWikiPage_icon.gif': Globals.ImageFile(
+        path.join('skins','zwiki_standard','wikipage_icon.gif'),globals()),
+    # for the rating plugin
+    'star_icon': Globals.ImageFile(
+        path.join('skins','zwiki_standard','star.png'),globals()),
+    'blank_star_icon': Globals.ImageFile(
+        path.join('skins','zwiki_standard','blank_star.png'),globals()),
     }
 
 def dummyOutlineConstructor(self):
