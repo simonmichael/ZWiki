@@ -45,6 +45,7 @@ def afterSetUp(self):
     self.wiki = self.folder.wiki
     self.wiki.manage_addProduct['ZWiki'].manage_addZWikiPage('TestPage')
     self.p = self.page = self.wiki.TestPage
+    self.p.edit(type='stx')
     # our mock request seems a bit more useful than ZTC's
     #self.request = self.app.REQUEST
     self.request = self.page.REQUEST = MockRequest()

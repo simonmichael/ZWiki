@@ -10,8 +10,7 @@ def test_suite():
 class Tests(ZwikiTestCase):
 
     def test_PageTypeRst(self):
-        self.p.edit(text='! PageOne PageTwo\n',type='msgrstprelinkdtmlfitissuehtml')
+        self.p.edit(text='! PageOne PageTwo\n',type='rst')
         self.assertEquals(
             self.p.render(bare=1),
-            '<p> PageOne PageTwo</p>\n<p>\n</p>\n')
-
+            '<blockquote>\nPageOne PageTwo</blockquote>\n<p>\n</p>\n')
