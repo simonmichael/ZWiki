@@ -1,0 +1,55 @@
+<html>
+  <body>
+
+    <div metal:define-macro="pageheader" class="pageheader" >
+      <!-- page header -->
+      <form method="GET" 
+            tal:define="
+                        methodname string:searchwiki;
+                        pagename string:SearchPage; 
+                        page python:here.pageWithName(pagename);
+                        pagehasdtml python:page and page.dtmlAllowed() and page.hasDynamicContent();
+                        url python:(pagehasdtml and page.id()) or (here.defaultPageId()+'/'+methodname);
+                        "
+            tal:attributes="action python:here.wikiUrl()+'/'+url;"
+            >
+        <table width="100%" border="0" cellspacing="0">
+          <tr>
+            <!-- logo -->
+            <td id="logo" width="1%" valign="top" class="logo_full">
+              <span metal:define-macro="logolink" tal:omit-tag="">
+                <a tal:attributes="href here/wiki_url"
+                   title="go to home page" 
+                   i18n:attributes="title"
+                   accesskey="f">
+                  <img src="misc_/ZWiki/ZWikiPage_icon.gif" height="48" width="48" 
+                       border="0" alt="home" i18n:attributes="alt"
+                       tal:replace="structure here/site_logo|default" /></a>
+              </span>
+            </td>
+            <!-- page name (and parents) -->
+            <td class="pagenameand" align="left" width="79%">
+              <span metal:define-macro="pagenameand" tal:omit-tag="">
+                <ul tal:replace="structure 
+                                 python:here.context(request,enlarge_current=1)">
+                  <li>context<ul><li><big><big><big>page name</big></big></big></li></ul></li>
+                </ul>
+              </span>
+            </td>
+            <!-- search form & page info -->
+            <td class="searchbox" width="20%" align="right">
+              <input id="searchinput" class="formfield" 
+                     name="expr" type="text" size="20" maxlength="100" value="" 
+                     title="search all pages" accesskey="s" i18n:attributes="title" /><br />
+              <span class="lasteditor" 
+                    tal:content="structure python:here.linkTitle(prettyprint=1)">
+                last edited n days ago by by so-and-so
+              </span>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+
+  </body>
+</html>

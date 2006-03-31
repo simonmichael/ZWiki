@@ -1,46 +1,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US" 
-      i18n:domain="zwiki"
-      tal:define="
-                  macros  python:here.wikipage_template(request).macros;
-                  ">
-  <head metal:use-macro="macros/head">
+<html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki" >
+  <head>
     <title metal:fill-slot="title" 
-           tal:content="string:${container/title} wiki contents" 
-           i18n:translate="" />
+           tal:content="string:${container/title} ${here/pageName} wiki contents" />
     <meta metal:fill-slot="searchtags" name="robots" content="noindex,nofollow" />
   </head>
-
-  <body bgcolor="#ffffff">
-    <div metal:use-macro="macros/linkpanel" />
-
-    <div metal:define-macro="wikiformheading" tal:omit-tag="">
-      <table width="100%" border="0" cellspacing="0" cellpadding="3">
-        <tr>
-          <td width="1%" valign="middle">
-            <span metal:use-macro="macros/logolink" />
-          </td>
-          <td valign="middle">
-            <h1 metal:define-slot="title" i18n:translate="">Wiki contents</h1>
-          </td>
-        </tr>
-      </table>
+  <body>
+    <div metal:fill-slot="main">
+      <h1 i18n:translate="">Wiki contents</h1>
+      <div class="formcontent">
+        <span tal:replace="structure options/hierarchy">page hierarchy..</span>
+        <div tal:condition="options/singletons">
+          <h3 i18n:translate="">Singletons</h3> 
+          <ul>
+            <li tal:repeat="singleton options/singletons">
+              <span tal:replace="structure singleton">singleton..</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-
-<div class="formcontent">
-
-<span tal:replace="structure options/hierarchy">page hierarchy..</span>
-
-<div tal:condition="options/singletons">
-<h3 i18n:translate="">Singletons</h3> 
-<ul>
-<li tal:repeat="singleton options/singletons">
-<span tal:replace="structure singleton">singleton..</span>
-</li>
-</ul>
-</div>
-
-</div>
-
   </body>
 </html>

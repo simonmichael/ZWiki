@@ -1,20 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
-      i18n:domain="zwiki"
-      tal:define="
-                  macros python:here.wikipage_template(request).macros;
-                  ">
-
-  <head metal:use-macro="macros/head">
+<html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki" >
+  <head>
     <title metal:fill-slot="title" 
-           tal:content="string:${container/title} ${here/Title} backlinks" />
+           tal:content="string:${container/title} ${here/pageName} backlinks" />
     <meta metal:fill-slot="searchtags" name="robots" content="noindex,nofollow" />
   </head>
-  
-  <body bgcolor="#ffffff">
-    <div metal:use-macro="macros/linkpanel" />
-
-    <div class="formcontent"
+  <body>
+    <div metal:fill-slot="main"
          tal:define="
                      canreparent python:user.has_permission('Zwiki: Reparent pages',here);
                      thispage here/Title;
@@ -23,12 +15,10 @@
                      sorted_backlinks python:sequence.sort(backlinks, 
                      (('Title', 'nocase', 'asc'),));
                      ">
-
       <form action="reparent" tal:attributes="action string:${here/pageUrl}/reparent">
         <table border="0" width="100%">
           <tr valign="top">
             <td width="50%">
-
               <p>
                 <b i18n:translate="">Parents</b><br />
                 <a href="page_url" title="linkTitle"
@@ -57,7 +47,6 @@
                   </span>
                 </li>
               </ol>
-
               <p>
                 <br />
                 <b i18n:translate="">Backlinks</b><br />
@@ -83,7 +72,6 @@
                   </span>
                 </li>
               </ol>
-
             </td>
             <td width="50%" tal:condition="not:canreparent">&nbsp;</td>
             <td width="50%" tal:condition="canreparent">
@@ -110,23 +98,22 @@
           </tr>
         </table>
       </form>
-
       <table border="0" width="100%" tal:define="subtopics here/childrenAsList">
         <tr valign="top">
           <td width="50%">
             <p>
               <b i18n:translate="">
                 Subtopics
-              </b><br />
-              <span i18n:translate="" tal:condition="not:subtopics">
-                This page has no subtopics.
-              </span>
-              <span i18n:translate="" tal:condition="subtopics">
-                Here are it's subtopics.
-              </span>
-              <span i18n:translate="" tal:condition="python:subtopics and len(subtopics)>1 and canreparent">
-                You can reorder them by clicking the ^ buttons.
-              </span>
+                </b><br />
+                <span i18n:translate="" tal:condition="not:subtopics">
+                  This page has no subtopics.
+                </span>
+                <span i18n:translate="" tal:condition="subtopics">
+                  Here are it's subtopics.
+                </span>
+                <span i18n:translate="" tal:condition="python:subtopics and len(subtopics)>1 and canreparent">
+                  You can reorder them by clicking the ^ buttons.
+                </span>
             </p>
             <ol>
               <li tal:repeat="cname subtopics"> 
@@ -151,8 +138,6 @@
           </td>
         </tr>
       </table>
-
     </div>
-
   </body>
 </html>

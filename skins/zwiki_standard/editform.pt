@@ -1,251 +1,218 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
-      i18n:domain="zwiki"
-      tal:define="
-      action     request/form/action|options/action;
-      creating   python:action == 'Create';
-      editing    python:not creating;
-      actioning  python:(creating and 'Creating') or 'Editing';
-      previewing python:request.form.get('editform',None);
-      page       request/form/page|options/page;
-      newname    request/form/title|page;
-      title      string:${container/title} ${actioning} ${page};
-      text       request/form/text|options/text;
-      type       request/form/type|python:(creating and here.defaultPageType()) or here.pageTypeId();
-      timestamp  request/form/timeStamp|here/timeStamp;
-      log        python:request.form.get('log',
-                          ((editing and 
-                            here.usernameFrom(request) == here.last_editor and
-                            here.ZopeTime() - here.lastEditTime() < 1) and here.last_log) or ''
-                           );
-      file       python:'' #doesn't work too well request/form/file|nothing ;
-      pagetypes  here/allowedPageTypes;
-      wiki_url   here/wikiUrl;
-      rows       python:request.get('zwiki_height',20);
-      uploaddir  python:getattr(container,'uploads',container);
-      macros     python:here.wikipage_template(request).macros;
-      "
-      onload="document.forms[0].text.focus();"
-      >
-
-  <head metal:use-macro="macros/head">
-    <title metal:fill-slot="title" tal:content="title" />
+<html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki" >
+  <head>
+    <title metal:fill-slot="title" 
+           tal:content="string:${container/title} ${here/Title} edit/create form" />
     <meta metal:fill-slot="searchtags" name="robots" content="noindex,nofollow" />
     <meta metal:fill-slot="extra" http-equiv="pragma" content="no-cache"
           tal:define="dummy python:request.RESPONSE.setHeader('pragma','no-cache')" />
   </head>
+  <body>
+    <div metal:fill-slot="main" tal:define="
+    action     request/form/action|options/action;
+    creating   python:action == 'Create';
+    editing    python:not creating;
+    actioning  python:(creating and 'Creating') or 'Editing';
+    previewing python:request.form.get('editform',None);
+    page       request/form/page|options/page;
+    newname    request/form/title|page;
+    title      string:${container/title} ${actioning} ${page};
+    text       request/form/text|options/text;
+    type       request/form/type|python:(creating and here.defaultPageType()) or here.pageTypeId();
+    timestamp  request/form/timeStamp|here/timeStamp;
+    log        python:request.form.get('log',
+    ((editing and 
+    here.usernameFrom(request) == here.last_editor and
+    here.ZopeTime() - here.lastEditTime() < 1) and here.last_log) or ''
+    );
+    file       python:'' #doesn't work too well request/form/file|nothing ;
+    pagetypes  here/allowedPageTypes;
+    wiki_url   here/wikiUrl;
+    rows       python:request.get('zwiki_height',20);
+    uploaddir  python:getattr(container,'uploads',container);
+    "
+    onload="document.forms[0].text.focus();"
+    >
+      <div class="formcontent">
+        <form method="post" enctype="multipart/form-data" action="" 
+              tal:attributes="action string:${here/page_url}">
+          <input name="timeStamp" type="hidden" value="" 
+                 tal:attributes="value timestamp" />
+          <input name="page" type="hidden" value="page"
+                 tal:attributes="value page" />
+          <input name="leaveplaceholder" value="" type="hidden"
+                 tal:condition="python:creating #no placeholder when creating" />
+          <div align="center">
+            <table width="100%" border="0" cellspacing="0" cellpadding="3">
+              <!-- page name & type -->
+              <tr>
+                <td valign="middle" align="left" bgcolor="#dddddd">
+                  <span tal:condition="python:
+                                       user.has_permission('Zwiki: Rename pages',here)">
+                    <span i18n:translate="">Page name</span>: 
+                    <input name="title" size="30" maxlength="100" value="" 
+                           title="the name of this wiki page (changing this may be slow!)"                          
+                           tabindex="" class="formfield" style="font-weight:bold;"
+                           i18n:attributes="title"
+                           tal:attributes="value python:newname;" />
+                  </span>
+                </td>
+                <td valign="middle" align="right" bgcolor="#dddddd">
+                  <span tal:condition="python:
+                                       user.has_permission('Zwiki: Change page types',here)">
+                    <span i18n:translate="">type</span>:
+                    <select name="type" tabindex="" class="formfield"
+                            title="select the formatting and rendering style for this page"
+                            i18n:attributes="title" >
+                      <tal:options tal:repeat="t pagetypes">
+                        <option value="type"
+                                tal:define="
+                                            dtmlallowed python:
+                                            t in ('stx','html') and
+                                            here.dtmlAllowed()
+                                            #here.lookupPageType(t).supportsDtml() and 
+                                            #here.dtmlAllowed();
+                                            extrasuffix python:
+                                            dtmlallowed and ' (+ DTML)' or ''; "
+                                tal:attributes="
+                                                value python:t; 
+                                                selected python:t==type"
+                                tal:content="python:
+                                             here.PAGE_TYPES.get(t,t) + extrasuffix">
+                          type
+                        </option>
+                      </tal:options>
+                    </select>
+                  </span>
+                </td>
+              </tr>
+              <!-- edit area -->
+              <tr>
+                <td colspan="2" align="center" bgcolor="#dddddd">
+                  <textarea tal:condition="not:here/supportsEpoz"
+                            wrap="virtual" name="text" rows="20" cols="60"
+                            style="width:100%; background-color:#f0f0f0" 
+                            tabindex=""
+                            tal:attributes="rows rows;"
+                            tal:content="text">text...</textarea>
+                  <span tal:condition="here/supportsEpoz"
+                        tal:replace="structure python:
+                                     here.Epoz(
+                                     'text',
+                                     data=text,
+                                     style='background:white;border:thin solid black;
+                                     width:100%;height:'+str(rows)+'em;',
+                                     css=here.defaultPageUrl()+'/stylesheet',
+                                     )"></span>
+                </td>
+              </tr>
+              <!-- better-positioned epoz source-mode checkbox -->
+              <tr tal:condition="python:0 #here/supportsEpoz">
+                <td valign="top" align="right" bgcolor="#dddddd" colspan="2"
+                    ><input id="EpozViewMode" type="checkbox" class="formfield"
+                    onclick="SwitchViewMode(this.checked)" 
+                    title="toggle source/WYSIWYG mode" 
+                    i18n:attributes="title"
+                    tabindex=""
+                    /></td>
+              </tr>
+              <!-- optional note -->
+              <tr>
+                <td valign="middle" align="left" bgcolor="#dddddd" colspan="2" 
+                    nowrap="nowrap">
+                  <span i18n:translate="">Optional change note</span>: 
+                  <input name="log" size="50" maxlength="100" value="" 
+                         tabindex="" class="formfield"
+                         title="a note makes RecentChanges more useful" 
+                         i18n:attributes="title"
+                         tal:attributes="value log;" 
+                         />
+                </td>
+              </tr>
+              <!-- file upload -->
+              <tr tal:condition="python:
+                                 user.has_permission('Add Documents, Images, and Files',
+                                 uploaddir)">
+                <td valign="middle" align="left" colspan="2" bgcolor="#dddddd" 
+                    nowrap="nowrap">
+                  <span i18n:translate="">Upload a file or image</span>: 
+                  <input type="file" name="file" size="30" value="" tabindex=""
+                         title="upload a file and link it on this page ?" 
+                         class="formfield" i18n:attributes="title"
+                         tal:attributes="value file;"
+                         />
+                </td>
+              </tr>
+              <!-- help links, save and cancel buttons -->
+              <tr>
+                <td valign="" align="left" bgcolor="#dddddd" colspan="1">
+                  <span i18n:translate="">For editing help, see</span> 
+                  <a tal:attributes="href string:${wiki_url}/HelpPage#editing"
+                     ><span i18n:translate="">HelpPage</span></a> 
+                  <span tal:omit-tag="" 
+                        tal:condition="python:
+                                       here.pageWithId('TextFormattingRules')">
+                    <span i18n:translate="">or</span> 
+                    <a 
+                        tal:attributes="href string:${wiki_url}/TextFormattingRules"
+                        ><span i18n:translate="">TextFormattingRules</span></a> 
+                    </span>.
+                </td>
+                <td valign="top" align="right" bgcolor="#dddddd" colspan="1">
+                  <strong><input 
+                  type="submit" name="edit:method" 
+                  value="Save" title="change this wiki page"
+                  tabindex="" style="font-weight:bold" accesskey="s"
+                  tal:attributes="
+                  value python:creating and ('Create') or default;
+                  title python:creating and ('create this wiki page') or default;"
+                  i18n:attributes="title;value"
+                  /></strong>&nbsp;<input 
+                  type="submit" name="editform:method" 
+                  value="Preview" title="preview this edit"
+                  tabindex="" accesskey="p"
+                  i18n:attributes="title;value"
+                  />&nbsp;<input 
+                  type="submit" value="Cancel" 
+                  title="cancel this edit and return to the page"
+                  tabindex="" 
+                  i18n:attributes="title;value"
+                  />
+                  <span tal:condition="python: False">
+                    <!-- force i18n extraction -->
+                    <span title="Create" i18n:attributes="title"></span>
+                    <span title="create this wiki page" i18n:attributes="title"></span>
+                  </span>
+                </td>
+              </tr>
 
-  <body bgcolor="#ffffff">
-    <div metal:use-macro="macros/linkpanel" />
-
-    <table tal:condition="python:0" 
-           width="100%" border="0" cellspacing="0" cellpadding="3" >
-      <tr>
-        <td width="1%" valign="middle">
-          <a tal:condition="python:request.get('zwiki_showlogo',1)"
-             tal:attributes="href here/wiki_url"
-             href="wiki_url" title="go to home page" accesskey="f" i18n:attributes="title">
-            <img tal:replace="structure container/site_logo|default"
-                 src="misc_/ZWiki/ZWikiPage_icon.gif" height="48" width="48" 
-                 border="0" alt="home" i18n:attributes="alt"/>
-          </a>
-        </td>
-        <td valign="middle">
-          <h1 tal:content="string:${actioning} ${page}">
-            Creating/Editing Pagename
-          </h1>
-        </td>
-      </tr>
-    </table>
-    <!-- end of header -->
-
-    <div class="formcontent">
-      <form method="post" enctype="multipart/form-data" action="" 
-            tal:attributes="action string:${here/page_url}">
-        <input name="timeStamp" type="hidden" value="" 
-               tal:attributes="value timestamp" />
-        <input name="page" type="hidden" value="page"
-               tal:attributes="value page" />
-        <input name="leaveplaceholder" value="" type="hidden"
-               tal:condition="python:creating #no placeholder when creating" />
-        <div align="center">
-          <table width="100%" border="0" cellspacing="0" cellpadding="3">
-            
-            <!-- page name & type -->
+            </table>
+          </div>
+        </form>
+        <div tal:condition="previewing">
+          <!-- preview -->
+          <table border="0" width="100%" class="dimtext"><tr>
+            <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
+            <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
+            <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
+            <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
+            <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
+          </tr></table>
+          <table border="4" width="100%" cellpadding="10" class="preview">
             <tr>
-              <td valign="middle" align="left" bgcolor="#dddddd">
-                <span tal:condition="python:
-                      user.has_permission('Zwiki: Rename pages',here)">
-                  <span i18n:translate="">Page name</span>: 
-                  <input name="title" size="30" maxlength="100" value="" 
-                         title="the name of this wiki page (changing this may be slow!)"                          
-                         tabindex="" class="formfield" style="font-weight:bold;"
-			 i18n:attributes="title"
-                         tal:attributes="value python:newname;" />
-                </span>
-              </td>
-              <td valign="middle" align="right" bgcolor="#dddddd">
-                <span tal:condition="python:
-                      user.has_permission('Zwiki: Change page types',here)">
-                  <span i18n:translate="">type</span>:
-                  <select name="type" tabindex="" class="formfield"
-                          title="select the formatting and rendering style for this page"
-			  i18n:attributes="title" >
-                    <tal:options tal:repeat="t pagetypes">
-                      <option value="type"
-                              tal:define="
-                              dtmlallowed python:
-                                t in ('stx','html') and
-                                here.dtmlAllowed()
-                                #here.lookupPageType(t).supportsDtml() and 
-                                #here.dtmlAllowed();
-                              extrasuffix python:
-                              dtmlallowed and ' (+ DTML)' or ''; "
-                              tal:attributes="
-                              value python:t; 
-                              selected python:t==type"
-                              tal:content="python:
-                              here.PAGE_TYPES.get(t,t) + extrasuffix">
-                        type
-                      </option>
-                    </tal:options>
-                  </select>
-                </span>
-              </td>
+              <td tal:content="structure python:here.renderText(
+                               text,type,REQUEST=request,RESPONSE=request.RESPONSE)"></td>
             </tr>
-            
-            <!-- edit area -->
-            <tr>
-              <td colspan="2" align="center" bgcolor="#dddddd">
-                <textarea tal:condition="not:here/supportsEpoz"
-                          wrap="virtual" name="text" rows="20" cols="60"
-                          style="width:100%; background-color:#f0f0f0" 
-                          tabindex=""
-                          tal:attributes="rows rows;"
-                          tal:content="text">text...</textarea>
-                <span tal:condition="here/supportsEpoz"
-                      tal:replace="structure python:
-                      here.Epoz(
-                      'text',
-                      data=text,
-                      style='background:white;border:thin solid black;
-                             width:100%;height:'+str(rows)+'em;',
-                             css=here.defaultPageUrl()+'/stylesheet',
-                          )"></span>
-              </td>
-            </tr>
-
-            <!-- better-positioned epoz source-mode checkbox -->
-            <tr tal:condition="python:0 #here/supportsEpoz">
-              <td valign="top" align="right" bgcolor="#dddddd" colspan="2"
-                  ><input id="EpozViewMode" type="checkbox" class="formfield"
-                  onclick="SwitchViewMode(this.checked)" 
-                  title="toggle source/WYSIWYG mode" 
-		  i18n:attributes="title"
-                  tabindex=""
-              /></td>
-            </tr>
-
-            <!-- optional note -->
-            <tr>
-              <td valign="middle" align="left" bgcolor="#dddddd" colspan="2" 
-                  nowrap="nowrap">
-                <span i18n:translate="">Optional change note</span>: 
-                <input name="log" size="50" maxlength="100" value="" 
-                       tabindex="" class="formfield"
-                       title="a note makes RecentChanges more useful" 
-                       i18n:attributes="title"
-                       tal:attributes="value log;" 
-                       />
-              </td>
-            </tr>
-
-            <!-- file upload -->
-            <tr tal:condition="python:
-                user.has_permission('Add Documents, Images, and Files',
-                                    uploaddir)">
-              <td valign="middle" align="left" colspan="2" bgcolor="#dddddd" 
-                  nowrap="nowrap">
-                <span i18n:translate="">Upload a file or image</span>: 
-                <input type="file" name="file" size="30" value="" tabindex=""
-                       title="upload a file and link it on this page ?" 
-		       class="formfield" i18n:attributes="title"
-                       tal:attributes="value file;"
-                       />
-              </td>
-            </tr>
-
-            <!-- help links, save and cancel buttons -->
-            <tr>
-              <td valign="" align="left" bgcolor="#dddddd" colspan="1">
-                <span i18n:translate="">For editing help, see</span> 
-                <a tal:attributes="href string:${wiki_url}/HelpPage#editing"
-                ><span i18n:translate="">HelpPage</span></a> 
-                <span tal:omit-tag="" 
-                      tal:condition="python:
-                      here.pageWithId('TextFormattingRules')">
-                  <span i18n:translate="">or</span> 
-                  <a 
-                   tal:attributes="href string:${wiki_url}/TextFormattingRules"
-                  ><span i18n:translate="">TextFormattingRules</span></a> 
-                  </span>.
-              </td>
-              <td valign="top" align="right" bgcolor="#dddddd" colspan="1">
-                <strong><input 
-                       type="submit" name="edit:method" 
-                       value="Save" title="change this wiki page"
-                       tabindex="" style="font-weight:bold" accesskey="s"
-                       tal:attributes="
-                       value python:creating and ('Create') or default;
-                       title python:creating and ('create this wiki page') or default;"
-                       i18n:attributes="title;value"
-                       /></strong>&nbsp;<input 
-                       type="submit" name="editform:method" 
-                       value="Preview" title="preview this edit"
-                       tabindex="" accesskey="p"
-                       i18n:attributes="title;value"
-                       />&nbsp;<input 
-                       type="submit" value="Cancel" 
-                       title="cancel this edit and return to the page"
-                       tabindex="" 
-		       i18n:attributes="title;value"
-                       />
-		<span tal:condition="python: False">
-			<!-- force i18n extraction -->
-			<span title="Create" i18n:attributes="title"></span>
-			<span title="create this wiki page" i18n:attributes="title"></span>
-		</span>
-              </td>
-            </tr>
-
           </table>
+          <table border="0" width="100%" class="dimtext"><tr>
+            <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
+            <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
+            <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
+            <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
+            <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
+          </tr></table>
         </div>
-      </form>
-
-      <div tal:condition="previewing">
-        <table border="0" width="100%" class="dimtext"><tr>
-        <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
-        <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
-        <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
-        <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
-        <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
-        </tr></table>
-        <table border="4" width="100%" cellpadding="10" class="preview">
-          <tr>
-            <td tal:content="structure python:here.renderText(
-            text,type,REQUEST=request,RESPONSE=request.RESPONSE)"></td>
-          </tr>
-        </table>
-        <table border="0" width="100%" class="dimtext"><tr>
-        <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
-        <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
-        <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
-        <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
-        <td align="center"><b i18n:translate="label_preview">PREVIEW</b></td>
-        </tr></table>
       </div>
-
     </div>
-
   </body>
 </html>

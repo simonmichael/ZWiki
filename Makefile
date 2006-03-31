@@ -237,7 +237,7 @@ tags:
 	  -o -name .old     -prune -type f \
 	  -o -name doxygen -prune -type f \
 	  -o -name .doxygen -prune -type f \
-	  | xargs etags
+	  | xargs etags --language-force=python #make sure non-py files are included
 
 zopetags:
 	cd /zope/lib/python; \

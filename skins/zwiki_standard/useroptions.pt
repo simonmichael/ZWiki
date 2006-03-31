@@ -1,22 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
-      i18n:domain="zwiki"
-      tal:define="
-      title string:User options;
-      macros python:here.wikipage_template(request).macros;
-      ">
-  <head metal:use-macro="macros/head">
-    <title metal:fill-slot="title" tal:content="title" />
+<html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki" >
+  <head>
+    <title metal:fill-slot="title" i18n:translate="">User options</title>
     <meta metal:fill-slot="searchtags" name="robots" content="noindex,nofollow" />
   </head>
-
-  <body bgcolor="#ffffff">
-    <div metal:use-macro="macros/linkpanel" />
-
-    <div class="formcontent" tal:content="structure 
-	python:here.getSkinTemplate('UserOptions')(here,request)">
-	content goes here..
+  <body>
+    <div metal:fill-slot="main">
+      <div class="formcontent" 
+           tal:content="structure python:
+                        here.getSkinTemplate('UserOptions')(here,request)">
+        content goes here..
+      </div>
     </div>
-
-</body>
+  </body>
 </html>

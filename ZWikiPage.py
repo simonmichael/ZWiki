@@ -1099,13 +1099,14 @@ class ZWikiPage(
     security.declareProtected(Permissions.View, 'defaultPage')
     def defaultPage(self):
         """
-        Return this wiki's default/front page object.
+        Return this wiki's default page object, where eg mail goes by default.
         
         That is:
-        -a page named in the default_page string or lines property
-        -or the page named FrontPage
-        -or the first page object in the folder
-        -or None.
+
+        - a page named in the default_page string or lines property
+        - or the page named FrontPage
+        - or the first page object in the folder
+        - or None.
         """
         # default_page property could be a list, tuple or string
         default_page_names = getattr(self.folder(),'default_page',[])

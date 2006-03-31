@@ -1,0 +1,42 @@
+<html>
+
+  <head metal:define-macro="head">
+    <meta http-equiv="Content-Type" content="" 
+          tal:define="
+                      charset python:'utf-8';
+                      dummy   python:request.RESPONSE.setHeader(
+                      'Content-Type','text/html;; charset='+charset);"
+          tal:attributes="content string:text/html;;charset=${charset}" 
+          />
+    <span metal:define-slot="searchtags" 
+          tal:omit-tag="" 
+          tal:define="indexdelay python:24">
+      <span tal:condition="python:here.lastEditIntervalInHours() >= indexdelay"
+            tal:omit-tag="">
+        <meta metal:define-slot="keywords" name="keywords" content=""
+              tal:attributes="content here/spacedPageName;" />
+        <meta metal:define-slot="description" name="description" content=""
+              tal:attributes="content here/summary;" />
+      </span>
+      <span tal:condition="python:
+        here.lastEditIntervalInHours() < indexdelay" tal:omit-tag="">
+        <meta name="robots" content="noindex" />
+      </span>
+    </span>
+    <span metal:define-slot="extra" tal:omit-tag=""
+          />
+    <link rel="stylesheet" type="text/css" href="" 
+          tal:attributes="href string:${here/defaultPageUrl}/stylesheet" 
+          />
+    <span metal:define-macro="favicon" tal:condition="container/favicon|nothing" tal:omit-tag="">
+      <link rel="shortcut icon" href="favicon"/>
+      <link rel="icon" href="favicon"/>
+    </span>
+    <title metal:define-slot="title"
+           tal:content="string:${container/title} ${here/pageName}">
+      page title
+    </title>
+  </head>
+
+  <body />
+</html>

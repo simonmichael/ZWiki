@@ -37,6 +37,12 @@ def loadPageTemplate(name,dir='skins/zwiki_standard'):
     #                        globals(),
     #                        __name__=name)
 
+def loadMacros(name,dir='skins/zwiki_standard'):
+    """
+    Load all macros from the named page template on the filesystem.
+    """
+    return loadPageTemplate(name,dir).pt_macros()
+
 def loadDtmlMethod(name,dir='skins/zwiki_standard'):
     """
     Load the named DTML method from the filesystem.
@@ -107,43 +113,70 @@ def onlyBodyFrom(t):
 def addErrorTo(text,error):
     return """<div class="error">%s</div>\n%s""" % (error,text)
 
+# templates for the standard skin's views
+STANDARD_TEMPLATES = {}
+for t in [
+    'badtemplate',
+    'backlinks',
+    'contentspage',
+    'denied',
+    'diffform',
+    'editform',
+    'maintemplate',
+    'recentchanges',
+    'searchwiki',
+    'subscribeform',
+    'useroptions',
+    'wikipage',
+    ]:
+    STANDARD_TEMPLATES[t] = loadPageTemplate(t)
 
-STANDARD_TEMPLATES = {
-    'badtemplate'        : loadPageTemplate('badtemplate'),
-    'denied'             : loadPageTemplate('denied'),
+# dtml included by the default templates
+for t in [
+    'RecentChanges',
+    'SearchPage',
+    'UserOptions',
+    'subtopics_outline',
+    'subtopics_board',
+    ]:
+    STANDARD_TEMPLATES[t] = loadDtmlMethod(t)
 
-    #main page view
-    #wikipage defines macros used by most other templates
-    'wikipage'           : loadPageTemplate('wikipage'),
-    'stylesheet'         : loadStylesheetFile('stylesheet.css'),
+# stylesheet
+STANDARD_TEMPLATES['stylesheet'] = loadStylesheetFile('stylesheet.css')
 
-    #secondary page views/forms
-    #these omit the pageheading
-    'backlinks'          : loadPageTemplate('backlinks'),
-    'editform'           : loadPageTemplate('editform'),
-    'diffform'           : loadPageTemplate('diffform'),
-    'subscribeform'      : loadPageTemplate('subscribeform'),
-
-    #wiki views/forms
-    #contentspage defines a wikiformheading macro used by all the rest
-    #except useroptions
-    'contentspage'       : loadPageTemplate('contentspage'),
-    'recentchanges'      : loadPageTemplate('recentchanges'),
-    'searchwiki'         : loadPageTemplate('searchwiki'),
-    'useroptions'        : loadPageTemplate('useroptions'),
-    # dtml versions which the above will usually use
-    'RecentChanges'      : loadDtmlMethod('RecentChanges'),
-    'SearchPage'         : loadDtmlMethod('SearchPage'),
-    'UserOptions'        : loadDtmlMethod('UserOptions'),
-
-    #fragments
-    'subtopics_outline'  : loadDtmlMethod('subtopics_outline'),
-    'subtopics_board'    : loadDtmlMethod('subtopics_board'),
-    }
-
+# templates for the plone skin
 # don't need to pre-load these, normal cmf skin lookup will find them
-PLONE_TEMPLATES = {
-    }
+PLONE_TEMPLATES = {}
+
+# macros in these templates will be available to all views in here.macros
+MACROS = {}
+for t in [
+    'accesskeys',
+    'commentform',
+    'content',
+    'head',
+    'links',
+    'pageheader',
+    'pagemanagementform',
+    'ratingform',
+    'siteheader',
+    ]:
+    MACROS.update(loadMacros(t))
+# backwards compatibility
+# pre-0.52 these were defined in wikipage, old custom templates may need them
+# two more were defined in contentspage, we won't support those
+null = ZopePageTemplate(
+    'null','<div metal:define-macro="null" />').pt_macros()['null']
+for t in [
+    'favicon',
+    'linkpanel',
+    'logolink',
+    'navpanel',
+    'pagelinks',
+    'pagenameand',
+    'wikilinks',
+    ]:
+    MACROS[t] = null
 
 
 class SkinUtils:
@@ -208,6 +241,7 @@ class SkinUtils:
         - or the dtml methods, if either can be acquired
         - or the default wikipage template from the filesystem.
         """
+        #import pdb; pdb.set_trace()
         REQUEST = getattr(self,'REQUEST',None)
         if (#(self.supportsCMF() and self.inCMF()) or
             hasattr(REQUEST,'bare') or
@@ -345,37 +379,48 @@ class SkinViews:
     """
     security = ClassSecurityInfo()
 
+    macros = MACROS
+
     security.declareProtected(Permissions.View, 'wikipage')
     def wikipage(self, dummy=None, REQUEST=None, RESPONSE=None):
         """
         Render the main page view (dummy method to allow standard skin in CMF).
 
-        XXX this may or may not still be useful. Old comment:
-        The wikipage template is usually applied by addSkinTo;
-        this is provided so you can configure it as the "view" method
-        in portal_types -> Wiki Page -> actions to use Zwiki's standard 
+        XXX should be going away soon. Old comment: the wikipage template
+        is usually applied by __call__ -> addSkinTo, but this method is
+        provided so you can configure it as the"view" action
+        in portal_types -> Wiki Page -> actions and get use Zwiki's standard 
         skin inside a CMF/Plone site.
         """
         return self.render(REQUEST=REQUEST,RESPONSE=RESPONSE)
 
-    security.declareProtected(Permissions.View, 'wikipage_template')
-    def wikipage_template(self, REQUEST=None):
-        """
-        Get the standard wikipage template, unevaluated, for macro access.
-
-        This will always return the standard skin's wikipage as
-        zwiki_plone's doesn't have the macros. Provides macro aliases
-        for backwards compatibility.
-        """
-        standard_wikipage = STANDARD_TEMPLATES['wikipage'].__of__(self)
-        if self.inCMF(): template = standard_wikipage
-        else: template = self.getSkinTemplate('wikipage')
-        return template
-
     # backwards compatibility
     wikipage_view = wikipage
+    # old templates look for wikipage_template().macros
+    def wikipage_template(self, REQUEST=None): return self
     wikipage_macros = wikipage_template
-    
+
+
+    security.declareProtected(Permissions.View, 'maintemplate')
+    def maintemplate(self, REQUEST=None):
+        """
+        Return the standard or plone main_template, unevaluated.
+
+        This provides a plone-like main_template which all other
+        templates can use, whether we are in plone or not.
+        """
+        # XXX not really working out yet.. need this hack
+        # all skin templates wrap themselves with main_template
+        # in CMF, use the cmf/plone one, otherwise use ours
+        # should allow use of ours in cmf/plone also
+        if self.inCMF():
+            return self.getSkinTemplate('main_template')
+        else:
+            return self.getSkinTemplate('maintemplate')
+    # and make here/main_template/macros/... work
+    from ComputedAttribute import ComputedAttribute
+    main_template = ComputedAttribute(maintemplate,1)
+
     security.declareProtected(Permissions.View, 'stylesheet')
     def stylesheet(self, REQUEST=None):
         """

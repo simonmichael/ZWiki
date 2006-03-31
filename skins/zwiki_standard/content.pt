@@ -1,0 +1,20 @@
+<html>
+  <body>
+
+    <div metal:define-macro="content" class="content">
+      <!-- page content (main text, subtopics links, comments) -->
+      <!--
+      <div metal:use-macro="here/macros/maintext" />
+      <div metal:use-macro="here/macros/subtopics" />
+      <div metal:use-macro="here/macros/comments" />
+      -->
+      <div tal:replace="structure options/body">
+        main text, subtopics links, comments
+      </div>
+      <a name="bottom"></a>
+      <br />
+      <div metal:use-macro="here/macros/commentform" />
+    </div>
+
+  </body>
+</html>

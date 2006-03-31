@@ -1,192 +1,180 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
-      i18n:domain="zwiki"
-      tal:define="
-                  title   string:${container/title} ${here/pageName} subscription;
-                  macros  python:here.wikipage_template(request).macros;
-      ">
-  <head metal:use-macro="macros/head">
-    <title metal:fill-slot="title" tal:content="title" />
+<html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki" >
+  <head>
+    <title metal:fill-slot="title" 
+           tal:content="string:${container/title} ${here/pageName} subscription" />
     <meta metal:fill-slot="searchtags" name="robots" content="noindex,nofollow" />
   </head>
-
-<body bgcolor="#ffffff">
-
-<div metal:use-macro="macros/linkpanel" />
-
-<div class="formcontent">
-
-      <h1 tal:condition="here/inCMF"><span i18n:translate="" tal:omit-tag="">Mail subscription</span></h1>
-      <span tal:condition="request/emailchanged|nothing">
-        <!-- remember email address with a cookie like UserOptions -->
-        <tal:dummy tal:define="r python:request.RESPONSE.setCookie(
-                   'email',
-                   request.email,
-                   path='/',
-                   expires=(here.ZopeTime() + 365).rfc822())
-                   "/>
-      </span>
-      <form method="post" 
-            enctype="multipart/form-data"
-            action="page_url/subscribeform" 
-            tal:attributes="action string:${here/page_url}/subscribeform"
-            tal:define="
-            email member/getUserName|request/email|nothing;
-            pagesubscriber python:here.isSubscriber(email);
-            wikisubscriber python:here.isWikiSubscriber(email);
-            othersubscriptions python:here.otherPageSubscriptionsFor(email);
-            split python:modules['string'].split;
-            mailoutEverything python:getattr(here, 'mailout_policy','') == 'edits';
-            ">
-        <p>
-	  <span tal:condition="not:mailoutEverything" i18n:translate="subscribe_desc_comments" tal:omit-tag="">
-          You can subscribe to this page or to the whole wiki.
-          Subscribers receive a copy of comments via email.
-          Or return to
-	  </span>
-	  <span tal:condition="mailoutEverything" i18n:translate="subscribe_desc_edits" tal:omit-tag="">
-          You can subscribe to this page or to the whole wiki.
-          Subscribers receive a copy of all edits via email.
-          Or return to
-	  </span>
-          <a href="page_url" tal:attributes="href here/page_url" 
-             tal:content="here/pageName">Page name</a>.
-        </p>
-
-        <div tal:condition="here/inCMF">
-          <input name="email" type="hidden" tal:attributes="value email" />
-        </div>
-        <div tal:condition="not:here/inCMF">
-          <span i18n:translate="" tal:omit-tag="">Your email address</span>:
-          <input name="email" type="text" size="30" value="email" 
-                 tal:attributes="value email" class="formfield" />
-          <input name="emailchanged" type="hidden" value="1" />
-          <input class="context"
-                 type="submit" 
-                 name="../subscribeform:method" 
-                 value="Change" 
-		 i18n:attributes="value"
-                 />
-        </div>
-
-        <div tal:condition="not:email" i18n:translate="subscribe_no_email">
-          To subscribe, please configure your email address.
-        </div>
-        <table width="100%" cellpadding="2" cellspacing="1" border="0">
-          <tr valign="top" tal:condition="email">
-            <td valign="top" width="50%"
-                tal:attributes="class python:
-                (pagesubscriber and 'subscribed') or 'notsubscribed'">
-              <br />
-              <span tal:condition="pagesubscriber" tal:omit-tag="">
-                <b i18n:translate="subscribed_page_ok">You are currently subscribed<br />
-                to this page.</b>
-              </span>
-              <span tal:condition="not:pagesubscriber">
-                <span i18n:translate="subscribed_page_no" tal:omit-tag="">You are currently not subscribed<br />
-                to this page.</span>
-              </span>
-              <br />
-              <input tal:condition="pagesubscriber" 
-                     class="standalone"
-                     type="submit" 
-                     name="../unsubscribe:method" 
-                     value=" Unsubscribe from this page " 
-		     i18n:attributes="value"
-                     />
-              <input tal:condition="not:pagesubscriber" 
-                     class="standalone"
-                     type="submit" 
-                     name="../subscribe:method" 
-                     value=" Subscribe to this page " 
-	             i18n:attributes="value"
-                     />
-              <span tal:condition="not:pagesubscriber">
-              &nbsp;&nbsp;<span i18n:translate="">all edits</span>:
-              <input type="checkbox" 
-                     name="edits" 
-                     value="1" 
-                     />
-              </span>
-            </td>
-            <td valign="top" width="50%"
-                tal:attributes="class python:
-                (pagesubscriber and 'subscribed') or 'notsubscribed'">
-              <br />
-              <b tal:condition="wikisubscriber" i18n:translate="subscribed_wiki_ok">
-                You are currently subscribed<br />
-                to the whole wiki.
-              </b>
-              <span tal:condition="not:wikisubscriber" i18n:translate="subscribed_wiki_no" tal:omit-tag="">
-                You are currently not subscribed<br /> to the whole wiki.
-              </span>
-              <br />
-              <input tal:condition="wikisubscriber" 
-                     class="standalone"
-                     type="submit" 
-                     name="../wikiUnsubscribe:method" 
-                     value="Unsubscribe from whole wiki" 
-		     i18n:attributes="value"
-                     />
-              <input tal:condition="not:wikisubscriber" 
-                     class="standalone"
-                     type="submit" 
-                     name="../wikiSubscribe:method" 
-                     value="Subscribe to whole wiki" 
-		     i18n:attributes="value"
-                     />
-              <span tal:condition="not:wikisubscriber">
-              &nbsp;&nbsp;<span i18n:translate="">all edits</span>:
-              <input type="checkbox" 
-                     name="edits" 
-                     value="1" 
-                     />
-              </span>
-            </td>
-          </tr>
-          <tr tal:condition="python:email and othersubscriptions">
-            <td>
-              <span i18n:translate="other_page_subscribed" tal:omit-tag="">You are subscribed to these other pages</span>:
-              <span tal:repeat="pageid othersubscriptions" tal:omit-tag="">
+  <body>
+    <div metal:fill-slot="main">
+      <div class="formcontent">
+        <h1 tal:condition="here/inCMF"><span i18n:translate="" tal:omit-tag="">Mail subscription</span></h1>
+        <span tal:condition="request/emailchanged|nothing">
+          <!-- remember email address with a cookie like UserOptions -->
+          <tal:dummy tal:define="r python:request.RESPONSE.setCookie(
+                                 'email',
+                                 request.email,
+                                 path='/',
+                                 expires=(here.ZopeTime() + 365).rfc822())
+                                 "/>
+        </span>
+        <form method="post" 
+              enctype="multipart/form-data"
+              action="page_url/subscribeform" 
+              tal:attributes="action string:${here/page_url}/subscribeform"
+              tal:define="
+                          email member/getUserName|request/email|nothing;
+                          pagesubscriber python:here.isSubscriber(email);
+                          wikisubscriber python:here.isWikiSubscriber(email);
+                          othersubscriptions python:here.otherPageSubscriptionsFor(email);
+                          split python:modules['string'].split;
+                          mailoutEverything python:getattr(here, 'mailout_policy','') == 'edits';
+                          ">
+          <p>
+            <span tal:condition="not:mailoutEverything" i18n:translate="subscribe_desc_comments" tal:omit-tag="">
+              You can subscribe to this page or to the whole wiki.
+              Subscribers receive a copy of comments via email.
+              Or return to
+            </span>
+            <span tal:condition="mailoutEverything" i18n:translate="subscribe_desc_edits" tal:omit-tag="">
+              You can subscribe to this page or to the whole wiki.
+              Subscribers receive a copy of all edits via email.
+              Or return to
+            </span>
+            <a href="page_url" tal:attributes="href here/page_url" 
+               tal:content="here/pageName">Page name</a>.
+          </p>
+          <div tal:condition="here/inCMF">
+            <input name="email" type="hidden" tal:attributes="value email" />
+          </div>
+          <div tal:condition="not:here/inCMF">
+            <span i18n:translate="" tal:omit-tag="">Your email address</span>:
+            <input name="email" type="text" size="30" value="email" 
+                   tal:attributes="value email" class="formfield" />
+            <input name="emailchanged" type="hidden" value="1" />
+            <input class="context"
+                   type="submit" 
+                   name="../subscribeform:method" 
+                   value="Change" 
+                   i18n:attributes="value"
+                   />
+          </div>
+          <div tal:condition="not:email" i18n:translate="subscribe_no_email">
+            To subscribe, please configure your email address.
+          </div>
+          <table width="100%" cellpadding="2" cellspacing="1" border="0">
+            <tr valign="top" tal:condition="email">
+              <td valign="top" width="50%"
+                  tal:attributes="class python:
+                                  (pagesubscriber and 'subscribed') or 'notsubscribed'">
                 <br />
-                <a href="../pageid/subscribeform?email=email"
-                 tal:attributes="href python:
-                 '%s/%s/subscribeform?email=%s' % (
-                 here.wiki_url(),pageid,here.urlquote(email))"
-                 tal:content="python:here.pageWithId(pageid).pageName()"
-                >pagename</a>
-              </span>
-            </td>
-            <td>
-              &nbsp;
-            </td>
-          </tr>
-
-          <tr>
-            <td valign="top" width="50%" tal:define="subs here/subscriberList">
-              <br />
-              <span i18n:translate="" tal:omit-tag="">Page subscribers</span>:
-	      (<span tal:replace="python:len(subs)" />)
-              <br />
-              <span tal:repeat="sub subs" tal:omit-tag="">
-                <span tal:replace="python:split(sub,'@')[0]"></span><br />
-              </span>
-            </td>
-            <td valign="top" width="50%" tal:define="subs here/wikiSubscriberList">
-              <br />
-              <span i18n:translate="" tal:omit-tag="">Wiki subscribers</span>:
-	      (<span tal:replace="python:len(subs)" />)
-              <br />
-              <span tal:repeat="sub subs" tal:omit-tag="">
-                <span tal:replace="python:split(sub,'@')[0]"></span>
+                <span tal:condition="pagesubscriber" tal:omit-tag="">
+                  <b i18n:translate="subscribed_page_ok">You are currently subscribed<br />
+                  to this page.</b>
+                </span>
+                <span tal:condition="not:pagesubscriber">
+                  <span i18n:translate="subscribed_page_no" tal:omit-tag="">You are currently not subscribed<br />
+                  to this page.</span>
+                </span>
                 <br />
-              </span>
-            </td>
-          </tr>
-
-        </table>
-      </form>
-
-</div>
-</body>
+                <input tal:condition="pagesubscriber" 
+                       class="standalone"
+                       type="submit" 
+                       name="../unsubscribe:method" 
+                       value=" Unsubscribe from this page " 
+                       i18n:attributes="value"
+                       />
+                <input tal:condition="not:pagesubscriber" 
+                       class="standalone"
+                       type="submit" 
+                       name="../subscribe:method" 
+                       value=" Subscribe to this page " 
+                       i18n:attributes="value"
+                       />
+                <span tal:condition="not:pagesubscriber">
+                  &nbsp;&nbsp;<span i18n:translate="">all edits</span>:
+                  <input type="checkbox" 
+                         name="edits" 
+                         value="1" 
+                         />
+                </span>
+              </td>
+              <td valign="top" width="50%"
+                  tal:attributes="class python:
+                                  (pagesubscriber and 'subscribed') or 'notsubscribed'">
+                <br />
+                <b tal:condition="wikisubscriber" i18n:translate="subscribed_wiki_ok">
+                  You are currently subscribed<br />
+                  to the whole wiki.
+                </b>
+                <span tal:condition="not:wikisubscriber" i18n:translate="subscribed_wiki_no" tal:omit-tag="">
+                  You are currently not subscribed<br /> to the whole wiki.
+                </span>
+                <br />
+                <input tal:condition="wikisubscriber" 
+                       class="standalone"
+                       type="submit" 
+                       name="../wikiUnsubscribe:method" 
+                       value="Unsubscribe from whole wiki" 
+                       i18n:attributes="value"
+                       />
+                <input tal:condition="not:wikisubscriber" 
+                       class="standalone"
+                       type="submit" 
+                       name="../wikiSubscribe:method" 
+                       value="Subscribe to whole wiki" 
+                       i18n:attributes="value"
+                       />
+                <span tal:condition="not:wikisubscriber">
+                  &nbsp;&nbsp;<span i18n:translate="">all edits</span>:
+                  <input type="checkbox" 
+                         name="edits" 
+                         value="1" 
+                         />
+                </span>
+              </td>
+            </tr>
+            <tr tal:condition="python:email and othersubscriptions">
+              <td>
+                <span i18n:translate="other_page_subscribed" tal:omit-tag="">You are subscribed to these other pages</span>:
+                <span tal:repeat="pageid othersubscriptions" tal:omit-tag="">
+                  <br />
+                  <a href="../pageid/subscribeform?email=email"
+                     tal:attributes="href python:
+                                     '%s/%s/subscribeform?email=%s' % (
+                                     here.wiki_url(),pageid,here.urlquote(email))"
+                     tal:content="python:here.pageWithId(pageid).pageName()"
+                     >pagename</a>
+                </span>
+              </td>
+              <td>
+                &nbsp;
+              </td>
+            </tr>
+            <tr>
+              <td valign="top" width="50%" tal:define="subs here/subscriberList">
+                <br />
+                <span i18n:translate="" tal:omit-tag="">Page subscribers</span>:
+                (<span tal:replace="python:len(subs)" />)
+                <br />
+                <span tal:repeat="sub subs" tal:omit-tag="">
+                  <span tal:replace="python:split(sub,'@')[0]"></span><br />
+                </span>
+              </td>
+              <td valign="top" width="50%" tal:define="subs here/wikiSubscriberList">
+                <br />
+                <span i18n:translate="" tal:omit-tag="">Wiki subscribers</span>:
+                (<span tal:replace="python:len(subs)" />)
+                <br />
+                <span tal:repeat="sub subs" tal:omit-tag="">
+                  <span tal:replace="python:split(sub,'@')[0]"></span>
+                  <br />
+                </span>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>

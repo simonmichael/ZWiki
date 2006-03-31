@@ -1,0 +1,74 @@
+<html>
+  <body>
+
+    <div metal:define-macro="commentform"
+         tal:condition="python:user.has_permission('Zwiki: Add comments',here)">
+      <!-- comment form -->
+      <br />
+      <br />
+      <div >
+        <form method="post" enctype="multipart/form-data"
+              class="commentform" style="margin-top:0;margin-bottom:0"
+              tal:attributes="action here/pageUrl">
+          <input name="timeStamp" type="hidden" value="editTimestamp"
+                 tal:attributes="value here/editTimestamp" />
+          <input name="page" type="hidden" value="id" 
+                 tal:attributes="value here/id" />
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="">
+            <tr>
+              <td align="left" valign="middle" nowrap="nowrap" colspan="2">
+                <small>
+                  <span i18n:translate="">subject</span>: 
+                  <input type="text" name="subject_heading" value="" 
+                         size="40" maxlength="100" style="font-weight:bold;" 
+                         class="formfield" 
+                         title="a subject helps clarify threads and RecentChanges" 
+                         i18n:attributes="title" 
+                         tal:attributes="value request/subject|nothing" />
+                  <span tal:condition="request/in_reply_to|nothing">
+                    (<span i18n:translate="">replying</span>)
+                  </span>
+                </small>
+              </td>
+            </tr>
+            <tr>
+              <td align="center" valign="bottom" bgcolor="" colspan="2">
+                <textarea wrap="virtual" name="text" rows="3" cols="60" 
+                          style="width:100%;"  class="formfield"
+                          title="to comment (and cc any subscribers) enter text here and click add"
+                          i18n:attributes="title"
+                          ></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td align="left" valign="middle">
+                &nbsp;
+              </td>
+              <td align="right" valign="top" nowrap="nowrap"> 
+                <input type="hidden" name="in_reply_to"
+                       tal:attributes="value request/in_reply_to|nothing" />
+                <input type="hidden" name="use_heading" value="1" />
+                <span tal:condition="python:here.isMailoutEnabled()" >
+                  <small>(
+                  <span tal:define="nbsubscriber 
+                                    python:here.subscriberCount() + here.wikiSubscriberCount()">
+                    <span tal:condition="python:nbsubscriber>1" i18n:translate="">
+                      <span tal:content="python:str(nbsubscriber)" i18n:name="nb" /> subscribers
+                    </span>
+                    <span tal:condition="python:nbsubscriber==1" i18n:translate="">
+                      1 subscriber
+                    </span>
+                  </span>
+                  )</small>
+                </span>
+                <input type="submit" name="comment:method" value="add a comment" 
+                       i18n:attributes="value add-comment"
+                       style="font-weight:bold" /></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+
+  </body>
+</html>

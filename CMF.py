@@ -4,6 +4,8 @@
 # for PUT_factory ?). 
 # move CMFInstall into the skin ?
 
+from types import *
+import string, re, os
 from Globals import InitializeClass
 
 try:
@@ -20,8 +22,6 @@ if not HAS_CMF:
         def inCMF(self): return 0
 
 else:
-    from types import *
-    import string, re, os
     from AccessControl import ClassSecurityInfo
     from Acquisition import aq_base, aq_inner, aq_parent
     from OFS.DTMLDocument import DTMLDocument
