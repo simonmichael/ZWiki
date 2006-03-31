@@ -47,16 +47,12 @@ def initialize(context):
             #I want to change the zmi add menu.. but not the meta_type
             #meta_type=Defaults.PAGE_ADD_MENU_NAME,
             permission=Permissions.Add,
-            icon = 'images/ZWikiPage_icon.gif',
+            icon = 'skins/zwiki_standard/wikipage_icon.gif',
             constructors = ( 
                 ZWikiPage.manage_addZWikiPageForm,
                 ZWikiPage.manage_addZWikiPage,
                 ),
             )
-        # allow zclass subclassing ?
-        #context.createZClassForBase(ZWikiPage.ZWikiPage,
-        #                              globals(),
-        #                              nice_name=None)
         # and the PersistentOutline class, so it's zmi-manageable
         context.registerClass(
             OutlineSupport.PersistentOutline,
@@ -94,10 +90,10 @@ def initialize(context):
             registerDirectory('skins/zwiki_standard', globals())
         except ImportError:
             pass
-        # auto-install extra wiki templates to zodb
-        #autoImport(context)
 
+    # don't let any error prevent initialisation
     except:
+        # log it
         import sys, traceback, string
         type, val, tb = sys.exc_info()
         sys.stderr.write(string.join(traceback.format_exception(type, val, tb),
