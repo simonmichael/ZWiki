@@ -1,8 +1,10 @@
-Skin templates for the standard zope (non-CMF) skin. Also two ZMI forms.
+Templates, scripts, styleshees, images for Zwiki's standard skin. These
+define a single flexible skin that works in both ordinary and CMF/Plone
+wikis. See also Views.py.
 
-See also UI.py.
+Also some ZMI forms. See Wiki.py.
 
-The wiki-named dtml files like RecentChanges.dtml are based on the
-evolving dtml wiki pages on zwiki.org. They are included by the
-similarly named page templates (eg recentpages.pt), and can also be
-installed as editable pages via /setupDtmlPages.
+The wiki-named dtml files like RecentChanges.dtml are snapshots of the
+evolving dynamic wiki pages of the same name at zwiki.org. They are used
+as helpers by the similarly named page templates (eg recentpages.pt), or
+can be installed as editable wiki pages via /setupDtmlPages.
