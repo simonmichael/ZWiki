@@ -11,11 +11,9 @@ from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER
-from Products.ZWiki.Views import loadPageTemplate, onlyBodyFrom, STANDARD_TEMPLATES
+from Products.ZWiki.Views import loadPageTemplate, loadMacros, MACROS
 
-STANDARD_TEMPLATES.update({
-    'ratingform': loadPageTemplate('ratingform','plugins/rating'),
-    })
+MACROS.update(loadMacros('ratingform','plugins/rating'))
 
 RATING_METADATA = [
     'voteCount',
@@ -139,16 +137,6 @@ class PluginRating:
             return 1
 
     # UI methods
-
-    security.declareProtected(Permissions.View, 'ratingform')
-    def ratingform(self, REQUEST=None):
-        """
-        Render the page rating form as a (customizable) HTML fragment.
-
-        The page's rating, current user's vote etc. will be highlighted.
-        """
-        #return onlyBodyFrom(
-        return self.getSkinTemplate('ratingform')(self,REQUEST)
 
     security.declareProtected(Permissions.View, 'ratingStyle')
     def ratingStyle(self,rating=''):
