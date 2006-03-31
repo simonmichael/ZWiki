@@ -73,11 +73,7 @@ def install(self):
     #ZWikiPage().__of__(self).setupTracker(pages=0)
 
     # Setup the skins
-    # This is borrowed from CMFDefault/scripts/addImagesToSkinPaths.pys
     if 'zwiki_plone' not in skinstool.objectIds():
-        # We need to add Filesystem Directory Views for any directories
-        # in our skins/ directory.  These directories should already be
-        # configured.
         addDirectoryViews(skinstool, 'skins', wiki_globals)
         out.write("Added zwiki skin directories to portal_skins\n")
 

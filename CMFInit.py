@@ -5,14 +5,14 @@ import string, re, os
 from AccessControl import getSecurityManager
 from DateTime import DateTime
 from Globals import package_home
+from Products.CMFCore.DirectoryView import addDirectoryViews, \
+     registerDirectory, manage_listAvailableDirectories
+
 from ZWikiPage import ZWikiPage
 import Permissions
 from Defaults import PAGE_METATYPE, PAGE_PORTALTYPE
 from Wikis import _addDTMLMethod, _addZWikiPage
-
 from I18n import _
-
-wiki_globals=globals()
 
 default_perms = {
     'create': 'nonanon',
@@ -21,6 +21,10 @@ default_perms = {
     'move': 'owners', # rename/delete/reparent
     'regulate': 'owners'
     }
+
+wiki_globals=globals()
+
+registerDirectory('skins', wiki_globals)
 
 def initPageMetadata(page):
     page.creation_date = DateTime()
