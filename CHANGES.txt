@@ -1,5 +1,80 @@
-        A customized recentchanges or searchwiki template will break;
-	delete them or replace with the latest version and re-customize.
+    Summary
+
+	...
+
+    Upgrade notes
+
+        A customized ``recentchanges`` or ``searchwiki`` template will
+        break; delete them or replace with the latest version and
+        re-customize.
+
+        This release breaks the standard-skin-in-plone procedure.
+	
+    Changes
+
+      Installing
+
+	* fix startup error with Zope 2.7 (#1222, Frank Laurijssens)
+
+	* fix a mysterious new bug with cmf/plone registration (#1237)
+
+      Configuring
+
+      Browsing
+
+	* fix two-year-old freeform links speed regression (#818, Warren
+          Holt, Simon Michael)
+
+	* fix double-linking of bare urls in rst pages
+
+	* add standard RST styles and latest zwiki.org tweaks to
+          stylesheet
+
+	* tweak rst comment headings - remove blank line after heading,
+          don't italicise username
+
+	* fix too-small headings on RST pages, and don't show so many RST
+          warnings (#1224)
+
+	* work better with plone livesearch
+
+	* UserOptions.dtml was missing a > (Andrew Milton)
+
+	* remove unneeded styling of external editor icon
+
+      Editing
+
+	* make restructured text the default page type, change page type
+          order in editform (AdoptRestructuredText)
+
+	* fix error displayed on first comment to an RST page (#1233)
+
+      Page hierarchy
+
+	* make backlinks form smarter
+
+      Mail
+
+      Issue tracking
+
+	* don't bother showing "(property change)" in issue mailouts
+
+	* link to issuebrowser by default
+
+	* make IssueBrowser show categories more usefully out of the box
+
+      Translations
+
+      General
+	
+	* standard_error_message cleanups
+
+	* doc cleanups, reorder ZWikiPage base classes
+
+	* namegeddon. File and class renames for clarity and better
+          organization eg in wing ide
+
+	* add TODO.txt
 
 
 Zwiki 0.51.0 2006/03/02
