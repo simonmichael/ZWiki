@@ -146,6 +146,8 @@ def loadPageTemplate(name,dir='skins/zwiki_standard'):
 def loadMacros(name,dir='skins/zwiki_standard'):
     """
     Load all macros from the named page template on the filesystem.
+
+    Returns a dictionary of 0 or more macros.
     """
     return loadPageTemplate(name,dir).pt_macros()
 
