@@ -32,7 +32,7 @@ else:
 
     def test_suite():
         suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(InstallTests))
+        suite.addTest(unittest.makeSuite(TestsOfCMFPloneInstall))
         suite.addTest(unittest.makeSuite(Tests))
         return suite
 
