@@ -52,22 +52,20 @@ class PageTypeRst(PageTypeBase):
                            subject, username, time, 
                            message_id=None,in_reply_to=None):
         heading = '\n\n'
-        heading += '**%s** --' % (subject or '...')
-        if username: heading = heading + '`%s`, ' % (username)
+        heading += '| **%s** --' % (subject or '...')
+        if username: heading = heading + '%s, ' % (username)
         heading += time
-        heading += ' `%s`__\n\n' % _("reply")
-        if message_id:
-            inreplytobit = '&in_reply_to='+quote(message_id)
-        else:
-            in_reply_to = ''
-        heading += '__ %s?subject=%s%s#bottom\n\n' % (page.page_url(),
-                                                      quote(subject or ''),
-                                                      inreplytobit)
+        heading += ' `%s <%s?subject=%s%s#bottom>`_' % (
+            _("reply"),
+            page.pageUrl(),
+            quote(subject or ''),
+            ((message_id and '&in_reply_to='+quote(message_id))
+             or '')
+            )
+        heading += '\n| '
         return heading
 
     def discussionSeparator(self,page):
-        #first comment gives "Document or section may not begin with a transition.", #1233
-        #return '\n\n-----\n\n'
         return ''
 
     def inlineImage(self, page, id, path):
