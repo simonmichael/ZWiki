@@ -13,11 +13,18 @@ from Products.ZWiki.I18n import _
 # be secret, invisible, and never encountered by users. Ha!
 MIDSECTIONMARKER = 'ZWIKIMIDSECTION'
 
-#from AccessControl import getSecurityManager
-#getSecurityManager().declarePublic('yes')
-#getSecurityManager().declarePublic('no')
-def yes(self): return 1
-def no(self): return 0
+# XXX trying to make these public for editform
+from AccessControl import ModuleSecurityInfo
+modulesecurity = ModuleSecurityInfo()
+modulesecurity.declarePublic('yes')
+modulesecurity.declarePublic('no')
+def yes(self):
+    """public"""
+    return 1
+def no(self):
+    """public"""
+    return 0
+modulesecurity.apply(globals())
 
 
 class PageTypeBase:
@@ -237,3 +244,4 @@ class PageTypeBaseHtml(PageTypeBase):
 
     def linkFile(self, page, id, path):
         return '\n\n<a href="%s">%s</a>\n' % (path,id)
+

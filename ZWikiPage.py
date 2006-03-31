@@ -201,6 +201,7 @@ class ZWikiPage(
             self.setPageType(DEFAULT_PAGETYPE)
         return self.page_type
     def lookupPageType(self,id=None):
+        """Return the page type object with this id (or the default)"""
         match = filter(lambda x:x._id==id,PAGETYPES)
         return (match and match[0]) or DEFAULT_PAGETYPE
     security.declarePublic('pageType') # useful for troubleshooting
@@ -389,12 +390,12 @@ class ZWikiPage(
 
     security.declareProtected(Permissions.View, 'supportsHtml')
     def supportsHtml(self): 
-        """supportsHtml"""
+        """Does this page render ordinary HTML tags ?"""
         return self.pageType().supportsHtml()
 
     security.declareProtected(Permissions.View, 'supportsDtml')
     def supportsDtml(self): 
-        """supportsDtml"""
+        """Does this page support embedded DTML ?"""
         return self.pageType().supportsDtml()
 
     security.declareProtected(Permissions.View, 'hasDynamicContent')

@@ -66,19 +66,20 @@
                             i18n:attributes="title" >
                       <tal:options tal:repeat="t pagetypes">
                         <option value="type"
-                                tal:define="
-                                            dtmlallowed python:
-                                            t in ('stx','html') and
-                                            here.dtmlAllowed()
-                                            #here.lookupPageType(t).supportsDtml() and 
-                                            #here.dtmlAllowed();
-                                            extrasuffix python:
-                                            dtmlallowed and ' (+ DTML)' or ''; "
-                                tal:attributes="
-                                                value python:t; 
+                                tal:define="extrasuffix python:
+                  (t == 'html'         and here.epozInstalled() and ' (WYSIWYG)')
+               or (t in ('stx','html') and here.dtmlAllowed()   and ' (+ DTML)')
+               or ''
+               # Since wysiwyg html editors like epoz mangle it, we'll assume DTML
+               # is undesirable whenever they are likely to be used.
+               # The following would be better, but I can't figure out the necessary
+               # security declarations.
+               #   (here.lookupPageType(t).supportsDtml() and here.dtmlAllowed()   and ' (+ DTML)')
+               #or (here.lookupPageType(t).supportsEpoz() and here.epozInstalled() and ' (WYSIWYG)')
+               #or '' ;"
+                                tal:attributes="value t; 
                                                 selected python:t==type"
-                                tal:content="python:
-                                             here.PAGE_TYPES.get(t,t) + extrasuffix">
+                                tal:content="python:here.PAGE_TYPES.get(t,t) + extrasuffix">
                           type
                         </option>
                       </tal:options>
