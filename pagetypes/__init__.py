@@ -118,11 +118,9 @@ modules = [re.sub('.py$','',f) for f in os.listdir(__path__[0])
                and not f == '__init__.py'
                )
            ]
-# ensure the standard ordering of page types in the editform
-# XXX FIXME this is not robust against new page types, or the removal of a
-# page type.  Instead the wiki install should add the folder property
-# 'allowed_page_types' which specifies an order.
-firstmods = ['stx','rst','wwml','html','plaintext']
+# enforce the order of at least the first few page types in the editform
+# can be overridden with the 'allowed_page_types' folder property
+firstmods = ['rst','stx','html','plaintext']
 firstmods.reverse()
 for mod in firstmods:
     try:
