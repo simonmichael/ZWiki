@@ -10,7 +10,7 @@
       <h1 i18n:translate="">Wiki contents</h1>
       <div class="formcontent">
         <span tal:replace="structure options/hierarchy">page hierarchy..</span>
-        <div tal:condition="options/singletons">
+        <div tal:condition="options/singletons" class="aqtree3clickable">
           <h3 i18n:translate="">Singletons</h3> 
           <ul>
             <li tal:repeat="singleton options/singletons">
