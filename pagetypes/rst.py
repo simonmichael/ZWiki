@@ -34,7 +34,7 @@ class PageTypeRst(PageTypeBase):
                      self.preRenderMessages(page))
         t = page.applyWikiLinkLineEscapesIn(t)
         t = self.format(t)
-        t = page.markLinksIn(t)
+        t = page.markLinksIn(t,urls=0)
         t = self.protectEmailAddresses(page,t)
         return t
 

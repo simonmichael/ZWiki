@@ -458,7 +458,7 @@ class ZWikiPage(
             or (self.doubleParenthesisLinksAllowed() and
                 re.match(doubleparenthesisexpr,link))) and 1)
 
-    def markLinksIn(self,text):
+    def markLinksIn(self,text,urls=1):
         """
         Find and mark links in text, for fast replacement later.
 
@@ -466,6 +466,9 @@ class ZWikiPage(
         extents and link names, this simply marks the links in place to
         make them easy to find again.  Tries to be smart about finding
         links only where you want it to.
+
+        As well as all kinds of Zwiki wiki-links, marks bare urls, unless
+        urls is false (useful for restructured text).
         """
         markedtext = ''
         state = {'lastend':0,'inpre':0,'incode':0,'intag':0,'inanchor':0}
@@ -478,7 +481,7 @@ class ZWikiPage(
                 linkstart,linkend = m.span()
                 if (link[0]=='!'
                     or not (self.isValidWikiLinkSyntax(link)
-                            or re.match(url,link)
+                            or (urls and re.match(url,link))
                             or re.match(hashnumberexpr,link)
                             )
                     or within_literal(linkstart,linkend-1,state,text) # XXX these
