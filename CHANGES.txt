@@ -8,17 +8,23 @@
         break; delete them or replace with the latest version and
         re-customize.
 
-        This release breaks the standard-skin-in-plone procedure.
+        This release breaks the standard-skin-in-plone how-to.
 	
     Changes
 
       Installing
 
-	* fix startup error with Zope 2.7 (#1222, Frank Laurijssens)
+	* fix startup failure with Zope 2.7 (#1222, Frank Laurijssens)
 
 	* fix a mysterious new bug with cmf/plone registration (#1237)
 
       Configuring
+
+        * leave site links enabled by default again (home, changes,
+          issues...)
+
+        * fix container context, make page management form create button
+          respect folder permission (#1220)
 
       Browsing
 
@@ -28,7 +34,8 @@
 	* fix double-linking of bare urls in rst pages
 
 	* add standard RST styles and latest zwiki.org tweaks to
-          stylesheet
+          stylesheet - black headings & subtopic links, limited text
+          width, etc.
 
 	* tweak rst comment headings - remove blank line after heading,
           don't italicise username
@@ -42,6 +49,10 @@
 
 	* remove unneeded styling of external editor icon
 
+        * remove unnecessary inconsistent-looking access key on logo
+
+        * show a heading on all views except editform
+
       Editing
 
 	* make restructured text the default page type, change page type
@@ -49,9 +60,15 @@
 
 	* fix error displayed on first comment to an RST page (#1233)
 
+        * show "HTML (WYSIWYG)" in the editform when Epoz is available
+
+        * remove editform's hard-coded gray background
+
       Page hierarchy
 
 	* make backlinks form smarter
+
+        * make singletons have same style as other links in contents
 
       Mail
 
@@ -59,7 +76,7 @@
 
 	* don't bother showing "(property change)" in issue mailouts
 
-	* link to issuebrowser by default
+	* provide a link to issuebrowser by default
 
 	* make IssueBrowser show categories more usefully out of the box
 
@@ -67,14 +84,20 @@
 
       General
 	
+	* namegeddon. File and class renames and re-ordering for clarity
+          and better organization eg in wing ide
+
+        * major refactoring of skin templates using macros, the same
+          templates are now used for standard & plone skins (ViewGeddon)
+
+        * document skin code in Views.py
+
+        * use PageTemplateFile so view templates will reload in debug mode
+          (macros still don't)
+
+        * move all images to skins dir, use the standard zwiki page icon in plone
+
 	* standard_error_message cleanups
-
-	* doc cleanups, reorder ZWikiPage base classes
-
-	* namegeddon. File and class renames for clarity and better
-          organization eg in wing ide
-
-	* add TODO.txt
 
 
 Zwiki 0.51.0 2006/03/02
