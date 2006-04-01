@@ -130,18 +130,14 @@ from I18n import _, DTMLFile, HTMLFile
 
 # utilities
 
-THISDIR = os.path.split(os.path.abspath(__file__))[0]
-
 def loadPageTemplate(name,dir='skins/zwiki_standard'):
     """
     Load the named page template from the filesystem.
     """
-    return ZopePageTemplate(
-        name,
-        open(os.path.join(THISDIR,dir,'%s.pt'%name),'r').read())
-    #return PageTemplateFile(os.path.join(dir,'%s.pt'%name),
-    #                        globals(),
-    #                        __name__=name)
+    return PageTemplateFile(
+        os.path.join(dir,'%s.pt' % name),
+        globals(),
+        __name__=name)
 
 def loadMacros(name,dir='skins/zwiki_standard'):
     """
@@ -164,8 +160,11 @@ def loadDtmlMethod(name,dir='skins/zwiki_standard'):
 
 def loadStylesheetFile(name,dir='skins/zwiki_standard'):
     """
-    Load the stylesheet File from the filesystem. Also fix a mod. time bug.
+    Load the stylesheet File from the filesystem.
+
+    Also work around a modification time bug.
     """
+    THISDIR = os.path.split(os.path.abspath(__file__))[0]
     filepath = os.path.join(THISDIR,dir,name)
     data,mtime = '',0
     try:
@@ -305,13 +304,16 @@ class SkinUtils:
         """
         Get the named skin template from the ZODB or filesystem.
 
-        This will find either a Page Template or DTML Method with the
-        specified name, preferring the former, and return it wrapped
-        in the current page's context.  We look first in the ZODB
-        acquisition context; then in the skins/* layers on the
-        filesystem, looking in zwiki_standard or zwiki_plone first
-        depending on whether we're in a CMF site.  If the template
-        can't be found, return a standard error template.
+        This will find either a Page Template or DTML Method (XXX still ?
+        test) with the specified name, preferring the former, and return
+        it wrapped in the current page's context (container=folder,
+        here=page).
+
+        We look first in the ZODB acquisition context; then in the skins/*
+        layers on the filesystem, looking in zwiki_standard or zwiki_plone
+        first depending on whether we're in a CMF site.  If the template
+        can't be found, return a generic error template.
+        XXX does look in zwiki_plone even when we're not in a CMF site, why ?
 
         This is basically duplicating the CMF skin mechanism, but in a
         way that works everywhere, and with some extra error-handling
@@ -331,9 +333,11 @@ class SkinUtils:
                       None))
         if not isTemplate(obj):
             obj = STANDARD_TEMPLATES['badtemplate']
-        return obj.__of__(self)
+        # make sure both folder and page are in the context
+        # to set container and here
+        return obj.__of__(self.folder()).__of__(self)
 
-    # XXX
+    # XXX simplify
     security.declareProtected(Permissions.View, 'addSkinTo')
     def addSkinTo(self,body,**kw):
         """
@@ -367,8 +371,10 @@ class SkinUtils:
                    body + \
                    self.getSkinTemplate('standard_wiki_footer')(self,REQUEST)
         else:
-            return STANDARD_TEMPLATES['wikipage'].__of__(self)(self,REQUEST,
-                                                              body=body,**kw)
+            #return STANDARD_TEMPLATES['wikipage'].__of__(self)(self,REQUEST,body=body,**kw)
+            # make sure container and here are correct
+            # now does this still work for dtml methods ? who cares ?
+            return STANDARD_TEMPLATES['wikipage'].__of__(self.folder()).__of__(self)(body=body,**kw)
 
 InitializeClass(SkinUtils)
 
