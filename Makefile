@@ -58,7 +58,7 @@ epydoc2:
 # 5. update pot and po files from code (make pot po) and record
 # 6. re-upload all to rosetta
 
-LANGUAGES=af ar de en_GB es et fi fr he hu it ja nl pl pt pt_BR ro ru sv tr zh_CN zh_TW
+LANGUAGES=af ar de en_GB es et fi fr he hu it ja nl pl pt pt_BR ro ru sv th tr zh_CN zh_TW
 LANGUAGES_DISABLED=fr_CA ga
 I18NEXTRACT=/zope3/bin/i18nextract # still need to patch this, see zopewiki
 
