@@ -1,98 +1,113 @@
+# Swedish translation for zwiki
+# Copyright (c) (c) 2005 Canonical Ltd, and Rosetta Contributors 2005
+# This file is distributed under the same license as the zwiki package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2005.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ZWiki-0-51-0\n"
+"Project-Id-Version: zwiki\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: Sat Apr  1 14:13:10 2006\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: <zwiki@zwiki.org>\n"
+"PO-Revision-Date: 2006-03-15 21:18+0000\n"
+"Last-Translator: Simon Michael <simon@joyful.com>\n"
+"Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: zope/app/locales/extract.py\n"
-"Language-code: xx\n"
-"Language-name: X\n"
-"Preferred-encodings: utf-8 latin1\n"
+"X-Rosetta-Version: 0.1\n"
 "Domain: zwiki\n"
 
 #: i/Admin.py:62
 msgid "You are not authorized to upgrade all pages."
-msgstr ""
+msgstr "Du är inte auktoriserad att uppgradera alla sidorna."
 
 #: i/Admin.py:63
 msgid "(folder -> Manage properties)"
-msgstr ""
+msgstr "(map -> Hantera alternativ)"
 
 #: i/Editing.py:323
-msgid "You are not authorized to reparent or change subtopics links on this ZWiki Page."
+#, fuzzy
+msgid ""
+"You are not authorized to reparent or change subtopics links on this ZWiki "
+"Page."
 msgstr ""
+"Du har inte tillträde till omdirigera eller ändra underrubrikslänkar på den "
+"här ZWiki sidan."
 
 #: i/Editing.py:345
 msgid "You are not authorized to change this ZWiki Page's type."
-msgstr ""
+msgstr "Du har inte tillträde att ändra en här Zwiki sidans typ."
 
-#: i/Editing.py:379
-#: i/Editing.py:406
+#: i/Editing.py:379 i/Editing.py:406
 msgid "You are not authorized to edit this ZWiki Page."
-msgstr ""
+msgstr "Du har inte tillåtelse att ändra den här ZWiki sidan."
 
 #: i/Editing.py:409
 msgid "You are not authorized to delete this ZWiki Page."
-msgstr ""
+msgstr "Du har inte tillåtelse att tabort den här ZWiki sidan."
 
 #: i/Editing.py:559
 msgid ""
 "This page was renamed to %s. You can delete this one if no longer needed.\n"
 msgstr ""
+"Den här sidan hade byttnamn till %s. Du kan tabort den här om du inte "
+"behöver den.\n"
 
 #: i/Editing.py:655
 msgid "You are not authorized to upload files here."
-msgstr ""
+msgstr "Du har inte tillåtelse att ladda upp filer här."
 
 #: i/Editing.py:659
 msgid "You are not authorized to add a link on this ZWiki Page."
-msgstr ""
+msgstr "Du har inte tillträda att lägga till länkar på den här ZWiki sidan."
 
-#: i/Editing.py:68
-#: i/Editing.py:152
-#: i/Editing.py:290
-#: i/Views.py:606
+#: i/Editing.py:68 i/Editing.py:152 i/Editing.py:290 i/Views.py:606
 #: i/Views.py:652
-msgid "Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."
+msgid ""
+"Sorry, this wiki doesn't allow anonymous edits. Please configure a username "
+"in options first."
 msgstr ""
 
 #: i/Editing.py:819
-msgid "There was a problem: %s. Please contact the site administrator for help."
-msgstr ""
+msgid ""
+"There was a problem: %s. Please contact the site administrator for help."
+msgstr "Något är fel: %s. Kontakta sidans administratör för hjälp."
 
 #: i/Editing.py:826
 msgid "banned_links match"
 msgstr ""
 
 #: i/Editing.py:827
+#, fuzzy
 msgid "your edit contained a banned link pattern"
-msgstr ""
+msgstr "din ändring innehåller ett förbjudet länkmönster"
 
 #: i/Editing.py:838
+#, fuzzy
 msgid "exceeded max_anonymous_links"
-msgstr ""
+msgstr "utökad max_anonymous_links"
 
 #: i/Editing.py:839
+#, fuzzy
 msgid "adding of external links by anonymous authors is restricted"
 msgstr ""
+"begränsad möjlighet för anonyma författare att lägga till externa länkar"
 
-#: i/Mail.py:490
-#: i/skins/dtmlmessages.pt:59
+#: i/Mail.py:490 i/skins/dtmlmessages.pt:59
+#, fuzzy
 msgid "anonymous"
-msgstr ""
+msgstr "anonym"
 
-#: i/OutlineSupport.py:838
-#: i/skins/zwiki_standard/wikipage-inline.pt:141
+#: i/OutlineSupport.py:838 i/skins/zwiki_standard/wikipage-inline.pt:141
+#, fuzzy
 msgid "which pages link to this one ?"
-msgstr ""
+msgstr "vilken sidolänk till den här?"
 
 #: i/OutlineSupport.py:846
+#, fuzzy
 msgid "You are here"
-msgstr ""
+msgstr "Du är här"
 
 #: i/Utils.py:465
 msgid "years"
@@ -124,76 +139,77 @@ msgstr ""
 
 #: i/Utils.py:471
 msgid "days"
-msgstr ""
+msgstr "dagar"
 
 #: i/Utils.py:473
 msgid "hours"
-msgstr ""
+msgstr "timmar"
 
 #: i/Utils.py:473
 msgid "hour"
-msgstr ""
+msgstr "timme"
 
 #: i/Utils.py:475
 msgid "minute"
-msgstr ""
+msgstr "minut"
 
 #: i/Utils.py:475
 msgid "minutes"
-msgstr ""
+msgstr "minuter"
 
 #: i/Utils.py:477
 msgid "second"
-msgstr ""
+msgstr "sekund"
 
 #: i/Utils.py:477
 msgid "seconds"
-msgstr ""
+msgstr "sekunder"
 
 #: i/Views.py:706
+#, fuzzy
 msgid "Edit conflict"
-msgstr ""
+msgstr "Ändrings Conflict"
 
 #: i/Views.py:726
+#, fuzzy
 msgid "Someone else has saved this page while you were editing"
-msgstr ""
+msgstr "Någon annan har sparat den här sidan medan du höll på att ändra"
 
 #: i/Views.py:727
 msgid "To resolve the conflict, do this"
-msgstr ""
+msgstr "För att lösa konflikten, gör så här"
 
 #: i/Views.py:728
 msgid "Click your browser's back button"
-msgstr ""
+msgstr "Clicka på din webbläsares bakåt knapp"
 
 #: i/Views.py:729
 msgid "Copy your recent edits to the clipboard"
-msgstr ""
+msgstr "Kopiera dina senaste ändringar till klippbordet"
 
 #: i/Views.py:730
 msgid "Click your browser's refresh button"
-msgstr ""
+msgstr "Klicka på din webbläsares uppdateringsknapp"
 
 #: i/Views.py:731
 msgid "Paste in your edits again, being mindful of the latest changes"
-msgstr ""
+msgstr "Klista in dina ändringar igen, var aktsam för de senase ändringarna"
 
 #: i/Views.py:732
 msgid "Click the Change button again"
-msgstr ""
+msgstr "Click på ändra knappen igen"
 
-#: i/Views.py:733
-#: i/skins/zwiki_standard/editform.pt:159
+#: i/Views.py:733 i/skins/zwiki_standard/editform.pt:159
 msgid "or"
-msgstr ""
+msgstr "eller"
 
 #: i/Views.py:734
 msgid "To discard your changes and start again, click OK"
-msgstr ""
+msgstr "För att kastabort dina ändringar och börja om, klicka OK"
 
 #: i/Views.py:743
 msgid "Page is locked"
-msgstr ""
+msgstr "Sidan är låst"
 
 #: i/Views.py:754
 msgid ""
@@ -213,11 +229,13 @@ msgstr ""
 #: i/Views.py:770
 msgid ""
 "\n"
-"        Access keys can be accessed in mozilla-based browsers by pressing alt-<key>\n"
+"        Access keys can be accessed in mozilla-based browsers by pressing "
+"alt-<key>\n"
 "        IE users: must also press enter\n"
 "        Mac users: command-<key>\n"
 "        Opera users: shift-escape-<key>\n"
-"        These won't work here, back up to the previous page to try them out.\n"
+"        These won't work here, back up to the previous page to try them "
+"out.\n"
 "\n"
 "        0    show these access key assignments\n"
 "\n"
@@ -233,8 +251,10 @@ msgid ""
 "        s    go to search field\n"
 "        \n"
 "        page functions:\n"
-"        +    (in a plone/cmf site with skin switching set up) use zwiki's plone/cmf skin\n"
-"        -    (in a plone/cmf site with skin switching set up) use zwiki's standard skin\n"
+"        +    (in a plone/cmf site with skin switching set up) use zwiki's "
+"plone/cmf skin\n"
+"        -    (in a plone/cmf site with skin switching set up) use zwiki's "
+"standard skin\n"
 "        v    view page\n"
 "        m    mail subscription\n"
 "        b    show backlinks (links to this page)\n"
@@ -268,20 +288,17 @@ msgstr ""
 
 #: i/ZWikiPage.py:670
 msgid "create this page"
-msgstr ""
+msgstr "skape den här sidan"
 
-#: i/ZWikiPage.py:793
-#: i/ZWikiPage.py:809
-#: i/ZWikiPage.py:812
+#: i/ZWikiPage.py:793 i/ZWikiPage.py:809 i/ZWikiPage.py:812
 msgid "last edited %(interval)s ago"
-msgstr ""
+msgstr "förra ändingen skädde %(interval)s sedan"
 
 #: i/ZWikiPage.py:804
 msgid "show last edit"
 msgstr ""
 
-#: i/ZWikiPage.py:821
-#: i/ZWikiPage.py:823
+#: i/ZWikiPage.py:821 i/ZWikiPage.py:823
 msgid "by %(editor)s"
 msgstr ""
 
@@ -317,8 +334,7 @@ msgstr ""
 msgid "Upload new attachment \"%(filename)s\""
 msgstr ""
 
-#: i/pagetypes/moin.py:335
-#: i/pagetypes/moin.py:345
+#: i/pagetypes/moin.py:335 i/pagetypes/moin.py:345
 msgid "Edit drawing %(filename)s"
 msgstr ""
 
@@ -330,8 +346,7 @@ msgstr ""
 msgid "Expected an integer \"%(key)s\" before \"%(token)s\""
 msgstr ""
 
-#: i/pagetypes/moin.py:745
-#: i/pagetypes/moin.py:754
+#: i/pagetypes/moin.py:745 i/pagetypes/moin.py:754
 msgid "Expected an integer \"%(arg)s\" after \"%(key)s\""
 msgstr ""
 
@@ -341,10 +356,9 @@ msgstr ""
 
 #: i/pagetypes/rst.py:59
 msgid "reply"
-msgstr ""
+msgstr "svara"
 
-#: i/plugins/tracker/filterissues.pt:12
-#: i/skins/dtmlmessages.pt:30
+#: i/plugins/tracker/filterissues.pt:12 i/skins/dtmlmessages.pt:30
 msgid "Filter issues"
 msgstr ""
 
@@ -356,28 +370,23 @@ msgstr ""
 msgid "Issue tracker"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:10
-#: i/skins/dtmlmessages.pt:32
+#: i/skins/dtmlmessages.pt:10 i/skins/dtmlmessages.pt:32
 msgid "category"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:11
-#: i/skins/dtmlmessages.pt:33
+#: i/skins/dtmlmessages.pt:11 i/skins/dtmlmessages.pt:33
 msgid "severity"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:12
-#: i/skins/dtmlmessages.pt:34
+#: i/skins/dtmlmessages.pt:12 i/skins/dtmlmessages.pt:34
 msgid "status"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:13
-#: i/skins/dtmlmessages.pt:35
+#: i/skins/dtmlmessages.pt:13 i/skins/dtmlmessages.pt:35
 msgid "age"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:14
-#: i/skins/dtmlmessages.pt:36
+#: i/skins/dtmlmessages.pt:14 i/skins/dtmlmessages.pt:36
 msgid "modified"
 msgstr ""
 
@@ -455,11 +464,11 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:38
 msgid "Name"
-msgstr ""
+msgstr "Namn"
 
 #: i/skins/dtmlmessages.pt:39
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: i/skins/dtmlmessages.pt:4
 msgid "filter issues"
@@ -471,28 +480,25 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:41
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: i/skins/dtmlmessages.pt:42
 msgid "Optional subject"
-msgstr ""
+msgstr "Alternativt änme"
 
 #: i/skins/dtmlmessages.pt:43
 msgid "Optional comment"
-msgstr ""
+msgstr "Alternativ Kommentar"
 
-#: i/skins/dtmlmessages.pt:44
-#: i/skins/dtmlmessages.pt:45
+#: i/skins/dtmlmessages.pt:44 i/skins/dtmlmessages.pt:45
 msgid "Add a ZWiki web"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:46
-#: i/skins/dtmlmessages.pt:85
+#: i/skins/dtmlmessages.pt:46 i/skins/dtmlmessages.pt:85
 msgid "Id"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:47
-#: i/skins/dtmlmessages.pt:86
+#: i/skins/dtmlmessages.pt:47 i/skins/dtmlmessages.pt:86
 msgid "Title"
 msgstr ""
 
@@ -565,17 +571,18 @@ msgid "Tips: A single word works best for matching page names."
 msgstr ""
 
 #: i/skins/dtmlmessages.pt:64
-msgid "Case-insensitivity and wildcards may be supported depending on your catalog configuration."
+msgid ""
+"Case-insensitivity and wildcards may be supported depending on your catalog "
+"configuration."
 msgstr ""
 
 #: i/skins/dtmlmessages.pt:65
 msgid "Leave it blank to list all pages."
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:66
-#: i/skins/dtmlmessages.pt:67
+#: i/skins/dtmlmessages.pt:66 i/skins/dtmlmessages.pt:67
 msgid "Search"
-msgstr ""
+msgstr "Sök"
 
 #: i/skins/dtmlmessages.pt:68
 msgid "Page names matching"
@@ -595,11 +602,11 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:71
 msgid "Set your preferences for this wiki:"
-msgstr ""
+msgstr "Ställ in inställningarna för den här wiki:"
 
 #: i/skins/dtmlmessages.pt:72
 msgid "User name:"
-msgstr ""
+msgstr "Användarnamn:"
 
 #: i/skins/dtmlmessages.pt:73
 msgid "(identifies your edits)"
@@ -639,45 +646,46 @@ msgstr ""
 
 #: i/skins/dtmlmessages.pt:81
 msgid "Forget options"
-msgstr ""
+msgstr "Glömbort inställningarna"
 
-#: i/skins/dtmlmessages.pt:82
-#: i/skins/dtmlmessages.pt:83
+#: i/skins/dtmlmessages.pt:82 i/skins/dtmlmessages.pt:83
 msgid "Add ZWiki Page"
 msgstr ""
 
 #: i/skins/dtmlmessages.pt:84
-msgid "You may create a new ZWiki Page object using the form below. You may also choose to upload an existing html file from your local computer by clicking the <i>Browse</i> button."
+msgid ""
+"You may create a new ZWiki Page object using the form below. You may also "
+"choose to upload an existing html file from your local computer by clicking "
+"the <i>Browse</i> button."
 msgstr ""
 
 #: i/skins/dtmlmessages.pt:87
 msgid "File"
-msgstr ""
+msgstr "Fil"
 
 #: i/skins/dtmlmessages.pt:88
 msgid "Add"
-msgstr ""
+msgstr "Lägg till"
 
 #: i/skins/dtmlmessages.pt:89
 msgid "Add and Edit"
-msgstr ""
+msgstr "Lägg till och ändra"
 
-#: i/skins/dtmlmessages.pt:9
-#: i/skins/dtmlmessages.pt:31
+#: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:31
 msgid "#"
 msgstr ""
 
 #: i/skins/dtmlmessages.pt:90
 msgid "Topic"
-msgstr ""
+msgstr "Ämne"
 
 #: i/skins/dtmlmessages.pt:91
 msgid "Last updated"
-msgstr ""
+msgstr "Senase uppdateringen"
 
 #: i/skins/dtmlmessages.pt:92
 msgid "Comments"
-msgstr ""
+msgstr "Kommentarer"
 
 #: i/skins/dtmlmessages.pt:93
 msgid "Views"
@@ -687,8 +695,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:95
-#: i/skins/dtmlmessages.pt:97
+#: i/skins/dtmlmessages.pt:95 i/skins/dtmlmessages.pt:97
 msgid "by"
 msgstr ""
 
@@ -722,8 +729,9 @@ msgid "Backlinks"
 msgstr ""
 
 #: i/skins/zwiki_standard/backlinks.pt:26
+#, fuzzy
 msgid "Parents"
-msgstr ""
+msgstr "paranteser"
 
 #: i/skins/zwiki_standard/backlinks.pt:31
 msgid "is a top-level topic."
@@ -742,11 +750,14 @@ msgid "No other pages link to this one."
 msgstr ""
 
 #: i/skins/zwiki_standard/backlinks.pt:82
-msgid "You can set this page's parent(s) to place it within the overall page hierarchy."
+msgid ""
+"You can set this page's parent(s) to place it within the overall page "
+"hierarchy."
 msgstr ""
 
 #: i/skins/zwiki_standard/backlinks.pt:85
-msgid "Check one or more checkboxes or enter a page name here, and click the button."
+msgid ""
+"Check one or more checkboxes or enter a page name here, and click the button."
 msgstr ""
 
 #: i/skins/zwiki_standard/backlinks.pt:88
@@ -754,7 +765,8 @@ msgid "Enter a page name here and click the button."
 msgstr ""
 
 #: i/skins/zwiki_standard/backlinks.pt:91
-msgid "You can type just the first few letters, case and punctuation are ignored."
+msgid ""
+"You can type just the first few letters, case and punctuation are ignored."
 msgstr ""
 
 #: i/skins/zwiki_standard/backlinks.pt:98
@@ -766,7 +778,11 @@ msgid "Bad template"
 msgstr ""
 
 #: i/skins/zwiki_standard/badtemplate.pt:13
-msgid "There was a problem locating one of this wiki's skin templates. There may be a page or other non-page-template/non-dtml-method object with the same ID, obscuring the template. Or the template may be missing on the filesystem (an incomplete Zwiki installation)."
+msgid ""
+"There was a problem locating one of this wiki's skin templates. There may be "
+"a page or other non-page-template/non-dtml-method object with the same ID, "
+"obscuring the template. Or the template may be missing on the filesystem (an "
+"incomplete Zwiki installation)."
 msgstr ""
 
 #: i/skins/zwiki_standard/contentspage.pt:12
@@ -785,8 +801,8 @@ msgstr ""
 msgid "Edit history"
 msgstr ""
 
-#: i/skins/zwiki_standard/diffform.pt:21
 #. Default: "Log note :"
+#: i/skins/zwiki_standard/diffform.pt:21
 msgid "log_note"
 msgstr ""
 
@@ -794,13 +810,11 @@ msgstr ""
 msgid "full history"
 msgstr ""
 
-#: i/skins/zwiki_standard/diffform.pt:27
-#: i/skins/zwiki_standard/diffform.pt:29
+#: i/skins/zwiki_standard/diffform.pt:27 i/skins/zwiki_standard/diffform.pt:29
 msgid "<< previous edit"
 msgstr ""
 
-#: i/skins/zwiki_standard/diffform.pt:31
-#: i/skins/zwiki_standard/diffform.pt:33
+#: i/skins/zwiki_standard/diffform.pt:31 i/skins/zwiki_standard/diffform.pt:33
 msgid "next edit >>"
 msgstr ""
 
@@ -845,7 +859,6 @@ msgid "TextFormattingRules"
 msgstr ""
 
 #: i/skins/zwiki_standard/editform.pt:166
-#: i/skins/zwiki_standard/editform.pt:166
 msgid "${DYNAMIC_CONTENT}"
 msgstr ""
 
@@ -873,6 +886,7 @@ msgstr ""
 msgid "create this wiki page"
 msgstr ""
 
+#. Default: "PREVIEW"
 #: i/skins/zwiki_standard/editform.pt:199
 #: i/skins/zwiki_standard/editform.pt:200
 #: i/skins/zwiki_standard/editform.pt:201
@@ -883,7 +897,6 @@ msgstr ""
 #: i/skins/zwiki_standard/editform.pt:214
 #: i/skins/zwiki_standard/editform.pt:215
 #: i/skins/zwiki_standard/editform.pt:216
-#. Default: "PREVIEW"
 msgid "label_preview"
 msgstr ""
 
@@ -911,15 +924,15 @@ msgstr ""
 msgid "Search this wiki"
 msgstr ""
 
-#: i/skins/zwiki_standard/subscribeform.pt:108
 #. Default: ""
 #.  "You are currently subscribed<br />\n"
 #.  "                  to the whole wiki."
+#: i/skins/zwiki_standard/subscribeform.pt:108
 msgid "subscribed_wiki_ok"
 msgstr ""
 
-#: i/skins/zwiki_standard/subscribeform.pt:112
 #. Default: "You are currently not subscribed<br /> to the whole wiki."
+#: i/skins/zwiki_standard/subscribeform.pt:112
 msgid "subscribed_wiki_no"
 msgstr ""
 
@@ -935,8 +948,8 @@ msgstr ""
 msgid "Subscribe to whole wiki"
 msgstr ""
 
-#: i/skins/zwiki_standard/subscribeform.pt:141
 #. Default: "You are subscribed to these other pages"
+#: i/skins/zwiki_standard/subscribeform.pt:141
 msgid "other_page_subscribed"
 msgstr ""
 
@@ -948,19 +961,19 @@ msgstr ""
 msgid "Wiki subscribers"
 msgstr ""
 
-#: i/skins/zwiki_standard/subscribeform.pt:36
 #. Default: ""
 #.  "You can subscribe to this page or to the whole wiki.\n"
 #.  "              Subscribers receive a copy of comments via email.\n"
 #.  "              Or return to"
+#: i/skins/zwiki_standard/subscribeform.pt:36
 msgid "subscribe_desc_comments"
 msgstr ""
 
-#: i/skins/zwiki_standard/subscribeform.pt:41
 #. Default: ""
 #.  "You can subscribe to this page or to the whole wiki.\n"
 #.  "              Subscribers receive a copy of all edits via email.\n"
 #.  "              Or return to"
+#: i/skins/zwiki_standard/subscribeform.pt:41
 msgid "subscribe_desc_edits"
 msgstr ""
 
@@ -972,32 +985,32 @@ msgstr ""
 msgid "Change"
 msgstr ""
 
-#: i/skins/zwiki_standard/subscribeform.pt:64
 #. Default: "To subscribe, please configure your email address."
+#: i/skins/zwiki_standard/subscribeform.pt:64
 msgid "subscribe_no_email"
 msgstr ""
 
-#: i/skins/zwiki_standard/subscribeform.pt:74
 #. Default: ""
 #.  "You are currently subscribed<br />\n"
 #.  "                  to this page."
+#: i/skins/zwiki_standard/subscribeform.pt:74
 msgid "subscribed_page_ok"
 msgstr ""
 
-#: i/skins/zwiki_standard/subscribeform.pt:78
 #. Default: ""
 #.  "You are currently not subscribed<br />\n"
 #.  "                  to this page."
+#: i/skins/zwiki_standard/subscribeform.pt:78
 msgid "subscribed_page_no"
 msgstr ""
 
-#: i/skins/zwiki_standard/subscribeform.pt:82
 #. Default: "Unsubscribe from this page"
+#: i/skins/zwiki_standard/subscribeform.pt:82
 msgid " Unsubscribe from this page "
 msgstr ""
 
-#: i/skins/zwiki_standard/subscribeform.pt:89
 #. Default: "Subscribe to this page"
+#: i/skins/zwiki_standard/subscribeform.pt:89
 msgid " Subscribe to this page "
 msgstr ""
 
@@ -1007,8 +1020,9 @@ msgid "all edits"
 msgstr ""
 
 #: i/skins/zwiki_standard/useroptions.pt:12
+#, fuzzy
 msgid "User options"
-msgstr ""
+msgstr "Glömbort inställningarna"
 
 #: i/skins/zwiki_standard/wikipage-inline.pt:100
 msgid "changes"
@@ -1134,14 +1148,14 @@ msgstr ""
 msgid "1 subscriber"
 msgstr ""
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:355
 #. Default: "add a comment"
+#: i/skins/zwiki_standard/wikipage-inline.pt:355
 msgid "add-comment"
 msgstr ""
 
 #: i/skins/zwiki_standard/wikipage-inline.pt:388
 msgid "new"
-msgstr ""
+msgstr "ny"
 
 #: i/skins/zwiki_standard/wikipage-inline.pt:389
 msgid "parent,"
@@ -1164,8 +1178,9 @@ msgid "enter a page name and click buttons to the right (mouse over for help)"
 msgstr ""
 
 #: i/skins/zwiki_standard/wikipage-inline.pt:408
+#, fuzzy
 msgid "reparent"
-msgstr ""
+msgstr "paranteser"
 
 #: i/skins/zwiki_standard/wikipage-inline.pt:408
 msgid "make this page a subtopic of the page you have entered"
@@ -1176,15 +1191,17 @@ msgid "rename this page to the name you have entered, updating all links"
 msgstr ""
 
 #: i/skins/zwiki_standard/wikipage-inline.pt:413
+#, fuzzy
 msgid "rename"
-msgstr ""
+msgstr "Användarnamn:"
 
 #: i/skins/zwiki_standard/wikipage-inline.pt:418
 msgid "delete!"
 msgstr ""
 
 #: i/skins/zwiki_standard/wikipage-inline.pt:418
-msgid "delete this page, and redirect links to the page you have entered, if any"
+msgid ""
+"delete this page, and redirect links to the page you have entered, if any"
 msgstr ""
 
 #: i/skins/zwiki_standard/wikipage-inline.pt:423
@@ -1207,4 +1224,90 @@ msgstr ""
 msgid "show wiki recent changes"
 msgstr ""
 
+#, fuzzy
+#~ msgid "add a comment"
+#~ msgstr "En kommentar"
 
+#~ msgid "Comment"
+#~ msgstr "Kommentar"
+
+#, fuzzy
+#~ msgid "Menu for Wiki Page related actions."
+#~ msgstr "Menu för Wiki sidans funktioner"
+
+#~ msgid "Table of Contents"
+#~ msgstr "Innehållsförteckning"
+
+#~ msgid "A Wiki"
+#~ msgstr "En Wiki"
+
+#~ msgid "Wiki"
+#~ msgstr "Wiki"
+
+#~ msgid "Subscriptions"
+#~ msgstr "Prenumerationer"
+
+#~ msgid "Change Wiki Page"
+#~ msgstr "Ändra Wiki-sida"
+
+#~ msgid "Edit"
+#~ msgstr "Redigera"
+
+#~ msgid "Add Wiki"
+#~ msgstr "Lägg till Wiki"
+
+#~ msgid "Wiki User"
+#~ msgstr "Wiki-användare"
+
+#~ msgid "Wiki visitors, which can only view and comment on wikis."
+#~ msgstr "Wiki-besökare som bara kan visa och kommentera på wikis."
+
+#~ msgid "A Wiki Page"
+#~ msgstr "En Wiki-sida"
+
+#~ msgid "Wiki Page"
+#~ msgstr "Wiki-sida"
+
+#~ msgid "A Wiki Page Comment"
+#~ msgstr "En Wiki-sidekommentar"
+
+#~ msgid "Wiki Page Comment"
+#~ msgstr "Wiki-sidekommentar"
+
+#~ msgid "Wiki Editor"
+#~ msgstr "Wiki Redigerare"
+
+#, fuzzy
+#~ msgid "The Wiki Editor can create and edit wikis."
+#~ msgstr "Wiki editorn kan skapa och ändra wikis."
+
+#~ msgid "Wiki Administrator"
+#~ msgstr "Wiki-administratör"
+
+#, fuzzy
+#~ msgid "The Wiki Admin can fully manage wiki pages."
+#~ msgstr "Wiki Admin kan fulständingt hantera wiki sidor"
+
+#~ msgid "View a Wiki Page"
+#~ msgstr "Visa en Wiki-sida"
+
+#~ msgid "View Wiki Page"
+#~ msgstr "Visa Wiki-sida"
+
+#~ msgid "Comment on Wiki Page"
+#~ msgstr "Kommentera på Wiki-sida"
+
+#~ msgid "Make a comment on Wiki Page"
+#~ msgstr "Gör en kommentar på Wiki-sida"
+
+#~ msgid "Add Wiki Page"
+#~ msgstr "Lägg till Wiki-sida"
+
+#~ msgid "Edit Wiki Page"
+#~ msgstr "Redigera Wiki-sida"
+
+#~ msgid "Delete Wiki Page"
+#~ msgstr "Ta bort Wiki-sida"
+
+#~ msgid "You are not authorized to rename this ZWiki Page."
+#~ msgstr "Du har inte tillåtelse att byta namn den här ZWiki sidan."

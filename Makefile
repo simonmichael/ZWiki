@@ -58,16 +58,14 @@ epydoc2:
 # 5. update pot and po files from code (make pot po) and record
 # 6. re-upload all to rosetta
 
-LANGUAGES=af ar de en-GB es et fi fr he hu it ja nl pl pt pt-BR ro ru sv tr zh-CN zh-TW 
-LANGUAGES_DISABLED=fr-CA ga
-
+LANGUAGES=af ar de en_GB es et fi fr he hu it ja nl pl pt pt_BR ro ru sv tr zh_CN zh_TW
+LANGUAGES_DISABLED=fr_CA ga
 I18NEXTRACT=/zope3/bin/i18nextract # still need to patch this, see zopewiki
 
 pot:
 	echo '<div i18n:domain="zwiki">' >skins/dtmlmessages.pt # dtml extraction hack
 	find plugins skins wikis -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt
 	echo '</div>' >>skins/dtmlmessages.pt
-
 	$(I18NEXTRACT) -d zwiki -p . -o ./i18n \
 	    -x _darcs -x .old -x misc -x ftests  -x .doxygen
 	tail +12 i18n/zwiki-manual.pot >>i18n/zwiki.pot
@@ -87,8 +85,8 @@ pot:
 po:
 	cd i18n; \
 	for L in $(LANGUAGES); do \
-	 msgmerge -U zwiki-$$L.po zwiki.pot; \
-	 msgmerge -U zwiki-plone-$$L.po zwiki-plone.pot; \
+	 msgmerge -U $$L.po zwiki.pot; \
+	 msgmerge -U plone-$$L.po zwiki-plone.pot; \
 	 done
 
 # PTS auto-generates these, this is here just for sanity checking and stats
@@ -96,12 +94,13 @@ mo:
 	cd i18n; \
 	for L in $(LANGUAGES); do \
 	 echo $$L; \
-	 msgfmt --statistics zwiki-$$L.po -o zwiki-$$L.mo; \
-	 msgfmt --statistics zwiki-plone-$$L.po -o zwiki-plone-$$L.mo; \
+	 msgfmt --statistics $$L.po -o zwiki-$$L.mo; \
+	 msgfmt --statistics plone-$$L.po -o zwiki-plone-$$L.mo; \
 	 done; \
 	rm -f *.mo
 
-potarball:
+# tar up po files for upload to rosetta
+rosettatarball:
 	cd i18n; \
 	tar cvf zwiki.tar zwiki.pot; \
 	for L in $(LANGUAGES); do tar rvf zwiki.tar zwiki-$$L.po; done; \
