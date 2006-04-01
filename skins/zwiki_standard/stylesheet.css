@@ -85,7 +85,8 @@ input,select {
 
 /* top stuff */
 
-.linkpanel td, .linkpanel_minimal td {
+.linkpanel td {
+  vertical-align: middle;
 }
 .linkpanel a {
   text-decoration:none;
@@ -95,7 +96,6 @@ input,select {
   vertical-align: middle;
 }
 .otherlinks {
-  vertical-align: middle;
 }
 .navpanel {
   font-size: 80%;

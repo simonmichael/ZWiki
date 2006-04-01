@@ -10,16 +10,16 @@ Overview
 
 - *view methods* are defined for wiki pages (via mixin class, usually in
   Views.py). These define the standard views which are always available no
-  matter what kind of site we are in.
+  matter what kind of site we are in (main view, editform, backlinks etc.)
 
 - view methods usually call a *view template* of the same name to render
   the view, sometimes passing data as arguments. These templates can be
   customized by wiki admins.
 
 - all views use the *stylesheet* method/template to control their
-  appearance by CSS. This allows wiki admins (and users, when installed in
-  a certain way) to customize the wiki's appearance without needing to
-  change view templates.
+  appearance by CSS. This allows wiki admins (and users, see below) to
+  customize the wiki's appearance without needing to change view
+  templates.
 
 More about templates
 --------------------

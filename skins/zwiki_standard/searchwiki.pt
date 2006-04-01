@@ -1,11 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki" >
   <head>
-    <title metal:fill-slot="title" i18n:translate="">Search this wiki</title>
-    <meta metal:fill-slot="searchtags" name="robots" content="noindex,nofollow" />
+    <title metal:fill-slot="title_slot" tal:content="
+           string:${container/title} search" />
+    <metal:block metal:fill-slot="head_slot">
+      <metal:block metal:use-macro="here/macros/formsearchtags" />
+    </metal:block>
   </head>
   <body>
     <div metal:fill-slot="main">
+      <metal:macro metal:use-macro="here/macros/accesskeys" />
       <div class="formcontent" 
            tal:content="structure python:
                         here.getSkinTemplate('SearchPage')(here,request)">

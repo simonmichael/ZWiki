@@ -1,38 +1,42 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki" >
   <head>
-    <title metal:fill-slot="title" 
-           tal:content="string:${container/title} ${here/Title} edit/create form" />
-    <meta metal:fill-slot="searchtags" name="robots" content="noindex,nofollow" />
-    <meta metal:fill-slot="extra" http-equiv="pragma" content="no-cache"
-          tal:define="dummy python:request.RESPONSE.setHeader('pragma','no-cache')" />
+    <title metal:fill-slot="title_slot" tal:content="
+           string:${container/title} ${here/pageName} edit/create" />
+    <metal:block metal:fill-slot="head_slot">
+      <metal:block metal:use-macro="here/macros/formsearchtags" />
+      <meta http-equiv="pragma" content="no-cache"
+            tal:define="dummy python:
+                        request.RESPONSE.setHeader('pragma','no-cache')" />
+    </metal:block>
   </head>
   <body>
-    <div metal:fill-slot="main" tal:define="
-    action     request/form/action|options/action;
-    creating   python:action == 'Create';
-    editing    python:not creating;
-    actioning  python:(creating and 'Creating') or 'Editing';
-    previewing python:request.form.get('editform',None);
-    page       request/form/page|options/page;
-    newname    request/form/title|page;
-    title      string:${container/title} ${actioning} ${page};
-    text       request/form/text|options/text;
-    type       request/form/type|python:(creating and here.defaultPageType()) or here.pageTypeId();
-    timestamp  request/form/timeStamp|here/timeStamp;
-    log        python:request.form.get('log',
-    ((editing and 
-    here.usernameFrom(request) == here.last_editor and
-    here.ZopeTime() - here.lastEditTime() < 1) and here.last_log) or ''
-    );
-    file       python:'' #doesn't work too well request/form/file|nothing ;
-    pagetypes  here/allowedPageTypes;
-    wiki_url   here/wikiUrl;
-    rows       python:request.get('zwiki_height',20);
-    uploaddir  python:getattr(container,'uploads',container);
-    "
-    onload="document.forms[0].text.focus();"
-    >
+    <div metal:fill-slot="main" 
+         tal:define="
+      action     request/form/action|options/action;
+      creating   python:action == 'Create';
+      editing    python:not creating;
+      actioning  python:(creating and 'Creating') or 'Editing';
+      previewing python:request.form.get('editform',None);
+      page       request/form/page|options/page;
+      newname    request/form/title|page;
+      title      string:${container/title} ${actioning} ${page};
+      text       request/form/text|options/text;
+      type       request/form/type|python:(creating and here.defaultPageType()) or here.pageTypeId();
+      timestamp  request/form/timeStamp|here/timeStamp;
+      log        python:request.form.get('log',
+      ((editing and 
+      here.usernameFrom(request) == here.last_editor and
+      here.ZopeTime() - here.lastEditTime() < 1) and here.last_log) or ''
+      );
+      file       python:'' #doesn't work too well request/form/file|nothing ;
+      pagetypes  here/allowedPageTypes;
+      wiki_url   here/wikiUrl;
+      rows       python:request.get('zwiki_height',20);
+      uploaddir  python:getattr(container,'uploads',container);
+      "
+      onload="document.forms[0].text.focus();"
+      >
+      <metal:macro metal:use-macro="here/macros/accesskeys" />
       <div class="formcontent">
         <form method="post" enctype="multipart/form-data" action="" 
               tal:attributes="action string:${here/page_url}">

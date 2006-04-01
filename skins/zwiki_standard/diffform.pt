@@ -1,14 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki" >
   <head>
-    <title metal:fill-slot="title" 
-           tal:content="string:${container/title} ${here/pageName} diffs" />
-    <meta metal:fill-slot="searchtags" name="robots" content="noindex,nofollow" />
+    <title metal:fill-slot="title_slot" tal:content="
+           string:${container/title} ${here/pageName} edit history" />
+    <metal:block metal:fill-slot="head_slot">
+      <metal:block metal:use-macro="here/macros/formsearchtags" />
+    </metal:block>
   </head>
   <body>
+    <!-- the diff browser -->
     <div metal:fill-slot="main">
-      <tal:block tal:define="
-                             revA options/revA; 
+      <metal:macro metal:use-macro="here/macros/accesskeys" />
+      <tal:block tal:define="revA options/revA; 
                              difftext options/difftext;
                              ">
         <div class="formcontent">

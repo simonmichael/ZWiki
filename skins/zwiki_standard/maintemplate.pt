@@ -1,22 +1,28 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html metal:define-macro="master"
-      xmlns="http://www.w3.org/1999/xhtml" 
-      xml:lang="en" 
-      lang="en" 
+<metal:block metal:define-macro="master"><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" 
       i18n:domain="zwiki">
-  <head metal:use-macro="here/macros/head">
-    <title metal:fill-slot="title" metal:define-slot="title" 
-           tal:content="string:${container/title} ${here/Title}">page view</title>
-    <meta metal:fill-slot="searchtags" metal:define-slot="searchtags" name="robots" content="noindex,nofollow" />
-    <meta metal:fill-slot="extra" metal:define-slot="extra" tal:omit-tag="" />
+  <head>
+    <meta http-equiv="Content-Type"
+          tal:define="charset string:utf-8;
+                      dummy   python:request.RESPONSE.setHeader(
+                      'Content-Type','text/html;; charset='+charset);"
+          tal:attributes="content string:text/html;;charset=${charset}" 
+          />
+    <tal:block tal:condition="container/favicon|nothing">
+      <link rel="shortcut icon" href="favicon"/>
+      <link rel="icon" href="favicon"/>
+    </tal:block>
+    <link rel="stylesheet" type="text/css" href="" 
+          tal:attributes="href string:${here/defaultPageUrl}/stylesheet" 
+          />
+    <title metal:define-slot="title_slot" tal:content="
+           string:${container/title} ${here/pageName}" />
+    <metal:block metal:define-slot="head_slot" />
   </head>
   <body>
-    <!-- this is the outermost skin template in the standard skin,
-         interchangeable with plone's main_template,
-         all the other templates will work with either
-         -->
     <div metal:use-macro="here/macros/siteheader" />
-    <div metal:use-macro="here/macros/accesskeys" />
+    <div metal:use-macro="here/macros/links" />
     <div metal:define-slot="main" />
   </body>
 </html>
+</metal:block>
