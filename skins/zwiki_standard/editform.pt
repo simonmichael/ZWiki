@@ -50,7 +50,7 @@
             <table width="100%" border="0" cellspacing="0" cellpadding="3">
               <!-- page name & type -->
               <tr>
-                <td valign="middle" align="left" bgcolor="#dddddd">
+                <td valign="middle" align="left">
                   <span tal:condition="python:
                                        user.has_permission('Zwiki: Rename pages',here)">
                     <span i18n:translate="">Page name</span>: 
@@ -61,7 +61,7 @@
                            tal:attributes="value python:newname;" />
                   </span>
                 </td>
-                <td valign="middle" align="right" bgcolor="#dddddd">
+                <td valign="middle" align="right">
                   <span tal:condition="python:
                                        user.has_permission('Zwiki: Change page types',here)">
                     <span i18n:translate="">type</span>:
@@ -93,7 +93,7 @@
               </tr>
               <!-- edit area -->
               <tr>
-                <td colspan="2" align="center" bgcolor="#dddddd">
+                <td colspan="2" align="center">
                   <textarea tal:condition="not:here/supportsEpoz"
                             wrap="virtual" name="text" rows="20" cols="60"
                             style="width:100%; background-color:#f0f0f0" 
@@ -113,7 +113,7 @@
               </tr>
               <!-- better-positioned epoz source-mode checkbox -->
               <tr tal:condition="python:0 #here/supportsEpoz">
-                <td valign="top" align="right" bgcolor="#dddddd" colspan="2"
+                <td valign="top" align="right" colspan="2"
                     ><input id="EpozViewMode" type="checkbox" class="formfield"
                     onclick="SwitchViewMode(this.checked)" 
                     title="toggle source/WYSIWYG mode" 
@@ -123,7 +123,7 @@
               </tr>
               <!-- optional note -->
               <tr>
-                <td valign="middle" align="left" bgcolor="#dddddd" colspan="2" 
+                <td valign="middle" align="left" colspan="2" 
                     nowrap="nowrap">
                   <span i18n:translate="">Optional change note</span>: 
                   <input name="log" size="50" maxlength="100" value="" 
@@ -138,8 +138,7 @@
               <tr tal:condition="python:
                                  user.has_permission('Add Documents, Images, and Files',
                                  uploaddir)">
-                <td valign="middle" align="left" colspan="2" bgcolor="#dddddd" 
-                    nowrap="nowrap">
+                <td valign="middle" align="left" colspan="2" nowrap="nowrap">
                   <span i18n:translate="">Upload a file or image</span>: 
                   <input type="file" name="file" size="30" value="" tabindex=""
                          title="upload a file and link it on this page ?" 
@@ -150,7 +149,7 @@
               </tr>
               <!-- help links, save and cancel buttons -->
               <tr>
-                <td valign="" align="left" bgcolor="#dddddd" colspan="1">
+                <td valign="" align="left" colspan="1">
                   <span i18n:translate="">For editing help, see</span> 
                   <a tal:attributes="href string:${wiki_url}/HelpPage#editing"
                      ><span i18n:translate="">HelpPage</span></a> 
@@ -163,7 +162,7 @@
                         ><span i18n:translate="">TextFormattingRules</span></a> 
                     </span>.
                 </td>
-                <td valign="top" align="right" bgcolor="#dddddd" colspan="1">
+                <td valign="top" align="right" colspan="1">
                   <strong><input 
                   type="submit" name="edit:method" 
                   value="Save" title="change this wiki page"
