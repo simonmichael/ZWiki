@@ -14,7 +14,7 @@ from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER, formattedTraceback, addHook
 from Products.ZWiki.Views import loadDtmlMethod, loadPageTemplate, \
-     STANDARD_TEMPLATES, PLONE_TEMPLATES
+     STANDARD_TEMPLATES
 from Products.ZWiki.I18n import _
 
 STANDARD_TEMPLATES.update({
@@ -26,11 +26,6 @@ STANDARD_TEMPLATES.update({
     'IssueTracker'       : loadDtmlMethod('IssueTracker','plugins/tracker'),
     'IssueBrowser'       : loadDtmlMethod('IssueBrowser','plugins/tracker'),
     'FilterIssues'       : loadDtmlMethod('FilterIssues','plugins/tracker'),
-    })
-PLONE_TEMPLATES.update({
-    'issuetracker'       : loadPageTemplate('issuetracker_plone','plugins/tracker'),
-    'issuebrowser'       : loadPageTemplate('issuebrowser_plone','plugins/tracker'),
-    'filterissues'       : loadPageTemplate('filterissues_plone','plugins/tracker'),
     })
 
 # issue tracker defaults, will be installed as folder properties
