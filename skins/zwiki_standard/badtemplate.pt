@@ -8,6 +8,8 @@
   </head>
   <body>
     <div metal:fill-slot="main">
+      <metal:macro metal:use-macro="here/macros/accesskeys" />
+      <h1 i18n:translate="">Bad template</h1>
       <p i18n:translate="">
         There was a problem locating one of this wiki's skin templates.
         There may be a page or other non-page-template/non-dtml-method object

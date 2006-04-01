@@ -9,6 +9,7 @@
   <body>
     <div metal:fill-slot="main">
       <metal:macro metal:use-macro="here/macros/accesskeys" />
+      <h1 i18n:translate="">Recent changes</h1>
       <div class="formcontent" 
            tal:content="structure python:
                         here.getSkinTemplate('RecentChanges')(here,request)">

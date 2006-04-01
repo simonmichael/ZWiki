@@ -9,8 +9,8 @@
   <body>
     <div metal:fill-slot="main">
       <metal:macro metal:use-macro="here/macros/accesskeys" />
+      <h1 i18n:translate="">Mail subscription</h1>
       <div class="formcontent">
-        <h1 tal:condition="here/inCMF"><span i18n:translate="" tal:omit-tag="">Mail subscription</span></h1>
         <span tal:condition="request/emailchanged|nothing">
           <!-- remember email address with a cookie like UserOptions -->
           <tal:dummy tal:define="r python:request.RESPONSE.setCookie(

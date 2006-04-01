@@ -17,6 +17,7 @@
                      (('Title', 'nocase', 'asc'),));
                      ">
       <metal:macro metal:use-macro="here/macros/accesskeys" />
+      <h1 i18n:translate="">Backlinks</h1>
       <form action="reparent" tal:attributes="action string:${here/pageUrl}/reparent">
         <table border="0" width="100%">
           <tr valign="top">
