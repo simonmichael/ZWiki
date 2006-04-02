@@ -1,7 +1,7 @@
 # Zwiki/zwiki.org makefile
 
-# simple no-branch release process
-# --------------------------------
+# Zwiki release reminders
+# -----------------------
 # check for unrecorded changes
 # check tests pass
 # check for late tracker issues
@@ -114,19 +114,9 @@ rosettatarballs:
 
 
 ## testing
-
-# to run Zwiki unit tests, you probably need:
-# Zope 2.7.3 or greater
-# ZopeTestCase, linked under .../lib/python/Testing
-# CMF 1.5
-# Plone 
-# PlacelessTranslationService ? maybe
-
-# all tests, test.py
-# avoid mailin tests hanging due to #1104
-WHICH_TESTS=''
-
-# for quicker testing, you may want to use a zope instance with minimal
+# To run Zwiki unit tests, you need Zope 2.9 or greater. Some additional
+# tests will run if you have CMF, Plone, PlacelessTranslationService.
+# For quicker testing, you may want to use a zope instance with minimal
 # products installed. Also note the testrunner will run code from
 # zopectl's INSTANCE_HOME, regardless of your current dir or testrunner
 # args.
@@ -292,24 +282,3 @@ lrefresh: lrefresh-$(PRODUCT)
 lrefresh-%:
 	@echo refreshing product $* on $(LHOST)
 	curl -n -sS -o.curllog 'http://$(LHOST)/Control_Panel/Products/$*/manage_performRefresh'
-
-#fixissuepermissions:
-#	for ISSUE in 0001 0002 0003 0004 0005 0006 0007 0008 0009 0010; do \
-#	  echo "$(HOST): fixing permissions for IssueNo$$ISSUE" ;\
-#	  $(CURL) "http://$(HOST)/IssueNo$$ISSUE/manage_permission?permission_to_manage=Change+ZWiki+Page+Types" ;\
-#	done
-#
-#fixcreationtimes:
-#	for ISSUE in 0001 0002 0003 0004 0005 0006 0007 0008 0009 0010\
-#	  0011 0012 0013 0014 0015 0016 0017 0018 0019 0020\
-#	  0021 0022 0023 0024 0025 0026 0027 0028 0029 0030\
-#	  0031 0032 0033 0034 0035 0036 0037 0038 0039 0040\
-#	  0041 0042 0043 0044 0045 0046 0047 0048 0049 0050\
-#	  0051 0052 0053 0054; do \
-#	  echo "$(HOST): fixing creation time for IssueNo$$ISSUE" ;\
-#	  $(CURL) "http://$(HOST)/IssueNo$$ISSUE/manage_changeProperties?creation_time=2001/11/26+18%3A09+PST" ;\
-#	done
-#
-#updatecatalog:
-#	@echo updating Catalog on $(HOST)
-#	@$(CURL) "http://$(HOST)/Catalog/manage_catalogReindex"
