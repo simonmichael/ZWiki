@@ -16,7 +16,6 @@ LINK_TO_ALL_CATALOGED = 0    # link to all pages in the catalog ? unimplemented
 LINK_TO_ALL_OBJECTS = 0      # link to non-wiki page objects ? unimplemented
 LARGE_FILE_SIZE = 1024*1024  # images larger than this will not be inlined
 LEAVE_PLACEHOLDER = 0        # leave a placeholder page when renaming ?
-DEFAULT_DISPLAYMODE = 'minimal'   # default display mode for the standard skin
 WIKINAME_LINKS = 1           # enable/disable various wiki link syntaxes 
 BRACKET_LINKS = 1            # by default
 DOUBLE_BRACKET_LINKS = 1

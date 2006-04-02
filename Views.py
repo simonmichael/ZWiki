@@ -122,7 +122,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from Products.PageTemplates.Expressions import SecureModuleImporter
 
-from Defaults import PAGE_METATYPE, DEFAULT_DISPLAYMODE
+from Defaults import PAGE_METATYPE
 from Utils import BLATHER,formattedTraceback
 from Regexps import htmlheaderexpr, htmlfooterexpr, htmlbodyexpr
 from I18n import _, DTMLFile, HTMLFile
@@ -385,45 +385,50 @@ class SkinSwitchingUtils:
     """
     security = ClassSecurityInfo()
 
-    def displayMode(self,REQUEST=None):
+    security.declareProtected(Permissions.View, 'setskin')
+    def setskin(self,skin=None):
         """
-        Tell the user's current display mode - full, simple, or minimal.
+        When in a CMF/Plone site, switch between standard and plonish UI.
 
-        This affects the standard skin's appearance; it's not used in CMF/Plone.
-        This is either
-        - user's zwiki_displaymode cookie, set by clicking full/simple/minimal
-        - or the folder's default_displaymode string property (can acquire)
-        - or DEFAULT_DISPLAYMODE
-
-        This is kept for backwards compatibility with old zwiki skins.
+        The user's preferred skin mode is stored in a zwiki_displaymode
+        cookie.  This was once used to change the appearance of the
+        non-plone standard skin (full/simple/minimal); later it acquired
+        the ability to switch between CMF skins in CMF/plone; now it just
+        selects the zwiki or plone appearance in CMF/plone, by setting a
+        cookie for maintemplate().
         """
-        if not REQUEST: REQUEST = self.REQUEST
-        return REQUEST.get('zwiki_displaymode',self.defaultDisplayMode())
-
-    def defaultDisplayMode(self,REQUEST=None):
-        """
-        Tell the default display mode for this wiki. See displayMode.
-        """
-        return getattr(self.folder(),'default_displaymode',DEFAULT_DISPLAYMODE)
+        if skin in ('plone', 'cmf'):
+            self.setDisplayMode('plone')
+        else:
+            self.setDisplayMode('zwiki')
 
     security.declareProtected(Permissions.View, 'setDisplayMode')
-    def setDisplayMode(self,REQUEST,mode):
+    def setDisplayMode(self,mode):
         """
-        Change the user's display mode cookie for the standard skin.
-        
-        The display mode affects the appearance of Zwiki's standard skin;
-        it may be full, simple, or minimal.
+        Save the user's choice of skin mode as a cookie.
 
-        XXX nb keep useroptions synced with this.
+        For 1 year, should they be permanent ?
         """
+        REQUEST = self.REQUEST
         RESPONSE = REQUEST.RESPONSE
         RESPONSE.setCookie('zwiki_displaymode',
                            mode,
                            path='/',
-                           expires=(self.ZopeTime() + 365).rfc822()) # 1 year
-        REQUEST.RESPONSE.redirect(REQUEST.get('URL1'))
+                           expires=(self.ZopeTime() + 365).rfc822())
+        RESPONSE.redirect(REQUEST.get('URL1'))
 
     setSkinMode = setDisplayMode #backwards compatibility
+
+    def displayMode(self,REQUEST=None):
+        """
+        Find out the user's preferred skin mode.
+        """
+        REQUEST = REQUEST or self.REQUEST
+        defaultmode = (self.inCMF() and 'plone') or 'zwiki'
+        m = REQUEST.get('zwiki_displaymode', None)
+        if not m in ['zwiki','plone']:
+            m = defaultmode
+        return m
 
     security.declareProtected(Permissions.View, 'setCMFSkin')
     def setCMFSkin(self,REQUEST,skin):
@@ -445,39 +450,6 @@ class SkinSwitchingUtils:
         member.setProperties(REQUEST)
         portal_skins.updateSkinCookie()
         REQUEST.RESPONSE.redirect(REQUEST.get('URL1'))
-
-    security.declareProtected(Permissions.View, 'setskin')
-    def setskin(self,REQUEST,skin=None):
-        """
-        Change the user's cmf/plone skin or standard skin display mode.
-
-        This can be used to select a different CMF/Plone skin - primarily
-        used for switching to the standard zwiki skin inside a plone site.
-        To enable this you need to copy the default skin in portal_skins,
-        name it "Zwiki", and add the "zwiki_standard" layer above
-        "zwiki_plone". Cf http://zwiki.org/HowToUseTheStandardSkinInPlone .
-
-        It can also change the full/simple/minimal display mode of the
-        standard skin. This feature has been retired from the standard
-        skin, it remains here for backwards compatibility with old
-        wikis.
-
-        skin can be any of: full, simple, minimal, Zwiki, standard, the
-        name of a CMF/Plone skin, plone, cmf, or None (the last three are
-        an alias for "Plone Default", standard is an alias for "Zwiki").
-
-        I might have impaired this a bit in the post-0.43 cleanup.
-        """
-        RESPONSE = REQUEST.RESPONSE
-        if skin in ['full','simple','minimal']:
-            self.setSkinMode(REQUEST,skin)
-            skin = 'Zwiki'
-        if not self.inCMF(): return
-        if skin == 'standard':
-            skin = 'Zwiki'
-        if not skin or skin in ['plone','cmf']:
-            skin = 'Plone Default'
-        self.setCMFSkin(REQUEST,skin)
 
 InitializeClass(SkinSwitchingUtils)
 
@@ -526,7 +498,7 @@ class SkinViews:
         # all skin templates wrap themselves with main_template
         # in CMF, use the cmf/plone one, otherwise use ours
         # should allow use of ours in cmf/plone also
-        if self.inCMF():
+        if self.inCMF() and self.displayMode() == 'plone':
             return self.getSkinTemplate('main_template')
         else:
             return self.getSkinTemplate('maintemplate')
