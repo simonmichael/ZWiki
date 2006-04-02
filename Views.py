@@ -337,30 +337,30 @@ class SkinUtils:
         # to set container and here
         return obj.__of__(self.folder()).__of__(self)
 
-    # XXX simplify
     security.declareProtected(Permissions.View, 'addSkinTo')
     def addSkinTo(self,body,**kw):
         """
-        Apply the main view template (wikipage) to the rendered body text.
+        Add the main wiki page skin to some rendered body text.
 
-        Unless the 'bare' keyword is found in REQUEST.
+        Unless the 'bare' keyword is found in REQUEST. Also the 'skin'
+        keyword may be used to select a template other than wikipage.  If
+        no wikipage template is found in the zodb, then we look for a
+        standard_wiki_header/standard_wiki_footer dtml method pair
+        (backwards compatibility), otherwise the wikipage template on the
+        filesystem is used.
 
-        If no wikipage template is found, standard_wiki_header /
-        standard_wiki_footer dtml methods will be used (legacy support).
-        Specifically, use
-        - the wikipage page template in our acquisition context
-        - or the dtml methods, if either can be acquired
-        - or the default wikipage template from the filesystem.
+        This is used only for the main page view. Perhaps the wikipage
+        view method should replace it ?
         """
-        #import pdb; pdb.set_trace()
         REQUEST = getattr(self,'REQUEST',None)
-        if (#(self.supportsCMF() and self.inCMF()) or
-            hasattr(REQUEST,'bare') or
-            kw.has_key('bare')):
-            return body
-
         folder = self.folder()
+        # allow skin to be turned off for this request
+        if (hasattr(REQUEST,'bare') or kw.has_key('bare')):
+            return body
+        # or, use of a template other than wikipage
         skintemplate = kw.get('skin','wikipage')
+        # get the zodb template, zodb dtml methods, or fs template, and
+        # render in the context of this page
         if (hasattr(folder,skintemplate) and
             isPageTemplate(getattr(folder,skintemplate))):
             return getattr(folder,skintemplate).__of__(self)(
@@ -371,9 +371,6 @@ class SkinUtils:
                    body + \
                    self.getSkinTemplate('standard_wiki_footer')(self,REQUEST)
         else:
-            #return STANDARD_TEMPLATES['wikipage'].__of__(self)(self,REQUEST,body=body,**kw)
-            # make sure container and here are correct
-            # now does this still work for dtml methods ? who cares ?
             return STANDARD_TEMPLATES['wikipage'].__of__(self.folder()).__of__(self)(body=body,**kw)
 
 InitializeClass(SkinUtils)
