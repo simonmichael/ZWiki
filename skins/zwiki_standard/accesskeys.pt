@@ -1,6 +1,9 @@
 <html>
   <body>
-    <metal:block metal:define-macro="accesskeys">
+    <metal:block metal:define-macro="accesskeys"
+                 tal:define="pageurl here/pageUrl;
+                             thisurl python:here.urlquote(request.get('URL'));
+                             ">
       <!-- always-available zwiki access keys -->
       <a tal:attributes="href here/homeUrl" accesskey="f"></a>
       <a tal:attributes="href here/contentsUrl" accesskey="c"></a>
@@ -11,8 +14,8 @@
       <a tal:attributes="href here/uploadsUrl" accesskey="" tal:condition="python:0 #here/uploadsUrl"></a>
       <a tal:attributes="href here/preferencesUrl" accesskey="o"></a>
       <a tal:attributes="href here/helpUrl" accesskey="h" tal:condition="here/helpUrl"></a>
-      <a tal:attributes="href python:here.pageUrl()+'/setskin?skin=standard'" accesskey="-" tal:condition="here/inCMF"></a>
-      <a tal:attributes="href python:here.pageUrl()+'/setskin?skin=plone'" accesskey="+" tal:condition="here/inCMF"></a>
+      <a tal:attributes="href python:'%s/setskin?skin=zwiki&came_from=%s' % (pageurl,thisurl)" accesskey="-" tal:condition="here/inCMF"></a>
+      <a tal:attributes="href python:'%s/setskin?skin=plone&came_from=%s' % (pageurl,thisurl)" accesskey="+" tal:condition="here/inCMF"></a>
       <a tal:attributes="href here/pageUrl" accesskey="v"></a>
       <a tal:attributes="href string:${here/pageUrl}/subscribeform" accesskey="m"></a>
       <a tal:attributes="href string:${here/pageUrl}/backlinks" accesskey="b"></a>

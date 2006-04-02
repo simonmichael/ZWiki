@@ -412,7 +412,8 @@ class SkinSwitchingUtils:
                            mode,
                            path='/',
                            expires=(self.ZopeTime() + 365).rfc822())
-        RESPONSE.redirect(REQUEST.get('URL1'))
+        RESPONSE.redirect(REQUEST.get('came_from',
+                                      REQUEST.get('URL1')))
 
     setSkinMode = setDisplayMode #backwards compatibility
 
