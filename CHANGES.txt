@@ -16,11 +16,11 @@
           template you'll need to delete it or replace with the latest and
           re-customize
 
-	- the full/simple/minimal switching in old customized skin
-	  templates will no longer work as of this release
+	- full/simple/minimal links in old custom skin templates will no
+	  longer work.
         
 	- http://zwiki.org/HowToUseTheStandardSkinInPlone is now built in,
-          you no longer need a "Zwiki" CMF skin to do this.
+          if you made a "Zwiki" CMF skin you can delete it.
 
     Changes
 
@@ -40,8 +40,13 @@
 
       Browsing
 
-        * fix two-year-old freeform links speed regression (#818, Warren
-          Holt, Simon Michael)
+        * switching between plone and standard zwiki skins in CMF/plone
+          sites is now always available, and no longer changes the url.
+          Just use the - and + access keys (in firefox: alt minus, alt
+          plus).
+
+        * fix the two-year-old freeform links speed regression (#818,
+          Warren Holt, Simon Michael)
 
         * fix double-linking of bare urls in rst pages
 
