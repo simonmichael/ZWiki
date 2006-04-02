@@ -100,13 +100,16 @@ mo:
 	rm -f *.mo
 
 # tar up po files for upload to rosetta
-rosettatarball:
+rosettatarballs:
 	cd i18n; \
+	rm -f zwiki.tar zwiki-plone.tar; \
 	tar cvf zwiki.tar zwiki.pot; \
-	for L in $(LANGUAGES); do tar rvf zwiki.tar zwiki-$$L.po; done; \
+	for L in $(LANGUAGES); do tar rvf zwiki.tar $$L.po; done; \
 	tar cvf zwiki-plone.tar zwiki-plone.pot; \
-	for L in $(LANGUAGES); do tar rvf zwiki-plone.tar zwiki-plone-$$L.po; done; \
-	gzip -f zwiki.tar zwiki-plone.tar
+	for L in $(LANGUAGES); do tar rvf zwiki-plone.tar plone-$$L.po; done; \
+	gzip -f zwiki.tar zwiki-plone.tar; \
+	mv zwiki.tar.gz zwiki-`date +%Y%m%d`.tar.gz; \
+	mv zwiki-plone.tar.gz zwiki-plone-`date +%Y%m%d`.tar.gz; \
 
 
 
