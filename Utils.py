@@ -486,6 +486,7 @@ class PageUtils:
         Renders without the skin, passes REQUEST in case authentication is
         needed, fails silently if page does not exist.
         """
+        REQUEST = REQUEST or self.REQUEST
         p = self.pageWithNameOrId(page)
         if p: return p(bare=1,REQUEST=REQUEST, **kw)
         else: return ''
