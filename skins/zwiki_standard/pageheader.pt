@@ -37,7 +37,7 @@
             </td>
             <!-- search form & page info -->
             <td class="searchbox" width="20%" align="right">
-              <tal:block tal:condition="not:here/inCMF">
+              <tal:block tal:condition="not:here/usingPloneSkin">
                 <input id="searchinput" class="formfield"
                        name="expr" type="text" size="20" maxlength="100" value="" 
                        title="search all pages" accesskey="s" i18n:attributes="title" /><br />
@@ -46,7 +46,7 @@
                   last edited n days ago by by so-and-so
                 </span>
               </tal:block>
-              <tal:block tal:condition="here/inCMF">
+              <tal:block tal:condition="here/usingPloneSkin">
                 <span class="lasteditor" 
                       tal:content="structure python:here.linkTitle(prettyprint=1)">
                   last edited n days ago by by so-and-so

@@ -417,6 +417,7 @@ class SkinSwitchingUtils:
 
     setSkinMode = setDisplayMode #backwards compatibility
 
+    security.declareProtected(Permissions.View, 'displayMode')
     def displayMode(self,REQUEST=None):
         """
         Find out the user's preferred skin mode.
@@ -428,6 +429,15 @@ class SkinSwitchingUtils:
             m = defaultmode
         return m
 
+    security.declareProtected(Permissions.View, 'usingPloneSkin')
+    def usingPloneSkin(self,REQUEST=None):
+        """
+        Convenience utility for templates: are we using plone skin ?
+
+        Ie, are we using the plone display mode of zwiki's standard skin.
+        """
+        return (self.inCMF() and self.displayMode()=='plone')
+        
     security.declareProtected(Permissions.View, 'setCMFSkin')
     def setCMFSkin(self,REQUEST,skin):
         """
