@@ -380,10 +380,15 @@ class PageSubscriptionSupport:
               # address they know.
               ):
             from Products.CMFCore.utils import getToolByName
+            membership = getToolByName(self,'portal_membership')
+            memberdata = getToolByName(self,'portal_memberdata')
             return getattr(
-                (getToolByName(self,'portal_membership').getMemberById(subscriber) or
-                 # also check for a pseudo-member (acquired from above)
-                 getToolByName(self,'portal_memberdata')._members.get(subscriber,None)),
+                (membership.getMemberById(subscriber)
+                 # also check for a pseudo-member (a user acquired from above)
+                 # XXX clean up.. for now make this harmless with CMFMember
+                 # which doesn't have _members
+                  or (hasattr(memberdata,'_members') and
+                      memberdata._members.get(subscriber,None))),
                 'email',
                 None)
         else:
