@@ -1,3 +1,76 @@
+    Summary
+
+	Bugfix release.
+
+    Upgrade notes
+
+	If you installed 0.52 in a CMF or Plone site for the first time,
+	the zwiki_standard skin layer may not have been installed and some
+	images may appear broken. If so, uninstall and reinstall Zwiki in
+	add/remove products.
+    	
+    Changes
+
+      Installing
+
+	* fix backwards compatibility for old custom templates like
+	  editform (#1241)
+
+	* the zwiki_standard layer was not being registered during
+	  cmf/plone installation; don't add the unnecessary "Zwiki" skin
+	  any more
+
+	* Add Zwiki was not setting page type based on the file suffix
+	  (#1247)
+
+      Configuring
+
+	* don't html-quote the site header, if configured (#1240)
+
+      Browsing
+
+	* don't show wiki logo in plone skin
+
+	* show document actions instead of zwiki search form in plone skin
+
+	* don't show page hierarchy list bullets in plone skin
+
+	* don't make context links smaller in plone skin
+
+	* use h1 instead of big for page name
+
+	* add more whitespace between header and content in plone skin
+
+      Editing
+
+	* when creating pages, use epoz based on the new page's type, not
+	  the parent page's (#1243)
+
+      Page hierarchy
+
+      Mail
+
+	* subscribe form fixes for cmf/plone sites: fall back to zwiki
+	  options cookie when not logged in, don't subscribe Anonymous
+	  User, more help for logged in users (Jens Nachtigall, Simon
+	  Michael, #878, #1203)
+
+	* fix subscribeform _members attribute error with CMFMember
+	  (#1239, Jens Nachtigall, Simon Michael)
+
+      Issue tracking
+
+      Translations
+
+      General
+	
+	* don't let find objects in the catalog break due to outline
+	  (#1246)
+
+	* make include() convenience method more robust with
+	  authentication
+
+	
 Zwiki 0.52.0 2006/04/01
 
     Summary
