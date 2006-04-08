@@ -275,7 +275,6 @@ null = ZopePageTemplate(
     'null','<div metal:define-macro="null" />').pt_macros()['null']
 for t in [
     'favicon',
-    'linkpanel',
     'logolink',
     'navpanel',
     'pagelinks',
@@ -283,6 +282,7 @@ for t in [
     'wikilinks',
     ]:
     MACROS[t] = null
+MACROS['linkpanel'] = MACROS['links']
 
 
 class SkinUtils:
