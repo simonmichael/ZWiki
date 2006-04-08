@@ -831,7 +831,8 @@ class OutlineRendering:
                 if enlarge_current:
                     # just assume we are in the page header, and link to
                     # backlinks as well as enlarging
-                    return '<big><big><big><big><strong>%s</strong></big></big></big></big>' % \
+                    #return '<big><big><big><big><strong>%s</strong></big></big></big></big>' % \
+                    return '<h1 style="display:inline;">%s</h1>' % \
                            ('<a href="%s/%s/backlinks" title="%s" name="%s">%s</a>' % \
                             (wikiurl,
                              self.canonicalIdFrom(page),
