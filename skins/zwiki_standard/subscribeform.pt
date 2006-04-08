@@ -50,6 +50,11 @@
           </p>
           <div tal:condition="inCMFAndLoggedIn">
             <input name="email" type="hidden" tal:attributes="value email" />
+            <span i18n:translate="" tal:omit-tag="">
+              Your email address is
+              <span i18n:name="email" tal:replace="email" />,
+              use the site preferences to change it.
+            </span>
           </div>
           <div tal:condition="not:inCMFAndLoggedIn">
             <span i18n:translate="" tal:omit-tag="">Your email address</span>:
