@@ -695,9 +695,13 @@ class OutlineRendering:
         contentslink = \
           '<a href="%s" title="show wiki contents">%s contents</a>' \
           % (contentsurl, self.folder().title)
+        #with a contents link
         #return '<small><ul>%s\n%s\n</ul></small>' % (contentslink,hierarchy)
-        #XXX try no contents link in context
-        return '<small>%s\n</small>' % (hierarchy)
+        #XXX temp
+        if self.usingPloneSkin():
+            return '%s\n' % (hierarchy)
+        else:
+            return '<small>%s\n</small>' % (hierarchy)
 
     security.declareProtected(Permissions.View, 'contextX')
     def contextX(self, REQUEST=None, with_siblings=0):
