@@ -37,13 +37,26 @@
             </td>
             <!-- search form & page info -->
             <td class="searchbox" width="20%" align="right">
-              <input id="searchinput" class="formfield" 
-                     name="expr" type="text" size="20" maxlength="100" value="" 
-                     title="search all pages" accesskey="s" i18n:attributes="title" /><br />
-              <span class="lasteditor" 
-                    tal:content="structure python:here.linkTitle(prettyprint=1)">
-                last edited n days ago by by so-and-so
-              </span>
+              <tal:block tal:condition="not:here/inCMF">
+                <input id="searchinput" class="formfield"
+                       name="expr" type="text" size="20" maxlength="100" value="" 
+                       title="search all pages" accesskey="s" i18n:attributes="title" /><br />
+                <span class="lasteditor" 
+                      tal:content="structure python:here.linkTitle(prettyprint=1)">
+                  last edited n days ago by by so-and-so
+                </span>
+              </tal:block>
+              <tal:block tal:condition="here/inCMF">
+                <span class="lasteditor" 
+                      tal:content="structure python:here.linkTitle(prettyprint=1)">
+                  last edited n days ago by by so-and-so
+                </span>
+                <div metal:use-macro="python:
+                                      (hasattr(here,'document_actions')
+                                      and here.document_actions.macros['document_actions']) 
+                                      or default
+                                      # degrade gracefully. By all means make this more elegant.." />
+              </tal:block>
             </td>
           </tr>
         </table>
