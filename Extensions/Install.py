@@ -72,52 +72,31 @@ def install(self):
     # this would give an even more complete catalog.. should be unnecessary
     #ZWikiPage().__of__(self).setupTracker(pages=0)
 
-    # Setup the skins
-    if 'zwiki_plone' not in skinstool.objectIds():
+    # Set up the skins
+    if ('zwiki_plone' not in skinstool.objectIds()
+        or 'zwiki_standard' not in skinstool.objectIds()):
         addDirectoryViews(skinstool, 'skins', wiki_globals)
-        out.write("Added zwiki skin directories to portal_skins\n")
 
-    # Now we need to go through the skin configurations and insert
-    # 'zwiki_plone'.  Preferably, this should be right before where
-    # 'content' is placed.  Otherwise, we append it to the end.
-
-    # NB zwiki sometimes uses its built-in skin lookup to find helper
-    # templates, searching both zwiki_ layers regardless of what's in
-    # portal_skins - possible source of confusion for customizers
-    # here. Should we add zwiki_standard to portal_skins for clarity ?
-    # I guess so (but after zwiki_plone if already there, not custom)
-    #XXX for dir in ('zwiki_standard','zwiki_plone'):
-    
+    # Now we need to add the Zwiki skin layers to each existing skin.
+    # We'll add them after custom. Currently zwiki_plone is empty.
+    # NB possible source of confusion for customizers: due to it's
+    # built-in skin mechanism Zwiki may search both zwiki_ layers even if
+    # one or both has been removed from the CMF skin (not sure)
     skins = skinstool.getSkinSelections()
     for skin in skins:
         path = skinstool.getSkinPath(skin)
         path = map(string.strip, string.split(path,','))
-        for dir in ['zwiki_plone']:
+        for dir in ['zwiki_standard','zwiki_plone']:
             if not dir in path:
                 try:
                     idx = path.index('custom')
                 except ValueError:
                     idx = 999
                 path.insert(idx+1, dir)
-
         path = string.join(path, ', ')
         # addSkinSelection will replace existing skins as well.
         skinstool.addSkinSelection(skin, path)
-        out.write("Added 'zwiki_plone' to %s skin\n" % skin)
-
-    # And, we'll add an optional new skin, 'Zwiki', which offers Zwiki's
-    # standard templates within CMF/Plone
-    def hasSkin(s): return skinstool.getSkinPath(s) != s
-    if not hasSkin('Zwiki'):
-        path = (
-            hasSkin('Plone Default') and skinstool.getSkinPath('Plone Default')
-            or hasSkin('CMF Default') and skinstool.getSkinPath('CMF Default')
-            or None)
-        if path: # just in case
-            path = map(string.strip, string.split(path,','))
-            path.insert(path.index('zwiki_plone'),'zwiki_standard')
-            path = string.join(path, ', ')
-            skinstool.addSkinSelection('Zwiki',path)
+        out.write("Added Zwiki layers to %s skin\n" % skin)
 
     # remove workflow from Wiki pages
     cbt = workflowtool._chains_by_type
