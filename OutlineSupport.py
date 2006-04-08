@@ -859,7 +859,7 @@ class OutlineRendering:
         if did is None: did = []
         if got is None:
             # XXX trying hard to turn off bullets in plone!
-            got = ['<ul style="list-style:none" class="aqtree3clickable">']
+            got = ['<ul style="list-style:none; margin-left:0;" class="aqtree3clickable">']
             recursing = 0
         else:
             recursing = 1
