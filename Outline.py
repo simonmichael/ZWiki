@@ -289,11 +289,17 @@ class Outline:
         for t in tops:
             got.append(descend_ancestors(t, ancestors, did, self.childmap()))
         return got
-    def parents(self,node):
+    def parents(self,node=None):
         """
         Return a nesting/list representing node's immediate parents.
         """
-        return self.parentmap().get(node,[])[:]
+        #XXX temporary nasty kludge: there seems no obvious way to prevent
+        #zcatalog from trying to index this object, calling any methods
+        #which (like this one) match catalog index names, when a user does
+        #find all objects. So don't break when that happens.
+        if not node: return None
+        else: return self.parentmap().get(node,[])[:]
+            
     def firstParent(self,node):
         """
         Return the first parent of node, if any.
