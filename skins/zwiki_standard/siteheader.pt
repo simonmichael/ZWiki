@@ -4,7 +4,7 @@
     <!--  optional extra site header -->
     <div metal:define-macro="siteheader" 
          tal:condition="here/site_header|nothing" 
-         tal:replace="here/site_header" 
+         tal:replace="structure here/site_header" 
          class="siteheader" />
 
   </body>
