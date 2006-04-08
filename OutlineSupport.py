@@ -854,14 +854,15 @@ class OutlineRendering:
             return ''
         if did is None: did = []
         if got is None:
-            got = ['<ul class="aqtree3clickable">'] #SKWM 
+            # XXX trying hard to turn off bullets in plone!
+            got = ['<ul style="list-style:none" class="aqtree3clickable">']
             recursing = 0
         else:
             recursing = 1
         for n in nesting:
             if type(n) == ListType:
                 if not (n[0]==here and suppress_current): #XXX temp
-                    got.append('%s <li>%s' % (indent,renderContentsLink(n[0])))
+                    got.append('%s <li style="list-style:none" class="aqtree3clickable">%s' % (indent,renderContentsLink(n[0])))
                 if len(n) > 1:
                     if not (n[0]==here and suppress_current): #XXX temp
                         got.append('<ul>')
@@ -877,7 +878,7 @@ class OutlineRendering:
                                 got=got,
                                 indent=indent+' ')
                         else:
-                            got.append('%s <li>%s</li>' % (indent,renderContentsLink(i)))
+                            got.append('%s <li style="list-style:none" class="aqtree3clickable">%s</li>' % (indent,renderContentsLink(i)))
                     if not (n[0]==here and suppress_current): #XXX temp
                         got.append("</ul>")
                 else:
@@ -885,7 +886,7 @@ class OutlineRendering:
                 if not (n[0]==here and suppress_current):
                     got.append('%s </li>' % indent)
             else:
-                got.append('%s <li>%s</li>' % (indent,renderContentsLink(n)))
+                got.append('%s <li style="list-style:none" class="aqtree3clickable">%s</li>' % (indent,renderContentsLink(n)))
 
         if recursing:
             return got
