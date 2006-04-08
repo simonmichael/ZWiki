@@ -345,14 +345,14 @@ class PageSubscriptionSupport:
 
     def usernameOrEmailOfSubscriber(self):
         """
-        if the user is logged into the CMF, return his/her username
-        else return his/her email address
-        """ 
-        username = str(self.portal_membership.getAuthenticatedMember())
-        if username and not self.portal_membership.isAnonymousUser():
-            return username
-        else:
-            return self.REQUEST.get('email')
+        If the user is logged into the CMF, return his/her username
+        else return his/her email address cookie.
+        """
+        if self.inCMF():
+            username = str(self.portal_membership.getAuthenticatedMember())
+            if username and not self.portal_membership.isAnonymousUser():
+                return username
+        return self.REQUEST.get('email',None)
 
 
     # utilities
