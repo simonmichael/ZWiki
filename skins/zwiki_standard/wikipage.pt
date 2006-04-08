@@ -12,6 +12,7 @@
       <metal:macro metal:use-macro="here/macros/accesskeys" />
       <div metal:use-macro="here/macros/pageheader" />
       <div metal:use-macro="here/macros/ratingform" />
+      <br tal:condition="here/usingPloneSkin" />
       <div metal:use-macro="here/macros/content" />
       <div metal:use-macro="here/macros/pagemanagementform" />
     </div>
