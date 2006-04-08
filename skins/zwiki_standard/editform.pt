@@ -22,6 +22,10 @@
       title      string:${container/title} ${actioning} ${page};
       text       request/form/text|options/text;
       type       request/form/type|python:(creating and here.defaultPageType()) or here.pageTypeId();
+      useEpoz    python:
+                 here.epozInstalled() and ((editing and here.supportsEpoz())
+                                           or (creating and type=='html'))
+                 #here.supportsEpoz();
       timestamp  request/form/timeStamp|here/timeStamp;
       log        python:request.form.get('log',
       ((editing and 
@@ -94,13 +98,13 @@
               <!-- edit area -->
               <tr>
                 <td colspan="2" align="center">
-                  <textarea tal:condition="not:here/supportsEpoz"
+                  <textarea tal:condition="not:useEpoz"
                             wrap="virtual" name="text" rows="20" cols="60"
                             style="width:100%; background-color:#f0f0f0" 
                             tabindex=""
                             tal:attributes="rows rows;"
                             tal:content="text">text...</textarea>
-                  <span tal:condition="here/supportsEpoz"
+                  <span tal:condition="useEpoz"
                         tal:replace="structure python:
                                      here.Epoz(
                                      'text',
