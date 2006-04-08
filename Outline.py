@@ -298,7 +298,7 @@ class Outline:
         #which (like this one) match catalog index names, when a user does
         #find all objects. So don't break when that happens.
         if not node: return None
-        else: return self.parentmap().get(node,[])[:]
+        return self.parentmap().get(node,[])[:]
             
     def firstParent(self,node):
         """
