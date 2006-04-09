@@ -160,6 +160,16 @@ input,select {
 
 /* bottom stuff */
 
+/* these two hide the blank line after comment headings on RST pages
+ * NB commentbody is misleading, it's only the first paragraph for now.
+ */
+.commentheading {
+  margin-bottom:0;
+}
+.commentbody {
+  margin-top:0;
+}
+
 .commentform {
 }
 

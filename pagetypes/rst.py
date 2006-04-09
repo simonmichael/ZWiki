@@ -51,8 +51,22 @@ class PageTypeRst(PageTypeBase):
     def makeCommentHeading(self, page,
                            subject, username, time, 
                            message_id=None,in_reply_to=None):
-        heading = '\n\n'
-        heading += '| **%s** --' % (subject or '...')
+        """
+        Generate restructured text markup for a comment heading in a RST page.
+
+        Our traditional comment layout - body immediately following
+        heading with no blank line between - is possible in RST only if we
+        had the comment body to play with, or by the solution used here:
+        setting the class of the heading and first paragraph and using CSS
+        to remove the margins.
+
+        XXX NB this doesn't support complete styling as subsequent
+        paragraphs don't have the class.  Things need to change so that
+        comments are rendered from a template and can be fully customized
+        using HTML+CSS, not the text markup rules.
+        """
+        heading = '\n\n.. class:: commentheading\n\n'
+        heading += '**%s** --' % (subject or '...')
         if username: heading = heading + '%s, ' % (username)
         heading += time
         heading += ' `%s <%s?subject=%s%s#bottom>`_' % (
@@ -62,7 +76,7 @@ class PageTypeRst(PageTypeBase):
             ((message_id and '&in_reply_to='+quote(message_id))
              or '')
             )
-        heading += '\n| '
+        heading += '\n\n.. class:: commentbody\n\n'
         return heading
 
     def discussionSeparator(self,page):
