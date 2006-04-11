@@ -27,14 +27,24 @@
                        tal:replace="structure here/site_logo|default" /></a>
               </span>
             </td>
-            <!-- page name (and parents) -->
-            <td class="pagenameand" align="left" width="79%">
-              <span metal:define-macro="pagenameand" tal:omit-tag="">
+            <!-- page name and context (parent topics) -->
+            <td align="left" width="79%" tal:define="COMPACT_PARENTS python:0">
+              <tal:block tal:condition="not:COMPACT_PARENTS">
                 <ul tal:replace="structure 
                                  python:here.context(request,enlarge_current=1)">
                   <li>context<ul><li><big><big><big>page name</big></big></big></li></ul></li>
                 </ul>
-              </span>
+              </tal:block>
+              <tal:block tal:condition="COMPACT_PARENTS">
+                <tal:block condition="here/ancestorsAsList"
+                           repeat="ancestor here/ancestorsAsList">
+                  <span tal:replace="structure python:here.wikilink('['+ancestor+']')" />
+                  <small>>></small>
+                </tal:block>
+                <br />
+                <br />
+                <h1 tal:content="here/formattedPageName" >page name</h1>
+              </tal:block>
             </td>
             <!-- search form & page info -->
             <td class="searchbox" width="20%" align="right">
