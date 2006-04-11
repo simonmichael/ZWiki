@@ -25,6 +25,7 @@
                   <img src="misc_/ZWiki/ZWikiPage_icon" height="48" width="48" 
                        border="0" alt="home" i18n:attributes="alt"
                        tal:replace="structure here/site_logo|default" /></a>
+                &nbsp;
               </span>
             </td>
             <!-- page name and context (parent topics) -->
@@ -32,7 +33,7 @@
               <tal:block tal:condition="not:COMPACT_PARENTS">
                 <ul tal:replace="structure 
                                  python:here.context(request,enlarge_current=1)">
-                  <li>context<ul><li><big><big><big>page name</big></big></big></li></ul></li>
+                  <li>context<ul><li><h1 style="display:inline">page name</h1></li></ul></li>
                 </ul>
               </tal:block>
               <tal:block tal:condition="COMPACT_PARENTS">
@@ -42,8 +43,8 @@
                   <small>>></small>
                 </tal:block>
                 <br />
-                <br />
-                <h1 tal:content="here/formattedPageName" >page name</h1>
+                <br tal:condition="here/usingPloneSkin" />
+                <h1 style="display:inline" tal:content="here/formattedPageName" >page name</h1>
               </tal:block>
             </td>
             <!-- search form & page info -->
