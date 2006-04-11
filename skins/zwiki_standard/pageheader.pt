@@ -16,7 +16,7 @@
         <table width="100%" border="0" cellspacing="0">
           <tr>
             <!-- logo -->
-            <td id="logo" width="1%" valign="top" class="logo_full"
+            <td id="logo" width="1%" valign="top" class="logo"
                 tal:condition="not:here/usingPloneSkin">
               <span metal:define-macro="logolink" tal:omit-tag="">
                 <a tal:attributes="href here/wiki_url"
