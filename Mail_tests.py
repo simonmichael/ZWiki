@@ -143,4 +143,12 @@ class TestsOfSubscription(unittest.TestCase):
         thatpage.subscribe('me')
         thatpage.wikiSubscribe('me')
         self.assertEquals(thispage.otherPageSubscriptionsFor('me'),['ThatPage'])
+
+    def test_unsubscribePreservesEditSubscriptions(self):
+        """Test for #1255 bugfix"""
+        p = mockPage()
+        p.subscribe('a@a.a',edits=1)
+        p.subscribe('b@b.b')
+        p.unsubscribe('b@b.b')
+        self.assert_('a@a.a' in p.subscriberList(edits=1))
         

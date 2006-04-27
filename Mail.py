@@ -164,16 +164,25 @@ class PageSubscriptionSupport:
     ## page subscription api #############################################
 
     # XXX rename to subscribers() & wikiSubscribers() ?
+    # XXX and add editSubscribers & wikiEditSubscribers 
     def subscriberList(self, parent=0, edits=0):
         """
-        Return a list of this page's subscribers.
+        Return a list of this page's subscribers, without the :edits suffix.
 
-        With parent flag, manage the parent folder's subscriber list instead.
-        With edits flag, show only subscribers who have requested all edits.
+        A subscriber is represented by a string containing an email
+        address or a CMF username, and an optional :edits suffix
+        indicating they have requested all edits. Note this method strips
+        the :edits suffix.
+
+        If edits flag is true, return only the subscribers who have
+        requested all edits; otherwise, return all subscribers.
+
+        If parent flag is true, query the parent folder's subscriber list
+        instead.
         """
         return [re.sub(r':edits$','',s)
                 for s in stripList(self._getSubscribers(parent))
-                if s.endswith(':edits') or not edits]
+                if (not edits) or s.endswith(':edits')]
 
     def subscriberCount(self, parent=0, edits=0):
         """
@@ -231,13 +240,15 @@ class PageSubscriptionSupport:
         """
         Remove email from this page's subscriber list.
 
-        With parent flag, remove it from the parent folder's subscriber
-        list instead.  Tries to convert CMF usernames to email addresses
-        as per emailAddressFrom.
+        email may be an email address or CMF username, we try to convert
+        usernames to email addresses as needed.
+
+        If parent flag is true, remove it from the parent folder's
+        subscriber list instead.
         """
         subscriber = string.lower(email)
         if self.isSubscriber(subscriber,parent):
-            sl = self.subscriberList(parent)
+            sl = self._getSubscribers(parent)
             for s in sl:
                 if (self.emailAddressFrom(s) ==
                     self.emailAddressFrom(subscriber)):
