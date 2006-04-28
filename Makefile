@@ -119,24 +119,29 @@ rosettatarballs:
 # For quicker testing, you may want to use a zope instance with minimal
 # products installed. Also note the testrunner will run code from
 # zopectl's INSTANCE_HOME, regardless of your current dir or testrunner
-# args.
-QUICKZOPE=/zope1/bin/zopectl
-FULLZOPE=/zope2/bin/zopectl
-TESTARGS=test --tests-pattern='_tests$$' --test-file-pattern='_tests$$' -m Products.ZWiki
-QUICKTEST=$(QUICKZOPE) $(TESTARGS)
-FULLTEST=$(FULLZOPE) $(TESTARGS) -a 3
+# args. You'll need to adjust the zopectl file paths below.
+
+# our tests are in _tests.py at the same level
+TESTARGS=test --tests-pattern='_tests$$' --test-file-pattern='_tests$$'
+# zope instance with few products
+QUICKTEST=/zope1/bin/zopectl $(TESTARGS) -vv
+# zope instance with plone etc.
+ALLTEST= /zope2/bin/zopectl $(TESTARGS) -a 3 -vv
 
 test:
-	$(QUICKTEST) -q
+	$(QUICKTEST) -m Products.ZWiki
 
-testv:
-	$(QUICKTEST) -v
-
-testvv:
-	$(QUICKTEST) -vv
+# allows test limiting and additional args, eg:
+# make test-Mail
+# make test-"pagetypes.rst -vv -D"
+test-%:
+	$(QUICKTEST) -m Products.ZWiki.$*
 
 testall:
-	$(FULLTEST) -vv
+	$(ALLTEST) -m Products.ZWiki
+
+testall-%:
+	$(ALLTEST) -m Products.ZWiki.$*
 
 # silliness to properly capture output of a test run
 testresults:
