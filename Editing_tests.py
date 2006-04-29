@@ -115,7 +115,9 @@ class Tests(ZwikiTestCase):
         # with the right data
         self.assertEqual(str(f['edittestfile']),'test file data')
         # and a link should have been added to the page
-        self.assertEqual(p.read(),'\n\n<a href="edittestfile">edittestfile</a>\n')
+        #XXX do this test for each page type ?
+        #self.assertEqual(p.read(),'\n\n<a href="edittestfile">edittestfile</a>\n') # stx
+        self.assertEqual(p.read(),'\n\n!`edittestfile`__\n\n__ edittestfile\n')     # rst
 
         # a file with blank filename should be ignored
         p.REQUEST.file.filename = ''
@@ -131,14 +133,17 @@ class Tests(ZwikiTestCase):
         p.edit(REQUEST=p.REQUEST)
         self.assert_(hasattr(f,'edittestimage.jpg'))
         self.assertEqual(f['edittestimage.jpg'].content_type,'image/jpeg')
-        self.assertEqual(p.read(),'\n\n<img src="edittestimage.jpg" />\n')
+        #self.assertEqual(p.read(),'\n\n<img src="edittestimage.jpg" />\n') #stx
+        self.assertEqual(p.read(),'\n\n.. image:: edittestimage.jpg\n')     #rst
 
         # images should not be inlined if dontinline is set
         p.REQUEST.file.filename = 'edittestimage.png'
         p.REQUEST.dontinline = 1
         p.edit(REQUEST=p.REQUEST)
+        #self.assertEqual(p.read(),
+        #  '\n\n<img src="edittestimage.jpg" />\n\n\n<a href="edittestimage.png">edittestimage.png</a>\n') #stx
         self.assertEqual(p.read(),
-          '\n\n<img src="edittestimage.jpg" />\n\n\n<a href="edittestimage.png">edittestimage.png</a>\n')
+          '\n\n.. image:: edittestimage.jpg\n\n\n!`edittestimage.png`__\n\n__ edittestimage.png\n') #rst
 
     def testRedirectAfterDelete(self):
         p = self.page

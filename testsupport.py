@@ -1,27 +1,45 @@
-# common initialization and support classes for zwiki unit tests
+"""
+Common initialization and support classes for zwiki unit tests.
+
+Zwiki core and plugin test modules (_tests.py) import everything from
+here, then they are pretty much ready to go, except for installing
+whichever zope products they need. (We let each test module install
+just it's required products so that individual tests may be run more
+quickly.)
+
+what is the reason for using afterSetUp instead of setUp ? 
+
+XXX various, too many test fixture classes are used in zwiki tests right now:
+- ZwikiTestCase
+- PloneTestCase
+- ZopeTestCase
+- TestCase
+
+"""
 
 import sys, re, unittest
+
 import OFS, DateTime
-#from Testing.makerequest import makerequest
 from Testing import ZopeTestCase
 from ZPublisher.HTTPRequest import HTTPRequest
 from ZPublisher.HTTPResponse import HTTPResponse
+
 from Products.ZWiki.ZWikiPage import ZWikiPage
 from Products import ZWiki
 
 
-# defined in module scope for reuse by ZwikiPloneTests
 def afterSetUp(self):
     """
     Do common setup for our ZopeTestCase-based unit tests.
 
-    self is a ZopeTestCase instance; this should be called from it's
-    afterSetUp method.
+    This is a function so that it can be called by both our
+    ZopeTestCase and PloneTestCases's afterSetUp method.
+    XXX ?
 
     WARNING: this sets self.page.request at the beginning of the test.
     If you replace it with a new one, be sure to set page.request again
     and not just past REQUEST as an argument to avoid confusing DTML.
-
+    XXX pardon ?
     """
     # grant all zwiki permissions by default
     from Products.ZWiki import Permissions
@@ -40,12 +58,11 @@ def afterSetUp(self):
         Permissions.FTP,
         #CMFCorePermissions.AddPortalContent,
         ])
-    # set up a wiki in a subfolder, with one page
+    # set up a wiki in a subfolder, with one page of default type (RST)
     self.folder.manage_addFolder('wiki',title='')
     self.wiki = self.folder.wiki
     self.wiki.manage_addProduct['ZWiki'].manage_addZWikiPage('TestPage')
     self.p = self.page = self.wiki.TestPage
-    self.p.edit(type='stx')
     # our mock request seems a bit more useful than ZTC's
     #self.request = self.app.REQUEST
     self.request = self.page.REQUEST = MockRequest()
