@@ -377,33 +377,31 @@ class PageSubscriptionSupport:
         ':edits' appended.  We figure out the bare email address and
         return it (lower-cased), or if we can't, return None.
         """
-        if not (subscriber and type(subscriber) == StringType):
+        if not subscriber or type(subscriber) != StringType:
             return None
         subscriber = re.sub(r':edits$','',subscriber)
         if isEmailAddress(subscriber):
-            return string.lower(subscriber)
-        elif (self.inCMF()
-              # don't look up member email addresses if user is anonymous ?
-              #and not self.portal_membership.isAnonymousUser()
-              # No I think it's better to minimise confusion due to
-              # authenticated vs. unauthenticated (un)subscriptions, even
-              # if an anonymous visitor can unsubscribe a member whose
-              # address they know.
-              ):
+            email = subscriber
+        elif self.inCMF():
+            #and not self.portal_membership.isAnonymousUser()
+            # don't look up member email addresses if user is anonymous ?
+            # No I think it's better to minimise confusion due to
+            # authenticated vs. unauthenticated (un)subscriptions, even if
+            # it allows an anonymous visitor to unsubscribe a member whose
+            # address they know
             from Products.CMFCore.utils import getToolByName
             membership = getToolByName(self,'portal_membership')
             memberdata = getToolByName(self,'portal_memberdata')
-            return getattr(
-                (membership.getMemberById(subscriber)
-                 # also check for a pseudo-member (a user acquired from above)
-                 # XXX clean up.. for now make this harmless with CMFMember
-                 # which doesn't have _members
-                  or (hasattr(memberdata,'_members') and
-                      memberdata._members.get(subscriber,None))),
-                'email',
-                None)
+            member = membership.getMemberById(subscriber)
+            if not member:
+                # also check for a pseudo-member (a user acquired from above)
+                # NB doesn't work with CMFMember
+                if hasattr(memberdata,'_members'):
+                    member = memberdata._members.get(subscriber,None)
+            email = getattr(member,'email','')
         else:
-            return None
+            email = ''
+        return string.lower(email) or None
 
     def emailAddressesFrom(self,subscribers):
         """
