@@ -300,6 +300,10 @@ class PluginTracker:
         Upgrade issue: calling this before upgrading an issue to a
         0.17-style page id will mess up the id/title.
         """
+        if not self.checkSufficientId(REQUEST):
+            return self.denied(
+                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
+
         comment = ''
         if name:
             if name != self.issueName():
@@ -308,27 +312,37 @@ class PluginTracker:
                     name)
                 comment += "Name: '%s' => '%s' \n" % (self.pageName(),
                                                       newpagename)
+                if not self.checkPermission(Permissions.Rename, self):
+                    raise 'Unauthorized', (_('You are not authorized to rename this ZWiki Page.'))
                 self.rename(newpagename, updatebacklinks=1, sendmail=0,
                             REQUEST=REQUEST)
         if category:
             old = getattr(self,'category','')
             if category != old:
                 comment += "Category: %s => %s \n" % (old,category)
+                if not self.checkPermission(Permissions.Edit, self):
+                    raise 'Unauthorized', (_('You are not authorized to edit this ZWiki Page.'))
                 self.manage_changeProperties(category=category)
         if severity:
             old = getattr(self,'severity','')
             if severity != old:
                 comment += "Severity: %s => %s \n" % (old,severity)
+                if not self.checkPermission(Permissions.Edit, self):
+                    raise 'Unauthorized', (_('You are not authorized to edit this ZWiki Page.'))
                 self.manage_changeProperties(severity=severity)
         if status:
             old = getattr(self,'status','')
             if status != old:
                 comment += "Status: %s => %s \n" % (old,status)
+                if not self.checkPermission(Permissions.Edit, self):
+                    raise 'Unauthorized', (_('You are not authorized to edit this ZWiki Page.'))
                 self.manage_changeProperties(status=status)
         if text:
             comment += '\n' + text
 
         if comment:
+            if not self.checkPermission(Permissions.Comment, self):
+                raise 'Unauthorized', (_('You are not authorized to comment on this ZWiki Page.'))
             # there was a change, note it on the page and via mail
             # fine detail: don't say (property change) if there wasn't
             subject = ''
