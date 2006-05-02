@@ -1,3 +1,63 @@
+    Summary
+
+	RST+DTML support, alternate heading layout for plone, some
+	useful bugfixes.
+
+    Upgrade notes
+
+    Changes
+
+      Installing
+
+      Configuring
+
+	* add an old-style compact parents list as an alternative in
+          pageheader.pt, off by default (#1250)
+
+	* CSS cleanups
+
+      Browsing
+
+	* fix action icons layout in plone 2.0 (#1253)
+
+	* make top-right links small again in standard skin
+
+      Editing
+
+	* enable dtml interpretation in rst pagetype (Stefan Rank,
+          Simon Michael)
+
+      Page hierarchy
+
+      Mail
+
+	* fix unsubscribe, which was losing all subscribers' "all
+          edits" setting (#1254)
+
+	* fix an obscure case where cmf/plone subscriptions could be
+          ignored
+
+	* don't add NO_ADDRESS_FOR recipients, they break some MTAs
+          (#1255)
+
+      Issue tracking
+
+	* make changeIssueProperties respect relevant permissions and
+	  edits_need_username, to protect from spambots (#1260)
+
+	* be more robust about including full page name in issue
+          creation mails (#1257)
+
+      Translations
+
+      General
+	
+	* easier make test-* rules
+
+	* fix WWML test, which wasn't testing WWML at all
+
+	* testsupport docs, use rst not stx in default fixture
+
 Zwiki 0.52.1 2006/04/09
 
     Summary
