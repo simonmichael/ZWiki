@@ -550,23 +550,24 @@ class PageMailSupport:
 
         - adds a prefix if configured in mail_subject_prefix;
         - includes page name in brackets unless disabled with mail_page_name
-        - abbreviates issue tracker page names to just the number unless
-          mail_issue_name is true. Except! when creating the issue page.
-          XXX tracker plugin dependency
+        - abbreviates issue tracker page names to just the number, except
+          when creating the page or when overridden with mail_issue_name.
+          Temp kludge: we assume the page is being created if it's less than
+          30s old.
+          (XXX tracker plugin dependency)
         - appends subjectSuffix if provided
         """
         if getattr(self.folder(),'mail_page_name',1):
-            if self.issueNumber():
-                if (getattr(self.folder(),'mail_issue_name',0) or
-                                        #XXX temp kludge! was page created in the last 5 seconds ?
-                                        ((self.getPhysicalRoot().ZopeTime() - self.creationTime()) <
-                                         1.0 / 24 / 60 / 60 * 5)):
-                    pagename = '[%s] ' % self.pageName()
-                else:
-                    pagename = '[#%s] ' % self.issueNumber()
+            # we will add the page name
+            if (self.issueNumber()
+                and (self.getPhysicalRoot().ZopeTime()-self.creationTime()) > 30.0/24/60/60
+                and not getattr(self.folder(),'mail_issue_name',0)):
+                # we will truncate it to just the issue number
+                pagename = '[#%s] ' % self.issueNumber()
             else:
                 pagename = '[%s] ' % self.pageName()
         else:
+            # page name has been suppressed
             pagename = ''
         return (
             strip(getattr(self.folder(),'mail_subject_prefix','')) +
