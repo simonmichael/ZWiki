@@ -416,7 +416,9 @@ class PageSubscriptionSupport:
         emails = []
         for s in subscribers:
             e = self.emailAddressFrom(s)
-            emails.append(e or 'NO_ADDRESS_FOR_%s' % s)
+            # for troubleshooting, but breaks some MTAs
+            #emails.append(e or 'NO_ADDRESS_FOR_%s' % s)
+            if e: emails.append(e)
         return emails
 
     def usernamesFrom(self,subscriber):
