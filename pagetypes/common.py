@@ -157,6 +157,19 @@ class PageTypeBase:
     def linkFile(self, page, id, path):
         return '\n\nfile: %s/%s\n' % (page.pageUrl(),path)
 
+    def split(self):
+        """
+        Move this page's top-level sections to sub-pages.
+        """
+        return 
+
+    def merge(self):
+        """
+        Merge sub-pages as sections of this page.
+
+        This merges all offspring, not just immediate children.
+        """
+        return 
 
 class PageTypeBaseHtml(PageTypeBase):
     """

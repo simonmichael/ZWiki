@@ -1,3 +1,8 @@
+from docutils.utils import new_document
+from docutils.frontend import OptionParser
+from docutils.parsers.rst import Parser
+from docutils.nodes import section
+
 from common import *
 from Products.ZWiki.I18n import _
 from Products.ZWiki.pagetypes import registerPageType
@@ -14,6 +19,9 @@ except ImportError:
     BLATHER('could not import reStructuredText, will not be available')
 
 class PageTypeRst(PageTypeBase):
+    """
+    See also method docstrings in PageTypeBase.
+    """
     _id = 'rst'
     _name = 'reStructured Text'
     supportsRst = yes
@@ -91,6 +99,33 @@ class PageTypeRst(PageTypeBase):
    
     def linkFile(self, page, id, path):
         return '\n\n!`%s`__\n\n__ %s\n' % (id, path)
+
+    def split(self, page):
+        """
+        Move this page's top-level sections to sub-pages.
+
+        Calls docutils to parse the text properly.
+        """
+        d = new_document(
+            page.pageName(),
+            OptionParser(components=(Parser,)).get_default_values())
+        Parser().parse(page.text(), d)
+        sections = [s for s in d.traverse() if isinstance(s,section)]
+        # assume title is first element and body is the rest
+        # create sub-pages
+        for s in sections:
+            page.create(
+                page=s[0].astext(),
+                text=s.child_text_separator.join([p.astext() for p in s[1:]]))
+        # leave just the preamble on the parent page
+        page.edit(
+            text=d.child_text_separator.join(
+                [p.astext() for p in d[:d.first_child_matching_class(section)]]))
+        return 
+
+    #def merge(self, page):
+    #    for p in page.offspringNesting():
+
 
 registerPageType(PageTypeRst)
 

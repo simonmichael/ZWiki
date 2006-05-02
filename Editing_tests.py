@@ -600,3 +600,34 @@ long citations
         self.assertEquals(len(re.findall(r'(?i)<html',text)),1)
         self.assertEquals(len(re.findall(r'(?i)<body',text)),1)
 
+    def test_split_and_merge(self):
+        p = self.page
+        TEXT = """\
+zero
+
+xxx
+
+FIRST
+=====
+one
+
+aaa
+
+SECOND
+======
+two
+
+bbb
+"""
+        # test split
+        p.edit(text=TEXT)
+        p.split()
+        self.assertEquals(p.text(),'zero\n\nxxx')
+        self.assert_(p.pageWithName('FIRST'))
+        self.assertEquals(p.pageWithName('FIRST').text(),'one\n\naaa')
+        self.assert_(p.pageWithName('SECOND'))
+        self.assertEquals(p.pageWithName('SECOND').text(),'two\n\nbbb')
+        # test merge
+        #p.merge()
+        #self.assertEquals(p.text(),TEXT)
+

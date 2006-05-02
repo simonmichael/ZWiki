@@ -1036,6 +1036,27 @@ class PageEditingSupport:
     def defaultPageType(self):
         """This wiki's default page type."""
         return self.allowedPageTypes()[0]
+
+    def split(self):
+        """
+        Move this page's major sections to sub-pages, if supported.
+
+        Delegates to the page type; at present only the restructured
+        text page type does this.
+
+        Watch out for confusion with string.split which might arise
+        here and there.
+        """
+        return self.pageType().split(self)
+    
+    def merge(self):
+        """
+        Merge sub-pages as sections of this page, if supported.
+
+        Delegates to the page type; at present only the restructured
+        text page type does this.
+        """
+        return self.pageType().merge(self)
     
 InitializeClass(PageEditingSupport)
 
