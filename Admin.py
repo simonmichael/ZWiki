@@ -306,6 +306,7 @@ class PageAdminSupport:
         if REQUEST:
             REQUEST.RESPONSE.redirect(self.page_url())
 
+    #XXX does this not attempt to create everything ?
     security.declareProtected('Manage properties', 'setupPages')
     def setupDtmlPages(self,REQUEST=None):
         """
