@@ -124,7 +124,7 @@ rosettatarballs:
 # our tests are in _tests.py at the same level
 TESTARGS=test --tests-pattern='_tests$$' --test-file-pattern='_tests$$'
 # zope instance with few products
-QUICKTEST=/zope1/bin/zopectl $(TESTARGS) -vv
+QUICKTEST=/zope1/bin/zopectl $(TESTARGS)
 # zope instance with plone etc.
 ALLTEST= /zope2/bin/zopectl $(TESTARGS) -a 3 -vv
 
