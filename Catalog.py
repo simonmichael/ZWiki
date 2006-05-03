@@ -105,7 +105,7 @@ class PageCatalogSupport:
         """
         if self.hasCatalog() and self.isCatalogable():
             if log:
-                BLATHER('indexing',self.url(),'in',self.catalog().getId())
+                BLATHER('indexing',self.url())
             try:
                 self.catalog().catalog_object(self,self.url(),idxs)
             except:
