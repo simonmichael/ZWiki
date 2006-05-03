@@ -219,7 +219,7 @@ def onlyBodyFrom(t):
 def addErrorTo(text,error):
     return """<div class="error">%s</div>\n%s""" % (error,text)
 
-# templates for the standard skin's views
+# the standard zwiki skin templates
 STANDARD_TEMPLATES = {}
 for t in [
     'badtemplate',
@@ -250,10 +250,6 @@ for t in [
 # stylesheet
 STANDARD_TEMPLATES['stylesheet'] = loadStylesheetFile('stylesheet.css')
 
-# templates for the plone skin
-# don't need to pre-load these, normal cmf skin lookup will find them
-PLONE_TEMPLATES = {}
-
 # macros in these templates will be available to all views in here.macros
 MACROS = {}
 for t in [
@@ -267,6 +263,7 @@ for t in [
     'siteheader',
     ]:
     MACROS.update(loadMacros(t))
+
 # backwards compatibility
 # pre-0.52 these were defined in wikipage, old custom templates may need them
 # two more were defined in contentspage, we won't support those
@@ -317,13 +314,12 @@ class SkinUtils:
         to help skin customizers. Still evolving, it will all shake
         out in the end.
         """
-        # nb don't let a non-template shadow a template
         obj = getattr(self.folder(), name, None)
-        if not isTemplate(obj):
+        if not isTemplate(obj): # don't accept a non-template object
             obj = STANDARD_TEMPLATES.get(name,
                                          STANDARD_TEMPLATES['badtemplate'])
-        # make sure both folder and page are in the context
-        # to set container and here
+        # return it with both folder and page in the acquisition context,
+        # setting container and here
         return obj.__of__(self.folder()).__of__(self)
 
     security.declareProtected(Permissions.View, 'addSkinTo')
