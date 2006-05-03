@@ -50,8 +50,8 @@ More about templates
 - view templates call the here/main_template/macros/master macro to wrap
   themselves in the overall site skin. This calls CMF/Plone's main
   template if we are in CMF, or Zwiki's if we are not. (main_template is a
-  ComputedAttribute on zwiki pages, which calls the maintemplate() method,
-  which calls CMF/Plone's main_template or Zwiki's maintemplate template).
+  ComputedAttribute on zwiki pages, which calls the get_main_template method,
+  which calls CMF/Plone's main_template or Zwiki's main_template_zwiki template).
 
 Skin objects recap
 ------------------
@@ -375,7 +375,7 @@ class SkinSwitchingUtils:
         non-plone standard skin (full/simple/minimal); later it acquired
         the ability to switch between CMF skins in CMF/plone; now it just
         selects the zwiki or plone appearance in CMF/plone, by setting a
-        cookie for maintemplate().
+        cookie for getmaintemplate().
         """
         if skin in ('plone', 'cmf'):
             self.setDisplayMode('plone')
@@ -478,26 +478,29 @@ class SkinViews:
     def wikipage_template(self, REQUEST=None): return self
     wikipage_macros = wikipage_template
 
-    security.declareProtected(Permissions.View, 'maintemplate')
-    def maintemplate(self, REQUEST=None):
+    security.declareProtected(Permissions.View, 'getmaintemplate')
+    def getmaintemplate(self, REQUEST=None):
         """
-        Return the standard or plone main_template, unevaluated.
+        Return the standard Zwiki or CMF/Plone main template, unevaluated.
 
-        This provides a plone-like main_template which all other
-        templates can use, whether we are in plone or not.
+        This fetches the appropriate main template depending on whether we
+        are in or out of cmf/plone (and in the latter case, whether the
+        standard or plone skin mode is selected). We point the
+        'main_template' computed attribute at this method, and this allows
+        our templates to use here/main_template and be appropriately
+        skinned.
+        
         """
         # XXX not really working out yet.. need this hack
         # all skin templates wrap themselves with main_template
         # in CMF, use the cmf/plone one, otherwise use ours
         # should allow use of ours in cmf/plone also
         if self.inCMF() and self.displayMode() == 'plone':
-            return self.getSkinTemplate('main_template')
+            return self.getSkinTemplate('main_template') # plone's
         else:
-            return self.getSkinTemplate('maintemplate')
+            return self.getSkinTemplate('maintemplate')  # zwiki's
 
-    # also make here/main_template/macros work, so that our templates
-    # use that and be plone compatible
-    main_template = ComputedAttribute(maintemplate,1)
+    main_template = ComputedAttribute(getmaintemplate,1)
 
     security.declareProtected(Permissions.View, 'stylesheet')
     def stylesheet(self, REQUEST=None):
