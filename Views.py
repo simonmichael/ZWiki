@@ -244,18 +244,31 @@ for t in [
 TEMPLATES['stylesheet'] = loadStylesheetFile('stylesheet.css')
 
 # set up easy access to all macros via here/macros.
-# We use a computed attribute (below) to call getmacros on each access, to
-# ensure they are always fresh in debug mode. Right ?
+# XXX We use a computed attribute (below) to call getmacros on each
+# access, to ensure they are always fresh in debug mode - or when a zodb
+# template is customized. Right ?  So we have to check for customized
+# templates each time. getmacros is called a lot, are we getting into
+# performance concerns yet ?
+# we'll save the list of initial ZPT ids and check only these
+PAGETEMPLATEIDS = [t for t in TEMPLATES.keys()
+                   if isinstance(TEMPLATES[t],PageTemplateFile)]
 MACROS = {}
 def getmacros(self):
     """
     Return a dictionary of all the latest macros from our PageTemplateFiles.
 
-    This is called on each access to MACROS
+    This is called for each access to here/macros (MACROS)
     """
-    [MACROS.update(t.pt_macros())
-     for t in TEMPLATES.values() if isinstance(t,PageTemplateFile)]
+    if not self:
+        # for initialisation, just use standard templates
+        [MACROS.update(t.pt_macros())
+         for t in TEMPLATES.values() if isinstance(t,PageTemplateFile)]
+    else:
+        # when called in zope context, reflect any zodb customizations
+        for id in PAGETEMPLATEIDS:
+            MACROS.update(self.getSkinTemplate(id).pt_macros())
     return MACROS
+
 # provide old macros for backwards compatibility
 # pre-0.52 these were defined in wikipage, old custom templates may need them
 # two more were defined in contentspage, we won't support those
