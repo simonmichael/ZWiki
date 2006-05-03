@@ -8,44 +8,93 @@
   </head>
   <body>
     <!-- the diff browser -->
-    <div metal:fill-slot="main">
+    <div metal:fill-slot="main" 
+         tal:define="revA       python:int(options['revA']); 
+                     difftext   options/difftext;
+                     pageurl    here/pageUrl;
+                     numrevs    here/revisionCount;
+                     history    here/history;
+                     histinfo   python:history[revA-1];
+                     time       histinfo/time/ISO;
+                     description histinfo/description;
+                     revinfo    python:here.revisionInfoFor(revA-1);
+                     editor     revinfo/last_editor;
+                     ">
       <metal:macro metal:use-macro="here/macros/accesskeys" />
       <h1 i18n:translate="">Edit history</h1>
-      <tal:block tal:define="revA options/revA; 
-                             difftext options/difftext;
-                             ">
-        <div class="formcontent">
-          <table border="0" width="100%">
-            <tr>
-              <td align="left" valign="top">
-                <b i18n:translate="log_note">Log note :</b> <em tal:content="python:here.lastlog(revA-1)">log note..</em>
-              </td>
-              <td align="right" valign="top">
-                <form method="GET" action="" tal:attributes="action here/page_url">
-                  <input type="submit" name="manage_change_history_page:method" i18n:attributes="value"
-                         value="full history" tal:condition="python:user.has_permission('View History',here)" />
-                  <input tal:condition="python:revA < 19" type="submit" name="prevDiff:method" 
-                  value="&lt;&lt; previous edit" i18n:attributes="value" accesskey="p" />
-                  <input tal:condition="python:not (revA < 19)" disabled="1" type="submit" name="prevDiff:method" 
-                  value="&lt;&lt; previous edit" i18n:attributes="value" accesskey="p" />
-                  <input tal:condition="python:revA > 1" type="submit" name="nextDiff:method" 
-                         value="next edit &gt;&gt;"  i18n:attributes="value" accesskey="n" />
-                  <input tal:condition="python:not(revA > 1)" disabled="1" type="submit" name="nextDiff:method" 
-                         value="next edit &gt;&gt;"  i18n:attributes="value" accesskey="n" />
-                  <input tal:condition="python:user.has_permission('Zwiki: Edit pages', here)" 
-                         type="submit" name="revert:method" value="Revert this and later changes" 
-                         i18n:attributes="value" />
-                  <input type="submit" name="return" value="Return to page" i18n:attributes="value"/>
-                  <input type="hidden" name="currentRevision" tal:attributes="value revA" />
-                </form>
-              </td>
-            </tr>
+      <div class="formcontent">
+        <form method="GET" action="" tal:attributes="action here/page_url">
+          <input type="hidden" name="currentRevision" tal:attributes="value revA" />
+
+          <table border=0 cellspacing=0 width="100%">
+          <tr valign=middle>
+          <td>
+          <b i18n:translate="">Edit:</b>
+          -<span tal:replace="revA" /> of <span tal:replace="numrevs" />
+          <input tal:condition="python:revA < numrevs" 
+                 name="prevDiff:method" 
+                 value=" &lt;&lt; " 
+                 type="submit" i18n:attributes="value" accesskey="p" />
+          <input tal:condition="not:python:revA < numrevs"
+                 disabled="1" 
+                 value=" &lt;&lt; " 
+                 type="submit" i18n:attributes="value" accesskey="p" />
+
+          <span tal:repeat="hist history" tal:condition="python:0">
+            <tal:block tal:define="num python:numrevs-repeat['hist'].index;">
+              <a tal:content="string:-${num}" 
+                 tal:attributes="href string:${pageurl}/diff?revA=${num};
+                                 style python:revA==num and 'font-weight:bold' or '';
+                                 " />
+            </tal:block>
+          </span>
+
+          <input tal:condition="python:revA > 1" 
+                 name="nextDiff:method" 
+                 value=" &gt;&gt; "  
+                 type="submit" i18n:attributes="value" accesskey="n" />
+          <input tal:condition="not:python:revA > 1" 
+                 disabled="1" 
+                 value=" &gt;&gt; "  
+                 type="submit" i18n:attributes="value" accesskey="n" />
+
+          <input tal:condition="python:user.has_permission('View History',here)" 
+                 value="Manage" name="manage_change_history_page:method" 
+                 type="submit" i18n:attributes="value" />
+
+          <input tal:condition="python:user.has_permission('Zwiki: Edit pages', here)" 
+                 tal:attributes="disabled python:(revA==numrevs) and 1 or nothing;"
+                 value="Revert this and later edits"
+                 type="submit" name="revert:method"
+                 i18n:attributes="value" />
+
+          </td>
+          <td align="right">
+
+          <input type="submit" name="return" value="Return to page" i18n:attributes="value"/>
+
+          </td>
+          </tr>
+          <tr valign=top>
+          <td colspan=2>
+            <b i18n:translate="">Editor:</b> <span tal:replace="editor">...</span>
+            (may be wrong)
+            <br />
+            <b i18n:translate="">Time:</b> <span tal:replace="time">...</span>
+          </td>
+          </tr>
+          <tr valign=top>
+          <td colspan=2>
+            <b i18n:translate="">Note:</b> <span tal:replace="description" />
+          </td>
+          </tr>
           </table>
-          <pre tal:content="structure difftext">
-            diff..
-          </pre>
-        </div>
-      </tal:block>
+        </form>
+        <hr />
+        <pre tal:content="structure difftext">
+          diff..
+        </pre>
+      </div>
     </div>
   </body>
 </html>

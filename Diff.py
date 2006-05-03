@@ -1,12 +1,14 @@
-######################################################################
-# diff experiments
-#
-# todo
-# separate out html vs. email diff methods
-#
-# this is a mess.
-# newly promoted to Most Crufty
-# needs to be refactored and made testable
+"""
+Simple revisions support for zwiki pages.
+
+Provides methods to look up and revert to old versions from the ZODB history,
+and a diff-browsing form.
+
+todo:
+- clean up 
+- separate out html vs. email diff methods
+
+"""
 
 from __future__ import nested_scopes
 from string import join, split, atoi
@@ -19,8 +21,12 @@ from OFS.History import historicalRevision
 # use the former for compatibility with older zopes
 # XXX we don't support 1.5.2 now, change
 from OFS import ndiff
+from AccessControl import getSecurityManager, ClassSecurityInfo
+from Globals import InitializeClass
 
 from Defaults import MAX_OLD_LINES_DISPLAY, MAX_NEW_LINES_DISPLAY
+import Permissions
+from Utils import get_transaction, BLATHER, formattedTraceback
 
 def ISJUNK(line, pat=re.compile(r"\s*$").match):
     return pat(line) is not None
@@ -43,10 +49,12 @@ def abbreviate(lines,prefix,maxlines=5):
 
 class PageDiffSupport:
     """
-    I provide methods for browsing revision diffs to ZWikiPage.
+    I provide methods for browsing a zwiki page's 'edit history', or at
+    least the differences between recent edits.
     """
-
-    def diff(self,revA=1,revB=0,showSteps=0,REQUEST=None,
+    security = ClassSecurityInfo()
+    
+    def diff(self,revA=1,revB=0,REQUEST=None,
              test=None, # for testing
              ):
         """
@@ -57,6 +65,7 @@ class PageDiffSupport:
         XXX should skip uninteresting transactions
         if re.search(r'(/edit|/comment|/append|PUT)',lastrevision['description']):
         """
+        revA, revB = str(revA), str(revB)
         t = test or self.htmlDiff(revA=revA,revB=revB)
         return self.diffform(revA,t,REQUEST=REQUEST)
 
@@ -72,45 +81,159 @@ class PageDiffSupport:
         """
         return self.diff(int(currentRevision)-1,int(currentRevision)-2)
 
-    def lasttext(self, versionsBack=1):
+    def history(self):
+        """
+        Return the list of edit history entries (corresponding to revisions).
+
+        This is an alias for manage_change_history and is fairly
+        limited. History entries may relate to things other than text
+        changes, eg a property change. They contain some basic information
+        and may be used to fetch the old object (revision) from the
+        ZODB. When the ZODB is packed, history and revisions disappear.
+        The maximum number of history entries we can get is 20.
+        """
+        class EditRecord:
+            """
+            A brain-like object representing an edit (or other transaction).
+
+            Combines the contents of manage_change_history entries,
+            """
+            pass
+            
+        return self.manage_change_history()
+
+    def revisionCount(self):
+        """
+        How many old revisions are available in the ZODB ?
+        """
+        return len(self.history())
+
+    security.declareProtected(Permissions.View, 'pageRevision')
+    def pageRevision(self, rev):
+        """
+        Get one of the previous revisions of this page object.
+
+        The argument increases to select older revisions, eg revision 1 is
+        the most recent version prior to the current one, revision 2 is
+        the version before that, etc.
+        """
+        rev = int(rev)
+        try:
+            historyentry = self.history()[rev-1]
+            key = historyentry['key']
+            serial = apply(pack, ('>HHHH',)+tuple(map(atoi, split(key,'.'))))
+            return historicalRevision(self, serial)
+        except: # we don't have a version that old
+            return None
+
+    security.declareProtected(Permissions.View, 'revisionInfoFor')
+    def revisionInfoFor(self, rev):
+        """
+        A helper for the diffform view, fetches revision details for display.
+
+        This fetches the actual object, and is called on demand for each
+        revision.  Restricted code can't access the attributes directly.
+        Returns a dictionary of some useful and non-sensitive information.
+        """
+        old = self.pageRevision(rev)
+        if old:
+            return {
+                'last_editor':old.last_editor,
+                'last_edit_time':old.last_edit_time,
+                'lastEditTime':old.lastEditTime(),
+                }
+        else:
+            return None
+
+    security.declareProtected(Permissions.View, 'lasttext')
+    def lasttext(self, rev=1):
         """
         Return the text of the last or an earlier revision of this page.
         """
-        versionsBack = int(versionsBack)
-        try:
-            # problem here - manage_change_history only gets the last
-            # 20 revisions
-            lastrevision = self.manage_change_history()[versionsBack]
-            key = lastrevision['key']
-            serial=apply(pack, ('>HHHH',)+tuple(map(atoi, split(key,'.'))))
-            lastself=historicalRevision(self, serial)
-            return lastself.text()
-        except:
-            return '' # we don't have a version that old
-
+        revision = self.pageRevision(rev)
+        return revision and revision.text() or ''
+    
+    security.declareProtected(Permissions.Edit, 'revert')
     def revert(self, currentRevision, REQUEST=None):
         """
-        Revert the most recent change
-        """
-        lastrevision = self.manage_change_history()[int(currentRevision)]
-        key = lastrevision['key']
-        serial=apply(pack, ('>HHHH',)+tuple(map(atoi, split(key,'.'))))
-        lastself=historicalRevision(self, serial)
-        self.setText(lastself.text())
-        if REQUEST is not None:
-            REQUEST.RESPONSE.redirect(self.wiki_page_url())
+        Revert to the state of the specified revision.
 
-    def lastlog(self, versionsBack=0, withQuotes=0):
+        Copies a bunch of attributes from the old page object, and even
+        renames and reparents if needed.  Very useful for cleaning spam.
+        This is different from ZODB undo: it should be more reliable, and
+        it records new last editor details (and sends a mailout, etc)
+        instead of just restoring the old ones.
+        """
+        old = self.pageRevision(currentRevision)
+        self.setText(old.text())
+        self.setPageType(old.pageTypeId())
+        self.setVotes(old.votes())
+        if self.getParents() != old.getParents():
+            if not self.checkPermission(Permissions.Reparent, self):
+                raise 'Unauthorized', (
+                    _('You are not authorized to reparent this ZWiki Page.'))
+            self.setParents(old.getParents())
+            self.updateWikiOutline()
+        if self.pageName() != old.pageName():
+            if not self.checkPermission(Permissions.Rename, self):
+                raise 'Unauthorized', (
+                    _('You are not authorized to rename this ZWiki Page.'))
+            self.rename(old.pageName())
+        self.setLastEditor(REQUEST)
+        self.setLastLog('revert')
+        self.index_object()
+        self.sendMailToEditSubscribers(
+            'This page was reverted to the %s version.\n' % old.last_edit_time,
+            REQUEST=REQUEST,
+            subjectSuffix='',
+            subject='(reverted)')
+        if REQUEST is not None:
+            REQUEST.RESPONSE.redirect(self.pageUrl())
+
+    security.declareProtected(Permissions.Edit, 'revertEditsBy')
+    def revertEditsBy(self, username, REQUEST=None):
+        """
+        Revert all recent edits (the longest continuous sequence) by username.
+        """
+        # find the revision immediately before the latest continuous
+        # sequence of edits by username, if any.
+        if self.last_editor == username:
+            numrevs = self.revisionCount()
+            rev = 1
+            while rev <= numrevs and self.revisionInfoFor(rev)['last_editor'] == username:
+                rev += 1
+            if rev <= numrevs:
+                self.revert(rev,REQUEST=REQUEST) # got one, revert it
+
+    # restrict this one to managers, too powerful for passers-by
+    security.declareProtected(Permissions.manage_properties, 'revertEditsEverywhereBy')
+    def revertEditsEverywhereBy(self, username, REQUEST=None, batch=0):
+        """
+        Revert all the most recent edits by username throughout the wiki.
+        """
+        batch = int(batch)
+        n = 0
+        for p in self.pageObjects():
+            if p.last_editor == username:
+                n += 1
+                try:
+                    p.revertEditsBy(username,REQUEST=REQUEST)
+                except:
+                    BLATHER('failed to revert edits by %s at %s: %s' \
+                            % (username,p.id(),formattedTraceback()))
+                if batch and n % batch == 0:
+                    BLATHER('committing after %d reverts' % n)
+                    get_transaction().commit()
+        
+    def lastlog(self, rev=0, withQuotes=0):
         """
         Get the log note from an earlier revision of this page.
 
         Just a quick helper for diff browsing.
         """
-        versionsBack = int(versionsBack)
+        rev = int(rev)
         try:
-            # problem here - manage_change_history only gets the last
-            # 20 revisions
-            note = self.manage_change_history()[versionsBack]['description']
+            note = self.history()[rev]['description']
             match = re.search(r'"(.*)"',note)
             if match:
                 if withQuotes: return match.group()
@@ -131,8 +254,8 @@ class PageDiffSupport:
         Should it use a page template ?
         """
         # XXX doesn't allow a=''
-        a = a or self.lasttext(versionsBack=revA)
-        b = b or self.lasttext(versionsBack=revB)
+        a = a or self.lasttext(rev=revA)
+        b = b or self.lasttext(rev=revB)
         a = split(a,'\n')
         b = split(b,'\n')
         r = []
@@ -181,8 +304,8 @@ class PageDiffSupport:
         Each text segment is abbreviated according to built in constants,
         to avoid eg generating monster mail-outs. This can be annoying.
         """
-        a = a or self.lasttext(versionsBack=revA)
-        b = b or self.lasttext(versionsBack=revB)
+        a = a or self.lasttext(rev=revA)
+        b = b or self.lasttext(rev=revB)
         a = split(a,'\n')
         b = split(b,'\n')
         r = []
@@ -382,4 +505,7 @@ class PageDiffSupport:
 #            "</tr>\n"
 #            % (join(rx1, '\n'), join(ry1, '\n'),
 #               html_quote(join(rx2, '\n')), html_quote(join(ry2, '\n'))))
+
+
+InitializeClass(PageDiffSupport)
 
