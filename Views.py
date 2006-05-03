@@ -16,36 +16,32 @@ Overview
   the view, sometimes passing data as arguments. These templates can be
   customized by wiki admins.
 
-- all views use the *stylesheet* method/template to control their
-  appearance by CSS. This allows wiki admins (and users, see below) to
-  customize the wiki's appearance without needing to change view
-  templates.
+- view methods use getSkinTemplate() to find their helper templates. It
+  looks for a page template or dtml method of the specified name, in the
+  following places:
+
+  1. first, in the wiki folder in the ZODB
+
+  2. or, elsewhere in the ZODB by acquisition (including the CMF skin
+     layers if we are in a CMF/Plone site)
+
+  3. finally, in a built-in TEMPLATES dictionary containing the skin
+     templates defined by the files in skins/zwiki/ (and others registered
+     by plugins).
 
 More about templates
 --------------------
 
-- view methods use getSkinTemplate() to find the template. Usually, it
-  finds the page template of the desired name in STANDARD_TEMPLATES, a
-  dictionary which has been preloaded with the view templates defined in
-  skins/zwiki (and any others added by plugins).
+- the standard templates use METAL macros so that they can be broken up
+  into manageable chunks (like the comment form) and reused easily.
+  Usually there is a template file to define each macro, but this is just
+  convention. At runtime all the macros are gathered from TEMPLATES and
+  made available as here/macros.
 
-- getSkinTemplate() is quite flexible, here's the full detail: it looks
-  for a page template or a dtml method of the desired name, first in the
-  wiki folder in the ZODB, then elsewhere in the ZODB by acquisition
-  (which includes the CMF skins if we are in a CMF site), then finally
-  in STANDARD_TEMPLATES.
-
-- the templates make use of METAL macros, so that they can be broken up
-  into manageable chunks, like the comment form, and customized separately
-  and included where needed. Additional templates are used to define the
-  macros, usually one macro per template, though this is just convention:
-  at runtime all the macros are gathered together into MACROS and made
-  available as here/macros.
-
-- Currently all view templates (except those provided by plugins) are
-  defined in skins/zwiki and are designed to work in both standard and
-  CMF/Plone wikis.  The need to be compatible with CMF/Plone's
-  main_template puts certain constraints on Zwiki's templates.
+- Currently all templates, except those provided by plugins, are defined
+  in skins/zwiki and are designed to work in both standard and CMF/Plone
+  wikis.  The need to be compatible with CMF/Plone's main_template puts
+  certain constraints on Zwiki's templates.
 
 - view templates call the here/main_template/macros/master macro to wrap
   themselves in the overall site skin. This calls CMF/Plone's main
@@ -53,12 +49,12 @@ More about templates
   ComputedAttribute on zwiki pages, which calls the get_main_template method,
   which calls CMF/Plone's main_template or Zwiki's main_template_zwiki template).
 
-Skin objects recap
-------------------
+Skin object types
+-----------------
 
 Aside from the view methods, which are built in to the product code, all
-of these skin objects - view templates, helper templates, dtml methods,
-files, images - may be customized in the ZODB. Here's a review:
+skin objects - view templates, helper templates, dtml methods, files,
+images - may be customized in the ZODB. Here's a review:
 
 **page templates**
   Zope page templates are the workhorse for making dynamic views. They
@@ -79,7 +75,7 @@ files, images - may be customized in the ZODB. Here's a review:
   faster, a little less explicit, not well-formed HTML, a little harder to
   debug, easier to understand than macros.
 
-won'**files**
+**files**
   Best for chunks of content which do not change much and should be
   cached. A File object works well when customizing the stylesheet (though
   see below).
@@ -88,8 +84,8 @@ won'**files**
   Like files, but better suited to graphics. The zwiki skin includes a
   couple of icons.
 
-More notes
-----------
+Other notes
+-----------
   
 - several Zwiki views (eg recentchanges) are developed iteratively as dtml
   wiki pages on zwiki.org.  These are reused in the skin as dtml methods
@@ -97,19 +93,18 @@ More notes
   (recentchanges.pt). The page templates may be customized to not use dtml
   if preferred.
 
-- the stylesheet may be installed in the ZODB as a file object for
-  customization. Here's another configuration which makes it still more
-  customizable: install as a dtml method (stylesheet) which includes the
-  text of a wiki page (StyleSheet). See http://zwiki.org/HowTos.
-
-- the stylesheet view method has a special behavior: in addition to
-  looking for a skin template named ``stylesheet``, it will also accept
-  one called ``stylesheet.css``.
+- the stylesheet view method will accept a skin object called
+  ``stylesheet`` *or* ``stylesheet.css``.  It may be a File object, a DTML
+  Method, or an editable wiki page (see
+  http://zwiki.org/HowToSetUpAnEditableStylesheet).
 
 - from 0.54, all of the built in filesystem-based templates, dtml methods
-  and macros now refresh when running in debug mode.
+  and macros refresh when running in debug mode.
+  XXX there might be a problem with zodb-based customization of macros
+  not being possible, though
 
 """
+
 
 from __future__ import nested_scopes
 import os, sys, re, string, time, math
@@ -124,6 +119,7 @@ from Globals import InitializeClass, MessageDialog
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from Products.PageTemplates.Expressions import SecureModuleImporter
+from ComputedAttribute import ComputedAttribute
 
 from Defaults import PAGE_METATYPE
 from Utils import BLATHER, formattedTraceback
@@ -204,36 +200,37 @@ def isZwikiPage(obj):
 def addErrorTo(text,error):
     return """<div class="error">%s</div>\n%s""" % (error,text)
 
+
 # the standard zwiki skin templates
-STANDARD_TEMPLATES = {}
+TEMPLATES = {}
 for t in [
-    # intended to be viewed directly
+    # main view templates
     'badtemplate',
     'backlinks',
     'contentspage',
     'denied',
     'diffform',
     'editform',
-    'maintemplate',
     'recentchanges',
     'searchwiki',
     'subscribeform',
     'useroptions',
     'wikipage',
-    # intended to provide macros
+    # additional macro-providing templates
     'accesskeys',
     'commentform',
     'content',
     'head',
     'hierarchylinks',
     'links',
+    'maintemplate',
     'pageheader',
     'pagemanagementform',
     'siteheader',
     ]:
-    STANDARD_TEMPLATES[t] = loadPageTemplate(t)
+    TEMPLATES[t] = loadPageTemplate(t)
 
-# dtml included by the standard templates
+# helper dtml methods
 for t in [
     'RecentChanges',
     'SearchPage',
@@ -241,32 +238,28 @@ for t in [
     'subtopics_outline',
     'subtopics_board',
     ]:
-    STANDARD_TEMPLATES[t] = loadDtmlMethod(t)
+    TEMPLATES[t] = loadDtmlMethod(t)
 
-# stylesheet
-STANDARD_TEMPLATES['stylesheet'] = loadStylesheetFile('stylesheet.css')
+# stylesheet file
+TEMPLATES['stylesheet'] = loadStylesheetFile('stylesheet.css')
 
-# set up easy access to all macros via here/macros
-# we use a computed attribute (below) to call getmacros on each access, to ensure
-# they are always fresh in debug mode. I think this is fine. Any simpler
-# way ?
-
+# set up easy access to all macros via here/macros.
+# We use a computed attribute (below) to call getmacros on each access, to
+# ensure they are always fresh in debug mode. Right ?
 MACROS = {}
 def getmacros(self):
     """
     Return a dictionary of all the latest macros from our PageTemplateFiles.
 
-    This is called on each access to macros 
+    This is called on each access to MACROS
     """
     [MACROS.update(t.pt_macros())
-     for t in STANDARD_TEMPLATES.values() if isinstance(t,PageTemplateFile)]
+     for t in TEMPLATES.values() if isinstance(t,PageTemplateFile)]
     return MACROS
-
-getmacros(None)
-
-# backwards compatibility
+# provide old macros for backwards compatibility
 # pre-0.52 these were defined in wikipage, old custom templates may need them
 # two more were defined in contentspage, we won't support those
+getmacros(None)
 MACROS['linkpanel']   = MACROS['links']
 MACROS['navpanel']    = MACROS['hierarchylinks']
 nullmacro = ZopePageTemplate(
@@ -279,21 +272,357 @@ MACROS['wikilinks']   = nullmacro
 
 
 
-class SkinUtils:
-    """
-    This mixin provides a CMF-like skin lookup mechanism.
+class SkinViews:
+    """ 
+    This mixin defines the main Zwiki UI views as methods.
 
-    This allows us to find views regardless of where we are.
+    These view methods usually just call a built-in template of the same
+    name, which may be overridden by a similarly-named template in the
+    ZODB (a page template, a dtml method, sometimes a File..) A few
+    methods don't use a template at all.
     """
     security = ClassSecurityInfo()
 
-    def hasSkinTemplate(self,name):
+    security.declareProtected(Permissions.View, 'backlinks')
+    def backlinks(self, REQUEST=None):
         """
-        Does the named skin template exist in the aq context or filesystem ?
+        Render the backlinks form (template-customizable).
         """
-        # != ignores any acquisition wrapper
-        return self.getSkinTemplate(name) != STANDARD_TEMPLATES['badtemplate']
+        return self.getSkinTemplate('backlinks')(self,REQUEST)
+
+    security.declareProtected(Permissions.View, 'contentspage')
+    def contentspage(self, hierarchy, singletons, REQUEST=None):
+        """
+        Render the contents view (template-customizable).
+
+        hierarchy and singletons parameters are required.
+        """
+        return self.getSkinTemplate('contentspage')(self,REQUEST,
+                                                    hierarchy=hierarchy,
+                                                    singletons=singletons)
+
+    security.declareProtected(Permissions.Add, 'createform')
+    def createform(self, REQUEST=None, page=None, text=None, pagename=None):
+        """
+        Render the create form (template-customizable).
+
+        This usually just calls editform; it is protected by a
+        different permission and also allows an alternate pagename
+        argument to support the page management form (XXX temporary).
+        It may also be customized by a createform skin template, in
+        which case page creation and page editing forms are different.
+        """
+        if not self.checkSufficientId(REQUEST):
+            return self.denied(
+                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
+
+        if self.hasSkinTemplate('createform'):
+            return self.getSkinTemplate('createform')(
+                REQUEST, page or pagename, text)
+        else:
+            return self.editform(
+                REQUEST, page or pagename, text, action='Create')
+
+    security.declareProtected(Permissions.View, 'davLockDialog')
+    def davLockDialog(self):
+        """
+        web page displayed in webDAV lock conflict situations.
+        """
+        titlestr=_('Page is locked')
+        return MessageDialog(
+            title=titlestr,
+            message="""
+            <b>%s</b>
+            <p>
+            %s
+            <p>
+            %s
+            """ % (
+            titlestr,
+            _("""
+            This page has a webDAV lock. Someone is probably editing it
+            with an external editor.  You'll need to wait until they've
+            finished and then try again.  If you've just made some changes,
+            you may want to back up and copy your version of the text for
+            reference.
+            """),
+            _("To discard your changes and try again, click OK."),
+            ),
+            action=self.page_url()+'/editform')
+
+    security.declarePublic('denied')
+    def denied(self, reason=None, REQUEST=None):
+        """
+        Render the denied form (template-customizable).
+        """
+        return self.getSkinTemplate('denied')(self,REQUEST,reason=reason)
+
+    security.declareProtected(Permissions.View, 'diffform')
+    def diffform(self, revA, difftext, REQUEST=None):
+        """
+        Render the diff form (template-customizable).
+
+        revA and difftext parameters are required.
+        """
+        return self.getSkinTemplate('diffform')(self,REQUEST,
+                                                 revA=revA,
+                                                 difftext=difftext)
+
+    security.declareProtected(Permissions.View, 'editConflictDialog')
+    def editConflictDialog(self):
+        """
+        web page displayed in edit conflict situations.
+        """
+        #XXX form = self.getMessageDialog('editconflict')
+        #XXX form = self.getSkinTemplate('editconflict')
+        titlestr=_('Edit conflict')
+        return MessageDialog(
+            title=titlestr,
+            message="""
+            <b>%s</b>
+            <p>
+            %s.
+            %s:
+            <ol>
+            <li>%s
+            <li>%s
+            <li>%s
+            <li>%s
+            <li>%s.
+            </ol>
+            %s,
+            <p>
+            %s.
+            """ % (
+            titlestr,
+            _("Someone else has saved this page while you were editing"),
+            _("To resolve the conflict, do this"),
+            _("Click your browser's back button"),
+            _("Copy your recent edits to the clipboard"),
+            _("Click your browser's refresh button"),
+            _("Paste in your edits again, being mindful of the latest changes"),
+            _("Click the Change button again"),
+            _("or"),
+            _("To discard your changes and start again, click OK"),
+            ),
+            action=self.page_url()+'/editform')
+
+    security.declareProtected(Permissions.Edit, 'editform')
+    def editform(self, REQUEST=None, page=None, text=None, action='Change'):
+        """
+        Render the edit form (template-customizable).
+
+        This is usually called by createform also, and can handle both
+        editing and creating. The form's textarea contents may be specified.
+        """
+        if not self.checkSufficientId(REQUEST):
+            return self.denied(
+                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
         
+        if ((not page or page == self.pageName()) and
+            hasattr(self,'wl_isLocked') and self.wl_isLocked()):
+            return self.davLockDialog()
+
+        # what are we going to do ? set up page, text & action accordingly
+        if page is None:
+            # no page specified - editing the current page
+            page = self.pageName()
+            text = self.read()
+        elif self.pageWithName(page):
+            # editing a different page
+            text = self.pageWithName(page).read()
+        else:
+            # editing a brand-new page
+            action = 'Create'
+            text = text or ''
+
+        # display the edit form - a dtml method or the builtin default
+        # NB we redefine id as a convenience, so that one header can work
+        # for pages and editforms
+        # XXX can we simplify this/make dtml more version independent ?
+        # NB 'id' and 'oldid' are no longer used, but provide them for
+        # backwards compatibility with old templates
+            
+        return self.getSkinTemplate('editform')(self,REQUEST,
+                                                page=page,
+                                                text=text,
+                                                action=action,
+                                                id=page,
+                                                oldid=self.id())
+
+    security.declareProtected(Permissions.View, 'recentchanges')
+    def recentchanges(self, REQUEST=None):
+        """
+        Render the recentchanges form (template-customizable).
+        """
+        return self.getSkinTemplate('recentchanges')(self,REQUEST)
+
+    # we call this searchwiki, not searchpage, for clarity
+    security.declareProtected(Permissions.View, 'searchwiki')
+    def searchwiki(self, REQUEST=None):
+        """
+        Render the searchwiki form (template-customizable).
+        """
+        return self.getSkinTemplate('searchwiki')(self,REQUEST)
+
+    searchpage = searchwiki # alias
+
+    security.declareProtected(Permissions.View, 'showAccessKeys')
+    def showAccessKeys(self):
+        """
+        Show the access keys supported by the built-in skins.
+        """
+        return _("""
+        Access keys can be accessed in mozilla-based browsers by pressing alt-<key>
+        IE users: must also press enter
+        Mac users: command-<key>
+        Opera users: shift-escape-<key>
+        These won't work here, back up to the previous page to try them out.
+
+        0    show these access key assignments
+
+        wiki functions:
+        f    show front page
+        c    show wiki contents
+        r    show wiki recent changes
+             show discussion page
+        t    show issue tracker
+        i    show wiki index
+        o    show wiki options (preferences)
+        h    show help page
+        s    go to search field
+        
+        page functions:
+        +    (in a plone/cmf site with skin switching set up) use zwiki's plone/cmf skin
+        -    (in a plone/cmf site with skin switching set up) use zwiki's standard skin
+        v    view page
+        m    mail subscription
+        b    show backlinks (links to this page)
+        d    show diffs (page edit history)
+        y    show full history (in ZMI)
+        e    edit this page                       
+        x    edit with an external editor
+             print this page (and subtopics)
+        q    view page source (quick-view)
+             wipe and regenerate this page's render cache
+             go to subtopics
+             go to comments (messages)
+             go to page author's home page, if possible
+        n    next page
+        p    previous page
+        u    up to parent page
+        
+        in edit form:
+        s    save changes
+        p    preview
+        
+        when viewing diffs:
+        n    next edit
+        p    previous edit
+        """)
+    
+    security.declareProtected(Permissions.View, 'stylesheet')
+    def stylesheet(self, REQUEST=None):
+        """
+        Return the style sheet used by the other templates.
+
+        Template-customizable. Unlike the other skin methods, this one can
+        be overridden by either a 'stylesheet' or a 'stylesheet.css'
+        template - this is a little annoying.
+
+        Also the template in this case is usually a File (but can also be
+        a page template or dtml method for a dynamic stylesheet). When a
+        File is used the Last-modified header is set to help caching.
+        (Also, all pages use a single stylesheet url -
+        DEFAULTPAGE/stylesheet).
+        """
+        if REQUEST: REQUEST.RESPONSE.setHeader('Content-Type', 'text/css')
+        #XXX self.getSkinTemplate('stylesheet')
+        form = getattr(self.folder(),'stylesheet',
+                       getattr(self.folder(),'stylesheet.css',
+                               TEMPLATES['stylesheet']
+                               ))
+        if isPageTemplate(form) or isDtmlMethod(form):
+            return form.__of__(self)(self,REQUEST)
+        else: # a File
+            if REQUEST:
+                modified = form.bobobase_modification_time()
+                REQUEST.RESPONSE.setHeader('Last-Modified',
+                                           rfc1123_date(modified))
+            return form.index_html(REQUEST,REQUEST.RESPONSE)
+
+    security.declareProtected(Permissions.View, 'subscribeform')
+    def subscribeform(self, REQUEST=None):
+        """
+        Render the mail subscription form (template-customizable).
+        """
+        return self.getSkinTemplate('subscribeform')(self,REQUEST)
+
+    security.declareProtected(Permissions.View, 'useroptions')
+    def useroptions(self, REQUEST=None):
+        """
+        Render the useroptions form (template-customizable).
+        """
+        return self.getSkinTemplate('useroptions')(self,REQUEST)
+
+InitializeClass(SkinViews)
+
+
+
+class SkinUtils:
+    """
+    This mixin provides utilities for our views, so that they can work in
+    any kind of configuration - default or customized, standard or
+    cmf/plone, old or new templates..
+    """
+    security = ClassSecurityInfo()
+
+    # make MACROS available to all templates as here/macros
+    macros = ComputedAttribute(getmacros,1)
+
+    ## backwards compatibility - some old plone wikis expect wikipage_view
+    ## or wikipage actions ?
+    #security.declareProtected(Permissions.View, 'wikipage')
+    #def wikipage(self, dummy=None, REQUEST=None, RESPONSE=None):
+    #    """
+    #    Render the main page view (dummy method to allow standard skin in CMF).
+    #
+    #    XXX should be going away soon. Old comment: the wikipage template
+    #    is usually applied by __call__ -> addSkinTo, but this method is
+    #    provided so you can configure it as the"view" action
+    #    in portal_types -> Wiki Page -> actions and get use Zwiki's standard 
+    #    skin inside a CMF/Plone site.
+    #    """
+    #    return self.render(REQUEST=REQUEST,RESPONSE=RESPONSE)
+    #wikipage_view = wikipage
+    
+    # backwards compatibility - some old templates expect
+    # wikipage_template().macros or wikipage_macros something something
+    def wikipage_template(self, REQUEST=None): return self
+    wikipage_macros = wikipage_template
+
+    security.declareProtected(Permissions.View, 'getmaintemplate')
+    def getmaintemplate(self, REQUEST=None):
+        """
+        Return the standard Zwiki or CMF/Plone main template, unevaluated.
+
+        This fetches the appropriate main template depending on whether we
+        are in or out of cmf/plone (and in the latter case, whether the
+        user has selected standard or plone skin mode). We point the
+        'main_template' computed attribute at this method, which allows
+        our templates to use here/main_template and always be
+        appropriately skinned.
+        """
+        # XXX not really working out yet.. need this hack
+        # all skin templates wrap themselves with main_template
+        # in CMF, use the cmf/plone one, otherwise use ours
+        # should allow use of ours in cmf/plone also
+        if self.inCMF() and self.displayMode() == 'plone':
+            return self.getSkinTemplate('main_template') # plone's
+        else:
+            return self.getSkinTemplate('maintemplate')  # zwiki's
+    main_template = ComputedAttribute(getmaintemplate,1)
+
     def getSkinTemplate(self,name):
         """
         Get the named skin template from the ZODB or filesystem.
@@ -314,12 +643,18 @@ class SkinUtils:
         """
         obj = getattr(self.folder(), name, None)
         if not isTemplate(obj): # don't accept a non-template object
-            obj = STANDARD_TEMPLATES.get(name,
-                                         STANDARD_TEMPLATES['badtemplate'])
+            obj = TEMPLATES.get(name, TEMPLATES['badtemplate'])
         # return it with both folder and page in the acquisition context,
         # setting container and here
         return obj.__of__(self.folder()).__of__(self)
 
+    def hasSkinTemplate(self,name):
+        """
+        Does the named skin template exist in the aq context or filesystem ?
+        """
+        # != ignores any acquisition wrapper
+        return self.getSkinTemplate(name) != TEMPLATES['badtemplate']
+        
     security.declareProtected(Permissions.View, 'addSkinTo')
     def addSkinTo(self,body,**kw):
         """
@@ -332,7 +667,7 @@ class SkinUtils:
         (backwards compatibility), otherwise the wikipage template on the
         filesystem is used.
 
-        This is used only for the main page view. Perhaps the wikipage
+        XXX This is used only for the main page view. Perhaps the wikipage
         view method should replace it ?
         """
         REQUEST = getattr(self,'REQUEST',None)
@@ -354,14 +689,16 @@ class SkinUtils:
                    body + \
                    self.getSkinTemplate('standard_wiki_footer')(self,REQUEST)
         else:
-            return STANDARD_TEMPLATES['wikipage'].__of__(self.folder()).__of__(self)(body=body,**kw)
+            return TEMPLATES['wikipage'].__of__(self.folder()).__of__(self)(body=body,**kw)
 
 InitializeClass(SkinUtils)
 
 
+
 class SkinSwitchingUtils:
     """
-    This mixin provides methods for switching between alternate skins.
+    This mixin provides methods for switching between alternate skins
+    (or between display modes within a single zope skin).
     """
     security = ClassSecurityInfo()
 
@@ -445,351 +782,9 @@ class SkinSwitchingUtils:
 InitializeClass(SkinSwitchingUtils)
 
 
-class SkinViews:
-    """ 
-    This mixin provides methods for accessing the main UI views.
-
-    These methods may be overridden by ZODB skin templates (page
-    templates, dtml methods, sometimes a File) of the same name,
-    otherwise will use the defaults on the filesystem.
-    """
-    security = ClassSecurityInfo()
-
-    # make those fresh macros available to all templates as here/macros
-    from ComputedAttribute import ComputedAttribute
-    macros = ComputedAttribute(getmacros,1)
-
-    security.declareProtected(Permissions.View, 'wikipage')
-    def wikipage(self, dummy=None, REQUEST=None, RESPONSE=None):
-        """
-        Render the main page view (dummy method to allow standard skin in CMF).
-
-        XXX should be going away soon. Old comment: the wikipage template
-        is usually applied by __call__ -> addSkinTo, but this method is
-        provided so you can configure it as the"view" action
-        in portal_types -> Wiki Page -> actions and get use Zwiki's standard 
-        skin inside a CMF/Plone site.
-        """
-        return self.render(REQUEST=REQUEST,RESPONSE=RESPONSE)
-
-    # backwards compatibility
-    wikipage_view = wikipage
-    # old templates look for wikipage_template().macros
-    def wikipage_template(self, REQUEST=None): return self
-    wikipage_macros = wikipage_template
-
-    security.declareProtected(Permissions.View, 'getmaintemplate')
-    def getmaintemplate(self, REQUEST=None):
-        """
-        Return the standard Zwiki or CMF/Plone main template, unevaluated.
-
-        This fetches the appropriate main template depending on whether we
-        are in or out of cmf/plone (and in the latter case, whether the
-        standard or plone skin mode is selected). We point the
-        'main_template' computed attribute at this method, and this allows
-        our templates to use here/main_template and be appropriately
-        skinned.
-        
-        """
-        # XXX not really working out yet.. need this hack
-        # all skin templates wrap themselves with main_template
-        # in CMF, use the cmf/plone one, otherwise use ours
-        # should allow use of ours in cmf/plone also
-        if self.inCMF() and self.displayMode() == 'plone':
-            return self.getSkinTemplate('main_template') # plone's
-        else:
-            return self.getSkinTemplate('maintemplate')  # zwiki's
-
-    main_template = ComputedAttribute(getmaintemplate,1)
-
-    security.declareProtected(Permissions.View, 'stylesheet')
-    def stylesheet(self, REQUEST=None):
-        """
-        Return the style sheet used by the other templates.
-
-        Template-customizable. Unlike the other skin methods, this one can
-        be overridden by either a 'stylesheet' or a 'stylesheet.css'
-        template - this is a little annoying.
-
-        Also the template in this case is usually a File (but can also be
-        a page template or dtml method for a dynamic stylesheet). When a
-        File is used the Last-modified header is set to help caching.
-        (Also, all pages use a single stylesheet url -
-        DEFAULTPAGE/stylesheet).
-        """
-        if REQUEST: REQUEST.RESPONSE.setHeader('Content-Type', 'text/css')
-        #XXX self.getSkinTemplate('stylesheet')
-        form = getattr(self.folder(),'stylesheet',
-                       getattr(self.folder(),'stylesheet.css',
-                               STANDARD_TEMPLATES['stylesheet']
-                               ))
-        if isPageTemplate(form) or isDtmlMethod(form):
-            return form.__of__(self)(self,REQUEST)
-        else: # a File
-            if REQUEST:
-                modified = form.bobobase_modification_time()
-                REQUEST.RESPONSE.setHeader('Last-Modified',
-                                           rfc1123_date(modified))
-            return form.index_html(REQUEST,REQUEST.RESPONSE)
-
-    security.declareProtected(Permissions.View, 'backlinks')
-    def backlinks(self, REQUEST=None):
-        """
-        Render the backlinks form (template-customizable).
-        """
-        return self.getSkinTemplate('backlinks')(self,REQUEST)
-
-    security.declareProtected(Permissions.View, 'contentspage')
-    def contentspage(self, hierarchy, singletons, REQUEST=None):
-        """
-        Render the contents view (template-customizable).
-
-        hierarchy and singletons parameters are required.
-        """
-        return self.getSkinTemplate('contentspage')(self,REQUEST,
-                                                    hierarchy=hierarchy,
-                                                    singletons=singletons)
-
-    security.declareProtected(Permissions.View, 'diffform')
-    def diffform(self, revA, difftext, REQUEST=None):
-        """
-        Render the diff form (template-customizable).
-
-        revA and difftext parameters are required.
-        """
-        return self.getSkinTemplate('diffform')(self,REQUEST,
-                                                 revA=revA,
-                                                 difftext=difftext)
-
-    security.declareProtected(Permissions.Edit, 'editform')
-    def editform(self, REQUEST=None, page=None, text=None, action='Change'):
-        """
-        Render the edit form (template-customizable).
-
-        This is usually called by createform also, and can handle both
-        editing and creating. The form's textarea contents may be specified.
-        """
-        if not self.checkSufficientId(REQUEST):
-            return self.denied(
-                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
-        
-        if ((not page or page == self.pageName()) and
-            hasattr(self,'wl_isLocked') and self.wl_isLocked()):
-            return self.davLockDialog()
-
-        # what are we going to do ? set up page, text & action accordingly
-        if page is None:
-            # no page specified - editing the current page
-            page = self.pageName()
-            text = self.read()
-        elif self.pageWithName(page):
-            # editing a different page
-            text = self.pageWithName(page).read()
-        else:
-            # editing a brand-new page
-            action = 'Create'
-            text = text or ''
-
-        # display the edit form - a dtml method or the builtin default
-        # NB we redefine id as a convenience, so that one header can work
-        # for pages and editforms
-        # XXX can we simplify this/make dtml more version independent ?
-        # NB 'id' and 'oldid' are no longer used, but provide them for
-        # backwards compatibility with old templates
-            
-        return self.getSkinTemplate('editform')(self,REQUEST,
-                                                page=page,
-                                                text=text,
-                                                action=action,
-                                                id=page,
-                                                oldid=self.id())
-
-    security.declareProtected(Permissions.Add, 'createform')
-    def createform(self, REQUEST=None, page=None, text=None, pagename=None):
-        """
-        Render the create form (template-customizable).
-
-        This usually just calls editform; it is protected by a
-        different permission and also allows an alternate pagename
-        argument to support the page management form (XXX temporary).
-        It may also be customized by a createform skin template, in
-        which case page creation and page editing forms are different.
-        """
-        if not self.checkSufficientId(REQUEST):
-            return self.denied(
-                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
-
-        if self.hasSkinTemplate('createform'):
-            return self.getSkinTemplate('createform')(
-                REQUEST, page or pagename, text)
-        else:
-            return self.editform(
-                REQUEST, page or pagename, text, action='Create')
-
-    security.declareProtected(Permissions.View, 'subscribeform')
-    def subscribeform(self, REQUEST=None):
-        """
-        Render the mail subscription form (template-customizable).
-        """
-        return self.getSkinTemplate('subscribeform')(self,REQUEST)
-
-    security.declareProtected(Permissions.View, 'recentchanges')
-    def recentchanges(self, REQUEST=None):
-        """
-        Render the recentchanges form (template-customizable).
-        """
-        return self.getSkinTemplate('recentchanges')(self,REQUEST)
-
-    # we call this searchwiki, not searchpage, for clarity
-    security.declareProtected(Permissions.View, 'searchwiki')
-    def searchwiki(self, REQUEST=None):
-        """
-        Render the searchwiki form (template-customizable).
-        """
-        return self.getSkinTemplate('searchwiki')(self,REQUEST)
-
-    searchpage = searchwiki # alias
-
-    security.declareProtected(Permissions.View, 'useroptions')
-    def useroptions(self, REQUEST=None):
-        """
-        Render the useroptions form (template-customizable).
-        """
-        return self.getSkinTemplate('useroptions')(self,REQUEST)
-
-    security.declarePublic('denied')
-    def denied(self, reason=None, REQUEST=None):
-        """
-        Render the denied form (template-customizable).
-        """
-        return self.getSkinTemplate('denied')(self,REQUEST,reason=reason)
-
-    security.declareProtected(Permissions.View, 'editConflictDialog')
-    def editConflictDialog(self):
-        """
-        web page displayed in edit conflict situations.
-        """
-        #XXX form = self.getMessageDialog('editconflict')
-        #XXX form = self.getSkinTemplate('editconflict')
-        titlestr=_('Edit conflict')
-        return MessageDialog(
-            title=titlestr,
-            message="""
-            <b>%s</b>
-            <p>
-            %s.
-            %s:
-            <ol>
-            <li>%s
-            <li>%s
-            <li>%s
-            <li>%s
-            <li>%s.
-            </ol>
-            %s,
-            <p>
-            %s.
-            """ % (
-            titlestr,
-            _("Someone else has saved this page while you were editing"),
-            _("To resolve the conflict, do this"),
-            _("Click your browser's back button"),
-            _("Copy your recent edits to the clipboard"),
-            _("Click your browser's refresh button"),
-            _("Paste in your edits again, being mindful of the latest changes"),
-            _("Click the Change button again"),
-            _("or"),
-            _("To discard your changes and start again, click OK"),
-            ),
-            action=self.page_url()+'/editform')
-
-    security.declareProtected(Permissions.View, 'davLockDialog')
-    def davLockDialog(self):
-        """
-        web page displayed in webDAV lock conflict situations.
-        """
-        titlestr=_('Page is locked')
-        return MessageDialog(
-            title=titlestr,
-            message="""
-            <b>%s</b>
-            <p>
-            %s
-            <p>
-            %s
-            """ % (
-            titlestr,
-            _("""
-            This page has a webDAV lock. Someone is probably editing it
-            with an external editor.  You'll need to wait until they've
-            finished and then try again.  If you've just made some changes,
-            you may want to back up and copy your version of the text for
-            reference.
-            """),
-            _("To discard your changes and try again, click OK."),
-            ),
-            action=self.page_url()+'/editform')
-
-    security.declareProtected(Permissions.View, 'showAccessKeys')
-    def showAccessKeys(self):
-        """
-        Show the access keys supported by the built-in skins.
-        """
-        return _("""
-        Access keys can be accessed in mozilla-based browsers by pressing alt-<key>
-        IE users: must also press enter
-        Mac users: command-<key>
-        Opera users: shift-escape-<key>
-        These won't work here, back up to the previous page to try them out.
-
-        0    show these access key assignments
-
-        wiki functions:
-        f    show front page
-        c    show wiki contents
-        r    show wiki recent changes
-             show discussion page
-        t    show issue tracker
-        i    show wiki index
-        o    show wiki options (preferences)
-        h    show help page
-        s    go to search field
-        
-        page functions:
-        +    (in a plone/cmf site with skin switching set up) use zwiki's plone/cmf skin
-        -    (in a plone/cmf site with skin switching set up) use zwiki's standard skin
-        v    view page
-        m    mail subscription
-        b    show backlinks (links to this page)
-        d    show diffs (page edit history)
-        y    show full history (in ZMI)
-        e    edit this page                       
-        x    edit with an external editor
-             print this page (and subtopics)
-        q    view page source (quick-view)
-             wipe and regenerate this page's render cache
-             go to subtopics
-             go to comments (messages)
-             go to page author's home page, if possible
-        n    next page
-        p    previous page
-        u    up to parent page
-        
-        in edit form:
-        s    save changes
-        p    preview
-        
-        when viewing diffs:
-        n    next edit
-        p    previous edit
-        """)
-    
-InitializeClass(SkinViews)
-
-
 class PageViews(
+    SkinViews,
     SkinUtils,
     SkinSwitchingUtils,
-    SkinViews,
     ):
     pass

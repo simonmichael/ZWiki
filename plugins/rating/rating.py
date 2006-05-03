@@ -11,9 +11,9 @@ from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER
-from Products.ZWiki.Views import loadPageTemplate, loadMacros, MACROS
+from Products.ZWiki.Views import loadPageTemplate, TEMPLATES
 
-MACROS.update(loadMacros('ratingform','plugins/rating'))
+TEMPLATES['ratingform'] = loadPageTemplate('ratingform','plugins/rating')
 
 RATING_METADATA = [
     'voteCount',

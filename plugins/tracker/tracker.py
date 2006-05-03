@@ -13,16 +13,17 @@ from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER, formattedTraceback, addHook
-from Products.ZWiki.Views import loadDtmlMethod, loadPageTemplate, \
-     STANDARD_TEMPLATES
+from Products.ZWiki.Views import loadDtmlMethod, loadPageTemplate, TEMPLATES
+     
 from Products.ZWiki.I18n import _
 
-STANDARD_TEMPLATES.update({
+TEMPLATES.update({
     'issuepropertiesform': loadDtmlMethod('issuepropertiesform','plugins/tracker'),
+    # page template wrappers
     'issuetracker'       : loadPageTemplate('issuetracker','plugins/tracker'),
     'issuebrowser'       : loadPageTemplate('issuebrowser','plugins/tracker'),
     'filterissues'       : loadPageTemplate('filterissues','plugins/tracker'),
-    # dtml versions which the above will usually use
+    # the DTML implementations
     'IssueTracker'       : loadDtmlMethod('IssueTracker','plugins/tracker'),
     'IssueBrowser'       : loadDtmlMethod('IssueBrowser','plugins/tracker'),
     'FilterIssues'       : loadDtmlMethod('FilterIssues','plugins/tracker'),
