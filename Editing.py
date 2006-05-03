@@ -790,7 +790,6 @@ class PageEditingSupport:
         Change this page's text.
 
         Does cleanups and triggers pre-rendering and DTML re-parsing.
-        Also inserts purple number NIDs if appropriate.
         """
         self.raw = self.cleanupText(text)
         self.preRender(clear_cache=1)
@@ -876,7 +875,7 @@ class PageEditingSupport:
 
     def setLastEditor(self, REQUEST=None):
         """
-        record my last_editor & last_editor_ip
+        Record last editor info based on the current REQUEST and time.
         """
         if REQUEST:
             self.last_editor_ip = REQUEST.REMOTE_ADDR
