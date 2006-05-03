@@ -1,9 +1,8 @@
 <html>
-<head />
-<body>
-
+  <head />
+  <body>
     <!-- hierarchy navigation bar - off by default -->
-    <div metal:define-macro="navpanel" tal:omit-tag="" tal:condition="python:0">
+    <div metal:define-macro="hierarchylinks" tal:omit-tag="">
       <div class="navpanel">
         <table class="shade1" width="100%" border="0" cellspacing="0">
           <tr valign="top">
@@ -31,6 +30,5 @@
         </table>
       </div>
     </div>
-
-</body>
+  </body>
 </html>

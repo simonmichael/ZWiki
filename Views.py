@@ -35,11 +35,12 @@ More about templates
   (which includes the CMF skins if we are in a CMF site), then finally
   in STANDARD_TEMPLATES.
 
-- the templates make use of macros, which are defined in a bunch of helper
-  templates (also in skins/zwiki). These macros are preloaded in MACROS
-  and made available as here/macros. This allows the templates to be
-  broken up into manageable chunks (eg the comment form), which can be
-  customized in one place and included where needed.
+- the templates make use of METAL macros, so that they can be broken up
+  into manageable chunks, like the comment form, and customized separately
+  and included where needed. Additional templates are used to define the
+  macros, usually one macro per template, though this is just convention:
+  at runtime all the macros are gathered together into MACROS and made
+  available as here/macros.
 
 - Currently all view templates (except those provided by plugins) are
   defined in skins/zwiki and are designed to work in both standard and
@@ -87,8 +88,8 @@ won'**files**
   Like files, but better suited to graphics. The zwiki skin includes a
   couple of icons.
 
-More Zwiki skin notes
----------------------
+More notes
+----------
   
 - several Zwiki views (eg recentchanges) are developed iteratively as dtml
   wiki pages on zwiki.org.  These are reused in the skin as dtml methods
@@ -105,10 +106,8 @@ More Zwiki skin notes
   looking for a skin template named ``stylesheet``, it will also accept
   one called ``stylesheet.css``.
 
-- currently, when running with debug-mode on, the main view templates
-  (wikipage, diffform...) reload after an edit but the macro templates
-  (commentform, links) don't.
-  
+- from 0.54, all of the built in filesystem-based templates, dtml methods
+  and macros now refresh when running in debug mode.
 
 """
 
@@ -141,14 +140,6 @@ def loadPageTemplate(name,dir='skins/zwiki'):
         os.path.join(dir,'%s.pt' % name),
         globals(),
         __name__=name)
-
-def loadMacros(name,dir='skins/zwiki'):
-    """
-    Load all macros from the named page template on the filesystem.
-
-    Returns a dictionary of 0 or more macros.
-    """
-    return loadPageTemplate(name,dir).pt_macros()
 
 def loadDtmlMethod(name,dir='skins/zwiki'):
     """
@@ -216,6 +207,7 @@ def addErrorTo(text,error):
 # the standard zwiki skin templates
 STANDARD_TEMPLATES = {}
 for t in [
+    # intended to be viewed directly
     'badtemplate',
     'backlinks',
     'contentspage',
@@ -228,10 +220,20 @@ for t in [
     'subscribeform',
     'useroptions',
     'wikipage',
+    # intended to provide macros
+    'accesskeys',
+    'commentform',
+    'content',
+    'head',
+    'hierarchylinks',
+    'links',
+    'pageheader',
+    'pagemanagementform',
+    'siteheader',
     ]:
     STANDARD_TEMPLATES[t] = loadPageTemplate(t)
 
-# dtml included by the default templates
+# dtml included by the standard templates
 for t in [
     'RecentChanges',
     'SearchPage',
@@ -244,35 +246,37 @@ for t in [
 # stylesheet
 STANDARD_TEMPLATES['stylesheet'] = loadStylesheetFile('stylesheet.css')
 
-# macros in these templates will be available to all views in here.macros
+# set up easy access to all macros via here/macros
+# we use a computed attribute (below) to call getmacros on each access, to ensure
+# they are always fresh in debug mode. I think this is fine. Any simpler
+# way ?
+
 MACROS = {}
-for t in [
-    'accesskeys',
-    'commentform',
-    'content',
-    'head',
-    'links',
-    'pageheader',
-    'pagemanagementform',
-    'siteheader',
-    ]:
-    MACROS.update(loadMacros(t))
+def getmacros(self):
+    """
+    Return a dictionary of all the latest macros from our PageTemplateFiles.
+
+    This is called on each access to macros 
+    """
+    [MACROS.update(t.pt_macros())
+     for t in STANDARD_TEMPLATES.values() if isinstance(t,PageTemplateFile)]
+    return MACROS
+
+getmacros(None)
 
 # backwards compatibility
 # pre-0.52 these were defined in wikipage, old custom templates may need them
 # two more were defined in contentspage, we won't support those
-null = ZopePageTemplate(
+MACROS['linkpanel']   = MACROS['links']
+MACROS['navpanel']    = MACROS['hierarchylinks']
+nullmacro = ZopePageTemplate(
     'null','<div metal:define-macro="null" />').pt_macros()['null']
-for t in [
-    'favicon',
-    'logolink',
-    'navpanel',
-    'pagelinks',
-    'pagenameand',
-    'wikilinks',
-    ]:
-    MACROS[t] = null
-MACROS['linkpanel'] = MACROS['links']
+MACROS['favicon']     = nullmacro
+MACROS['logolink']    = nullmacro
+MACROS['pagelinks']   = nullmacro
+MACROS['pagenameand'] = nullmacro
+MACROS['wikilinks']   = nullmacro
+
 
 
 class SkinUtils:
@@ -451,7 +455,9 @@ class SkinViews:
     """
     security = ClassSecurityInfo()
 
-    macros = MACROS
+    # make those fresh macros available to all templates as here/macros
+    from ComputedAttribute import ComputedAttribute
+    macros = ComputedAttribute(getmacros,1)
 
     security.declareProtected(Permissions.View, 'wikipage')
     def wikipage(self, dummy=None, REQUEST=None, RESPONSE=None):
@@ -472,7 +478,6 @@ class SkinViews:
     def wikipage_template(self, REQUEST=None): return self
     wikipage_macros = wikipage_template
 
-
     security.declareProtected(Permissions.View, 'maintemplate')
     def maintemplate(self, REQUEST=None):
         """
@@ -489,8 +494,9 @@ class SkinViews:
             return self.getSkinTemplate('main_template')
         else:
             return self.getSkinTemplate('maintemplate')
-    # and make here/main_template/macros/... work
-    from ComputedAttribute import ComputedAttribute
+
+    # also make here/main_template/macros work, so that our templates
+    # use that and be plone compatible
     main_template = ComputedAttribute(maintemplate,1)
 
     security.declareProtected(Permissions.View, 'stylesheet')
