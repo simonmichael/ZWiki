@@ -78,7 +78,7 @@ files, images - may be customized in the ZODB. Here's a review:
   faster, a little less explicit, not well-formed HTML, a little harder to
   debug, easier to understand than macros.
 
-**files**
+won'**files**
   Best for chunks of content which do not change much and should be
   cached. A File object works well when customizing the stylesheet (though
   see below).
@@ -104,6 +104,11 @@ More Zwiki skin notes
 - the stylesheet view method has a special behavior: in addition to
   looking for a skin template named ``stylesheet``, it will also accept
   one called ``stylesheet.css``.
+
+- currently, when running with debug-mode on, the main view templates
+  (wikipage, diffform...) reload after an edit but the macro templates
+  (commentform, links) don't.
+  
 
 """
 
