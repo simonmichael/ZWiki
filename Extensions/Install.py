@@ -73,20 +73,16 @@ def install(self):
     #ZWikiPage().__of__(self).setupTracker(pages=0)
 
     # Set up the skins
-    if ('zwiki_plone' not in skinstool.objectIds()
-        or 'zwiki_standard' not in skinstool.objectIds()):
+    if 'zwiki' not in skinstool.objectIds():
         addDirectoryViews(skinstool, 'skins', wiki_globals)
 
-    # Now we need to add the Zwiki skin layers to each existing skin.
-    # We'll add them after custom. Currently zwiki_plone is empty.
-    # NB possible source of confusion for customizers: due to it's
-    # built-in skin mechanism Zwiki may search both zwiki_ layers even if
-    # one or both has been removed from the CMF skin (not sure)
+    # add the zwiki skin layer to each existing skin
+    # XXX should also remove old zwiki_plone, zwiki_standard layers
     skins = skinstool.getSkinSelections()
     for skin in skins:
         path = skinstool.getSkinPath(skin)
         path = map(string.strip, string.split(path,','))
-        for dir in ['zwiki_standard','zwiki_plone']:
+        for dir in ['zwiki']:
             if not dir in path:
                 try:
                     idx = path.index('custom')
@@ -96,7 +92,7 @@ def install(self):
         path = string.join(path, ', ')
         # addSkinSelection will replace existing skins as well.
         skinstool.addSkinSelection(skin, path)
-        out.write("Added Zwiki layers to %s skin\n" % skin)
+        out.write("Added zwiki layer to %s skin\n" % skin)
 
     # remove workflow from Wiki pages
     cbt = workflowtool._chains_by_type

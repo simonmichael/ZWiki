@@ -14,15 +14,15 @@ from I18n import _
 
 misc_ = {
     'ZWikiPage_icon': Globals.ImageFile(
-        path.join('skins','zwiki_standard','wikipage_icon.gif'), globals()),
+        path.join('skins','zwiki','wikipage_icon.gif'), globals()),
     # backwards compatibility
     'ZWikiPage_icon.gif': Globals.ImageFile(
-        path.join('skins','zwiki_standard','wikipage_icon.gif'),globals()),
+        path.join('skins','zwiki','wikipage_icon.gif'),globals()),
     # for the rating plugin
     'star_icon': Globals.ImageFile(
-        path.join('skins','zwiki_standard','star.png'),globals()),
+        path.join('skins','zwiki','star.png'),globals()),
     'blank_star_icon': Globals.ImageFile(
-        path.join('skins','zwiki_standard','blank_star.png'),globals()),
+        path.join('skins','zwiki','blank_star.png'),globals()),
     }
 
 def dummyOutlineConstructor(self):
@@ -47,7 +47,7 @@ def initialize(context):
             #I want to change the zmi add menu.. but not the meta_type
             #meta_type=Defaults.PAGE_ADD_MENU_NAME,
             permission=Permissions.Add,
-            icon = 'skins/zwiki_standard/wikipage_icon.gif',
+            icon = 'skins/zwiki/wikipage_icon.gif',
             constructors = ( 
                 ZWikiPage.manage_addZWikiPageForm,
                 ZWikiPage.manage_addZWikiPage,
@@ -87,7 +87,7 @@ def initialize(context):
         # register skin as customizable dir if FileSystemSite is installed
         try:
             from Products.FileSystemSite.DirectoryView import registerDirectory
-            registerDirectory('skins/zwiki_standard', globals())
+            registerDirectory('skins/zwiki', globals())
         except ImportError:
             pass
 

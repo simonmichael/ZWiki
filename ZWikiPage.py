@@ -1427,7 +1427,7 @@ def stripDelimitersFrom(link):
 
 
 # ZMI page creation form
-manage_addZWikiPageForm = DTMLFile('skins/zwiki_standard/addwikipageform', globals())
+manage_addZWikiPageForm = DTMLFile('skins/zwiki/addwikipageform', globals())
 
 def manage_addZWikiPage(self, id, title='', file='', REQUEST=None,
                         submit=None):

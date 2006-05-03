@@ -27,23 +27,22 @@ More about templates
 - view methods use getSkinTemplate() to find the template. Usually, it
   finds the page template of the desired name in STANDARD_TEMPLATES, a
   dictionary which has been preloaded with the view templates defined in
-  skins/zwiki_standard (and any others added by plugins).
+  skins/zwiki (and any others added by plugins).
 
 - getSkinTemplate() is quite flexible, here's the full detail: it looks
   for a page template or a dtml method of the desired name, first in the
   wiki folder in the ZODB, then elsewhere in the ZODB by acquisition
-  (which includes the CMF skins if we are in a CMF site), then in
-  PLONE_TEMPLATES (from skins/zwiki_plone) if we are in CMF, and finally
+  (which includes the CMF skins if we are in a CMF site), then finally
   in STANDARD_TEMPLATES.
 
 - the templates make use of macros, which are defined in a bunch of helper
-  templates (also in zwiki_standard). These macros are preloaded in MACROS
+  templates (also in skins/zwiki). These macros are preloaded in MACROS
   and made available as here/macros. This allows the templates to be
   broken up into manageable chunks (eg the comment form), which can be
   customized in one place and included where needed.
 
 - Currently all view templates (except those provided by plugins) are
-  defined in zwiki_standard and are designed to work in both standard and
+  defined in skins/zwiki and are designed to work in both standard and
   CMF/Plone wikis.  The need to be compatible with CMF/Plone's
   main_template puts certain constraints on Zwiki's templates.
 
@@ -130,7 +129,7 @@ from I18n import _, DTMLFile, HTMLFile
 
 # utilities
 
-def loadPageTemplate(name,dir='skins/zwiki_standard'):
+def loadPageTemplate(name,dir='skins/zwiki'):
     """
     Load the named page template from the filesystem.
     """
@@ -139,7 +138,7 @@ def loadPageTemplate(name,dir='skins/zwiki_standard'):
         globals(),
         __name__=name)
 
-def loadMacros(name,dir='skins/zwiki_standard'):
+def loadMacros(name,dir='skins/zwiki'):
     """
     Load all macros from the named page template on the filesystem.
 
@@ -147,7 +146,7 @@ def loadMacros(name,dir='skins/zwiki_standard'):
     """
     return loadPageTemplate(name,dir).pt_macros()
 
-def loadDtmlMethod(name,dir='skins/zwiki_standard'):
+def loadDtmlMethod(name,dir='skins/zwiki'):
     """
     Load the named DTML method from the filesystem.
     """
@@ -158,7 +157,7 @@ def loadDtmlMethod(name,dir='skins/zwiki_standard'):
     if not hasattr(dm,'meta_type'): dm.meta_type = 'DTML Method (File)'
     return dm
 
-def loadStylesheetFile(name,dir='skins/zwiki_standard'):
+def loadStylesheetFile(name,dir='skins/zwiki'):
     """
     Load the stylesheet File from the filesystem.
 
@@ -309,11 +308,9 @@ class SkinUtils:
         it wrapped in the current page's context (container=folder,
         here=page).
 
-        We look first in the ZODB acquisition context; then in the skins/*
-        layers on the filesystem, looking in zwiki_standard or zwiki_plone
-        first depending on whether we're in a CMF site.  If the template
-        can't be found, return a generic error template.
-        XXX does look in zwiki_plone even when we're not in a CMF site, why ?
+        We look first in the ZODB acquisition context; then in skins/zwiki
+        on the filesystem.If the template can't be found, return a generic
+        error template.  
 
         This is basically duplicating the CMF skin mechanism, but in a
         way that works everywhere, and with some extra error-handling
@@ -323,16 +320,8 @@ class SkinUtils:
         # nb don't let a non-template shadow a template
         obj = getattr(self.folder(), name, None)
         if not isTemplate(obj):
-            if not self.inCMF():
-                obj = STANDARD_TEMPLATES.get(name,
-                      PLONE_TEMPLATES.get(name,
-                      None))
-            else:
-                obj = PLONE_TEMPLATES.get(name,
-                      STANDARD_TEMPLATES.get(name,
-                      None))
-        if not isTemplate(obj):
-            obj = STANDARD_TEMPLATES['badtemplate']
+            obj = STANDARD_TEMPLATES.get(name,
+                                         STANDARD_TEMPLATES['badtemplate'])
         # make sure both folder and page are in the context
         # to set container and here
         return obj.__of__(self.folder()).__of__(self)
