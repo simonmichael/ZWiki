@@ -62,6 +62,7 @@ class PageAdminSupport:
              _('You are not authorized to upgrade all pages.') + \
              _('(folder -> Manage properties)'))
         
+        batch = int(batch)
         if render: BLATHER('upgrading and pre-rendering all pages:')
         else: BLATHER('upgrading all pages:')
         starttime = clock()
