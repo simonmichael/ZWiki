@@ -127,8 +127,7 @@ from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from Products.PageTemplates.Expressions import SecureModuleImporter
 
 from Defaults import PAGE_METATYPE
-from Utils import BLATHER,formattedTraceback
-from Regexps import htmlheaderexpr, htmlfooterexpr, htmlbodyexpr
+from Utils import BLATHER, formattedTraceback
 from I18n import _, DTMLFile, HTMLFile
 
 
@@ -210,16 +209,6 @@ def isZwikiPage(obj):
     return getattr(obj,'meta_type',None) in (
         PAGE_METATYPE,
         )
-
-def onlyBodyFrom(t):
-    # XXX these can be expensive, for now just skip if there's a problem
-    try:
-        t = re.sub(htmlheaderexpr,'',t)
-        t = re.sub(htmlfooterexpr,'',t)
-    except RuntimeError: pass
-    return t
-    # maybe better, but more inclined to mess with valid text ?
-    #return re.sub(htmlbodyexpr, r'\1', t)
 
 def addErrorTo(text,error):
     return """<div class="error">%s</div>\n%s""" % (error,text)

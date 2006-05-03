@@ -466,7 +466,6 @@ class PluginTracker:
         """
         Render the issue properties form as a (customizable) HTML fragment.
         """
-        #return onlyBodyFrom(
         return self.getSkinTemplate('issuepropertiesform')(self,REQUEST)
 
     security.declareProtected(Permissions.View, 'trackerUrl')

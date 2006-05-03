@@ -28,7 +28,6 @@ from Defaults import DISABLE_JAVASCRIPT, LARGE_FILE_SIZE, LEAVE_PLACEHOLDER
 import Permissions
 from Regexps import javascriptexpr, htmlheaderexpr, htmlfooterexpr
 from Utils import get_transaction, BLATHER, parseHeadersBody
-from Views import onlyBodyFrom
 from I18n import _
 
 
@@ -869,6 +868,15 @@ class PageEditingSupport:
             t = re.sub(javascriptexpr,r'&lt;disabled \1&gt;',t)
 
         # strip out HTML header tags if present
+        def onlyBodyFrom(t):
+            # XXX these can be expensive, for now just skip if there's a problem
+            try:
+                t = re.sub(htmlheaderexpr,'',t)
+                t = re.sub(htmlfooterexpr,'',t)
+            except RuntimeError: pass
+            return t
+            # maybe better, but more inclined to mess with valid text ?
+            #return re.sub(htmlbodyexpr, r'\1', t)
         t = onlyBodyFrom(t)
 
         return t
