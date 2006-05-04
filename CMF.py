@@ -26,7 +26,6 @@ else:
     from Acquisition import aq_base, aq_inner, aq_parent
     from OFS.DTMLDocument import DTMLDocument
     from Products.CMFCore.PortalContent import PortalContent
-    from Products.CMFCore.utils import _getViewFor
     from Products.CMFDefault.SkinnedFolder import SkinnedFolder
     from Products import CMFDefault
     from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
