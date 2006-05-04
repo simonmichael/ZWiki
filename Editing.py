@@ -836,6 +836,18 @@ class PageEditingSupport:
                     raiseSpamError(_("exceeded max_anonymous_links"),
                                    _("adding of external links by anonymous authors is restricted"))
 
+        # and a similar check for identified users
+        # XXX simplify ? one property for both ?
+        prop = 'max_identified_links'
+        # we'll handle either an int or string property
+        if (hasattr(self.folder(), prop)):
+            try: max = int(getattr(self.folder(), prop))
+            except ValueError: max = None
+            if max is not None:
+                if len(re.findall(r'https?://',t)) > max:
+                    raiseSpamError(_("exceeded max_identified_links"),
+                                   _("adding of external links by cookie-identified authors is restricted"))
+
     def cleanupText(self, t):
         """
         Do some cleanup of incoming text, also block spam links.
