@@ -251,6 +251,8 @@ TEMPLATES['stylesheet'] = loadStylesheetFile('stylesheet.css')
 # we'll save the list of initial ZPT ids and check only these
 PAGETEMPLATEIDS = [t for t in TEMPLATES.keys()
                    if isinstance(TEMPLATES[t],PageTemplateFile)]
+#XXX temp - need at least this too, it defines a macro
+PAGETEMPLATEIDS.extend(['ratingform'])
 MACROS = {}
 def getmacros(self):
     """
