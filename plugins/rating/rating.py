@@ -120,6 +120,19 @@ class PluginRating:
         """
         return self.votes().get(self.usernameFrom(REQUEST),None)
 
+    security.declareProtected(Permissions.View, 'myVotes')
+    def myVotes(self,REQUEST=None):
+        """
+        What votes have I recorded throughout the wiki ?
+
+        Returns a dictionary of page name:vote string pairs.
+        """
+        username = self.usernameFrom(REQUEST)
+        return {}.update(
+            [(p.pageName(), p.votes().get(username,None))
+             for p in self.pageObjects()
+             if username in p.votes().keys()])
+
     security.declareProtected(Permissions.View, 'rating')
     def rating(self):
         """
