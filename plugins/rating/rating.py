@@ -127,12 +127,23 @@ class PluginRating:
 
         Returns a dictionary of page name:vote string pairs.
         """
+        REQUEST = REQUEST or self.REQUEST
         username = self.usernameFrom(REQUEST)
-        return {}.update(
+        d = {}
+        d.update(
             [(p.pageName(), p.votes().get(username,None))
              for p in self.pageObjects()
              if username in p.votes().keys()])
+        return d
 
+    security.declareProtected(Permissions.View, 'myvotes')
+    def myvotes(self):
+        """
+        A web view for the above.
+        """
+        votes = self.myVotes()
+        return ''.join(['%2s %s\n' % (votes[p], p) for p in votes.keys()])
+        
     security.declareProtected(Permissions.View, 'rating')
     def rating(self):
         """
