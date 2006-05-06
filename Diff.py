@@ -83,7 +83,7 @@ class PageDiffSupport:
 
     def history(self):
         """
-        Return the list of edit history entries (corresponding to revisions).
+        Return the list of ZODB transaction history entries.
 
         This is an alias for manage_change_history and is fairly
         limited. History entries may relate to things other than text
@@ -119,7 +119,7 @@ class PageDiffSupport:
         """
         rev = int(rev)
         try:
-            historyentry = self.history()[rev-1]
+            historyentry = self.history()[rev]
             key = historyentry['key']
             serial = apply(pack, ('>HHHH',)+tuple(map(atoi, split(key,'.'))))
             return historicalRevision(self, serial)
