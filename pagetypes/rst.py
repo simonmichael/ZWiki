@@ -100,11 +100,14 @@ class PageTypeRst(PageTypeBase):
     def linkFile(self, page, id, path):
         return '\n\n!`%s`__\n\n__ %s\n' % (id, path)
 
+    # split and merge.. these are trickier than they seemed at first
+    
     def split(self, page):
         """
         Move this page's top-level sections to sub-pages.
 
         Calls docutils to parse the text properly.
+        Do we need to adjust heading styles ?
         """
         d = new_document(
             page.pageName(),
@@ -112,7 +115,7 @@ class PageTypeRst(PageTypeBase):
         Parser().parse(page.text(), d)
         sections = [s for s in d.traverse() if isinstance(s,section)]
         # assume title is first element and body is the rest
-        # create sub-pages
+        # create a sub-page for each section
         for s in sections:
             page.create(
                 page=s[0].astext(),
@@ -123,9 +126,38 @@ class PageTypeRst(PageTypeBase):
                 [p.astext() for p in d[:d.first_child_matching_class(section)]]))
         return 
 
-    #def merge(self, page):
-    #    for p in page.offspringNesting():
+    # XXX unfinished
+    def merge(self, page):
+        """
+        Merge sub-pages as sections of this page.
 
+        This merges all offspring, not just immediate children.
+        """
+        #get a rst parse tree of the current page
+        d = new_document(
+            page.pageName(),
+            OptionParser(components=(Parser,)).get_default_values())
+        Parser().parse(page.text(), d)
+        #walk the offspring, adding as elements to the tree and deleting
+        def walk(p):
+            d2 = new_document(
+                p.pageName(),
+                OptionParser(components=(Parser,)).get_default_values())
+            Parser().parse(p.text(), d2)
+            d += d2.traverse()
+            for c in page.childrenNesting():
+                c = p.pageWithName(c)
+                walk(c)
+                c.delete()
+        walk(page)
+        #convert the tree back to source text and update this page
+        page.edit(text=d.astext())
+
+        #or: walk the offspring, adding as text to this page with
+        #appropriate headings, and deleting
+        #need to adjust headings ?
+        #for p in page.offspringNesting():
+        #    pass
 
 registerPageType(PageTypeRst)
 

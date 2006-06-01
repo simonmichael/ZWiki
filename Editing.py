@@ -1056,6 +1056,7 @@ class PageEditingSupport:
         """This wiki's default page type."""
         return self.allowedPageTypes()[0]
 
+    security.declareProtected(Permissions.Add, 'split')
     def split(self):
         """
         Move this page's major sections to sub-pages, if supported.
@@ -1068,6 +1069,7 @@ class PageEditingSupport:
         """
         return self.pageType().split(self)
     
+    security.declareProtected(Permissions.Delete, 'merge')
     def merge(self):
         """
         Merge sub-pages as sections of this page, if supported.
