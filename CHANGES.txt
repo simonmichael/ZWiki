@@ -1,3 +1,64 @@
+    Summary
+
+        Miscellaneous view-related and general enhancements.
+
+    Upgrade notes
+
+        CMF/Plone users: the zwiki_standard and zwiki_plone skin layers
+	have been replaced by a single zwiki layer. Re-install Zwiki in
+	your CMF/Plone sites, using Plone's add/remove products or CMF's
+	quickinstaller, to register the new skin layer. Also remove the
+	zwiki_standard and zwiki_plone skin layers from your skins in
+	portal_skins -> Properties.
+        
+    Changes
+
+      Installing
+
+        * cleaned up ZMI Add ZWiki and Add ZWiki Page forms
+
+        * remove _getViewFor import that broke with CMF 2.0
+
+        * fix upgradeAll's batch option
+
+      Configuring
+
+      Browsing
+
+        * /myvotes view shows your votes in this wiki
+
+        * highlight your current vote for this page, if any
+
+      Editing
+
+        * support a max_identified_links property also, for
+	  cookie-identified users (for now)
+          
+        * edit history enhancements, a more useful diff browser and more
+	  powerful revert methods. Renames can now be reverted, reverting
+	  is more reliable, and appropriate mail notifications are sent.
+
+      Page hierarchy
+
+      Mail
+
+      Issue tracking
+
+      Translations
+
+      General
+        
+        * replace zwiki_standard and zwiki_plone with just skins/zwiki
+
+        * Views code cleanup
+
+        * simplify definition of view macros and make them refresh
+	  immediately in debug mode
+
+        * more code docs
+
+        * don't bother identifying the catalog in event log
+
 Zwiki 0.53.0 2006/05/01
 
     Summary
