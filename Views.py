@@ -362,7 +362,7 @@ class SkinViews:
             """),
             _("To discard your changes and try again, click OK."),
             ),
-            action=self.page_url()+'/editform')
+            action=self.pageUrl()+'/editform')
 
     security.declarePublic('denied')
     def denied(self, reason=None, REQUEST=None):
@@ -419,7 +419,7 @@ class SkinViews:
             _("or"),
             _("To discard your changes and start again, click OK"),
             ),
-            action=self.page_url()+'/editform')
+            action=self.pageUrl()+'/editform')
 
     security.declareProtected(Permissions.Edit, 'editform')
     def editform(self, REQUEST=None, page=None, text=None, action='Change'):

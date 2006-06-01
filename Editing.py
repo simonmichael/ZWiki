@@ -572,7 +572,7 @@ class PageEditingSupport:
                 subject='(renamed)')
 
         BLATHER('rename complete')
-        if REQUEST: REQUEST.RESPONSE.redirect(self.page_url())
+        if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl())
 
     def changeIdPreservingCreator(self,newid):
         creation_time, creator, creator_ip = \

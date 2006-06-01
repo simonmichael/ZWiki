@@ -61,7 +61,7 @@
                accesskey="b"
                ><span i18n:translate="">backlinks</span></a>
             <a tal:condition="python:here.isMailoutEnabled()"
-               tal:attributes="href python:here.page_url() + '/subscribeform'"
+               tal:attributes="href python:here.pageUrl() + '/subscribeform'"
                href="page_url/subscribeform" 
                accesskey="m"
                title="configure email subscription to this page or site" 
@@ -80,7 +80,7 @@
                ><span i18n:translate="">diff</span></a>
             <a tal:condition="python:user.has_permission('Zwiki: Edit pages',here)"
                tal:attributes="
-                               href python:here.page_url() + '/editform';
+                               href python:here.pageUrl() + '/editform';
                                title python: here.translateHelper('edit-page') + ' (' + here.linkTitle() + ')'"
                href="page_url/editform" 
                title="edit this page (last edited n days ago by so-and-so)"

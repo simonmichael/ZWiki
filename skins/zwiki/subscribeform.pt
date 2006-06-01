@@ -23,7 +23,7 @@
         <form method="post" 
               enctype="multipart/form-data"
               action="page_url/subscribeform" 
-              tal:attributes="action string:${here/page_url}/subscribeform"
+              tal:attributes="action string:${here/pageUrl}/subscribeform"
               tal:define="
                           email here/usernameOrEmailOfSubscriber;
                           inCMFAndLoggedIn python:here.inCMF() and not container.portal_membership.isAnonymousUser();
@@ -45,7 +45,7 @@
               Subscribers receive a copy of all edits via email.
               Or return to
             </span>
-            <a href="page_url" tal:attributes="href here/page_url" 
+            <a href="page_url" tal:attributes="href here/pageUrl" 
                tal:content="here/pageName">Page name</a>.
           </p>
           <div tal:condition="inCMFAndLoggedIn">

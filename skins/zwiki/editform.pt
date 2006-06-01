@@ -43,7 +43,7 @@
       <metal:macro metal:use-macro="here/macros/accesskeys" />
       <div class="formcontent">
         <form method="post" enctype="multipart/form-data" action="" 
-              tal:attributes="action string:${here/page_url}">
+              tal:attributes="action string:${here/pageUrl}">
           <input name="timeStamp" type="hidden" value="" 
                  tal:attributes="value timestamp" />
           <input name="page" type="hidden" value="page"

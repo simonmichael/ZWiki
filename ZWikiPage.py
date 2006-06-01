@@ -294,7 +294,7 @@ class ZWikiPage(
         if hasattr(self,'_v_cooked'):
             delattr(self,'_v_cooked')
             delattr(self,'_v_blocks')
-        if REQUEST: REQUEST.RESPONSE.redirect(self.page_url())
+        if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl())
 
     def cookDtmlIfNeeded(self):
         if self.dtmlAllowed() and self.hasDynamicContent(): self.cook()
@@ -576,7 +576,7 @@ class ZWikiPage(
             if re.search(
                 r'(?s)<a name="ref%s"' % (re.escape(linknobrackets)),text):
                 return '<a href="%s#ref%s" title="footnote %s">[%s]</a>' % (
-                    self.page_url(),linknobrackets,
+                    self.pageUrl(),linknobrackets,
                     linknobrackets,linknobrackets)
 
         # is it a bare URL ?

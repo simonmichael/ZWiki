@@ -226,7 +226,7 @@ class PageTypeBaseHtml(PageTypeBase):
         if username: heading = heading + '%s, ' % (username)
         if message_id:
             heading += ' <a href="%s#msg%s">%s</a>' % \
-                       (page.page_url(),
+                       (page.pageUrl(),
                         re.sub(r'^<(.*)>$',r'\1',message_id),
                         html_quote(time or ''))
             inreplytobit = '&in_reply_to='+quote(message_id)
@@ -234,11 +234,11 @@ class PageTypeBaseHtml(PageTypeBase):
             heading += html_quote(time or '')
             inreplytobit = ''
         #heading += ( (' <a href="%s?subject=%s%s#bottom">' 
-        #             % (page.page_url(),quote(subject or ''),inreplytobit)) +
+        #             % (page.pageUrl(),quote(subject or ''),inreplytobit)) +
         #             + _("reply") + '</a>' )
         
         heading += ' <a class="visualNoPrint" href="%s?subject=%s%s#bottom">reply</a>'\
-                   % (page.page_url(),quote(subject or ''),inreplytobit)
+                   % (page.pageUrl(),quote(subject or ''),inreplytobit)
 
                      
         heading += '<br />\n'

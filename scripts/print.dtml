@@ -20,7 +20,7 @@ print(text)
 <!-- display header -->
 <dtml-unless "REQUEST.get('no_print_header',0)">
 <p>
-<table width="100%"><tr><td><em>Printer friendly format for &dtml-page_url; 
+<table width="100%"><tr><td><em>Printer friendly format for &dtml-pageUrl; 
 <dtml-if "REQUEST.get('with_children',0)">
 and all child pages</dtml-if>
 :</em></td>

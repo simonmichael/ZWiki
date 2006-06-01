@@ -305,7 +305,7 @@ class PageAdminSupport:
                         text = m.group(3)
                         self.create(name,text=text)
         if REQUEST:
-            REQUEST.RESPONSE.redirect(self.page_url())
+            REQUEST.RESPONSE.redirect(self.pageUrl())
 
     #XXX does this not attempt to create everything ?
     security.declareProtected('Manage properties', 'setupPages')
@@ -332,7 +332,7 @@ class PageAdminSupport:
                     text = m.group(3)
                     self.create(name,text=text)
         if REQUEST:
-            REQUEST.RESPONSE.redirect(self.page_url())
+            REQUEST.RESPONSE.redirect(self.pageUrl())
 
     security.declareProtected('Manage properties', 'setupDtmlMethods')
     def setupDtmlMethods(self,REQUEST=None):
@@ -357,7 +357,7 @@ class PageAdminSupport:
                     title='',
                     file=open(os.path.join(d,m+'.dtml'),'r').read())
         if REQUEST:
-            REQUEST.RESPONSE.redirect(self.page_url())
+            REQUEST.RESPONSE.redirect(self.pageUrl())
 
     security.declareProtected('Manage properties', 'setupProperties')
     def setupProperties(self,REQUEST=None):
@@ -374,7 +374,7 @@ class PageAdminSupport:
         """
         pass
         if REQUEST:
-            REQUEST.RESPONSE.redirect(self.page_url())
+            REQUEST.RESPONSE.redirect(self.pageUrl())
 
     security.declareProtected('Manage properties', 'setupCatalog')
     def setupCatalog(self,REQUEST=None,reindex=1):
@@ -422,6 +422,6 @@ class PageAdminSupport:
                             % (n,p.id(),formattedTraceback()))
             BLATHER('indexing complete, %d pages processed' % n)
         if REQUEST:
-            REQUEST.RESPONSE.redirect(self.page_url())
+            REQUEST.RESPONSE.redirect(self.pageUrl())
             
 InitializeClass(PageAdminSupport)

@@ -23,7 +23,7 @@
       <metal:macro metal:use-macro="here/macros/accesskeys" />
       <h1 i18n:translate="">Edit history</h1>
       <div class="formcontent">
-        <form method="GET" action="" tal:attributes="action here/page_url">
+        <form method="GET" action="" tal:attributes="action here/pageUrl">
           <input type="hidden" name="currentRevision" tal:attributes="value revA" />
 
           <table border=0 cellspacing=0 width="100%">

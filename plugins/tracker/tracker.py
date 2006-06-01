@@ -357,7 +357,7 @@ class PluginTracker:
             #self.setLastEditor(REQUEST)
             #self.reindex_object()
         if REQUEST:
-            REQUEST.RESPONSE.redirect(self.page_url())
+            REQUEST.RESPONSE.redirect(self.pageUrl())
 
     def category_index(self):
         """helper method to facilitate sorting catalog results"""
