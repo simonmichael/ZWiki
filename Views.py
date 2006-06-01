@@ -100,8 +100,6 @@ Other notes
 
 - from 0.54, all of the built in filesystem-based templates, dtml methods
   and macros refresh when running in debug mode.
-  XXX there might be a problem with zodb-based customization of macros
-  not being possible, though
 
 """
 
@@ -248,7 +246,8 @@ TEMPLATES['stylesheet'] = loadStylesheetFile('stylesheet.css')
 # access, to ensure they are always fresh in debug mode - or when a zodb
 # template is customized. Right ?  So we have to check for customized
 # templates each time. getmacros is called a lot, are we getting into
-# performance concerns yet ?
+# performance concerns yet ? This seems a lot of work, there must
+# be some simpler acceptable setup we can offer.
 # we'll save the list of initial ZPT ids and check only these
 PAGETEMPLATEIDS = [t for t in TEMPLATES.keys()
                    if isinstance(TEMPLATES[t],PageTemplateFile)]

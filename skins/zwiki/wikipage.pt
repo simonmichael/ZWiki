@@ -6,7 +6,7 @@
     <metal:block metal:fill-slot="head_slot">
       <metal:block metal:use-macro="here/macros/pagesearchtags" />
     </metal:block>
-    <!-- use plone main_template's css_slot to override plone styles -->
+    <!-- override plone styles via main_template's css_slot:  -->
     <metal:block metal:fill-slot="css_slot">
       <link rel="stylesheet" type="text/css" href="" 
             tal:attributes="href string:${here/defaultPageUrl}/stylesheet" 

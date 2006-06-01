@@ -593,7 +593,7 @@ class OutlineManager:
 
     def childrenNesting(self):
         """
-        Return a nesting representing this page's ancestors and children.
+        Return a nesting representing this page's children.
         """
         return self.wikiOutline().children(self.pageName())
 
