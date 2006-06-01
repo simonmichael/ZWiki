@@ -124,7 +124,9 @@ class PageTypeRst(PageTypeBase):
         page.edit(
             text=d.child_text_separator.join(
                 [p.astext() for p in d[:d.first_child_matching_class(section)]]))
-        return 
+        
+        if getattr(page,'REQUEST',None):
+            page.REQUEST.RESPONSE.redirect(page.pageUrl())
 
     # XXX unfinished
     def merge(self, page):
@@ -158,6 +160,9 @@ class PageTypeRst(PageTypeBase):
         #need to adjust headings ?
         #for p in page.offspringNesting():
         #    pass
+
+        if getattr(page,'REQUEST',None):
+            page.REQUEST.RESPONSE.redirect(page.pageUrl())
 
 registerPageType(PageTypeRst)
 
