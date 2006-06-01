@@ -89,7 +89,7 @@ class PageTypeBase:
         problematic.
         """
         # make a new page object, like in create
-        p = page.__class__(source_string='', __name__=page.getId())
+        p = page.__class__(__name__=page.getId())
         p.title = page.pageName()
         p = p.__of__(page.aq_parent)
         p.setPageType(self.id())

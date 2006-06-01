@@ -1429,33 +1429,26 @@ def stripDelimitersFrom(link):
 # ZMI page creation form
 manage_addZWikiPageForm = DTMLFile('skins/zwiki/addwikipageform', globals())
 
-def manage_addZWikiPage(self, id, title='', file='', REQUEST=None,
-                        submit=None):
+def manage_addZWikiPage(self, name, REQUEST=None):
     """
-    Add a ZWiki Page object with the contents of file.
-
-    Usually zwiki pages are created by clicking on ? (via create); this
-    allows them to be added in the standard ZMI way. These should give
-    mostly similar results; refactor the two methods together if possible.
+    Add a new ZWiki Page to the current folder, in the ZMI.
     """
-    # create page and initialize in proper order, as in create.
-    p = ZWikiPage(source_string='', __name__=id)
+    # create page
+    # this should be done in the proper order. Based on create()
+    # XXX extract common method ?
+    id = ZWikiPage().canonicalIdFrom(name)
+    p = ZWikiPage(__name__=id)
+    p.title=name
     newid = self._setObject(id,p)
     p = getattr(self,newid)
-    p.title=title
     p.setCreator(REQUEST)
     p.setLastEditor(REQUEST)
     p._setOwnership(REQUEST)
-    p.setPageType(getattr(self,'allowed_page_types',[None])[0])
-    text = file
-    if type(text) is not StringType: text=text.read()
-    p.setText(text or '',REQUEST)
-    p.wikiOutline().add(p.pageName()) # update the wiki outline
-    p.index_object()
-    if REQUEST is not None:
-        try: u=self.DestinationURL()
-        except: u=REQUEST['URL1']
-        if submit==" Add and Edit ": u="%s/%s" % (u,quote(id))
-        REQUEST.RESPONSE.redirect(u+'/manage_main')
-    return ''
-
+    p.setPageType(p.defaultPageType())
+    p.setText('',REQUEST) # no harm
+    #p.index_object() # should be no need
+    p.wikiOutline().add(p.pageName())
+    if REQUEST:
+        if REQUEST.get('redirect','')=='page': u = p.pageUrl()
+        else: u = REQUEST['URL1']+'/manage_main'
+        REQUEST.RESPONSE.redirect(u)

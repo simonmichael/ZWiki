@@ -73,7 +73,7 @@ class PageEditingSupport:
 
         # make a new page object and situate it in the wiki
         # get a hold of it's acquisition wrapper
-        p = self.__class__(source_string='', __name__=id)
+        p = self.__class__(__name__=id)
         # set title now since manage_afterAdd will use it for wiki outline
         p.title = name
         # newid should be the same as id, but don't assume
