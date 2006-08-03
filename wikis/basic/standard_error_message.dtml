@@ -34,7 +34,7 @@ available, to reduce mail noise from test pages.
     </p>
     <p>
       Click here to 
-      <form action="<dtml-var "here.pageUrl()">/editform"
+      <form action="<dtml-var "here.pageUrl()">/createform"
             method="GET" enctype="multipart/form-data">
         <input type="hidden" name="page" value="&dtml-searchexpr;">
         <input type="submit" value="create this page">
