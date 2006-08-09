@@ -372,7 +372,7 @@ class PageEditingSupport:
             # do we have permission ?
             if (not
                 (self.checkPermission(Permissions.Edit, self) or
-                 (self.checkPermission(Permissions.Append, self)
+                 (self.checkPermission(Permissions.Comment, self)
                   and find(new,old) == 0))):
                 raise 'Unauthorized', (
                     _('You are not authorized to edit this ZWiki Page.'))
@@ -399,7 +399,7 @@ class PageEditingSupport:
             return 0
         if (not
             (self.checkPermission(Permissions.Edit, self) or
-             (self.checkPermission(Permissions.Append, self)
+             (self.checkPermission(Permissions.Comment, self)
               and find(self.cleanupText(text),self.read()) == 0))):
             raise 'Unauthorized', (
                 _('You are not authorized to edit this ZWiki Page.'))
@@ -653,7 +653,7 @@ class PageEditingSupport:
                 raise 'Unauthorized', (
                     _('You are not authorized to upload files here.'))
             if not (self.checkPermission(Permissions.Edit, self) or
-                    self.checkPermission(Permissions.Append, self)):
+                    self.checkPermission(Permissions.Comment, self)):
                 raise 'Unauthorized', (
                     _('You are not authorized to add a link on this ZWiki Page.'))
             # can we check file's size ?
