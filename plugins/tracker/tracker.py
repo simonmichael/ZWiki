@@ -236,6 +236,10 @@ class PluginTracker:
         IssueTracker page if it exists, or at the top level to avoid
         having issues scattered everywhere. Better ideas ?
         """
+        if not self.checkSufficientId(REQUEST):
+            return self.denied(
+                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
+
         # XXX hardcoded.. cf trackerUrl
         if self.pageWithName('IssueTracker'): parents = ['IssueTracker']
         else: parents = []
@@ -260,6 +264,10 @@ class PluginTracker:
 
         Returns the page name that was used.
         """
+        if not self.checkSufficientId(REQUEST):
+            return self.denied(
+                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
+
         newnumber = self.nextIssueNumber(REQUEST=REQUEST)
         pagename=self.pageNameFromIssueNumberAndName(newnumber,name)
         self.createIssue(pagename, text, None, 
