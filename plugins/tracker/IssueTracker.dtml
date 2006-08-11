@@ -441,8 +441,8 @@
     newstatus="_.getattr(REQUEST,'newstatus','open')"
     >
      <dtml-call "createNextIssue(
-       newtitle,newtext,newcategory,newseverity,newstatus,REQUEST=REQUEST)">
-     <dtml-call "RESPONSE.redirect(URL+recentlisting+scrollto)">
+       newtitle,newtext,newcategory,newseverity,newstatus,REQUEST=REQUEST)
+       # reloads the tracker page">
    </dtml-let>
  </dtml-if>
  

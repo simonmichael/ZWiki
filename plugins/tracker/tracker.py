@@ -223,55 +223,62 @@ class PluginTracker:
                     category='', severity='', status='', REQUEST=None,
                     sendmail=1):
         """
-        Convenience method for creating an issue page.
+        Create a page representing an issue with the specified details.
 
-        Security notes: create will check for page creation permission.
-        Sets title/category/severity/status properties without requiring
-        Manage properties permission.
+        Security notes: sets title/category/severity/status properties
+        without requiring Manage properties permission.
+        create() will also check the edits_need_username property and
+        redirect us to /denied if appropriate.
 
-        XXX only old issue tracker dtml pages call this, AFAIK.  
-        Clean up args. pageid is really pagename.  title is not used.
-
-        We will try to place the issue under a suitable parent - the
+        We try to place the issue under a suitable parent - the
         IssueTracker page if it exists, or at the top level to avoid
         having issues scattered everywhere. Better ideas ?
-        """
-        if not self.checkSufficientId(REQUEST):
-            return self.denied(
-                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
 
+        Returns the new page name or None.
+
+        XXX clean up old args kept for backwards compatibility. Only
+        really old issue tracker dtml pages call this directly.
+        pageid is really pagename.  title is not used.
+        """
         # XXX hardcoded.. cf trackerUrl
         if self.pageWithName('IssueTracker'): parents = ['IssueTracker']
         else: parents = []
-        self.create(pageid,text=text,REQUEST=REQUEST,parents=parents,
-                    sendmail=sendmail)
-        issue = self.pageWithName(pageid)
-        issue.manage_addProperty('category','issue_categories','selection')
-        issue.manage_addProperty('severity','issue_severities','selection')
-        issue.manage_addProperty('status','issue_statuses','selection')
-        issue.manage_changeProperties(title=pageid,
-                                      category=category,
-                                      severity=severity,
-                                      status=status
-                                      )
-        self.index_object()
+        # might fail due to edits_need_username
+        name = self.create(pageid,text=text,REQUEST=REQUEST,parents=parents,
+                           sendmail=sendmail)
+        if name:
+            issue = self.pageWithName(pageid)
+            issue.manage_addProperty('category','issue_categories','selection')
+            issue.manage_addProperty('severity','issue_severities','selection')
+            issue.manage_addProperty('status','issue_statuses','selection')
+            issue.manage_changeProperties(title=pageid,
+                                          category=category,
+                                          severity=severity,
+                                          status=status
+                                          )
+            #self.index_object() # XXX why ??
+            return name
+        else:
+            return None
 
     security.declareProtected(Permissions.Add, 'createNextIssue')
     def createNextIssue(self,name='',text='',category='',severity='',status='',
                         REQUEST=None,sendmail=1):
         """
-        Create a new issue page, using the next available issue number.
+        Add a new issue page, using the next available number, and redirect.
 
-        Returns the page name that was used.
+        createIssue() (really create()) will also check the
+        edits_need_username property and may redirect to an error.
+        Otherwise this will redirect to the tracker url (when called
+        via the web). Returns the new page's name or None.
         """
-        if not self.checkSufficientId(REQUEST):
-            return self.denied(
-                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
-
         newnumber = self.nextIssueNumber(REQUEST=REQUEST)
         pagename=self.pageNameFromIssueNumberAndName(newnumber,name)
-        self.createIssue(pagename, text, None, 
-                         category, severity, status, REQUEST,sendmail)
+        pagename=self.createIssue(pagename,text,None, 
+                                  category,severity,status,REQUEST,sendmail)
+        if pagename:
+            if REQUEST:
+                REQUEST.RESPONSE.redirect(self.trackerUrl())
         return pagename
 
     security.declareProtected(Permissions.View, 'nextIssueNumber')

@@ -59,13 +59,17 @@ class PageEditingSupport:
         - can handle a rename during page creation. This helps CMF/Plone
         and is occasionally useful.
         
-        - redirects to the new page if appropriate
+        - checks the edit_needs_username property as well as permissions.
+
+        - redirects to the new page or to the denied view if appropriate
+
+        - returns the new page's name or None
 
         """
         if not self.checkSufficientId(REQUEST):
-            return self.denied(
-                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
-
+            if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl()+'/denied')
+            return None
+        
         name = unquote(page or pagename)
         id = self.canonicalIdFrom(name)
 
@@ -119,12 +123,13 @@ class PageEditingSupport:
                 message_id=self.messageIdFromTime(p.creationTime())
                 )
         # and move on
-        if REQUEST is not None:
+        if REQUEST:
             try:
                 u = (REQUEST.get('redirectURL',None) or
                      REQUEST['URL2']+'/'+ quote(p.id()))
                 REQUEST.RESPONSE.redirect(u)
             except KeyError: pass
+        return name
 
     security.declarePublic('isDavLocked')
     def isDavLocked(self):
