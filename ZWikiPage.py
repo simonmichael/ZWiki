@@ -316,8 +316,13 @@ class ZWikiPage(
         # optimization: to save memory, avoid unnecessarily calling DTML
         # and generating _v_blocks data
         if not self.hasDynamicContent(): return self.preRendered()
-        return DTMLDocument.__call__(self,client,REQUEST,RESPONSE,**kw)
-
+        return DTMLDocument.__call__(
+            self.__of__(self.folder()), # ensure dtml in pages can acquire
+            client,
+            REQUEST,
+            RESPONSE,
+            **kw)
+    
     def renderMidsectionIn(self, text, **kw):
         """
         Insert some final things between the rendered document and discussion.
