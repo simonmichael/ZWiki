@@ -287,3 +287,15 @@ lrefresh: lrefresh-$(PRODUCT)
 lrefresh-%:
 	@echo refreshing product $* on $(LHOST)
 	curl -n -sS -o.curllog 'http://$(LHOST)/Control_Panel/Products/$*/manage_performRefresh'
+
+SITES=zwiki.org zopewiki.org plone.demo.zwiki.org
+THREADS=2 # same as in zope.conf
+LOADALL=ab -n$(THREADS) -c$(THREADS)
+
+warm-zodb-cache warm:
+	for site in $(SITES); do \
+	  $(LOADALL) "http://$$site/TestPage/recentchanges?period=ever&summaries=on"; \
+	  $(LOADALL) "http://$$site/TestPage/searchwiki?expr="; \
+          done
+	$(LOADALL) http://zwiki.org/RecycleBin
+	$(LOADALL) http://zwiki.org/FileUploads
