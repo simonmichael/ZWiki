@@ -136,13 +136,16 @@ class PluginRating:
              if username in p.votes().keys()])
         return d
 
+    # XXX
     security.declareProtected(Permissions.View, 'myvotes')
     def myvotes(self):
         """
-        A web view for the above.
+        A temporary web view for the above. 
         """
         votes = self.myVotes()
-        return ''.join(['%2s %s\n' % (votes[p], p) for p in votes.keys()])
+        return '<pre>%s</pre>' % (
+            ''.join(['%2s %s\n' % (votes[p], self.renderLinkToPage(p))
+                    for p in votes.keys()]))
         
     security.declareProtected(Permissions.View, 'rating')
     def rating(self):
