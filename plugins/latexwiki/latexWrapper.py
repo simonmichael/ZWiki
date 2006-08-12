@@ -109,22 +109,18 @@ def renderNonexistingImages(latexCodeList, charheightpx, alignfudge, resfudge, *
     os.system('cd %s; rm -f *.log *.aux *.tex *.pdf *.dvi *.ps %s-???.png'%(workingDir, fName))
     return escape(errors)
 
-def ensureWorkingDir(path):
-    """
-    Check the working directory exists and create if needed.
-    """
-    if not os.access(path,os.F_OK):
-        os.mkdir(path)
-    if not os.access(path,os.W_OK):
-        os.system('chmod u+rwx %s' % path)
-
 def runLatex(code, res, charheightpx, latexTemplate):
+    def ensureWorkingDirectory(path):
+        """Ensure this directory exists and is writable."""
+        if not os.access(path,os.F_OK): os.mkdir(path)
+        if not os.access(path,os.W_OK): os.system('chmod u+rwx %s' % path)
+
     texfileName = fileNameFor(code, charheightpx, '.tex')
     dvifileName = fileNameFor(code, charheightpx, '.dvi')
     psfileName = fileNameFor(code, charheightpx, '.ps')
     cmdLine = '%s %s' %(latexpath, texfileName)
 
-    ensureWorkingDir(workingDir)
+    ensureWorkingDirectory(workingDir)
     file = open(os.path.join(workingDir, texfileName), 'w')
     file.write(latexTemplate %(code,))
     file.close()
