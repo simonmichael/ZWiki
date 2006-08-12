@@ -97,7 +97,7 @@ def renderNonexistingImages(latexCodeList, charheightpx, alignfudge, resfudge, *
             im = Image.open(os.path.join(workingDir, imname))
             try:
                 im = align(im, charheightpx, alignfudge) # returns an RGBA image
-            except AlignError, data:
+            except (AlignError, ValueError), data:
                 raise LatexRenderError(str(data) + '\nThe code was:\n' + \
                     code+ '\nin the file %s'%(os.path.join(workingDir, imname)))
             if im.mode != 'RGBA':
