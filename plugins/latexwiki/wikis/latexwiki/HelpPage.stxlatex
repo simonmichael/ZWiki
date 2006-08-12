@@ -1,0 +1,179 @@
+This help page corresponds to Zwiki version 0.26.0.
+<dtml-var "'(This site is running '"><dtml-var zwiki_version><dtml-var "').'">
+Links beginning with "!ZWiki:..." lead to additional documentation on
+zwiki.org.
+
+"What's going on here ?":#whatisthis <br />
+"User interface":#ui <br />
+"Navigation":#navigation <br />
+"Subscription":#email <br />
+"Editing":#editing <br />
+"Formatting rules in a nutshell":#rules <br />
+"Finding out more":#more <br />
+
+<a name="whatisthis">What's going on here ?
+
+  This site is a wiki - a kind of collaborative website. (*wiki wiki* means quick.)
+  This site is running the Zwiki software - see ZWiki:WhatIsZwiki for more about that.
+
+  Wikis try to put as little as possible in the
+  way of people sharing useful content - often text, but also pictures and files.
+  Wikis are usually wide open and assume a cooperating community,
+  which in practice tends to work well.
+  Anyone can edit, add comments, and make new pages on the spot.
+  Like any medium, there are best practices which you'll discover in due course.
+
+  Intuitive naming and text formatting rules are used to simplify the process of
+  writing and linking pages.
+  The idea is to keep the text that people edit simple, so it's readable
+  as is, and, most importantly, editable by anyone, without sacrificing
+  attractive presentation.
+
+  Zwiki sites can also send out and receive comments and edits by email, 
+  effectively acting as a mail list where you can subscribe to topics of interest. 
+  If enabled, you'll see a "subscribe" link on each page.
+
+  For some basic definitions, try the ZWiki:ZwikiGlossary.
+
+<a name="ui">User interface
+
+  Zwiki's UI is quite customizable; the default interface with all permissions granted is described here.
+  (Currently, the major zwiki skins are "default":http://zwiki.org , 
+  "plone":http://plone.zwiki.org , and "commonplace":http://commonplacebook.org .)
+
+  If you see "full", "simple", "minimal" links, you can click them
+  to adjust the level of detail on screen.   Tip: if you can't
+  see one of the features described here, try clicking "full".
+  
+  You can set your user name, time zone and UI preferences in UserOptions ("preferences").
+
+<a name="navigation">Navigation
+
+  Each page in a wiki has a unique name, most often a WikiName - 
+  two or more capitalized words joined together
+  (Zwiki also allows trailing digits). 
+  When a page name appears in wiki text, it forms a link to that page.
+  If the page does not yet exist, a ? creation link will appear.
+
+  Pages may also have a [Free-form name],
+  which can be (almost) any word or phrase. 
+  Links which look like two wikinames joined by a colon lead to another site
+  (ZWiki:RemoteWikiLinks).
+
+  Zwiki additionally arranges pages in a hierarchy. You'll see this when browsing in full
+  mode.
+
+  - To return to the front page, click the site logo
+
+  - To see the page hierarchy, click "contents"
+
+  - To see an alphabetic index, click "index"
+
+  - To see recent activity in the wiki, click "changes"
+
+  - To see which pages link to this one, click the page title
+
+  - To see the recent edits to this page, click the "last edited by" link
+
+  - To jump to a known or semi-known page, enter the first part of it's name after the
+  last / in your browser's address field. Capitalization and spacing don't matter.
+
+  - To search the names and text of all pages, type in the search field and press enter
+
+  With a modern browser, you can use convenient quick-access keys 
+  (keyboard shortcuts) to navigate - see ZWiki:QuickReference.
+
+  See also ZWiki:HowToFindThings.
+
+<a name="email">Subscription
+
+  If you see a "subscribe" link, you can subscribe to this page or
+  the whole wiki to receive comments by mail, as follows: 
+
+  1. Click "subscribe"
+
+  2. if needed, enter your email address and click "Change"
+
+  3. click the button to toggle your page or wiki subscription status
+    (green means you are subscribed).
+
+  If configured by the site admin, subscribers may also send comments by mail.
+  Just reply to a comment, or send mail to the wiki's mail-in address.
+  Your mail will go to the page named in brackets in the subject
+  (or to a default page).
+
+<a name="editing"> Editing
+
+  You have full editing rights to any page, unless restricted by the site
+  admin. Note your comments may be received by many subscribers. To avoid
+  this, please use SandBox for testing.
+
+  - Add a comment using the form at the bottom of the page
+
+  - Click "edit" to change the page's text.
+    You may also be able to rename the page, upload a file, or choose other options here.
+  
+  - Create a new page by writing it's name on an existing page
+    (free-form names must be enclosed in brackets), 
+    then clicking the question mark which will appear beside it.
+
+  - In full mode, visit the backlinks screen to reparent the page
+    (place it in the hierarchy)
+
+  - After you have configured a user name, in full mode you may also use the 
+    page management form at the bottom of the screen to reparent, rename and delete pages. 
+
+
+<a name="rules"> 
+<table align="center" style="background-color:#eeeeff;border=thin black solid;padding=10;" width="75%" border=1><tr><td>
+
+Formatting rules in a nutshell
+
+   When you save a page, Zwiki normally applies standard ZWiki:TextFormattingRules - 
+   most often ZWiki:StructuredText, which is described here;
+   wiki linking rules; and some additional formatting for comments.
+
+   1. non-blank lines are run together to form a paragraph; 
+      paragraphs are separated by blank lines<br />
+
+   2. a one-line "paragraph" followed by a more-indented paragraph makes a
+      heading. Tip: you need only indent the first line.<br />
+
+   3. a paragraph beginning with - or a number followed by a space makes a bullet
+      or numbered list item; a more-indented list item starts a sub-list<br />
+
+   4. short text enclosed in 
+      &#42;...&#42; , 
+      &#42;&#42;...&#42;&#42; , 
+      &#95;...&#95; or 
+      &#39;...&#39; is *italic*, **bold**, _underlined_ or 'monospaced' respectively<br />
+
+   5. WikiName's, [Free-form name]s enclosed in brackets, ZWiki:RemoteWikiLinks , 
+      http://bare/urls , and "Structured Text links":http://zwiki.org/StructuredText are
+      made into hyperlinks
+
+   6. HTML tags may be added if necessary; on sites which permit it,
+      DTML (server-side code) may also be used <br />
+
+   7. short text enclosed in single quotes is quoted, ie
+      displayed in monospace font and protected from some of the above formatting. 
+      For reliable quoting of a body of text, indent it after a paragraph 
+      ending with a double colon ::
+
+       Like this (edit this page to see source).
+       This is the surest way to prevent WikiLinks, <HTML tags> and &dtml-tags;
+        and preserve
+         fixed-width formatting.
+
+   8. don't bother trying to learn all the text formatting rules and 
+      their interactions. Mimic the text around you;
+      when it does something unexpected, tweak it until it looks right; 
+      go to the docs or ask for help when you get really stuck or curious.
+
+</td></tr></table>
+
+<a name="more"> Finding out more
+
+  More about Zwiki: start at http://zwiki.org .
+
+  More about wiki in general: WikiWikiWeb:FrontPage , WikiWikiWeb:EvolutionOfaWikizen

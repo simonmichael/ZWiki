@@ -1,0 +1,85 @@
+LaTeX ... is the world standard for writing technical documents.  Authors in
+science and engineering are probably already familiar with it (or should be).
+If you've wrestled with and cursed at "equation editors", you will love LaTeX.
+
+What is most relevant for this site is *math*.  Citations are also under
+development (but this will be physics specific initially, for me), see my TODO.
+The following is borrowed from Winston Chang's "Latex cheat
+sheet":http://www.stdout.org/~winston/latex/.
+
+Math mode:
+
+  To use math mode in-line with text, surround the equation with &#36;, like
+  this !$x^2$ to make: $ x^2 $, or !\( x^2 \).  <br/>
+  To make a block equation use !\begin{equation} ...  \end{equation} like this:
+  \begin{equation}
+    x^2
+  \end{equation}
+  To make a block equation that is not numbered, use !\begin{equation*} ...
+  \end{equation*} or !\[ ... \] like this:
+  \begin{equation*}
+    x^2
+  \end{equation*}
+
+Basic constructs:
+
+\begin{tabular}{@{}l@{\hspace{1em}}l@{\hspace{2em}}l@{\hspace{1em}}l@{}}
+\verb!^{x}!             &  Superscript$^{x}$ &
+\verb!_{x}!             &  Subscript$_{x}$ \\
+\verb!\frac{x}{y}!      &  $\frac{x}{y}$ &
+\verb!\sum_{k=1}^n!     &  $\sum_{k=1}^n$ \\
+\verb!\sqrt[n]{x}!      &  $\sqrt[n]{x}$ &  \\
+\end{tabular}
+
+Math-mode symbols (this is a subset):
+
+\begin{tabular}{@{}l@{\hspace{1em}}l@{\hspace{2em}}l@{\hspace{1em}}l@{\hspace{2em}}l@{\hspace{1em}}l@{}}
+$\leq$          &  \verb!\leq!  &
+$\geq$          &  \verb!\geq!  &
+$\neq$          &  \verb!\neq!  \\
+$\cdot$         &  \verb!\cdot!  &
+$\times$        &  \verb!\times!  &
+$\div$          &  \verb!\div!  \\
+$\ast$          &  \verb!\ast!  &
+$\circ$         &  \verb!\circ!  &
+$\cdots$        &  \verb!\cdots!  \\
+$\alpha$        &  \verb!\alpha!  &
+$\beta$         &  \verb!\beta!  &
+$\gamma$        &  \verb!\gamma!  \\
+$\delta$        &  \verb!\delta!  &
+$\epsilon$      &  \verb!\epsilon!  &
+$\varepsilon$   &  \verb!\varepsilon!  \\
+$\zeta$         &  \verb!\zeta!  &
+$\eta$          &  \verb!\eta!  &
+$\theta$        &  \verb!\theta!  \\
+$\vartheta$     &  \verb!\vartheta!  &
+$\iota$         &  \verb!\iota!  &
+$\kappa$        &  \verb!\kappa!  \\
+$\lambda$       &  \verb!\lambda!  &
+$\mu$           &  \verb!\mu!  &
+$\nu$           &  \verb!\nu!  \\
+$\xi$           &  \verb!\xi!  &
+$\pi$           &  \verb!\pi!  &
+$\rho$          &  \verb!\rho!  \\
+$\sigma$        &  \verb!\sigma!  &
+$\tau$          &  \verb!\tau!  &
+$\upsilon$      &  \verb!\upsilon!  \\
+$\phi$          &  \verb!\phi!  &
+$\chi$          &  \verb!\chi!  &
+$\psi$          &  \verb!\psi!  \\
+$\omega$        &  \verb!\omega!  &
+$\Gamma$        &  \verb!\Gamma!  &
+$\Delta$        &  \verb!\Delta!  \\
+$\Theta$        &  \verb!\Theta!  &
+$\Lambda$       &  \verb!\Lambda!  &
+$\Xi$           &  \verb!\Xi!  \\
+$\Pi$           &  \verb!\Pi!  &
+$\Sigma$        &  \verb!\Sigma!  &
+$\Upsilon$      &  \verb!\Upsilon!  \\
+$\Phi$          &  \verb!\Phi!  &
+$\Psi$          &  \verb!\Psi!  &
+$\Omega$        &  \verb!\Omega!  \\
+\end{tabular}
+
+Any other LaTeX environments work as well including array, tabular (the above
+is tabular), and will be presented in HTML as an un-numbered block.

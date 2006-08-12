@@ -1,0 +1,345 @@
+TODO:
+    test colors ${\red x}$
+    test axodraw
+    test does LatexTemplate get added with plain text pagetype? (no)
+    "thinness" of new images is due to use of alpha channel  (e.g. alpha is 16%
+    and color is 16% results in a pixel that is 2.56%)
+        Derive "white" from image
+        Can dvipng handle alpha for me?
+    Alpha: fix normalization of color, leaves two angles.  Easy to derive right
+    color for a given alpha (fix norm of color at max).
+
+Paper sizes:
+    1. run gs in bbox mode to get sizes
+    2. Define custom paper sizes (create a .ps file for gs to include)
+        a. /usr/share/gs-esp/7.07/lib/gs_statd.ps for examples
+        b. use /margin and similar operators to get rid of margin
+        c. set imagingbbox to be same as paper size
+            ImagableArea?  -- in ppd files
+    3. gs -I switch to specify include file with my papersizes
+
+    bboxes don't change with paper size (but need letter or a4 to get
+    bboxes)
+    See: http://raph.levien.com/Devices.htm
+        for an example of how to set HW resolution using /.HWMargins and
+        /PageSize in stcolor.ps
+    See also /usr/share/gs-esp/7.07/lib/align.ps
+    gs -gXxY forces png's to be XxY in size (doesn't work)
+    Add to latex preamble: (moves text to UL)
+        \oddsidemargin -86pt
+        \headheight 0pt
+        \topmargin -96pt
+    dvipng is the answer.
+        does not handle axodraw, though claims to handle ps specials (?)
+        can use in --follow mode before latex finishes.
+        use png16 instead
+        identify equations and non-equations.  Use gs on non-equations.
+
+latex pagetype:
+    /usr/share/tex4ht/xhmlatex <file>
+    with a config file:
+        default font cmss-10 should be 'serif' or 'cmr10'
+        encoding should be utf-8
+
+    latexml:
+
+dvips resolutions:
+#        err, stdout, stderr = runCommand('dvips -D %f -R -mode pcscreen -o %s %s'%(res, psfileName, dvifileName))
+        #err, stdout, stderr = runCommand('dvips -o %s %s'%(psfileName, dvifileName))
+        # Select metafont mode
+        # -mode pcscreen            (118 dpi)
+        # -mode pcprevw             (118 dpi)
+        # -mode pixpt               (one pixel per point) (72.27 dpi)
+        # -mode mactrue             (72 dpi)
+        # -mode ncd                 (95 dpi)
+        # -mode macmag              (86 dpi)
+        # -mode ibmvga              (110 dpi)
+        # -mode declarge            (100 dpi)
+        # -mode decsmall            (82 dpi)
+        # -O -1in,-1in              (move offset to 0,0)
+
+TODO:
+  Resolution differences on navi/moya may be due to different paper sizes in
+  dvips.  Also try dvips -D and specify resolution (affects font selection)
+  rather than paper size.
+  Also add -R (secure mode -- see man page)
+  Chop off more of the dot horizontally?  1.5 is 1px too much at 16px charheight
+
+    use cmr10 font.
+    with centerline = dotendy (and pixel fudge), and res_fudge=1,
+        14 perfect
+        16 perfect
+        18 1px high
+        20 perfect
+
+    x: 28px high
+    cdot: 8px high
+    centerline is 2px from bottom of cdot  (1/4 factor then?)
+        12
+        14 perfect
+        16 
+        18 1px high (x-height 10.1666666)
+        20
+    1/8 factor:
+        12
+        14
+        16 
+        18 perfect (x-height 8.6666666)
+        20
+    3/8 factor:
+        12 perfect (x-height 7.25)
+        14 perfect (x-height 6.75)
+        16 1px low (x-height 7.50)
+        18 perfect (x-height 9.1666666)
+        20 perfect (x-height 9.3666666)
+    5/16 factor:
+        12  perfect (x-height 7.375)
+        14  perfect (x-height 6.625)
+        15  perfect (x-height 7.383333) (lower case smaller than cmr10)
+        16  perfect (x-height 7.25)
+        17  perfect (x-height 9.016666)
+        18  perfect (x-height 9.416666)
+        19  perfect (x-height 9.250000)
+        20  perfect (x-height 9.116666) (cmr10 good)
+        21  perfect (x-height 9.15)
+        22  perfect (x-height 11.41666)
+        23  1px low (x-height 11.78333)
+        24  1px high(x-height 12.79166)
+        25  1px low (x-height 12.14166)
+        26  perfect (x-height 12.125)
+        27  perfect (x-height 12.391667) (cmr10 tits)
+        28  1px high(x-height 12.658333)
+    --- new        centerline, dotcenter, dotpixmiss, newheight, res
+        12 generates blank image for $xj$
+        13 1px low   2.687500,  0.312500,   0.000000, 6.625000,   78
+      * 14 perfect   2.687500,  0.312500,   0.000000, 6.625000,   84
+        15 perfect   3.308333,  0.625000,  -0.066667, 7.383333,   90
+            cmr tits, lower case letters different size
+        16 perfect   3.375000,  0.625000,   0.000000, 7.250000,   96
+        17 perfect   4.508333,  0.625000,   0.133333, 9.016667,   102
+            cmr lower case top too wide
+      * 18 perfect   4.708333,  0.625000,   0.333333, 9.416667,   108
+            cmr upper case top too wide
+        19 perfect   4.375000,  0.625000,   0.000000, 9.250000,   114
+      * 20 perfect   4.441667,  0.625000,   0.066667, 9.116667,   120
+        21 perfect   4.575000,  0.625000,   0.200000, 9.150000,   126
+            cmr upper case top too wide, png upper case has tits on top
+        22 perfect   5.708333,  0.625000,   0.333333, 11.416667,  132
+            cmr lower case top too wide, png lower case has tits
+        23 1px low   4.108333,  0.625000,  -0.266667, 11.783333,  138
+        24 1px high  6.395833,  0.937500,   0.333333, 12.791667,  144
+            cmr top too wide, png roman has tits
+      * 25 1px low   4.929167,  0.937500,  -0.133333, 12.141667,  150
+        26 perfect   6.062500,  0.937500,   0.000000, 12.125000,  156
+            cmr lower case top too wide, lc roman has tits
+        27 perfect   6.195833,  0.937500,   0.133333, 12.391667,  162
+      * 28 1px high  6.329167,  0.937500,   0.266667, 12.658333,  168
+        29 1px low   5.995833,  0.937500,  -0.066667, 14.008333,  174
+            cmr upper case has tits, png lc has tits
+        30 1px low   6.129167,  0.937500,   0.066667, 13.741667,  180
+            cmr upper case top too wide, 
+            0.97    png uc has tits
+        31 perfect   7.195833,  0.937500,   0.133333, 14.391667,  186
+            cmr top too wide, png lc has tits
+      * 32 perfect   7.395833,  0.937500,   0.333333, 14.791667,  192
+
+        15 perfect   3.308333,  0.625000,  -0.066667, 7.383333,   111
+            cmr tops of letters fuzzy
+        15 perfect   2.308333,  0.625000,  -0.066667, 7.383333,   108
+            cmr tits, lower case letters different size
+        15 1px low   1.687500,  0.312500,   0.000000, 8.625000,   104
+            cmr tits, lower case letters different size
+        15 1px low   2.108333,  0.625000,  -0.266667, 7.783333,   102
+
+
+
+Startup time is 
+    0.123u 0.016s 0:00.18 72.2%     0+0k 0+0io 0pf+0w
+
+Time to get bbox for sample pdf generated by:
+    http://mcelrath.org/Notes/Littlest%20Higgs%20Phenomenology
+    time sudo -u zope gs -dSAFER -dDOINTERPOLATE -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -dNOPAUSE -dBATCH -r130 -sDEVICE=bbox -sOutputFile=bob-%03d.png *.pdf
+    0.427u 0.031s 0:00.52 86.5%     0+0k 0+0io 0pf+0w
+    0.427u 0.023s 0:00.50 88.0%     0+0k 0+0io 0pf+0w
+    0.423u 0.029s 0:00.49 89.7%     0+0k 0+0io 0pf+0w
+    0.415u 0.036s 0:00.46 95.6%     0+0k 0+0io 0pf+0w
+    0.422u 0.027s 0:00.49 89.7%     0+0k 0+0io 0pf+0w
+Time to ghostscript the same thing:
+    time sudo -u zope gs -dSAFER -dDOINTERPOLATE -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -dNOPAUSE -dBATCH -r130 -sDEVICE=pnggray -sOutputFile=bob-%03d.png *.pdf
+    2.456u 0.042s 0:02.52 98.8%     0+0k 0+0io 0pf+0w
+    2.517u 0.036s 0:02.57 98.8%     0+0k 0+0io 0pf+0w
+    2.478u 0.040s 0:02.55 98.4%     0+0k 0+0io 0pf+0w
+    2.478u 0.039s 0:02.53 98.8%     0+0k 0+0io 0pf+0w
+    2.461u 0.037s 0:02.53 98.4%     0+0k 0+0io 0pf+0w
+time sudo -u zope convert -scale 1075x1520 *.pdf bobconvert-%03d.png 
+    37.981u 0.439s 0:38.47 99.8%    0+0k 0+0io 0pf+0w
+    eek!
+time sudo -u zope mogrify -crop 204x13+204+692 bob-001.png bobnew-001.png
+    0.296u 0.039s 0:00.38 84.2%     0+0k 0+0io 0pf+0w
+
+time sudo -u zope mogrify -crop 0x0+2+2 bob-002.png
+    0.731u 0.045s 0:00.82 93.9%     0+0k 0+0io 0pf+0w
+    0.731u 0.040s 0:00.81 95.0%     0+0k 0+0io 0pf+0w
+    0.756u 0.040s 0:00.84 94.0%     0+0k 0+0io 0pf+0w
+    0.746u 0.039s 0:00.81 95.0%     0+0k 0+0io 0pf+0w
+    0.734u 0.041s 0:00.81 95.0%     0+0k 0+0io 0pf+0w
+
+time gs -dSAFER -dDOINTERPOLATE -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -dNOPAUSE -r125 -sDEVICE=pnggray -sOutputFile=test-%03d.png test.pdf < gsscript
+    5.665u 0.237s 0:06.60 89.2%  0+0k 0+0io 0pf+0w
+    5.698u 0.225s 0:06.76 87.4%  0+0k 0+0io 0pf+0w
+    5.696u 0.273s 0:06.92 86.1%  0+0k 0+0io 0pf+0w
+time source gsscript2
+    6.012u 0.317s 0:08.04 78.6%     0+0k 0+0io 0pf+0w
+    5.961u 0.312s 0:06.99 89.6%     0+0k 0+0io 0pf+0w
+    5.955u 0.311s 0:06.96 89.9%     0+0k 0+0io 0pf+0w
+
+
+
+Latex runs in (almost) constant time no matter how many pages are in the file.
+latex with existing LatexTemplate takes 0.2s.  
+    Removing all included packages takes 0.06-0.07s.  
+dvips -E takes 0.04-0.05s (indep of latex template).
+gs -sDEVICE=bbox takes 0.145s.
+eqn2img gives this command to ghostscript:
+      fprintf(gs, "%i neg %i neg translate\n", xoffset, yoffset);
+    can I get it to print the bbox without restarting?
+    Bounding Box printed in postscript by default is not tight.
+latex + dvips -E + gs bbox + gs + custom code = 0.25s + custom / eqn.
+pdflatex + gs
+(bbox) selectdevice
+(test.pdf) run
+1 showpage      (runs a particular page)
+
+
+Alignment:
+    on hawk: 
+        lowercase letters are exactly 8 pixels high (a,e, not y) 
+            Helvetica (Adobe) 14pt
+        Top of upper case letters to bottom of 'y' is 16px.
+    on draal:
+        lowercase letters are 9px, upper case plus 'y' is 15px.
+        (recopy TODO* from hawk)
+    Perhaps make all things less than 16px to 16px.  Can measure latex height
+    with a little latex:
+        \cdot Wj
+    Make this 16px scalable (match browser with latex)
+    anything else gets expanded by 2.
+
+    || or \left|\right| is getting second bar (first?) chopped sometimes.
+
+    1px too much is removed in 'e'.
+
+Documentation:
+    Fix README: -imagemagick +pil
+    Note about standard_header CSS template.
+    Change resolutions?
+
+1/22/2004
+    Rendering comments:
+        Stx is inserting <p>...</p> around every line.  When the whole page is
+        rendered it does not handle the page and comments separately.  Comment
+        headings should not be treated as Stx, and message bodies should only
+        be treated as Stx if the PageType class calls for it.
+
+1/31/2004
+    More timing tests.  I've switched to pslatex so I can use axodraw (requires
+    postscript specials so doesn't work with pdflatex)  dvips can spit out an
+    eps with a tight bbox for each page, which could speed things up significantly.
+    Timing tests on draal (600MHz alpha 21164), 512MB RAM)
+        pslatex/dvipdf: (looks crappy)
+            6.255u 0.469s 0:08.25 81.3%     0+0k 0+0io 0pf+0w
+        pslatex/dvips:  (looks best)
+            5.503u 0.385s 0:07.06 83.2%     0+0k 0+0io 0pf+0w
+        pdflatex:       (looks better)
+            5.696u 0.359s 0:07.12 84.8%     0+0k 0+0io 0pf+0w
+    appears to be only 10pt and 12pt available in latex
+    -dAlignToPixels=1
+        affects neither ps or pdf mode.
+
+2/2/2004
+    code='$\mathrm{Y}$' topsize=7.866667, bottomsize=4.133333, centerline = 7.866667, ne
+    wheight=15.733333, widentop=0.000000, widenbottom=0.000000, chopx=2.000000
+    code='$\mathrm{j}$' topsize=6.866667, bottomsize=7.133333, centerline = 6.866667, ne
+    wheight=14.266667, widentop=0.266667, widenbottom=0.000000, chopx=2.000000
+
+    code='$m$' topsize=3.866667, bottomsize=4.133333, centerline = 3.866667, newheight=8
+    .266667, widentop=0.266667, widenbottom=0.000000, chopx=2.000000
+    code='$G$' topsize=7.866667, bottomsize=4.133333, centerline = 7.866667, newheight=1
+    5.733333, widentop=0.000000, widenbottom=0.000000, chopx=2.000000
+
+
+    16px    centerline + 0.0666666
+    17px    centerline + 0.1333333
+    18px    centerline + 0
+
+2/3/2004
+    gs does not produce pnggray files that are the correct resolution for an 8.5x11 page.
+    scale factor is 1.063 (DPI larger than requested)
+    Is it only imaging a sub-region of the page?
+    produces the proper resolution:
+        gs-gnu 7.05 daneel 
+        /usr/local/bin/gs 8.11 on moya
+        gs-aladdin 7.04 on moya
+        gs-gnu 7.07 on moya
+        gs-esp 7.07 on moya
+
+    Size/Align/Res combinations that look good:
+        18  0     0.97  Times New Roman
+        17  0     1.03  
+        16  0.5   0.97  
+
+StructuredTextLatex changes:
+    remove ZWikiPage.applyWikiLinkLineEscapesIn (not needed)
+    remove ZWikiPage.protectLine
+    remove ZWikiPage.links (not used)           (note dtml-accessable but not used)
+    remove ZWikiPage.canonicalLinks (not used)  (note dtml-accessable but not used)
+    wikilink() called from DTML should really call ZWikiPage.renderLink
+
+6/4/2004:
+    How to do mathml with tex4ht:
+        1) include:
+            \usepackage[xhtml,mathml,no-DOCTYPE]{tex4ht}
+           in document preamble
+        2) latex $1.tex
+           tex4ht -f/$1.tex -i/usr/share/texmf/tex4ht/ht-fonts/ -cunihtf
+           t4ht -f/$1.tex
+        3) 
+            import sys
+            from xml.dom.ext.reader import Sax2
+            from xml.dom.ext import Print
+
+            reader = Sax2.Reader()
+            document = reader.fromStream(sys.stdin)
+            for math in document.getElementsByTagName('math'):
+                #... math is the MathML, in order it appeared in the document.
+
+        Can use one run of latex if we only look at the last N pages of the dvi
+        file:
+            dvips -p 228
+
+    times on navi:
+    dvips -e 0 may help with characters moving about...
+    latex (w/tex4ht usepackage)                                 0.94s
+           w/o tex4ht usepackage)                               0.25s
+    dvicopy -page-start 228 -max-pages=1 blah.dvi blah2.dvi     0.001s
+    dvips -E blah2.dvi blah2.ps                                 0.06s
+    gs ... (creates a full-page png :()                         0.2s
+        gs creating all images at once: (average of 229p)       0.0947s
+    convert blah2.ps blah2.png                                  0.136s
+
+    The altimg tag may be parsable by XSLT into an img tag.
+    Konqueror is pickier about XML than Mozilla -- use it to check
+MathML rendering errors:
+    mi { margin: -0.15em; } does not get applied to mi's in super/subscript.
+    spacing if <mi>sin</mi> sin is inconsistent -- i-n has more space than s-i.
+6/24/2004:
+    Plone interaction:
+        got plone quick installer working
+
+        Plone uses a <base href="http://localhost/Plone"> tag which gives the
+        WRONG page for the one you're looking at, and makes <a name> links
+        fail.
+
+        restore ALLOWED_PAGE_TYPES_IN_PLONE?  need to remove wwml for plone...
+
+        Plone skin w/header is CMFPlone/skins/plone_templates/header.pt

@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN"
+"http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"
+      xmlns:math="http://www.w3.org/1998/Math/MathML"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      i18n:domain="zwiki"
+      tal:define="
+      title   string:${container/title} ${here/title_or_id} diffs;
+      macros  python:here.wikipage_macros(request).macros;
+      displaymode python: here.displayMode();
+      minimal     python: displaymode=='minimal';
+      simple      python: displaymode=='simple';
+      full        python: displaymode=='full';
+      hierarchy   python: request.get('zwiki_showhierarchy',0);
+      linearhdr   python: 1 #displaymode=='full';
+      revA options/revA; 
+      difftext options/difftext;
+      ">
+<head>
+  <link rel="stylesheet" type="text/css" href="latexwiki.css" />
+  <meta http-equiv="Content-Type" content="application/xhtml+xml;charset=utf-8" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title tal:content="string:${container/title} ${here/title_or_id}" />
+</head>
+<body bgcolor="#ffffff">
+
+<div metal:use-macro="macros/linkpanel"></div>
+
+<div id="pageheading">
+  <form method="GET" 
+        tal:define="
+        methodname string:searchwiki;
+        pagename string:SearchPage; 
+        page python:here.pageWithName(pagename);
+        pagehasdtml python:page and page.dtmlAllowed() and page.hasDynamicContent();
+        url python:(pagehasdtml and page.id()) or (here.defaultPageId()+'/'+methodname);
+        "
+        tal:attributes="action python:here.wiki_url()+'/'+url;"
+        action="">
+
+    <!-- page heading in full & simple mode -->
+    <table tal:condition="not: minimal"
+           width="100%" border="0" cellspacing="0" class=""
+           tal:attributes="class python: nothing #not minimal and 'shade1' or nothing">
+      <tr>
+
+        <!-- ...logo -->
+        <td id="logo" width="1%" valign="top"
+            tal:attributes="id python: full and 'logo_full' or 'logo_simple'">
+          <span metal:use-macro="macros/logolink"></span>
+        </td>
+        <!-- ...page name + maybe parent context -->
+        <td id="pagenameand_linear" align="left" width="59%"
+            tal:condition="python: hierarchy and linearhdr">
+          <span metal:use-macro="macros/pagenameand_linear"></span>
+        </td>
+        <td id="pagenameand" align="left" width="59%"
+            tal:condition="python: hierarchy and not linearhdr">
+          <span metal:use-macro="macros/pagenameand"></span>
+        </td>
+        <td width="20%"><h1 tal:content="string: Changes in revision ${revA}"></h1>
+        </td>
+        <td id="pagenameonly" align="left" width="59%"
+            tal:condition="not: hierarchy">
+          <span metal:use-macro="macros/pagename"></span>
+        </td>
+      </tr>
+    </table>
+
+    <!-- page heading in minimal mode -->
+    <!-- twk: use table for minimal so logo and pagename are aligned consistently 
+         in simple & minimal -->
+    <table width="100%" border="0" cellspacing="0" tal:condition="minimal">
+      <tr>
+
+        <!-- ...logo -->
+        <td id="logo_minimal" width="1%" valign="middle">
+          <span metal:use-macro="macros/logolink"></span>
+        </td>
+
+        <!-- ...page name + maybe parent context -->
+        <td id="pagenameand_linear" align="left" width="79%"
+            tal:condition="python: hierarchy and linearhdr">
+          <span metal:use-macro="macros/pagenameand_linear"></span>
+        </td>
+        <td id="pagenameand" align="left" width="79%"
+            tal:condition="python: hierarchy and not linearhdr">
+          <span metal:use-macro="macros/pagenameand"></span>
+        </td>
+        <td id="pagenameonly" align="left" width="79%"
+            tal:condition="not: hierarchy">
+          <span metal:use-macro="macros/pagename"></span>
+        </td>
+
+        <!-- ...edit links + search box -->
+        <!-- twk: put otherlinks here rather than in a table above this -->
+        <td id="searchbox" width="20%" align="right" nowrap="nowrap"
+            tal:define="showsearch python:request.get('zwiki_showsearch',1)">
+          <span metal:use-macro="macros/displaymodes"></span>
+          <span metal:use-macro="macros/editlinks"></span>
+          <div tal:condition="python:1">
+            <input id="searchinput" class="formfield" tal:condition="showsearch"
+                   name="expr" type="text" size="20" maxlength="100" value="" 
+                   title="search all pages" accesskey="s" style="width: 95%" /> 
+            <!-- XXX hack: width 95% keeps moz from chopping off right end 
+                 with 1px borders -->
+          </div>
+        </td>
+
+      </tr>
+    </table>
+
+  </form>
+</div>
+<!-- end of header -->
+
+<div id="formcontent">
+
+<table border="0" width="100%">
+<tr>
+<td align="left" valign="top">
+<b>Log note: </b><em tal:content="python:here.lastlog(revA-1)">log note..</em>
+</td>
+<td align="right" valign="top" nowrap="nowrap">
+<form method="GET" action="" tal:attributes="action here/page_url">
+<input type="submit" name="manage_change_history_page:method" i18n:attributes="value"
+ value="full history" tal:condition="python:user.has_permission('View History',here)" />
+<input tal:condition="python:revA < 19" type="submit" name="prevDiff:method" 
+ value="&lt;&lt; previous edit" i18n:attributes="value" accesskey="p" />
+<input tal:condition="python:not (revA < 19)" disabled="1" type="submit" name="prevDiff:method" 
+ value="&lt;&lt; previous edit" i18n:attributes="value" accesskey="p" />
+<input tal:condition="python:revA > 1" type="submit" name="nextDiff:method" 
+ value="next edit &gt;&gt;"  i18n:attributes="value" accesskey="n" />
+<input tal:condition="python:not(revA > 1)" disabled="1" type="submit" name="nextDiff:method" 
+ value="next edit &gt;&gt;"  i18n:attributes="value" accesskey="n" />
+<input tal:condition="python:user.has_permission('Zwiki: Edit pages', here)" 
+    type="submit" name="revert:method" value="Revert this change and all successive changes" 
+    i18n:attributes="value" accesskey="v" />
+<input type="submit" name="return" value="Return to page" />
+<input type="hidden" name="currentRevision" tal:attributes="value revA" />
+</form>
+</td>
+</tr>
+</table>
+
+<pre tal:content="structure difftext">
+diff..
+</pre>
+
+</div>
+
+</body>
+</html>

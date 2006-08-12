@@ -1,0 +1,142 @@
+LatexWiki-sm 0.53:
+* Pared down to just the stxlatex page type; old LatexWiki pages should
+  get rendered as stxlatex, not break
+* Simplified file structure like other pagetypes/plugins
+* Updated to work with current Zwiki; tested with 0.52, should work back
+  to 0.46 or possibly 0.34
+* Does not do friendly zwiki version checking at startup
+* Does not install default latexwiki wiki automatically
+* Docs cleanups
+* ...in progress
+
+LatexWiki 0.42:
+* Fix align() due to change in behavior of Image::paste
+* New wikipage.pt after ZWiki eliminated wikipage_macros
+* FCNTL -> fcntl (python 2.4 support)
+* New alignment array should get the alignment correct for any latex_font_size
+  in 10-64 px.
+
+LatexWiki 0.38 (not released):
+* rename escapeEmailAddresses to protectEmailAddresses (grrr)
+* fix publish error on latexwiki.css under some circumstances
+* fix hang-on-startup due to either os.access or os.popen('which ...')
+* Allow runCommand to pass input to child, use it for itex
+* Improve rendering to allow wider range of font heights
+* Use new utility dvipng, vastly improving performance
+* Run dvips in secure mode
+* Use 72.27 points per inch for dvipng, 72 for ghostscript
+
+LatexWiki 0.35:
+* Move to non-blocking I/O on our sockets (prevents a hang when a page
+  contains many equations)
+* In Extensions/Install.py look in both SOFTWARE_HOME and INSTANCE_HOME for
+  the zwiki directory for our site template.  (Fix for Zope 2.7 / Plone 2.0)
+* latexwiki.css: Check for any ZWikiPage in the folder for including
+  /stylesheet, and do not include it if we are in plone (portal_factory
+  exists)
+* Fix itex detection.  (mine is in /usr/local/bin and that is not in the
+  default python path)
+* Fix $$ ... $$ block mode
+* Place latex in the img alt attribute.
+* Move runCommand and log into util.py so they can be used by reduce/axiom.
+
+LatexWiki 0.32:
+* move imageDoesNotExist outside of enclosing function (fix for python 2.1?)
+* Use 'dvips -o' (some dvips don't create .ps by default -- then what is it
+  doing?!?!  Making souffle?!?!?!)
+* Use full path for LocalFS images/
+* Better escaping of equations to appear in img alt=
+* Support $$eqn$$ display mode for equations
+* check for itex and enable existing code if it is found.  itex 0.8 can be
+  found here: http://golem.ph.utexas.edu/~distler/blog/archives/000355.html
+* add latexwiki.css.dtml which imports the default ZWiki stylesheet, and
+  appropriate wikipage.pt changes.
+* Created Extensions/Install.py for the CMF Quick Installer 
+* Modified latexwiki.css to only include FrontPage/stylesheet if there is a
+  FrontPage, and small tweaks to make latexwiki.css work with Plone.
+* Rework to support new ZWiki 0.32 pagetypes layout
+* Added diffform.pt so it includes latexwiki.css (will have to add others)
+
+LatexWiki 0.29:
+* Change version 0.25 -> 0.29 (to be same as ZWiki 0.29) after complaints, and
+  even I screwed up the download link.
+
+LatexWiki 0.25:
+* variable font size via the folder properties "latex_font_size", 
+  "latex_align_fudge", "latex_res_fudge".  Further refinements will probably
+  be necessary.
+* Fixed dot-chopping code so $\cdot \cdot$ doesn't generate an error.
+  (Thanks to Kyle Cranmer)
+* New Page Type:  ZwikiHtmlLatexPageType (HTML + LaTeX) should be able to feed
+  this straight into itex2MML
+* Fixed parsing of LaTeX so that $\begin{array} a \\ b \end{array}$ works
+* Fixed escaping so that $\$$ works
+* Be more careful using os.chdir().  We can tell LocalFS to use the relative
+  directory "LatexWiki" now.  Zope sees its CLIENT_HOME by default.
+* Modify ZWiki to be able to import the necessary elements of a LatexWiki site
+* LatexWiki template site (ZWiki/content/latexwiki,
+  LatexWiki/Extensions/setup_latexwiki.py)
+* User font selection and font size adjustment in UserOptions (and
+  stylesheet.css)
+
+LatexWiki 0.24:
+* Make ourselves appear first (and therefore default) in the list of possible
+  document types when creating a new document.
+* Added <span class="latexwiki"> to pages and a ploneCustom.css for plone
+  that will get text the right size and equations aligned.
+* Fixed links with equations not getting marked up.  (look for STX behavior
+  differences here)  Equation color does not match link color.
+
+LatexWiki 0.23:
+* Changed to pslatex/dvipdf rather than pdflatex so that postscript specials
+  work (axodraw/feynman diagrams in particular for me)
+* Fixed latexWrapper importing App::ImageFile rather than PIL::ImageFile
+
+LatexWiki 0.22:
+* Update for ZWiki 0.26 (should work with 0.25 too)
+* When latex gives us a blank page, bail properly. (try $\latex$)
+* See the new UPGRADE file.
+
+LatexWiki 0.21:
+* \( \) syntax for in-line equations works now.  
+* Fixed some issues with \[\]
+* Fixed equation numbering to not mark up O(1), and typo \3->\2
+* Prevent us from marking up escaped latex when it appears twice.
+* Fixed python bug with buffer sizes.  When there were a large number of
+  images on a page, ghostscript would hang writing to stderr (bbox run) and
+  python seems to ignore the buffer size argument to popen3.  Changed to a
+  poll/read loop.
+
+LatexWiki 0.20:
+* Added stylesheet.css
+* Updated INSTALL.txt to reflect ZWiki 0.23 install procedure, and stylesheet
+  use instead of standard_zwiki_header.
+* Found VERSION.txt, and updated it.
+* Updated __init__.py to be compatible with ZWiki 0.23 (thanks to Drew).
+* Prevent us from trying to render 0x0 pngs (which causes an error the first
+  time it happens).  Now we render a 1x1 transparent png.
+* Change the Ghostscript resolution 130 -> 126.  The characters look better,
+  the 'Y' doesn't have tits on the top, and lower case letters are larger (!)
+  and line up with the text better.
+* Fix the \[ \] in-line LaTeX mode. (is a block mode)
+* Fix equation numbers when they appear at the end of a file.
+
+10/3/2003 Release
+* Add equation numbers with internal hyperlinks.
+* Fixed rendering of images multiple times when the same equation appears more than once.
+* Fixed block equations to not have extra space after the equation.
+* Used PIL and 'gs -sDEVICE=bbox' to modify png's so that they line up with
+  the surrounding text.
+* Removed extra space after block images
+* Fixed bad indenting of lists that contained block equations
+* Fixed escaping: latex can be preceeded by a '!' to prevent it from being
+  rendered as LaTeX.
+* Use alpha channel PNG's, so that equations look right no matter what
+  background your page has.
+* Fix the replacement of dollar signs '$' when the same in-line equation
+  occurs twice.  Escaped in-line equations now have the dollar signs converted
+  to HTML entities &#36;
+* Commented out code that adds the original latex for a block equation in an
+  html comment <!-- \begin{equation}... etc --> so that LatexWiki doesn't
+  destroy existing comments.  We still mark up equations inside HTML comments
+
