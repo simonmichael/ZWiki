@@ -130,17 +130,26 @@ for mod in firstmods:
         pass
 # and import
 for m in modules:
-    try:
-        __import__('Products.ZWiki.pagetypes.%s' % m)
-    except:
-        BLATHER('could not load %s page type, skipping (traceback follows)\n%s' % (
-            m, formattedTraceback()))
+    if m.startswith('_'):
+        BLATHER('%s page type disabled with _ prefix, skipping\n' % m[1:])
+    else:
+        try:
+            __import__('Products.ZWiki.pagetypes.%s' % m)
+        except:
+            BLATHER('could not load %s page type, skipping (traceback follows)\n%s' % (
+                m, formattedTraceback()))
 
+# backwards compatibility - old zwiki page objects expect these to be here
+# but if a page type has been disabled with a _ prefix, just ignore
+# XXX can't really disable yet, these get imported somewhere else (except wwml)
 
-# backwards compatibility - need these here for old zodb objects
-from html      import ZwikiHtmlPageType
-from moin      import ZwikiMoinPageType
-from plaintext import ZwikiPlaintextPageType
-from rst       import ZwikiRstPageType
-from stx       import ZwikiStxPageType
-from wwml      import ZwikiWwmlPageType
+def tryImport(module, fromlist):
+    try: __import__(module,globals(),locals(),fromlist)
+    except ImportError: pass
+
+tryImport('html',      ['ZwikiHtmlPageType'])
+tryImport('moin',      ['ZwikiMoinPageType'])
+tryImport('plaintext', ['ZwikiPlaintextPageType'])
+tryImport('rst',       ['ZwikiRstPageType'])
+tryImport('stx',       ['ZwikiStxPageType'])
+tryImport('wwml',      ['ZwikiWwmlPageType'])

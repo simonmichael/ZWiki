@@ -81,8 +81,11 @@ modules = [re.sub('.py$','',f) for f in os.listdir(__path__[0])
                )
            ]
 for m in modules:
-    try:
-        __import__('Products.ZWiki.plugins.%s' % m)
-    except:
-        BLATHER('could not load %s plugin, skipping (traceback follows)\n%s' % (
-            m, formattedTraceback()))
+    if m.startswith('_'):
+        BLATHER('%s plugin disabled with _ prefix, skipping\n' % m[1:])
+    else:
+        try:
+            __import__('Products.ZWiki.plugins.%s' % m)
+        except:
+            BLATHER('could not load %s plugin, skipping (traceback follows)\n%s' % (
+                m, formattedTraceback()))
