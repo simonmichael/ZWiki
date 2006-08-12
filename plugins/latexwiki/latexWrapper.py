@@ -42,20 +42,20 @@ latexInlinePattern = r'^(\$(?!\$)|\\\()$'
 
 # This is only used if your wiki does not have a node LatexTemplate.
 defaultLatexTemplate = r"""
-\\documentclass[%d""" %(charsizept) + """pt,notitlepage]{article}
-\\usepackage{amsmath}
-\\usepackage{amsfonts}
-\\usepackage[all]{xy}
-\\newenvironment{latex}{}{}
-\\begin{document}
-\\oddsidemargin -86pt
-\\headheight 0pt
-\\topmargin -96pt
-\\nofiles
-\\pagestyle{empty}
-%s
-\\end{document}
-"""
+\documentclass[%dpt,notitlepage]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[all]{xy}
+\newenvironment{latex}{}{}
+\oddsidemargin -86pt
+\headheight 0pt
+\topmargin -96pt
+\nofiles
+\begin{document}
+\pagestyle{empty}
+%%s
+\end{document}
+"""  % (charsizept)
 
 def imageDoesNotExist(code, charheightpx):
     return not os.path.exists(os.path.join(workingDir, 
