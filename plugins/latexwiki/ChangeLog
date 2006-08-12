@@ -1,4 +1,12 @@
-LatexWiki-sm 0.53:
+Zwiki 0.56:
+* latexwiki is now shipped with Zwiki as one of the standard plugins.
+  Changes will be noted only in ZWiki/CHANGES.txt from now on, probably.
+* create the working directory if needed, avoiding an IO error
+* fix defaultLatexTemplate string definition, avoiding a latex error
+* disable broken widentop adjustment in align for now, avoiding a PIL error
+* make align slightly more robust
+
+latexwiki-sm 0.53:
 * Pared down to just the stxlatex page type; old LatexWiki pages should
   get rendered as stxlatex, not break
 * Simplified file structure like other pagetypes/plugins
