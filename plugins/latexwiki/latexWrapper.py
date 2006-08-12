@@ -298,7 +298,7 @@ def align(im, charheightpx=0, alignfudge=0):
         widentop = bottomsize - topsize
     chopx = letterstartx-1
     newheight= int(newheight)
-    widentop = int(widentop)
+    widentop = 0 #int(widentop) #SKWM broken
     im2 = Image.new('RGBA', (im.size[0]-chopx,newheight), (255,255,255))
     im2.paste(im,(-chopx,widentop,im.size[0]-chopx,im.size[1]-widentop))
     return im2
