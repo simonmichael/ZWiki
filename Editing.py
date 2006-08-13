@@ -839,7 +839,7 @@ class PageEditingSupport:
             if max is not None:
                 if len(re.findall(r'https?://',t)) > max:
                     raiseSpamError(_("exceeded max_anonymous_links"),
-                                   _("adding of external links by anonymous authors is restricted"))
+                                   _("adding of external links by unidentified users is restricted"))
 
         # and a similar check for identified users
         # XXX simplify ? one property for both ?
@@ -851,7 +851,7 @@ class PageEditingSupport:
             if max is not None:
                 if len(re.findall(r'https?://',t)) > max:
                     raiseSpamError(_("exceeded max_identified_links"),
-                                   _("adding of external links by cookie-identified authors is restricted"))
+                                   _("adding of external links is restricted"))
 
     def cleanupText(self, t):
         """
