@@ -45,3 +45,8 @@ LatexWiki readme
  This product is available under the GPL - see LICENSE.txt
  All rights reserved, all disclaimers apply, etc.
 
+NEW NOTES:
+
+pamphlet pages:
+- install dvipng
+- install http://daly.axiom-developer.org/axiom.sty as /usr/local/share/texmf/tex/latex/axiom.sty and run mktexlsr
