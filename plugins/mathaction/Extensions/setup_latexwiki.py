@@ -8,11 +8,14 @@ from Products.ZWiki.plugins.mathaction.util import workingDir
 def setup_latexwiki(self): 
     """ Add required attributes to new LatexWiki site, and then remove this method 
     """ 
-
-    self.manage_addProperty('allow_dtml', 'true', 'boolean') 
-    self.manage_addProperty('latex_font_size', 18, 'int')
-    self.manage_addProperty('latex_align_fudge', 0.0, 'float')
-    self.manage_addProperty('latex_res_fudge', 0.97, 'float') 
+    if not hasattr(self,'allow_dtml'):
+        self.manage_addProperty('allow_dtml', 'true', 'boolean') 
+    if not hasattr(self,'latex_font_size'):
+        self.manage_addProperty('latex_font_size', 18, 'int')
+    if not hasattr(self,'latex_align_fudge'):
+        self.manage_addProperty('latex_align_fudge', 0.0, 'float')
+    if not hasattr(self,'latex_res_fudge'):
+        self.manage_addProperty('latex_res_fudge', 0.97, 'float') 
     if(not os.access(workingDir, os.F_OK)): 
         os.mkdir(workingDir)
         zLOG.LOG('LatexWiki',zLOG.DEBUG, 'LatexWiki image directory %s created'%(workingDir)) 
