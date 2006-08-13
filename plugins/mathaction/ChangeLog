@@ -1,3 +1,21 @@
+Zwiki 0.56:
+* added to Zwiki repo as plugins/mathaction
+  mathaction is now shipped with Zwiki, as one of the standard plugins.
+  I'll note the main changes I've made from the original; see the darcs
+  history for full detail. After this, changes will be noted only in
+  ZWiki/CHANGES.txt, probably.
+* move page types to pagetypes.py
+* some page type renaming & relabelling for consistency
+* remove VERSION.txt
+* move stxlatex experiments to a subdirectory 
+
+mathaction-sm 0.55:
+* Simplified file structure like other pagetypes/plugins
+* Commented out all but the math and pamphlet page types
+* Updated to work with current Zwiki; tested with 0.55
+* Does not do zwiki version checking at startup
+* Does not install default latexwiki wiki automatically
+
 LatexWiki 0.33:
 * Move to non-blocking I/O on our sockets (prevents a hang when a page
   contains many equations)
