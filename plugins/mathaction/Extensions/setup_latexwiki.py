@@ -39,6 +39,6 @@ def setup_latexwiki(self):
         zLOG.LOG('LatexWiki', zLOG.ERROR, 
             'Failed to find a suitable filesystem product')
     self.REQUEST.RESPONSE.redirect(self.REQUEST['URL1'])
-    self._delObject('setup_latexwiki')
+    #self._delObject('setup_latexwiki')
 
 
