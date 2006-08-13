@@ -140,9 +140,9 @@ for m in modules:
                 m, formattedTraceback()))
 
 # backwards compatibility - old zwiki page objects expect these to be here
+
 # but if a page type has been disabled with a _ prefix, just ignore
 # XXX can't really disable yet, these get imported somewhere else (except wwml)
-
 def tryImport(module, fromlist):
     try: __import__(module,globals(),locals(),fromlist)
     except ImportError: pass
