@@ -18,7 +18,6 @@ class PageTypeStxMath(PageTypeStx):
     """
     docstring
     """
-    #_id = 'msgstxprelinkdtmlfitissuehtmllatex'
     _id = 'stxmath'
     _name = 'Structured Text + Math'
     supportsLaTeX = yes
@@ -102,12 +101,16 @@ registerPageType(PageTypeStxMath)
 # This class supports pamphlet (noweb) format for MathAction
 # Oct 6, 2005 Bill Page
 
-class PageTypeStxPamphlet(PageTypeStx):
+# XXX this doesn't/can't use STX and so should just use PageTypeBase
+# but it doesn't work so well and needs investigation (no skin, shows
+# midsection marker)
+#class PageTypePamphlet(PageTypeBase):
+class PageTypePamphlet(PageTypeStx):
     """
     docstring
     """
-    _id = 'stxpamphlet'
-    _name = 'Structured Text Pamphlet'
+    _id = 'pamphlet'
+    _name = 'Noweb pamphlet'
     supportsLaTeX = yes
     supportsPlone = yes
 
@@ -164,7 +167,7 @@ class PageTypeStxPamphlet(PageTypeStx):
         return heading
 
 
-registerPageType(PageTypeStxPamphlet)
+registerPageType(PageTypePamphlet)
 
 
 

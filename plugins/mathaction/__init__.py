@@ -12,7 +12,7 @@ import pagetypes
 
 # backwards compatibility for old page objects
 ZwikiMathPageType      = pagetypes.PageTypeStxMath
-ZwikiPamphletPageType  = pagetypes.PageTypeStxPamphlet
+ZwikiPamphletPageType  = pagetypes.PageTypePamphlet
 #ZwikiHtmlLatexPageType = 
 #ZwikiLatexPageType     = 
 #ZwikiItexPageType      = 
