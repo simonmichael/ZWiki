@@ -1,0 +1,74 @@
+**Welcome!** 
+
+This is the front page of the LatexWiki wiki template.  
+Here are the HelpPage, RecentChanges, UserOptions and
+<a href="FrontPage/map">contents</a>.  
+
+You'll find additional Zwiki documentation at ZWiki:ZwikiDocs, including
+ZWiki:ReleaseNotes, ZWiki:KnownIssues and the ZWiki:ZwikiTracker.
+ZWiki:GeneralDiscussion and the #zope IRC channel are good places to get
+help.
+
+"Edit":FrontPage/editform this page and replace it with something
+appropriate. 
+Other things you may want to configure (or not):
+
+- **LaTeX fonts** <br/>
+LaTeX font size is configured in the 'properties' panel for this page's
+folder.  'latex_font_size' specifies the size in pixels of the LaTeX fonts,
+'latex_align_fudge' adjusts LaTeX equations up and down with respect to the
+surrounding text, and 'latex_res_fudge' adjusts the ghostscript resolution to
+improve LaTeX font appearance.  Combinations which work well are (18, 0, 0.97),
+(17, 0, 1.03), and (16, 0.5, 0.97).  Browser fonts can be adjusted on a per-user
+basis in UserOptions.
+
+- **Permissions** <br/>
+To view this wiki, users need 'View' and 'Access content information'
+permissions on the folder. To create new pages they need 'Add ZWiki Page'
+permission; to upload files, 'Add Documents, Images, and
+Files'. Permissions to add comments, edit, reparent etc. all begin with
+'Zwiki: ' and appear at the end of the permissions list.
+
+- **Mail out (subscription)** <br/>
+Set up a zope !MailHost object and add a 'mail_from' folder string property
+containing a valid From address.  A "subscribe" link will appear in the
+page footer. You may want to add the ZWiki:MailHostFix to make Bcc work.
+
+- **Mail in** <br/>
+You'll need to set up a special mail alias, a zope helper method, a
+default discussion page and 'mail_to'/'mail_replyto' folder
+properties. Users will be able to reply to comments by mail.
+See ZWiki:WikiMail.
+
+- **External (client-side) editing** <br/> 
+Install the ZWiki:ExternalEditor zope product and make sure users have the
+'Use external editor' permission (and the WebDAV lock/unlock permissions
+if you are using locking locking). EE's pencil icon will appear in the
+page footer.  Users will probably be able to edit pages with their
+preferred editor after installing EE's client helper app.
+
+- **A bug tracker** <br/>
+An issue tracking database integrated with the wiki. 
+See ZWiki:HowToInstallAZwikiTracker
+
+- **A more featureful front page** <br/>
+Eg showing latest comments from other pages.
+See ZWiki:FrontPage source for ideas
+
+- **Security** <br/>
+ If you allow untrusted users to edit your wiki, you should be aware of
+ the <a
+ href="http://www.zope.org/Members/jim/ZopeSecurity/ServerSideTrojan"
+ >server-side trojan issue</a>.  Unless carefully configured Zwiki may
+ allow users to create content (eg DTML or javascript) which will be
+ executed when viewed by others. For example, DTML code could delete other
+ zope objects to which it has access (restricted to the lowest of the page
+ owner and the page viewer's privileges).  Tips: make the wiki folder's
+ owner a low-privileged user, set the standard_page_type folder property
+ to a non-DTML page type, remove or disable editing on any DTML-enabled
+ pages, deny 'Zwiki: Change page types' permission.  Decide for yourself
+ whether these steps are necessary, or keeping backups will suffice, or <a
+ href="http://c2.com/cgi/wiki?YouArentGonnaNeedIt">YAGNI</a> applies.
+
+Enjoy your wiki!
+

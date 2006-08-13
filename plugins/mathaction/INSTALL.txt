@@ -1,0 +1,65 @@
+Installing LatexWiki (Standalone)
+
+  1. Make sure that you have the required components installed. 
+     This product requires:
+
+     * "Zope":http://www.zope.org 2.6 or later
+     
+     * Python 2.2 or later
+
+     * the "ZWiki Zope product":http://www.zwiki.org 0.32 or later
+
+     * the "LocalFS":http://www.easyleading.org/Downloads/ Zope product
+
+     * Ghostscript 6.0.5 or later with PDF and PNG support
+
+     * A working LaTeX installation including latex and dvips
+
+     * The "Python Imaging Library":http://www.pythonware.com/products/pil/
+
+     In debian you can::
+
+       apt-get install tetex-base tetex-bin tetex-extra gs zope python2.2-imaging
+
+     ZWiki and LocalFS must be installed manually.  (Just untar them into the Products
+     directory, similar to step 2)
+
+  2. Unpack the LatexWiki distribution into your Zope installation's
+     Products directory (usually /usr/lib/zope/lib/python/Products) with a
+     command such as::
+
+       tar -zxvf LatexWiki-0.32.tar.gz
+
+  3. If you do not already have a Wiki, create one by going to the Zope
+     management interface and selecting ZWiki from the pulldown in the
+     upper right.  For "Type", select "latexwiki".
+
+Installing LatexWiki in Plone (See also: "PloneAndCMF":http://zwiki.org/Chapter13PloneAndCMF)
+
+  1. Do steps 1 and 2 above.
+
+  2. Install the CMF Quick Installer (included with Plone 2.0)
+  
+  3. Create a 'Plone Site' from the dropdown in the ZMI.
+
+  4. Add a 'CMF Quick Installer' tool to your new plone site.
+
+  5. Click on this new plone_cmfquickinstaller node in the ZMI.  You should see
+      both ZWiki and LatexWiki.  Install both.  
+      
+  6. Create a ZWiki Page.  You will have to press shift-reload in your browser
+     when viewing this new page in order to get the new latexwiki stylesheets
+     that get installed in step 5.
+
+I recommend removing one of the two sidebars in Plone.  LatexWiki requires a
+somewhat large font to make latex readable, which looks bad when put into
+Plone's narrow document window between two sidebars.  
+
+    To do this: 
+
+        1. Go to your plone folder in the ZMI
+
+        2. Click the "Properties" tab
+
+        3. Delete the lines in either the "right_slots" or "left_slots"
+           properties.

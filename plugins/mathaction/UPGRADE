@@ -1,0 +1,28 @@
+LatexWiki 0.25:
+ * You will have to add the properties 'latex_font_size' (int),
+   'latex_align_fudge' (float), 'latex_res_fudge' (float), and 'allow_dtml'
+   (boolean) to your wiki folder(s).  It may be useful to create a latexwiki
+   from the template (see INSTALL.txt, step 3) for comparison.
+
+ * If you are using Ape or something else (FileSystemSite?) to allow access to
+   the images/ directory, this will still work but the site template will try
+   to create a LocalFS images directory.  Just delete it and replace it with
+   Ape, or whatever.  Appropriate patches to Extensions/setup_latexwiki.py
+   would be appreciated.
+
+LatexWiki 0.22:
+
+ * remove editform,  RecentChanges, SearchPage, UserOptions, IssueTracker, and
+   FilterIssues if you have them.
+
+ * You may have to modify files which make reference to any of the above pages.
+   They are all now methods that can be called like:
+        <a href="&dtml-wiki_page_url;/recentchanges">Recent Changes</a>
+
+ * If you have just added the stylesheet for the first time (see INSTALL.txt),
+   you may need to add:
+       <link rel="stylesheet" href="stylesheet">
+   to your standard_wiki_header.  (Newer wikis do not have the standard_wiki_header)
+
+ * DO NOT DOWNGRADE.  ZWiki 0.25 changes page types fundamentally, and your
+   wiki will be broken if you downgrade to an older version of ZWiki.

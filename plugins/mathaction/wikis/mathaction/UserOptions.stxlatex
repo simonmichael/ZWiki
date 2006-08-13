@@ -1,0 +1,305 @@
+<p>
+  Set your site preferences below. You may also click the full, simple, minimal 
+  links if provided.
+</p>
+
+<dtml-comment>with REQUEST needed in plone/cmf for some reason I can't fathom
+</dtml-comment>
+<dtml-with REQUEST>
+<dtml-let 
+ RESPONSE="REQUEST.RESPONSE"
+ cookielist="[
+   'zwiki_username',
+   'email',
+   'zwiki_height',
+   'zwiki_width',
+   'zwiki_timezone',
+   'zwiki_showlogo',
+   'zwiki_showsearch',
+   'zwiki_showhierarchy',
+   'zwiki_showpagemgmt',
+   'zwiki_displaymode',
+   'latexwiki_font',
+   'latexwiki_fontadjust',
+   ]
+   #multi-skin setup, see ZwikiSkins
+   #'skin',
+   #'zwiki_theme',
+   #]
+   ">
+<dtml-if setcookies>
+<dtml-let e="(ZopeTime() + 365).rfc822()">
+<dtml-in cookielist prefix=x>
+<dtml-if "_.has_key(x_sequence_item)">
+<dtml-call "RESPONSE.setCookie(x_sequence_item, REQUEST.get(x_sequence_item), 
+                               path='/', expires=e)">
+<dtml-comment>use path=wiki_url() if you want per-wiki cookies</dtml-comment>
+</dtml-if>
+</dtml-in>
+</dtml-let>
+<dtml-call "RESPONSE.redirect(REQUEST.get('redirectURL',pageUrl()))">
+<dtml-elif clearcookies>
+<dtml-in "cookielist+['zwiki_bookmarks','zwiki_showquote']" prefix=x>
+<dtml-call "RESPONSE.expireCookie(x_sequence_item,path='/')">
+</dtml-in>
+<dtml-comment>reload page to get a REQUEST with the new cookie values
+</dtml-comment>
+<dtml-call "RESPONSE.redirect(REQUEST.get('redirectURL',pageUrl()))">
+</dtml-if>
+</dtml-let>
+<form action="&dtml-URL;" METHOD="POST" ENCTYPE="multipart/form-data"
+style="border:none;">
+
+<p>
+User name: <input type="text" name="zwiki_username" size=20
+maxlength=20 tabindex=3 value="<dtml-var zwiki_username missing>">
+(identifies your edits)
+
+<p>
+Email address: <input type="text" name="email" size=20 maxlength=40 tabindex=4
+value="<dtml-var email missing>"> 
+(for subscribing)
+
+<p>
+Editform
+width: <input type="text" name="zwiki_width" size=3 maxlength=3 tabindex=1
+value="<dtml-var zwiki_width missing=60>"> 
+height: <input type="text" name="zwiki_height" size=3 maxlength=3 tabindex=2
+value="<dtml-var zwiki_height missing=20>">
+(textarea dimensions; width will be 100% if supported)
+
+<p>
+Time zone: 
+<dtml-let 
+now=ZopeTime
+timezones="(
+'GMT-1100',
+'GMT-1030',
+'GMT-1000',
+'GMT-0930',
+'GMT-0900',
+'GMT-0830',
+'GMT-0800',
+'GMT-0730',
+'GMT-0700',
+'GMT-0630',
+'GMT-0600',
+'GMT-0530',
+'GMT-0500',
+'GMT-0430',
+'GMT-0400',
+'GMT-0330',
+'GMT-0300',
+'GMT-0230',
+'GMT-0200',
+'GMT-0130',
+'GMT-0100',
+'GMT',
+'GMT+0100',
+'GMT+0130',
+'GMT+0200',
+'GMT+0230',
+'GMT+0300',
+'GMT+0330',
+'GMT+0400',
+'GMT+0430',
+'GMT+0500',
+'GMT+0530',
+'GMT+0600',
+'GMT+0630',
+'GMT+0700',
+'GMT+0730',
+'GMT+0800',
+'GMT+0830',
+'GMT+0900',
+'GMT+0930',
+'GMT+1000',
+'GMT+1030',
+'GMT+1100',
+'GMT+1130',
+'GMT+1200',
+'GMT+1230',
+'GMT+1300',
+)"
+userzone="REQUEST.get('zwiki_timezone',None)"
+userzone="((userzone in timezones) and userzone) or 'GMT'"
+>
+Your local time is 
+<select name="zwiki_timezone" tabindex=5>
+<dtml-in timezones prefix=x>
+<option value="&dtml-x_sequence_item;"
+<dtml-if "userzone == x_sequence_item">selected</dtml-if>
+>
+<dtml-comment>cf IssueNo0595
+<dtml-try><dtml-var "now.toZone(x_sequence_item).ISO()"><dtml-except></dtml-try> 
+</dtml-comment>
+<dtml-var "now.toZone(x_sequence_item).ISO()">
+ (&dtml-x_sequence_item;)
+</dtml-in>
+</select>
+(localizes most times)
+</dtml-let>
+
+<dtml-comment>
+<p>
+Bookmarks: 
+<input type="text" name="zwiki_bookmarks" size=60 maxlength=1000 tabindex=6
+value="<dtml-var zwiki_bookmarks html_quote 
+missing="">">
+<br />
+(appear in footer; konqueror users, separate your bookmarks with , not space)
+</dtml-comment>
+
+<p>
+Show logo ? 
+<select name="zwiki_showlogo" tabindex=10>
+  <option value="">No</option>
+  <option value="1" 
+  <dtml-if "REQUEST.get('zwiki_showlogo',1)">selected</dtml-if>
+  >Yes</option>
+</select>
+
+<p>
+Show page hierarchy ?
+<select name="zwiki_showhierarchy" tabindex=7>
+  <option value="">No</option>
+  <option value="1" 
+  <dtml-if zwiki_showhierarchy>selected</dtml-if>
+  >Yes</option>
+</select>
+(This wiki keeps a page hierarchy, which you can use or ignore.)
+
+<p>
+Show search field ? (except in minimal mode)
+<select name="zwiki_showsearch" tabindex=8>
+  <option value="">No</option>
+  <option value="1" 
+  <dtml-if "REQUEST.get('zwiki_showsearch',1)">selected</dtml-if>
+  >Yes</option>
+</select>
+
+<dtml-comment>
+<p>
+Show AnnoyingQuote ? (in full mode)
+<select name="zwiki_showquote" tabindex=9>
+  <option value="">No</option>
+  <option value="1" 
+  <dtml-if "REQUEST.get('zwiki_showquote',1)">selected</dtml-if>
+  >Yes</option>
+</select>
+</dtml-comment>
+
+<p>
+Show page management form ? (in full mode)
+<select name="zwiki_showpagemgmt" tabindex=10>
+  <option value="">No</option>
+  <option value="1" 
+  <dtml-if "REQUEST.get('zwiki_showpagemgmt',1)">selected</dtml-if>
+  >Yes</option>
+</select>
+(You must also configure a username or be logged in.)
+
+<dtml-let fontadj="_.int(REQUEST.get('latexwiki_fontadjust',0))" 
+          fontsize="latex_font_size">
+Font: <input type="text" name="latexwiki_font" size=30
+value="<dtml-var latexwiki_font missing="serif">">
+(site administrator has chosen a !LaTeX font-size of 
+<dtml-var expr="latex_font_size">px)<br/>
+Font size adjustment: <input type="text" name="latexwiki_fontadjust" 
+                             value="<dtml-var latexwiki_fontadjust missing=0>" size=2>px
+<table border=1>
+<tr><th></th><th>Upper Case</th><th>Lower Case</th></tr>
+<tr>
+<td> Are browser roman and italic letters the same height?  </td>
+<td> <div style="font-family:<dtml-var latexwiki_font missing="serif">; 
+                 font-size:<dtml-var expr="fontsize+fontadj">px;">
+X<i>X</i>
+</div> </td>
+<td> <div style="font-family:<dtml-var latexwiki_font missing="serif">; 
+                 font-size:<dtml-var expr="fontsize+fontadj">px;">
+x<i>x</i>
+</div> </td>
+</tr><tr>
+<td> Are Roman browser and !LaTeX letters the same height, and similar looking? </td>
+<td> <div style="font-family:<dtml-var latexwiki_font missing="serif">; 
+                 font-size:<dtml-var expr="fontsize+fontadj">px;">
+X$\rm X$
+</div> </td>
+<td> <div style="font-family:<dtml-var latexwiki_font missing="serif">; 
+                 font-size:<dtml-var expr="fontsize+fontadj">px;">
+x$\rm x$
+</div> </td>
+</tr> <tr>
+<td> Are Roman browser and !LaTeX letters the same height, and similar looking? </td>
+<td> <div style="font-family:<dtml-var latexwiki_font missing="serif">; 
+                 font-size:<dtml-var expr="fontsize+fontadj">px;">
+<i>X</i>$X$
+</div> </td>
+<td> <div style="font-family:<dtml-var latexwiki_font missing="serif">; 
+                 font-size:<dtml-var expr="fontsize+fontadj">px;">
+<i>x</i>$x$
+</div> </td>
+</tr>
+</tr> <tr>
+<td> Are !LaTeX superscript/subscript fonts readable? </td>
+<td> $\scriptstyle X$$\scriptstyle Z$ </td>
+<td> $\scriptstyle x$$\scriptstyle z$ </td>
+</tr> <tr>
+<td> Are !LaTeX superscript-superscript/subscript-subscript fonts readable? </td>
+<td> $\scriptscriptstyle X$$\scriptscriptstyle Z$ </td>
+<td> $\scriptscriptstyle x$$\scriptscriptstyle z$ </td>
+</tr>
+</table>
+</dtml-let>
+
+<dtml-comment>see http://zwiki.org/ZwikiSkins
+<p>
+Use which zwiki skin ?
+<select name="skin" tabindex=11>
+<dtml-let skins="[
+  'default',
+  'commonplace',
+  'wikipagex',
+  ]">
+<dtml-in skins prefix=x>
+<option value="&dtml-x_sequence_item;"
+<dtml-if "REQUEST.get('skin','default') == x_sequence_item">selected</dtml-if>
+>
+&dtml-x_sequence_item;
+</dtml-in>
+</dtml-let>
+</select>
+(Skins other than default may have problems. Commonplace is slow on this site.)
+
+<p>
+Use which theme with the commonplace skin ?
+<select name="zwiki_theme" tabindex=12>
+<dtml-let themes="[
+  'arcadian.css',
+  'default.css',
+  'earthy.css',
+  'sensible.css',
+  'tide.css',
+  'zettai.css',
+  ]">
+<dtml-in themes prefix=x>
+<option value="&dtml-x_sequence_item;"
+<dtml-if "REQUEST.get('zwiki_theme','default.css') == x_sequence_item">selected</dtml-if>
+>
+&dtml-x_sequence_item;
+</dtml-in>
+</dtml-let>
+</select>
+</dtml-comment>
+
+<div align="right"> 
+<b><input type="submit" name="setcookies" value="Save options" tabindex=13
+style="font-weight:bold"></b>
+<input type="submit" name="clearcookies" value="Forget options"
+tabindex=14> 
+</div>
+<input type="hidden" name="zwiki_displaymode" 
+value="<dtml-var zwiki_displaymode missing=simple>">
+
+</form>
+</dtml-with>
