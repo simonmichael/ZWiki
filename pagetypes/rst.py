@@ -8,7 +8,7 @@ from Products.ZWiki.I18n import _
 from Products.ZWiki.pagetypes import registerPageType
 
 # RST verbosity (MORE <- 0 debug, 1 info, 2 warning, 3 error, 4 severe -> LESS) :
-RST_REPORT_LEVEL = 3
+RST_REPORT_LEVEL = 4
 # top-level RST heading will render as this HTML heading:
 RST_INITIAL_HEADER_LEVEL = 2
 
