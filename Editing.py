@@ -851,7 +851,7 @@ class PageEditingSupport:
             if max is not None:
                 if len(re.findall(r'https?://',t)) > max:
                     raiseSpamError(_("exceeded max_identified_links"),
-                                   _("adding of external links is restricted"))
+                                   _("adding of external links is restricted, even for identified users"))
 
     def cleanupText(self, t):
         """
