@@ -819,7 +819,7 @@ class PageEditingSupport:
         def raiseSpamError(reason, verbose_reason):
             BLATHER(('blocked edit from %s (%s) on %s (%s)\n%s\n') % \
                     (ip, username, page, reason, t))
-            raise _("There was a problem: %s. Please contact the site administrator for help." % \
+            raise _("There was a problem: %s" % \
                     (verbose_reason))
             
         # banned link pattern ?
@@ -827,7 +827,7 @@ class PageEditingSupport:
             pat = strip(pat)
             if pat and re.search(pat,t):
                 raiseSpamError(_("banned_links match"),
-                               _("your edit contained a banned link pattern"))
+                               _("your edit contained a banned link pattern. Please contact the site administrator for help."))
 
         # anonymous edit with too many urls ?
         prop = 'max_anonymous_links'
@@ -839,7 +839,7 @@ class PageEditingSupport:
             if max is not None:
                 if len(re.findall(r'https?://',t)) > max:
                     raiseSpamError(_("exceeded max_anonymous_links"),
-                                   _("adding of external links by unidentified users is restricted"))
+                                   _("adding of external links by unidentified users is restricted. Please back up and remove some of the http urls you added, or contact the site administrator for help."))
 
         # and a similar check for identified users
         # XXX simplify ? one property for both ?
@@ -851,7 +851,7 @@ class PageEditingSupport:
             if max is not None:
                 if len(re.findall(r'https?://',t)) > max:
                     raiseSpamError(_("exceeded max_identified_links"),
-                                   _("adding of external links is restricted, even for identified users"))
+                                   _("adding of external links is restricted, even for identified users. Please back up and remove some of the http urls you added, or contact the site administrator for help."))
 
     def cleanupText(self, t):
         """
