@@ -20,27 +20,25 @@ def setup_latexwiki(self):
         os.mkdir(workingDir)
         zLOG.LOG('LatexWiki',zLOG.DEBUG, 'LatexWiki image directory %s created'%(workingDir)) 
     id = 'images'
-    # Transition to this once we are storing images in the ZODB ob =
-    # BTreeFolder2(id) 
-    ob = None 
-    try: 
-        from Products.LocalFS.LocalFS import LocalFS 
-        ob = LocalFS(id, '', workingDir, None, None) 
-    except ImportError: # no localfs
-        zLOG.LOG('LatexWiki',zLOG.ERROR,'LocalFS not installed')
-# FileSystemSite does not automatically refresh when the contents of the
-# filesystem chages.  I'm not sure if it's possible to enable that...
-#        try:
-#            from Products.FileSystemSite.DirectoryView import DirectoryView
-#            ob = DirectoryView(id, workingDir)
-#        except ImportError:
-#            zLOG.LOG('LatexWiki',zLOG.DEBUG,'FileSystemSite not installed either')
-    # FIXME: try Ape too
-    if ob != None:
-        self._setObject(id, ob, set_owner=1)
-    else:
-        zLOG.LOG('LatexWiki', zLOG.ERROR, 
-            'Failed to find a suitable filesystem product')
+    if not hasattr(self,'images'):
+        ob = None 
+        try: 
+            from Products.LocalFS.LocalFS import LocalFS 
+            ob = LocalFS(id, '', workingDir, None, None) 
+        except ImportError: # no localfs
+            zLOG.LOG('LatexWiki',zLOG.ERROR,'LocalFS not installed')
+    # FileSystemSite does not automatically refresh when the contents of the
+    # filesystem chages.  I'm not sure if it's possible to enable that...
+    #        try:
+    #            from Products.FileSystemSite.DirectoryView import DirectoryView
+    #            ob = DirectoryView(id, workingDir)
+    #        except ImportError:
+    #            zLOG.LOG('LatexWiki',zLOG.DEBUG,'FileSystemSite not installed either')
+        if ob != None:
+            self._setObject(id, ob, set_owner=1)
+        else:
+            zLOG.LOG('LatexWiki', zLOG.ERROR, 
+                'Failed to find a suitable filesystem product')
     self.REQUEST.RESPONSE.redirect(self.REQUEST['URL1'])
     #self._delObject('setup_latexwiki')
 
