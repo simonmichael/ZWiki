@@ -107,7 +107,7 @@ def runCommand(cmdLine):
     return error, string.join(stdout, ''), string.join(stderr, '')
 
 def runNoweb(fDir,fName):
-    cmdLine = "cd '%s'; /usr/local/axiom/mnt/linux/bin/lib/noweave -delay '%s.pamphlet' > '%s.tex'"%(fDir,fName,fName)
+    cmdLine = "cd '%s'; /usr/bin/noweave -delay '%s.pamphlet' > '%s.tex'"%(fDir,fName,fName)
     err, stdout, stderr = runCommand(cmdLine)
     if err:
         log('%s\n%s\n%s\n%s\n'%(cmdLine, err, stdout, stderr), 'NowebError')
@@ -115,7 +115,7 @@ def runNoweb(fDir,fName):
     return stderr
 
 def runLatex(fDir,fName):
-    cmdLine = "cd '%s'; rm -f *.dot; /usr/local/teTeX/bin/i686-pc-linux-gnu/latex --interaction nonstopmode '%s.tex'" %(fDir,fName)
+    cmdLine = "cd '%s'; rm -f *.dot; /usr/bin/latex --interaction nonstopmode '%s.tex'" %(fDir,fName)
 
     err, stdout, stderr = runCommand(cmdLine)
 # Process Graphviz .dot files
@@ -150,7 +150,7 @@ def runDviPdfm(fDir,fName):
     return stderr
  
 def runDviPs(fDir,fName):
-    cmdLine = "cd '%s'; /usr/local/teTeX/bin/i686-pc-linux-gnu/dvips -z -o '%s.ps' '%s.dvi'"%(fDir,fName,fName)
+    cmdLine = "cd '%s'; /usr/bin/dvips -z -o '%s.ps' '%s.dvi'"%(fDir,fName,fName)
     err, stdout, stderr = runCommand(cmdLine)
     if err:
         log('%s\n%s\n%s\n%s\n'%(cmdLine, err, stdout, stderr), 'DviPdfError')
