@@ -415,10 +415,10 @@ class PageAdminSupport:
             for p in self.pageObjects():
                 n = n + 1
                 try:
-                    BLATHER('indexing page #%d %s in %s'%(n,p.id(),cid))
+                    BLATHER('indexing page %d %s in %s'%(n,p.id(),cid))
                     p.index_object(log=0)
                 except:
-                    BLATHER('failed to index page #%d %s: %s' \
+                    BLATHER('failed to index page %d %s: %s' \
                             % (n,p.id(),formattedTraceback()))
             BLATHER('indexing complete, %d pages processed' % n)
         if REQUEST:
