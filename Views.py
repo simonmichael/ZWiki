@@ -203,7 +203,7 @@ def addErrorTo(text,error):
 TEMPLATES = {}
 for t in [
     # main view templates
-    'badtemplate',
+    'badtemplate', # should be first
     'backlinks',
     'contentspage',
     'denied',
@@ -225,6 +225,7 @@ for t in [
     'pageheader',
     'pagemanagementform',
     'siteheader',
+    'testtemplate',
     ]:
     TEMPLATES[t] = loadPageTemplate(t)
 
