@@ -1,20 +1,29 @@
-views and skins
----------------
-keep cleaning up and simplifying
-skins/zwiki_standard,plone -> skins/zwiki ?
+commit pending changes
+fix 1284 acquisition bug - Views, Views_tests
+plone metadata/properties tab
+built-in helppage
+editform help
+release 0.56
 
-tests
------
+SITES
+fix speed
+better tracking of free wikis
+better free wiki signup/marketing/maintenance
+close down dead wikis
+
+PROCESS
+automatic release
+
+VIEWS AND SKINS
+keep cleaning up and simplifying
+
+TESTS
 aftersetup -> setup ? clarify in all fixtures
 bring back doctests ?
 review/remove ftests
 
-docs
-----
-replace doxygen stuff with latest epydoc ?
-
-misc
-----
+OTHER
+replace doxygen stuff with latest epydoc
 better separation of darcs-controlled and misc/old/doxygen files
 lowercase filenames ?
 
