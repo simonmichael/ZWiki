@@ -131,7 +131,7 @@ ALLTEST= /zope2/bin/zopectl $(TESTARGS) -a 3 -vv
 test:
 	$(QUICKTEST) -m Products.ZWiki
 
-# allows test limiting and additional args, eg:
+# allows test limiting and additional args. Examples:
 # make test-Mail
 # make test-"pagetypes.rst -vv -D"
 test-%:
