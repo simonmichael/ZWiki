@@ -1,18 +1,24 @@
 # stuff that didn't fit in CMF.py or __init__.py
+# __init__ tries to import this, will ignore any errors
 
 from types import *
 import string, re, os
 from AccessControl import getSecurityManager
 from DateTime import DateTime
-from Globals import package_home
-from Products.CMFCore.DirectoryView import addDirectoryViews, \
-     registerDirectory, manage_listAvailableDirectories
+import Products.CMFCore
+from Products.CMFCore.DirectoryView import registerDirectory
 
 from ZWikiPage import ZWikiPage
 import Permissions
 from Defaults import PAGE_METATYPE, PAGE_PORTALTYPE
 from Wikis import _addDTMLMethod, _addZWikiPage
 from I18n import _
+
+try:
+    import Products.CMFPlone
+    PLONE_VERSION = Products.CMFPlone.utils.getFSVersionTuple()
+except ImportError:
+    PLONE_VERSION = (0,0,0) # not installed
 
 default_perms = {
     'create': 'nonanon',
@@ -62,6 +68,54 @@ def addWikiPage(self, id, title='', page_type=None, file=''):
     ob.setPageType(
         page_type or getattr(self,'allowed_page_types',[None])[0])
     self._setObject(id, ob)
+
+# The metadata tab broke in plone 2.5 because, as I understand it,
+# plone dropped the metadata_edit_form template in favour of a properties
+# method; so the action needs to link to /properties with plone >= 2.5,
+# and to /metadata_edit_form with plone <2.5 or non-plone cmf.
+# I decided to disable the tab by default, but we still create the action
+# it should work if people enable it. Issues to resolve:
+#
+# 1. be off by default
+#    use visible: 0
+#    
+# 2. handle existing sites & upgrades gracefully
+#
+#    a. when upgrading zwiki, in a site which has had
+#       the metadata tab installed, it will remain
+#       visible. Tell admins to uncheck visible in
+#       portal_types -> Wiki Page -> actions, or
+#       remove/add Zwiki in the site. (check this)
+#
+#    b. when upgrading plone past 2.5, clicking on
+#       the metadata tab on wiki pages will give an
+#       error. Tell admins to remove/add Zwiki in the
+#       site.
+#       
+# 3. be easy to enable
+#    check visible box in portal_types -> Wiki Page -> actions
+#    -> properties (metadata ?) action
+# 
+# 4. work in all plones
+#    add appropriate action for current plone version,
+#    tell admins to remove/add Zwiki when upgrading plone past 2.5
+
+if PLONE_VERSION >= (2,5):                 
+    METADATA_TAB = {'id': 'properties',
+                    'name': 'Properties',
+                    'action': 'string:${object_url}/properties',
+                    'permissions': (Permissions.Edit,),
+                    'category': 'object',
+                    'visible': 0,
+                    }
+else:
+    METADATA_TAB = {'id': 'metadata',
+                    'name': 'Metadata',
+                    'action': 'string:${object_url}/metadata_edit_form',
+                    'permissions': (Permissions.Edit,),
+                    'category': 'object',
+                    'visible': 0,
+                    }
 
 factory_type_information = (
     {'id': PAGE_PORTALTYPE,
@@ -140,25 +194,18 @@ factory_type_information = (
                   'category': 'object_actions',
                   'visible': 0,
                   },
-                  {'id': 'metadata',
-                   'name': 'Metadata',
-                   'action': 'string:${object_url}/metadata_edit_form',
-                   'permissions': (Permissions.Edit,),
-                   'category': 'object',
-                  },
+                 METADATA_TAB,
                  ),
      },
     )
 
-from Products.CMFCore import utils
-from Products.CMFCore.DirectoryView import registerDirectory
 
 def initialize(context): 
     """Initialize the ZWiki product for use in CMF.
     """
     registerDirectory('skins', globals())
     # XXX I don't want this in the zmi add menu, how can I hide it ?
-    utils.ContentInit(
+    Products.CMFCore.utils.ContentInit(
         'Wiki Content',
         content_types = (ZWikiPage, ),
         permission = Permissions.Add,

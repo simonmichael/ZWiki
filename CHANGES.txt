@@ -1,3 +1,46 @@
+    Summary
+
+	...
+
+    Upgrade notes
+
+        Wiki pages in Plone will no longer show the metadata tab; if you
+	are upgrading, be sure to re-install Zwiki in your plone site's
+	Add/Remove Products to make the tab go away.  
+
+	If you do need the metadata/properties tab, you can enable it by
+	checking its visible box in ZMI -> portal_types -> Wiki Page ->
+	actions (you'll need to do this again any time you re-install
+	Zwiki in the site). Also, if you have upgraded Plone past 2.5 be
+	sure to re-install Zwiki once to convert the old metadata tab to a
+	new-style properties tab.
+
+    Changes
+
+      Installing
+
+	* hide the metadata tab in cmf/plone, allow it to be
+          re-enabled, and make it a properties tab in plone 2.5; see
+          upgrade notes (#1273)
+
+      Configuring
+
+      Browsing
+
+      Editing
+
+      Page hierarchy
+
+      Mail
+
+      Issue tracking
+
+      Translations
+
+      General
+	
+
+
 Zwiki 0.55.0 2006/08/02
 
     Summary
