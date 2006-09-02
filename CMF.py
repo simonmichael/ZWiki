@@ -174,5 +174,16 @@ else:
             """Always show the green border; Zwiki's current UI needs it."""
             return 1
 
+        def isDefaultPageInFolder(self):
+            """ Returns a boolean indicating whether the current context is the
+                default page of its parent folder.
+
+                Plone 2.5 wants this. It's used (so far) to disable
+                plone's cut/copy/paste/rename actions for the default
+                page. I guess this suits Zwiki's default (front) wiki
+                page.
+            """
+            return self == self.defaultPage()
+
 InitializeClass(PageCMFSupport)
 
