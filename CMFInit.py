@@ -14,6 +14,7 @@ from Defaults import PAGE_METATYPE, PAGE_PORTALTYPE
 from Wikis import _addDTMLMethod, _addZWikiPage
 from I18n import _
 
+# no longer used, but maybe later.
 try:
     import Products.CMFPlone
     PLONE_VERSION = Products.CMFPlone.utils.getFSVersionTuple()
@@ -68,54 +69,6 @@ def addWikiPage(self, id, title='', page_type=None, file=''):
     ob.setPageType(
         page_type or getattr(self,'allowed_page_types',[None])[0])
     self._setObject(id, ob)
-
-# The metadata tab broke in plone 2.5 because, as I understand it,
-# plone dropped the metadata_edit_form template in favour of a properties
-# method; so the action needs to link to /properties with plone >= 2.5,
-# and to /metadata_edit_form with plone <2.5 or non-plone cmf.
-# I decided to disable the tab by default, but we still create the action
-# it should work if people enable it. Issues to resolve:
-#
-# 1. be off by default
-#    use visible: 0
-#    
-# 2. handle existing sites & upgrades gracefully
-#
-#    a. when upgrading zwiki, in a site which has had
-#       the metadata tab installed, it will remain
-#       visible. Tell admins to uncheck visible in
-#       portal_types -> Wiki Page -> actions, or
-#       remove/add Zwiki in the site. (check this)
-#
-#    b. when upgrading plone past 2.5, clicking on
-#       the metadata tab on wiki pages will give an
-#       error. Tell admins to remove/add Zwiki in the
-#       site.
-#       
-# 3. be easy to enable
-#    check visible box in portal_types -> Wiki Page -> actions
-#    -> properties (metadata ?) action
-# 
-# 4. work in all plones
-#    add appropriate action for current plone version,
-#    tell admins to remove/add Zwiki when upgrading plone past 2.5
-
-if PLONE_VERSION >= (2,5):                 
-    METADATA_TAB = {'id': 'properties',
-                    'name': 'Properties',
-                    'action': 'string:${object_url}/properties',
-                    'permissions': (Permissions.Edit,),
-                    'category': 'object',
-                    'visible': 0,
-                    }
-else:
-    METADATA_TAB = {'id': 'metadata',
-                    'name': 'Metadata',
-                    'action': 'string:${object_url}/metadata_edit_form',
-                    'permissions': (Permissions.Edit,),
-                    'category': 'object',
-                    'visible': 0,
-                    }
 
 factory_type_information = (
     {'id': PAGE_PORTALTYPE,
@@ -194,7 +147,6 @@ factory_type_information = (
                   'category': 'object_actions',
                   'visible': 0,
                   },
-                 METADATA_TAB,
                  ),
      },
     )
