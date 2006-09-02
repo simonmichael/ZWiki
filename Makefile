@@ -414,3 +414,8 @@ list_authors:
 		/usr/local/src/darcs-unstable/Unrecord.o \
 		/usr/local/src/darcs-unstable/Unrevert.o \
 		/usr/local/src/darcs-unstable/WhatsNew.o
+
+# reinstall zwiki product in plone site
+# uses ~/.netrc for authorization
+reinstall:
+	curl -n 'http://plone.demo.zwiki.org/portal_quickinstaller/reinstallProducts?products=ZWiki'
