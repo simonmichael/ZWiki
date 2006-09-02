@@ -3,6 +3,7 @@
 # Zwiki release reminders
 # -----------------------
 # check for unrecorded changes
+# check for (AIEEE!) translations 
 # check tests pass
 # check for late tracker issues
 # check showAccessKeys,README,wikis/,skins/,zwiki.org HelpPage,QuickReference
