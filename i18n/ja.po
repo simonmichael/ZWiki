@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Zwiki 0.9.10\n"
 "POT-Creation-Date: Sat Apr  1 14:13:10 2006\n"
-"PO-Revision-Date: 2006-03-14 02:50+0000\n"
+"PO-Revision-Date: 2006-08-23 12:28+0000\n"
 "Last-Translator: jack <jack@jk.to>\n"
 "Language-Team: Japanese <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -66,23 +66,23 @@ msgstr ""
 #: i/Editing.py:819
 msgid ""
 "There was a problem: %s. Please contact the site administrator for help."
-msgstr ""
+msgstr "問題(%s)が発生しました。サイトの管理者に連絡してください"
 
 #: i/Editing.py:826
 msgid "banned_links match"
-msgstr ""
+msgstr "禁止リンクにマッチ"
 
 #: i/Editing.py:827
 msgid "your edit contained a banned link pattern"
-msgstr ""
+msgstr "禁止リンクパターンが編集内容に含まれています"
 
 #: i/Editing.py:838
 msgid "exceeded max_anonymous_links"
-msgstr ""
+msgstr "最大匿名リンク数に到達しました"
 
 #: i/Editing.py:839
 msgid "adding of external links by anonymous authors is restricted"
-msgstr ""
+msgstr "匿名ユーザによる外部リンクの追加は制限されています"
 
 #: i/Mail.py:490 i/skins/dtmlmessages.pt:59
 msgid "anonymous"
@@ -218,7 +218,6 @@ msgid "To discard your changes and try again, click OK."
 msgstr "修正するより、最初からやり直すほうがよいなら、「OK」をクリック"
 
 #: i/Views.py:770
-#, fuzzy
 msgid ""
 "\n"
 "        Access keys can be accessed in mozilla-based browsers by pressing "
@@ -318,20 +317,19 @@ msgstr ""
 
 #: i/Wikis.py:49
 msgid "Unknown wiki type"
-msgstr ""
+msgstr "不明な Wiki タイプ"
 
 #: i/ZWikiPage.py:670
 msgid "create this page"
-msgstr ""
+msgstr "ページを作成"
 
 #: i/ZWikiPage.py:793 i/ZWikiPage.py:809 i/ZWikiPage.py:812
 msgid "last edited %(interval)s ago"
 msgstr "更新から %(interval)s 経過"
 
 #: i/ZWikiPage.py:804
-#, fuzzy
 msgid "show last edit"
-msgstr "更新を表示する %(lastlog)s"
+msgstr "最後の更新を表示"
 
 #: i/ZWikiPage.py:821 i/ZWikiPage.py:823
 msgid "by %(editor)s"
@@ -339,7 +337,7 @@ msgstr "編集者: %(editor)s"
 
 #: i/__init__.py:34
 msgid "No need to add a Zwiki Outline Cache"
-msgstr ""
+msgstr "Zwiki アウトラインキャッシュを追加する必要はありません"
 
 #: i/__init__.py:35
 msgid ""
@@ -348,6 +346,10 @@ msgid ""
 "        Zwiki will create it for you as needed.\n"
 "        "
 msgstr ""
+"ZMI の Add メニュー に\"Zwiki Outline Cache\"が現れますが\n"
+"        これは実装上の理由によるもので、直接追加する必要はありません。\n"
+"        必要になったときには自動的に作成されます\n"
+"        "
 
 #: i/pagetypes/common.py:240
 msgid "comments"
@@ -401,12 +403,11 @@ msgstr "問題点フィルタの設定"
 #: i/plugins/tracker/issuebrowser.pt:12
 #, fuzzy
 msgid "Issue browser"
-msgstr "IssueTracker"
+msgstr "Issue ブラウザ"
 
 #: i/plugins/tracker/issuetracker.pt:12
-#, fuzzy
 msgid "Issue tracker"
-msgstr "IssueTracker"
+msgstr "Issue tracker"
 
 #: i/skins/dtmlmessages.pt:10 i/skins/dtmlmessages.pt:32
 msgid "category"
@@ -524,12 +525,12 @@ msgstr "状態"
 #: i/skins/dtmlmessages.pt:42
 #, fuzzy
 msgid "Optional subject"
-msgstr "追加メモ"
+msgstr "オプションの題名"
 
 #: i/skins/dtmlmessages.pt:43
 #, fuzzy
 msgid "Optional comment"
-msgstr "追加メモ"
+msgstr "オプションのコメント"
 
 #: i/skins/dtmlmessages.pt:44 i/skins/dtmlmessages.pt:45
 msgid "Add a ZWiki web"
@@ -552,8 +553,9 @@ msgid "Create wiki"
 msgstr "Wikiの新規作成"
 
 #: i/skins/dtmlmessages.pt:5
+#, fuzzy
 msgid "browse open issues"
-msgstr ""
+msgstr "開かれている issue を見る"
 
 #: i/skins/dtmlmessages.pt:50
 msgid "and enter"
@@ -640,8 +642,9 @@ msgid "recent"
 msgstr "現在"
 
 #: i/skins/dtmlmessages.pt:70
+#, fuzzy
 msgid "Thorough (non-catalog) search for text matching"
-msgstr ""
+msgstr "(カタログベースでない)全文テキスト検索"
 
 #: i/skins/dtmlmessages.pt:71
 msgid "Set your preferences for this wiki:"
@@ -728,7 +731,7 @@ msgstr "追加"
 
 #: i/skins/dtmlmessages.pt:91
 msgid "Last updated"
-msgstr ""
+msgstr "最終更新"
 
 #: i/skins/dtmlmessages.pt:92
 #, fuzzy
@@ -743,43 +746,43 @@ msgstr "表示"
 #: i/skins/dtmlmessages.pt:94
 #, fuzzy
 msgid "Created"
-msgstr "作成"
+msgstr "作成済み"
 
 #: i/skins/dtmlmessages.pt:95 i/skins/dtmlmessages.pt:97
 msgid "by"
-msgstr ""
+msgstr "by"
 
 #: i/skins/dtmlmessages.pt:96
 msgid "<dtml-var lasteditinterval> ago</dtml-var>"
-msgstr ""
+msgstr "<dtml-var lasteditinterval> 前</dtml-var>"
 
 #: i/skins/dtmlmessages.pt:98
 msgid "on"
-msgstr ""
+msgstr "on"
 
 #: i/skins/zwiki_standard/backlinks.pt:108
 #, fuzzy
 msgid "Subtopics"
-msgstr "追加"
+msgstr "サブトピック"
 
 #: i/skins/zwiki_standard/backlinks.pt:111
 msgid "This page has no subtopics."
-msgstr ""
+msgstr "サブトピックはありません"
 
 #: i/skins/zwiki_standard/backlinks.pt:114
 #, fuzzy
 msgid "Here are it's subtopics."
-msgstr "Wikiの問題点一覧ページです。"
+msgstr "サブトピック一覧です"
 
 #: i/skins/zwiki_standard/backlinks.pt:117
 msgid "You can reorder them by clicking the ^ buttons."
-msgstr ""
+msgstr "「^」ボタンをクリックして順序を変えることができます"
 
 #: i/skins/zwiki_standard/backlinks.pt:20
 #: i/skins/zwiki_standard/backlinks.pt:55
 #, fuzzy
 msgid "Backlinks"
-msgstr "逆リンク"
+msgstr "バックリンク"
 
 #: i/skins/zwiki_standard/backlinks.pt:26
 #, fuzzy
@@ -807,7 +810,7 @@ msgstr "どこからリンクされているでしょうか？"
 msgid ""
 "You can set this page's parent(s) to place it within the overall page "
 "hierarchy."
-msgstr ""
+msgstr "全てのページの階層の中から、このページの親を設定することができます"
 
 #: i/skins/zwiki_standard/backlinks.pt:85
 msgid ""
@@ -822,6 +825,7 @@ msgstr ""
 msgid ""
 "You can type just the first few letters, case and punctuation are ignored."
 msgstr ""
+"最初の数文字を入力して下さい。なお、大文字/小文字や句読点は同一視されます"
 
 #: i/skins/zwiki_standard/backlinks.pt:98
 msgid "Reparent"
@@ -829,7 +833,7 @@ msgstr "Reparent"
 
 #: i/skins/zwiki_standard/badtemplate.pt:12
 msgid "Bad template"
-msgstr ""
+msgstr "悪いテンプレート"
 
 #: i/skins/zwiki_standard/badtemplate.pt:13
 #, fuzzy
@@ -839,9 +843,10 @@ msgid ""
 "obscuring the template. Or the template may be missing on the filesystem (an "
 "incomplete Zwiki installation)."
 msgstr ""
-"Wikiのスキンテンプレートに問題がありました。オブジェクトのスキンテンプレート"
-"IDがPageTemplate、DTML Methodではないようです。またはテンプレートがみつかりま"
-"せん。"
+"Wikiのスキンテンプレートのどれかに問題があります。同じIDのページか、他のペー"
+"ジテンプレートでもdtml-method でもないオブジェクトがあるか、あいまいなテンプ"
+"レートです。またはファイルシステム上にテンプレートがみつかりません(インストー"
+"ルが不完全です)。"
 
 #: i/skins/zwiki_standard/contentspage.pt:12
 msgid "Wiki contents"
@@ -853,12 +858,12 @@ msgstr "Singletons"
 
 #: i/skins/zwiki_standard/denied.pt:12
 msgid "Not permitted"
-msgstr ""
+msgstr "許可されていない"
 
 #: i/skins/zwiki_standard/diffform.pt:13
 #, fuzzy
 msgid "Edit history"
-msgstr "全ての履歴"
+msgstr "履歴の編集"
 
 #. Default: "Log note :"
 #: i/skins/zwiki_standard/diffform.pt:21
@@ -880,7 +885,7 @@ msgstr "次の変更 >>"
 #: i/skins/zwiki_standard/diffform.pt:35
 #, fuzzy
 msgid "Revert this and later changes"
-msgstr "すべての変更を取り消す"
+msgstr "これより後のすべての変更を取り消す"
 
 #: i/skins/zwiki_standard/diffform.pt:38
 msgid "Return to page"
@@ -920,7 +925,7 @@ msgstr "TextFormattingRules"
 
 #: i/skins/zwiki_standard/editform.pt:166
 msgid "${DYNAMIC_CONTENT}"
-msgstr ""
+msgstr "${DYNAMIC_CONTENT}"
 
 #: i/skins/zwiki_standard/editform.pt:174
 msgid "preview this edit"
@@ -959,7 +964,7 @@ msgstr "このwikiページを作成します"
 #: i/skins/zwiki_standard/editform.pt:216
 #, fuzzy
 msgid "label_preview"
-msgstr "(必須)"
+msgstr "プレビュー"
 
 #: i/skins/zwiki_standard/editform.pt:56
 msgid "Page name"
@@ -980,12 +985,12 @@ msgstr "このページのフォーマットと描画スタイルを選択して
 #: i/skins/zwiki_standard/recentchanges.pt:12
 #, fuzzy
 msgid "Recent changes"
-msgstr "最近の変更を表示"
+msgstr "最近の変更"
 
 #: i/skins/zwiki_standard/searchwiki.pt:12
 #, fuzzy
 msgid "Search this wiki"
-msgstr "このwikiページを作成します"
+msgstr "このwikiからの検索"
 
 #. Default: ""
 #.  "You are currently subscribed<br />\n"
@@ -1304,307 +1309,304 @@ msgstr "ホーム"
 msgid "show wiki recent changes"
 msgstr "最近の変更を表示"
 
-#~ msgid "Backlinks for"
-#~ msgstr "このページへのリンク:"
+msgid "Backlinks for"
+msgstr "このページへのリンク:"
 
-#~ msgid "singleton_desc"
-#~ msgstr "Singleton とは他のページとリンクされていないページです。"
+msgid "singleton_desc"
+msgstr "Singleton とは他のページとリンクされていないページです。"
 
-#~ msgid "History for"
-#~ msgstr "履歴:"
+msgid "History for"
+msgstr "履歴:"
 
-#~ msgid "return to page"
-#~ msgstr "ページに戻る"
+msgid "return to page"
+msgstr "ページに戻る"
 
-#~ msgid "help_shortname"
-#~ msgstr ""
-#~ "注: 大規模なwikiでページの名前を変更するのは時間がかかることがあります。他"
-#~ "のページも可能なら変更されます。"
+msgid "help_shortname"
+msgstr ""
+"注: 大規模なwikiでページの名前を変更するのは時間がかかることがあります。他の"
+"ページも可能なら変更されます。"
 
-#~ msgid "label_body_text"
-#~ msgstr "本文"
+msgid "label_body_text"
+msgstr "本文"
 
-#~ msgid "help_wikibody"
-#~ msgstr ""
-#~ "Wikiページの中では [カギかっこ] でリンクを作成できます。ページを保存すると"
-#~ "カギ括弧の\n"
-#~ "内容に<code>?</code>が付いたリンクが表示されるので、クリックするとその名前"
-#~ "でページを\n"
-#~ "作成します。(訳注:英数字以外を使う場合はパッチが必要な場合もあります)"
+msgid "help_wikibody"
+msgstr ""
+"Wikiページの中では [カギかっこ] でリンクを作成できます。ページを保存するとカ"
+"ギ括弧の\n"
+"内容に<code>?</code>が付いたリンクが表示されるので、クリックするとその名前で"
+"ページを\n"
+"作成します。(訳注:英数字以外を使う場合はパッチが必要な場合もあります)"
 
-#~ msgid "help_wikiwords"
-#~ msgstr "WikiWordsでのリンクの仕組みもサポートされています。"
+msgid "help_wikiwords"
+msgstr "WikiWordsでのリンクの仕組みもサポートされています。"
 
-#~ msgid "label_note"
-#~ msgstr "バージョン説明(任意)"
+msgid "label_note"
+msgstr "バージョン説明(任意)"
 
-#~ msgid "help_wikinote"
-#~ msgstr "この変更についての簡単な説明を書きます。"
+msgid "help_wikinote"
+msgstr "この変更についての簡単な説明を書きます。"
 
-#~ msgid "label_upload_contents_optional"
-#~ msgstr "ファイル・画像のアップロード (任意)"
+msgid "label_upload_contents_optional"
+msgstr "ファイル・画像のアップロード (任意)"
 
-#~ msgid "help_wikiupload"
-#~ msgstr "ファイル・画像をこのwikiページに添付します。"
+msgid "help_wikiupload"
+msgstr "ファイル・画像をこのwikiページに添付します。"
 
-#~ msgid "label_format"
-#~ msgstr "フォーマット"
+msgid "label_format"
+msgstr "フォーマット"
 
-#~ msgid "help_format"
-#~ msgstr ""
-#~ "どのフォーマットにするかわからない場合は、平文テキストを選んで普通に入力し"
-#~ "ます。"
+msgid "help_format"
+msgstr ""
+"どのフォーマットにするかわからない場合は、平文テキストを選んで普通に入力しま"
+"す。"
 
-#~ msgid "Save"
-#~ msgstr "保存"
+msgid "Save"
+msgstr "保存"
 
-#~ msgid "heading_edit_wiki_page"
-#~ msgstr "${itemtype} \"${pagename}\" の編集"
+msgid "heading_edit_wiki_page"
+msgstr "${itemtype} \"${pagename}\" の編集"
 
-#~ msgid "description_edit_wiki_page"
-#~ msgstr "Wiki Page は相互リンクしているページを作ることができます。"
+msgid "description_edit_wiki_page"
+msgstr "Wiki Page は相互リンクしているページを作ることができます。"
 
-#~ msgid "legend_wiki_page_details"
-#~ msgstr "Wiki Page 詳細"
+msgid "legend_wiki_page_details"
+msgstr "Wiki Page 詳細"
 
-#~ msgid "label_pagename"
-#~ msgstr "ページ名"
+msgid "label_pagename"
+msgstr "ページ名"
 
-#~ msgid "Required"
-#~ msgstr "必須入力"
+msgid "Required"
+msgstr "必須入力"
 
-#~ msgid "label_required"
-#~ msgstr "(必須)"
+msgid "label_required"
+msgstr "(必須)"
 
-#~ msgid "heading_wiki_recent_changes"
-#~ msgstr "最近の更新"
+msgid "heading_wiki_recent_changes"
+msgstr "最近の更新"
 
-#~ msgid "heading_wiki_search_wiki"
-#~ msgstr "Wikiを検索"
+msgid "heading_wiki_search_wiki"
+msgstr "Wikiを検索"
 
-#~ msgid "Unsubscribe from this page"
-#~ msgstr "このページの講読を解除する"
+msgid "Unsubscribe from this page"
+msgstr "このページの講読を解除する"
 
-#~ msgid "Subscribe to this page"
-#~ msgstr "このページを講読する"
+msgid "Subscribe to this page"
+msgstr "このページを講読する"
 
-#~ msgid "heading_wiki_user_options"
-#~ msgstr "ユーザオプション"
-
-#, fuzzy
-#~ msgid "add a comment"
-#~ msgstr "コメントの追加"
-
-#~ msgid "heading_wiki_filter_issues"
-#~ msgstr "問題の絞り込み"
+msgid "heading_wiki_user_options"
+msgstr "ユーザオプション"
 
 #, fuzzy
-#~ msgid "heading_wiki_issue_browser"
-#~ msgstr "Issue tracker"
+msgid "add a comment"
+msgstr "コメントの追加"
 
-#~ msgid "heading_wiki_issue_tracker"
-#~ msgstr "Issue tracker"
-
-#, fuzzy
-#~ msgid "property change"
-#~ msgstr "最近の変更を表示"
-
-#~ msgid "backlinks_reparent_help"
-#~ msgstr ""
-#~ "このページをコンテンツの階層の中でどこに配置させるかを決めるために、親を設"
-#~ "定\n"
-#~ "することもできます。チェックボックスで選択するか、他の親ページ名を入力"
-#~ "し、\n"
-#~ "「Reparent」をクリックしてください。普通、親ページは一つで充分です"
+msgid "heading_wiki_filter_issues"
+msgstr "問題の絞り込み"
 
 #, fuzzy
-#~ msgid "backlinks_reparent_help2"
-#~ msgstr ""
-#~ "このページをコンテンツの階層の中でどこに配置させるかを決めるために、親を設"
-#~ "定\n"
-#~ "することもできます。チェックボックスで選択するか、他の親ページ名を入力"
-#~ "し、\n"
-#~ "「Reparent」をクリックしてください。普通、親ページは一つで充分です"
+msgid "heading_wiki_issue_browser"
+msgstr "Issue tracker"
+
+msgid "heading_wiki_issue_tracker"
+msgstr "Issue tracker"
 
 #, fuzzy
-#~ msgid "View"
-#~ msgstr "表示"
+msgid "property change"
+msgstr "最近の変更を表示"
+
+msgid "backlinks_reparent_help"
+msgstr ""
+"このページをコンテンツの階層の中でどこに配置させるかを決めるために、親を設"
+"定\n"
+"することもできます。チェックボックスで選択するか、他の親ページ名を入力し、\n"
+"「Reparent」をクリックしてください。普通、親ページは一つで充分です"
 
 #, fuzzy
-#~ msgid "Comment"
-#~ msgstr "コメント"
+msgid "backlinks_reparent_help2"
+msgstr ""
+"このページをコンテンツの階層の中でどこに配置させるかを決めるために、親を設"
+"定\n"
+"することもできます。チェックボックスで選択するか、他の親ページ名を入力し、\n"
+"「Reparent」をクリックしてください。普通、親ページは一つで充分です"
 
 #, fuzzy
-#~ msgid "A Comment"
-#~ msgstr "コメント"
+msgid "View"
+msgstr "表示"
 
 #, fuzzy
-#~ msgid "Table of Contents"
-#~ msgstr "目次"
+msgid "Comment"
+msgstr "コメント"
 
 #, fuzzy
-#~ msgid "A Wiki"
-#~ msgstr "ZWikiページの新規作成"
+msgid "A Comment"
+msgstr "コメント"
 
 #, fuzzy
-#~ msgid "Subscriptions"
-#~ msgstr "メール講読"
+msgid "Table of Contents"
+msgstr "目次"
 
 #, fuzzy
-#~ msgid "Change Wiki Page"
-#~ msgstr "ZWikiページの新規作成"
+msgid "A Wiki"
+msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-#~ msgid "Edit"
-#~ msgstr "編集"
+msgid "Subscriptions"
+msgstr "メール講読"
 
 #, fuzzy
-#~ msgid "Add Wiki"
-#~ msgstr "ZWikiページの新規作成"
+msgid "Change Wiki Page"
+msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-#~ msgid "Wiki User"
-#~ msgstr "Wiki 講読者"
+msgid "Edit"
+msgstr "編集"
 
 #, fuzzy
-#~ msgid "A Wiki Page"
-#~ msgstr "ZWikiページの新規作成"
+msgid "Add Wiki"
+msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-#~ msgid "Wiki Page"
-#~ msgstr "ZWikiページの新規作成"
+msgid "Wiki User"
+msgstr "Wiki 講読者"
 
 #, fuzzy
-#~ msgid "A Wiki Page Comment"
-#~ msgstr "ZWikiページの新規作成"
+msgid "A Wiki Page"
+msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-#~ msgid "Wiki Page Comment"
-#~ msgstr "Wiki コンテンツ"
+msgid "Wiki Page"
+msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-#~ msgid "View a Wiki Page"
-#~ msgstr "ZWikiページの新規作成"
+msgid "A Wiki Page Comment"
+msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-#~ msgid "View Wiki Page"
-#~ msgstr "ZWikiページの新規作成"
+msgid "Wiki Page Comment"
+msgstr "Wiki コンテンツ"
 
 #, fuzzy
-#~ msgid "Add Wiki Page"
-#~ msgstr "ZWikiページの新規作成"
+msgid "View a Wiki Page"
+msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-#~ msgid "Edit Wiki Page"
-#~ msgstr "ZWikiページの新規作成"
+msgid "View Wiki Page"
+msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-#~ msgid "Delete Wiki Page"
-#~ msgstr "ZWikiページの新規作成"
+msgid "Add Wiki Page"
+msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-#~ msgid "Reparent Wiki Page"
-#~ msgstr "ZWikiページの新規作成"
-
-#~ msgid "You are not authorized to rename this ZWiki Page."
-#~ msgstr "このページの名前を変更する権限がありません"
-
-#~ msgid "page in parent wiki"
-#~ msgstr "親wikiページ中"
+msgid "Edit Wiki Page"
+msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-#~ msgid "plone"
-#~ msgstr "更新記録"
-
-#~ msgid "show all features"
-#~ msgstr "全機能を表示"
-
-#~ msgid "full"
-#~ msgstr "詳細"
-
-#~ msgid "show basic features"
-#~ msgstr "基本的な機能を表示"
-
-#~ msgid "simple"
-#~ msgstr "シンプル"
-
-#~ msgid "show only essential features"
-#~ msgstr "最低限の機能のみ表示"
-
-#~ msgid "minimal"
-#~ msgstr "極小"
-
-#~ msgid "subtopic"
-#~ msgstr "追加"
+msgid "Delete Wiki Page"
+msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-#~ msgid "for this page"
-#~ msgstr "このwikiページを作成します"
+msgid "Reparent Wiki Page"
+msgstr "ZWikiページの新規作成"
 
-#~ msgid "title"
-#~ msgstr "タイトル"
+msgid "You are not authorized to rename this ZWiki Page."
+msgstr "このページの名前を変更する権限がありません"
 
-#~ msgid "File Uploads"
-#~ msgstr "アップロードされているファイル"
+msgid "page in parent wiki"
+msgstr "親wikiページ中"
 
-#~ msgid "uploads_desc"
-#~ msgstr "このページはこのWikiにアップロードされたファイルの一覧です"
+#, fuzzy
+msgid "plone"
+msgstr "更新記録"
 
-#~ msgid "save"
-#~ msgstr "保存"
+msgid "show all features"
+msgstr "全機能を表示"
 
-#~ msgid "view"
-#~ msgstr "表示"
+msgid "full"
+msgstr "詳細"
 
-#~ msgid "no_files_uploaded"
-#~ msgstr "ファイルはアップロードされていません"
+msgid "show basic features"
+msgstr "基本的な機能を表示"
 
-#~ msgid "box_wiki_navigation"
-#~ msgstr "Wiki ナビゲーション"
+msgid "simple"
+msgstr "シンプル"
 
-#~ msgid "enter comments here and click add; or, click edit"
-#~ msgstr ""
-#~ "ここにコメントを入れ、「コメントの追加」をクリックするか、「編集」をクリッ"
-#~ "クしてください"
+msgid "show only essential features"
+msgstr "最低限の機能のみ表示"
 
-#~ msgid "Details & comments"
-#~ msgstr "詳細とコメント"
+msgid "minimal"
+msgstr "極小"
 
-#~ msgid "hits"
-#~ msgstr "ヒット"
+msgid "subtopic"
+msgstr "追加"
 
-#~ msgid ""
-#~ "no catalog or the catalog search gave an error, a brute-force search was "
-#~ "used"
-#~ msgstr "カタログがないかエラーのため、全数検索が使われました"
+#, fuzzy
+msgid "for this page"
+msgstr "このwikiページを作成します"
 
-#~ msgid "Contents"
-#~ msgstr "目次"
+msgid "title"
+msgstr "タイトル"
 
-#~ msgid "Diffs for"
-#~ msgstr "Diffs for"
+msgid "File Uploads"
+msgstr "アップロードされているファイル"
 
-#~ msgid "page rating"
-#~ msgstr "ページの評価"
+msgid "uploads_desc"
+msgstr "このページはこのWikiにアップロードされたファイルの一覧です"
 
-#~ msgid "rating_score"
-#~ msgstr "評価点"
+msgid "save"
+msgstr "保存"
 
-#~ msgid "click to rate"
-#~ msgstr "クリックして評価"
+msgid "view"
+msgstr "表示"
 
-#~ msgid "voting as"
-#~ msgstr "投票："
+msgid "no_files_uploaded"
+msgstr "ファイルはアップロードされていません"
 
-#~ msgid "Here are the pages which link to"
-#~ msgstr "このページのリンク先"
+msgid "box_wiki_navigation"
+msgstr "Wiki ナビゲーション"
 
-#~ msgid "box_canreparent"
-#~ msgstr ""
-#~ "このページをコンテンツの階層の中でどこに配置させるかを決めるために、\n"
-#~ "    <em>親</em>を設定することもできます。チェックボックスで選択するか\n"
-#~ "    他の親ページ名を入力し、「Reparent」をクリックしてください。普通、\n"
-#~ "    親ページは一つで充分です"
+msgid "enter comments here and click add; or, click edit"
+msgstr ""
+"ここにコメントを入れ、「コメントの追加」をクリックするか、「編集」をクリック"
+"してください"
 
-#~ msgid "Other parent"
-#~ msgstr "他の親"
+msgid "Details & comments"
+msgstr "詳細とコメント"
+
+msgid "hits"
+msgstr "ヒット"
+
+msgid ""
+"no catalog or the catalog search gave an error, a brute-force search was used"
+msgstr "カタログがないかエラーのため、全数検索が使われました"
+
+msgid "Contents"
+msgstr "目次"
+
+msgid "Diffs for"
+msgstr "Diffs for"
+
+msgid "page rating"
+msgstr "ページの評価"
+
+msgid "rating_score"
+msgstr "評価点"
+
+msgid "click to rate"
+msgstr "クリックして評価"
+
+msgid "voting as"
+msgstr "投票："
+
+msgid "Here are the pages which link to"
+msgstr "このページのリンク先"
+
+msgid "box_canreparent"
+msgstr ""
+"このページをコンテンツの階層の中でどこに配置させるかを決めるために、\n"
+"    <em>親</em>を設定することもできます。チェックボックスで選択するか\n"
+"    他の親ページ名を入力し、「Reparent」をクリックしてください。普通、\n"
+"    親ページは一つで充分です"
+
+msgid "Other parent"
+msgstr "他の親"
