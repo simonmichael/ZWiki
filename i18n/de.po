@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: zwiki-de\n"
 "Report-Msgid-Bugs-To:\n"
 "POT-Creation-Date: Sat Apr  1 14:13:10 2006\n"
-"PO-Revision-Date: 2006-01-20 18:00+0000\n"
-"Last-Translator: Jens Nachtigall <nachtigall@web.de>\n"
+"PO-Revision-Date: 2006-05-29 07:47+0000\n"
+"Last-Translator: Stefan Kose <Kamikaze482@gmx.net>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -68,10 +68,13 @@ msgstr ""
 
 #: i/Editing.py:68 i/Editing.py:152 i/Editing.py:290 i/Views.py:606
 #: i/Views.py:652
+#, fuzzy
 msgid ""
 "Sorry, this wiki doesn't allow anonymous edits. Please configure a username "
 "in options first."
 msgstr ""
+"In diesem Wiki sind keine anonymen Eintragungen erlaubt. \n"
+"Bitte stellen Sie zunächst Ihren Nutzernamen in den Optionen ein."
 
 #: i/Editing.py:819
 msgid ""
@@ -352,8 +355,9 @@ msgstr ""
 "        "
 
 #: i/Wikis.py:49
+#, fuzzy
 msgid "Unknown wiki type"
-msgstr ""
+msgstr "Unbekanntes Wiki Format"
 
 #: i/ZWikiPage.py:670
 msgid "create this page"
@@ -500,14 +504,13 @@ msgid "Here are the wiki's issue pages."
 msgstr "Diese Wiki-Seite erstellen"
 
 #: i/skins/dtmlmessages.pt:20
-#, fuzzy
 msgid "Details:"
 msgstr "Details:"
 
 #: i/skins/dtmlmessages.pt:21
 #, fuzzy
 msgid "add issue"
-msgstr "Probleme"
+msgstr "Problem hinzufügen"
 
 #: i/skins/dtmlmessages.pt:22
 #, fuzzy
@@ -534,7 +537,6 @@ msgid "Page text contains any of:"
 msgstr "Text enthält:"
 
 #: i/skins/dtmlmessages.pt:27
-#, fuzzy
 msgid "Categories:"
 msgstr "Kategorien:"
 
@@ -549,8 +551,11 @@ msgid "Statuses:"
 msgstr "Status:"
 
 #: i/skins/dtmlmessages.pt:3
+#, fuzzy
 msgid "Enter a search term, click the numbers to the right,"
 msgstr ""
+"Geben Sie einen Suchterm ein, klicken Sie die Nummern auf der rechten Seite "
+"an,"
 
 #: i/skins/dtmlmessages.pt:37
 #, fuzzy
@@ -560,7 +565,7 @@ msgstr "Eingereicht von"
 #: i/skins/dtmlmessages.pt:38
 #, fuzzy
 msgid "Name"
-msgstr "Name,"
+msgstr "Name"
 
 #: i/skins/dtmlmessages.pt:39
 #, fuzzy
@@ -613,8 +618,9 @@ msgid "Create wiki"
 msgstr "Wiki erstellen"
 
 #: i/skins/dtmlmessages.pt:5
+#, fuzzy
 msgid "browse open issues"
-msgstr ""
+msgstr "offene Probleme durchsuchen"
 
 #: i/skins/dtmlmessages.pt:50
 msgid "and enter"
@@ -788,7 +794,6 @@ msgid "Add and Edit"
 msgstr "Hinzufügen und Bearbeiten"
 
 #: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:31
-#, fuzzy
 msgid "#"
 msgstr "#"
 
@@ -879,15 +884,22 @@ msgstr ""
 msgid ""
 "Check one or more checkboxes or enter a page name here, and click the button."
 msgstr ""
+"Wählen Sie eine oder mehrere Checkboxen an, oder geben die hier einen "
+"Seitennamen an. Bestätigen Sie per Click auf den Button."
 
 #: i/skins/zwiki_standard/backlinks.pt:88
 msgid "Enter a page name here and click the button."
 msgstr ""
+"Geben Sie hier einen Seitennamen an, und bestätigen Sie per Click auf den "
+"Button"
 
 #: i/skins/zwiki_standard/backlinks.pt:91
+#, fuzzy
 msgid ""
 "You can type just the first few letters, case and punctuation are ignored."
 msgstr ""
+"Sie brauchen nur wenige Anfangsbuchstaben eingeben, Groß- und "
+"Kleinschreibung sowie Zeichensetzung werden ignoriert."
 
 #: i/skins/zwiki_standard/backlinks.pt:98
 msgid "Reparent"
@@ -920,7 +932,7 @@ msgstr "Singletons"
 
 #: i/skins/zwiki_standard/denied.pt:12
 msgid "Not permitted"
-msgstr ""
+msgstr "Nicht erlaubt"
 
 #: i/skins/zwiki_standard/diffform.pt:13
 #, fuzzy
@@ -1049,7 +1061,6 @@ msgstr ""
 "werden soll."
 
 #: i/skins/zwiki_standard/recentchanges.pt:12
-#, fuzzy
 msgid "Recent changes"
 msgstr "Letzte Änderungen"
 
@@ -1160,9 +1171,8 @@ msgid "all edits"
 msgstr "alle Bearbeitungen"
 
 #: i/skins/zwiki_standard/useroptions.pt:12
-#, fuzzy
 msgid "User options"
-msgstr "Einstellungen speichern"
+msgstr "Benutzer Optionen"
 
 #: i/skins/zwiki_standard/wikipage-inline.pt:100
 msgid "changes"
@@ -1372,203 +1382,203 @@ msgstr "Startseite"
 msgid "show wiki recent changes"
 msgstr "Letzte Änderungen zeigen"
 
-#~ msgid "Backlinks for"
-#~ msgstr "Backlinks für"
+msgid "Backlinks for"
+msgstr "Backlinks für"
 
-#~ msgid "singleton_desc"
-#~ msgstr "Singletons sind Seiten auf oberster Ebene der Seitenhierarchie."
+msgid "singleton_desc"
+msgstr "Singletons sind Seiten auf oberster Ebene der Seitenhierarchie."
 
-#~ msgid "History for"
-#~ msgstr "Alte Versionen von"
+msgid "History for"
+msgstr "Alte Versionen von"
 
-#~ msgid "return to page"
-#~ msgstr "Zurück zur Seite"
+msgid "return to page"
+msgstr "Zurück zur Seite"
 
-#~ msgid "help_shortname"
-#~ msgstr ""
-#~ "Achtung: In einem großen Wiki kann es sehr lange dauern, eine Seite "
-#~ "umzubenennen. Wenn möglich, werden dabei Verweise in anderen Seiten "
-#~ "aktualisiert."
+msgid "help_shortname"
+msgstr ""
+"Achtung: In einem großen Wiki kann es sehr lange dauern, eine Seite "
+"umzubenennen. Wenn möglich, werden dabei Verweise in anderen Seiten "
+"aktualisiert."
 
-#~ msgid "label_body_text"
-#~ msgstr "Seiteninhalt"
+msgid "label_body_text"
+msgstr "Seiteninhalt"
 
-#~ msgid "help_wikibody"
-#~ msgstr ""
-#~ "Verwenden Sie WikiNamen oder  [eckige Klammern] um auf andere Seiten zu "
-#~ "verweisen. Verweise auf Seiten, die noch nicht existieren, werden mit "
-#~ "einem kleinen <code>?</code> gekennzeichnet. Klicken Sie auf dieses "
-#~ "Fragezeichen, um die fehlende Seite zu erstellen."
+msgid "help_wikibody"
+msgstr ""
+"Verwenden Sie WikiNamen oder  [eckige Klammern] um auf andere Seiten zu "
+"verweisen. Verweise auf Seiten, die noch nicht existieren, werden mit einem "
+"kleinen <code>?</code> gekennzeichnet. Klicken Sie auf dieses Fragezeichen, "
+"um die fehlende Seite zu erstellen."
 
-#~ msgid "label_note"
-#~ msgstr "Notiz für die Versionskontrolle (optional)"
+msgid "label_note"
+msgstr "Notiz für die Versionskontrolle (optional)"
 
-#~ msgid "help_wikinote"
-#~ msgstr "Kurze Beschreibung ihrer Änderungen:"
+msgid "help_wikinote"
+msgstr "Kurze Beschreibung ihrer Änderungen:"
 
-#~ msgid "label_upload_contents_optional"
-#~ msgstr "Datei oder Bild hochladen (optional)"
+msgid "label_upload_contents_optional"
+msgstr "Datei oder Bild hochladen (optional)"
 
-#~ msgid "help_wikiupload"
-#~ msgstr "Fügen Sie hier eine Datei oder ein Bild zu dieser Seite hinzu."
+msgid "help_wikiupload"
+msgstr "Fügen Sie hier eine Datei oder ein Bild zu dieser Seite hinzu."
 
-#~ msgid "label_format"
-#~ msgstr "Seitenformat"
+msgid "label_format"
+msgstr "Seitenformat"
 
-#~ msgid "help_format"
-#~ msgstr ""
-#~ "Wenn Sie bei der Wahl des Formats unsicher sind, wählen Sie 'Plain Text'."
+msgid "help_format"
+msgstr ""
+"Wenn Sie bei der Wahl des Formats unsicher sind, wählen Sie 'Plain Text'."
 
-#~ msgid "Save"
-#~ msgstr "Speichern"
+msgid "Save"
+msgstr "Speichern"
 
-#~ msgid "heading_edit_wiki_page"
-#~ msgstr "${itemtype} \"${pagename}\" bearbeiten"
+msgid "heading_edit_wiki_page"
+msgstr "${itemtype} \"${pagename}\" bearbeiten"
 
-#~ msgid "description_edit_wiki_page"
-#~ msgstr "Tragen Sie hier alle Einzelheiten zur Wiki-Seite ein."
+msgid "description_edit_wiki_page"
+msgstr "Tragen Sie hier alle Einzelheiten zur Wiki-Seite ein."
 
-#~ msgid "legend_wiki_page_details"
-#~ msgstr "Einzelheiten zur Wiki-Seite"
+msgid "legend_wiki_page_details"
+msgstr "Einzelheiten zur Wiki-Seite"
 
-#~ msgid "label_pagename"
-#~ msgstr "Seitenname"
+msgid "label_pagename"
+msgstr "Seitenname"
 
-#~ msgid "Required"
-#~ msgstr "Erforderlich"
+msgid "Required"
+msgstr "Erforderlich"
 
-#~ msgid "label_required"
-#~ msgstr "(erforderlich)"
+msgid "label_required"
+msgstr "(erforderlich)"
 
-#~ msgid "heading_wiki_recent_changes"
-#~ msgstr "Letzte Änderungen"
+msgid "heading_wiki_recent_changes"
+msgstr "Letzte Änderungen"
 
-#~ msgid "heading_wiki_search_wiki"
-#~ msgstr "Suche in diesem Wiki"
+msgid "heading_wiki_search_wiki"
+msgstr "Suche in diesem Wiki"
 
-#~ msgid "Unsubscribe from this page"
-#~ msgstr "Abonnement für diese Seite kündigen"
+msgid "Unsubscribe from this page"
+msgstr "Abonnement für diese Seite kündigen"
 
-#~ msgid "Subscribe to this page"
-#~ msgstr "Diese Seite abonnieren"
+msgid "Subscribe to this page"
+msgstr "Diese Seite abonnieren"
 
-#~ msgid "heading_wiki_user_options"
-#~ msgstr "Benutzereinstellungen"
+msgid "heading_wiki_user_options"
+msgstr "Benutzereinstellungen"
 
-#~ msgid "heading_wiki_filter_issues"
-#~ msgstr "Probleme filtern"
+msgid "heading_wiki_filter_issues"
+msgstr "Probleme filtern"
 
-#~ msgid "heading_wiki_issue_browser"
-#~ msgstr "Problem-Browser"
+msgid "heading_wiki_issue_browser"
+msgstr "Problem-Browser"
 
-#~ msgid "heading_wiki_issue_tracker"
-#~ msgstr "Problemliste"
+msgid "heading_wiki_issue_tracker"
+msgstr "Problemliste"
 
-#~ msgid "property change"
-#~ msgstr "Eigenschaften ändern"
+msgid "property change"
+msgstr "Eigenschaften ändern"
 
-#~ msgid "backlinks_reparent_help"
-#~ msgstr ""
-#~ "Sie können dieser Seite andere Seiten als Oberkategorien zuordnen, um sie "
-#~ "in der Wiki-Hierarchie zu platzieren. Setzen Sie dazu ein Häkchen vor die "
-#~ "gewünschten(n) Seite(n) oder geben Sie den Namen einer Seite ein."
+msgid "backlinks_reparent_help"
+msgstr ""
+"Sie können dieser Seite andere Seiten als Oberkategorien zuordnen, um sie in "
+"der Wiki-Hierarchie zu platzieren. Setzen Sie dazu ein Häkchen vor die "
+"gewünschten(n) Seite(n) oder geben Sie den Namen einer Seite ein."
 
-#~ msgid "backlinks_reparent_help2"
-#~ msgstr "und hier klicken"
+msgid "backlinks_reparent_help2"
+msgstr "und hier klicken"
 
-#~ msgid "View"
-#~ msgstr "Anzeigen"
+msgid "View"
+msgstr "Anzeigen"
 
-#~ msgid "Comment"
-#~ msgstr "Kommentar"
+msgid "Comment"
+msgstr "Kommentar"
 
-#~ msgid "A Comment"
-#~ msgstr "Ein Kommentar"
+msgid "A Comment"
+msgstr "Ein Kommentar"
 
-#~ msgid "Menu for Wiki Page related actions."
-#~ msgstr "Menü für auf Wiki-Seiten bezogene Aktionen."
+msgid "Menu for Wiki Page related actions."
+msgstr "Menü für auf Wiki-Seiten bezogene Aktionen."
 
-#~ msgid "A Wiki"
-#~ msgstr "Ein Wiki"
+msgid "A Wiki"
+msgstr "Ein Wiki"
 
-#~ msgid "Wiki"
-#~ msgstr "Wiki"
+msgid "Wiki"
+msgstr "Wiki"
 
-#~ msgid "Table of Contents"
-#~ msgstr "Inhaltsverzeichnis"
+msgid "Table of Contents"
+msgstr "Inhaltsverzeichnis"
 
-#~ msgid "TOC"
-#~ msgstr "Inhaltsverzeichnis"
+msgid "TOC"
+msgstr "Inhaltsverzeichnis"
 
-#~ msgid "Subscriptions"
-#~ msgstr "E-Mail-Abonnements"
+msgid "Subscriptions"
+msgstr "E-Mail-Abonnements"
 
-#~ msgid "Add Wiki"
-#~ msgstr "Wiki hinzufügen"
+msgid "Add Wiki"
+msgstr "Wiki hinzufügen"
 
-#~ msgid "Change Wiki Page"
-#~ msgstr "Wiki-Seite ändern"
+msgid "Change Wiki Page"
+msgstr "Wiki-Seite ändern"
 
-#~ msgid "Edit"
-#~ msgstr "Bearbeiten"
+msgid "Edit"
+msgstr "Bearbeiten"
 
-#~ msgid "Wiki User"
-#~ msgstr "Wiki-Benutzer"
+msgid "Wiki User"
+msgstr "Wiki-Benutzer"
 
-#~ msgid "Wiki visitors, which can only view and comment on wikis."
-#~ msgstr ""
-#~ "Wiki-Besucher, die Wiki-Seiten nur betrachten oder kommentieren dürfen."
+msgid "Wiki visitors, which can only view and comment on wikis."
+msgstr ""
+"Wiki-Besucher, die Wiki-Seiten nur betrachten oder kommentieren dürfen."
 
-#~ msgid "A Wiki Page"
-#~ msgstr "Eine Wiki-Seite"
+msgid "A Wiki Page"
+msgstr "Eine Wiki-Seite"
 
-#~ msgid "Wiki Page"
-#~ msgstr "Wiki-Seite"
+msgid "Wiki Page"
+msgstr "Wiki-Seite"
 
-#~ msgid "A Wiki Page Comment"
-#~ msgstr "Ein Kommentar einer Wiki-Seite"
+msgid "A Wiki Page Comment"
+msgstr "Ein Kommentar einer Wiki-Seite"
 
-#~ msgid "Wiki Page Comment"
-#~ msgstr "Kommentar einer Wiki-Seite"
+msgid "Wiki Page Comment"
+msgstr "Kommentar einer Wiki-Seite"
 
-#~ msgid "Wiki Editor"
-#~ msgstr "Wiki-Bearbeiter"
+msgid "Wiki Editor"
+msgstr "Wiki-Bearbeiter"
 
-#~ msgid "The Wiki Editor can create and edit wikis."
-#~ msgstr "Ein Wiki-Bearbeiter darf Wiki-Seiten erstellen und bearbeiten."
+msgid "The Wiki Editor can create and edit wikis."
+msgstr "Ein Wiki-Bearbeiter darf Wiki-Seiten erstellen und bearbeiten."
 
-#~ msgid "Wiki Administrator"
-#~ msgstr "Wiki-Administrator"
+msgid "Wiki Administrator"
+msgstr "Wiki-Administrator"
 
-#~ msgid "The Wiki Admin can fully manage wiki pages."
-#~ msgstr "Der Wiki-Administrator darf Wiki-Seiten vollständig verwalten."
+msgid "The Wiki Admin can fully manage wiki pages."
+msgstr "Der Wiki-Administrator darf Wiki-Seiten vollständig verwalten."
 
-#~ msgid "View a Wiki Page"
-#~ msgstr "Eine Wiki-Seite anzeigen"
+msgid "View a Wiki Page"
+msgstr "Eine Wiki-Seite anzeigen"
 
-#~ msgid "View Wiki Page"
-#~ msgstr "Wiki-Seite anzeigen"
+msgid "View Wiki Page"
+msgstr "Wiki-Seite anzeigen"
 
-#~ msgid "Comment on Wiki Page"
-#~ msgstr "Wiki-Seite kommentieren"
+msgid "Comment on Wiki Page"
+msgstr "Wiki-Seite kommentieren"
 
-#~ msgid "Make a comment on Wiki Page"
-#~ msgstr "Einer Wiki-Seite einen Kommentar hinzufügen"
+msgid "Make a comment on Wiki Page"
+msgstr "Einer Wiki-Seite einen Kommentar hinzufügen"
 
-#~ msgid "Add Wiki Page"
-#~ msgstr "Wiki-Seite hinzufügen"
+msgid "Add Wiki Page"
+msgstr "Wiki-Seite hinzufügen"
 
-#~ msgid "Edit Wiki Page"
-#~ msgstr "Wiki-Seite bearbeiten"
+msgid "Edit Wiki Page"
+msgstr "Wiki-Seite bearbeiten"
 
-#~ msgid "Delete Wiki Page"
-#~ msgstr "Wiki-Seite löschen"
+msgid "Delete Wiki Page"
+msgstr "Wiki-Seite löschen"
 
-#~ msgid "Reparent a Wiki Page"
-#~ msgstr "Eine Wiki-Seite in der Wiki-Hierarchie verschieben"
+msgid "Reparent a Wiki Page"
+msgstr "Eine Wiki-Seite in der Wiki-Hierarchie verschieben"
 
-#~ msgid "Reparent Wiki Page"
-#~ msgstr "Wiki-Seite in der Wiki-Hierarchie verschieben"
+msgid "Reparent Wiki Page"
+msgstr "Wiki-Seite in der Wiki-Hierarchie verschieben"
 
-#~ msgid "Minimal Wiki Page Container implementation "
-#~ msgstr "Minimale Implementation eines Wiki-Seiten-Containers "
+msgid "Minimal Wiki Page Container implementation "
+msgstr "Minimale Implementation eines Wiki-Seiten-Containers "
