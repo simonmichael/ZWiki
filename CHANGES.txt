@@ -1,44 +1,73 @@
     Summary
 
-	...
+	Plone 2.5 support, LatexWiki and MathAction incorporated, plone
+	tabs cleanup, translation updates, bug fixes.
 
     Upgrade notes
 
-        Wiki pages in Plone (or CMF) will no longer show the metadata tab;
-	if you are upgrading, be sure to re-install Zwiki in your plone
-	site's Add/Remove Products to make the tab go away.
-
-	If you do need the metadata/properties tab, you can enable it by
-	checking its visible box in ZMI -> portal_types -> Wiki Page ->
-	actions (you'll need to do this again any time you re-install
-	Zwiki in the site). Also, if you have upgraded Plone past 2.5 be
-	sure to re-install Zwiki once to convert the old metadata tab to a
-	new-style properties tab.
+        If you are upgrading, re-install Zwiki in your plone site's
+	Add/Remove Products to make the metadata tab go away. (See below.)
 
     Changes
 
       Installing
 
-	* hide the metadata tab in cmf/plone, allow it to be
-          re-enabled, and make it a properties tab in plone 2.5; see
-          upgrade notes (#1273)
+	* Wiki pages in Plone (or CMF) will no longer show the metadata
+	  tab by default. http://zwiki.org/1273 has more about
+	  this. (#1273)
+
+        * add isDefaultPageInFolder method, fixing plone 2.5.x support
+	  (#1283)
 
       Configuring
 
+        * don't use # in setupTracker's event log messages, it was confusing
+
       Browsing
+
+        * don't limit the content area to 80% width in standard skin's stylesheet
+
+        * clean up plone/cmf tabs/actions
+
+        * change backlinks form's title to Related pages
+
+        * in the PAGE/myvotes view, link to pages 
 
       Editing
 
-      Page hierarchy
+        * tweak the warning a user sees when too many external links are added
 
-      Mail
+        * make restructured text be more silent about errors (report
+	  severe errors only)
 
+        * LaTeX support: add the zwiki.org version of LatexWiki to Zwiki's
+	  standard plugins (Simon Michael, Bob McElrath, Open Software Services)
+
+        * Axiom, Reduce, Maxima, Noweb support: add the zwiki.org version
+	  of MathAction to Zwiki's standard plugins (Simon Michael, Bill Page)
+
+        * increase max page name length in editform from 100 to 300 for eg
+	  latexwiki formula page names
+	
       Issue tracking
+
+        * make the add issue form respect the edits_need_username property,
+	  closing a spam hole (#1279)
 
       Translations
 
+        * new Breton translation for plone skin (Fulup)
+
+	* translation updates: 
+	  - German (Stefan Kose)
+	  - Japanese (Masaya Kato)
+	  - Russian (Valery Sharapov)
+	
       General
 	
+        * in embedded DTML, ensure the context object (_.this) can acquire
+	  from the folder, as we'd expect. Zope bug ? see collector
+
 
 
 Zwiki 0.55.0 2006/08/02
