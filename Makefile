@@ -49,26 +49,32 @@ epydoc2:
 # 3. update pot and po files from code (make pot po) and record
 #
 # NEW WAY - syncing back & forth with http://launchpad.net/rosetta
-# why update in rosetta ? we get translations we wouldn't otherwise get
-# why update in repo ? we have to update from the latest code there
+# why accept changes in rosetta ? we get translations we wouldn't otherwise get
+# why accept changes in darcs ? we have to sync po files with latest code
 # Each month:
 # 1. record code changes
 # 2. accept/apply any pending darcs/diff patches to po files
-# 3. download latest good po files from rosetta, merge with above and record
+# 3. download latest good po files from rosetta, msgmerge with above and record
 # 4. add any new translations to makefile's language list
 # 5. update pot and po files from code (make pot po) and record
 # 6. re-upload all to rosetta
 
-LANGUAGES=af ar de en_GB es et fi fr he hu it ja nl pl pt pt_BR ro ru sv th tr zh_CN zh_TW
+LANGUAGES=af ar br de en_GB es et fi fr he hu it ja nl pl pt pt_BR ro ru sv th tr zh_CN zh_TW
 LANGUAGES_DISABLED=fr_CA ga
-I18NEXTRACT=/zope3/bin/i18nextract # still need to patch this, see zopewiki
 
+# how to set up i18nextract:
+# cd /usr/local/src (or adapt ZOPE3SRC above)
+# svn co svn://svn.zope.org/repos/main/Zope3/trunk Zope3
+# cd Zope3; make inplace; cp sample_principals.zcml  principals.zcml
+# cd ZWiki; make pot should work
+# NB also add -x argument for any new directories that should be excluded
+ZOPE3SRC=/usr/local/src/Zope3
+I18NEXTRACT=PYTHONPATH=$(ZOPE3SRC)/src $(ZOPE3SRC)/utilities/i18nextract.py
 pot:
 	echo '<div i18n:domain="zwiki">' >skins/dtmlmessages.pt # dtml extraction hack
 	find plugins skins wikis -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt
 	echo '</div>' >>skins/dtmlmessages.pt
-	$(I18NEXTRACT) -d zwiki -p . -o ./i18n \
-	    -x _darcs -x .old -x misc -x ftests  -x .doxygen
+	$(I18NEXTRACT) -d zwiki -p . -o ./i18n -x _darcs -x releases -x misc -x Notes
 	tail +12 i18n/zwiki-manual.pot >>i18n/zwiki.pot
 	python -c \
 	   "import re; \
