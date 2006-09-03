@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Zwiki 0.9.10\n"
-"POT-Creation-Date: Sat Apr  1 14:13:10 2006\n"
+"POT-Creation-Date: Sat Sep  2 18:10:16 2006\n"
 "PO-Revision-Date: 2006-08-23 12:28+0000\n"
 "Last-Translator: jack <jack@jk.to>\n"
 "Language-Team: Japanese <LL@li.org>\n"
@@ -13,190 +13,179 @@ msgstr ""
 "Preferred-encodings: utf-8\n"
 "Domain: zwiki\n"
 
-#: i/Admin.py:62
+#: src/ZWiki/Admin.py:62
 msgid "You are not authorized to upgrade all pages."
 msgstr "全てのページをアップグレードする権限がありません"
 
-#: i/Admin.py:63
+#: src/ZWiki/Admin.py:63
 msgid "(folder -> Manage properties)"
 msgstr "(フォルダ -> プロパティの管理)"
 
-#: i/Editing.py:323
-msgid ""
-"You are not authorized to reparent or change subtopics links on this ZWiki "
-"Page."
-msgstr ""
-"このページのリペアレントやサブトピックリンクの変更をする権限がありません"
+#: src/ZWiki/Diff.py:174
+#, fuzzy
+msgid "You are not authorized to reparent this ZWiki Page."
+msgstr "このページの名前を変更する権限がありません"
 
-#: i/Editing.py:345
-msgid "You are not authorized to change this ZWiki Page's type."
-msgstr "このページのタイプ変更をする権限がありません"
+#: src/ZWiki/Diff.py:180 src/ZWiki/plugins/tracker/tracker.py:332
+msgid "You are not authorized to rename this ZWiki Page."
+msgstr "このページの名前を変更する権限がありません"
 
-#: i/Editing.py:379 i/Editing.py:406
-msgid "You are not authorized to edit this ZWiki Page."
-msgstr "このページの編集権限がありません"
-
-#: i/Editing.py:409
-msgid "You are not authorized to delete this ZWiki Page."
-msgstr "このページの削除権限がありません"
-
-#: i/Editing.py:559
-msgid ""
-"This page was renamed to %s. You can delete this one if no longer needed.\n"
-msgstr ""
-"このページの名前は %s に変更されました。このページが不要であれば削除してもか"
-"まいません\n"
-
-#: i/Editing.py:655
-msgid "You are not authorized to upload files here."
-msgstr "ここにファイルをアップロードする権限がありません"
-
-#: i/Editing.py:659
-msgid "You are not authorized to add a link on this ZWiki Page."
-msgstr "このページにリンクを追加する権限がありません"
-
-#: i/Editing.py:68 i/Editing.py:152 i/Editing.py:290 i/Views.py:606
-#: i/Views.py:652
+#: src/ZWiki/Editing.py:156 src/ZWiki/Editing.py:294 src/ZWiki/Views.py:332
+#: src/ZWiki/Views.py:435 src/ZWiki/plugins/tracker/tracker.py:321
 msgid ""
 "Sorry, this wiki doesn't allow anonymous edits. Please configure a username "
 "in options first."
 msgstr ""
 "匿名ユーザによる編集は許可されていません。まず、ユーザ設定をしてください。"
 
-#: i/Editing.py:819
+#: src/ZWiki/Editing.py:327
 msgid ""
-"There was a problem: %s. Please contact the site administrator for help."
-msgstr "問題(%s)が発生しました。サイトの管理者に連絡してください"
+"You are not authorized to reparent or change subtopics links on this ZWiki "
+"Page."
+msgstr ""
+"このページのリペアレントやサブトピックリンクの変更をする権限がありません"
 
-#: i/Editing.py:826
+#: src/ZWiki/Editing.py:349
+msgid "You are not authorized to change this ZWiki Page's type."
+msgstr "このページのタイプ変更をする権限がありません"
+
+#: src/ZWiki/Editing.py:383 src/ZWiki/Editing.py:410
+#: src/ZWiki/plugins/tracker/tracker.py:340
+#: src/ZWiki/plugins/tracker/tracker.py:347
+#: src/ZWiki/plugins/tracker/tracker.py:354
+msgid "You are not authorized to edit this ZWiki Page."
+msgstr "このページの編集権限がありません"
+
+#: src/ZWiki/Editing.py:413
+msgid "You are not authorized to delete this ZWiki Page."
+msgstr "このページの削除権限がありません"
+
+#: src/ZWiki/Editing.py:563
+msgid ""
+"This page was renamed to %s. You can delete this one if no longer needed.\n"
+msgstr ""
+"このページの名前は %s に変更されました。このページが不要であれば削除してもか"
+"まいません\n"
+
+#: src/ZWiki/Editing.py:659
+msgid "You are not authorized to upload files here."
+msgstr "ここにファイルをアップロードする権限がありません"
+
+#: src/ZWiki/Editing.py:663
+msgid "You are not authorized to add a link on this ZWiki Page."
+msgstr "このページにリンクを追加する権限がありません"
+
+#: src/ZWiki/Editing.py:822
+msgid "There was a problem: %s"
+msgstr ""
+
+#: src/ZWiki/Editing.py:829
 msgid "banned_links match"
 msgstr "禁止リンクにマッチ"
 
-#: i/Editing.py:827
-msgid "your edit contained a banned link pattern"
-msgstr "禁止リンクパターンが編集内容に含まれています"
+#: src/ZWiki/Editing.py:830
+#, fuzzy
+msgid ""
+"your edit contained a banned link pattern. Please contact the site "
+"administrator for help."
+msgstr "問題(%s)が発生しました。サイトの管理者に連絡してください"
 
-#: i/Editing.py:838
+#: src/ZWiki/Editing.py:841
 msgid "exceeded max_anonymous_links"
 msgstr "最大匿名リンク数に到達しました"
 
-#: i/Editing.py:839
-msgid "adding of external links by anonymous authors is restricted"
-msgstr "匿名ユーザによる外部リンクの追加は制限されています"
+#: src/ZWiki/Editing.py:842
+msgid ""
+"adding of external links by unidentified users is restricted. Please back up "
+"and remove some of the http urls you added, or contact the site "
+"administrator for help."
+msgstr ""
 
-#: i/Mail.py:490 i/skins/dtmlmessages.pt:59
+#: src/ZWiki/Editing.py:853
+#, fuzzy
+msgid "exceeded max_identified_links"
+msgstr "最大匿名リンク数に到達しました"
+
+#: src/ZWiki/Editing.py:854
+msgid ""
+"adding of external links is restricted, even for identified users. Please "
+"back up and remove some of the http urls you added, or contact the site "
+"administrator for help."
+msgstr ""
+
+#: src/ZWiki/Mail.py:506 src/ZWiki/skins/dtmlmessages.pt:58
 msgid "anonymous"
 msgstr "匿名"
 
-#: i/OutlineSupport.py:838 i/skins/zwiki_standard/wikipage-inline.pt:141
+#: src/ZWiki/OutlineSupport.py:843 src/ZWiki/skins/zwiki/links.pt:56
 msgid "which pages link to this one ?"
 msgstr "どこからリンクされているでしょうか？"
 
-#: i/OutlineSupport.py:846
+#: src/ZWiki/OutlineSupport.py:851
 msgid "You are here"
 msgstr "現在の位置"
 
-#: i/Utils.py:465
+#: src/ZWiki/Utils.py:465
 msgid "years"
 msgstr "年"
 
-#: i/Utils.py:465
+#: src/ZWiki/Utils.py:465
 msgid "year"
 msgstr "年"
 
-#: i/Utils.py:467
+#: src/ZWiki/Utils.py:467
 msgid "month"
 msgstr "月"
 
-#: i/Utils.py:467
+#: src/ZWiki/Utils.py:467
 msgid "months"
 msgstr "月"
 
-#: i/Utils.py:469
+#: src/ZWiki/Utils.py:469
 msgid "weeks"
 msgstr "週"
 
-#: i/Utils.py:469
+#: src/ZWiki/Utils.py:469
 msgid "week"
 msgstr "週"
 
-#: i/Utils.py:471
+#: src/ZWiki/Utils.py:471
 msgid "day"
 msgstr "日"
 
-#: i/Utils.py:471
+#: src/ZWiki/Utils.py:471
 msgid "days"
 msgstr "日"
 
-#: i/Utils.py:473
+#: src/ZWiki/Utils.py:473
 msgid "hours"
 msgstr "時間"
 
-#: i/Utils.py:473
+#: src/ZWiki/Utils.py:473
 msgid "hour"
 msgstr "時間"
 
-#: i/Utils.py:475
+#: src/ZWiki/Utils.py:475
 msgid "minute"
 msgstr "分"
 
-#: i/Utils.py:475
+#: src/ZWiki/Utils.py:475
 msgid "minutes"
 msgstr "分"
 
-#: i/Utils.py:477
+#: src/ZWiki/Utils.py:477
 msgid "second"
 msgstr "秒"
 
-#: i/Utils.py:477
+#: src/ZWiki/Utils.py:477
 msgid "seconds"
 msgstr "秒"
 
-#: i/Views.py:706
-msgid "Edit conflict"
-msgstr "編集の衝突"
-
-#: i/Views.py:726
-msgid "Someone else has saved this page while you were editing"
-msgstr "あなたの編集中にだれかがこのページを更新しました"
-
-#: i/Views.py:727
-msgid "To resolve the conflict, do this"
-msgstr "衝突を解消するために、以下のようにしてください"
-
-#: i/Views.py:728
-msgid "Click your browser's back button"
-msgstr "ブラウザの「戻る」ボタンをクリック"
-
-#: i/Views.py:729
-msgid "Copy your recent edits to the clipboard"
-msgstr "最後に編集した結果をクリップボードにコピーする"
-
-#: i/Views.py:730
-msgid "Click your browser's refresh button"
-msgstr "ブラウザの「更新」ボタンをクリック"
-
-#: i/Views.py:731
-msgid "Paste in your edits again, being mindful of the latest changes"
-msgstr "ペーストし、最後にされた変更に注意しながら、編集しなおす"
-
-#: i/Views.py:732
-msgid "Click the Change button again"
-msgstr "「変更」ボタンをクリック"
-
-#: i/Views.py:733 i/skins/zwiki_standard/editform.pt:159
-msgid "or"
-msgstr "または"
-
-#: i/Views.py:734
-msgid "To discard your changes and start again, click OK"
-msgstr "修正するより、最初からやり直すほうがよいなら、「OK」をクリック"
-
-#: i/Views.py:743
+#: src/ZWiki/Views.py:346
 msgid "Page is locked"
 msgstr "ページはロックされています"
 
-#: i/Views.py:754
+#: src/ZWiki/Views.py:357
 msgid ""
 "\n"
 "            This page has a webDAV lock. Someone is probably editing it\n"
@@ -213,11 +202,51 @@ msgstr ""
 "            参照用にバックアップ、コピーをすることもできます。\n"
 "            "
 
-#: i/Views.py:761
+#: src/ZWiki/Views.py:364
 msgid "To discard your changes and try again, click OK."
 msgstr "修正するより、最初からやり直すほうがよいなら、「OK」をクリック"
 
-#: i/Views.py:770
+#: src/ZWiki/Views.py:393
+msgid "Edit conflict"
+msgstr "編集の衝突"
+
+#: src/ZWiki/Views.py:413
+msgid "Someone else has saved this page while you were editing"
+msgstr "あなたの編集中にだれかがこのページを更新しました"
+
+#: src/ZWiki/Views.py:414
+msgid "To resolve the conflict, do this"
+msgstr "衝突を解消するために、以下のようにしてください"
+
+#: src/ZWiki/Views.py:415
+msgid "Click your browser's back button"
+msgstr "ブラウザの「戻る」ボタンをクリック"
+
+#: src/ZWiki/Views.py:416
+msgid "Copy your recent edits to the clipboard"
+msgstr "最後に編集した結果をクリップボードにコピーする"
+
+#: src/ZWiki/Views.py:417
+msgid "Click your browser's refresh button"
+msgstr "ブラウザの「更新」ボタンをクリック"
+
+#: src/ZWiki/Views.py:418
+msgid "Paste in your edits again, being mindful of the latest changes"
+msgstr "ペーストし、最後にされた変更に注意しながら、編集しなおす"
+
+#: src/ZWiki/Views.py:419
+msgid "Click the Change button again"
+msgstr "「変更」ボタンをクリック"
+
+#: src/ZWiki/Views.py:420 src/ZWiki/skins/zwiki/editform.pt:163
+msgid "or"
+msgstr "または"
+
+#: src/ZWiki/Views.py:421
+msgid "To discard your changes and start again, click OK"
+msgstr "修正するより、最初からやり直すほうがよいなら、「OK」をクリック"
+
+#: src/ZWiki/Views.py:490
 msgid ""
 "\n"
 "        Access keys can be accessed in mozilla-based browsers by pressing "
@@ -315,31 +344,32 @@ msgstr ""
 "        p    前の変更\n"
 "        "
 
-#: i/Wikis.py:49
+#: src/ZWiki/Wikis.py:49
 msgid "Unknown wiki type"
 msgstr "不明な Wiki タイプ"
 
-#: i/ZWikiPage.py:670
+#: src/ZWiki/ZWikiPage.py:675
 msgid "create this page"
 msgstr "ページを作成"
 
-#: i/ZWikiPage.py:793 i/ZWikiPage.py:809 i/ZWikiPage.py:812
+#: src/ZWiki/ZWikiPage.py:798 src/ZWiki/ZWikiPage.py:814
+#: src/ZWiki/ZWikiPage.py:817
 msgid "last edited %(interval)s ago"
 msgstr "更新から %(interval)s 経過"
 
-#: i/ZWikiPage.py:804
+#: src/ZWiki/ZWikiPage.py:809
 msgid "show last edit"
 msgstr "最後の更新を表示"
 
-#: i/ZWikiPage.py:821 i/ZWikiPage.py:823
+#: src/ZWiki/ZWikiPage.py:826 src/ZWiki/ZWikiPage.py:828
 msgid "by %(editor)s"
 msgstr "編集者: %(editor)s"
 
-#: i/__init__.py:34
+#: src/ZWiki/__init__.py:34
 msgid "No need to add a Zwiki Outline Cache"
 msgstr "Zwiki アウトラインキャッシュを追加する必要はありません"
 
-#: i/__init__.py:35
+#: src/ZWiki/__init__.py:35
 msgid ""
 "Zwiki Outline Cache appears in the ZMI Add menu\n"
 "        for implementation reasons, but should not be added directly.\n"
@@ -351,491 +381,565 @@ msgstr ""
 "        必要になったときには自動的に作成されます\n"
 "        "
 
-#: i/pagetypes/common.py:240
+#: src/ZWiki/pagetypes/common.py:253
 msgid "comments"
 msgstr "コメント"
 
-#: i/pagetypes/moin.py:1990
+#: src/ZWiki/pagetypes/moin.py:1990
 msgid "Expected \"=\" to follow \"%(token)s\""
 msgstr "\"=\" による \"%(token)\" のフォロー待ち"
 
-#: i/pagetypes/moin.py:1999
+#: src/ZWiki/pagetypes/moin.py:1999
 msgid "Expected a value for key \"%(token)s\""
 msgstr "\"%(token)\"キーの値(value)待ち"
 
-#: i/pagetypes/moin.py:302
+#: src/ZWiki/pagetypes/moin.py:302
 msgid "Create new drawing \"%(filename)s\""
 msgstr "新しいドロー\"%(filename)\" を作成"
 
-#: i/pagetypes/moin.py:304
+#: src/ZWiki/pagetypes/moin.py:304
 msgid "Upload new attachment \"%(filename)s\""
 msgstr "新しい添付ファイル\"%(filename)\"をアップロード"
 
-#: i/pagetypes/moin.py:335 i/pagetypes/moin.py:345
+#: src/ZWiki/pagetypes/moin.py:335 src/ZWiki/pagetypes/moin.py:345
 msgid "Edit drawing %(filename)s"
 msgstr "ドロー%(filename)を編集"
 
-#: i/pagetypes/moin.py:730
+#: src/ZWiki/pagetypes/moin.py:730
 msgid "Expected \"%(wanted)s\" after \"%(key)s\", got \"%(token)s\""
 msgstr ""
 "\"%(key)s\" のあとの \"%(wanted)s\" 待ち、 \"%(token)s\"を取得してください"
 
-#: i/pagetypes/moin.py:736
+#: src/ZWiki/pagetypes/moin.py:736
 msgid "Expected an integer \"%(key)s\" before \"%(token)s\""
 msgstr "\"%(token)s\"の前の\"%(key)s\"には整数が必要です"
 
-#: i/pagetypes/moin.py:745 i/pagetypes/moin.py:754
+#: src/ZWiki/pagetypes/moin.py:745 src/ZWiki/pagetypes/moin.py:754
 msgid "Expected an integer \"%(arg)s\" after \"%(key)s\""
 msgstr "\"%(key)s\"の後の\"%(arg)s\"には整数が必要です"
 
-#: i/pagetypes/moin.py:774
+#: src/ZWiki/pagetypes/moin.py:774
 msgid "Expected a color value \"%(arg)s\" after \"%(key)s\""
 msgstr "\"%(key)s\"の後の\"%(arg)s\"には色の値が必要です"
 
-#: i/pagetypes/rst.py:59
+#: src/ZWiki/pagetypes/rst.py:85
 msgid "reply"
 msgstr "返信"
 
-#: i/plugins/tracker/filterissues.pt:12 i/skins/dtmlmessages.pt:30
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:127
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:127
+msgid "full history"
+msgstr "全ての履歴"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:129
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:131
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:129
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:131
+msgid "<< previous edit"
+msgstr "<< 前の変更"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:133
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:135
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:133
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:135
+msgid "next edit >>"
+msgstr "次の変更 >>"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:137
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:137
+#, fuzzy
+msgid "Revert this change and all successive changes"
+msgstr "これより後のすべての変更を取り消す"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:169
+msgid "show plone skin"
+msgstr ""
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:172
+#, fuzzy
+msgid "plone"
+msgstr "更新記録"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:173
+msgid "show all features"
+msgstr "全機能を表示"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:179
+msgid "full"
+msgstr "詳細"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:180
+msgid "show basic features"
+msgstr "基本的な機能を表示"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:186
+msgid "simple"
+msgstr "シンプル"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:187
+msgid "show only essential features"
+msgstr "最低限の機能のみ表示"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:193
+msgid "minimal"
+msgstr "極小"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:507
+msgid "subtopic"
+msgstr "追加"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:512
+#, fuzzy
+msgid "for this page"
+msgstr "このwikiページを作成します"
+
+#. Default: "reparent"
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:520
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:525
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:530
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:535
+msgid "title"
+msgstr "タイトル"
+
+#: src/ZWiki/plugins/tracker/filterissues.pt:12
+#: src/ZWiki/skins/dtmlmessages.pt:30
 msgid "Filter issues"
 msgstr "問題点フィルタの設定"
 
-#: i/plugins/tracker/issuebrowser.pt:12
+#: src/ZWiki/plugins/tracker/issuebrowser.pt:12
 #, fuzzy
 msgid "Issue browser"
 msgstr "Issue ブラウザ"
 
-#: i/plugins/tracker/issuetracker.pt:12
+#: src/ZWiki/plugins/tracker/issuetracker.pt:12
 msgid "Issue tracker"
 msgstr "Issue tracker"
 
-#: i/skins/dtmlmessages.pt:10 i/skins/dtmlmessages.pt:32
+#: src/ZWiki/plugins/tracker/tracker.py:361
+#, fuzzy
+msgid "You are not authorized to comment on this ZWiki Page."
+msgstr "このページの編集権限がありません"
+
+#: src/ZWiki/skins/dtmlmessages.pt:10 src/ZWiki/skins/dtmlmessages.pt:32
 msgid "category"
 msgstr "分類"
 
-#: i/skins/dtmlmessages.pt:11 i/skins/dtmlmessages.pt:33
+#: src/ZWiki/skins/dtmlmessages.pt:11 src/ZWiki/skins/dtmlmessages.pt:33
 msgid "severity"
 msgstr "緊急度"
 
-#: i/skins/dtmlmessages.pt:12 i/skins/dtmlmessages.pt:34
+#: src/ZWiki/skins/dtmlmessages.pt:12 src/ZWiki/skins/dtmlmessages.pt:34
 msgid "status"
 msgstr "状態"
 
-#: i/skins/dtmlmessages.pt:13 i/skins/dtmlmessages.pt:35
+#: src/ZWiki/skins/dtmlmessages.pt:13 src/ZWiki/skins/dtmlmessages.pt:35
 msgid "age"
 msgstr "作成後の経過時間"
 
-#: i/skins/dtmlmessages.pt:14 i/skins/dtmlmessages.pt:36
+#: src/ZWiki/skins/dtmlmessages.pt:14 src/ZWiki/skins/dtmlmessages.pt:36
 msgid "modified"
 msgstr "変更後の経過時間"
 
-#: i/skins/dtmlmessages.pt:15
+#: src/ZWiki/skins/dtmlmessages.pt:15
 msgid "Add a new issue:"
 msgstr "新しい問題点の登録:"
 
-#: i/skins/dtmlmessages.pt:16
+#: src/ZWiki/skins/dtmlmessages.pt:16
 msgid "Name:"
 msgstr "名前:"
 
-#: i/skins/dtmlmessages.pt:17
+#: src/ZWiki/skins/dtmlmessages.pt:17
 msgid "Category:"
 msgstr "分類:"
 
-#: i/skins/dtmlmessages.pt:18
+#: src/ZWiki/skins/dtmlmessages.pt:18
 msgid "Severity:"
 msgstr "緊急度:"
 
-#: i/skins/dtmlmessages.pt:19
+#: src/ZWiki/skins/dtmlmessages.pt:19
 msgid "Status:"
 msgstr "状態:"
 
-#: i/skins/dtmlmessages.pt:2
+#: src/ZWiki/skins/dtmlmessages.pt:2
 msgid "Here are the wiki's issue pages."
 msgstr "Wikiの問題点一覧ページです。"
 
-#: i/skins/dtmlmessages.pt:20
+#: src/ZWiki/skins/dtmlmessages.pt:20
 msgid "Details:"
 msgstr "詳細:"
 
-#: i/skins/dtmlmessages.pt:21
+#: src/ZWiki/skins/dtmlmessages.pt:21
 msgid "add issue"
 msgstr "問題点の登録"
 
-#: i/skins/dtmlmessages.pt:22
+#: src/ZWiki/skins/dtmlmessages.pt:22
 msgid "More advanced"
 msgstr "詳細な"
 
-#: i/skins/dtmlmessages.pt:23
+#: src/ZWiki/skins/dtmlmessages.pt:23
 msgid "issue tracker"
 msgstr "IssueTracker"
 
-#: i/skins/dtmlmessages.pt:24
+#: src/ZWiki/skins/dtmlmessages.pt:24
 msgid "search options"
 msgstr "検索オプション"
 
-#: i/skins/dtmlmessages.pt:25
+#: src/ZWiki/skins/dtmlmessages.pt:25
 msgid "Name contains any of:"
 msgstr "名前フィルタ（以下の用語を名前に含む）:"
 
-#: i/skins/dtmlmessages.pt:26
+#: src/ZWiki/skins/dtmlmessages.pt:26
 msgid "Page text contains any of:"
 msgstr "ページテキストフィルタ（以下の用語を含む）:"
 
-#: i/skins/dtmlmessages.pt:27
+#: src/ZWiki/skins/dtmlmessages.pt:27
 msgid "Categories:"
 msgstr "分類:"
 
-#: i/skins/dtmlmessages.pt:28
+#: src/ZWiki/skins/dtmlmessages.pt:28
 msgid "Severities:"
 msgstr "緊急度:"
 
-#: i/skins/dtmlmessages.pt:29
+#: src/ZWiki/skins/dtmlmessages.pt:29
 msgid "Statuses:"
 msgstr "状態:"
 
-#: i/skins/dtmlmessages.pt:3
+#: src/ZWiki/skins/dtmlmessages.pt:3
 #, fuzzy
 msgid "Enter a search term, click the numbers to the right,"
 msgstr "検索用語をテキストボックスに入力、または右の数字をクリック、あるいは"
 
-#: i/skins/dtmlmessages.pt:37
+#: src/ZWiki/skins/dtmlmessages.pt:37
 msgid "Submitted by"
 msgstr "投稿者:"
 
-#: i/skins/dtmlmessages.pt:38
+#: src/ZWiki/skins/dtmlmessages.pt:38
 msgid "Name"
 msgstr "名前"
 
-#: i/skins/dtmlmessages.pt:39
+#: src/ZWiki/skins/dtmlmessages.pt:39
 msgid "Category"
 msgstr "分類"
 
-#: i/skins/dtmlmessages.pt:4
+#: src/ZWiki/skins/dtmlmessages.pt:4
 msgid "filter issues"
 msgstr "問題点フィルタの設定をしてください"
 
-#: i/skins/dtmlmessages.pt:40
+#: src/ZWiki/skins/dtmlmessages.pt:40
 msgid "Severity"
 msgstr "緊急度"
 
-#: i/skins/dtmlmessages.pt:41
+#: src/ZWiki/skins/dtmlmessages.pt:41
 msgid "Status"
 msgstr "状態"
 
-#: i/skins/dtmlmessages.pt:42
+#: src/ZWiki/skins/dtmlmessages.pt:42
 #, fuzzy
 msgid "Optional subject"
 msgstr "オプションの題名"
 
-#: i/skins/dtmlmessages.pt:43
+#: src/ZWiki/skins/dtmlmessages.pt:43
 #, fuzzy
 msgid "Optional comment"
 msgstr "オプションのコメント"
 
-#: i/skins/dtmlmessages.pt:44 i/skins/dtmlmessages.pt:45
-msgid "Add a ZWiki web"
-msgstr "ZWikiウェブの新規作成"
+#: src/ZWiki/skins/dtmlmessages.pt:44 src/ZWiki/skins/dtmlmessages.pt:45
+#, fuzzy
+msgid "Add ZWiki"
+msgstr "ZWikiページの新規作成"
 
-#: i/skins/dtmlmessages.pt:46 i/skins/dtmlmessages.pt:85
-msgid "Id"
+#: src/ZWiki/skins/dtmlmessages.pt:46
+#, fuzzy
+msgid "Id:"
 msgstr "Id"
 
-#: i/skins/dtmlmessages.pt:47 i/skins/dtmlmessages.pt:86
-msgid "Title"
+#: src/ZWiki/skins/dtmlmessages.pt:47
+#, fuzzy
+msgid "Title:"
 msgstr "タイトル"
 
-#: i/skins/dtmlmessages.pt:48
-msgid "Type"
-msgstr "種類"
+#: src/ZWiki/skins/dtmlmessages.pt:48
+#, fuzzy
+msgid "Template:"
+msgstr "悪いテンプレート"
 
-#: i/skins/dtmlmessages.pt:49
-msgid "Create wiki"
-msgstr "Wikiの新規作成"
+#: src/ZWiki/skins/dtmlmessages.pt:49
+#, fuzzy
+msgid "Add wiki"
+msgstr "ZWikiページの新規作成"
 
-#: i/skins/dtmlmessages.pt:5
+#: src/ZWiki/skins/dtmlmessages.pt:5
 #, fuzzy
 msgid "browse open issues"
 msgstr "開かれている issue を見る"
 
-#: i/skins/dtmlmessages.pt:50
-msgid "and enter"
-msgstr "Wikiページ作成後に表示する"
-
-#: i/skins/dtmlmessages.pt:51
+#: src/ZWiki/skins/dtmlmessages.pt:50
 msgid "Pages changed in the last"
 msgstr "最近変更されたページ:"
 
-#: i/skins/dtmlmessages.pt:52
+#: src/ZWiki/skins/dtmlmessages.pt:51
 msgid "Recently changed pages, with summaries"
 msgstr "最新の変更されたページ(要約付き)"
 
-#: i/skins/dtmlmessages.pt:53
+#: src/ZWiki/skins/dtmlmessages.pt:52
 msgid "Show summaries ?"
 msgstr "要約を表示する"
 
-#: i/skins/dtmlmessages.pt:54
+#: src/ZWiki/skins/dtmlmessages.pt:53
 msgid "Refresh"
 msgstr "最新情報に更新"
 
-#: i/skins/dtmlmessages.pt:55
+#: src/ZWiki/skins/dtmlmessages.pt:54
 msgid "Page"
 msgstr "ページ"
 
-#: i/skins/dtmlmessages.pt:56
+#: src/ZWiki/skins/dtmlmessages.pt:55
 msgid "Edited&nbsp;by"
 msgstr "編集者"
 
-#: i/skins/dtmlmessages.pt:57
+#: src/ZWiki/skins/dtmlmessages.pt:56
 msgid "Time"
 msgstr "時間"
 
-#: i/skins/dtmlmessages.pt:58
+#: src/ZWiki/skins/dtmlmessages.pt:57
 msgid "NEW"
 msgstr "NEW"
 
-#: i/skins/dtmlmessages.pt:6
-msgid "search issues"
-msgstr "問題点の検索"
-
-#: i/skins/dtmlmessages.pt:60
+#: src/ZWiki/skins/dtmlmessages.pt:59
 msgid "Pages marked (NEW) have been created within the last week"
 msgstr "(NEW)マークのついたページは一週間以内に作成されたページです。"
 
-#: i/skins/dtmlmessages.pt:61
+#: src/ZWiki/skins/dtmlmessages.pt:6
+msgid "search issues"
+msgstr "問題点の検索"
+
+#: src/ZWiki/skins/dtmlmessages.pt:60
 msgid "Enter a word or phrase and hit enter to search the entire wiki."
 msgstr "検索したい言葉やフレーズを入力してEnterを押すとWiki全体を検索します。"
 
-#: i/skins/dtmlmessages.pt:62
+#: src/ZWiki/skins/dtmlmessages.pt:61
 msgid "This is the same as using the search field at top right."
 msgstr "ここは右上の検索フィールドを使うのと同じです"
 
-#: i/skins/dtmlmessages.pt:63
+#: src/ZWiki/skins/dtmlmessages.pt:62
 msgid "Tips: A single word works best for matching page names."
 msgstr ""
 "ヒント: ページ名にマッチさせたい場合には一語の言葉を使うと確率が上がります。"
 
-#: i/skins/dtmlmessages.pt:64
+#: src/ZWiki/skins/dtmlmessages.pt:63
 msgid ""
 "Case-insensitivity and wildcards may be supported depending on your catalog "
 "configuration."
 msgstr ""
 "大文字小文字を区別や、ワイルドカードのサポートはZCatalogの設定に依存します"
 
-#: i/skins/dtmlmessages.pt:65
+#: src/ZWiki/skins/dtmlmessages.pt:64
 msgid "Leave it blank to list all pages."
 msgstr "すべてのページを一覧にする場合には検索用語を空欄にします。"
 
-#: i/skins/dtmlmessages.pt:66 i/skins/dtmlmessages.pt:67
+#: src/ZWiki/skins/dtmlmessages.pt:65 src/ZWiki/skins/dtmlmessages.pt:66
 msgid "Search"
 msgstr "検索"
 
-#: i/skins/dtmlmessages.pt:68
+#: src/ZWiki/skins/dtmlmessages.pt:67
 msgid "Page names matching"
 msgstr "ページ名の一致"
 
-#: i/skins/dtmlmessages.pt:69
+#: src/ZWiki/skins/dtmlmessages.pt:68
 msgid "Text matching"
 msgstr "テキストの一致"
 
-#: i/skins/dtmlmessages.pt:7
-msgid "recent"
-msgstr "現在"
-
-#: i/skins/dtmlmessages.pt:70
+#: src/ZWiki/skins/dtmlmessages.pt:69
 #, fuzzy
 msgid "Thorough (non-catalog) search for text matching"
 msgstr "(カタログベースでない)全文テキスト検索"
 
-#: i/skins/dtmlmessages.pt:71
+#: src/ZWiki/skins/dtmlmessages.pt:7
+msgid "recent"
+msgstr "現在"
+
+#: src/ZWiki/skins/dtmlmessages.pt:70
 msgid "Set your preferences for this wiki:"
 msgstr "このWikiでのユーザ設定を行います:"
 
-#: i/skins/dtmlmessages.pt:72
+#: src/ZWiki/skins/dtmlmessages.pt:71
 msgid "User name:"
 msgstr "ユーザ名:"
 
-#: i/skins/dtmlmessages.pt:73
+#: src/ZWiki/skins/dtmlmessages.pt:72
 msgid "(identifies your edits)"
 msgstr "(編集者を識別するのに使用します)"
 
-#: i/skins/dtmlmessages.pt:74
+#: src/ZWiki/skins/dtmlmessages.pt:73
 msgid "Email address:"
 msgstr "メールアドレス:"
 
-#: i/skins/dtmlmessages.pt:75
+#: src/ZWiki/skins/dtmlmessages.pt:74
 msgid "(allows mail subscription)"
 msgstr "(メールで変更の通知を受け取れるようにします)"
 
-#: i/skins/dtmlmessages.pt:76
+#: src/ZWiki/skins/dtmlmessages.pt:75
 msgid "Your time zone:"
 msgstr "タイムゾーン:"
 
-#: i/skins/dtmlmessages.pt:77
+#: src/ZWiki/skins/dtmlmessages.pt:76
 msgid "(localizes most times)"
 msgstr "(時間表示をユーザのタイムゾーンに合わせます。日本はGMT+0900です)"
 
-#: i/skins/dtmlmessages.pt:78
+#: src/ZWiki/skins/dtmlmessages.pt:77
 msgid "Edit form height:"
 msgstr "編集フォームの行数:"
 
-#: i/skins/dtmlmessages.pt:79
+#: src/ZWiki/skins/dtmlmessages.pt:78
 msgid "(adjusts form size)"
 msgstr "(フォームのサイズを変更します)"
 
-#: i/skins/dtmlmessages.pt:8
-msgid "all"
-msgstr "すべて"
-
-#: i/skins/dtmlmessages.pt:80
+#: src/ZWiki/skins/dtmlmessages.pt:79
 msgid "Save options"
 msgstr "設定を保存する"
 
-#: i/skins/dtmlmessages.pt:81
+#: src/ZWiki/skins/dtmlmessages.pt:8
+msgid "all"
+msgstr "すべて"
+
+#: src/ZWiki/skins/dtmlmessages.pt:80
 msgid "Forget options"
 msgstr "設定を消去する"
 
-#: i/skins/dtmlmessages.pt:82 i/skins/dtmlmessages.pt:83
+#: src/ZWiki/skins/dtmlmessages.pt:81 src/ZWiki/skins/dtmlmessages.pt:82
 msgid "Add ZWiki Page"
 msgstr "ZWikiページの新規作成"
 
-#: i/skins/dtmlmessages.pt:84
-msgid ""
-"You may create a new ZWiki Page object using the form below. You may also "
-"choose to upload an existing html file from your local computer by clicking "
-"the <i>Browse</i> button."
-msgstr ""
-"下のフォームを使って新規のZWikiページオブジェクトを作成することができます。"
-"<i>参照...</i>ボタンをクリックすると、ローカルコンピュータの既存のHTMLファイ"
-"ルをアップロードすることもできます。"
+#: src/ZWiki/skins/dtmlmessages.pt:83
+#, fuzzy
+msgid "Page&nbsp;name:"
+msgstr "ページ名"
 
-#: i/skins/dtmlmessages.pt:87
-msgid "File"
-msgstr "ファイル"
+#: src/ZWiki/skins/dtmlmessages.pt:84
+#, fuzzy
+msgid "Add wiki page"
+msgstr "ZWikiページの新規作成"
 
-#: i/skins/dtmlmessages.pt:88
-msgid "Add"
-msgstr "新規作成"
-
-#: i/skins/dtmlmessages.pt:89
-msgid "Add and Edit"
-msgstr "作成後すぐに編集"
-
-#: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:31
-msgid "#"
-msgstr ""
-
-#: i/skins/dtmlmessages.pt:90
+#: src/ZWiki/skins/dtmlmessages.pt:85
 #, fuzzy
 msgid "Topic"
 msgstr "追加"
 
-#: i/skins/dtmlmessages.pt:91
+#: src/ZWiki/skins/dtmlmessages.pt:86
 msgid "Last updated"
 msgstr "最終更新"
 
-#: i/skins/dtmlmessages.pt:92
+#: src/ZWiki/skins/dtmlmessages.pt:87
 #, fuzzy
 msgid "Comments"
 msgstr "コメント"
 
-#: i/skins/dtmlmessages.pt:93
+#: src/ZWiki/skins/dtmlmessages.pt:88
 #, fuzzy
 msgid "Views"
 msgstr "表示"
 
-#: i/skins/dtmlmessages.pt:94
+#: src/ZWiki/skins/dtmlmessages.pt:89
 #, fuzzy
 msgid "Created"
 msgstr "作成済み"
 
-#: i/skins/dtmlmessages.pt:95 i/skins/dtmlmessages.pt:97
+#: src/ZWiki/skins/dtmlmessages.pt:9 src/ZWiki/skins/dtmlmessages.pt:31
+msgid "#"
+msgstr ""
+
+#: src/ZWiki/skins/dtmlmessages.pt:90 src/ZWiki/skins/dtmlmessages.pt:92
 msgid "by"
 msgstr "by"
 
-#: i/skins/dtmlmessages.pt:96
+#: src/ZWiki/skins/dtmlmessages.pt:91
 msgid "<dtml-var lasteditinterval> ago</dtml-var>"
 msgstr "<dtml-var lasteditinterval> 前</dtml-var>"
 
-#: i/skins/dtmlmessages.pt:98
+#: src/ZWiki/skins/dtmlmessages.pt:93
 msgid "on"
 msgstr "on"
 
-#: i/skins/zwiki_standard/backlinks.pt:108
+#: src/ZWiki/skins/zwiki/backlinks.pt:108
 #, fuzzy
 msgid "Subtopics"
 msgstr "サブトピック"
 
-#: i/skins/zwiki_standard/backlinks.pt:111
+#: src/ZWiki/skins/zwiki/backlinks.pt:111
 msgid "This page has no subtopics."
 msgstr "サブトピックはありません"
 
-#: i/skins/zwiki_standard/backlinks.pt:114
+#: src/ZWiki/skins/zwiki/backlinks.pt:114
 #, fuzzy
 msgid "Here are it's subtopics."
 msgstr "サブトピック一覧です"
 
-#: i/skins/zwiki_standard/backlinks.pt:117
+#: src/ZWiki/skins/zwiki/backlinks.pt:117
 msgid "You can reorder them by clicking the ^ buttons."
 msgstr "「^」ボタンをクリックして順序を変えることができます"
 
-#: i/skins/zwiki_standard/backlinks.pt:20
-#: i/skins/zwiki_standard/backlinks.pt:55
+#: src/ZWiki/skins/zwiki/backlinks.pt:20
 #, fuzzy
-msgid "Backlinks"
-msgstr "バックリンク"
+msgid "Related pages"
+msgstr "ページを作成"
 
-#: i/skins/zwiki_standard/backlinks.pt:26
+#: src/ZWiki/skins/zwiki/backlinks.pt:26
 #, fuzzy
 msgid "Parents"
 msgstr "親,"
 
-#: i/skins/zwiki_standard/backlinks.pt:31
+#: src/ZWiki/skins/zwiki/backlinks.pt:31
 msgid "is a top-level topic."
 msgstr "は上位レベルのトピックです"
 
-#: i/skins/zwiki_standard/backlinks.pt:32
+#: src/ZWiki/skins/zwiki/backlinks.pt:32
 msgid "is a subtopic of:"
 msgstr "は以下の下位トピックです:"
 
-#: i/skins/zwiki_standard/backlinks.pt:56
+#: src/ZWiki/skins/zwiki/backlinks.pt:55
+#, fuzzy
+msgid "Backlinks"
+msgstr "バックリンク"
+
+#: src/ZWiki/skins/zwiki/backlinks.pt:56
 msgid "Here are the pages which link to it:"
 msgstr "ここにリンクしているページ群:"
 
-#: i/skins/zwiki_standard/backlinks.pt:57
+#: src/ZWiki/skins/zwiki/backlinks.pt:57
 #, fuzzy
 msgid "No other pages link to this one."
 msgstr "どこからリンクされているでしょうか？"
 
-#: i/skins/zwiki_standard/backlinks.pt:82
+#: src/ZWiki/skins/zwiki/backlinks.pt:82
 msgid ""
 "You can set this page's parent(s) to place it within the overall page "
 "hierarchy."
 msgstr "全てのページの階層の中から、このページの親を設定することができます"
 
-#: i/skins/zwiki_standard/backlinks.pt:85
+#: src/ZWiki/skins/zwiki/backlinks.pt:85
 msgid ""
 "Check one or more checkboxes or enter a page name here, and click the button."
 msgstr ""
 
-#: i/skins/zwiki_standard/backlinks.pt:88
+#: src/ZWiki/skins/zwiki/backlinks.pt:88
 msgid "Enter a page name here and click the button."
 msgstr ""
 
-#: i/skins/zwiki_standard/backlinks.pt:91
+#: src/ZWiki/skins/zwiki/backlinks.pt:91
 msgid ""
 "You can type just the first few letters, case and punctuation are ignored."
 msgstr ""
 "最初の数文字を入力して下さい。なお、大文字/小文字や句読点は同一視されます"
 
-#: i/skins/zwiki_standard/backlinks.pt:98
+#: src/ZWiki/skins/zwiki/backlinks.pt:98
 msgid "Reparent"
 msgstr "Reparent"
 
-#: i/skins/zwiki_standard/badtemplate.pt:12
+#: src/ZWiki/skins/zwiki/badtemplate.pt:12
 msgid "Bad template"
 msgstr "悪いテンプレート"
 
-#: i/skins/zwiki_standard/badtemplate.pt:13
+#: src/ZWiki/skins/zwiki/badtemplate.pt:13
 #, fuzzy
 msgid ""
 "There was a problem locating one of this wiki's skin templates. There may be "
@@ -848,184 +952,404 @@ msgstr ""
 "レートです。またはファイルシステム上にテンプレートがみつかりません(インストー"
 "ルが不完全です)。"
 
-#: i/skins/zwiki_standard/contentspage.pt:12
+#: src/ZWiki/skins/zwiki/commentform.pt:21
+msgid "subject"
+msgstr "題名"
+
+#: src/ZWiki/skins/zwiki/commentform.pt:22
+msgid "a subject helps clarify threads and RecentChanges"
+msgstr "題名はスレッドや最近の更新をわかりやすくします"
+
+#: src/ZWiki/skins/zwiki/commentform.pt:29
+msgid "replying"
+msgstr "返信する"
+
+#: src/ZWiki/skins/zwiki/commentform.pt:36
+msgid "to comment (and cc any subscribers) enter text here and click add"
+msgstr ""
+"コメントを書いて「コメントを追加」を押すと追記されます(変更通知も送信されま"
+"す)"
+
+#: src/ZWiki/skins/zwiki/commentform.pt:56
+msgid "${nb} subscribers"
+msgstr "人の購読者"
+
+#: src/ZWiki/skins/zwiki/commentform.pt:58
+msgid "1 subscriber"
+msgstr "1 人の購読者"
+
+#. Default: "add a comment"
+#: src/ZWiki/skins/zwiki/commentform.pt:64
+msgid "add-comment"
+msgstr "コメントの追加"
+
+#: src/ZWiki/skins/zwiki/contentspage.pt:12
 msgid "Wiki contents"
 msgstr "Wiki コンテンツ"
 
-#: i/skins/zwiki_standard/contentspage.pt:16
+#: src/ZWiki/skins/zwiki/contentspage.pt:16
 msgid "Singletons"
 msgstr "Singletons"
 
-#: i/skins/zwiki_standard/denied.pt:12
+#: src/ZWiki/skins/zwiki/denied.pt:12
 msgid "Not permitted"
 msgstr "許可されていない"
 
-#: i/skins/zwiki_standard/diffform.pt:13
+#: src/ZWiki/skins/zwiki/diffform.pt:24
 #, fuzzy
 msgid "Edit history"
 msgstr "履歴の編集"
 
-#. Default: "Log note :"
-#: i/skins/zwiki_standard/diffform.pt:21
-msgid "log_note"
-msgstr "更新記録"
-
-#: i/skins/zwiki_standard/diffform.pt:25
-msgid "full history"
-msgstr "全ての履歴"
-
-#: i/skins/zwiki_standard/diffform.pt:27 i/skins/zwiki_standard/diffform.pt:29
-msgid "<< previous edit"
-msgstr "<< 前の変更"
-
-#: i/skins/zwiki_standard/diffform.pt:31 i/skins/zwiki_standard/diffform.pt:33
-msgid "next edit >>"
-msgstr "次の変更 >>"
-
-#: i/skins/zwiki_standard/diffform.pt:35
+#: src/ZWiki/skins/zwiki/diffform.pt:32
 #, fuzzy
-msgid "Revert this and later changes"
+msgid "Edit:"
+msgstr "編集"
+
+#. Default: "<<"
+#: src/ZWiki/skins/zwiki/diffform.pt:34 src/ZWiki/skins/zwiki/diffform.pt:38
+msgid " << "
+msgstr ""
+
+#. Default: ">>"
+#: src/ZWiki/skins/zwiki/diffform.pt:52 src/ZWiki/skins/zwiki/diffform.pt:56
+msgid " >> "
+msgstr ""
+
+#: src/ZWiki/skins/zwiki/diffform.pt:61
+#, fuzzy
+msgid "Manage"
+msgstr "変更"
+
+#: src/ZWiki/skins/zwiki/diffform.pt:65
+#, fuzzy
+msgid "Revert this and later edits"
 msgstr "これより後のすべての変更を取り消す"
 
-#: i/skins/zwiki_standard/diffform.pt:38
+#: src/ZWiki/skins/zwiki/diffform.pt:74
 msgid "Return to page"
 msgstr "ページに戻る"
 
-#: i/skins/zwiki_standard/editform.pt:117
+#: src/ZWiki/skins/zwiki/diffform.pt:85
+#, fuzzy
+msgid "Time:"
+msgstr "時間"
+
+#: src/ZWiki/skins/zwiki/diffform.pt:90
+#, fuzzy
+msgid "Note:"
+msgstr "名前:"
+
+#: src/ZWiki/skins/zwiki/editform.pt:121
 msgid "toggle source/WYSIWYG mode"
 msgstr "ソース/WYSIWYGモードを切り替える"
 
-#: i/skins/zwiki_standard/editform.pt:128
+#: src/ZWiki/skins/zwiki/editform.pt:132
 msgid "Optional change note"
 msgstr "変更の概要"
 
-#: i/skins/zwiki_standard/editform.pt:129
+#: src/ZWiki/skins/zwiki/editform.pt:133
 msgid "a note makes RecentChanges more useful"
 msgstr "noteは変更の記録としてRecentChangeに表示されます"
 
-#: i/skins/zwiki_standard/editform.pt:142
+#: src/ZWiki/skins/zwiki/editform.pt:146
 msgid "Upload a file or image"
 msgstr "ファイルや画像のアップロード"
 
-#: i/skins/zwiki_standard/editform.pt:143
+#: src/ZWiki/skins/zwiki/editform.pt:147
 msgid "upload a file and link it on this page ?"
 msgstr "ファイルをアップロードしてこのページにリンクを置きますか？"
 
-#: i/skins/zwiki_standard/editform.pt:153
+#: src/ZWiki/skins/zwiki/editform.pt:157
 msgid "For editing help, see"
 msgstr "編集のヘルプは"
 
-#: i/skins/zwiki_standard/editform.pt:155
+#: src/ZWiki/skins/zwiki/editform.pt:159
 msgid "HelpPage"
 msgstr "HelpPage"
 
-#: i/skins/zwiki_standard/editform.pt:162
+#: src/ZWiki/skins/zwiki/editform.pt:166
 msgid "TextFormattingRules"
 msgstr "TextFormattingRules"
 
-#: i/skins/zwiki_standard/editform.pt:166
+#: src/ZWiki/skins/zwiki/editform.pt:170
 msgid "${DYNAMIC_CONTENT}"
 msgstr "${DYNAMIC_CONTENT}"
 
-#: i/skins/zwiki_standard/editform.pt:174
+#: src/ZWiki/skins/zwiki/editform.pt:178
 msgid "preview this edit"
 msgstr "編集内容を確認します"
 
-#: i/skins/zwiki_standard/editform.pt:174
+#: src/ZWiki/skins/zwiki/editform.pt:178
 msgid "Preview"
 msgstr "プレビュー"
 
-#: i/skins/zwiki_standard/editform.pt:179
+#: src/ZWiki/skins/zwiki/editform.pt:183
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: i/skins/zwiki_standard/editform.pt:179
+#: src/ZWiki/skins/zwiki/editform.pt:183
 msgid "cancel this edit and return to the page"
 msgstr "編集をキャンセルして前のページに戻ります"
 
-#: i/skins/zwiki_standard/editform.pt:187
+#: src/ZWiki/skins/zwiki/editform.pt:191
 msgid "Create"
 msgstr "作成"
 
-#: i/skins/zwiki_standard/editform.pt:188
+#: src/ZWiki/skins/zwiki/editform.pt:192
 msgid "create this wiki page"
 msgstr "このwikiページを作成します"
 
 #. Default: "PREVIEW"
-#: i/skins/zwiki_standard/editform.pt:199
-#: i/skins/zwiki_standard/editform.pt:200
-#: i/skins/zwiki_standard/editform.pt:201
-#: i/skins/zwiki_standard/editform.pt:202
-#: i/skins/zwiki_standard/editform.pt:203
-#: i/skins/zwiki_standard/editform.pt:212
-#: i/skins/zwiki_standard/editform.pt:213
-#: i/skins/zwiki_standard/editform.pt:214
-#: i/skins/zwiki_standard/editform.pt:215
-#: i/skins/zwiki_standard/editform.pt:216
+#: src/ZWiki/skins/zwiki/editform.pt:203 src/ZWiki/skins/zwiki/editform.pt:204
+#: src/ZWiki/skins/zwiki/editform.pt:205 src/ZWiki/skins/zwiki/editform.pt:206
+#: src/ZWiki/skins/zwiki/editform.pt:207 src/ZWiki/skins/zwiki/editform.pt:216
+#: src/ZWiki/skins/zwiki/editform.pt:217 src/ZWiki/skins/zwiki/editform.pt:218
+#: src/ZWiki/skins/zwiki/editform.pt:219 src/ZWiki/skins/zwiki/editform.pt:220
 #, fuzzy
 msgid "label_preview"
 msgstr "プレビュー"
 
-#: i/skins/zwiki_standard/editform.pt:56
+#: src/ZWiki/skins/zwiki/editform.pt:60
 msgid "Page name"
 msgstr "ページ名"
 
-#: i/skins/zwiki_standard/editform.pt:57
+#: src/ZWiki/skins/zwiki/editform.pt:61
 msgid "the name of this wiki page (changing this may be slow!)"
 msgstr "このwikiページの名前です(変更するには時間がかかります!)"
 
-#: i/skins/zwiki_standard/editform.pt:67
+#: src/ZWiki/skins/zwiki/editform.pt:71
 msgid "type"
 msgstr "タイプ"
 
-#: i/skins/zwiki_standard/editform.pt:68
+#: src/ZWiki/skins/zwiki/editform.pt:72
 msgid "select the formatting and rendering style for this page"
 msgstr "このページのフォーマットと描画スタイルを選択してください"
 
-#: i/skins/zwiki_standard/recentchanges.pt:12
+#: src/ZWiki/skins/zwiki/links.pt:102
+msgid "(external edit)"
+msgstr "(ExternalEditor)"
+
+#: src/ZWiki/skins/zwiki/links.pt:12
+msgid "home"
+msgstr "ホーム"
+
+#: src/ZWiki/skins/zwiki/links.pt:13
+msgid "show wiki recent changes"
+msgstr "最近の変更を表示"
+
+#: src/ZWiki/skins/zwiki/links.pt:17
+msgid "changes"
+msgstr "最近の変更"
+
+#: src/ZWiki/skins/zwiki/links.pt:18
+msgid "show discussion page"
+msgstr "議論ページを表示"
+
+#: src/ZWiki/skins/zwiki/links.pt:22
+msgid "discussion"
+msgstr "議論"
+
+#: src/ZWiki/skins/zwiki/links.pt:23
+msgid "show issue tracker"
+msgstr "問題追跡を表示"
+
+#: src/ZWiki/skins/zwiki/links.pt:27
+msgid "issues"
+msgstr "問題"
+
+#: src/ZWiki/skins/zwiki/links.pt:28
+msgid "show wiki contents"
+msgstr "目次を表示"
+
+#: src/ZWiki/skins/zwiki/links.pt:32
+msgid "contents"
+msgstr "目次"
+
+#: src/ZWiki/skins/zwiki/links.pt:33
+msgid "show wiki index"
+msgstr "索引を表示"
+
+#: src/ZWiki/skins/zwiki/links.pt:37
+msgid "index"
+msgstr "索引"
+
+#: src/ZWiki/skins/zwiki/links.pt:38
+msgid "show upload page"
+msgstr "アップロードページを表示"
+
+#: src/ZWiki/skins/zwiki/links.pt:42
+msgid "uploads"
+msgstr "アップロード"
+
+#: src/ZWiki/skins/zwiki/links.pt:43
+msgid "show help page"
+msgstr "ヘルプを表示"
+
+#: src/ZWiki/skins/zwiki/links.pt:48
+msgid "help"
+msgstr "ヘルプ"
+
+#: src/ZWiki/skins/zwiki/links.pt:49
+msgid "show wiki options"
+msgstr "設定を表示"
+
+#: src/ZWiki/skins/zwiki/links.pt:53
+msgid "options"
+msgstr "設定"
+
+#: src/ZWiki/skins/zwiki/links.pt:62
+msgid "backlinks"
+msgstr "逆リンク"
+
+#: src/ZWiki/skins/zwiki/links.pt:63
+msgid "configure email subscription to this page or site"
+msgstr "このページやサイト全体の購読のためのE-Mailアドレスを設定"
+
+#: src/ZWiki/skins/zwiki/links.pt:73
+msgid "subscribe"
+msgstr "購読"
+
+#: src/ZWiki/skins/zwiki/links.pt:74
+msgid "show this page's change history"
+msgstr "このページの変更履歴を表示"
+
+#: src/ZWiki/skins/zwiki/links.pt:8
+msgid "show front page"
+msgstr "FrontPageを表示"
+
+#: src/ZWiki/skins/zwiki/links.pt:80
+msgid "diff"
+msgstr "差分"
+
+#: src/ZWiki/skins/zwiki/links.pt:89
+msgid "edit"
+msgstr "編集"
+
+#: src/ZWiki/skins/zwiki/links.pt:90
+msgid "edit using external editor"
+msgstr "ExternalEditorを使って編集"
+
+#: src/ZWiki/skins/zwiki/pageheader.pt:22
+msgid "go to home page"
+msgstr "ホームページへ移動"
+
+#: src/ZWiki/skins/zwiki/pageheader.pt:53
+msgid "search all pages"
+msgstr "全ページ検索"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:25
+msgid "new"
+msgstr "新規"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:26
+msgid "parent,"
+msgstr "親,"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:29
+msgid "name,"
+msgstr "名前,"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:32
+msgid "replacement,"
+msgstr "削除,"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:35
+#, fuzzy
+msgid "page"
+msgstr "作成後の経過時間"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:40
+msgid "enter a page name and click buttons to the right (mouse over for help)"
+msgstr ""
+"ページ名を入力して実行したい内容のボタンを押してください(マウスをボタンに重ね"
+"るとヘルプが表示されます)"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:45
+#, fuzzy
+msgid "reparent"
+msgstr "Reparent"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:45
+msgid "make this page a subtopic of the page you have entered"
+msgstr ""
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:50
+msgid "rename this page to the name you have entered, updating all links"
+msgstr ""
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:50
+#, fuzzy
+msgid "rename"
+msgstr "名前,"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:55
+msgid "delete!"
+msgstr ""
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:55
+msgid ""
+"delete this page, and redirect links to the page you have entered, if any"
+msgstr ""
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:60
+msgid "create a page with the name you have entered, as a subtopic of this one"
+msgstr ""
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:60
+#, fuzzy
+msgid "create"
+msgstr "作成"
+
+#: src/ZWiki/skins/zwiki/recentchanges.pt:12
 #, fuzzy
 msgid "Recent changes"
 msgstr "最近の変更"
 
-#: i/skins/zwiki_standard/searchwiki.pt:12
+#: src/ZWiki/skins/zwiki/searchwiki.pt:12
 #, fuzzy
 msgid "Search this wiki"
 msgstr "このwikiからの検索"
 
+#: src/ZWiki/skins/zwiki/subscribeform.pt:102
+#: src/ZWiki/skins/zwiki/subscribeform.pt:136
+#, fuzzy
+msgid "all edits"
+msgstr "編集"
+
 #. Default: ""
 #.  "You are currently subscribed<br />\n"
 #.  "                  to the whole wiki."
-#: i/skins/zwiki_standard/subscribeform.pt:108
+#: src/ZWiki/skins/zwiki/subscribeform.pt:113
 msgid "subscribed_wiki_ok"
 msgstr "現在あなたはこのWiki全体を講読しています"
 
 #. Default: "You are currently not subscribed<br /> to the whole wiki."
-#: i/skins/zwiki_standard/subscribeform.pt:112
+#: src/ZWiki/skins/zwiki/subscribeform.pt:117
 msgid "subscribed_wiki_no"
 msgstr "Wiki全体の変更の通知は設定されていません。"
 
-#: i/skins/zwiki_standard/subscribeform.pt:116
-msgid "Unsubscribe from whole wiki"
-msgstr "Wiki全体の変更通知を解除"
-
-#: i/skins/zwiki_standard/subscribeform.pt:12
+#: src/ZWiki/skins/zwiki/subscribeform.pt:12
 msgid "Mail subscription"
 msgstr "メール講読"
 
-#: i/skins/zwiki_standard/subscribeform.pt:123
+#: src/ZWiki/skins/zwiki/subscribeform.pt:121
+msgid "Unsubscribe from whole wiki"
+msgstr "Wiki全体の変更通知を解除"
+
+#: src/ZWiki/skins/zwiki/subscribeform.pt:128
 msgid "Subscribe to whole wiki"
 msgstr "Wiki全体の変更を通知"
 
 #. Default: "You are subscribed to these other pages"
-#: i/skins/zwiki_standard/subscribeform.pt:141
+#: src/ZWiki/skins/zwiki/subscribeform.pt:146
 msgid "other_page_subscribed"
 msgstr "通知を設定している他のページ"
 
-#: i/skins/zwiki_standard/subscribeform.pt:159
+#: src/ZWiki/skins/zwiki/subscribeform.pt:164
 msgid "Page subscribers"
 msgstr "ページ講読者"
 
-#: i/skins/zwiki_standard/subscribeform.pt:168
+#: src/ZWiki/skins/zwiki/subscribeform.pt:173
 msgid "Wiki subscribers"
 msgstr "Wiki 講読者"
 
@@ -1033,7 +1357,7 @@ msgstr "Wiki 講読者"
 #.  "You can subscribe to this page or to the whole wiki.\n"
 #.  "              Subscribers receive a copy of comments via email.\n"
 #.  "              Or return to"
-#: i/skins/zwiki_standard/subscribeform.pt:36
+#: src/ZWiki/skins/zwiki/subscribeform.pt:38
 #, fuzzy
 msgid "subscribe_desc_comments"
 msgstr ""
@@ -1046,7 +1370,7 @@ msgstr ""
 #.  "You can subscribe to this page or to the whole wiki.\n"
 #.  "              Subscribers receive a copy of all edits via email.\n"
 #.  "              Or return to"
-#: i/skins/zwiki_standard/subscribeform.pt:41
+#: src/ZWiki/skins/zwiki/subscribeform.pt:43
 #, fuzzy
 msgid "subscribe_desc_edits"
 msgstr ""
@@ -1055,558 +1379,345 @@ msgstr ""
 "        (但し、サイト管理者によって許可されている場合以外には一般的は編集によ"
 "るものは含まれません)        Or return to(未訳)"
 
-#: i/skins/zwiki_standard/subscribeform.pt:53
+#: src/ZWiki/skins/zwiki/subscribeform.pt:53
+msgid "Email will go to the address you have configured in site preferences."
+msgstr ""
+
+#: src/ZWiki/skins/zwiki/subscribeform.pt:58
 msgid "Your email address"
 msgstr "メールアドレス"
 
-#: i/skins/zwiki_standard/subscribeform.pt:57
+#: src/ZWiki/skins/zwiki/subscribeform.pt:62
 msgid "Change"
 msgstr "変更"
 
 #. Default: "To subscribe, please configure your email address."
-#: i/skins/zwiki_standard/subscribeform.pt:64
+#: src/ZWiki/skins/zwiki/subscribeform.pt:69
 msgid "subscribe_no_email"
 msgstr "講読するために、メールアドレスを設定してください"
 
 #. Default: ""
 #.  "You are currently subscribed<br />\n"
 #.  "                  to this page."
-#: i/skins/zwiki_standard/subscribeform.pt:74
+#: src/ZWiki/skins/zwiki/subscribeform.pt:79
 msgid "subscribed_page_ok"
 msgstr "現在あなたはこのページを講読しています"
 
 #. Default: ""
 #.  "You are currently not subscribed<br />\n"
 #.  "                  to this page."
-#: i/skins/zwiki_standard/subscribeform.pt:78
+#: src/ZWiki/skins/zwiki/subscribeform.pt:83
 msgid "subscribed_page_no"
 msgstr "現在あなたはこのページを講読していません"
 
 #. Default: "Unsubscribe from this page"
-#: i/skins/zwiki_standard/subscribeform.pt:82
+#: src/ZWiki/skins/zwiki/subscribeform.pt:87
 msgid " Unsubscribe from this page "
 msgstr " このページの購読を解除 "
 
 #. Default: "Subscribe to this page"
-#: i/skins/zwiki_standard/subscribeform.pt:89
+#: src/ZWiki/skins/zwiki/subscribeform.pt:94
 msgid " Subscribe to this page "
 msgstr " このページを購読 "
 
-#: i/skins/zwiki_standard/subscribeform.pt:97
-#: i/skins/zwiki_standard/subscribeform.pt:131
-#, fuzzy
-msgid "all edits"
-msgstr "編集"
-
-#: i/skins/zwiki_standard/useroptions.pt:12
+#: src/ZWiki/skins/zwiki/useroptions.pt:12
 #, fuzzy
 msgid "User options"
 msgstr "検索オプション"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:100
-msgid "changes"
-msgstr "最近の変更"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:101
-msgid "show discussion page"
-msgstr "議論ページを表示"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:105
-msgid "discussion"
-msgstr "議論"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:106
-msgid "show issue tracker"
-msgstr "問題追跡を表示"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:110
-msgid "issues"
-msgstr "問題"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:111
-msgid "show wiki contents"
-msgstr "目次を表示"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:115
-msgid "contents"
-msgstr "目次"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:116
-msgid "show wiki index"
-msgstr "索引を表示"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:120
-msgid "index"
-msgstr "索引"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:121
-msgid "show upload page"
-msgstr "アップロードページを表示"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:125
-msgid "uploads"
-msgstr "アップロード"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:127
-msgid "show help page"
-msgstr "ヘルプを表示"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:132
-msgid "help"
-msgstr "ヘルプ"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:133
-msgid "show wiki options"
-msgstr "設定を表示"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:137
-msgid "options"
-msgstr "設定"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:147
-msgid "backlinks"
-msgstr "逆リンク"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:148
-msgid "configure email subscription to this page or site"
-msgstr "このページやサイト全体の購読のためのE-Mailアドレスを設定"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:158
-msgid "subscribe"
-msgstr "購読"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:159
-msgid "show this page's change history"
-msgstr "このページの変更履歴を表示"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:165
-msgid "diff"
-msgstr "差分"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:174
-msgid "edit"
-msgstr "編集"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:175
-msgid "edit using external editor"
-msgstr "ExternalEditorを使って編集"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:187
-msgid "(external edit)"
-msgstr "(ExternalEditor)"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:246
-msgid "go to home page"
-msgstr "ホームページへ移動"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:266
-msgid "search all pages"
-msgstr "全ページ検索"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:312
-msgid "subject"
-msgstr "題名"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:313
-msgid "a subject helps clarify threads and RecentChanges"
-msgstr "題名はスレッドや最近の更新をわかりやすくします"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:320
-msgid "replying"
-msgstr "返信する"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:327
-msgid "to comment (and cc any subscribers) enter text here and click add"
-msgstr ""
-"コメントを書いて「コメントを追加」を押すと追記されます(変更通知も送信されま"
-"す)"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:347
-msgid "${nb} subscribers"
-msgstr "人の購読者"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:349
-msgid "1 subscriber"
-msgstr "1 人の購読者"
-
-#. Default: "add a comment"
-#: i/skins/zwiki_standard/wikipage-inline.pt:355
-msgid "add-comment"
-msgstr "コメントの追加"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:388
-msgid "new"
-msgstr "新規"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:389
-msgid "parent,"
-msgstr "親,"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:392
-msgid "name,"
-msgstr "名前,"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:395
-msgid "replacement,"
-msgstr "削除,"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:398
-#, fuzzy
-msgid "page"
-msgstr "作成後の経過時間"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:403
-msgid "enter a page name and click buttons to the right (mouse over for help)"
-msgstr ""
-"ページ名を入力して実行したい内容のボタンを押してください(マウスをボタンに重ね"
-"るとヘルプが表示されます)"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:408
-#, fuzzy
-msgid "reparent"
-msgstr "Reparent"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:408
-msgid "make this page a subtopic of the page you have entered"
-msgstr ""
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:413
-msgid "rename this page to the name you have entered, updating all links"
-msgstr ""
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:413
-#, fuzzy
-msgid "rename"
-msgstr "名前,"
+#~ msgid "your edit contained a banned link pattern"
+#~ msgstr "禁止リンクパターンが編集内容に含まれています"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:418
-msgid "delete!"
-msgstr ""
+#~ msgid "adding of external links by anonymous authors is restricted"
+#~ msgstr "匿名ユーザによる外部リンクの追加は制限されています"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:418
-msgid ""
-"delete this page, and redirect links to the page you have entered, if any"
-msgstr ""
+#~ msgid "Add a ZWiki web"
+#~ msgstr "ZWikiウェブの新規作成"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:423
-msgid "create a page with the name you have entered, as a subtopic of this one"
-msgstr ""
+#~ msgid "Type"
+#~ msgstr "種類"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:423
-#, fuzzy
-msgid "create"
-msgstr "作成"
+#~ msgid "Create wiki"
+#~ msgstr "Wikiの新規作成"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:91
-msgid "show front page"
-msgstr "FrontPageを表示"
+#~ msgid "and enter"
+#~ msgstr "Wikiページ作成後に表示する"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:95
-msgid "home"
-msgstr "ホーム"
+#~ msgid ""
+#~ "You may create a new ZWiki Page object using the form below. You may also "
+#~ "choose to upload an existing html file from your local computer by "
+#~ "clicking the <i>Browse</i> button."
+#~ msgstr ""
+#~ "下のフォームを使って新規のZWikiページオブジェクトを作成することができま"
+#~ "す。<i>参照...</i>ボタンをクリックすると、ローカルコンピュータの既存のHTML"
+#~ "ファイルをアップロードすることもできます。"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:96
-msgid "show wiki recent changes"
-msgstr "最近の変更を表示"
+#~ msgid "File"
+#~ msgstr "ファイル"
 
-msgid "Backlinks for"
-msgstr "このページへのリンク:"
+#~ msgid "Add"
+#~ msgstr "新規作成"
 
-msgid "singleton_desc"
-msgstr "Singleton とは他のページとリンクされていないページです。"
+#~ msgid "Add and Edit"
+#~ msgstr "作成後すぐに編集"
 
-msgid "History for"
-msgstr "履歴:"
+#~ msgid "log_note"
+#~ msgstr "更新記録"
 
-msgid "return to page"
-msgstr "ページに戻る"
+#~ msgid "Backlinks for"
+#~ msgstr "このページへのリンク:"
 
-msgid "help_shortname"
-msgstr ""
-"注: 大規模なwikiでページの名前を変更するのは時間がかかることがあります。他の"
-"ページも可能なら変更されます。"
+#~ msgid "singleton_desc"
+#~ msgstr "Singleton とは他のページとリンクされていないページです。"
 
-msgid "label_body_text"
-msgstr "本文"
+#~ msgid "History for"
+#~ msgstr "履歴:"
 
-msgid "help_wikibody"
-msgstr ""
-"Wikiページの中では [カギかっこ] でリンクを作成できます。ページを保存するとカ"
-"ギ括弧の\n"
-"内容に<code>?</code>が付いたリンクが表示されるので、クリックするとその名前で"
-"ページを\n"
-"作成します。(訳注:英数字以外を使う場合はパッチが必要な場合もあります)"
+#~ msgid "return to page"
+#~ msgstr "ページに戻る"
 
-msgid "help_wikiwords"
-msgstr "WikiWordsでのリンクの仕組みもサポートされています。"
+#~ msgid "help_shortname"
+#~ msgstr ""
+#~ "注: 大規模なwikiでページの名前を変更するのは時間がかかることがあります。他"
+#~ "のページも可能なら変更されます。"
 
-msgid "label_note"
-msgstr "バージョン説明(任意)"
+#~ msgid "label_body_text"
+#~ msgstr "本文"
 
-msgid "help_wikinote"
-msgstr "この変更についての簡単な説明を書きます。"
+#~ msgid "help_wikibody"
+#~ msgstr ""
+#~ "Wikiページの中では [カギかっこ] でリンクを作成できます。ページを保存すると"
+#~ "カギ括弧の\n"
+#~ "内容に<code>?</code>が付いたリンクが表示されるので、クリックするとその名前"
+#~ "でページを\n"
+#~ "作成します。(訳注:英数字以外を使う場合はパッチが必要な場合もあります)"
 
-msgid "label_upload_contents_optional"
-msgstr "ファイル・画像のアップロード (任意)"
+#~ msgid "help_wikiwords"
+#~ msgstr "WikiWordsでのリンクの仕組みもサポートされています。"
 
-msgid "help_wikiupload"
-msgstr "ファイル・画像をこのwikiページに添付します。"
+#~ msgid "label_note"
+#~ msgstr "バージョン説明(任意)"
 
-msgid "label_format"
-msgstr "フォーマット"
+#~ msgid "help_wikinote"
+#~ msgstr "この変更についての簡単な説明を書きます。"
 
-msgid "help_format"
-msgstr ""
-"どのフォーマットにするかわからない場合は、平文テキストを選んで普通に入力しま"
-"す。"
+#~ msgid "label_upload_contents_optional"
+#~ msgstr "ファイル・画像のアップロード (任意)"
 
-msgid "Save"
-msgstr "保存"
+#~ msgid "help_wikiupload"
+#~ msgstr "ファイル・画像をこのwikiページに添付します。"
 
-msgid "heading_edit_wiki_page"
-msgstr "${itemtype} \"${pagename}\" の編集"
+#~ msgid "label_format"
+#~ msgstr "フォーマット"
 
-msgid "description_edit_wiki_page"
-msgstr "Wiki Page は相互リンクしているページを作ることができます。"
+#~ msgid "help_format"
+#~ msgstr ""
+#~ "どのフォーマットにするかわからない場合は、平文テキストを選んで普通に入力し"
+#~ "ます。"
 
-msgid "legend_wiki_page_details"
-msgstr "Wiki Page 詳細"
+#~ msgid "Save"
+#~ msgstr "保存"
 
-msgid "label_pagename"
-msgstr "ページ名"
+#~ msgid "heading_edit_wiki_page"
+#~ msgstr "${itemtype} \"${pagename}\" の編集"
 
-msgid "Required"
-msgstr "必須入力"
+#~ msgid "description_edit_wiki_page"
+#~ msgstr "Wiki Page は相互リンクしているページを作ることができます。"
 
-msgid "label_required"
-msgstr "(必須)"
+#~ msgid "legend_wiki_page_details"
+#~ msgstr "Wiki Page 詳細"
 
-msgid "heading_wiki_recent_changes"
-msgstr "最近の更新"
+#~ msgid "label_pagename"
+#~ msgstr "ページ名"
 
-msgid "heading_wiki_search_wiki"
-msgstr "Wikiを検索"
+#~ msgid "Required"
+#~ msgstr "必須入力"
 
-msgid "Unsubscribe from this page"
-msgstr "このページの講読を解除する"
+#~ msgid "label_required"
+#~ msgstr "(必須)"
 
-msgid "Subscribe to this page"
-msgstr "このページを講読する"
+#~ msgid "heading_wiki_recent_changes"
+#~ msgstr "最近の更新"
 
-msgid "heading_wiki_user_options"
-msgstr "ユーザオプション"
+#~ msgid "heading_wiki_search_wiki"
+#~ msgstr "Wikiを検索"
+
+#~ msgid "Unsubscribe from this page"
+#~ msgstr "このページの講読を解除する"
+
+#~ msgid "Subscribe to this page"
+#~ msgstr "このページを講読する"
+
+#~ msgid "heading_wiki_user_options"
+#~ msgstr "ユーザオプション"
 
 #, fuzzy
-msgid "add a comment"
-msgstr "コメントの追加"
+#~ msgid "add a comment"
+#~ msgstr "コメントの追加"
 
-msgid "heading_wiki_filter_issues"
-msgstr "問題の絞り込み"
-
-#, fuzzy
-msgid "heading_wiki_issue_browser"
-msgstr "Issue tracker"
-
-msgid "heading_wiki_issue_tracker"
-msgstr "Issue tracker"
+#~ msgid "heading_wiki_filter_issues"
+#~ msgstr "問題の絞り込み"
 
 #, fuzzy
-msgid "property change"
-msgstr "最近の変更を表示"
+#~ msgid "heading_wiki_issue_browser"
+#~ msgstr "Issue tracker"
 
-msgid "backlinks_reparent_help"
-msgstr ""
-"このページをコンテンツの階層の中でどこに配置させるかを決めるために、親を設"
-"定\n"
-"することもできます。チェックボックスで選択するか、他の親ページ名を入力し、\n"
-"「Reparent」をクリックしてください。普通、親ページは一つで充分です"
+#~ msgid "heading_wiki_issue_tracker"
+#~ msgstr "Issue tracker"
 
 #, fuzzy
-msgid "backlinks_reparent_help2"
-msgstr ""
-"このページをコンテンツの階層の中でどこに配置させるかを決めるために、親を設"
-"定\n"
-"することもできます。チェックボックスで選択するか、他の親ページ名を入力し、\n"
-"「Reparent」をクリックしてください。普通、親ページは一つで充分です"
+#~ msgid "property change"
+#~ msgstr "最近の変更を表示"
+
+#~ msgid "backlinks_reparent_help"
+#~ msgstr ""
+#~ "このページをコンテンツの階層の中でどこに配置させるかを決めるために、親を設"
+#~ "定\n"
+#~ "することもできます。チェックボックスで選択するか、他の親ページ名を入力"
+#~ "し、\n"
+#~ "「Reparent」をクリックしてください。普通、親ページは一つで充分です"
 
 #, fuzzy
-msgid "View"
-msgstr "表示"
+#~ msgid "backlinks_reparent_help2"
+#~ msgstr ""
+#~ "このページをコンテンツの階層の中でどこに配置させるかを決めるために、親を設"
+#~ "定\n"
+#~ "することもできます。チェックボックスで選択するか、他の親ページ名を入力"
+#~ "し、\n"
+#~ "「Reparent」をクリックしてください。普通、親ページは一つで充分です"
 
 #, fuzzy
-msgid "Comment"
-msgstr "コメント"
+#~ msgid "View"
+#~ msgstr "表示"
 
 #, fuzzy
-msgid "A Comment"
-msgstr "コメント"
+#~ msgid "Comment"
+#~ msgstr "コメント"
 
 #, fuzzy
-msgid "Table of Contents"
-msgstr "目次"
+#~ msgid "A Comment"
+#~ msgstr "コメント"
 
 #, fuzzy
-msgid "A Wiki"
-msgstr "ZWikiページの新規作成"
+#~ msgid "Table of Contents"
+#~ msgstr "目次"
 
 #, fuzzy
-msgid "Subscriptions"
-msgstr "メール講読"
+#~ msgid "A Wiki"
+#~ msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-msgid "Change Wiki Page"
-msgstr "ZWikiページの新規作成"
+#~ msgid "Subscriptions"
+#~ msgstr "メール講読"
 
 #, fuzzy
-msgid "Edit"
-msgstr "編集"
+#~ msgid "Change Wiki Page"
+#~ msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-msgid "Add Wiki"
-msgstr "ZWikiページの新規作成"
+#~ msgid "Wiki User"
+#~ msgstr "Wiki 講読者"
 
 #, fuzzy
-msgid "Wiki User"
-msgstr "Wiki 講読者"
+#~ msgid "A Wiki Page"
+#~ msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-msgid "A Wiki Page"
-msgstr "ZWikiページの新規作成"
+#~ msgid "Wiki Page"
+#~ msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-msgid "Wiki Page"
-msgstr "ZWikiページの新規作成"
+#~ msgid "A Wiki Page Comment"
+#~ msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-msgid "A Wiki Page Comment"
-msgstr "ZWikiページの新規作成"
+#~ msgid "Wiki Page Comment"
+#~ msgstr "Wiki コンテンツ"
 
 #, fuzzy
-msgid "Wiki Page Comment"
-msgstr "Wiki コンテンツ"
+#~ msgid "View a Wiki Page"
+#~ msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-msgid "View a Wiki Page"
-msgstr "ZWikiページの新規作成"
+#~ msgid "View Wiki Page"
+#~ msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-msgid "View Wiki Page"
-msgstr "ZWikiページの新規作成"
+#~ msgid "Edit Wiki Page"
+#~ msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-msgid "Add Wiki Page"
-msgstr "ZWikiページの新規作成"
+#~ msgid "Delete Wiki Page"
+#~ msgstr "ZWikiページの新規作成"
 
 #, fuzzy
-msgid "Edit Wiki Page"
-msgstr "ZWikiページの新規作成"
+#~ msgid "Reparent Wiki Page"
+#~ msgstr "ZWikiページの新規作成"
 
-#, fuzzy
-msgid "Delete Wiki Page"
-msgstr "ZWikiページの新規作成"
+#~ msgid "page in parent wiki"
+#~ msgstr "親wikiページ中"
 
-#, fuzzy
-msgid "Reparent Wiki Page"
-msgstr "ZWikiページの新規作成"
+#~ msgid "File Uploads"
+#~ msgstr "アップロードされているファイル"
 
-msgid "You are not authorized to rename this ZWiki Page."
-msgstr "このページの名前を変更する権限がありません"
+#~ msgid "uploads_desc"
+#~ msgstr "このページはこのWikiにアップロードされたファイルの一覧です"
 
-msgid "page in parent wiki"
-msgstr "親wikiページ中"
+#~ msgid "save"
+#~ msgstr "保存"
 
-#, fuzzy
-msgid "plone"
-msgstr "更新記録"
+#~ msgid "view"
+#~ msgstr "表示"
 
-msgid "show all features"
-msgstr "全機能を表示"
+#~ msgid "no_files_uploaded"
+#~ msgstr "ファイルはアップロードされていません"
 
-msgid "full"
-msgstr "詳細"
+#~ msgid "box_wiki_navigation"
+#~ msgstr "Wiki ナビゲーション"
 
-msgid "show basic features"
-msgstr "基本的な機能を表示"
+#~ msgid "enter comments here and click add; or, click edit"
+#~ msgstr ""
+#~ "ここにコメントを入れ、「コメントの追加」をクリックするか、「編集」をクリッ"
+#~ "クしてください"
 
-msgid "simple"
-msgstr "シンプル"
+#~ msgid "Details & comments"
+#~ msgstr "詳細とコメント"
 
-msgid "show only essential features"
-msgstr "最低限の機能のみ表示"
+#~ msgid "hits"
+#~ msgstr "ヒット"
 
-msgid "minimal"
-msgstr "極小"
+#~ msgid ""
+#~ "no catalog or the catalog search gave an error, a brute-force search was "
+#~ "used"
+#~ msgstr "カタログがないかエラーのため、全数検索が使われました"
 
-msgid "subtopic"
-msgstr "追加"
+#~ msgid "Contents"
+#~ msgstr "目次"
 
-#, fuzzy
-msgid "for this page"
-msgstr "このwikiページを作成します"
+#~ msgid "Diffs for"
+#~ msgstr "Diffs for"
 
-msgid "title"
-msgstr "タイトル"
+#~ msgid "page rating"
+#~ msgstr "ページの評価"
 
-msgid "File Uploads"
-msgstr "アップロードされているファイル"
+#~ msgid "rating_score"
+#~ msgstr "評価点"
 
-msgid "uploads_desc"
-msgstr "このページはこのWikiにアップロードされたファイルの一覧です"
+#~ msgid "click to rate"
+#~ msgstr "クリックして評価"
 
-msgid "save"
-msgstr "保存"
+#~ msgid "voting as"
+#~ msgstr "投票："
 
-msgid "view"
-msgstr "表示"
+#~ msgid "Here are the pages which link to"
+#~ msgstr "このページのリンク先"
 
-msgid "no_files_uploaded"
-msgstr "ファイルはアップロードされていません"
+#~ msgid "box_canreparent"
+#~ msgstr ""
+#~ "このページをコンテンツの階層の中でどこに配置させるかを決めるために、\n"
+#~ "    <em>親</em>を設定することもできます。チェックボックスで選択するか\n"
+#~ "    他の親ページ名を入力し、「Reparent」をクリックしてください。普通、\n"
+#~ "    親ページは一つで充分です"
 
-msgid "box_wiki_navigation"
-msgstr "Wiki ナビゲーション"
-
-msgid "enter comments here and click add; or, click edit"
-msgstr ""
-"ここにコメントを入れ、「コメントの追加」をクリックするか、「編集」をクリック"
-"してください"
-
-msgid "Details & comments"
-msgstr "詳細とコメント"
-
-msgid "hits"
-msgstr "ヒット"
-
-msgid ""
-"no catalog or the catalog search gave an error, a brute-force search was used"
-msgstr "カタログがないかエラーのため、全数検索が使われました"
-
-msgid "Contents"
-msgstr "目次"
-
-msgid "Diffs for"
-msgstr "Diffs for"
-
-msgid "page rating"
-msgstr "ページの評価"
-
-msgid "rating_score"
-msgstr "評価点"
-
-msgid "click to rate"
-msgstr "クリックして評価"
-
-msgid "voting as"
-msgstr "投票："
-
-msgid "Here are the pages which link to"
-msgstr "このページのリンク先"
-
-msgid "box_canreparent"
-msgstr ""
-"このページをコンテンツの階層の中でどこに配置させるかを決めるために、\n"
-"    <em>親</em>を設定することもできます。チェックボックスで選択するか\n"
-"    他の親ページ名を入力し、「Reparent」をクリックしてください。普通、\n"
-"    親ページは一つで充分です"
-
-msgid "Other parent"
-msgstr "他の親"
+#~ msgid "Other parent"
+#~ msgstr "他の親"

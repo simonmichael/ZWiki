@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: zwiki-hu\n"
-"POT-Creation-Date: Sat Apr  1 14:13:10 2006\n"
+"POT-Creation-Date: Sat Sep  2 18:10:16 2006\n"
 "PO-Revision-Date: 2006-02-26 09:01+0000\n"
 "Last-Translator: József Jároli (kaixo) <en@innen.hu>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
@@ -16,15 +16,31 @@ msgstr ""
 "Domain: zwiki\n"
 "X-Generator: KBabel 1.3\n"
 
-#: i/Admin.py:62
+#: src/ZWiki/Admin.py:62
 msgid "You are not authorized to upgrade all pages."
 msgstr "Nincs jogosultsága az összes lap aktualizálásához."
 
-#: i/Admin.py:63
+#: src/ZWiki/Admin.py:63
 msgid "(folder -> Manage properties)"
 msgstr "(mappa -> Tulajnonságok beállítása)"
 
-#: i/Editing.py:323
+#: src/ZWiki/Diff.py:174
+#, fuzzy
+msgid "You are not authorized to reparent this ZWiki Page."
+msgstr "Nincs jogosultsága átnevezni ezt a ZWiki lapot."
+
+#: src/ZWiki/Diff.py:180 src/ZWiki/plugins/tracker/tracker.py:332
+msgid "You are not authorized to rename this ZWiki Page."
+msgstr "Nincs jogosultsága átnevezni ezt a ZWiki lapot."
+
+#: src/ZWiki/Editing.py:156 src/ZWiki/Editing.py:294 src/ZWiki/Views.py:332
+#: src/ZWiki/Views.py:435 src/ZWiki/plugins/tracker/tracker.py:321
+msgid ""
+"Sorry, this wiki doesn't allow anonymous edits. Please configure a username "
+"in options first."
+msgstr ""
+
+#: src/ZWiki/Editing.py:327
 msgid ""
 "You are not authorized to reparent or change subtopics links on this ZWiki "
 "Page."
@@ -32,177 +48,145 @@ msgstr ""
 "Nincs jogosultsága újraszármaztatni a lapot vagy megváltoztatni a "
 "fejezetekre mutató hivatkozásokat ezen a ZWiki lapon."
 
-#: i/Editing.py:345
+#: src/ZWiki/Editing.py:349
 msgid "You are not authorized to change this ZWiki Page's type."
 msgstr "Nincs jogosultsága megváltoztatni a ZWiki lap típusát."
 
-#: i/Editing.py:379 i/Editing.py:406
+#: src/ZWiki/Editing.py:383 src/ZWiki/Editing.py:410
+#: src/ZWiki/plugins/tracker/tracker.py:340
+#: src/ZWiki/plugins/tracker/tracker.py:347
+#: src/ZWiki/plugins/tracker/tracker.py:354
 msgid "You are not authorized to edit this ZWiki Page."
 msgstr "Nincs jogosultsága szerkeszteni ezt a ZWiki lapot."
 
-#: i/Editing.py:409
+#: src/ZWiki/Editing.py:413
 msgid "You are not authorized to delete this ZWiki Page."
 msgstr "Nincs jogosultsága törölni ezt a ZWiki lapot."
 
-#: i/Editing.py:559
+#: src/ZWiki/Editing.py:563
 msgid ""
 "This page was renamed to %s. You can delete this one if no longer needed.\n"
 msgstr ""
 "Ez a lap át lett nevezve. Új neve: %s. Letörölheti ezt a lapot, ha nincs rá "
 "egyébként már szükség.\n"
 
-#: i/Editing.py:655
+#: src/ZWiki/Editing.py:659
 msgid "You are not authorized to upload files here."
 msgstr "Nincs jogosultsága ide fájlokat feltölteni."
 
-#: i/Editing.py:659
+#: src/ZWiki/Editing.py:663
 msgid "You are not authorized to add a link on this ZWiki Page."
 msgstr "Nincs jogosultsága hivatkozások hozzáadásához ezen a ZWiki lapon."
 
-#: i/Editing.py:68 i/Editing.py:152 i/Editing.py:290 i/Views.py:606
-#: i/Views.py:652
-msgid ""
-"Sorry, this wiki doesn't allow anonymous edits. Please configure a username "
-"in options first."
+#: src/ZWiki/Editing.py:822
+msgid "There was a problem: %s"
 msgstr ""
 
-#: i/Editing.py:819
-msgid ""
-"There was a problem: %s. Please contact the site administrator for help."
-msgstr ""
-
-#: i/Editing.py:826
+#: src/ZWiki/Editing.py:829
 msgid "banned_links match"
 msgstr ""
 
-#: i/Editing.py:827
-msgid "your edit contained a banned link pattern"
+#: src/ZWiki/Editing.py:830
+msgid ""
+"your edit contained a banned link pattern. Please contact the site "
+"administrator for help."
 msgstr ""
 
-#: i/Editing.py:838
+#: src/ZWiki/Editing.py:841
 msgid "exceeded max_anonymous_links"
 msgstr ""
 
-#: i/Editing.py:839
-msgid "adding of external links by anonymous authors is restricted"
+#: src/ZWiki/Editing.py:842
+msgid ""
+"adding of external links by unidentified users is restricted. Please back up "
+"and remove some of the http urls you added, or contact the site "
+"administrator for help."
 msgstr ""
 
-#: i/Mail.py:490 i/skins/dtmlmessages.pt:59
+#: src/ZWiki/Editing.py:853
+msgid "exceeded max_identified_links"
+msgstr ""
+
+#: src/ZWiki/Editing.py:854
+msgid ""
+"adding of external links is restricted, even for identified users. Please "
+"back up and remove some of the http urls you added, or contact the site "
+"administrator for help."
+msgstr ""
+
+#: src/ZWiki/Mail.py:506 src/ZWiki/skins/dtmlmessages.pt:58
 msgid "anonymous"
 msgstr "névtelen"
 
-#: i/OutlineSupport.py:838 i/skins/zwiki_standard/wikipage-inline.pt:141
+#: src/ZWiki/OutlineSupport.py:843 src/ZWiki/skins/zwiki/links.pt:56
 msgid "which pages link to this one ?"
 msgstr "Mely lapokról mutat hivatkozás erre a lapra?"
 
-#: i/OutlineSupport.py:846
+#: src/ZWiki/OutlineSupport.py:851
 msgid "You are here"
 msgstr "Aktuális lap"
 
-#: i/Utils.py:465
+#: src/ZWiki/Utils.py:465
 msgid "years"
 msgstr "év"
 
-#: i/Utils.py:465
+#: src/ZWiki/Utils.py:465
 msgid "year"
 msgstr "év"
 
-#: i/Utils.py:467
+#: src/ZWiki/Utils.py:467
 msgid "month"
 msgstr "hónap"
 
-#: i/Utils.py:467
+#: src/ZWiki/Utils.py:467
 msgid "months"
 msgstr "hónap"
 
-#: i/Utils.py:469
+#: src/ZWiki/Utils.py:469
 msgid "weeks"
 msgstr "hét"
 
-#: i/Utils.py:469
+#: src/ZWiki/Utils.py:469
 msgid "week"
 msgstr "hét"
 
-#: i/Utils.py:471
+#: src/ZWiki/Utils.py:471
 msgid "day"
 msgstr "nap"
 
-#: i/Utils.py:471
+#: src/ZWiki/Utils.py:471
 msgid "days"
 msgstr "nap"
 
-#: i/Utils.py:473
+#: src/ZWiki/Utils.py:473
 msgid "hours"
 msgstr "óra"
 
-#: i/Utils.py:473
+#: src/ZWiki/Utils.py:473
 msgid "hour"
 msgstr "óra"
 
-#: i/Utils.py:475
+#: src/ZWiki/Utils.py:475
 msgid "minute"
 msgstr "perc"
 
-#: i/Utils.py:475
+#: src/ZWiki/Utils.py:475
 msgid "minutes"
 msgstr "perc"
 
-#: i/Utils.py:477
+#: src/ZWiki/Utils.py:477
 msgid "second"
 msgstr "másodperc"
 
-#: i/Utils.py:477
+#: src/ZWiki/Utils.py:477
 msgid "seconds"
 msgstr "másodperc"
 
-#: i/Views.py:706
-msgid "Edit conflict"
-msgstr "Ellentmondás feloldása"
-
-#: i/Views.py:726
-msgid "Someone else has saved this page while you were editing"
-msgstr "Más már rámentett az lapra, amíg Ön szerkesztette azt."
-
-#: i/Views.py:727
-msgid "To resolve the conflict, do this"
-msgstr "Az ellentmondás feloldásához tegye a következőket:"
-
-#: i/Views.py:728
-msgid "Click your browser's back button"
-msgstr "Nyomja meg a böngészője \"Vissza\" gombját."
-
-#: i/Views.py:729
-msgid "Copy your recent edits to the clipboard"
-msgstr "Másolja a legutóbbi változtatásokat a vágólapra."
-
-#: i/Views.py:730
-msgid "Click your browser's refresh button"
-msgstr "Nyomja meg böngészője \"Frissítés\" gombját"
-
-#: i/Views.py:731
-msgid "Paste in your edits again, being mindful of the latest changes"
-msgstr ""
-"Szúrja be a szerkesztett részeket újra, szem előtt tartva a legutóbbi "
-"változtatásokat."
-
-#: i/Views.py:732
-msgid "Click the Change button again"
-msgstr "Nyomja meg a \"Változtat\" gombot még egyszer."
-
-#: i/Views.py:733 i/skins/zwiki_standard/editform.pt:159
-msgid "or"
-msgstr "vagy"
-
-#: i/Views.py:734
-msgid "To discard your changes and start again, click OK"
-msgstr ""
-"A változások elvetéséhez és az újrakezdéshez nyomja meg az \"OK\" gombot."
-
-#: i/Views.py:743
+#: src/ZWiki/Views.py:346
 msgid "Page is locked"
 msgstr "Zárolt lap"
 
-#: i/Views.py:754
+#: src/ZWiki/Views.py:357
 msgid ""
 "\n"
 "            This page has a webDAV lock. Someone is probably editing it\n"
@@ -223,12 +207,55 @@ msgstr ""
 "            összehasonlításképp.\n"
 "            "
 
-#: i/Views.py:761
+#: src/ZWiki/Views.py:364
 msgid "To discard your changes and try again, click OK."
 msgstr ""
 "A változtatások elvetéséhez és az újrakezdéshez nyomja meg az \"OK\" gombot."
 
-#: i/Views.py:770
+#: src/ZWiki/Views.py:393
+msgid "Edit conflict"
+msgstr "Ellentmondás feloldása"
+
+#: src/ZWiki/Views.py:413
+msgid "Someone else has saved this page while you were editing"
+msgstr "Más már rámentett az lapra, amíg Ön szerkesztette azt."
+
+#: src/ZWiki/Views.py:414
+msgid "To resolve the conflict, do this"
+msgstr "Az ellentmondás feloldásához tegye a következőket:"
+
+#: src/ZWiki/Views.py:415
+msgid "Click your browser's back button"
+msgstr "Nyomja meg a böngészője \"Vissza\" gombját."
+
+#: src/ZWiki/Views.py:416
+msgid "Copy your recent edits to the clipboard"
+msgstr "Másolja a legutóbbi változtatásokat a vágólapra."
+
+#: src/ZWiki/Views.py:417
+msgid "Click your browser's refresh button"
+msgstr "Nyomja meg böngészője \"Frissítés\" gombját"
+
+#: src/ZWiki/Views.py:418
+msgid "Paste in your edits again, being mindful of the latest changes"
+msgstr ""
+"Szúrja be a szerkesztett részeket újra, szem előtt tartva a legutóbbi "
+"változtatásokat."
+
+#: src/ZWiki/Views.py:419
+msgid "Click the Change button again"
+msgstr "Nyomja meg a \"Változtat\" gombot még egyszer."
+
+#: src/ZWiki/Views.py:420 src/ZWiki/skins/zwiki/editform.pt:163
+msgid "or"
+msgstr "vagy"
+
+#: src/ZWiki/Views.py:421
+msgid "To discard your changes and start again, click OK"
+msgstr ""
+"A változások elvetéséhez és az újrakezdéshez nyomja meg az \"OK\" gombot."
+
+#: src/ZWiki/Views.py:490
 #, fuzzy
 msgid ""
 "\n"
@@ -327,32 +354,33 @@ msgstr ""
 "        p    előző szerkesztés\n"
 "        "
 
-#: i/Wikis.py:49
+#: src/ZWiki/Wikis.py:49
 msgid "Unknown wiki type"
 msgstr ""
 
-#: i/ZWikiPage.py:670
+#: src/ZWiki/ZWikiPage.py:675
 msgid "create this page"
 msgstr "Hozd létre ezt a lapot"
 
-#: i/ZWikiPage.py:793 i/ZWikiPage.py:809 i/ZWikiPage.py:812
+#: src/ZWiki/ZWikiPage.py:798 src/ZWiki/ZWikiPage.py:814
+#: src/ZWiki/ZWikiPage.py:817
 msgid "last edited %(interval)s ago"
 msgstr "szerkesztés óta eltelt: %(interval)s"
 
-#: i/ZWikiPage.py:804
+#: src/ZWiki/ZWikiPage.py:809
 #, fuzzy
 msgid "show last edit"
 msgstr "utolsó szerkesztés megjelenítése: %(lastlog)s"
 
-#: i/ZWikiPage.py:821 i/ZWikiPage.py:823
+#: src/ZWiki/ZWikiPage.py:826 src/ZWiki/ZWikiPage.py:828
 msgid "by %(editor)s"
 msgstr "<br />szerkesztette: %(editor)s"
 
-#: i/__init__.py:34
+#: src/ZWiki/__init__.py:34
 msgid "No need to add a Zwiki Outline Cache"
 msgstr ""
 
-#: i/__init__.py:35
+#: src/ZWiki/__init__.py:35
 msgid ""
 "Zwiki Outline Cache appears in the ZMI Add menu\n"
 "        for implementation reasons, but should not be added directly.\n"
@@ -360,273 +388,356 @@ msgid ""
 "        "
 msgstr ""
 
-#: i/pagetypes/common.py:240
+#: src/ZWiki/pagetypes/common.py:253
 msgid "comments"
 msgstr "Hozzászólások"
 
-#: i/pagetypes/moin.py:1990
+#: src/ZWiki/pagetypes/moin.py:1990
 msgid "Expected \"=\" to follow \"%(token)s\""
 msgstr "\"=\" jelnek kellene követnie ezt: \"%(token)s\""
 
-#: i/pagetypes/moin.py:1999
+#: src/ZWiki/pagetypes/moin.py:1999
 msgid "Expected a value for key \"%(token)s\""
 msgstr "Értéket kellene adni ennek a kulcsnak: \"%(token)s\""
 
-#: i/pagetypes/moin.py:302
+#: src/ZWiki/pagetypes/moin.py:302
 msgid "Create new drawing \"%(filename)s\""
 msgstr "Új rajz létrehozása: \"%(filename)s\""
 
-#: i/pagetypes/moin.py:304
+#: src/ZWiki/pagetypes/moin.py:304
 msgid "Upload new attachment \"%(filename)s\""
 msgstr "Új csatolmány feltöltése: \"%(filename)s\""
 
-#: i/pagetypes/moin.py:335 i/pagetypes/moin.py:345
+#: src/ZWiki/pagetypes/moin.py:335 src/ZWiki/pagetypes/moin.py:345
 msgid "Edit drawing %(filename)s"
 msgstr "A %(filename)s nevű rajz szerkesztése"
 
-#: i/pagetypes/moin.py:730
+#: src/ZWiki/pagetypes/moin.py:730
 msgid "Expected \"%(wanted)s\" after \"%(key)s\", got \"%(token)s\""
 msgstr ""
 "\"%(wanted)s\" után \"%(key)s\" kellene következzen ehelyett: \"%(token)s\""
 
-#: i/pagetypes/moin.py:736
+#: src/ZWiki/pagetypes/moin.py:736
 msgid "Expected an integer \"%(key)s\" before \"%(token)s\""
 msgstr "Egész \"%(key)s\" értéknek kellene lennie \"%(token)s\" előtt"
 
-#: i/pagetypes/moin.py:745 i/pagetypes/moin.py:754
+#: src/ZWiki/pagetypes/moin.py:745 src/ZWiki/pagetypes/moin.py:754
 msgid "Expected an integer \"%(arg)s\" after \"%(key)s\""
 msgstr "Egész \"%(arg)s\" értéknek kellene következnie \"%(key)s\" után"
 
-#: i/pagetypes/moin.py:774
+#: src/ZWiki/pagetypes/moin.py:774
 msgid "Expected a color value \"%(arg)s\" after \"%(key)s\""
 msgstr "Szín értéknek \"%(arg)s\" kellene következnie \"%(key)s\" után"
 
-#: i/pagetypes/rst.py:59
+#: src/ZWiki/pagetypes/rst.py:85
 msgid "reply"
 msgstr "Válasz"
 
-#: i/plugins/tracker/filterissues.pt:12 i/skins/dtmlmessages.pt:30
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:127
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:127
+msgid "full history"
+msgstr "Az összes változtatás listája"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:129
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:131
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:129
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:131
+msgid "<< previous edit"
+msgstr "<< előző változtatás"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:133
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:135
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:133
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:135
+msgid "next edit >>"
+msgstr "következő változtatás >>"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:137
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:137
+#, fuzzy
+msgid "Revert this change and all successive changes"
+msgstr "E változtatás és az összes ezt követő változtatás visszavonása"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:169
+msgid "show plone skin"
+msgstr ""
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:172
+#, fuzzy
+msgid "plone"
+msgstr ""
+"Az lap előzményeinek kilistázásakor látható kiegészítő megjegyzés (nem "
+"kötelező)"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:173
+msgid "show all features"
+msgstr "Az összes felhasználói lehetőség megjelenítése"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:179
+msgid "full"
+msgstr "teljes nézet"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:180
+msgid "show basic features"
+msgstr "Az alapvető felhasználói lehetőségek megjelenítése"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:186
+msgid "simple"
+msgstr "egyszerű nézet"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:187
+msgid "show only essential features"
+msgstr "Csak a legszükségesebb felhasználói lehetőségek megjelenítése"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:193
+msgid "minimal"
+msgstr "minimális nézet"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:507
+msgid "subtopic"
+msgstr "alfejezet létrehozása"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:512
+#, fuzzy
+msgid "for this page"
+msgstr "Hozd létre ezt a lapot"
+
+#. Default: "reparent"
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:520
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:525
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:530
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:535
+msgid "title"
+msgstr "cím"
+
+#: src/ZWiki/plugins/tracker/filterissues.pt:12
+#: src/ZWiki/skins/dtmlmessages.pt:30
 msgid "Filter issues"
 msgstr "Ügyek szűrése"
 
-#: i/plugins/tracker/issuebrowser.pt:12
+#: src/ZWiki/plugins/tracker/issuebrowser.pt:12
 #, fuzzy
 msgid "Issue browser"
 msgstr "Ügykezelő"
 
-#: i/plugins/tracker/issuetracker.pt:12
+#: src/ZWiki/plugins/tracker/issuetracker.pt:12
 #, fuzzy
 msgid "Issue tracker"
 msgstr "Ügykezelő"
 
-#: i/skins/dtmlmessages.pt:10 i/skins/dtmlmessages.pt:32
+#: src/ZWiki/plugins/tracker/tracker.py:361
+#, fuzzy
+msgid "You are not authorized to comment on this ZWiki Page."
+msgstr "Nincs jogosultsága szerkeszteni ezt a ZWiki lapot."
+
+#: src/ZWiki/skins/dtmlmessages.pt:10 src/ZWiki/skins/dtmlmessages.pt:32
 msgid "category"
 msgstr "kategória"
 
-#: i/skins/dtmlmessages.pt:11 i/skins/dtmlmessages.pt:33
+#: src/ZWiki/skins/dtmlmessages.pt:11 src/ZWiki/skins/dtmlmessages.pt:33
 msgid "severity"
 msgstr "fontosság"
 
-#: i/skins/dtmlmessages.pt:12 i/skins/dtmlmessages.pt:34
+#: src/ZWiki/skins/dtmlmessages.pt:12 src/ZWiki/skins/dtmlmessages.pt:34
 msgid "status"
 msgstr "állapot"
 
-#: i/skins/dtmlmessages.pt:13 i/skins/dtmlmessages.pt:35
+#: src/ZWiki/skins/dtmlmessages.pt:13 src/ZWiki/skins/dtmlmessages.pt:35
 msgid "age"
 msgstr "kor"
 
-#: i/skins/dtmlmessages.pt:14 i/skins/dtmlmessages.pt:36
+#: src/ZWiki/skins/dtmlmessages.pt:14 src/ZWiki/skins/dtmlmessages.pt:36
 msgid "modified"
 msgstr "módosítva"
 
-#: i/skins/dtmlmessages.pt:15
+#: src/ZWiki/skins/dtmlmessages.pt:15
 msgid "Add a new issue:"
 msgstr "Új Ügy hozzáadása:"
 
-#: i/skins/dtmlmessages.pt:16
+#: src/ZWiki/skins/dtmlmessages.pt:16
 msgid "Name:"
 msgstr "Név:"
 
-#: i/skins/dtmlmessages.pt:17
+#: src/ZWiki/skins/dtmlmessages.pt:17
 msgid "Category:"
 msgstr "Kategória:"
 
-#: i/skins/dtmlmessages.pt:18
+#: src/ZWiki/skins/dtmlmessages.pt:18
 msgid "Severity:"
 msgstr "Fontosság:"
 
-#: i/skins/dtmlmessages.pt:19
+#: src/ZWiki/skins/dtmlmessages.pt:19
 msgid "Status:"
 msgstr "Állapot:"
 
-#: i/skins/dtmlmessages.pt:2
+#: src/ZWiki/skins/dtmlmessages.pt:2
 msgid "Here are the wiki's issue pages."
 msgstr "A wiki ügykezelő lapjai."
 
-#: i/skins/dtmlmessages.pt:20
+#: src/ZWiki/skins/dtmlmessages.pt:20
 msgid "Details:"
 msgstr "Részletek:"
 
-#: i/skins/dtmlmessages.pt:21
+#: src/ZWiki/skins/dtmlmessages.pt:21
 msgid "add issue"
 msgstr "Ügy hozzáadása"
 
-#: i/skins/dtmlmessages.pt:22
+#: src/ZWiki/skins/dtmlmessages.pt:22
 msgid "More advanced"
 msgstr "Haladó"
 
-#: i/skins/dtmlmessages.pt:23
+#: src/ZWiki/skins/dtmlmessages.pt:23
 msgid "issue tracker"
 msgstr "Ügykezelő"
 
-#: i/skins/dtmlmessages.pt:24
+#: src/ZWiki/skins/dtmlmessages.pt:24
 msgid "search options"
 msgstr "keresési beállítások"
 
-#: i/skins/dtmlmessages.pt:25
+#: src/ZWiki/skins/dtmlmessages.pt:25
 msgid "Name contains any of:"
 msgstr "A névben megtalálható:"
 
-#: i/skins/dtmlmessages.pt:26
+#: src/ZWiki/skins/dtmlmessages.pt:26
 msgid "Page text contains any of:"
 msgstr "A lap szövegében megtalálható:"
 
-#: i/skins/dtmlmessages.pt:27
+#: src/ZWiki/skins/dtmlmessages.pt:27
 msgid "Categories:"
 msgstr "Kategóriák:"
 
-#: i/skins/dtmlmessages.pt:28
+#: src/ZWiki/skins/dtmlmessages.pt:28
 msgid "Severities:"
 msgstr "Fontosságok:"
 
-#: i/skins/dtmlmessages.pt:29
+#: src/ZWiki/skins/dtmlmessages.pt:29
 msgid "Statuses:"
 msgstr "Állapotok:"
 
-#: i/skins/dtmlmessages.pt:3
+#: src/ZWiki/skins/dtmlmessages.pt:3
 #, fuzzy
 msgid "Enter a search term, click the numbers to the right,"
 msgstr ""
 "Írja be a kereső-kifejezést, vagy kattintson egy jobboldali számra, vagy"
 
-#: i/skins/dtmlmessages.pt:37
+#: src/ZWiki/skins/dtmlmessages.pt:37
 msgid "Submitted by"
 msgstr "Beküldte"
 
-#: i/skins/dtmlmessages.pt:38
+#: src/ZWiki/skins/dtmlmessages.pt:38
 msgid "Name"
 msgstr "Név"
 
-#: i/skins/dtmlmessages.pt:39
+#: src/ZWiki/skins/dtmlmessages.pt:39
 msgid "Category"
 msgstr "Kategória"
 
-#: i/skins/dtmlmessages.pt:4
+#: src/ZWiki/skins/dtmlmessages.pt:4
 msgid "filter issues"
 msgstr "ügyek szűrése"
 
-#: i/skins/dtmlmessages.pt:40
+#: src/ZWiki/skins/dtmlmessages.pt:40
 msgid "Severity"
 msgstr "Fontosság"
 
-#: i/skins/dtmlmessages.pt:41
+#: src/ZWiki/skins/dtmlmessages.pt:41
 msgid "Status"
 msgstr "Állapot"
 
-#: i/skins/dtmlmessages.pt:42
+#: src/ZWiki/skins/dtmlmessages.pt:42
 #, fuzzy
 msgid "Optional subject"
 msgstr "Kiegészítő megjegyzés"
 
-#: i/skins/dtmlmessages.pt:43
+#: src/ZWiki/skins/dtmlmessages.pt:43
 #, fuzzy
 msgid "Optional comment"
 msgstr "Kiegészítő megjegyzés"
 
-#: i/skins/dtmlmessages.pt:44 i/skins/dtmlmessages.pt:45
-msgid "Add a ZWiki web"
-msgstr "ZWiki hálózat hozzáadása"
+#: src/ZWiki/skins/dtmlmessages.pt:44 src/ZWiki/skins/dtmlmessages.pt:45
+#, fuzzy
+msgid "Add ZWiki"
+msgstr "Zwiki Lap hozzáadása"
 
-#: i/skins/dtmlmessages.pt:46 i/skins/dtmlmessages.pt:85
-msgid "Id"
+#: src/ZWiki/skins/dtmlmessages.pt:46
+#, fuzzy
+msgid "Id:"
 msgstr "Azonosító"
 
-#: i/skins/dtmlmessages.pt:47 i/skins/dtmlmessages.pt:86
-msgid "Title"
+#: src/ZWiki/skins/dtmlmessages.pt:47
+#, fuzzy
+msgid "Title:"
 msgstr "Cím"
 
-#: i/skins/dtmlmessages.pt:48
-msgid "Type"
-msgstr "Típus"
+#: src/ZWiki/skins/dtmlmessages.pt:48
+msgid "Template:"
+msgstr ""
 
-#: i/skins/dtmlmessages.pt:49
-msgid "Create wiki"
-msgstr "Wiki létrehozása"
+#: src/ZWiki/skins/dtmlmessages.pt:49
+#, fuzzy
+msgid "Add wiki"
+msgstr "Zwiki Lap hozzáadása"
 
-#: i/skins/dtmlmessages.pt:5
+#: src/ZWiki/skins/dtmlmessages.pt:5
 msgid "browse open issues"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:50
-msgid "and enter"
-msgstr "és belépés"
-
-#: i/skins/dtmlmessages.pt:51
+#: src/ZWiki/skins/dtmlmessages.pt:50
 msgid "Pages changed in the last"
 msgstr "Legutóbb változtatott lapok listája az eltelt idő szerint:"
 
-#: i/skins/dtmlmessages.pt:52
+#: src/ZWiki/skins/dtmlmessages.pt:51
 msgid "Recently changed pages, with summaries"
 msgstr "Legutóbb változtatott lapok, összefoglalókkal"
 
-#: i/skins/dtmlmessages.pt:53
+#: src/ZWiki/skins/dtmlmessages.pt:52
 msgid "Show summaries ?"
 msgstr "Összefoglalók megjelenítése?"
 
-#: i/skins/dtmlmessages.pt:54
+#: src/ZWiki/skins/dtmlmessages.pt:53
 msgid "Refresh"
 msgstr "Frissít"
 
-#: i/skins/dtmlmessages.pt:55
+#: src/ZWiki/skins/dtmlmessages.pt:54
 msgid "Page"
 msgstr "Lap"
 
-#: i/skins/dtmlmessages.pt:56
+#: src/ZWiki/skins/dtmlmessages.pt:55
 msgid "Edited&nbsp;by"
 msgstr "Szerkesztette:"
 
-#: i/skins/dtmlmessages.pt:57
+#: src/ZWiki/skins/dtmlmessages.pt:56
 msgid "Time"
 msgstr "Idő"
 
-#: i/skins/dtmlmessages.pt:58
+#: src/ZWiki/skins/dtmlmessages.pt:57
 msgid "NEW"
 msgstr "ÚJ"
 
-#: i/skins/dtmlmessages.pt:6
-msgid "search issues"
-msgstr "Keresés az ügyek között"
-
-#: i/skins/dtmlmessages.pt:60
+#: src/ZWiki/skins/dtmlmessages.pt:59
 msgid "Pages marked (NEW) have been created within the last week"
 msgstr "A ÚJ-ként jelölt lapokat egy héten belül hozták létre"
 
-#: i/skins/dtmlmessages.pt:61
+#: src/ZWiki/skins/dtmlmessages.pt:6
+msgid "search issues"
+msgstr "Keresés az ügyek között"
+
+#: src/ZWiki/skins/dtmlmessages.pt:60
 msgid "Enter a word or phrase and hit enter to search the entire wiki."
 msgstr ""
 "Írjon be egy szót vagy kifejezést, majd nyomja meg az ENTER gombot az egész "
 "wikiben való kereséshez."
 
-#: i/skins/dtmlmessages.pt:62
+#: src/ZWiki/skins/dtmlmessages.pt:61
 msgid "This is the same as using the search field at top right."
 msgstr ""
 "Ez ugyanaz, mintha a jobb felső sarokban található keresőmezőt használná."
 
-#: i/skins/dtmlmessages.pt:63
+#: src/ZWiki/skins/dtmlmessages.pt:62
 msgid "Tips: A single word works best for matching page names."
 msgstr "Javaslat: Lapcímek keresésekor a legjobb, ha csak egy szót használ."
 
-#: i/skins/dtmlmessages.pt:64
+#: src/ZWiki/skins/dtmlmessages.pt:63
 msgid ""
 "Case-insensitivity and wildcards may be supported depending on your catalog "
 "configuration."
@@ -634,219 +745,211 @@ msgstr ""
 "Kisbetű-nagybetű különbség és speciális helyettesítő karakterek is "
 "számíthatnak a Zope katalógusának beállításaitól függően."
 
-#: i/skins/dtmlmessages.pt:65
+#: src/ZWiki/skins/dtmlmessages.pt:64
 msgid "Leave it blank to list all pages."
 msgstr "Hagyja üresen, ha az összes lapot szeretné kilistázni."
 
-#: i/skins/dtmlmessages.pt:66 i/skins/dtmlmessages.pt:67
+#: src/ZWiki/skins/dtmlmessages.pt:65 src/ZWiki/skins/dtmlmessages.pt:66
 msgid "Search"
 msgstr "Keres"
 
-#: i/skins/dtmlmessages.pt:68
+#: src/ZWiki/skins/dtmlmessages.pt:67
 msgid "Page names matching"
 msgstr "Az alábbi lapok neve tartalmazza a keresett kifejezést:"
 
-#: i/skins/dtmlmessages.pt:69
+#: src/ZWiki/skins/dtmlmessages.pt:68
 msgid "Text matching"
 msgstr "Az alábbi lapok tartalmazzák a keresett kifejezést:"
 
-#: i/skins/dtmlmessages.pt:7
-msgid "recent"
-msgstr "friss"
-
-#: i/skins/dtmlmessages.pt:70
+#: src/ZWiki/skins/dtmlmessages.pt:69
 msgid "Thorough (non-catalog) search for text matching"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:71
+#: src/ZWiki/skins/dtmlmessages.pt:7
+msgid "recent"
+msgstr "friss"
+
+#: src/ZWiki/skins/dtmlmessages.pt:70
 msgid "Set your preferences for this wiki:"
 msgstr "A Wiki felhasználói beállításai:"
 
-#: i/skins/dtmlmessages.pt:72
+#: src/ZWiki/skins/dtmlmessages.pt:71
 msgid "User name:"
 msgstr "Felhasználói név:"
 
-#: i/skins/dtmlmessages.pt:73
+#: src/ZWiki/skins/dtmlmessages.pt:72
 msgid "(identifies your edits)"
 msgstr "(azonosítja az Ön szerkesztéseit)"
 
-#: i/skins/dtmlmessages.pt:74
+#: src/ZWiki/skins/dtmlmessages.pt:73
 msgid "Email address:"
 msgstr "E-mail cím:"
 
-#: i/skins/dtmlmessages.pt:75
+#: src/ZWiki/skins/dtmlmessages.pt:74
 msgid "(allows mail subscription)"
 msgstr "(lehetővé teszi az előfizetést e-mail címre)"
 
-#: i/skins/dtmlmessages.pt:76
+#: src/ZWiki/skins/dtmlmessages.pt:75
 msgid "Your time zone:"
 msgstr "Az Ön időzónája:"
 
-#: i/skins/dtmlmessages.pt:77
+#: src/ZWiki/skins/dtmlmessages.pt:76
 msgid "(localizes most times)"
 msgstr "(a legtöbb időt átváltja helyire)"
 
-#: i/skins/dtmlmessages.pt:78
+#: src/ZWiki/skins/dtmlmessages.pt:77
 msgid "Edit form height:"
 msgstr "Szerkesztőmező magassága:"
 
-#: i/skins/dtmlmessages.pt:79
+#: src/ZWiki/skins/dtmlmessages.pt:78
 msgid "(adjusts form size)"
 msgstr "(beállítja a szerkesztőmező méretét)"
 
-#: i/skins/dtmlmessages.pt:8
-msgid "all"
-msgstr "minden"
-
-#: i/skins/dtmlmessages.pt:80
+#: src/ZWiki/skins/dtmlmessages.pt:79
 msgid "Save options"
 msgstr "Beállítások mentése"
 
-#: i/skins/dtmlmessages.pt:81
+#: src/ZWiki/skins/dtmlmessages.pt:8
+msgid "all"
+msgstr "minden"
+
+#: src/ZWiki/skins/dtmlmessages.pt:80
 msgid "Forget options"
 msgstr "Beállítások elvetése"
 
-#: i/skins/dtmlmessages.pt:82 i/skins/dtmlmessages.pt:83
+#: src/ZWiki/skins/dtmlmessages.pt:81 src/ZWiki/skins/dtmlmessages.pt:82
 msgid "Add ZWiki Page"
 msgstr "Zwiki Lap hozzáadása"
 
-#: i/skins/dtmlmessages.pt:84
-msgid ""
-"You may create a new ZWiki Page object using the form below. You may also "
-"choose to upload an existing html file from your local computer by clicking "
-"the <i>Browse</i> button."
-msgstr ""
-"Létrehozhat egy ZWiki Lap elemet az alábbi szerkesztőmező segítségével, vagy "
-"akár feltölthet egy html fájlt a saját gépéről a <i>Tallózás</i> gomb "
-"megnyomásával."
+#: src/ZWiki/skins/dtmlmessages.pt:83
+#, fuzzy
+msgid "Page&nbsp;name:"
+msgstr "Lap neve"
 
-#: i/skins/dtmlmessages.pt:87
-msgid "File"
-msgstr "Fájl"
+#: src/ZWiki/skins/dtmlmessages.pt:84
+#, fuzzy
+msgid "Add wiki page"
+msgstr "Zwiki Lap hozzáadása"
 
-#: i/skins/dtmlmessages.pt:88
-msgid "Add"
-msgstr "Hozzáad"
-
-#: i/skins/dtmlmessages.pt:89
-msgid "Add and Edit"
-msgstr "Hozzáad és szerkeszt"
-
-#: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:31
-msgid "#"
-msgstr ""
-
-#: i/skins/dtmlmessages.pt:90
+#: src/ZWiki/skins/dtmlmessages.pt:85
 #, fuzzy
 msgid "Topic"
 msgstr "alfejezet létrehozása"
 
-#: i/skins/dtmlmessages.pt:91
+#: src/ZWiki/skins/dtmlmessages.pt:86
 msgid "Last updated"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:92
+#: src/ZWiki/skins/dtmlmessages.pt:87
 #, fuzzy
 msgid "Comments"
 msgstr "Hozzászólások"
 
-#: i/skins/dtmlmessages.pt:93
+#: src/ZWiki/skins/dtmlmessages.pt:88
 #, fuzzy
 msgid "Views"
 msgstr "Megtekint"
 
-#: i/skins/dtmlmessages.pt:94
+#: src/ZWiki/skins/dtmlmessages.pt:89
 #, fuzzy
 msgid "Created"
 msgstr "Létrehoz"
 
-#: i/skins/dtmlmessages.pt:95 i/skins/dtmlmessages.pt:97
+#: src/ZWiki/skins/dtmlmessages.pt:9 src/ZWiki/skins/dtmlmessages.pt:31
+msgid "#"
+msgstr ""
+
+#: src/ZWiki/skins/dtmlmessages.pt:90 src/ZWiki/skins/dtmlmessages.pt:92
 msgid "by"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:96
+#: src/ZWiki/skins/dtmlmessages.pt:91
 msgid "<dtml-var lasteditinterval> ago</dtml-var>"
 msgstr ""
 
-#: i/skins/dtmlmessages.pt:98
+#: src/ZWiki/skins/dtmlmessages.pt:93
 msgid "on"
 msgstr ""
 
-#: i/skins/zwiki_standard/backlinks.pt:108
+#: src/ZWiki/skins/zwiki/backlinks.pt:108
 #, fuzzy
 msgid "Subtopics"
 msgstr "alfejezet létrehozása"
 
-#: i/skins/zwiki_standard/backlinks.pt:111
+#: src/ZWiki/skins/zwiki/backlinks.pt:111
 msgid "This page has no subtopics."
 msgstr ""
 
-#: i/skins/zwiki_standard/backlinks.pt:114
+#: src/ZWiki/skins/zwiki/backlinks.pt:114
 #, fuzzy
 msgid "Here are it's subtopics."
 msgstr "A wiki ügykezelő lapjai."
 
-#: i/skins/zwiki_standard/backlinks.pt:117
+#: src/ZWiki/skins/zwiki/backlinks.pt:117
 msgid "You can reorder them by clicking the ^ buttons."
 msgstr ""
 
-#: i/skins/zwiki_standard/backlinks.pt:20
-#: i/skins/zwiki_standard/backlinks.pt:55
+#: src/ZWiki/skins/zwiki/backlinks.pt:20
 #, fuzzy
-msgid "Backlinks"
-msgstr "idemutató"
+msgid "Related pages"
+msgstr "Hozd létre ezt a lapot"
 
-#: i/skins/zwiki_standard/backlinks.pt:26
+#: src/ZWiki/skins/zwiki/backlinks.pt:26
 #, fuzzy
 msgid "Parents"
 msgstr "szülő-lap,"
 
-#: i/skins/zwiki_standard/backlinks.pt:31
+#: src/ZWiki/skins/zwiki/backlinks.pt:31
 msgid "is a top-level topic."
 msgstr "a hierarchia legfelső szintjén található."
 
-#: i/skins/zwiki_standard/backlinks.pt:32
+#: src/ZWiki/skins/zwiki/backlinks.pt:32
 msgid "is a subtopic of:"
 msgstr "alfejezete a következő lapnak:"
 
-#: i/skins/zwiki_standard/backlinks.pt:56
+#: src/ZWiki/skins/zwiki/backlinks.pt:55
+#, fuzzy
+msgid "Backlinks"
+msgstr "idemutató"
+
+#: src/ZWiki/skins/zwiki/backlinks.pt:56
 msgid "Here are the pages which link to it:"
 msgstr "Idemutató lapok:"
 
-#: i/skins/zwiki_standard/backlinks.pt:57
+#: src/ZWiki/skins/zwiki/backlinks.pt:57
 #, fuzzy
 msgid "No other pages link to this one."
 msgstr "Mely lapokról mutat hivatkozás erre a lapra?"
 
-#: i/skins/zwiki_standard/backlinks.pt:82
+#: src/ZWiki/skins/zwiki/backlinks.pt:82
 msgid ""
 "You can set this page's parent(s) to place it within the overall page "
 "hierarchy."
 msgstr ""
 
-#: i/skins/zwiki_standard/backlinks.pt:85
+#: src/ZWiki/skins/zwiki/backlinks.pt:85
 msgid ""
 "Check one or more checkboxes or enter a page name here, and click the button."
 msgstr ""
 
-#: i/skins/zwiki_standard/backlinks.pt:88
+#: src/ZWiki/skins/zwiki/backlinks.pt:88
 msgid "Enter a page name here and click the button."
 msgstr ""
 
-#: i/skins/zwiki_standard/backlinks.pt:91
+#: src/ZWiki/skins/zwiki/backlinks.pt:91
 msgid ""
 "You can type just the first few letters, case and punctuation are ignored."
 msgstr ""
 
-#: i/skins/zwiki_standard/backlinks.pt:98
+#: src/ZWiki/skins/zwiki/backlinks.pt:98
 msgid "Reparent"
 msgstr "Újraszármaztat"
 
-#: i/skins/zwiki_standard/badtemplate.pt:12
+#: src/ZWiki/skins/zwiki/badtemplate.pt:12
 msgid "Bad template"
 msgstr ""
 
-#: i/skins/zwiki_standard/badtemplate.pt:13
+#: src/ZWiki/skins/zwiki/badtemplate.pt:13
 #, fuzzy
 msgid ""
 "There was a problem locating one of this wiki's skin templates. There may be "
@@ -858,187 +961,413 @@ msgstr ""
 "létezik egy elem, melynek azonosítója egyezik egy sablonéval, amely nem Page "
 "Template vagy DTML Method elem, vagy hiányzik a kérdéses sablon."
 
-#: i/skins/zwiki_standard/contentspage.pt:12
+#: src/ZWiki/skins/zwiki/commentform.pt:21
+msgid "subject"
+msgstr "Hozzászólás tárgya"
+
+#: src/ZWiki/skins/zwiki/commentform.pt:22
+msgid "a subject helps clarify threads and RecentChanges"
+msgstr ""
+"A tárgy megadása segíti a hozzászólások és a LegutóbbiVáltozások "
+"nyomonkövetését."
+
+#: src/ZWiki/skins/zwiki/commentform.pt:29
+msgid "replying"
+msgstr "válaszadás"
+
+#: src/ZWiki/skins/zwiki/commentform.pt:36
+msgid "to comment (and cc any subscribers) enter text here and click add"
+msgstr ""
+"Ha hozzá szeretne szólni az oldal témájához, töltse ki ezt a mezőt, majd "
+"nyomja meg a \"Hozzászólás beküldése\" gombot. (A hozzászólásról értesítést "
+"kap levélben az összes előfizető.)"
+
+#: src/ZWiki/skins/zwiki/commentform.pt:56
+msgid "${nb} subscribers"
+msgstr "${nb} előfizető"
+
+#: src/ZWiki/skins/zwiki/commentform.pt:58
+msgid "1 subscriber"
+msgstr "egy előfizető"
+
+#. Default: "add a comment"
+#: src/ZWiki/skins/zwiki/commentform.pt:64
+msgid "add-comment"
+msgstr "Hozzászólás beküldése"
+
+#: src/ZWiki/skins/zwiki/contentspage.pt:12
 msgid "Wiki contents"
 msgstr "A wiki tartalma"
 
-#: i/skins/zwiki_standard/contentspage.pt:16
+#: src/ZWiki/skins/zwiki/contentspage.pt:16
 msgid "Singletons"
 msgstr "Árva lapok"
 
-#: i/skins/zwiki_standard/denied.pt:12
+#: src/ZWiki/skins/zwiki/denied.pt:12
 msgid "Not permitted"
 msgstr ""
 
-#: i/skins/zwiki_standard/diffform.pt:13
+#: src/ZWiki/skins/zwiki/diffform.pt:24
 #, fuzzy
 msgid "Edit history"
 msgstr "Az összes változtatás listája"
 
-#. Default: "Log note :"
-#: i/skins/zwiki_standard/diffform.pt:21
-msgid "log_note"
-msgstr ""
-"Az lap előzményeinek kilistázásakor látható kiegészítő megjegyzés (nem "
-"kötelező)"
-
-#: i/skins/zwiki_standard/diffform.pt:25
-msgid "full history"
-msgstr "Az összes változtatás listája"
-
-#: i/skins/zwiki_standard/diffform.pt:27 i/skins/zwiki_standard/diffform.pt:29
-msgid "<< previous edit"
-msgstr "<< előző változtatás"
-
-#: i/skins/zwiki_standard/diffform.pt:31 i/skins/zwiki_standard/diffform.pt:33
-msgid "next edit >>"
-msgstr "következő változtatás >>"
-
-#: i/skins/zwiki_standard/diffform.pt:35
+#: src/ZWiki/skins/zwiki/diffform.pt:32
 #, fuzzy
-msgid "Revert this and later changes"
+msgid "Edit:"
+msgstr "szerkeszt"
+
+#. Default: "<<"
+#: src/ZWiki/skins/zwiki/diffform.pt:34 src/ZWiki/skins/zwiki/diffform.pt:38
+msgid " << "
+msgstr ""
+
+#. Default: ">>"
+#: src/ZWiki/skins/zwiki/diffform.pt:52 src/ZWiki/skins/zwiki/diffform.pt:56
+msgid " >> "
+msgstr ""
+
+#: src/ZWiki/skins/zwiki/diffform.pt:61
+#, fuzzy
+msgid "Manage"
+msgstr "Változtat"
+
+#: src/ZWiki/skins/zwiki/diffform.pt:65
+#, fuzzy
+msgid "Revert this and later edits"
 msgstr "E változtatás és az összes ezt követő változtatás visszavonása"
 
-#: i/skins/zwiki_standard/diffform.pt:38
+#: src/ZWiki/skins/zwiki/diffform.pt:74
 msgid "Return to page"
 msgstr "Visszatérés a következő lapra:"
 
-#: i/skins/zwiki_standard/editform.pt:117
+#: src/ZWiki/skins/zwiki/diffform.pt:85
+#, fuzzy
+msgid "Time:"
+msgstr "Idő"
+
+#: src/ZWiki/skins/zwiki/diffform.pt:90
+#, fuzzy
+msgid "Note:"
+msgstr "Név:"
+
+#: src/ZWiki/skins/zwiki/editform.pt:121
 msgid "toggle source/WYSIWYG mode"
 msgstr "váltás a forráskód megjelenítése és a vizuális szerkesztő-nézet között"
 
-#: i/skins/zwiki_standard/editform.pt:128
+#: src/ZWiki/skins/zwiki/editform.pt:132
 msgid "Optional change note"
 msgstr "Kiegészítő megjegyzés a változtatásokhoz"
 
-#: i/skins/zwiki_standard/editform.pt:129
+#: src/ZWiki/skins/zwiki/editform.pt:133
 msgid "a note makes RecentChanges more useful"
 msgstr ""
 "A megjegyzés a LegutóbbiVáltozások című átnézeti oldalt teszi használhatóbbá."
 
-#: i/skins/zwiki_standard/editform.pt:142
+#: src/ZWiki/skins/zwiki/editform.pt:146
 msgid "Upload a file or image"
 msgstr "Fájl vagy kép feltöltése"
 
-#: i/skins/zwiki_standard/editform.pt:143
+#: src/ZWiki/skins/zwiki/editform.pt:147
 msgid "upload a file and link it on this page ?"
 msgstr "Fájl feltöltése és meghivatkozása erről a lapról?"
 
-#: i/skins/zwiki_standard/editform.pt:153
+#: src/ZWiki/skins/zwiki/editform.pt:157
 msgid "For editing help, see"
 msgstr "Itt talál segítséget a szerkesztéshez:"
 
-#: i/skins/zwiki_standard/editform.pt:155
+#: src/ZWiki/skins/zwiki/editform.pt:159
 msgid "HelpPage"
 msgstr "SúgóLap"
 
-#: i/skins/zwiki_standard/editform.pt:162
+#: src/ZWiki/skins/zwiki/editform.pt:166
 msgid "TextFormattingRules"
 msgstr "SzövegFormázásiSzabályok"
 
-#: i/skins/zwiki_standard/editform.pt:166
+#: src/ZWiki/skins/zwiki/editform.pt:170
 msgid "${DYNAMIC_CONTENT}"
 msgstr ""
 
-#: i/skins/zwiki_standard/editform.pt:174
+#: src/ZWiki/skins/zwiki/editform.pt:178
 msgid "preview this edit"
 msgstr "szerkesztés előnézete"
 
-#: i/skins/zwiki_standard/editform.pt:174
+#: src/ZWiki/skins/zwiki/editform.pt:178
 msgid "Preview"
 msgstr "Előnézet"
 
-#: i/skins/zwiki_standard/editform.pt:179
+#: src/ZWiki/skins/zwiki/editform.pt:183
 msgid "Cancel"
 msgstr "Elvet"
 
-#: i/skins/zwiki_standard/editform.pt:179
+#: src/ZWiki/skins/zwiki/editform.pt:183
 msgid "cancel this edit and return to the page"
 msgstr "A szerkesztés elvetése, visszatérés a laphoz."
 
-#: i/skins/zwiki_standard/editform.pt:187
+#: src/ZWiki/skins/zwiki/editform.pt:191
 msgid "Create"
 msgstr "Létrehoz"
 
-#: i/skins/zwiki_standard/editform.pt:188
+#: src/ZWiki/skins/zwiki/editform.pt:192
 msgid "create this wiki page"
 msgstr "wiki lap létrehozása"
 
 #. Default: "PREVIEW"
-#: i/skins/zwiki_standard/editform.pt:199
-#: i/skins/zwiki_standard/editform.pt:200
-#: i/skins/zwiki_standard/editform.pt:201
-#: i/skins/zwiki_standard/editform.pt:202
-#: i/skins/zwiki_standard/editform.pt:203
-#: i/skins/zwiki_standard/editform.pt:212
-#: i/skins/zwiki_standard/editform.pt:213
-#: i/skins/zwiki_standard/editform.pt:214
-#: i/skins/zwiki_standard/editform.pt:215
-#: i/skins/zwiki_standard/editform.pt:216
+#: src/ZWiki/skins/zwiki/editform.pt:203 src/ZWiki/skins/zwiki/editform.pt:204
+#: src/ZWiki/skins/zwiki/editform.pt:205 src/ZWiki/skins/zwiki/editform.pt:206
+#: src/ZWiki/skins/zwiki/editform.pt:207 src/ZWiki/skins/zwiki/editform.pt:216
+#: src/ZWiki/skins/zwiki/editform.pt:217 src/ZWiki/skins/zwiki/editform.pt:218
+#: src/ZWiki/skins/zwiki/editform.pt:219 src/ZWiki/skins/zwiki/editform.pt:220
 #, fuzzy
 msgid "label_preview"
 msgstr "(kötelező)"
 
-#: i/skins/zwiki_standard/editform.pt:56
+#: src/ZWiki/skins/zwiki/editform.pt:60
 msgid "Page name"
 msgstr "Lap neve"
 
-#: i/skins/zwiki_standard/editform.pt:57
+#: src/ZWiki/skins/zwiki/editform.pt:61
 msgid "the name of this wiki page (changing this may be slow!)"
 msgstr "a wiki lap neve (A változtatás eltarthat egy ideig!)"
 
-#: i/skins/zwiki_standard/editform.pt:67
+#: src/ZWiki/skins/zwiki/editform.pt:71
 msgid "type"
 msgstr "típus"
 
-#: i/skins/zwiki_standard/editform.pt:68
+#: src/ZWiki/skins/zwiki/editform.pt:72
 msgid "select the formatting and rendering style for this page"
 msgstr "A lap formázási és megjelenítési stílusának kiválasztása"
 
-#: i/skins/zwiki_standard/recentchanges.pt:12
+#: src/ZWiki/skins/zwiki/links.pt:102
+msgid "(external edit)"
+msgstr "(külső szerkesztés)"
+
+#: src/ZWiki/skins/zwiki/links.pt:12
+msgid "home"
+msgstr "nyitólap"
+
+#: src/ZWiki/skins/zwiki/links.pt:13
+msgid "show wiki recent changes"
+msgstr "A wiki legutóbbi változtatásainak megjelenítése"
+
+#: src/ZWiki/skins/zwiki/links.pt:17
+msgid "changes"
+msgstr "változások"
+
+#: src/ZWiki/skins/zwiki/links.pt:18
+msgid "show discussion page"
+msgstr "Ugrás a hozzászólás-lapra (fórum)"
+
+#: src/ZWiki/skins/zwiki/links.pt:22
+msgid "discussion"
+msgstr "hozzászólások"
+
+#: src/ZWiki/skins/zwiki/links.pt:23
+msgid "show issue tracker"
+msgstr "Ugrás az Ügykezelőre"
+
+#: src/ZWiki/skins/zwiki/links.pt:27
+msgid "issues"
+msgstr "ügykezelő"
+
+#: src/ZWiki/skins/zwiki/links.pt:28
+msgid "show wiki contents"
+msgstr "Ugrás a wiki tartalomjegyzékére"
+
+#: src/ZWiki/skins/zwiki/links.pt:32
+msgid "contents"
+msgstr "tartalomjegyzék"
+
+#: src/ZWiki/skins/zwiki/links.pt:33
+msgid "show wiki index"
+msgstr "Ugrás a wiki névmutatójára"
+
+#: src/ZWiki/skins/zwiki/links.pt:37
+msgid "index"
+msgstr "névmutató"
+
+#: src/ZWiki/skins/zwiki/links.pt:38
+msgid "show upload page"
+msgstr "Ugrás a feltöltési lapra"
+
+#: src/ZWiki/skins/zwiki/links.pt:42
+msgid "uploads"
+msgstr "feltöltések"
+
+#: src/ZWiki/skins/zwiki/links.pt:43
+msgid "show help page"
+msgstr "Ugrás a súgólapra"
+
+#: src/ZWiki/skins/zwiki/links.pt:48
+msgid "help"
+msgstr "segítség"
+
+#: src/ZWiki/skins/zwiki/links.pt:49
+msgid "show wiki options"
+msgstr "Wiki felhasználói beállításainak megjelenítése"
+
+#: src/ZWiki/skins/zwiki/links.pt:53
+msgid "options"
+msgstr "beállítások"
+
+#: src/ZWiki/skins/zwiki/links.pt:62
+msgid "backlinks"
+msgstr "idemutató"
+
+#: src/ZWiki/skins/zwiki/links.pt:63
+msgid "configure email subscription to this page or site"
+msgstr "E-mail címmel történő előfizetés erre a lapra, vagy az egész wikire."
+
+#: src/ZWiki/skins/zwiki/links.pt:73
+msgid "subscribe"
+msgstr "előfizet"
+
+#: src/ZWiki/skins/zwiki/links.pt:74
+msgid "show this page's change history"
+msgstr "változtatások történetének megjelenítése"
+
+#: src/ZWiki/skins/zwiki/links.pt:8
+msgid "show front page"
+msgstr "Ugrás a nyitólapra"
+
+#: src/ZWiki/skins/zwiki/links.pt:80
+msgid "diff"
+msgstr "összevet"
+
+#: src/ZWiki/skins/zwiki/links.pt:89
+msgid "edit"
+msgstr "szerkeszt"
+
+#: src/ZWiki/skins/zwiki/links.pt:90
+msgid "edit using external editor"
+msgstr "szerkesztés külső szerkesztővel"
+
+#: src/ZWiki/skins/zwiki/pageheader.pt:22
+msgid "go to home page"
+msgstr "vissza a nyitólapra"
+
+#: src/ZWiki/skins/zwiki/pageheader.pt:53
+msgid "search all pages"
+msgstr "Keresés az összes lapon"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:25
+msgid "new"
+msgstr "új"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:26
+msgid "parent,"
+msgstr "szülő-lap,"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:29
+msgid "name,"
+msgstr "név,"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:32
+msgid "replacement,"
+msgstr "lapok kicserélése,"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:35
+#, fuzzy
+msgid "page"
+msgstr "kor"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:40
+msgid "enter a page name and click buttons to the right (mouse over for help)"
+msgstr ""
+"írja be a lap nevét, majd kattintson a jobboldali gombokra (menjen föléjük "
+"az egérrel segítségért)"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:45
+#, fuzzy
+msgid "reparent"
+msgstr "Újraszármaztat"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:45
+#, fuzzy
+msgid "make this page a subtopic of the page you have entered"
+msgstr "Újraszármaztatja az lapot az Ön által megadott szülő-laphoz."
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:50
+msgid "rename this page to the name you have entered, updating all links"
+msgstr ""
+"Megváltoztatja a lap nevét az ide beírt névre, a lapra mutató össze link "
+"aktualizálásával."
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:50
+msgid "rename"
+msgstr "átnevez"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:55
+msgid "delete!"
+msgstr "töröl!"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:55
+#, fuzzy
+msgid ""
+"delete this page, and redirect links to the page you have entered, if any"
+msgstr "Újraszármaztatja az lapot az Ön által megadott szülő-laphoz."
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:60
+#, fuzzy
+msgid "create a page with the name you have entered, as a subtopic of this one"
+msgstr ""
+"Megváltoztatja a lap nevét az ide beírt névre, a lapra mutató össze link "
+"aktualizálásával."
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:60
+msgid "create"
+msgstr "létrehoz"
+
+#: src/ZWiki/skins/zwiki/recentchanges.pt:12
 #, fuzzy
 msgid "Recent changes"
 msgstr "A wiki legutóbbi változtatásainak megjelenítése"
 
-#: i/skins/zwiki_standard/searchwiki.pt:12
+#: src/ZWiki/skins/zwiki/searchwiki.pt:12
 #, fuzzy
 msgid "Search this wiki"
 msgstr "wiki lap létrehozása"
 
+#: src/ZWiki/skins/zwiki/subscribeform.pt:102
+#: src/ZWiki/skins/zwiki/subscribeform.pt:136
+#, fuzzy
+msgid "all edits"
+msgstr "szerkeszt"
+
 #. Default: ""
 #.  "You are currently subscribed<br />\n"
 #.  "                  to the whole wiki."
-#: i/skins/zwiki_standard/subscribeform.pt:108
+#: src/ZWiki/skins/zwiki/subscribeform.pt:113
 msgid "subscribed_wiki_ok"
 msgstr "Előfizetett az egész wikire."
 
 #. Default: "You are currently not subscribed<br /> to the whole wiki."
-#: i/skins/zwiki_standard/subscribeform.pt:112
+#: src/ZWiki/skins/zwiki/subscribeform.pt:117
 msgid "subscribed_wiki_no"
 msgstr "Jelenleg nincs előfizetve az egész wikire."
 
-#: i/skins/zwiki_standard/subscribeform.pt:116
-msgid "Unsubscribe from whole wiki"
-msgstr "Előfizetés törlése az egész wikiről."
-
-#: i/skins/zwiki_standard/subscribeform.pt:12
+#: src/ZWiki/skins/zwiki/subscribeform.pt:12
 msgid "Mail subscription"
 msgstr "Előfizetés e-mail címmel"
 
-#: i/skins/zwiki_standard/subscribeform.pt:123
+#: src/ZWiki/skins/zwiki/subscribeform.pt:121
+msgid "Unsubscribe from whole wiki"
+msgstr "Előfizetés törlése az egész wikiről."
+
+#: src/ZWiki/skins/zwiki/subscribeform.pt:128
 msgid "Subscribe to whole wiki"
 msgstr "Előfizetés az egész wikire"
 
 #. Default: "You are subscribed to these other pages"
-#: i/skins/zwiki_standard/subscribeform.pt:141
+#: src/ZWiki/skins/zwiki/subscribeform.pt:146
 msgid "other_page_subscribed"
 msgstr "A következő lapokra van még előfizetve"
 
-#: i/skins/zwiki_standard/subscribeform.pt:159
+#: src/ZWiki/skins/zwiki/subscribeform.pt:164
 msgid "Page subscribers"
 msgstr "A lap előfizetői"
 
-#: i/skins/zwiki_standard/subscribeform.pt:168
+#: src/ZWiki/skins/zwiki/subscribeform.pt:173
 msgid "Wiki subscribers"
 msgstr "A wiki előfizetői"
 
@@ -1046,7 +1375,7 @@ msgstr "A wiki előfizetői"
 #.  "You can subscribe to this page or to the whole wiki.\n"
 #.  "              Subscribers receive a copy of comments via email.\n"
 #.  "              Or return to"
-#: i/skins/zwiki_standard/subscribeform.pt:36
+#: src/ZWiki/skins/zwiki/subscribeform.pt:38
 #, fuzzy
 msgid "subscribe_desc_comments"
 msgstr ""
@@ -1060,7 +1389,7 @@ msgstr ""
 #.  "You can subscribe to this page or to the whole wiki.\n"
 #.  "              Subscribers receive a copy of all edits via email.\n"
 #.  "              Or return to"
-#: i/skins/zwiki_standard/subscribeform.pt:41
+#: src/ZWiki/skins/zwiki/subscribeform.pt:43
 #, fuzzy
 msgid "subscribe_desc_edits"
 msgstr ""
@@ -1070,267 +1399,86 @@ msgstr ""
 "rendszer adminisztrárora másképpen nem rendelkezett.).\n"
 "          Vagy visszatérhet a következő lapra:"
 
-#: i/skins/zwiki_standard/subscribeform.pt:53
+#: src/ZWiki/skins/zwiki/subscribeform.pt:53
+msgid "Email will go to the address you have configured in site preferences."
+msgstr ""
+
+#: src/ZWiki/skins/zwiki/subscribeform.pt:58
 msgid "Your email address"
 msgstr "Az Ön e-mail címe"
 
-#: i/skins/zwiki_standard/subscribeform.pt:57
+#: src/ZWiki/skins/zwiki/subscribeform.pt:62
 msgid "Change"
 msgstr "Változtat"
 
 #. Default: "To subscribe, please configure your email address."
-#: i/skins/zwiki_standard/subscribeform.pt:64
+#: src/ZWiki/skins/zwiki/subscribeform.pt:69
 msgid "subscribe_no_email"
 msgstr "A sikeres előfizetéshez szükséges az e-mail cím megadása."
 
 #. Default: ""
 #.  "You are currently subscribed<br />\n"
 #.  "                  to this page."
-#: i/skins/zwiki_standard/subscribeform.pt:74
+#: src/ZWiki/skins/zwiki/subscribeform.pt:79
 msgid "subscribed_page_ok"
 msgstr "Előfizetett erre a lapra."
 
 #. Default: ""
 #.  "You are currently not subscribed<br />\n"
 #.  "                  to this page."
-#: i/skins/zwiki_standard/subscribeform.pt:78
+#: src/ZWiki/skins/zwiki/subscribeform.pt:83
 msgid "subscribed_page_no"
 msgstr "Nincs előfizetve erre a lapra."
 
 #. Default: "Unsubscribe from this page"
-#: i/skins/zwiki_standard/subscribeform.pt:82
+#: src/ZWiki/skins/zwiki/subscribeform.pt:87
 msgid " Unsubscribe from this page "
 msgstr " Előfizetés törlése erről a lapról "
 
 #. Default: "Subscribe to this page"
-#: i/skins/zwiki_standard/subscribeform.pt:89
+#: src/ZWiki/skins/zwiki/subscribeform.pt:94
 msgid " Subscribe to this page "
 msgstr " Előfizetés erre a lapra "
 
-#: i/skins/zwiki_standard/subscribeform.pt:97
-#: i/skins/zwiki_standard/subscribeform.pt:131
-#, fuzzy
-msgid "all edits"
-msgstr "szerkeszt"
-
-#: i/skins/zwiki_standard/useroptions.pt:12
+#: src/ZWiki/skins/zwiki/useroptions.pt:12
 #, fuzzy
 msgid "User options"
 msgstr "keresési beállítások"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:100
-msgid "changes"
-msgstr "változások"
+#~ msgid "Add a ZWiki web"
+#~ msgstr "ZWiki hálózat hozzáadása"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:101
-msgid "show discussion page"
-msgstr "Ugrás a hozzászólás-lapra (fórum)"
+#~ msgid "Type"
+#~ msgstr "Típus"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:105
-msgid "discussion"
-msgstr "hozzászólások"
+#~ msgid "Create wiki"
+#~ msgstr "Wiki létrehozása"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:106
-msgid "show issue tracker"
-msgstr "Ugrás az Ügykezelőre"
+#~ msgid "and enter"
+#~ msgstr "és belépés"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:110
-msgid "issues"
-msgstr "ügykezelő"
+#~ msgid ""
+#~ "You may create a new ZWiki Page object using the form below. You may also "
+#~ "choose to upload an existing html file from your local computer by "
+#~ "clicking the <i>Browse</i> button."
+#~ msgstr ""
+#~ "Létrehozhat egy ZWiki Lap elemet az alábbi szerkesztőmező segítségével, "
+#~ "vagy akár feltölthet egy html fájlt a saját gépéről a <i>Tallózás</i> "
+#~ "gomb megnyomásával."
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:111
-msgid "show wiki contents"
-msgstr "Ugrás a wiki tartalomjegyzékére"
+#~ msgid "File"
+#~ msgstr "Fájl"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:115
-msgid "contents"
-msgstr "tartalomjegyzék"
+#~ msgid "Add"
+#~ msgstr "Hozzáad"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:116
-msgid "show wiki index"
-msgstr "Ugrás a wiki névmutatójára"
+#~ msgid "Add and Edit"
+#~ msgstr "Hozzáad és szerkeszt"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:120
-msgid "index"
-msgstr "névmutató"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:121
-msgid "show upload page"
-msgstr "Ugrás a feltöltési lapra"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:125
-msgid "uploads"
-msgstr "feltöltések"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:127
-msgid "show help page"
-msgstr "Ugrás a súgólapra"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:132
-msgid "help"
-msgstr "segítség"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:133
-msgid "show wiki options"
-msgstr "Wiki felhasználói beállításainak megjelenítése"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:137
-msgid "options"
-msgstr "beállítások"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:147
-msgid "backlinks"
-msgstr "idemutató"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:148
-msgid "configure email subscription to this page or site"
-msgstr "E-mail címmel történő előfizetés erre a lapra, vagy az egész wikire."
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:158
-msgid "subscribe"
-msgstr "előfizet"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:159
-msgid "show this page's change history"
-msgstr "változtatások történetének megjelenítése"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:165
-msgid "diff"
-msgstr "összevet"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:174
-msgid "edit"
-msgstr "szerkeszt"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:175
-msgid "edit using external editor"
-msgstr "szerkesztés külső szerkesztővel"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:187
-msgid "(external edit)"
-msgstr "(külső szerkesztés)"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:246
-msgid "go to home page"
-msgstr "vissza a nyitólapra"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:266
-msgid "search all pages"
-msgstr "Keresés az összes lapon"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:312
-msgid "subject"
-msgstr "Hozzászólás tárgya"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:313
-msgid "a subject helps clarify threads and RecentChanges"
-msgstr ""
-"A tárgy megadása segíti a hozzászólások és a LegutóbbiVáltozások "
-"nyomonkövetését."
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:320
-msgid "replying"
-msgstr "válaszadás"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:327
-msgid "to comment (and cc any subscribers) enter text here and click add"
-msgstr ""
-"Ha hozzá szeretne szólni az oldal témájához, töltse ki ezt a mezőt, majd "
-"nyomja meg a \"Hozzászólás beküldése\" gombot. (A hozzászólásról értesítést "
-"kap levélben az összes előfizető.)"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:347
-msgid "${nb} subscribers"
-msgstr "${nb} előfizető"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:349
-msgid "1 subscriber"
-msgstr "egy előfizető"
-
-#. Default: "add a comment"
-#: i/skins/zwiki_standard/wikipage-inline.pt:355
-msgid "add-comment"
-msgstr "Hozzászólás beküldése"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:388
-msgid "new"
-msgstr "új"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:389
-msgid "parent,"
-msgstr "szülő-lap,"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:392
-msgid "name,"
-msgstr "név,"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:395
-msgid "replacement,"
-msgstr "lapok kicserélése,"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:398
-#, fuzzy
-msgid "page"
-msgstr "kor"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:403
-msgid "enter a page name and click buttons to the right (mouse over for help)"
-msgstr ""
-"írja be a lap nevét, majd kattintson a jobboldali gombokra (menjen föléjük "
-"az egérrel segítségért)"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:408
-#, fuzzy
-msgid "reparent"
-msgstr "Újraszármaztat"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:408
-#, fuzzy
-msgid "make this page a subtopic of the page you have entered"
-msgstr "Újraszármaztatja az lapot az Ön által megadott szülő-laphoz."
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:413
-msgid "rename this page to the name you have entered, updating all links"
-msgstr ""
-"Megváltoztatja a lap nevét az ide beírt névre, a lapra mutató össze link "
-"aktualizálásával."
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:413
-msgid "rename"
-msgstr "átnevez"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:418
-msgid "delete!"
-msgstr "töröl!"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:418
-#, fuzzy
-msgid ""
-"delete this page, and redirect links to the page you have entered, if any"
-msgstr "Újraszármaztatja az lapot az Ön által megadott szülő-laphoz."
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:423
-#, fuzzy
-msgid "create a page with the name you have entered, as a subtopic of this one"
-msgstr ""
-"Megváltoztatja a lap nevét az ide beírt névre, a lapra mutató össze link "
-"aktualizálásával."
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:423
-msgid "create"
-msgstr "létrehoz"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:91
-msgid "show front page"
-msgstr "Ugrás a nyitólapra"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:95
-msgid "home"
-msgstr "nyitólap"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:96
-msgid "show wiki recent changes"
-msgstr "A wiki legutóbbi változtatásainak megjelenítése"
+#~ msgid "log_note"
+#~ msgstr ""
+#~ "Az lap előzményeinek kilistázásakor látható kiegészítő megjegyzés (nem "
+#~ "kötelező)"
 
 #~ msgid "Backlinks for"
 #~ msgstr "Idemutató hivatkozások:"
@@ -1493,14 +1641,6 @@ msgstr "A wiki legutóbbi változtatásainak megjelenítése"
 #~ msgstr "Zwiki Lap hozzáadása"
 
 #, fuzzy
-#~ msgid "Edit"
-#~ msgstr "szerkeszt"
-
-#, fuzzy
-#~ msgid "Add Wiki"
-#~ msgstr "Zwiki Lap hozzáadása"
-
-#, fuzzy
 #~ msgid "Wiki User"
 #~ msgstr "A wiki előfizetői"
 
@@ -1529,10 +1669,6 @@ msgstr "A wiki legutóbbi változtatásainak megjelenítése"
 #~ msgstr "Zwiki Lap hozzáadása"
 
 #, fuzzy
-#~ msgid "Add Wiki Page"
-#~ msgstr "Zwiki Lap hozzáadása"
-
-#, fuzzy
 #~ msgid "Edit Wiki Page"
 #~ msgstr "Zwiki Lap hozzáadása"
 
@@ -1544,45 +1680,8 @@ msgstr "A wiki legutóbbi változtatásainak megjelenítése"
 #~ msgid "Reparent Wiki Page"
 #~ msgstr "Zwiki Lap hozzáadása"
 
-#~ msgid "You are not authorized to rename this ZWiki Page."
-#~ msgstr "Nincs jogosultsága átnevezni ezt a ZWiki lapot."
-
 #~ msgid "page in parent wiki"
 #~ msgstr "Lap a szülő-wikiben"
-
-#, fuzzy
-#~ msgid "plone"
-#~ msgstr ""
-#~ "Az lap előzményeinek kilistázásakor látható kiegészítő megjegyzés (nem "
-#~ "kötelező)"
-
-#~ msgid "show all features"
-#~ msgstr "Az összes felhasználói lehetőség megjelenítése"
-
-#~ msgid "full"
-#~ msgstr "teljes nézet"
-
-#~ msgid "show basic features"
-#~ msgstr "Az alapvető felhasználói lehetőségek megjelenítése"
-
-#~ msgid "simple"
-#~ msgstr "egyszerű nézet"
-
-#~ msgid "show only essential features"
-#~ msgstr "Csak a legszükségesebb felhasználói lehetőségek megjelenítése"
-
-#~ msgid "minimal"
-#~ msgstr "minimális nézet"
-
-#~ msgid "subtopic"
-#~ msgstr "alfejezet létrehozása"
-
-#, fuzzy
-#~ msgid "for this page"
-#~ msgstr "Hozd létre ezt a lapot"
-
-#~ msgid "title"
-#~ msgstr "cím"
 
 #~ msgid "XXX"
 #~ msgstr "XXX"

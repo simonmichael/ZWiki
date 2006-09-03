@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zwiki-de\n"
 "Report-Msgid-Bugs-To:\n"
-"POT-Creation-Date: Sat Apr  1 14:13:10 2006\n"
+"POT-Creation-Date: Sat Sep  2 18:10:16 2006\n"
 "PO-Revision-Date: 2006-05-29 07:47+0000\n"
 "Last-Translator: Stefan Kose <Kamikaze482@gmx.net>\n"
 "Language-Team: German <debian-l10n-german@lists.debian.org>\n"
@@ -21,53 +21,28 @@ msgstr ""
 "Preferred-encodings: utf-8\n"
 "Domain: zwiki\n"
 
-#: i/Admin.py:62
+#: src/ZWiki/Admin.py:62
 msgid "You are not authorized to upgrade all pages."
 msgstr ""
 "Sie sind nicht berechtigt die Wiki-Seiten zu aktualisieren (You are not "
 "authorized to upgrade all pages)."
 
-#: i/Admin.py:63
+#: src/ZWiki/Admin.py:63
 msgid "(folder -> Manage properties)"
 msgstr "(folder -> Manage properties)"
 
-#: i/Editing.py:323
-msgid ""
-"You are not authorized to reparent or change subtopics links on this ZWiki "
-"Page."
-msgstr ""
-"Sie sind nicht berechtigt, Seiten in der Wiki-Hierarchie zu verschieben."
-
-#: i/Editing.py:345
-msgid "You are not authorized to change this ZWiki Page's type."
-msgstr "Sie sind nicht berechtigt, das Format dieser ZWiki-Seite zu ändern."
-
-#: i/Editing.py:379 i/Editing.py:406
-msgid "You are not authorized to edit this ZWiki Page."
-msgstr "Sie sind nicht berechtigt, diese ZWiki-Seite zu bearbeiten."
-
-#: i/Editing.py:409
-msgid "You are not authorized to delete this ZWiki Page."
+#: src/ZWiki/Diff.py:174
+#, fuzzy
+msgid "You are not authorized to reparent this ZWiki Page."
 msgstr "Sie sind nicht berechtigt, diese ZWiki-Seite zu löschen."
 
-#: i/Editing.py:559
-msgid ""
-"This page was renamed to %s. You can delete this one if no longer needed.\n"
-msgstr ""
-"Diese ZWiki-Seite wurde in %s umbenannt. Sie können die Seite löschen,sollte "
-"sie nicht mehr gebraucht werden.\n"
+#: src/ZWiki/Diff.py:180 src/ZWiki/plugins/tracker/tracker.py:332
+#, fuzzy
+msgid "You are not authorized to rename this ZWiki Page."
+msgstr "Sie sind nicht berechtigt, diese ZWiki-Seite zu löschen."
 
-#: i/Editing.py:655
-msgid "You are not authorized to upload files here."
-msgstr "Sie sind nicht berechtigt, Dateien in dieses Wiki hochzuladen."
-
-#: i/Editing.py:659
-msgid "You are not authorized to add a link on this ZWiki Page."
-msgstr ""
-"Sie sind nicht berechtigt, einen Link zu dieser ZWiki-Seite hinzuzufügen."
-
-#: i/Editing.py:68 i/Editing.py:152 i/Editing.py:290 i/Views.py:606
-#: i/Views.py:652
+#: src/ZWiki/Editing.py:156 src/ZWiki/Editing.py:294 src/ZWiki/Views.py:332
+#: src/ZWiki/Views.py:435 src/ZWiki/plugins/tracker/tracker.py:321
 #, fuzzy
 msgid ""
 "Sorry, this wiki doesn't allow anonymous edits. Please configure a username "
@@ -76,151 +51,157 @@ msgstr ""
 "In diesem Wiki sind keine anonymen Eintragungen erlaubt. \n"
 "Bitte stellen Sie zunächst Ihren Nutzernamen in den Optionen ein."
 
-#: i/Editing.py:819
+#: src/ZWiki/Editing.py:327
 msgid ""
-"There was a problem: %s. Please contact the site administrator for help."
+"You are not authorized to reparent or change subtopics links on this ZWiki "
+"Page."
+msgstr ""
+"Sie sind nicht berechtigt, Seiten in der Wiki-Hierarchie zu verschieben."
+
+#: src/ZWiki/Editing.py:349
+msgid "You are not authorized to change this ZWiki Page's type."
+msgstr "Sie sind nicht berechtigt, das Format dieser ZWiki-Seite zu ändern."
+
+#: src/ZWiki/Editing.py:383 src/ZWiki/Editing.py:410
+#: src/ZWiki/plugins/tracker/tracker.py:340
+#: src/ZWiki/plugins/tracker/tracker.py:347
+#: src/ZWiki/plugins/tracker/tracker.py:354
+msgid "You are not authorized to edit this ZWiki Page."
+msgstr "Sie sind nicht berechtigt, diese ZWiki-Seite zu bearbeiten."
+
+#: src/ZWiki/Editing.py:413
+msgid "You are not authorized to delete this ZWiki Page."
+msgstr "Sie sind nicht berechtigt, diese ZWiki-Seite zu löschen."
+
+#: src/ZWiki/Editing.py:563
+msgid ""
+"This page was renamed to %s. You can delete this one if no longer needed.\n"
+msgstr ""
+"Diese ZWiki-Seite wurde in %s umbenannt. Sie können die Seite löschen,sollte "
+"sie nicht mehr gebraucht werden.\n"
+
+#: src/ZWiki/Editing.py:659
+msgid "You are not authorized to upload files here."
+msgstr "Sie sind nicht berechtigt, Dateien in dieses Wiki hochzuladen."
+
+#: src/ZWiki/Editing.py:663
+msgid "You are not authorized to add a link on this ZWiki Page."
+msgstr ""
+"Sie sind nicht berechtigt, einen Link zu dieser ZWiki-Seite hinzuzufügen."
+
+#: src/ZWiki/Editing.py:822
+msgid "There was a problem: %s"
+msgstr ""
+
+#: src/ZWiki/Editing.py:829
+msgid "banned_links match"
+msgstr "'banned_links'-Treffer"
+
+#: src/ZWiki/Editing.py:830
+#, fuzzy
+msgid ""
+"your edit contained a banned link pattern. Please contact the site "
+"administrator for help."
 msgstr ""
 "Ein Problem ist aufgetreten: %s. Bitte kontaktieren Sie den Administrator "
 "dieser Webseite, falls Sie Hilfe benötigen."
 
-#: i/Editing.py:826
-msgid "banned_links match"
-msgstr "'banned_links'-Treffer"
-
-#: i/Editing.py:827
-msgid "your edit contained a banned link pattern"
-msgstr "Ihre Bearbeitung enthielt einen verbotenen Link"
-
-#: i/Editing.py:838
+#: src/ZWiki/Editing.py:841
 msgid "exceeded max_anonymous_links"
 msgstr "'max_anonymous_links' überschritten"
 
-#: i/Editing.py:839
-msgid "adding of external links by anonymous authors is restricted"
+#: src/ZWiki/Editing.py:842
+msgid ""
+"adding of external links by unidentified users is restricted. Please back up "
+"and remove some of the http urls you added, or contact the site "
+"administrator for help."
 msgstr ""
-"anonyme Autoren dürfen nur eine begrenzte Anzahl externer Links hinzufügen"
 
-#: i/Mail.py:490 i/skins/dtmlmessages.pt:59
+#: src/ZWiki/Editing.py:853
+#, fuzzy
+msgid "exceeded max_identified_links"
+msgstr "'max_anonymous_links' überschritten"
+
+#: src/ZWiki/Editing.py:854
+msgid ""
+"adding of external links is restricted, even for identified users. Please "
+"back up and remove some of the http urls you added, or contact the site "
+"administrator for help."
+msgstr ""
+
+#: src/ZWiki/Mail.py:506 src/ZWiki/skins/dtmlmessages.pt:58
 msgid "anonymous"
 msgstr "anonym"
 
-#: i/OutlineSupport.py:838 i/skins/zwiki_standard/wikipage-inline.pt:141
+#: src/ZWiki/OutlineSupport.py:843 src/ZWiki/skins/zwiki/links.pt:56
 msgid "which pages link to this one ?"
 msgstr "Welche Seiten verweisen auf diese?"
 
-#: i/OutlineSupport.py:846
+#: src/ZWiki/OutlineSupport.py:851
 msgid "You are here"
 msgstr "Sie befinden sich hier."
 
-#: i/Utils.py:465
+#: src/ZWiki/Utils.py:465
 msgid "years"
 msgstr "Jahre"
 
-#: i/Utils.py:465
+#: src/ZWiki/Utils.py:465
 msgid "year"
 msgstr "Jahr"
 
-#: i/Utils.py:467
+#: src/ZWiki/Utils.py:467
 msgid "month"
 msgstr "Monat"
 
-#: i/Utils.py:467
+#: src/ZWiki/Utils.py:467
 msgid "months"
 msgstr "Monate"
 
-#: i/Utils.py:469
+#: src/ZWiki/Utils.py:469
 msgid "weeks"
 msgstr "Wochen"
 
-#: i/Utils.py:469
+#: src/ZWiki/Utils.py:469
 msgid "week"
 msgstr "Woche"
 
-#: i/Utils.py:471
+#: src/ZWiki/Utils.py:471
 msgid "day"
 msgstr "Tag"
 
-#: i/Utils.py:471
+#: src/ZWiki/Utils.py:471
 msgid "days"
 msgstr "Tage"
 
-#: i/Utils.py:473
+#: src/ZWiki/Utils.py:473
 msgid "hours"
 msgstr "Stunden"
 
-#: i/Utils.py:473
+#: src/ZWiki/Utils.py:473
 msgid "hour"
 msgstr "Stunde"
 
-#: i/Utils.py:475
+#: src/ZWiki/Utils.py:475
 msgid "minute"
 msgstr "Minute"
 
-#: i/Utils.py:475
+#: src/ZWiki/Utils.py:475
 msgid "minutes"
 msgstr "Minuten"
 
-#: i/Utils.py:477
+#: src/ZWiki/Utils.py:477
 msgid "second"
 msgstr "Sekunde"
 
-#: i/Utils.py:477
+#: src/ZWiki/Utils.py:477
 msgid "seconds"
 msgstr "Sekunden"
 
-#: i/Views.py:706
-msgid "Edit conflict"
-msgstr "Bearbeitungskonflikt"
-
-#: i/Views.py:726
-msgid "Someone else has saved this page while you were editing"
-msgstr "Jemand hat diese Seite geändert, während Sie sie bearbeitet haben."
-
-#: i/Views.py:727
-msgid "To resolve the conflict, do this"
-msgstr "So können Sie diesen Konflikt lösen:"
-
-#: i/Views.py:728
-msgid "Click your browser's back button"
-msgstr ""
-"Kehren Sie zum Bearbeitungsformular zurück, indem Sie in Ihrem Browser auf "
-"die 'Zurück'-Schaltfläche klicken."
-
-#: i/Views.py:729
-msgid "Copy your recent edits to the clipboard"
-msgstr "Kopieren Sie Ihre letzten Änderungen in die Zwischenablage."
-
-#: i/Views.py:730
-msgid "Click your browser's refresh button"
-msgstr ""
-"Aktualisieren Sie das Bearbeitungsformular, indem Sie in Ihrem Browser auf "
-"die 'Neu laden'-Schaltfläche klicken."
-
-#: i/Views.py:731
-msgid "Paste in your edits again, being mindful of the latest changes"
-msgstr ""
-"Fügen Sie Ihre Änderungen erneut ein. Beachten Sie dabei, dass die Seite in "
-"der Zwischenzeit bereits von jemand anderem geändert wurde."
-
-#: i/Views.py:732
-msgid "Click the Change button again"
-msgstr "Speichern Sie die Seite mit Ihren Änderungen erneut."
-
-#: i/Views.py:733 i/skins/zwiki_standard/editform.pt:159
-msgid "or"
-msgstr "oder"
-
-#: i/Views.py:734
-msgid "To discard your changes and start again, click OK"
-msgstr ""
-"Um Ihre Änderungen zu verwerfen und von vorne zu beginnen, klicken Sie auf "
-"'OK'."
-
-#: i/Views.py:743
+#: src/ZWiki/Views.py:346
 msgid "Page is locked"
 msgstr "Seite ist gesperrt"
 
-#: i/Views.py:754
+#: src/ZWiki/Views.py:357
 msgid ""
 "\n"
 "            This page has a webDAV lock. Someone is probably editing it\n"
@@ -239,13 +220,61 @@ msgstr ""
 "            sicherheitshalber speichern.\n"
 "            "
 
-#: i/Views.py:761
+#: src/ZWiki/Views.py:364
 msgid "To discard your changes and try again, click OK."
 msgstr ""
 "Um Ihre Änderungen zu verwerfen und von vorne zu beginnen, klicken Sie auf "
 "'OK'."
 
-#: i/Views.py:770
+#: src/ZWiki/Views.py:393
+msgid "Edit conflict"
+msgstr "Bearbeitungskonflikt"
+
+#: src/ZWiki/Views.py:413
+msgid "Someone else has saved this page while you were editing"
+msgstr "Jemand hat diese Seite geändert, während Sie sie bearbeitet haben."
+
+#: src/ZWiki/Views.py:414
+msgid "To resolve the conflict, do this"
+msgstr "So können Sie diesen Konflikt lösen:"
+
+#: src/ZWiki/Views.py:415
+msgid "Click your browser's back button"
+msgstr ""
+"Kehren Sie zum Bearbeitungsformular zurück, indem Sie in Ihrem Browser auf "
+"die 'Zurück'-Schaltfläche klicken."
+
+#: src/ZWiki/Views.py:416
+msgid "Copy your recent edits to the clipboard"
+msgstr "Kopieren Sie Ihre letzten Änderungen in die Zwischenablage."
+
+#: src/ZWiki/Views.py:417
+msgid "Click your browser's refresh button"
+msgstr ""
+"Aktualisieren Sie das Bearbeitungsformular, indem Sie in Ihrem Browser auf "
+"die 'Neu laden'-Schaltfläche klicken."
+
+#: src/ZWiki/Views.py:418
+msgid "Paste in your edits again, being mindful of the latest changes"
+msgstr ""
+"Fügen Sie Ihre Änderungen erneut ein. Beachten Sie dabei, dass die Seite in "
+"der Zwischenzeit bereits von jemand anderem geändert wurde."
+
+#: src/ZWiki/Views.py:419
+msgid "Click the Change button again"
+msgstr "Speichern Sie die Seite mit Ihren Änderungen erneut."
+
+#: src/ZWiki/Views.py:420 src/ZWiki/skins/zwiki/editform.pt:163
+msgid "or"
+msgstr "oder"
+
+#: src/ZWiki/Views.py:421
+msgid "To discard your changes and start again, click OK"
+msgstr ""
+"Um Ihre Änderungen zu verwerfen und von vorne zu beginnen, klicken Sie auf "
+"'OK'."
+
+#: src/ZWiki/Views.py:490
 msgid ""
 "\n"
 "        Access keys can be accessed in mozilla-based browsers by pressing "
@@ -354,32 +383,33 @@ msgstr ""
 "        p    vorherige Änderung\n"
 "        "
 
-#: i/Wikis.py:49
+#: src/ZWiki/Wikis.py:49
 #, fuzzy
 msgid "Unknown wiki type"
 msgstr "Unbekanntes Wiki Format"
 
-#: i/ZWikiPage.py:670
+#: src/ZWiki/ZWikiPage.py:675
 msgid "create this page"
 msgstr "Diese Seite erstellen"
 
-#: i/ZWikiPage.py:793 i/ZWikiPage.py:809 i/ZWikiPage.py:812
+#: src/ZWiki/ZWikiPage.py:798 src/ZWiki/ZWikiPage.py:814
+#: src/ZWiki/ZWikiPage.py:817
 msgid "last edited %(interval)s ago"
 msgstr "Zuletzt geändert vor %(interval)s"
 
-#: i/ZWikiPage.py:804
+#: src/ZWiki/ZWikiPage.py:809
 msgid "show last edit"
 msgstr "Letzte Änderung zeigen"
 
-#: i/ZWikiPage.py:821 i/ZWikiPage.py:823
+#: src/ZWiki/ZWikiPage.py:826 src/ZWiki/ZWikiPage.py:828
 msgid "by %(editor)s"
 msgstr "von %(editor)s"
 
-#: i/__init__.py:34
+#: src/ZWiki/__init__.py:34
 msgid "No need to add a Zwiki Outline Cache"
 msgstr "Zwiki-Outline-Cache nicht selbst hinzufügen"
 
-#: i/__init__.py:35
+#: src/ZWiki/__init__.py:35
 msgid ""
 "Zwiki Outline Cache appears in the ZMI Add menu\n"
 "        for implementation reasons, but should not be added directly.\n"
@@ -392,300 +422,386 @@ msgstr ""
 "         Zwiki wird den Outline-Cache bei Bedarf selbst erstellen.\n"
 "        "
 
-#: i/pagetypes/common.py:240
+#: src/ZWiki/pagetypes/common.py:253
 msgid "comments"
 msgstr "Kommentare"
 
-#: i/pagetypes/moin.py:1990
+#: src/ZWiki/pagetypes/moin.py:1990
 msgid "Expected \"=\" to follow \"%(token)s\""
 msgstr "Erwartete \"=\" nach \"%(token)s\""
 
-#: i/pagetypes/moin.py:1999
+#: src/ZWiki/pagetypes/moin.py:1999
 msgid "Expected a value for key \"%(token)s\""
 msgstr "Erwartete einen Wert nach Schlüsselwort \"%(token)s\""
 
-#: i/pagetypes/moin.py:302
+#: src/ZWiki/pagetypes/moin.py:302
 msgid "Create new drawing \"%(filename)s\""
 msgstr "Erstelle neue Zeichnung \"%(filename)s\""
 
-#: i/pagetypes/moin.py:304
+#: src/ZWiki/pagetypes/moin.py:304
 msgid "Upload new attachment \"%(filename)s\""
 msgstr "Lade neuen Anhang \"%(filename)s\" hoch"
 
-#: i/pagetypes/moin.py:335 i/pagetypes/moin.py:345
+#: src/ZWiki/pagetypes/moin.py:335 src/ZWiki/pagetypes/moin.py:345
 msgid "Edit drawing %(filename)s"
 msgstr "Bearbeite Zeichnung %(filename)s"
 
-#: i/pagetypes/moin.py:730
+#: src/ZWiki/pagetypes/moin.py:730
 msgid "Expected \"%(wanted)s\" after \"%(key)s\", got \"%(token)s\""
 msgstr "Erwartete \"%(wanted)s\" nach \"%(key)s\", erhielt aber \"%(token)s\""
 
-#: i/pagetypes/moin.py:736
+#: src/ZWiki/pagetypes/moin.py:736
 msgid "Expected an integer \"%(key)s\" before \"%(token)s\""
 msgstr "Erwartete einen Integerwert \"%(key)s\" vor \"%(token)s\""
 
-#: i/pagetypes/moin.py:745 i/pagetypes/moin.py:754
+#: src/ZWiki/pagetypes/moin.py:745 src/ZWiki/pagetypes/moin.py:754
 msgid "Expected an integer \"%(arg)s\" after \"%(key)s\""
 msgstr "Erwatete einen Integerwert \"%(arg)s\" nach \"%(key)s\""
 
-#: i/pagetypes/moin.py:774
+#: src/ZWiki/pagetypes/moin.py:774
 msgid "Expected a color value \"%(arg)s\" after \"%(key)s\""
 msgstr "Erwartete einen Farbwert \"%(arg)s\" nach \"%(key)s\""
 
-#: i/pagetypes/rst.py:59
+#: src/ZWiki/pagetypes/rst.py:85
 msgid "reply"
 msgstr "Antworten"
 
-#: i/plugins/tracker/filterissues.pt:12 i/skins/dtmlmessages.pt:30
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:127
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:127
+msgid "full history"
+msgstr "Alle Versionen"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:129
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:131
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:129
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:131
+msgid "<< previous edit"
+msgstr "<< vorherige Änderung"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:133
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:135
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:133
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:135
+msgid "next edit >>"
+msgstr "nächste Änderung >>"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:137
+#: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:137
+#, fuzzy
+msgid "Revert this change and all successive changes"
+msgstr "Diese und alle folgenden Änderungen rückgängig machen"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:169
+msgid "show plone skin"
+msgstr ""
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:172
+#, fuzzy
+msgid "plone"
+msgstr "Notiz"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:173
+#, fuzzy
+msgid "show all features"
+msgstr "Suche auf allen Seiten"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:179
+msgid "full"
+msgstr ""
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:180
+#, fuzzy
+msgid "show basic features"
+msgstr "Letzte Änderung zeigen"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:186
+#, fuzzy
+msgid "simple"
+msgstr "Datei"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:187
+msgid "show only essential features"
+msgstr ""
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:193
+msgid "minimal"
+msgstr ""
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:507
+#, fuzzy
+msgid "subtopic"
+msgstr "Unterkategorien"
+
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:512
+#, fuzzy
+msgid "for this page"
+msgstr "Diese Seite erstellen"
+
+#. Default: "reparent"
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:520
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:525
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:530
+#: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:535
+#, fuzzy
+msgid "title"
+msgstr "Titel"
+
+#: src/ZWiki/plugins/tracker/filterissues.pt:12
+#: src/ZWiki/skins/dtmlmessages.pt:30
 msgid "Filter issues"
 msgstr "Probleme filtern"
 
-#: i/plugins/tracker/issuebrowser.pt:12
+#: src/ZWiki/plugins/tracker/issuebrowser.pt:12
 msgid "Issue browser"
 msgstr "Problembrowser"
 
-#: i/plugins/tracker/issuetracker.pt:12
+#: src/ZWiki/plugins/tracker/issuetracker.pt:12
 msgid "Issue tracker"
 msgstr "Problemliste"
 
-#: i/skins/dtmlmessages.pt:10 i/skins/dtmlmessages.pt:32
+#: src/ZWiki/plugins/tracker/tracker.py:361
+#, fuzzy
+msgid "You are not authorized to comment on this ZWiki Page."
+msgstr "Sie sind nicht berechtigt, diese ZWiki-Seite zu bearbeiten."
+
+#: src/ZWiki/skins/dtmlmessages.pt:10 src/ZWiki/skins/dtmlmessages.pt:32
 #, fuzzy
 msgid "category"
 msgstr "Kategorie"
 
-#: i/skins/dtmlmessages.pt:11 i/skins/dtmlmessages.pt:33
+#: src/ZWiki/skins/dtmlmessages.pt:11 src/ZWiki/skins/dtmlmessages.pt:33
 #, fuzzy
 msgid "severity"
 msgstr "Schweregrad"
 
-#: i/skins/dtmlmessages.pt:12 i/skins/dtmlmessages.pt:34
+#: src/ZWiki/skins/dtmlmessages.pt:12 src/ZWiki/skins/dtmlmessages.pt:34
 #, fuzzy
 msgid "status"
 msgstr "Status"
 
-#: i/skins/dtmlmessages.pt:13 i/skins/dtmlmessages.pt:35
+#: src/ZWiki/skins/dtmlmessages.pt:13 src/ZWiki/skins/dtmlmessages.pt:35
 #, fuzzy
 msgid "age"
 msgstr "Seite"
 
-#: i/skins/dtmlmessages.pt:14 i/skins/dtmlmessages.pt:36
+#: src/ZWiki/skins/dtmlmessages.pt:14 src/ZWiki/skins/dtmlmessages.pt:36
 #, fuzzy
 msgid "modified"
 msgstr "Geändert"
 
-#: i/skins/dtmlmessages.pt:15
+#: src/ZWiki/skins/dtmlmessages.pt:15
 #, fuzzy
 msgid "Add a new issue:"
 msgstr "Neues Problem hinzufügen:"
 
-#: i/skins/dtmlmessages.pt:16
+#: src/ZWiki/skins/dtmlmessages.pt:16
 #, fuzzy
 msgid "Name:"
 msgstr "Name,"
 
-#: i/skins/dtmlmessages.pt:17
+#: src/ZWiki/skins/dtmlmessages.pt:17
 #, fuzzy
 msgid "Category:"
 msgstr "Kategorie:"
 
-#: i/skins/dtmlmessages.pt:18
+#: src/ZWiki/skins/dtmlmessages.pt:18
 #, fuzzy
 msgid "Severity:"
 msgstr "Schweregrad:"
 
-#: i/skins/dtmlmessages.pt:19
+#: src/ZWiki/skins/dtmlmessages.pt:19
 #, fuzzy
 msgid "Status:"
 msgstr "Status:"
 
-#: i/skins/dtmlmessages.pt:2
+#: src/ZWiki/skins/dtmlmessages.pt:2
 #, fuzzy
 msgid "Here are the wiki's issue pages."
 msgstr "Diese Wiki-Seite erstellen"
 
-#: i/skins/dtmlmessages.pt:20
+#: src/ZWiki/skins/dtmlmessages.pt:20
 msgid "Details:"
 msgstr "Details:"
 
-#: i/skins/dtmlmessages.pt:21
+#: src/ZWiki/skins/dtmlmessages.pt:21
 #, fuzzy
 msgid "add issue"
 msgstr "Problem hinzufügen"
 
-#: i/skins/dtmlmessages.pt:22
+#: src/ZWiki/skins/dtmlmessages.pt:22
 #, fuzzy
 msgid "More advanced"
 msgstr "Erweiterte Suche in der"
 
-#: i/skins/dtmlmessages.pt:23
+#: src/ZWiki/skins/dtmlmessages.pt:23
 #, fuzzy
 msgid "issue tracker"
 msgstr "Problemliste"
 
-#: i/skins/dtmlmessages.pt:24
+#: src/ZWiki/skins/dtmlmessages.pt:24
 msgid "search options"
 msgstr "Einstellungen speichern"
 
-#: i/skins/dtmlmessages.pt:25
+#: src/ZWiki/skins/dtmlmessages.pt:25
 #, fuzzy
 msgid "Name contains any of:"
 msgstr "Name enthält:"
 
-#: i/skins/dtmlmessages.pt:26
+#: src/ZWiki/skins/dtmlmessages.pt:26
 #, fuzzy
 msgid "Page text contains any of:"
 msgstr "Text enthält:"
 
-#: i/skins/dtmlmessages.pt:27
+#: src/ZWiki/skins/dtmlmessages.pt:27
 msgid "Categories:"
 msgstr "Kategorien:"
 
-#: i/skins/dtmlmessages.pt:28
+#: src/ZWiki/skins/dtmlmessages.pt:28
 #, fuzzy
 msgid "Severities:"
 msgstr "Schweregrade:"
 
-#: i/skins/dtmlmessages.pt:29
+#: src/ZWiki/skins/dtmlmessages.pt:29
 #, fuzzy
 msgid "Statuses:"
 msgstr "Status:"
 
-#: i/skins/dtmlmessages.pt:3
+#: src/ZWiki/skins/dtmlmessages.pt:3
 #, fuzzy
 msgid "Enter a search term, click the numbers to the right,"
 msgstr ""
 "Geben Sie einen Suchterm ein, klicken Sie die Nummern auf der rechten Seite "
 "an,"
 
-#: i/skins/dtmlmessages.pt:37
+#: src/ZWiki/skins/dtmlmessages.pt:37
 #, fuzzy
 msgid "Submitted by"
 msgstr "Eingereicht von"
 
-#: i/skins/dtmlmessages.pt:38
+#: src/ZWiki/skins/dtmlmessages.pt:38
 #, fuzzy
 msgid "Name"
 msgstr "Name"
 
-#: i/skins/dtmlmessages.pt:39
+#: src/ZWiki/skins/dtmlmessages.pt:39
 #, fuzzy
 msgid "Category"
 msgstr "Kategorie"
 
-#: i/skins/dtmlmessages.pt:4
+#: src/ZWiki/skins/dtmlmessages.pt:4
 #, fuzzy
 msgid "filter issues"
 msgstr "Probleme filtern"
 
-#: i/skins/dtmlmessages.pt:40
+#: src/ZWiki/skins/dtmlmessages.pt:40
 #, fuzzy
 msgid "Severity"
 msgstr "Schweregrad"
 
-#: i/skins/dtmlmessages.pt:41
+#: src/ZWiki/skins/dtmlmessages.pt:41
 #, fuzzy
 msgid "Status"
 msgstr "Status"
 
-#: i/skins/dtmlmessages.pt:42
+#: src/ZWiki/skins/dtmlmessages.pt:42
 #, fuzzy
 msgid "Optional subject"
 msgstr "Notiz zu den Änderungen (optional)"
 
-#: i/skins/dtmlmessages.pt:43
+#: src/ZWiki/skins/dtmlmessages.pt:43
 #, fuzzy
 msgid "Optional comment"
 msgstr "Notiz zu den Änderungen (optional)"
 
-#: i/skins/dtmlmessages.pt:44 i/skins/dtmlmessages.pt:45
-msgid "Add a ZWiki web"
-msgstr "Ein ZWiki-Web hinzufügen"
+#: src/ZWiki/skins/dtmlmessages.pt:44 src/ZWiki/skins/dtmlmessages.pt:45
+#, fuzzy
+msgid "Add ZWiki"
+msgstr "Wiki hinzufügen"
 
-#: i/skins/dtmlmessages.pt:46 i/skins/dtmlmessages.pt:85
-msgid "Id"
+#: src/ZWiki/skins/dtmlmessages.pt:46
+#, fuzzy
+msgid "Id:"
 msgstr "Id"
 
-#: i/skins/dtmlmessages.pt:47 i/skins/dtmlmessages.pt:86
-msgid "Title"
+#: src/ZWiki/skins/dtmlmessages.pt:47
+#, fuzzy
+msgid "Title:"
 msgstr "Titel"
 
-#: i/skins/dtmlmessages.pt:48
-msgid "Type"
-msgstr "Typ"
+#: src/ZWiki/skins/dtmlmessages.pt:48
+msgid "Template:"
+msgstr ""
 
-#: i/skins/dtmlmessages.pt:49
-msgid "Create wiki"
-msgstr "Wiki erstellen"
+#: src/ZWiki/skins/dtmlmessages.pt:49
+#, fuzzy
+msgid "Add wiki"
+msgstr "Wiki hinzufügen"
 
-#: i/skins/dtmlmessages.pt:5
+#: src/ZWiki/skins/dtmlmessages.pt:5
 #, fuzzy
 msgid "browse open issues"
 msgstr "offene Probleme durchsuchen"
 
-#: i/skins/dtmlmessages.pt:50
-msgid "and enter"
-msgstr "und betreten"
-
-#: i/skins/dtmlmessages.pt:51
+#: src/ZWiki/skins/dtmlmessages.pt:50
 msgid "Pages changed in the last"
 msgstr "Seiten mit Änderungen innerhalb von"
 
-#: i/skins/dtmlmessages.pt:52
+#: src/ZWiki/skins/dtmlmessages.pt:51
 msgid "Recently changed pages, with summaries"
 msgstr "Kürzlich veränderte Seiten, mit Zusammenfassungen"
 
-#: i/skins/dtmlmessages.pt:53
+#: src/ZWiki/skins/dtmlmessages.pt:52
 msgid "Show summaries ?"
 msgstr "Auszüge anzeigen?"
 
-#: i/skins/dtmlmessages.pt:54
+#: src/ZWiki/skins/dtmlmessages.pt:53
 msgid "Refresh"
 msgstr "Aktualisieren"
 
-#: i/skins/dtmlmessages.pt:55
+#: src/ZWiki/skins/dtmlmessages.pt:54
 msgid "Page"
 msgstr "Seite"
 
-#: i/skins/dtmlmessages.pt:56
+#: src/ZWiki/skins/dtmlmessages.pt:55
 msgid "Edited&nbsp;by"
 msgstr "Von"
 
-#: i/skins/dtmlmessages.pt:57
+#: src/ZWiki/skins/dtmlmessages.pt:56
 msgid "Time"
 msgstr "Zeit"
 
-#: i/skins/dtmlmessages.pt:58
+#: src/ZWiki/skins/dtmlmessages.pt:57
 msgid "NEW"
 msgstr "Neu"
 
-#: i/skins/dtmlmessages.pt:6
+#: src/ZWiki/skins/dtmlmessages.pt:59
+msgid "Pages marked (NEW) have been created within the last week"
+msgstr "Mit (Neu) markierte Seiten wurden innerhalb der letzten Woche erstellt"
+
+#: src/ZWiki/skins/dtmlmessages.pt:6
 #, fuzzy
 msgid "search issues"
 msgstr "Probleme filtern"
 
-#: i/skins/dtmlmessages.pt:60
-msgid "Pages marked (NEW) have been created within the last week"
-msgstr "Mit (Neu) markierte Seiten wurden innerhalb der letzten Woche erstellt"
-
-#: i/skins/dtmlmessages.pt:61
+#: src/ZWiki/skins/dtmlmessages.pt:60
 msgid "Enter a word or phrase and hit enter to search the entire wiki."
 msgstr ""
 "Geben Sie einen oder mehrere Begriffe ein und drücken Sie die Eingabetaste, "
 "um das gesamte Wiki zu durchsuchen."
 
-#: i/skins/dtmlmessages.pt:62
+#: src/ZWiki/skins/dtmlmessages.pt:61
 msgid "This is the same as using the search field at top right."
 msgstr ""
 "Das Ergebnis ist das selbe, als wenn Sie das Suchfeld in der rechten oberen "
 "Ecke benutzen."
 
-#: i/skins/dtmlmessages.pt:63
+#: src/ZWiki/skins/dtmlmessages.pt:62
 msgid "Tips: A single word works best for matching page names."
 msgstr ""
 "Tipp: Ein einzelner Begriff eignet sich am besten für die Suche nach "
 "passenden Seitennamen."
 
-#: i/skins/dtmlmessages.pt:64
+#: src/ZWiki/skins/dtmlmessages.pt:63
 msgid ""
 "Case-insensitivity and wildcards may be supported depending on your catalog "
 "configuration."
@@ -693,207 +809,199 @@ msgstr ""
 "Je nach Ihrer Katalogkonfiguration, werden Groß- und Kleinschreibung "
 "ignoriert und Platzhalter unterstützt."
 
-#: i/skins/dtmlmessages.pt:65
+#: src/ZWiki/skins/dtmlmessages.pt:64
 msgid "Leave it blank to list all pages."
 msgstr "Mit einem leeren Suchfeld erhalten Sie eine Liste aller Seiten."
 
-#: i/skins/dtmlmessages.pt:66 i/skins/dtmlmessages.pt:67
+#: src/ZWiki/skins/dtmlmessages.pt:65 src/ZWiki/skins/dtmlmessages.pt:66
 msgid "Search"
 msgstr "Suchen"
 
-#: i/skins/dtmlmessages.pt:68
+#: src/ZWiki/skins/dtmlmessages.pt:67
 msgid "Page names matching"
 msgstr "Gefundene Seitennamen"
 
-#: i/skins/dtmlmessages.pt:69
+#: src/ZWiki/skins/dtmlmessages.pt:68
 msgid "Text matching"
 msgstr "Gefundene Textstellen"
 
-#: i/skins/dtmlmessages.pt:7
+#: src/ZWiki/skins/dtmlmessages.pt:69
+msgid "Thorough (non-catalog) search for text matching"
+msgstr "Gründliche (nicht katalog-basierte) Suche nach passenden Textstellen"
+
+#: src/ZWiki/skins/dtmlmessages.pt:7
 #, fuzzy
 msgid "recent"
 msgstr "Unterordnen"
 
-#: i/skins/dtmlmessages.pt:70
-msgid "Thorough (non-catalog) search for text matching"
-msgstr "Gründliche (nicht katalog-basierte) Suche nach passenden Textstellen"
-
-#: i/skins/dtmlmessages.pt:71
+#: src/ZWiki/skins/dtmlmessages.pt:70
 msgid "Set your preferences for this wiki:"
 msgstr "Wählen Sie Ihre Einstellungen für dieses Wiki:"
 
-#: i/skins/dtmlmessages.pt:72
+#: src/ZWiki/skins/dtmlmessages.pt:71
 msgid "User name:"
 msgstr "Benutzername:"
 
-#: i/skins/dtmlmessages.pt:73
+#: src/ZWiki/skins/dtmlmessages.pt:72
 msgid "(identifies your edits)"
 msgstr "(kennzeichnet Ihre Änderungen)"
 
-#: i/skins/dtmlmessages.pt:74
+#: src/ZWiki/skins/dtmlmessages.pt:73
 msgid "Email address:"
 msgstr "E-Mail-Adresse:"
 
-#: i/skins/dtmlmessages.pt:75
+#: src/ZWiki/skins/dtmlmessages.pt:74
 msgid "(allows mail subscription)"
 msgstr "(für E-Mail-Abonnements)"
 
-#: i/skins/dtmlmessages.pt:76
+#: src/ZWiki/skins/dtmlmessages.pt:75
 msgid "Your time zone:"
 msgstr "Ihre Zeitzone:"
 
-#: i/skins/dtmlmessages.pt:77
+#: src/ZWiki/skins/dtmlmessages.pt:76
 msgid "(localizes most times)"
 msgstr "(für Zeitangaben im Wiki)"
 
-#: i/skins/dtmlmessages.pt:78
+#: src/ZWiki/skins/dtmlmessages.pt:77
 msgid "Edit form height:"
 msgstr "Höhe des Bearbeitungsformulars:"
 
-#: i/skins/dtmlmessages.pt:79
+#: src/ZWiki/skins/dtmlmessages.pt:78
 msgid "(adjusts form size)"
 msgstr "(bestimmt die Größe des Textfelds)"
 
-#: i/skins/dtmlmessages.pt:8
+#: src/ZWiki/skins/dtmlmessages.pt:79
+msgid "Save options"
+msgstr "Einstellungen speichern"
+
+#: src/ZWiki/skins/dtmlmessages.pt:8
 #, fuzzy
 msgid "all"
 msgstr "Alle"
 
-#: i/skins/dtmlmessages.pt:80
-msgid "Save options"
-msgstr "Einstellungen speichern"
-
-#: i/skins/dtmlmessages.pt:81
+#: src/ZWiki/skins/dtmlmessages.pt:80
 msgid "Forget options"
 msgstr "Einstellungen löschen"
 
-#: i/skins/dtmlmessages.pt:82 i/skins/dtmlmessages.pt:83
+#: src/ZWiki/skins/dtmlmessages.pt:81 src/ZWiki/skins/dtmlmessages.pt:82
 msgid "Add ZWiki Page"
 msgstr "ZWiki-Seite hinzufügen"
 
-#: i/skins/dtmlmessages.pt:84
-msgid ""
-"You may create a new ZWiki Page object using the form below. You may also "
-"choose to upload an existing html file from your local computer by clicking "
-"the <i>Browse</i> button."
-msgstr ""
-"Mit Hilfe des Eingabeformulars können Sie eine neue ZWiki-Seite erstellen. "
-"Sie können aber auch eine existierende HTML-Seite von ihrem eigenen Computer "
-"hochladen, indem Sie den Knopf rechts vom 'Datei'-Feld klicken."
+#: src/ZWiki/skins/dtmlmessages.pt:83
+#, fuzzy
+msgid "Page&nbsp;name:"
+msgstr "Seitenname"
 
-#: i/skins/dtmlmessages.pt:87
-msgid "File"
-msgstr "Datei"
+#: src/ZWiki/skins/dtmlmessages.pt:84
+#, fuzzy
+msgid "Add wiki page"
+msgstr "Wiki-Seite hinzufügen"
 
-#: i/skins/dtmlmessages.pt:88
-msgid "Add"
-msgstr "Hinzufügen"
-
-#: i/skins/dtmlmessages.pt:89
-msgid "Add and Edit"
-msgstr "Hinzufügen und Bearbeiten"
-
-#: i/skins/dtmlmessages.pt:9 i/skins/dtmlmessages.pt:31
-msgid "#"
-msgstr "#"
-
-#: i/skins/dtmlmessages.pt:90
+#: src/ZWiki/skins/dtmlmessages.pt:85
 msgid "Topic"
 msgstr "Thema"
 
-#: i/skins/dtmlmessages.pt:91
+#: src/ZWiki/skins/dtmlmessages.pt:86
 msgid "Last updated"
 msgstr "Letzte Änderung"
 
-#: i/skins/dtmlmessages.pt:92
+#: src/ZWiki/skins/dtmlmessages.pt:87
 msgid "Comments"
 msgstr "Kommentare"
 
-#: i/skins/dtmlmessages.pt:93
+#: src/ZWiki/skins/dtmlmessages.pt:88
 msgid "Views"
 msgstr "Ansichten"
 
-#: i/skins/dtmlmessages.pt:94
+#: src/ZWiki/skins/dtmlmessages.pt:89
 msgid "Created"
 msgstr "Erstellt"
 
-#: i/skins/dtmlmessages.pt:95 i/skins/dtmlmessages.pt:97
+#: src/ZWiki/skins/dtmlmessages.pt:9 src/ZWiki/skins/dtmlmessages.pt:31
+msgid "#"
+msgstr "#"
+
+#: src/ZWiki/skins/dtmlmessages.pt:90 src/ZWiki/skins/dtmlmessages.pt:92
 msgid "by"
 msgstr "von"
 
-#: i/skins/dtmlmessages.pt:96
+#: src/ZWiki/skins/dtmlmessages.pt:91
 msgid "<dtml-var lasteditinterval> ago</dtml-var>"
 msgstr "<dtml-var lasteditinterval> vor</dtml-var>"
 
-#: i/skins/dtmlmessages.pt:98
+#: src/ZWiki/skins/dtmlmessages.pt:93
 msgid "on"
 msgstr "am"
 
-#: i/skins/zwiki_standard/backlinks.pt:108
+#: src/ZWiki/skins/zwiki/backlinks.pt:108
 msgid "Subtopics"
 msgstr "Unterkategorien"
 
-#: i/skins/zwiki_standard/backlinks.pt:111
+#: src/ZWiki/skins/zwiki/backlinks.pt:111
 msgid "This page has no subtopics."
 msgstr "Diese Seite besitzt keine Unterkategorien."
 
-#: i/skins/zwiki_standard/backlinks.pt:114
+#: src/ZWiki/skins/zwiki/backlinks.pt:114
 #, fuzzy
 msgid "Here are it's subtopics."
 msgstr "Diese Seite besitzt folgende Unterkategorien:"
 
-#: i/skins/zwiki_standard/backlinks.pt:117
+#: src/ZWiki/skins/zwiki/backlinks.pt:117
 #, fuzzy
 msgid "You can reorder them by clicking the ^ buttons."
 msgstr ""
 "Sie können die Reihenfolge der Unterkategorien verändern, indem Sie auf den "
 "Knopf mit dem ^ drücken."
 
-#: i/skins/zwiki_standard/backlinks.pt:20
-#: i/skins/zwiki_standard/backlinks.pt:55
-msgid "Backlinks"
-msgstr "Backlinks"
+#: src/ZWiki/skins/zwiki/backlinks.pt:20
+#, fuzzy
+msgid "Related pages"
+msgstr "Diese Seite erstellen"
 
-#: i/skins/zwiki_standard/backlinks.pt:26
+#: src/ZWiki/skins/zwiki/backlinks.pt:26
 msgid "Parents"
 msgstr "Übergeordnete Seiten"
 
-#: i/skins/zwiki_standard/backlinks.pt:31
+#: src/ZWiki/skins/zwiki/backlinks.pt:31
 msgid "is a top-level topic."
 msgstr "hat keine Oberkategorie."
 
-#: i/skins/zwiki_standard/backlinks.pt:32
+#: src/ZWiki/skins/zwiki/backlinks.pt:32
 msgid "is a subtopic of:"
 msgstr "ist eine untergeordnete Seite von:"
 
-#: i/skins/zwiki_standard/backlinks.pt:56
+#: src/ZWiki/skins/zwiki/backlinks.pt:55
+msgid "Backlinks"
+msgstr "Backlinks"
+
+#: src/ZWiki/skins/zwiki/backlinks.pt:56
 msgid "Here are the pages which link to it:"
 msgstr "Diese Seiten verweisen auf sie:"
 
-#: i/skins/zwiki_standard/backlinks.pt:57
+#: src/ZWiki/skins/zwiki/backlinks.pt:57
 msgid "No other pages link to this one."
 msgstr "Keine anderen Seiten verweisen auf diese."
 
-#: i/skins/zwiki_standard/backlinks.pt:82
+#: src/ZWiki/skins/zwiki/backlinks.pt:82
 msgid ""
 "You can set this page's parent(s) to place it within the overall page "
 "hierarchy."
 msgstr ""
 
-#: i/skins/zwiki_standard/backlinks.pt:85
+#: src/ZWiki/skins/zwiki/backlinks.pt:85
 msgid ""
 "Check one or more checkboxes or enter a page name here, and click the button."
 msgstr ""
 "Wählen Sie eine oder mehrere Checkboxen an, oder geben die hier einen "
 "Seitennamen an. Bestätigen Sie per Click auf den Button."
 
-#: i/skins/zwiki_standard/backlinks.pt:88
+#: src/ZWiki/skins/zwiki/backlinks.pt:88
 msgid "Enter a page name here and click the button."
 msgstr ""
 "Geben Sie hier einen Seitennamen an, und bestätigen Sie per Click auf den "
 "Button"
 
-#: i/skins/zwiki_standard/backlinks.pt:91
+#: src/ZWiki/skins/zwiki/backlinks.pt:91
 #, fuzzy
 msgid ""
 "You can type just the first few letters, case and punctuation are ignored."
@@ -901,15 +1009,15 @@ msgstr ""
 "Sie brauchen nur wenige Anfangsbuchstaben eingeben, Groß- und "
 "Kleinschreibung sowie Zeichensetzung werden ignoriert."
 
-#: i/skins/zwiki_standard/backlinks.pt:98
+#: src/ZWiki/skins/zwiki/backlinks.pt:98
 msgid "Reparent"
 msgstr "Unterordnen"
 
-#: i/skins/zwiki_standard/badtemplate.pt:12
+#: src/ZWiki/skins/zwiki/badtemplate.pt:12
 msgid "Bad template"
 msgstr ""
 
-#: i/skins/zwiki_standard/badtemplate.pt:13
+#: src/ZWiki/skins/zwiki/badtemplate.pt:13
 msgid ""
 "There was a problem locating one of this wiki's skin templates. There may be "
 "a page or other non-page-template/non-dtml-method object with the same ID, "
@@ -922,187 +1030,409 @@ msgstr ""
 "Eventuell fehlt das Skin-Template auch im Dateisystem (eine unvollständige "
 "Zwiki-Installation)."
 
-#: i/skins/zwiki_standard/contentspage.pt:12
+#: src/ZWiki/skins/zwiki/commentform.pt:21
+msgid "subject"
+msgstr "Betreff"
+
+#: src/ZWiki/skins/zwiki/commentform.pt:22
+msgid "a subject helps clarify threads and RecentChanges"
+msgstr ""
+"Mit aussagekräftigen Betreffen kann man Diskussionen leichter folgen und die "
+"Liste der jüngsten Änderungen wird informativer."
+
+#: src/ZWiki/skins/zwiki/commentform.pt:29
+msgid "replying"
+msgstr "Antwort auf einen Kommentar"
+
+#: src/ZWiki/skins/zwiki/commentform.pt:36
+msgid "to comment (and cc any subscribers) enter text here and click add"
+msgstr ""
+"Um diese Seite zu kommentieren (und alle Abonnenten zu benachrichtigen), "
+"geben Sie hier einen Text ein und klicken Sie auf 'Kommentar hinzufügen'."
+
+#: src/ZWiki/skins/zwiki/commentform.pt:56
+msgid "${nb} subscribers"
+msgstr "${nb} Abonnenten"
+
+#: src/ZWiki/skins/zwiki/commentform.pt:58
+msgid "1 subscriber"
+msgstr "1 Abonnent"
+
+#. Default: "add a comment"
+#: src/ZWiki/skins/zwiki/commentform.pt:64
+msgid "add-comment"
+msgstr "Kommentar hinzufügen"
+
+#: src/ZWiki/skins/zwiki/contentspage.pt:12
 msgid "Wiki contents"
 msgstr "Wiki-Inhalt"
 
-#: i/skins/zwiki_standard/contentspage.pt:16
+#: src/ZWiki/skins/zwiki/contentspage.pt:16
 msgid "Singletons"
 msgstr "Singletons"
 
-#: i/skins/zwiki_standard/denied.pt:12
+#: src/ZWiki/skins/zwiki/denied.pt:12
 msgid "Not permitted"
 msgstr "Nicht erlaubt"
 
-#: i/skins/zwiki_standard/diffform.pt:13
+#: src/ZWiki/skins/zwiki/diffform.pt:24
 #, fuzzy
 msgid "Edit history"
 msgstr "Alle Versionen"
 
-#. Default: "Log note :"
-#: i/skins/zwiki_standard/diffform.pt:21
-msgid "log_note"
-msgstr "Notiz"
+#: src/ZWiki/skins/zwiki/diffform.pt:32
+#, fuzzy
+msgid "Edit:"
+msgstr "Bearbeiten"
 
-#: i/skins/zwiki_standard/diffform.pt:25
-msgid "full history"
-msgstr "Alle Versionen"
+#. Default: "<<"
+#: src/ZWiki/skins/zwiki/diffform.pt:34 src/ZWiki/skins/zwiki/diffform.pt:38
+msgid " << "
+msgstr ""
 
-#: i/skins/zwiki_standard/diffform.pt:27 i/skins/zwiki_standard/diffform.pt:29
-msgid "<< previous edit"
-msgstr "<< vorherige Änderung"
+#. Default: ">>"
+#: src/ZWiki/skins/zwiki/diffform.pt:52 src/ZWiki/skins/zwiki/diffform.pt:56
+msgid " >> "
+msgstr ""
 
-#: i/skins/zwiki_standard/diffform.pt:31 i/skins/zwiki_standard/diffform.pt:33
-msgid "next edit >>"
-msgstr "nächste Änderung >>"
+#: src/ZWiki/skins/zwiki/diffform.pt:61
+#, fuzzy
+msgid "Manage"
+msgstr "Ändern"
 
-#: i/skins/zwiki_standard/diffform.pt:35
-msgid "Revert this and later changes"
+#: src/ZWiki/skins/zwiki/diffform.pt:65
+#, fuzzy
+msgid "Revert this and later edits"
 msgstr "Diese und alle folgenden Änderungen rückgängig machen"
 
-#: i/skins/zwiki_standard/diffform.pt:38
+#: src/ZWiki/skins/zwiki/diffform.pt:74
 msgid "Return to page"
 msgstr "Zurück zu"
 
-#: i/skins/zwiki_standard/editform.pt:117
+#: src/ZWiki/skins/zwiki/diffform.pt:85
+#, fuzzy
+msgid "Time:"
+msgstr "Zeit"
+
+#: src/ZWiki/skins/zwiki/diffform.pt:90
+#, fuzzy
+msgid "Note:"
+msgstr "Name,"
+
+#: src/ZWiki/skins/zwiki/editform.pt:121
 msgid "toggle source/WYSIWYG mode"
 msgstr "Zwischen Quell- und WYSIWYG-Modus wechseln"
 
-#: i/skins/zwiki_standard/editform.pt:128
+#: src/ZWiki/skins/zwiki/editform.pt:132
 msgid "Optional change note"
 msgstr "Notiz zu den Änderungen (optional)"
 
-#: i/skins/zwiki_standard/editform.pt:129
+#: src/ZWiki/skins/zwiki/editform.pt:133
 msgid "a note makes RecentChanges more useful"
 msgstr "Durch Notizen wird die Liste der letzten Änderungen nützlicher."
 
-#: i/skins/zwiki_standard/editform.pt:142
+#: src/ZWiki/skins/zwiki/editform.pt:146
 msgid "Upload a file or image"
 msgstr "Datei oder Bild hochladen"
 
-#: i/skins/zwiki_standard/editform.pt:143
+#: src/ZWiki/skins/zwiki/editform.pt:147
 msgid "upload a file and link it on this page ?"
 msgstr ""
 "Soll eine Datei oder ein Bild ins Wiki hochgeladen und ein Verweis darauf zu "
 "dieser Seite hinzugefügt werden?"
 
-#: i/skins/zwiki_standard/editform.pt:153
+#: src/ZWiki/skins/zwiki/editform.pt:157
 msgid "For editing help, see"
 msgstr "Hilfe zum Bearbeiten von Seiten finden Sie unter"
 
-#: i/skins/zwiki_standard/editform.pt:155
+#: src/ZWiki/skins/zwiki/editform.pt:159
 msgid "HelpPage"
 msgstr "HilfeSeite"
 
-#: i/skins/zwiki_standard/editform.pt:162
+#: src/ZWiki/skins/zwiki/editform.pt:166
 msgid "TextFormattingRules"
 msgstr "TextFormatierungsRegeln"
 
-#: i/skins/zwiki_standard/editform.pt:166
+#: src/ZWiki/skins/zwiki/editform.pt:170
 msgid "${DYNAMIC_CONTENT}"
 msgstr "${DYNAMIC_CONTENT}"
 
-#: i/skins/zwiki_standard/editform.pt:174
+#: src/ZWiki/skins/zwiki/editform.pt:178
 msgid "preview this edit"
 msgstr "Vorschau der bearbeiteten Seite"
 
-#: i/skins/zwiki_standard/editform.pt:174
+#: src/ZWiki/skins/zwiki/editform.pt:178
 msgid "Preview"
 msgstr "Vorschau"
 
-#: i/skins/zwiki_standard/editform.pt:179
+#: src/ZWiki/skins/zwiki/editform.pt:183
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: i/skins/zwiki_standard/editform.pt:179
+#: src/ZWiki/skins/zwiki/editform.pt:183
 msgid "cancel this edit and return to the page"
 msgstr "Bearbeitung abbrechen und zur ursprünglichen Seite zurückkehren"
 
-#: i/skins/zwiki_standard/editform.pt:187
+#: src/ZWiki/skins/zwiki/editform.pt:191
 msgid "Create"
 msgstr "Erstellen"
 
-#: i/skins/zwiki_standard/editform.pt:188
+#: src/ZWiki/skins/zwiki/editform.pt:192
 msgid "create this wiki page"
 msgstr "Diese Wiki-Seite erstellen"
 
 #. Default: "PREVIEW"
-#: i/skins/zwiki_standard/editform.pt:199
-#: i/skins/zwiki_standard/editform.pt:200
-#: i/skins/zwiki_standard/editform.pt:201
-#: i/skins/zwiki_standard/editform.pt:202
-#: i/skins/zwiki_standard/editform.pt:203
-#: i/skins/zwiki_standard/editform.pt:212
-#: i/skins/zwiki_standard/editform.pt:213
-#: i/skins/zwiki_standard/editform.pt:214
-#: i/skins/zwiki_standard/editform.pt:215
-#: i/skins/zwiki_standard/editform.pt:216
+#: src/ZWiki/skins/zwiki/editform.pt:203 src/ZWiki/skins/zwiki/editform.pt:204
+#: src/ZWiki/skins/zwiki/editform.pt:205 src/ZWiki/skins/zwiki/editform.pt:206
+#: src/ZWiki/skins/zwiki/editform.pt:207 src/ZWiki/skins/zwiki/editform.pt:216
+#: src/ZWiki/skins/zwiki/editform.pt:217 src/ZWiki/skins/zwiki/editform.pt:218
+#: src/ZWiki/skins/zwiki/editform.pt:219 src/ZWiki/skins/zwiki/editform.pt:220
 msgid "label_preview"
 msgstr "VORSCHAU"
 
-#: i/skins/zwiki_standard/editform.pt:56
+#: src/ZWiki/skins/zwiki/editform.pt:60
 msgid "Page name"
 msgstr "Seitenname"
 
-#: i/skins/zwiki_standard/editform.pt:57
+#: src/ZWiki/skins/zwiki/editform.pt:61
 msgid "the name of this wiki page (changing this may be slow!)"
 msgstr ""
 "Der Name dieser Wiki-Seite. (es kann sehr lange dauern, den Namen einer "
 "Seite zu ändern!)"
 
-#: i/skins/zwiki_standard/editform.pt:67
+#: src/ZWiki/skins/zwiki/editform.pt:71
 msgid "type"
 msgstr "Typ"
 
-#: i/skins/zwiki_standard/editform.pt:68
+#: src/ZWiki/skins/zwiki/editform.pt:72
 msgid "select the formatting and rendering style for this page"
 msgstr ""
 "Wählen Sie die Art und Weise, wie diese Seite formatiert und dargestellt "
 "werden soll."
 
-#: i/skins/zwiki_standard/recentchanges.pt:12
+#: src/ZWiki/skins/zwiki/links.pt:102
+msgid "(external edit)"
+msgstr "Diese Seite mit einem externem Editor bearbeiten"
+
+#: src/ZWiki/skins/zwiki/links.pt:12
+msgid "home"
+msgstr "Startseite"
+
+#: src/ZWiki/skins/zwiki/links.pt:13
+msgid "show wiki recent changes"
+msgstr "Letzte Änderungen zeigen"
+
+#: src/ZWiki/skins/zwiki/links.pt:17
+msgid "changes"
+msgstr "Änderungen"
+
+#: src/ZWiki/skins/zwiki/links.pt:18
+msgid "show discussion page"
+msgstr "Diskussionsseite aufrufen"
+
+#: src/ZWiki/skins/zwiki/links.pt:22
+msgid "discussion"
+msgstr "Diskussion"
+
+#: src/ZWiki/skins/zwiki/links.pt:23
+msgid "show issue tracker"
+msgstr "Problemliste (Issue Tracker) aufrufen"
+
+#: src/ZWiki/skins/zwiki/links.pt:27
+msgid "issues"
+msgstr "Probleme"
+
+#: src/ZWiki/skins/zwiki/links.pt:28
+msgid "show wiki contents"
+msgstr "Inhaltverzeichnis aufrufen"
+
+#: src/ZWiki/skins/zwiki/links.pt:32
+msgid "contents"
+msgstr "Inhalt"
+
+#: src/ZWiki/skins/zwiki/links.pt:33
+msgid "show wiki index"
+msgstr "Index aufrufen"
+
+#: src/ZWiki/skins/zwiki/links.pt:37
+msgid "index"
+msgstr "Index"
+
+#: src/ZWiki/skins/zwiki/links.pt:38
+msgid "show upload page"
+msgstr "Dateien anzeigen, die in dieses Wiki hochgeladen wurden"
+
+#: src/ZWiki/skins/zwiki/links.pt:42
+msgid "uploads"
+msgstr "Dateien"
+
+#: src/ZWiki/skins/zwiki/links.pt:43
+msgid "show help page"
+msgstr "Hilfeseite aufrufen"
+
+#: src/ZWiki/skins/zwiki/links.pt:48
+msgid "help"
+msgstr "Hilfe"
+
+#: src/ZWiki/skins/zwiki/links.pt:49
+msgid "show wiki options"
+msgstr "Wiki-Einstellungen aufrufen"
+
+#: src/ZWiki/skins/zwiki/links.pt:53
+msgid "options"
+msgstr "Einstellungen"
+
+#: src/ZWiki/skins/zwiki/links.pt:62
+msgid "backlinks"
+msgstr "Backlinks"
+
+#: src/ZWiki/skins/zwiki/links.pt:63
+msgid "configure email subscription to this page or site"
+msgstr "E-Mail-Abonnements für diese Seite oder das gesamte Wiki ändern"
+
+#: src/ZWiki/skins/zwiki/links.pt:73
+msgid "subscribe"
+msgstr "Abonnement"
+
+#: src/ZWiki/skins/zwiki/links.pt:74
+msgid "show this page's change history"
+msgstr "Alte Versionen dieser Seite zeigen"
+
+#: src/ZWiki/skins/zwiki/links.pt:8
+msgid "show front page"
+msgstr "Startseite aufrufen"
+
+#: src/ZWiki/skins/zwiki/links.pt:80
+msgid "diff"
+msgstr "Unterschiede"
+
+#: src/ZWiki/skins/zwiki/links.pt:89
+msgid "edit"
+msgstr "Bearbeiten"
+
+#: src/ZWiki/skins/zwiki/links.pt:90
+msgid "edit using external editor"
+msgstr "Mit externem Editor bearbeiten"
+
+#: src/ZWiki/skins/zwiki/pageheader.pt:22
+msgid "go to home page"
+msgstr "Startseite aufrufen"
+
+#: src/ZWiki/skins/zwiki/pageheader.pt:53
+msgid "search all pages"
+msgstr "Suche auf allen Seiten"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:25
+msgid "new"
+msgstr "Neu:"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:26
+msgid "parent,"
+msgstr "Oberkategorie,"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:29
+msgid "name,"
+msgstr "Name,"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:32
+msgid "replacement,"
+msgstr "Ersatzseite,"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:35
+msgid "page"
+msgstr "Seite"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:40
+msgid "enter a page name and click buttons to the right (mouse over for help)"
+msgstr ""
+"geben Sie den Namen einer Seite ein und klicken Sie auf die Knöpfe rechts "
+"(eine Hilfe erscheint, wenn Sie die Maus über die Knöpfe bewegen)"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:45
+msgid "reparent"
+msgstr "Unterordnen"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:45
+msgid "make this page a subtopic of the page you have entered"
+msgstr "Diese Seite zu einem Unterthema der eingegebenen Seite machen"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:50
+msgid "rename this page to the name you have entered, updating all links"
+msgstr ""
+"Diese Seite in den eingegebenen Namen umbenennen und alle Links aktualisieren"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:50
+msgid "rename"
+msgstr "Umbenennen"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:55
+msgid "delete!"
+msgstr "Löschen!"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:55
+msgid ""
+"delete this page, and redirect links to the page you have entered, if any"
+msgstr ""
+"Diese Seite löschen. Sofern direkte Links auf die eingegebene Seite "
+"existieren, diese umleiten."
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:60
+msgid "create a page with the name you have entered, as a subtopic of this one"
+msgstr ""
+"Erstelle eine Seite mit dem eingegebenen Namen als Unterthema dieser Seite."
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:60
+msgid "create"
+msgstr "Erstellen"
+
+#: src/ZWiki/skins/zwiki/recentchanges.pt:12
 msgid "Recent changes"
 msgstr "Letzte Änderungen"
 
-#: i/skins/zwiki_standard/searchwiki.pt:12
+#: src/ZWiki/skins/zwiki/searchwiki.pt:12
 #, fuzzy
 msgid "Search this wiki"
 msgstr "Wiki durchsuchen"
 
+#: src/ZWiki/skins/zwiki/subscribeform.pt:102
+#: src/ZWiki/skins/zwiki/subscribeform.pt:136
+msgid "all edits"
+msgstr "alle Bearbeitungen"
+
 #. Default: ""
 #.  "You are currently subscribed<br />\n"
 #.  "                  to the whole wiki."
-#: i/skins/zwiki_standard/subscribeform.pt:108
+#: src/ZWiki/skins/zwiki/subscribeform.pt:113
 msgid "subscribed_wiki_ok"
 msgstr "Sie haben das gesamte Wiki abonniert."
 
 #. Default: "You are currently not subscribed<br /> to the whole wiki."
-#: i/skins/zwiki_standard/subscribeform.pt:112
+#: src/ZWiki/skins/zwiki/subscribeform.pt:117
 msgid "subscribed_wiki_no"
 msgstr "Sie haben nicht das gesamte Wiki abonniert."
 
-#: i/skins/zwiki_standard/subscribeform.pt:116
-msgid "Unsubscribe from whole wiki"
-msgstr "Abonnement des gesamten Wikis kündigen"
-
-#: i/skins/zwiki_standard/subscribeform.pt:12
+#: src/ZWiki/skins/zwiki/subscribeform.pt:12
 msgid "Mail subscription"
 msgstr "E-Mail-Abonnement"
 
-#: i/skins/zwiki_standard/subscribeform.pt:123
+#: src/ZWiki/skins/zwiki/subscribeform.pt:121
+msgid "Unsubscribe from whole wiki"
+msgstr "Abonnement des gesamten Wikis kündigen"
+
+#: src/ZWiki/skins/zwiki/subscribeform.pt:128
 msgid "Subscribe to whole wiki"
 msgstr "Gesamtes Wiki abonnieren"
 
 #. Default: "You are subscribed to these other pages"
-#: i/skins/zwiki_standard/subscribeform.pt:141
+#: src/ZWiki/skins/zwiki/subscribeform.pt:146
 msgid "other_page_subscribed"
 msgstr "Sie haben folgende weiteren Seiten abonniert"
 
-#: i/skins/zwiki_standard/subscribeform.pt:159
+#: src/ZWiki/skins/zwiki/subscribeform.pt:164
 msgid "Page subscribers"
 msgstr "Abonnenten dieser Seite"
 
-#: i/skins/zwiki_standard/subscribeform.pt:168
+#: src/ZWiki/skins/zwiki/subscribeform.pt:173
 msgid "Wiki subscribers"
 msgstr "Abonnenten des gesamten Wikis"
 
@@ -1110,7 +1440,7 @@ msgstr "Abonnenten des gesamten Wikis"
 #.  "You can subscribe to this page or to the whole wiki.\n"
 #.  "              Subscribers receive a copy of comments via email.\n"
 #.  "              Or return to"
-#: i/skins/zwiki_standard/subscribeform.pt:36
+#: src/ZWiki/skins/zwiki/subscribeform.pt:38
 msgid "subscribe_desc_comments"
 msgstr ""
 "Sie können diese Seite oder das gesamte Wiki abonnieren. Als Abonnent werden "
@@ -1121,464 +1451,281 @@ msgstr ""
 #.  "You can subscribe to this page or to the whole wiki.\n"
 #.  "              Subscribers receive a copy of all edits via email.\n"
 #.  "              Or return to"
-#: i/skins/zwiki_standard/subscribeform.pt:41
+#: src/ZWiki/skins/zwiki/subscribeform.pt:43
 msgid "subscribe_desc_edits"
 msgstr ""
 "Sie können diese Seite oder das gesamte Wiki abonnieren. Als Abonnent werden "
 "Sie per E-Mail benachrichtigt, wenn diese Seite bzw. das Wiki verändert "
 "werden. Oder kehren Sie zurück zu"
 
-#: i/skins/zwiki_standard/subscribeform.pt:53
+#: src/ZWiki/skins/zwiki/subscribeform.pt:53
+msgid "Email will go to the address you have configured in site preferences."
+msgstr ""
+
+#: src/ZWiki/skins/zwiki/subscribeform.pt:58
 msgid "Your email address"
 msgstr "Ihre E-Mail-Adresse"
 
-#: i/skins/zwiki_standard/subscribeform.pt:57
+#: src/ZWiki/skins/zwiki/subscribeform.pt:62
 msgid "Change"
 msgstr "Ändern"
 
 #. Default: "To subscribe, please configure your email address."
-#: i/skins/zwiki_standard/subscribeform.pt:64
+#: src/ZWiki/skins/zwiki/subscribeform.pt:69
 msgid "subscribe_no_email"
 msgstr "Bitte geben Sie für das Abonnement Ihre E-Mail-Adresse ein."
 
 #. Default: ""
 #.  "You are currently subscribed<br />\n"
 #.  "                  to this page."
-#: i/skins/zwiki_standard/subscribeform.pt:74
+#: src/ZWiki/skins/zwiki/subscribeform.pt:79
 msgid "subscribed_page_ok"
 msgstr "Sie haben diese Seite abonniert."
 
 #. Default: ""
 #.  "You are currently not subscribed<br />\n"
 #.  "                  to this page."
-#: i/skins/zwiki_standard/subscribeform.pt:78
+#: src/ZWiki/skins/zwiki/subscribeform.pt:83
 msgid "subscribed_page_no"
 msgstr "Sie haben diese Seite nicht abonniert."
 
 #. Default: "Unsubscribe from this page"
-#: i/skins/zwiki_standard/subscribeform.pt:82
+#: src/ZWiki/skins/zwiki/subscribeform.pt:87
 msgid " Unsubscribe from this page "
 msgstr " Abonnement dieser Seite kündigen "
 
 #. Default: "Subscribe to this page"
-#: i/skins/zwiki_standard/subscribeform.pt:89
+#: src/ZWiki/skins/zwiki/subscribeform.pt:94
 msgid " Subscribe to this page "
 msgstr " Diese Seite abonnieren "
 
-#: i/skins/zwiki_standard/subscribeform.pt:97
-#: i/skins/zwiki_standard/subscribeform.pt:131
-msgid "all edits"
-msgstr "alle Bearbeitungen"
-
-#: i/skins/zwiki_standard/useroptions.pt:12
+#: src/ZWiki/skins/zwiki/useroptions.pt:12
 msgid "User options"
 msgstr "Benutzer Optionen"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:100
-msgid "changes"
-msgstr "Änderungen"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:101
-msgid "show discussion page"
-msgstr "Diskussionsseite aufrufen"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:105
-msgid "discussion"
-msgstr "Diskussion"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:106
-msgid "show issue tracker"
-msgstr "Problemliste (Issue Tracker) aufrufen"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:110
-msgid "issues"
-msgstr "Probleme"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:111
-msgid "show wiki contents"
-msgstr "Inhaltverzeichnis aufrufen"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:115
-msgid "contents"
-msgstr "Inhalt"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:116
-msgid "show wiki index"
-msgstr "Index aufrufen"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:120
-msgid "index"
-msgstr "Index"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:121
-msgid "show upload page"
-msgstr "Dateien anzeigen, die in dieses Wiki hochgeladen wurden"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:125
-msgid "uploads"
-msgstr "Dateien"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:127
-msgid "show help page"
-msgstr "Hilfeseite aufrufen"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:132
-msgid "help"
-msgstr "Hilfe"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:133
-msgid "show wiki options"
-msgstr "Wiki-Einstellungen aufrufen"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:137
-msgid "options"
-msgstr "Einstellungen"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:147
-msgid "backlinks"
-msgstr "Backlinks"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:148
-msgid "configure email subscription to this page or site"
-msgstr "E-Mail-Abonnements für diese Seite oder das gesamte Wiki ändern"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:158
-msgid "subscribe"
-msgstr "Abonnement"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:159
-msgid "show this page's change history"
-msgstr "Alte Versionen dieser Seite zeigen"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:165
-msgid "diff"
-msgstr "Unterschiede"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:174
-msgid "edit"
-msgstr "Bearbeiten"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:175
-msgid "edit using external editor"
-msgstr "Mit externem Editor bearbeiten"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:187
-msgid "(external edit)"
-msgstr "Diese Seite mit einem externem Editor bearbeiten"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:246
-msgid "go to home page"
-msgstr "Startseite aufrufen"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:266
-msgid "search all pages"
-msgstr "Suche auf allen Seiten"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:312
-msgid "subject"
-msgstr "Betreff"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:313
-msgid "a subject helps clarify threads and RecentChanges"
-msgstr ""
-"Mit aussagekräftigen Betreffen kann man Diskussionen leichter folgen und die "
-"Liste der jüngsten Änderungen wird informativer."
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:320
-msgid "replying"
-msgstr "Antwort auf einen Kommentar"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:327
-msgid "to comment (and cc any subscribers) enter text here and click add"
-msgstr ""
-"Um diese Seite zu kommentieren (und alle Abonnenten zu benachrichtigen), "
-"geben Sie hier einen Text ein und klicken Sie auf 'Kommentar hinzufügen'."
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:347
-msgid "${nb} subscribers"
-msgstr "${nb} Abonnenten"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:349
-msgid "1 subscriber"
-msgstr "1 Abonnent"
-
-#. Default: "add a comment"
-#: i/skins/zwiki_standard/wikipage-inline.pt:355
-msgid "add-comment"
-msgstr "Kommentar hinzufügen"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:388
-msgid "new"
-msgstr "Neu:"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:389
-msgid "parent,"
-msgstr "Oberkategorie,"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:392
-msgid "name,"
-msgstr "Name,"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:395
-msgid "replacement,"
-msgstr "Ersatzseite,"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:398
-msgid "page"
-msgstr "Seite"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:403
-msgid "enter a page name and click buttons to the right (mouse over for help)"
-msgstr ""
-"geben Sie den Namen einer Seite ein und klicken Sie auf die Knöpfe rechts "
-"(eine Hilfe erscheint, wenn Sie die Maus über die Knöpfe bewegen)"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:408
-msgid "reparent"
-msgstr "Unterordnen"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:408
-msgid "make this page a subtopic of the page you have entered"
-msgstr "Diese Seite zu einem Unterthema der eingegebenen Seite machen"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:413
-msgid "rename this page to the name you have entered, updating all links"
-msgstr ""
-"Diese Seite in den eingegebenen Namen umbenennen und alle Links aktualisieren"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:413
-msgid "rename"
-msgstr "Umbenennen"
-
-#: i/skins/zwiki_standard/wikipage-inline.pt:418
-msgid "delete!"
-msgstr "Löschen!"
+#~ msgid "your edit contained a banned link pattern"
+#~ msgstr "Ihre Bearbeitung enthielt einen verbotenen Link"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:418
-msgid ""
-"delete this page, and redirect links to the page you have entered, if any"
-msgstr ""
-"Diese Seite löschen. Sofern direkte Links auf die eingegebene Seite "
-"existieren, diese umleiten."
+#~ msgid "adding of external links by anonymous authors is restricted"
+#~ msgstr ""
+#~ "anonyme Autoren dürfen nur eine begrenzte Anzahl externer Links hinzufügen"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:423
-msgid "create a page with the name you have entered, as a subtopic of this one"
-msgstr ""
-"Erstelle eine Seite mit dem eingegebenen Namen als Unterthema dieser Seite."
+#~ msgid "Add a ZWiki web"
+#~ msgstr "Ein ZWiki-Web hinzufügen"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:423
-msgid "create"
-msgstr "Erstellen"
+#~ msgid "Type"
+#~ msgstr "Typ"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:91
-msgid "show front page"
-msgstr "Startseite aufrufen"
+#~ msgid "Create wiki"
+#~ msgstr "Wiki erstellen"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:95
-msgid "home"
-msgstr "Startseite"
+#~ msgid "and enter"
+#~ msgstr "und betreten"
 
-#: i/skins/zwiki_standard/wikipage-inline.pt:96
-msgid "show wiki recent changes"
-msgstr "Letzte Änderungen zeigen"
+#~ msgid ""
+#~ "You may create a new ZWiki Page object using the form below. You may also "
+#~ "choose to upload an existing html file from your local computer by "
+#~ "clicking the <i>Browse</i> button."
+#~ msgstr ""
+#~ "Mit Hilfe des Eingabeformulars können Sie eine neue ZWiki-Seite "
+#~ "erstellen. Sie können aber auch eine existierende HTML-Seite von ihrem "
+#~ "eigenen Computer hochladen, indem Sie den Knopf rechts vom 'Datei'-Feld "
+#~ "klicken."
 
-msgid "Backlinks for"
-msgstr "Backlinks für"
+#~ msgid "Add"
+#~ msgstr "Hinzufügen"
 
-msgid "singleton_desc"
-msgstr "Singletons sind Seiten auf oberster Ebene der Seitenhierarchie."
+#~ msgid "Add and Edit"
+#~ msgstr "Hinzufügen und Bearbeiten"
 
-msgid "History for"
-msgstr "Alte Versionen von"
+#~ msgid "Backlinks for"
+#~ msgstr "Backlinks für"
 
-msgid "return to page"
-msgstr "Zurück zur Seite"
+#~ msgid "singleton_desc"
+#~ msgstr "Singletons sind Seiten auf oberster Ebene der Seitenhierarchie."
 
-msgid "help_shortname"
-msgstr ""
-"Achtung: In einem großen Wiki kann es sehr lange dauern, eine Seite "
-"umzubenennen. Wenn möglich, werden dabei Verweise in anderen Seiten "
-"aktualisiert."
+#~ msgid "History for"
+#~ msgstr "Alte Versionen von"
 
-msgid "label_body_text"
-msgstr "Seiteninhalt"
+#~ msgid "return to page"
+#~ msgstr "Zurück zur Seite"
 
-msgid "help_wikibody"
-msgstr ""
-"Verwenden Sie WikiNamen oder  [eckige Klammern] um auf andere Seiten zu "
-"verweisen. Verweise auf Seiten, die noch nicht existieren, werden mit einem "
-"kleinen <code>?</code> gekennzeichnet. Klicken Sie auf dieses Fragezeichen, "
-"um die fehlende Seite zu erstellen."
+#~ msgid "help_shortname"
+#~ msgstr ""
+#~ "Achtung: In einem großen Wiki kann es sehr lange dauern, eine Seite "
+#~ "umzubenennen. Wenn möglich, werden dabei Verweise in anderen Seiten "
+#~ "aktualisiert."
 
-msgid "label_note"
-msgstr "Notiz für die Versionskontrolle (optional)"
+#~ msgid "label_body_text"
+#~ msgstr "Seiteninhalt"
 
-msgid "help_wikinote"
-msgstr "Kurze Beschreibung ihrer Änderungen:"
+#~ msgid "help_wikibody"
+#~ msgstr ""
+#~ "Verwenden Sie WikiNamen oder  [eckige Klammern] um auf andere Seiten zu "
+#~ "verweisen. Verweise auf Seiten, die noch nicht existieren, werden mit "
+#~ "einem kleinen <code>?</code> gekennzeichnet. Klicken Sie auf dieses "
+#~ "Fragezeichen, um die fehlende Seite zu erstellen."
 
-msgid "label_upload_contents_optional"
-msgstr "Datei oder Bild hochladen (optional)"
+#~ msgid "label_note"
+#~ msgstr "Notiz für die Versionskontrolle (optional)"
 
-msgid "help_wikiupload"
-msgstr "Fügen Sie hier eine Datei oder ein Bild zu dieser Seite hinzu."
+#~ msgid "help_wikinote"
+#~ msgstr "Kurze Beschreibung ihrer Änderungen:"
 
-msgid "label_format"
-msgstr "Seitenformat"
+#~ msgid "label_upload_contents_optional"
+#~ msgstr "Datei oder Bild hochladen (optional)"
 
-msgid "help_format"
-msgstr ""
-"Wenn Sie bei der Wahl des Formats unsicher sind, wählen Sie 'Plain Text'."
+#~ msgid "help_wikiupload"
+#~ msgstr "Fügen Sie hier eine Datei oder ein Bild zu dieser Seite hinzu."
 
-msgid "Save"
-msgstr "Speichern"
+#~ msgid "label_format"
+#~ msgstr "Seitenformat"
 
-msgid "heading_edit_wiki_page"
-msgstr "${itemtype} \"${pagename}\" bearbeiten"
+#~ msgid "help_format"
+#~ msgstr ""
+#~ "Wenn Sie bei der Wahl des Formats unsicher sind, wählen Sie 'Plain Text'."
 
-msgid "description_edit_wiki_page"
-msgstr "Tragen Sie hier alle Einzelheiten zur Wiki-Seite ein."
+#~ msgid "Save"
+#~ msgstr "Speichern"
 
-msgid "legend_wiki_page_details"
-msgstr "Einzelheiten zur Wiki-Seite"
+#~ msgid "heading_edit_wiki_page"
+#~ msgstr "${itemtype} \"${pagename}\" bearbeiten"
 
-msgid "label_pagename"
-msgstr "Seitenname"
+#~ msgid "description_edit_wiki_page"
+#~ msgstr "Tragen Sie hier alle Einzelheiten zur Wiki-Seite ein."
 
-msgid "Required"
-msgstr "Erforderlich"
+#~ msgid "legend_wiki_page_details"
+#~ msgstr "Einzelheiten zur Wiki-Seite"
 
-msgid "label_required"
-msgstr "(erforderlich)"
+#~ msgid "label_pagename"
+#~ msgstr "Seitenname"
 
-msgid "heading_wiki_recent_changes"
-msgstr "Letzte Änderungen"
+#~ msgid "Required"
+#~ msgstr "Erforderlich"
 
-msgid "heading_wiki_search_wiki"
-msgstr "Suche in diesem Wiki"
+#~ msgid "label_required"
+#~ msgstr "(erforderlich)"
 
-msgid "Unsubscribe from this page"
-msgstr "Abonnement für diese Seite kündigen"
+#~ msgid "heading_wiki_recent_changes"
+#~ msgstr "Letzte Änderungen"
 
-msgid "Subscribe to this page"
-msgstr "Diese Seite abonnieren"
+#~ msgid "heading_wiki_search_wiki"
+#~ msgstr "Suche in diesem Wiki"
 
-msgid "heading_wiki_user_options"
-msgstr "Benutzereinstellungen"
+#~ msgid "Unsubscribe from this page"
+#~ msgstr "Abonnement für diese Seite kündigen"
 
-msgid "heading_wiki_filter_issues"
-msgstr "Probleme filtern"
+#~ msgid "Subscribe to this page"
+#~ msgstr "Diese Seite abonnieren"
 
-msgid "heading_wiki_issue_browser"
-msgstr "Problem-Browser"
+#~ msgid "heading_wiki_user_options"
+#~ msgstr "Benutzereinstellungen"
 
-msgid "heading_wiki_issue_tracker"
-msgstr "Problemliste"
+#~ msgid "heading_wiki_filter_issues"
+#~ msgstr "Probleme filtern"
 
-msgid "property change"
-msgstr "Eigenschaften ändern"
+#~ msgid "heading_wiki_issue_browser"
+#~ msgstr "Problem-Browser"
 
-msgid "backlinks_reparent_help"
-msgstr ""
-"Sie können dieser Seite andere Seiten als Oberkategorien zuordnen, um sie in "
-"der Wiki-Hierarchie zu platzieren. Setzen Sie dazu ein Häkchen vor die "
-"gewünschten(n) Seite(n) oder geben Sie den Namen einer Seite ein."
+#~ msgid "heading_wiki_issue_tracker"
+#~ msgstr "Problemliste"
 
-msgid "backlinks_reparent_help2"
-msgstr "und hier klicken"
+#~ msgid "property change"
+#~ msgstr "Eigenschaften ändern"
 
-msgid "View"
-msgstr "Anzeigen"
+#~ msgid "backlinks_reparent_help"
+#~ msgstr ""
+#~ "Sie können dieser Seite andere Seiten als Oberkategorien zuordnen, um sie "
+#~ "in der Wiki-Hierarchie zu platzieren. Setzen Sie dazu ein Häkchen vor die "
+#~ "gewünschten(n) Seite(n) oder geben Sie den Namen einer Seite ein."
 
-msgid "Comment"
-msgstr "Kommentar"
+#~ msgid "backlinks_reparent_help2"
+#~ msgstr "und hier klicken"
 
-msgid "A Comment"
-msgstr "Ein Kommentar"
+#~ msgid "View"
+#~ msgstr "Anzeigen"
 
-msgid "Menu for Wiki Page related actions."
-msgstr "Menü für auf Wiki-Seiten bezogene Aktionen."
+#~ msgid "Comment"
+#~ msgstr "Kommentar"
 
-msgid "A Wiki"
-msgstr "Ein Wiki"
+#~ msgid "A Comment"
+#~ msgstr "Ein Kommentar"
 
-msgid "Wiki"
-msgstr "Wiki"
+#~ msgid "Menu for Wiki Page related actions."
+#~ msgstr "Menü für auf Wiki-Seiten bezogene Aktionen."
 
-msgid "Table of Contents"
-msgstr "Inhaltsverzeichnis"
+#~ msgid "A Wiki"
+#~ msgstr "Ein Wiki"
 
-msgid "TOC"
-msgstr "Inhaltsverzeichnis"
+#~ msgid "Wiki"
+#~ msgstr "Wiki"
 
-msgid "Subscriptions"
-msgstr "E-Mail-Abonnements"
+#~ msgid "Table of Contents"
+#~ msgstr "Inhaltsverzeichnis"
 
-msgid "Add Wiki"
-msgstr "Wiki hinzufügen"
+#~ msgid "TOC"
+#~ msgstr "Inhaltsverzeichnis"
 
-msgid "Change Wiki Page"
-msgstr "Wiki-Seite ändern"
+#~ msgid "Subscriptions"
+#~ msgstr "E-Mail-Abonnements"
 
-msgid "Edit"
-msgstr "Bearbeiten"
+#~ msgid "Change Wiki Page"
+#~ msgstr "Wiki-Seite ändern"
 
-msgid "Wiki User"
-msgstr "Wiki-Benutzer"
+#~ msgid "Wiki User"
+#~ msgstr "Wiki-Benutzer"
 
-msgid "Wiki visitors, which can only view and comment on wikis."
-msgstr ""
-"Wiki-Besucher, die Wiki-Seiten nur betrachten oder kommentieren dürfen."
+#~ msgid "Wiki visitors, which can only view and comment on wikis."
+#~ msgstr ""
+#~ "Wiki-Besucher, die Wiki-Seiten nur betrachten oder kommentieren dürfen."
 
-msgid "A Wiki Page"
-msgstr "Eine Wiki-Seite"
+#~ msgid "A Wiki Page"
+#~ msgstr "Eine Wiki-Seite"
 
-msgid "Wiki Page"
-msgstr "Wiki-Seite"
+#~ msgid "Wiki Page"
+#~ msgstr "Wiki-Seite"
 
-msgid "A Wiki Page Comment"
-msgstr "Ein Kommentar einer Wiki-Seite"
+#~ msgid "A Wiki Page Comment"
+#~ msgstr "Ein Kommentar einer Wiki-Seite"
 
-msgid "Wiki Page Comment"
-msgstr "Kommentar einer Wiki-Seite"
+#~ msgid "Wiki Page Comment"
+#~ msgstr "Kommentar einer Wiki-Seite"
 
-msgid "Wiki Editor"
-msgstr "Wiki-Bearbeiter"
+#~ msgid "Wiki Editor"
+#~ msgstr "Wiki-Bearbeiter"
 
-msgid "The Wiki Editor can create and edit wikis."
-msgstr "Ein Wiki-Bearbeiter darf Wiki-Seiten erstellen und bearbeiten."
+#~ msgid "The Wiki Editor can create and edit wikis."
+#~ msgstr "Ein Wiki-Bearbeiter darf Wiki-Seiten erstellen und bearbeiten."
 
-msgid "Wiki Administrator"
-msgstr "Wiki-Administrator"
+#~ msgid "Wiki Administrator"
+#~ msgstr "Wiki-Administrator"
 
-msgid "The Wiki Admin can fully manage wiki pages."
-msgstr "Der Wiki-Administrator darf Wiki-Seiten vollständig verwalten."
+#~ msgid "The Wiki Admin can fully manage wiki pages."
+#~ msgstr "Der Wiki-Administrator darf Wiki-Seiten vollständig verwalten."
 
-msgid "View a Wiki Page"
-msgstr "Eine Wiki-Seite anzeigen"
+#~ msgid "View a Wiki Page"
+#~ msgstr "Eine Wiki-Seite anzeigen"
 
-msgid "View Wiki Page"
-msgstr "Wiki-Seite anzeigen"
+#~ msgid "View Wiki Page"
+#~ msgstr "Wiki-Seite anzeigen"
 
-msgid "Comment on Wiki Page"
-msgstr "Wiki-Seite kommentieren"
+#~ msgid "Comment on Wiki Page"
+#~ msgstr "Wiki-Seite kommentieren"
 
-msgid "Make a comment on Wiki Page"
-msgstr "Einer Wiki-Seite einen Kommentar hinzufügen"
+#~ msgid "Make a comment on Wiki Page"
+#~ msgstr "Einer Wiki-Seite einen Kommentar hinzufügen"
 
-msgid "Add Wiki Page"
-msgstr "Wiki-Seite hinzufügen"
+#~ msgid "Edit Wiki Page"
+#~ msgstr "Wiki-Seite bearbeiten"
 
-msgid "Edit Wiki Page"
-msgstr "Wiki-Seite bearbeiten"
+#~ msgid "Delete Wiki Page"
+#~ msgstr "Wiki-Seite löschen"
 
-msgid "Delete Wiki Page"
-msgstr "Wiki-Seite löschen"
+#~ msgid "Reparent a Wiki Page"
+#~ msgstr "Eine Wiki-Seite in der Wiki-Hierarchie verschieben"
 
-msgid "Reparent a Wiki Page"
-msgstr "Eine Wiki-Seite in der Wiki-Hierarchie verschieben"
+#~ msgid "Reparent Wiki Page"
+#~ msgstr "Wiki-Seite in der Wiki-Hierarchie verschieben"
 
-msgid "Reparent Wiki Page"
-msgstr "Wiki-Seite in der Wiki-Hierarchie verschieben"
-
-msgid "Minimal Wiki Page Container implementation "
-msgstr "Minimale Implementation eines Wiki-Seiten-Containers "
+#~ msgid "Minimal Wiki Page Container implementation "
+#~ msgstr "Minimale Implementation eines Wiki-Seiten-Containers "
