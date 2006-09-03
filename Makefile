@@ -307,8 +307,11 @@ warm-zodb-cache warm:
 	$(LOADALL) http://zwiki.org/RecycleBin
 	$(LOADALL) http://zwiki.org/FileUploads
 
-# fun.. darcs-style list_authors. must be an easier way
-list_authors:
+# fun.. darcs-style author stats. Need to make this easier.
+authorstats:
+	@make -s list_authors && ./list_authors stats
+
+list_authors: list_authors.hs
 	ghc -cpp  -package QuickCheck -package util -package parsec -O -funbox-strict-fields  -Wall -Werror -i/usr/local/src/darcs-unstable -DHAVE_CURSES -optl-lcurses -optl-lz -o list_authors list_authors.hs \
 		/usr/local/src/darcs-unstable/c_compat.o \
 		/usr/local/src/darcs-unstable/maybe_relink.o \
