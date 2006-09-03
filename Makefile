@@ -3,7 +3,7 @@
 # Zwiki release reminders
 # -----------------------
 # check for unrecorded changes
-# check for (AIEEE!) translations 
+# check for translations 
 # check tests pass
 # check for late tracker issues
 # check showAccessKeys,README,wikis/,skins/,zwiki.org HelpPage,QuickReference
@@ -74,7 +74,7 @@ pot:
 	echo '<div i18n:domain="zwiki">' >skins/dtmlmessages.pt # dtml extraction hack
 	find plugins skins wikis -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt
 	echo '</div>' >>skins/dtmlmessages.pt
-	$(I18NEXTRACT) -d zwiki -p . -o ./i18n -x _darcs -x releases -x misc -x Notes
+	$(I18NEXTRACT) -d zwiki -p . -o ./i18n -x _darcs -x releases -x misc -x MYNOTES
 	tail +12 i18n/zwiki-manual.pot >>i18n/zwiki.pot
 	python -c \
 	   "import re; \
@@ -151,10 +151,11 @@ testall-%:
 	$(ALLTEST) -m Products.ZWiki.$*
 
 # silliness to properly capture output of a test run
+TESTRESULTS=TESTRESULTS
 testresults:
-	date >.testresults 
-	make -s test >>.testresults 2>.stderr
-	cat .stderr >>.testresults
+	date >$(TESTRESULTS)
+	make -s test >>$(TESTRESULTS) 2>.stderr
+	cat .stderr >>$(TESTRESULTS)
 	rm -f .stderr
 
 ## upload (rsync and darcs)

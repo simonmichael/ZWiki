@@ -1,0 +1,60 @@
+Clarify the role of filesystem and wiki docs
+============================================
+
+Filesystem
+----------
+faster for one developer wielding a text editor
+or several devs who are good with darcs
+revision controlled - secure, trackable
+can work offline
+can get out of sync, uncommited changes here and there
+can be auto-generated - epydoc, test output, author stats etc.
+can be published (but not edited directly) online
+less visible and less pretty for readers
+better than wiki for large single documents
+
+current uses:
+
+CHANGES - release notes, also published at zwiki.org/ReleaseNotes
+CONTRIBUTORS - official contributor list
+GPL, LICENSE - license and copyright status
+REPOPOLICY - copyright and other developer policies for this repo
+README_tests - developer test documentation
+README - basic product info
+TODO - project plans & todos
+other READMEs - basic info for each directory
+plugins/latexwiki/LICENSE.txt,NOTES.txt,README.txt - latexwiki-specific copyright info, dev notes, admin/user notes
+plugins/mathaction/INSTALL.txt,LICENSE.txt,Notes,README.txt,UPGRADE - needs consolidation like the above
+TESTRESULTS - unit test output updated hourly, published at zwiki.org/TestResults
+MYNOTES/ - simon's notes & snippets, not published
+misc/ - public notes & snippets, published but not committed
+
+Wiki
+----
+slower to view and slower to edit
+more accessible and more editable for a wide audience
+one master copy used by everyone - simple
+no special tools needed
+email integration - notification and mailin
+good for indexing and searching many documents (local and google search)
+formatting aids - table of contents, headings, tables
+more effort to protect and maintain; more vulnerable to decay
+more expensive to host - every page takes memory & speed
+more public - indexed quickly, for ever
+can organize a large number of documents in a hierarchy
+
+current uses:
+ 
+zwiki.org
+plone.demo.zwiki.org
+free zwikis
+
+
+Thoughts
+--------
+filesystem for developers, wiki for users, admins & general public
+use text files anywhere for fast developer notes
+no special docs directory, just upper-case, no suffix
+publish all filesystem docs online, within wiki or in the style of rdoc
+restructured text and moving docs between FS and wiki encouraged
+wiki needs to be fast
