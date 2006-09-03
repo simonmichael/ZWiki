@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zwiki-ru\n"
 "POT-Creation-Date: Sat Apr  1 14:13:10 2006\n"
-"PO-Revision-Date: 2006-02-26 09:02+0000\n"
-"Last-Translator: Michael Krishtopa <theo@ua.fm>\n"
+"PO-Revision-Date: 2006-06-14 11:27+0000\n"
+"Last-Translator: Valery Sharapov <lumbermill@yandex.ru>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -70,23 +70,23 @@ msgstr ""
 #: i/Editing.py:819
 msgid ""
 "There was a problem: %s. Please contact the site administrator for help."
-msgstr ""
+msgstr "Есть проблема: %s. За помощью, пожалуйста свяжитесь с администратором."
 
 #: i/Editing.py:826
 msgid "banned_links match"
-msgstr ""
+msgstr "совпадение с banned_links"
 
 #: i/Editing.py:827
 msgid "your edit contained a banned link pattern"
-msgstr ""
+msgstr "ваша правка содержала шаблон запрещенной ссылки"
 
 #: i/Editing.py:838
 msgid "exceeded max_anonymous_links"
-msgstr ""
+msgstr "превышено max_anonymous_links"
 
 #: i/Editing.py:839
 msgid "adding of external links by anonymous authors is restricted"
-msgstr ""
+msgstr "добавление внешних ссылок анонимными авторами ограничено"
 
 #: i/Mail.py:490 i/skins/dtmlmessages.pt:59
 msgid "anonymous"
@@ -212,14 +212,14 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"            Эта страница залочена WebDav. Скорее всего, кто-то редактирует "
-"её\n"
-"            внешним редактором. Вам надо подождать пока они закончат и "
+"            На этой странице - замОк WebDav. Скорее всего, кто-то "
+"редактирует её\n"
+"            внешним редактором. Вам надо подождать, пока они закончат, и "
 "затем\n"
-"            попытаться снова. Если Вы уже внесли изменения, Вы, скорее "
-"всего,\n"
-"            захотите сохранить и скопировать копию Вашей версии текста для "
-"ссылки.\n"
+"            попытаться снова. Если Вы лишь внесли некоторые изменения, Вы,\n"
+"            скорее всего, захотите сохранить и скопировать копию Вашей "
+"версии\n"
+"            текста, для справки.\n"
 "            "
 
 #: i/Views.py:761
@@ -348,7 +348,7 @@ msgstr "%(editor)s"
 
 #: i/__init__.py:34
 msgid "No need to add a Zwiki Outline Cache"
-msgstr ""
+msgstr "Добавление Кэш Наброска Zwiki не нужно"
 
 #: i/__init__.py:35
 msgid ""
@@ -360,19 +360,19 @@ msgstr ""
 
 #: i/pagetypes/common.py:240
 msgid "comments"
-msgstr ""
+msgstr "комментарии"
 
 #: i/pagetypes/moin.py:1990
 msgid "Expected \"=\" to follow \"%(token)s\""
-msgstr ""
+msgstr "Нужен \"=\" после \"%(token)s\""
 
 #: i/pagetypes/moin.py:1999
 msgid "Expected a value for key \"%(token)s\""
-msgstr ""
+msgstr "Нужно значение для ключа \"%(token)s\""
 
 #: i/pagetypes/moin.py:302
 msgid "Create new drawing \"%(filename)s\""
-msgstr ""
+msgstr "Создать новый рисунок \"%(filename)s\""
 
 #: i/pagetypes/moin.py:304
 msgid "Upload new attachment \"%(filename)s\""
@@ -380,11 +380,11 @@ msgstr ""
 
 #: i/pagetypes/moin.py:335 i/pagetypes/moin.py:345
 msgid "Edit drawing %(filename)s"
-msgstr ""
+msgstr "Изменить рисунок %(filename)s"
 
 #: i/pagetypes/moin.py:730
 msgid "Expected \"%(wanted)s\" after \"%(key)s\", got \"%(token)s\""
-msgstr ""
+msgstr "Нужно \"%(wanted)s\" после \"%(key)s\", а не \"%(token)s\""
 
 #: i/pagetypes/moin.py:736
 msgid "Expected an integer \"%(key)s\" before \"%(token)s\""
@@ -1341,407 +1341,404 @@ msgstr "главная"
 msgid "show wiki recent changes"
 msgstr "показать последние изменения wiki"
 
-#~ msgid "Backlinks for"
-#~ msgstr "Обратные ссылки для"
+msgid "Backlinks for"
+msgstr "Обратные ссылки для"
 
-#~ msgid "singleton_desc"
-#~ msgstr ""
-#~ "Единственные потомки - страницы, которые не имеют ссылок на другие "
-#~ "страницы."
+msgid "singleton_desc"
+msgstr ""
+"Единственные потомки - страницы, которые не имеют ссылок на другие страницы."
 
-#~ msgid "History for"
-#~ msgstr "История для"
+msgid "History for"
+msgstr "История для"
 
-#~ msgid "return to page"
-#~ msgstr "вернуться на страницу"
+msgid "return to page"
+msgstr "вернуться на страницу"
 
-#~ msgid "help_shortname"
-#~ msgstr ""
-#~ "Внимание: Переименование страницы в большой wiki может быть медленным. "
-#~ "Остальные страницы будут обновлены\n"
-#~ "при возможности."
+msgid "help_shortname"
+msgstr ""
+"Внимание: Переименование страницы в большой wiki может быть медленным. "
+"Остальные страницы будут обновлены\n"
+"при возможности."
 
-#~ msgid "label_body_text"
-#~ msgstr "Текст"
+msgid "label_body_text"
+msgstr "Текст"
 
-#~ msgid "help_wikibody"
-#~ msgstr ""
-#~ "На Wiki странице Вы используете [квадратные скобки] для создания ссылок. "
-#~ "Когда Вы сохраняете страницу,\n"
-#~ "содержимое квадратных скобок будет содержать маленькую ссылку в виде "
-#~ "<code>?</code> после себя, которую\n"
-#~ "Вы нажимаете для создания новой страницы с этим именем (введенное в "
-#~ "квадратные скобки)."
+msgid "help_wikibody"
+msgstr ""
+"На Wiki странице Вы используете [квадратные скобки] для создания ссылок. "
+"Когда Вы сохраняете страницу,\n"
+"содержимое квадратных скобок будет содержать маленькую ссылку в виде <code>?"
+"</code> после себя, которую\n"
+"Вы нажимаете для создания новой страницы с этим именем (введенное в "
+"квадратные скобки)."
 
-#~ msgid "help_wikiwords"
-#~ msgstr ""
-#~ "Эта Wiki так же поддерживает WikiWords, в качестве механизма ссылок."
+msgid "help_wikiwords"
+msgstr "Эта Wiki так же поддерживает WikiWords, в качестве механизма ссылок."
 
-#~ msgid "label_note"
-#~ msgstr "Заметка для истории страницы (необязательно)"
+msgid "label_note"
+msgstr "Заметка для истории страницы (необязательно)"
 
-#~ msgid "help_wikinote"
-#~ msgstr "Короткое описание внесенных изменений."
+msgid "help_wikinote"
+msgstr "Короткое описание внесенных изменений."
 
-#~ msgid "label_upload_contents_optional"
-#~ msgstr "Загрузить файл или изображение (необязательно)"
+msgid "label_upload_contents_optional"
+msgstr "Загрузить файл или изображение (необязательно)"
 
-#~ msgid "help_wikiupload"
-#~ msgstr "Прикрепляет файл или изображение к этой wiki странице."
+msgid "help_wikiupload"
+msgstr "Прикрепляет файл или изображение к этой wiki странице."
 
-#~ msgid "label_format"
-#~ msgstr "Формат страницы"
+msgid "label_format"
+msgstr "Формат страницы"
 
-#~ msgid "help_format"
-#~ msgstr ""
-#~ "Если Вы неуверены какой формат использовать, выберите Plain\n"
-#~ "Text и набирайте документ как обычно."
+msgid "help_format"
+msgstr ""
+"Если Вы неуверены какой формат использовать, выберите Plain\n"
+"Text и набирайте документ как обычно."
 
-#~ msgid "Save"
-#~ msgstr "Сохранить"
+msgid "Save"
+msgstr "Сохранить"
 
-#~ msgid "heading_edit_wiki_page"
-#~ msgstr ""
-#~ "Редактировать\n"
-#~ "        ${itemtype} \n"
-#~ "\n"
-#~ "        \"${pagename}\""
+msgid "heading_edit_wiki_page"
+msgstr ""
+"Редактировать\n"
+"        ${itemtype} \n"
+"\n"
+"        \"${pagename}\""
 
-#~ msgid "description_edit_wiki_page"
-#~ msgstr "Wiki страница позволяет Вам создавать сложно соединенные страницы."
+msgid "description_edit_wiki_page"
+msgstr "Wiki страница позволяет Вам создавать сложно соединенные страницы."
 
-#~ msgid "legend_wiki_page_details"
-#~ msgstr "Детали Wiki страницы"
+msgid "legend_wiki_page_details"
+msgstr "Детали Wiki страницы"
 
-#~ msgid "label_pagename"
-#~ msgstr "Название страницы"
+msgid "label_pagename"
+msgstr "Название страницы"
 
-#~ msgid "Required"
-#~ msgstr "Обязательно"
+msgid "Required"
+msgstr "Обязательно"
 
-#~ msgid "label_required"
-#~ msgstr "(Обязательно)"
+msgid "label_required"
+msgstr "(Обязательно)"
 
-#~ msgid "heading_wiki_recent_changes"
-#~ msgstr "Последние элементы"
+msgid "heading_wiki_recent_changes"
+msgstr "Последние элементы"
 
-#~ msgid "heading_wiki_search_wiki"
-#~ msgstr "Искать в этой wiki"
+msgid "heading_wiki_search_wiki"
+msgstr "Искать в этой wiki"
 
-#~ msgid "Unsubscribe from this page"
-#~ msgstr "Отписаться от этой страницы"
+msgid "Unsubscribe from this page"
+msgstr "Отписаться от этой страницы"
 
-#~ msgid "Subscribe to this page"
-#~ msgstr "Подписаться на эту страницу"
+msgid "Subscribe to this page"
+msgstr "Подписаться на эту страницу"
 
-#~ msgid "heading_wiki_user_options"
-#~ msgstr "Опции пользователя"
+msgid "heading_wiki_user_options"
+msgstr "Опции пользователя"
 
 #, fuzzy
-#~ msgid "add a comment"
-#~ msgstr "Добавить"
+msgid "add a comment"
+msgstr "Добавить"
 
-#~ msgid "heading_wiki_filter_issues"
-#~ msgstr "Фильтровать задачи"
-
-#, fuzzy
-#~ msgid "heading_wiki_issue_browser"
-#~ msgstr "Текущая задача"
-
-#~ msgid "heading_wiki_issue_tracker"
-#~ msgstr "Текущая задача"
+msgid "heading_wiki_filter_issues"
+msgstr "Фильтровать задачи"
 
 #, fuzzy
-#~ msgid "property change"
-#~ msgstr "показать последние изменения wiki"
+msgid "heading_wiki_issue_browser"
+msgstr "Текущая задача"
 
-#~ msgid "backlinks_reparent_help"
-#~ msgstr ""
-#~ "Вы можете поменять родителя(лей) этой страницы, что бы включить ее в "
-#~ "глобальную \n"
-#~ "иерархию страницы. Отметьте боксы или введите имя новой страницы и "
-#~ "нажмите 'Переназначить'.\n"
-#~ "Одного родителя, как правило, достаточно."
+msgid "heading_wiki_issue_tracker"
+msgstr "Текущая задача"
 
 #, fuzzy
-#~ msgid "backlinks_reparent_help2"
-#~ msgstr ""
-#~ "Вы можете поменять родителя(лей) этой страницы, что бы включить ее в "
-#~ "глобальную \n"
-#~ "иерархию страницы. Отметьте боксы или введите имя новой страницы и "
-#~ "нажмите 'Переназначить'.\n"
-#~ "Одного родителя, как правило, достаточно."
+msgid "property change"
+msgstr "показать последние изменения wiki"
+
+msgid "backlinks_reparent_help"
+msgstr ""
+"Вы можете поменять родителя(лей) этой страницы, что бы включить ее в "
+"глобальную \n"
+"иерархию страницы. Отметьте боксы или введите имя новой страницы и нажмите "
+"'Переназначить'.\n"
+"Одного родителя, как правило, достаточно."
 
 #, fuzzy
-#~ msgid "View"
-#~ msgstr "Просмотр"
+msgid "backlinks_reparent_help2"
+msgstr ""
+"Вы можете поменять родителя(лей) этой страницы, что бы включить ее в "
+"глобальную \n"
+"иерархию страницы. Отметьте боксы или введите имя новой страницы и нажмите "
+"'Переназначить'.\n"
+"Одного родителя, как правило, достаточно."
 
 #, fuzzy
-#~ msgid "Comment"
-#~ msgstr "Добавить"
+msgid "View"
+msgstr "Просмотр"
 
 #, fuzzy
-#~ msgid "A Comment"
-#~ msgstr "Добавить"
+msgid "Comment"
+msgstr "Добавить"
 
 #, fuzzy
-#~ msgid "Table of Contents"
-#~ msgstr "Содержание"
+msgid "A Comment"
+msgstr "Добавить"
 
 #, fuzzy
-#~ msgid "A Wiki"
-#~ msgstr "Добавить страницу ZWiki"
+msgid "Table of Contents"
+msgstr "Содержание"
 
 #, fuzzy
-#~ msgid "Subscriptions"
-#~ msgstr "Подписка по почте"
+msgid "A Wiki"
+msgstr "Добавить страницу ZWiki"
 
 #, fuzzy
-#~ msgid "Change Wiki Page"
-#~ msgstr "Добавить страницу ZWiki"
+msgid "Subscriptions"
+msgstr "Подписка по почте"
 
 #, fuzzy
-#~ msgid "Edit"
-#~ msgstr "редактировать"
+msgid "Change Wiki Page"
+msgstr "Добавить страницу ZWiki"
 
 #, fuzzy
-#~ msgid "Add Wiki"
-#~ msgstr "Добавить страницу ZWiki"
+msgid "Edit"
+msgstr "редактировать"
 
 #, fuzzy
-#~ msgid "Wiki User"
-#~ msgstr "Подписчики Wiki"
+msgid "Add Wiki"
+msgstr "Добавить страницу ZWiki"
 
 #, fuzzy
-#~ msgid "A Wiki Page"
-#~ msgstr "Добавить страницу ZWiki"
+msgid "Wiki User"
+msgstr "Подписчики Wiki"
 
 #, fuzzy
-#~ msgid "Wiki Page"
-#~ msgstr "Добавить страницу ZWiki"
+msgid "A Wiki Page"
+msgstr "Добавить страницу ZWiki"
 
 #, fuzzy
-#~ msgid "A Wiki Page Comment"
-#~ msgstr "Добавить страницу ZWiki"
+msgid "Wiki Page"
+msgstr "Добавить страницу ZWiki"
 
 #, fuzzy
-#~ msgid "Wiki Page Comment"
-#~ msgstr "Содержание Wiki"
+msgid "A Wiki Page Comment"
+msgstr "Добавить страницу ZWiki"
 
 #, fuzzy
-#~ msgid "View a Wiki Page"
-#~ msgstr "Добавить страницу ZWiki"
+msgid "Wiki Page Comment"
+msgstr "Содержание Wiki"
 
 #, fuzzy
-#~ msgid "View Wiki Page"
-#~ msgstr "Добавить страницу ZWiki"
+msgid "View a Wiki Page"
+msgstr "Добавить страницу ZWiki"
 
 #, fuzzy
-#~ msgid "Add Wiki Page"
-#~ msgstr "Добавить страницу ZWiki"
+msgid "View Wiki Page"
+msgstr "Добавить страницу ZWiki"
 
 #, fuzzy
-#~ msgid "Edit Wiki Page"
-#~ msgstr "Добавить страницу ZWiki"
+msgid "Add Wiki Page"
+msgstr "Добавить страницу ZWiki"
 
 #, fuzzy
-#~ msgid "Delete Wiki Page"
-#~ msgstr "Добавить страницу ZWiki"
+msgid "Edit Wiki Page"
+msgstr "Добавить страницу ZWiki"
 
 #, fuzzy
-#~ msgid "Reparent Wiki Page"
-#~ msgstr "Добавить страницу ZWiki"
-
-#~ msgid "You are not authorized to rename this ZWiki Page."
-#~ msgstr "Вы не авторизованы для переименования этой Zwiki страницы."
-
-#~ msgid "page in parent wiki"
-#~ msgstr "страница в родительской wiki"
+msgid "Delete Wiki Page"
+msgstr "Добавить страницу ZWiki"
 
 #, fuzzy
-#~ msgid "plone"
-#~ msgstr "Заметка для истории страницы (необязательно)"
+msgid "Reparent Wiki Page"
+msgstr "Добавить страницу ZWiki"
 
-#~ msgid "show all features"
-#~ msgstr "показать все особенности"
+msgid "You are not authorized to rename this ZWiki Page."
+msgstr "Вы не авторизованы для переименования этой Zwiki страницы."
 
-#~ msgid "full"
-#~ msgstr "полный"
-
-#~ msgid "show basic features"
-#~ msgstr "показать основные особенности"
-
-#~ msgid "simple"
-#~ msgstr "простой"
-
-#~ msgid "show only essential features"
-#~ msgstr "показать только отличительные особенности"
-
-#~ msgid "minimal"
-#~ msgstr "минимальный"
+msgid "page in parent wiki"
+msgstr "страница в родительской wiki"
 
 #, fuzzy
-#~ msgid "subtopic"
-#~ msgstr "является подтемой:"
+msgid "plone"
+msgstr "Заметка для истории страницы (необязательно)"
+
+msgid "show all features"
+msgstr "показать все особенности"
+
+msgid "full"
+msgstr "полный"
+
+msgid "show basic features"
+msgstr "показать основные особенности"
+
+msgid "simple"
+msgstr "простой"
+
+msgid "show only essential features"
+msgstr "показать только отличительные особенности"
+
+msgid "minimal"
+msgstr "минимальный"
 
 #, fuzzy
-#~ msgid "for this page"
-#~ msgstr "создать эту wiki страницу"
+msgid "subtopic"
+msgstr "является подтемой:"
 
 #, fuzzy
-#~ msgid "title"
-#~ msgstr "Заголовок"
-
-#~ msgid "File Uploads"
-#~ msgstr "Загрузки файлов"
-
-#~ msgid "uploads_desc"
-#~ msgstr "Эта страница содержит все загрузки в эту wiki."
-
-#~ msgid "save"
-#~ msgstr "Сохранить"
-
-#~ msgid "view"
-#~ msgstr "Просмотр"
-
-#~ msgid "no_files_uploaded"
-#~ msgstr "Ни одного загруженного файла."
-
-#~ msgid "box_wiki_navigation"
-#~ msgstr "Навигация Wiki"
-
-#~ msgid "enter comments here and click add; or, click edit"
-#~ msgstr ""
-#~ "Введите тут комментарий и нажмите 'Добавить' или нажмите 'Редактировать'"
-
-#~ msgid "Details & comments"
-#~ msgstr "Детали и комментарии"
-
-#~ msgid "hits"
-#~ msgstr "кликов"
-
-#~ msgid ""
-#~ "no catalog or the catalog search gave an error, a brute-force search was "
-#~ "used"
-#~ msgstr ""
-#~ "нет каталога или поиск по каталогу выдал ошибку. Был использован "
-#~ "принудительный поиск"
-
-#~ msgid "Contents"
-#~ msgstr "Содержание"
-
-#~ msgid "Diffs for"
-#~ msgstr "Различия для"
-
-#~ msgid "name"
-#~ msgstr "имя"
-
-#~ msgid "page rating"
-#~ msgstr "рейтинг страницы"
-
-#~ msgid "rating_score"
-#~ msgstr "${score} от ${nb_votes} голосов"
-
-#~ msgid "click to rate"
-#~ msgstr "нажмите для участия в рейтинге"
-
-#~ msgid "voting as"
-#~ msgstr "голосовать как"
-
-#~ msgid "Here are the pages which link to"
-#~ msgstr "Страницы, которые ссылаются на"
+msgid "for this page"
+msgstr "создать эту wiki страницу"
 
 #, fuzzy
-#~ msgid "box_canreparent"
-#~ msgstr "переназначить"
+msgid "title"
+msgstr "Заголовок"
 
-#~ msgid "Other parent"
-#~ msgstr "Другой родитель"
+msgid "File Uploads"
+msgstr "Загрузки файлов"
 
-#~ msgid "You may also click the full, simple, minimal links if provided."
-#~ msgstr ""
-#~ "Вы так же можете выбрать полный, нормальный или минимальный режим, если "
-#~ "предложено."
+msgid "uploads_desc"
+msgstr "Эта страница содержит все загрузки в эту wiki."
 
-#~ msgid "for subscribing"
-#~ msgstr "для подписи"
+msgid "save"
+msgstr "Сохранить"
 
-#~ msgid "width"
-#~ msgstr "ширина"
+msgid "view"
+msgstr "Просмотр"
 
-#~ msgid "height"
-#~ msgstr "высота"
+msgid "no_files_uploaded"
+msgstr "Ни одного загруженного файла."
 
-#~ msgid "textarea dimensions; width will be 100% if supported"
-#~ msgstr "размерность текстового поля; если поддерживается, ширина будет 100%"
+msgid "box_wiki_navigation"
+msgstr "Навигация Wiki"
 
-#~ msgid "Your local time is"
-#~ msgstr "Ваше местное время:"
+msgid "enter comments here and click add; or, click edit"
+msgstr ""
+"Введите тут комментарий и нажмите 'Добавить' или нажмите 'Редактировать'"
 
-#~ msgid "Show logo ?"
-#~ msgstr "Показать логотип?"
+msgid "Details & comments"
+msgstr "Детали и комментарии"
 
-#~ msgid "No"
-#~ msgstr "Нет"
+msgid "hits"
+msgstr "кликов"
 
-#~ msgid "Yes"
-#~ msgstr "Да"
+msgid ""
+"no catalog or the catalog search gave an error, a brute-force search was used"
+msgstr ""
+"нет каталога или поиск по каталогу выдал ошибку. Был использован "
+"принудительный поиск"
 
-#~ msgid "Show page hierarchy ?"
-#~ msgstr "Показать иерархию страницы?"
+msgid "Contents"
+msgstr "Содержание"
 
-#~ msgid "This wiki keeps a page hierarchy, which you can use or ignore."
-#~ msgstr ""
-#~ "Эта wiki содержит иерархию страницы, которую Вы можете использовать или "
-#~ "проигнорировать."
+msgid "Diffs for"
+msgstr "Различия для"
 
-#~ msgid "Show search field ?"
-#~ msgstr "Показывать поле поиска?"
+msgid "name"
+msgstr "имя"
 
-#~ msgid "except in minimal mode"
-#~ msgstr "за исключением минимального режима"
+msgid "page rating"
+msgstr "рейтинг страницы"
 
-#~ msgid "Show AnnoyingQuote ?"
-#~ msgstr "Показывать цитаты?"
+msgid "rating_score"
+msgstr "${score} от ${nb_votes} голосов"
 
-#~ msgid "in full mode"
-#~ msgstr "в полном режиме"
+msgid "click to rate"
+msgstr "нажмите для участия в рейтинге"
 
-#~ msgid "Show page management form ?"
-#~ msgstr "Показать форму управления страницей?"
+msgid "voting as"
+msgstr "голосовать как"
 
-#~ msgid "You must also configure a username or be logged in."
-#~ msgstr ""
-#~ "Вам так же необходимо настроить имя пользователя или быть залогиненным."
+msgid "Here are the pages which link to"
+msgstr "Страницы, которые ссылаются на"
 
-#~ msgid "no subscribers"
-#~ msgstr "подписчиков нет"
+#, fuzzy
+msgid "box_canreparent"
+msgstr "переназначить"
 
-#~ msgid "parent_name_replace"
-#~ msgstr "новый родитель, название или перемещение"
+msgid "Other parent"
+msgstr "Другой родитель"
 
-#~ msgid ""
-#~ "enter a new parent, new name, replacement page (if any) or subtopic name"
-#~ msgstr ""
-#~ "введите нового родителя, новое название, страницу перемещения (если это "
-#~ "имеет место) или название подтемы"
+msgid "You may also click the full, simple, minimal links if provided."
+msgstr ""
+"Вы так же можете выбрать полный, нормальный или минимальный режим, если "
+"предложено."
 
-#~ msgid "box_zwiki_showhierarchy"
-#~ msgstr ""
-#~ "Вы так же можете установить <em>родителя(лей)</em> этой страницы для "
-#~ "расположения её\n"
-#~ "в иерархии контента. Отметьте ячейки или введите новое название страницы "
-#~ "и нажмите\n"
-#~ "'Переназначить'. Одного родителя, обычно, достаточно."
+msgid "for subscribing"
+msgstr "для подписи"
 
-#~ msgid "cancel"
-#~ msgstr "отменить"
+msgid "width"
+msgstr "ширина"
 
-#~ msgid ""
-#~ "move this page to the recycle bin, and relink to the name you have entered"
-#~ msgstr ""
-#~ "переместить эту страницу в мусорную корзину и поменять ссылку на имя, "
-#~ "которое Вы ввели"
+msgid "height"
+msgstr "высота"
 
-#~ msgid "create a new subtopic of this page"
-#~ msgstr "создать новую подтему этой страницы"
+msgid "textarea dimensions; width will be 100% if supported"
+msgstr "размерность текстового поля; если поддерживается, ширина будет 100%"
+
+msgid "Your local time is"
+msgstr "Ваше местное время:"
+
+msgid "Show logo ?"
+msgstr "Показать логотип?"
+
+msgid "No"
+msgstr "Нет"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "Show page hierarchy ?"
+msgstr "Показать иерархию страницы?"
+
+msgid "This wiki keeps a page hierarchy, which you can use or ignore."
+msgstr ""
+"Эта wiki содержит иерархию страницы, которую Вы можете использовать или "
+"проигнорировать."
+
+msgid "Show search field ?"
+msgstr "Показывать поле поиска?"
+
+msgid "except in minimal mode"
+msgstr "за исключением минимального режима"
+
+msgid "Show AnnoyingQuote ?"
+msgstr "Показывать цитаты?"
+
+msgid "in full mode"
+msgstr "в полном режиме"
+
+msgid "Show page management form ?"
+msgstr "Показать форму управления страницей?"
+
+msgid "You must also configure a username or be logged in."
+msgstr ""
+"Вам так же необходимо настроить имя пользователя или быть залогиненным."
+
+msgid "no subscribers"
+msgstr "подписчиков нет"
+
+msgid "parent_name_replace"
+msgstr "новый родитель, название или перемещение"
+
+msgid ""
+"enter a new parent, new name, replacement page (if any) or subtopic name"
+msgstr ""
+"введите нового родителя, новое название, страницу перемещения (если это "
+"имеет место) или название подтемы"
+
+msgid "box_zwiki_showhierarchy"
+msgstr ""
+"Вы так же можете установить <em>родителя(лей)</em> этой страницы для "
+"расположения её\n"
+"в иерархии контента. Отметьте ячейки или введите новое название страницы и "
+"нажмите\n"
+"'Переназначить'. Одного родителя, обычно, достаточно."
+
+msgid "cancel"
+msgstr "отменить"
+
+msgid ""
+"move this page to the recycle bin, and relink to the name you have entered"
+msgstr ""
+"переместить эту страницу в мусорную корзину и поменять ссылку на имя, "
+"которое Вы ввели"
+
+msgid "create a new subtopic of this page"
+msgstr "создать новую подтему этой страницы"
