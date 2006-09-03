@@ -1,5 +1,5 @@
 Clarify the role of filesystem and wiki docs
-============================================
+
 
 Filesystem
 ----------
@@ -26,8 +26,10 @@ other READMEs - basic info for each directory
 plugins/latexwiki/LICENSE.txt,NOTES.txt,README.txt - latexwiki-specific copyright info, dev notes, admin/user notes
 plugins/mathaction/INSTALL.txt,LICENSE.txt,Notes,README.txt,UPGRADE - needs consolidation like the above
 TESTRESULTS - unit test output updated hourly, published at zwiki.org/TestResults
-MYNOTES/ - simon's notes & snippets, not published
 misc/ - public notes & snippets, published but not committed
+MYNOTES/ - simon's notes & snippets, not published
+MYNOTES/RelNotesTemplate - template for CHANGES
+
 
 Wiki
 ----
@@ -45,16 +47,21 @@ can organize a large number of documents in a hierarchy
 
 current uses:
  
-zwiki.org
+zwiki.org, including
+NextReleaseNewsDraft - unused
+GeneralDiscussion
+InternationalisationDiscussion
+IssueTracker
 plone.demo.zwiki.org
-free zwikis
+free zwikis, including kpug zope3 docs, leo, etc.
+zopewiki.org, joyful.com etc.
 
 
 Thoughts
 --------
-filesystem for developers, wiki for users, admins & general public
-use text files anywhere for fast developer notes
+filesystem for developers, wiki for users/admins/general public
+use text files anywhere for fast developer notes - one requirement, keep them current
 no special docs directory, just upper-case, no suffix
-publish all filesystem docs online, within wiki or in the style of rdoc
+publish all filesystem docs online, like rdoc or within wiki (they will be googlable ?)
 restructured text and moving docs between FS and wiki encouraged
 wiki needs to be fast
