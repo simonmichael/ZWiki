@@ -439,6 +439,6 @@ reinstall:
 # Run this as root in the ZWiki dir on zwiki.org.
 
 fixperms:
-	chgrp -R zwiki .
-	chmod -R g+w .
-	find -type d -exec chmod g+s {}  \; 
+	chgrp -R zwiki *
+	chmod -R g+w *
+	find . -type d -exec chmod g+s {}  \; 
