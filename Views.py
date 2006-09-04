@@ -211,6 +211,7 @@ for t in [
     'editform',
     'recentchanges',
     'searchwiki',
+    'helppage',
     'subscribeform',
     'useroptions',
     'wikipage',
@@ -233,6 +234,7 @@ for t in [
 for t in [
     'RecentChanges',
     'SearchPage',
+    'HelpPage',
     'UserOptions',
     'subtopics_outline',
     'subtopics_board',
@@ -481,6 +483,13 @@ class SkinViews:
         return self.getSkinTemplate('searchwiki')(self,REQUEST)
 
     searchpage = searchwiki # alias
+
+    security.declareProtected(Permissions.View, 'helppage')
+    def helppage(self, REQUEST=None):
+        """
+        Render the helppage form (template-customizable).
+        """
+        return self.getSkinTemplate('helppage')(self,REQUEST)
 
     security.declareProtected(Permissions.View, 'showAccessKeys')
     def showAccessKeys(self):
