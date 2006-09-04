@@ -430,3 +430,15 @@ list_authors: list_authors.hs
 # uses ~/.netrc for authorization
 reinstall:
 	curl -n 'http://plone.demo.zwiki.org/portal_quickinstaller/reinstallProducts?products=ZWiki'
+
+# ensure all files in zwiki.org repo have the right permissions for all
+# users, darcs mail-in etc. Everything should have group "zwiki", be
+# group-writable, and directories should have the setgid bit set.
+# May need to run this periodically since certain operations mess up
+# the permissions, such as... (?)
+# Run this as root in the ZWiki dir on zwiki.org.
+
+fixperms:
+	chgrp -R zwiki .
+	chmod -R g+w .
+	find -type d -exec chmod g+s {}  \; 
