@@ -5,7 +5,7 @@ from types import *
 import string, re, os
 from AccessControl import getSecurityManager
 from DateTime import DateTime
-import Products.CMFCore
+import Products.CMFCore.utils
 from Products.CMFCore.DirectoryView import registerDirectory
 
 from ZWikiPage import ZWikiPage
@@ -16,7 +16,7 @@ from I18n import _
 
 # no longer used, but maybe later.
 try:
-    import Products.CMFPlone
+    import Products.CMFPlone.utils
     PLONE_VERSION = Products.CMFPlone.utils.getFSVersionTuple()
 except ImportError:
     PLONE_VERSION = (0,0,0) # not installed
