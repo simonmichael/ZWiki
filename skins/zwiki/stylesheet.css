@@ -21,18 +21,29 @@
 
 .lasteditor              {color:gray;}
 
-.aqtree3clickable a {   
- list-style:none;
- text-decoration: none; 
- color: black;
-}
-
 /* can't get these to combine with dimtext for some reason */
 .highrated               {font-size: 80%; color: green} 
 .neutralrated            {font-size: 80%; color: gray}
 .lowrated                {font-size: 80%; color: red}
 
-.subtopicspanel          {color: gray; /*background: #dddddd;*/ }
+.subtopics {
+  margin-top:2em;
+  margin-left:0;
+}
+.subtopicsheading {
+  color: gray; 
+  font-weight:bold;
+}
+.subtopic {
+  list-style:none; 
+}
+.subtopic a {   
+  text-decoration: none; 
+  color: black;
+}
+.expandable {
+}
+
 
 .commentsheader         {color:gray; font-weight:bold;}
 .commentform             {color:gray;}

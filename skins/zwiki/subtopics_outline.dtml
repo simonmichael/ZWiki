@@ -4,15 +4,10 @@
  subtopics="offspring(exclude_self=1,depth=depth)"
 >
 <dtml-if subtopics>
-<a name="subtopics"><br /></a>
-<p>
-<table class="subtopicspanel">
-  <tr>
-    <td>
-      <b>subtopics:</b>
-      <dtml-var subtopics>
-    </td>
-  </tr>
-</table>
+<div class="subtopics">
+<a name="subtopics"></a>
+<h4 class="subtopicsheading">subtopics:</h4>
+<dtml-var subtopics>
+</div>
 </dtml-if>
 </dtml-let>
