@@ -146,9 +146,18 @@ def loadDtmlMethod(name,dir='skins/zwiki'):
     if not hasattr(dm,'meta_type'): dm.meta_type = 'DTML Method (File)'
     return dm
 
-def loadStylesheetFile(name,dir='skins/zwiki'):
+def loadStylesheet(name,dir='skins/zwiki'):
     """
-    Load the stylesheet File from the filesystem.
+    Load the stylesheet file from the filesystem.
+    """
+    f = loadFile(name,dir=dir)
+    if f:
+        f.content_type = 'text/css'
+        return f
+
+def loadFile(name,dir='skins/zwiki'):
+    """
+    Load a File from the filesystem.
 
     Also work around a modification time bug.
     """
@@ -156,14 +165,19 @@ def loadStylesheetFile(name,dir='skins/zwiki'):
     filepath = os.path.join(THISDIR,dir,name)
     data,mtime = '',0
     try:
-        fp = open(filepath,'rb')
-        data = fp.read()
-        mtime = os.path.getmtime(filepath)
-    finally: fp.close()
-    file = File('stylesheet','',data,content_type='text/css')
-    # fix bobobase_mod_time which will otherwise be current time
-    file.bobobase_modification_time = lambda:mtime
-    return file
+        try:
+            fp = open(filepath,'rb')
+            data = fp.read()
+            mtime = os.path.getmtime(filepath)
+            file = File('stylesheet','',data)
+            # bug workaround: bobobase_modification_time will otherwise be current time
+            file.bobobase_modification_time = lambda:mtime
+            return file # whee! does the finally first
+        except:
+            return None
+    finally:
+        fp.close()
+
 
 def isPageTemplate(obj):
     return getattr(obj,'meta_type',None) in (
@@ -234,15 +248,18 @@ for t in [
 for t in [
     'RecentChanges',
     'SearchPage',
-    'HelpPage',
     'UserOptions',
     'subtopics_outline',
     'subtopics_board',
     ]:
     TEMPLATES[t] = loadDtmlMethod(t)
 
-# stylesheet file
-TEMPLATES['stylesheet'] = loadStylesheetFile('stylesheet.css')
+# other things
+TEMPLATES['stylesheet'] = loadStylesheet('stylesheet.css')
+# this really expects to be a full wiki page, for now
+# read it as a file and format it in helppage.pt
+TEMPLATES['HelpPage'] = loadFile('HelpPage.dtml')
+
 
 # set up easy access to all macros via here/macros.
 # XXX We use a computed attribute (below) to call getmacros on each

@@ -112,9 +112,9 @@ def addWikiFromFs(self, new_id, title='', wiki_type='zwikidotorg',
         if m: id, type = m.groups()
         text = open(dir + os.sep + filename, 'r').read()
         if type == 'dtml':
-            _addDTMLMethod(f, filename[:-5], title='', file=text)
+            addDTMLMethod(f, filename[:-5], title='', file=text)
         elif re.match(r'(?:(?:stx|html|latex)(?:dtml)?|txt)', type):
-            _addZWikiPage(f,id,title='',page_type=type,file=text)
+            addZWikiPage(f,id,title='',page_type=type,file=text)
         elif type == 'pt':
             f._setObject(id, ZopePageTemplate(id, text, 'text/html'))
         elif type == 'py':
@@ -130,7 +130,7 @@ def addWikiFromFs(self, new_id, title='', wiki_type='zwikidotorg',
         else:
             f._setObject(id, File(id, '', text))
 
-def _addDTMLMethod(self, id, title='', file=''):
+def addDTMLMethod(self, id, title='', file=''):
     id=str(id)
     title=str(title)
     ob = DTMLMethod(source_string=file, __name__=id)
@@ -140,7 +140,7 @@ def _addDTMLMethod(self, id, title='', file=''):
     #ob.setSubOwner('both') #?
     self._setObject(id, ob)
 
-def _addZWikiPage(self, id, title='',
+def addZWikiPage(self, id, title='',
                   page_type=PAGETYPES[0]._id, file=''):
     id=str(id)
     title=str(title)
