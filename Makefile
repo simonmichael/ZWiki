@@ -199,7 +199,6 @@ FILE:=$(PRODUCT)-$(VERSIONNO).tgz
 
 Release: releasenotes version releasetag tarball push rpush
 
-# record CHANGES.. 
 releasenotes:
 	@echo recording release notes
 	@darcs record -am 'update release notes' CHANGES
@@ -269,7 +268,7 @@ alltags: tags producttags zopetags
 	cat TAGS /zope2/Products/TAGS /zope/lib/python/TAGS >TAGS.all
 
 clean:
-	rm -f .*~ *~ *.tgz *.bak `find . -name "*.pyc"`
+	rm -f .*~ *~ *.tgz *.bak *.hi *.ho `find . -name "*.pyc"`
 
 Clean: clean
 	rm -f i18n/*.mo skins/dtmlmessages.pt
