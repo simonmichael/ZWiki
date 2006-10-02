@@ -256,8 +256,9 @@ for t in [
 
 # other things
 TEMPLATES['stylesheet'] = loadStylesheet('stylesheet.css')
-# this really expects to be a full wiki page, for now
-# read it as a file and format it in helppage.pt
+# XXX this really expects to be a full wiki page
+# for now, read it as a file and format it in helppage.pt
+# one issue: File does not refresh in debug mode ?
 TEMPLATES['HelpPage'] = loadFile('HelpPage.dtml')
 
 

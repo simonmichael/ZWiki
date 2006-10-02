@@ -21,34 +21,38 @@
   It is often possible to upload files and pictures and get email notifications as well.
 
   This site is running Zwiki, a particular kind of wiki software.
-  (WhatIsZwiki has more about that.)
   For some more definitions, try the ZWiki:ZwikiGlossary.
 
 <a name="3"><li>User interface</li></a>
 
   Zwiki's user interface comes in two main flavours: 
-  "standard":http://zwiki.org and "plone":http://plone.zwiki.org .
+  "standard":http://zwiki.org and "plone":http://plone.demo.zwiki.org .
   It may be further customized (skinned) by site administrators.
 
   The standard skin includes "full", "simple", "minimal" links at the top; click these
   to quickly adjust the level of detail on screen. Tip: if you can't
   see one of the features described here, try clicking "full".
 
-  You can select your user name, time zone and other things in UserOptions (the "preferences" link).
+  You can set your user name, time zone and other things in 
+  <dtml-if 1><dtml-var "'<a href=%s>options</a>' % optionsUrl()">
+  <dtml-else>"options"</dtml-if>.
+  (Some sites require this before you can make changes.)
+  
 
 <a name="4"><li>Navigation</li></a>
 
-  Each page in a wiki has a unique name, most often a WikiName - 
+  Each page in a wiki has a unique name, most often a !WikiName - 
   two or more capitalized words joined together. 
   Free-form names, which can be any word or phrase, 
   may also be used. A page name automatically links to that page.
   ZWiki:RemoteWikiLinks - two wikinames joined by a colon - are links to other sites. 
   You'll also see standard HTML links and URL links.
 
-  Certain pages or links provide special functions such as an overview of the wiki ("contents") 
-  or list of recently-changed pages ("changes"). These links are visible when you are in 
-  "simple" or "full" mode.  Or, you can use convenient "access keys":QuickReference#accesskeys 
+  Certain standard links provide special functions such as an overview
+  of the wiki ("contents") or list of recently-changed pages
+  ("changes").  You can use the convenient "access keys":http://zwiki.org/QuickReference#access-keys 
   to navigate.
+  
 
   Click "backlinks" or the page title to see the list of pages which link to this one.
 
@@ -106,7 +110,8 @@
    When you save a page, Zwiki formats and links your text according to some standard rules.
    Different rules are applied depending on the *page type*;
    they are described at ZWiki:TextFormattingRules.
-   The default is ZWiki:StructuredText which works like this:
+   Here is a quick primer for ZWiki:StructuredText 
+   (but note many zwikis now use ZWiki:RestructuredText which has some differences).
 
    1. non-blank lines are run together to form a paragraph; 
       paragraphs are separated by blank lines<br />
@@ -123,8 +128,8 @@
       &#95;...&#95; or 
       &#39;...&#39; is *italic*, **bold**, _underlined_ or 'monospaced' respectively<br />
 
-   5. WikiName's, [Free-form name]s enclosed in brackets, ZWiki:RemoteWikiLinks , 
-      http://bare/urls , and "Structured Text links":http://zwiki.org/StructuredText are
+   5. !WikiNames, ![Free-form name]s enclosed in brackets, ZWiki:RemoteWikiLinks , 
+      !http://bare/urls , and !"Structured Text links":http://zwiki.org/StructuredText are
       made into hyperlinks
 
    6. HTML tags may be added if necessary; on sites which permit it,
