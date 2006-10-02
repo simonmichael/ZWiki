@@ -683,7 +683,7 @@ class OutlineRendering:
             enlarge_current=enlarge_current,
             suppress_hyperlink=suppress_hyperlink)
         # special case: if parent seems to be missing, reset
-        # XXX will not match with css class ? clean up
+        # XXX will not match ? clean up
         if hierarchy == '<ul>\n</ul>':
             self.setParents([])
             self.index_object()
@@ -859,17 +859,17 @@ class OutlineRendering:
             return ''
         if did is None: did = []
         if got is None:
-            got = ['<ul class="expandable">']
+            got = ['<ul class="subtopics expandable">']
             recursing = 0
         else:
             recursing = 1
         for n in nesting:
             if type(n) == ListType:
                 if not (n[0]==here and suppress_current): #XXX temp
-                    got.append('%s <li class="subtopic">%s' % (indent,renderContentsLink(n[0])))
+                    got.append('%s <li>%s' % (indent,renderContentsLink(n[0])))
                 if len(n) > 1:
                     if not (n[0]==here and suppress_current): #XXX temp
-                        got.append('<ul class="expandable">')
+                        got.append('<ul class="subtopics expandable">')
                     for i in n[1:]:
                         if type(i) == ListType:
                             got = self.renderNesting(
@@ -882,7 +882,7 @@ class OutlineRendering:
                                 got=got,
                                 indent=indent+' ')
                         else:
-                            got.append('%s <li class="subtopic">%s</li>' % (indent,renderContentsLink(i)))
+                            got.append('%s <li>%s</li>' % (indent,renderContentsLink(i)))
                     if not (n[0]==here and suppress_current): #XXX temp
                         got.append("</ul>")
                 else:
@@ -890,7 +890,7 @@ class OutlineRendering:
                 if not (n[0]==here and suppress_current):
                     got.append('%s </li>' % indent)
             else:
-                got.append('%s <li class="subtopic">%s</li>' % (indent,renderContentsLink(n)))
+                got.append('%s <li>%s</li>' % (indent,renderContentsLink(n)))
 
         if recursing:
             return got

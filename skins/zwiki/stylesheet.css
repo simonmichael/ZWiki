@@ -1,196 +1,15 @@
-/************************************************************-*-c-*-
- First, the zwiki stylesheet (based on Zwiki 0.51)
- Change or add customizations at the bottom as you prefer, cleanups coming later
- *******************************************************************/
-
-/* colours and general styles */
-
-/* default gray */
-.shade1                  {color:gray;}
-.shade1 a:link           {color:gray;}
-.shade1 a:visited        {color:#aaaaaa;}
-
-.dimtext                 {font-size: 80%; color: gray;}
-
-.linkpanel td, .linkpanel_minimal td {color: gray;}
-
-.navpanel                {color: gray;}
-
-.searchbox a:link        {color: gray;}
-.searchbox a:visited     {color: #aaaaaa;}
-
-.lasteditor              {color:gray;}
-
-/* can't get these to combine with dimtext for some reason */
-.highrated               {font-size: 80%; color: green} 
-.neutralrated            {font-size: 80%; color: gray}
-.lowrated                {font-size: 80%; color: red}
-
-.subtopics {
-  margin-top:2em;
-  margin-left:0;
-}
-.subtopicsheading {
-  color: gray; 
-  font-weight:bold;
-}
-.subtopic {
-  list-style:none; 
-}
-.subtopic a {   
-  text-decoration: none; 
-  color: black;
-}
-.expandable {
-}
-
-
-.commentsheader         {color:gray; font-weight:bold;}
-.commentform             {color:gray;}
-
-.subscribed              {} /* for subscribeform */
-.notsubscribed           {}
-
-/* background shade of form fields 
- * input,textarea,select {} would be cleaner but changes buttons too
- * (except file upload buttons)
- * can select with input[type=submit] but not in IE 
+/* Zwiki stylesheet - edit to change the wiki's appearance 
+ *
+ * This may be installed
+ * - as the built-in skin method "/stylesheet" (default)
+ * - as zodb file or dtml method "stylesheet" (anywhere in acquisition context)
+ * - as wiki page "StyleSheet" (http://zwiki.org/HowToMakeAnEditableStyleSheet)
  */
-.formfield               {background: #f0f0f0;}
 
-body {
-  margin:0; 
-  padding:0;
-  font-family:sans-serif, verdana, arial, helvetica;
-  color: black;
-  background-color: white;
-  /* background: white url('top-border-fade.jpg') repeat-x; */
-}
-h2 {
-  margin-top: 1.5em;
-  font-size: 130%;
-}
-pre, code {
-  background-color: #ffeed0;
-  padding: 4px;
-  color: #103010;
-}
-.content {
-  margin-top:2em;
-  margin-left:2em; 
-  margin-right:2em;
-  /*  width: 80%;*/
-  background-color: white;
-} 
-td.content {
- border: 1px solid #EEEEEE;
-}
-.formcontent {
- margin:8px;
-} 
-input,select {
-  font-size:inherit;
-}
-.error { 
- color:red; background-color:#ffdddd; border:thin solid red; 
-}
-
-/* top stuff */
-
-.linkpanel td {
-  vertical-align: middle;
-  font-size: 80%;
-}
-.linkpanel a {
-  text-decoration:none;
-}
-.navpanel {
-  font-size: 80%;
-}
-.pageheader ul {
-  margin-top:0px; margin-bottom:0px; margin-left:6px; padding-left:6px;
-}
-.pageheader li, .subtopicspanel li {
-  list-style:none;
-}
-.logo { /*td*/
-  padding-top: 0.5em;
-  padding-right: 4px;
-}
-.searchbox {
-  vertical-align: top;
-  font-size: 80%;
-}
-#searchinput { /* generated tag with id=searchinput already has a class (multiple classes bad for IE<5.5 ?) */
- width:95%; 
- margin-top: 0px;
-}
-.lasteditor {
-  font-style: italic;
-}
-
-/* middle stuff */
-
-.subtopicspanel ul {
-  margin-top:0px; margin-bottom:0px; margin-left:12px; padding-left:12px;
-}
-.subtopicspanel td ul {
-  font-weight:bold;
-}
-.subtopicspanel td ul ul {
-  font-weight:normal; font-size:0.9em;
-}
-
-/*
-.preview {
-  border:4px; width:100%; padding:10px; background-color:#ffffaa;
-}
-*/
-
-/* bottom stuff */
-
-/* these two hide the blank line after comment headings on RST pages
- * NB commentbody is misleading, it's only the first paragraph for now.
- */
-.commentheading {
-  margin-bottom:0;
-}
-.commentbody {
-  margin-top:0;
-}
-
-.commentform {
-}
-
-/* misc stuff */
-
-/* handy for displaying completion status */
-.incomplete {color: red;}
-.zeropercent {color: red;}
-.tenpercent {color: red;}
-.twentypercent {color: red;}
-.thirtypercent {color: red;}
-.fortypercent {color: red;}
-.fiftypercent {color: red;}
-.sixtypercent {color: green;}
-.seventypercent {color: green;}
-.eightypercent {color: green;}
-.ninetypercent {color: green;}
-.onehundredpercent {color: green;}
-.complete {color: green;}
-
-/*
-.link-external {
-  background: transparent url(http://plone.zwiki.org/link_icon.gif) 0px 1px no-repeat;
-  padding: 1px 0px 1px 16px;
-}
-*/
-
-
-/*******************************************************************
- docutils' html4css stylesheet, inlined for easy reference
- For easier upgrades, do not change this; override in the customizations section
- *******************************************************************/
+/***********************************************************************-*-c-*-
+ First, docutils' html4css stylesheet, inlined here for easy reference
+ For easier upgrades, you may want to add your changes as overrides at the end
+ *****************************************************************************/
 
 /*
 :Author: David Goodger
@@ -469,7 +288,356 @@ ul.auto-toc {
   list-style-type: none }
 
 
+/***********************************************************************-*-c-*-
+ Zwiki styles
+ For easier upgrades, you may want to add your changes as overrides at the end
+ *****************************************************************************/
 
-/*******************************************************************
- customizations for the above
- *******************************************************************/
+/* colours and general styles */
+
+/* default gray */
+.shade1                  {color:gray;}
+.shade1 a:link           {color:gray;}
+.shade1 a:visited        {color:gray;}
+
+.dimtext                 {font-size: 80%; color: gray;}
+
+.linkpanel td, .linkpanel_minimal td {color: gray;}
+                                      
+.navpanel {
+       color: gray;
+}
+
+.searchbox a:link        {color: gray;}
+.searchbox a:visited     {color: #aaaaaa;}
+
+.lasteditor              {color:gray;}
+
+/* can't get these to combine with dimtext for some reason */
+.highrated               {font-size: 80%; color: green} 
+.neutralrated            {font-size: 80%; color: gray}
+.lowrated                {font-size: 80%; color: red}
+
+.commentsheader          {color:gray; font-weight:bold;}
+.commentform             {color:gray;}
+
+.subscribed              {} /* for subscribeform */
+.notsubscribed           {}
+
+/* background shade of form fields 
+ * input,textarea,select {} would be cleaner but changes buttons too
+ * (except file upload buttons)
+ * can select with input[type=submit] but not in IE 
+ */
+.formfield               {background: #f0f0f0;}
+
+body {
+  margin:0; 
+  padding:0;
+  font-family:sans, sans-serif, verdana, arial, helvetica;
+  color: black;
+  background-color: white /*#eefff0*/ ;
+  /* background: white url('top-border-fade.jpg') repeat-x; */
+}
+h2 {
+  margin-top: 1.5em;
+  font-size: 130%;
+}
+pre, code, tt {
+  padding: 4px;
+/*border-left: solid 1px #cc6600;*/
+/*  background-color: #ffeed0;*/
+  color: red;
+  font-weight:bold;
+}
+.content {
+  margin-top:2em;
+  margin-left:2em; 
+  margin-right:2em;
+ /* width: 80%; */
+  background-color: white;
+} 
+td.content {
+ border: 1px solid #EEEEEE;
+}
+.formcontent {
+ margin:8px;
+} 
+input,select {
+  font-size:inherit;
+}
+.error { 
+ color:red; background-color:#ffdddd; border:thin solid red; 
+}
+
+/* top stuff */
+
+.linkpanel td, .linkpanel_minimal td {
+  font-size: 80%;
+}
+.linkpanel a {
+  text-decoration:none;
+}
+.wikilinks {
+  font-weight: normal;
+  vertical-align: middle;
+}
+.otherlinks {
+  vertical-align: middle;
+}
+.navpanel {
+  font-size: 80%;
+}
+.pageheader ul {
+  margin-top:0px; margin-bottom:0px; margin-left:6px; padding-left:6px;
+}
+.logo_full { /*td*/
+  padding-top: 0.5em;
+  padding-right: 4px;
+}
+.logo_simple { /*td*/
+  padding-top: 1em;
+  padding-right: 4px;
+}
+.logo_minimal {
+  padding-top: 1em;
+  padding-right: 4px;
+}
+.pagenameand { /*td*/
+ padding: 0;
+ vertical-align: middle;
+}
+.pagenameonly { /*td*/
+  font-size: xx-large;
+  font-weight: bold;
+  vertical-align: middle;
+}
+.searchbox {
+  vertical-align: top;
+  font-size: 80%;
+}
+#searchinput { /* generated tag with id=searchinput already has a class (multiple classes bad for IE<5.5 ?) */
+ width:95%; 
+ margin-top: 0px;
+}
+.lasteditor {
+  font-style: italic;
+}
+
+/*
+.preview {
+  border:4px; width:100%; padding:10px; background-color:#ffffaa;
+}
+*/
+
+/* subtopics styling (also page context above title to some extent)
+ *
+ * a screenshot would be better, but here's what these intend to do
+ * (known to work in at least firefox 2):
+ * - gray subtopics heading
+ * - no list bullets
+ * - only slight indentation
+ * - black links
+ * - no link underlining
+ * - top-level subtopics are bold
+ * - links get smaller with depth (down to your browser's minimum if any)
+ */
+
+.subtopics {
+  margin-top:1em;
+}
+.subtopics h4 {
+  color: gray; 
+/*  margin-bottom:0;*/
+}
+.subtopics ul {
+  margin-top:0;
+  margin-left:1em;
+  padding-left:0;
+}
+.subtopics li {
+  list-style:none;
+}
+.subtopics a {   
+  text-decoration: none; 
+  color: black;
+}
+.subtopics ul {
+  font-weight:bold;
+}
+.subtopics ul ul {
+  font-weight:normal; 
+  font-size:0.9em;
+}
+.expandable {
+}
+
+/* bottom stuff */
+
+.commentform {
+}
+
+/* misc stuff */
+
+/* handy for displaying completion status */
+.incomplete {color: red;}
+.zeropercent {color: red;}
+.tenpercent {color: red;}
+.twentypercent {color: red;}
+.thirtypercent {color: red;}
+.fortypercent {color: red;}
+.fiftypercent {color: red;}
+.sixtypercent {color: green;}
+.seventypercent {color: green;}
+.eightypercent {color: green;}
+.ninetypercent {color: green;}
+.onehundredpercent {color: green;}
+.complete {color: green;}
+
+/*
+.link-external {
+  background: transparent url(http://plone.zwiki.org/link_icon.gif) 0px 1px no-repeat;
+  padding: 1px 0px 1px 16px;
+}
+*/
+
+/* overrides for standard docutils styles on restructured text pages */
+
+div.sidebar {
+  margin-left: 1em ;
+  margin-bottom: 1em;
+  padding: 1em ;
+  float: right ;
+  clear: right ;
+  border: none;
+  /*background-color: #ddbbff;*/
+}
+
+dt { font-weight:bold; }
+
+/* these two hide the blank line after comment headings on RST pages
+ * NB commentbody is misleading, it's only the first paragraph for now.
+ */
+.commentheading {
+  margin-bottom:0;
+}
+
+.commentbody {
+  margin-top:0;
+}
+
+
+/***********************************************************************-*-c-*-
+ MathAction styles
+ For easier upgrades, you may want to add your changes as overrides at the end
+ *****************************************************************************/
+
+pre, code {
+  white-space: pre; /* CSS2 */
+  white-space: -moz-pre-wrap; /* Mozilla */
+  white-space: -hp-pre-wrap; /* HP printers */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: pre-wrap; /* CSS 2.1 */
+  white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
+  word-wrap: break-word; /* IE */
+}
+
+#axiomlabel {
+    position:relative; 
+    right:0.8em; 
+    top:-0.2em; 
+    font-size:100%; 
+    color: #446644;
+    font-family: monospace;
+}
+#axiomcode {
+    background-color: transparent; 
+    font-family: monospace; 
+    font-size:100%;
+}   
+#axiomtext {
+    margin-left:2em;
+    background-color: lightgrey;
+    font-family: monospace; 
+    font-size:85%;
+    padding: 1ex; padding-top: 0;
+/*    border-width: 0.5ex;  border-style: inset; border-color:lightgrey;*/
+}   
+#axiomcode pre {
+    margin-left:1.5em;
+    background-color: lightgreen; 
+    font-family: monospace; 
+    font-size:85%;
+    padding: 1ex; padding-top: 0;
+/*    border-width: 0.5ex;  border-style: outset; border-color:lightgreen;*/
+}
+#reducelabel { 
+    position:relative; 
+    right:0.8em; 
+    top:-0.2em; 
+    font-size:73%; 
+    color: #446644;
+    font-family: monospace;
+}
+#reducecode {
+    width:98%;
+    margin-left:1em; margin-bottom:1ex; margin-top:1ex;
+    white-space:pre;
+    background-color: lightpink;
+    font-family: monospace;
+    font-size:85%
+/*    border-width: 0.5ex;  border-style: outset; border-color:lightpink;*/
+    padding: 1ex; padding-top: 0;
+}
+#reducecode pre {
+    font-family: monospace;
+    font-size:85%
+}
+
+#maximalabel {
+    position:relative; 
+    right:0.8em; 
+    top:-0.2em; 
+    font-size:100%; 
+    color: #448844;
+    font-family: monospace;
+}
+#maximacode {
+    background-color: transparent; 
+    font-family: monospace; 
+    font-size:85%;
+}   
+
+#maximaoutput {
+    margin-left:2em;
+    background-color: transparent; 
+    font-family: monospace; 
+    font-size:85%;
+}   
+#maximainput {
+    width:98%;
+    margin-left:1em; margin-bottom:1ex; margin-top:1ex;
+    background-color: lightblue;
+    font-family: monospace; 
+    font-size:85%;
+    padding: 1ex; padding-top: 0;
+/*    border-width: 0.5ex;  border-style: inset; border-color:lightgrey;*/
+}
+
+#maximacode pre {
+    margin-left:1.5em;
+    background-color: lightgrey; 
+    font-family: monospace; 
+    font-size:85%;
+    padding: 1ex; padding-top: 0;
+/*    border-width: 0.5ex;  border-style: outset; border-color:lightgrey;*/
+}
+
+img.equation { vertical-align: middle; border: 0px }
+
+
+/***********************************************************************-*-c-*-
+ Customizations for the above
+ *****************************************************************************/
+
