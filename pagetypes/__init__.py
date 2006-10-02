@@ -143,13 +143,37 @@ for m in modules:
 
 # but if a page type has been disabled with a _ prefix, just ignore
 # XXX can't really disable yet, these get imported somewhere else (except wwml)
-def tryImport(module, fromlist):
-    try: __import__(module,globals(),locals(),fromlist)
-    except ImportError: pass
+#def tryImport(module, fromlist):
+#    try: __import__(module,globals(),locals(),fromlist)
+#    except ImportError: pass
 
-tryImport('html',      ['ZwikiHtmlPageType'])
-tryImport('moin',      ['ZwikiMoinPageType'])
-tryImport('plaintext', ['ZwikiPlaintextPageType'])
-tryImport('rst',       ['ZwikiRstPageType'])
-tryImport('stx',       ['ZwikiStxPageType'])
-tryImport('wwml',      ['ZwikiWwmlPageType'])
+try:
+    import html
+    ZwikiHtmlPageType = html.PageTypeHtml
+except ImportError:
+    pass
+try:
+    import moin
+    ZwikiMoinPageType = moin.PageTypeMoin
+except ImportError:
+    pass
+try:
+    import plaintext
+    ZwikiPlaintextPageType = plaintext.PageTypePlaintext
+except ImportError:
+    pass
+try:
+    import rst
+    ZwikiRstPageType = rst.PageTypeRst
+except ImportError:
+    pass
+try:
+    import stx
+    ZwikiStxPageType = stx.PageTypeStx
+except ImportError:
+    pass
+try:
+    import wwml
+    ZwikiWwmlPageType = wwml.PageTypeWwml
+except ImportError:
+    pass
