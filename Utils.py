@@ -33,6 +33,8 @@ from I18n import _
 try: from transaction import get as get_transaction
 except ImportError: get_transaction = get_transaction
 
+ZWIKI_BIRTHDATE='1999/11/05'
+
 
 class PageUtils:
     """
@@ -372,7 +374,12 @@ class PageUtils:
         """
         try: return DateTime(self.creation_time)
         except (AttributeError,DateTimeSyntaxError):
-            return DateTime('2001/1/1')
+            # if the time is corrupt or missing somehow, don't beat
+            # around the bush; be darn sure to give it some fixed time
+            # or we'll see repeats in rss feeds & planets.
+            # folder's creation time would be good but that's not
+            # available.
+            return DateTime(ZWIKI_BIRTHDATE)
 
     security.declareProtected(Permissions.View, 'lastEditTime')
     def lastEditTime(self):
@@ -381,7 +388,8 @@ class PageUtils:
         """
         try: return DateTime(self.last_edit_time)
         except (AttributeError,DateTimeSyntaxError):
-            return DateTime('2001/1/1')
+            # similar considerations to creationTime()
+            return DateTime(ZWIKI_BIRTHDATE)
 
     security.declareProtected(Permissions.View, 'folder')
     def folder(self):

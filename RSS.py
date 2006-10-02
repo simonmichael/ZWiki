@@ -32,14 +32,14 @@ class PageRSSSupport:
         wikiurl = self.wikiUrl()
         REQUEST.RESPONSE.setHeader('Content-Type','text/xml')
         t = """\
-        <rss version="2.0">
-          <channel>
-            <title>%(feedtitle)s</title>
-            <link>%(feedurl)s</link>
-            <description>%(feeddescription)s</description>
-            <language>%(feedlanguage)s</language>
-            <pubDate>%(feeddate)s</pubDate>
-        """ % {
+<rss version="2.0">
+<channel>
+<title>%(feedtitle)s</title>
+<link>%(feedurl)s</link>
+<description>%(feeddescription)s</description>
+<language>%(feedlanguage)s</language>
+<pubDate>%(feeddate)s</pubDate>
+""" % {
             'feedtitle':feedtitle,
             'feeddescription':feeddescription,
             'feedurl':wikiurl,
@@ -50,25 +50,26 @@ class PageRSSSupport:
                             sort_order='reverse',
                             sort_limit=num,
                             isBoring=0):
+            pobj = p.getObject()
             t += """\
-            <item>
-              <title>%(title)s</title>
-              <link>%(wikiurl)s/%(id)s</link>
-              <description><![CDATA[%(summary)s]]></description>
-              <pubDate>%(creation_time)s</pubDate>
-            </item>
-        """ % {
+<item>
+<title>%(title)s</title>
+<link>%(wikiurl)s/%(id)s</link>
+<description><![CDATA[%(summary)s]]></description>
+<pubDate>%(creation_time)s</pubDate>
+</item>
+""" % {
             'title':p.Title,
             'wikiurl':wikiurl,
             'id':p.id,
-            'summary':p.getObject().summary(1000),
-            'creation_time':DateTime(p.creation_time).rfc822(),
+            'summary':pobj.summary(1000),
+            'creation_time':pobj.creationTime().rfc822(), # be robust here
             }
         #      <description><![CDATA[%(summary)s]]></description>
         t += """\
-          </channel>
-        </rss>
-        """
+</channel>
+</rss>
+"""
         return t
 
     security.declareProtected(Permissions.View, 'changes_rss')
@@ -85,14 +86,14 @@ class PageRSSSupport:
         wikiurl = self.wikiUrl()
         REQUEST.RESPONSE.setHeader('Content-Type','text/xml')
         t = """\
-        <rss version="2.0">
-          <channel>
-            <title>%(feedtitle)s</title>
-            <link>%(feedurl)s</link>
-            <description>%(feeddescription)s</description>
-            <language>%(feedlanguage)s</language>
-            <pubDate>%(feeddate)s</pubDate>
-        """ % {
+<rss version="2.0">
+<channel>
+<title>%(feedtitle)s</title>
+<link>%(feedurl)s</link>
+<description>%(feeddescription)s</description>
+<language>%(feedlanguage)s</language>
+<pubDate>%(feeddate)s</pubDate>
+""" % {
             'feedtitle':feedtitle,
             'feeddescription':feeddescription,
             'feedurl':wikiurl,
@@ -103,24 +104,25 @@ class PageRSSSupport:
                             sort_order='reverse',
                             sort_limit=num,
                             isBoring=0):
+            pobj = p.getObject()
             t += """\
-            <item>
-              <title>%(title)s</title>
-              <link>%(wikiurl)s/%(id)s</link>
-              <description>%(last_log)s</description>
-              <pubDate>%(last_edit_time)s</pubDate>
-            </item>
-        """ % {
+<item>
+<title>%(title)s</title>
+<link>%(wikiurl)s/%(id)s</link>
+<description>%(last_log)s</description>
+<pubDate>%(last_edit_time)s</pubDate>
+</item>
+""" % {
             'title':'[%s] %s' % (p.Title,html_quote(p.last_log)),
             'wikiurl':wikiurl,
             'id':p.id,
-            'last_log':html_quote(p.getObject().textDiff()),
-            'last_edit_time':p.lastEditTime.rfc822(),
+            'last_log':html_quote(pobj.textDiff()),
+            'last_edit_time':pobj.lastEditTime().rfc822(), # be robust here
             }
         t += """\
-          </channel>
-        </rss>
-        """
+</channel>
+</rss>
+"""
         return t
 
 
