@@ -1,31 +1,44 @@
     Summary
 
-	...
+	Style and help cleanups, bugfixes.
 
     Upgrade notes
 
-	...
+	If you use the http://zwiki.org/HowToMakeContentsExpandable ,
+        you'll need to update it to work with the new "expandable" 
+        css class.
 	
     Changes
 
-      Installing
-
       Configuring
+
+        * reorganize stylesheet
+
+        * add missing mathaction styles 
+
+        * rename "aqtree3clickable" css class to "expandable"
 
       Browsing
 
-      Editing
+        * subtopics, page context, wiki contents styling fixes
 
-      Page hierarchy
+        * make help page a built-in view like recentchanges etc.
 
-      Mail
+        * help updates
 
-      Issue tracking
-
-      Translations
+        * make rss feeds and creationTime()/lastEditTime() more robust, eg
+          when creation_time property is blank
 
       General
 	
+        * fix backwards compatibility for old page objects
+
+        * speed up and quieten down tests a little
+
+        * developer docs cleanup
+
+        * "authorstats" make rule. Welcome, Haskell!
+
 
 
 Zwiki 0.56.0 2006/09/02
