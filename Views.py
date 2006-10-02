@@ -259,7 +259,7 @@ TEMPLATES['stylesheet'] = loadStylesheet('stylesheet.css')
 # XXX this really expects to be a full wiki page
 # for now, read it as a file and format it in helppage.pt
 # one issue: File does not refresh in debug mode ?
-TEMPLATES['HelpPage'] = loadFile('HelpPage.dtml')
+TEMPLATES['HelpPage'] = loadFile('HelpPage.stx')
 
 
 # set up easy access to all macros via here/macros.

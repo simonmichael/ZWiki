@@ -7,7 +7,7 @@
 # check tests pass
 # check for late tracker issues
 # check showAccessKeys,README,wikis/,skins/,zwiki.org HelpPage,QuickReference
-# update CHANGES.txt from darcs changes --from-tag=0.xx
+# update CHANGES from darcs changes --from-tag=0.xx
 # update version.txt
 # make Release
 # update KnownIssues,OldKnownIssues,#zwiki
@@ -199,23 +199,23 @@ FILE:=$(PRODUCT)-$(VERSIONNO).tgz
 
 Release: releasenotes version releasetag tarball push rpush
 
-# record CHANGES.txt.. 
+# record CHANGES.. 
 releasenotes:
 	@echo recording release notes
-	@darcs record -am 'update release notes' CHANGES.txt
+	@darcs record -am 'update release notes' CHANGES
 
 # bump version number in various places and record; don't have other
 # changes in these files
 version:
 	@echo bumping version to $(VERSIONNO)
-	@(echo 'Zwiki' $(VERSIONNO) `date +%Y/%m/%d`; echo)|cat - CHANGES.txt \
-	  >.temp; mv .temp CHANGES.txt
+	@(echo 'Zwiki' $(VERSIONNO) `date +%Y/%m/%d`; echo)|cat - CHANGES \
+	  >.temp; mv .temp CHANGES
 	@perl -pi -e "s/__version__='.*?'/__version__='$(VERSIONNO)'/" \
 	  __init__.py
 	@perl -pi -e "s/Zwiki version [0-9a-z.-]+/Zwiki version $(VERSIONNO)/"\
-	  wikis/basic/HelpPage.stx
+	  skins/zwiki/HelpPage.stx
 	@darcs record -am 'bump version to $(VERSIONNO)' \
-	  version.txt CHANGES.txt __init__.py wikis/basic/HelpPage.stx
+	  version.txt CHANGES __init__.py skins/zwiki/HelpPage.stx
 
 releasetag:
 	@echo tagging release-$(VERSION)
