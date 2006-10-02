@@ -430,7 +430,7 @@ input,select {
 }
 */
 
-/* subtopics styling (also page context above title to some extent)
+/* subtopics styling (also page context and wiki contents)
  *
  * a screenshot would be better, but here's what these intend to do
  * (known to work in at least firefox 2):
@@ -441,9 +441,13 @@ input,select {
  * - no link underlining
  * - top-level subtopics are bold
  * - links get smaller with depth (down to your browser's minimum if any)
+ *
+ * currently, hierarchical page links as seen in subtopics, page context
+ * above the title and wiki contents use the "outline" and "expandable" classes
+ * and subtopics are additionally in a div with "subtopics" class
  */
 
-.subtopics {
+div.subtopics {
   margin-top:1em;
 }
 .subtopics h4 {
@@ -451,23 +455,24 @@ input,select {
 /*  margin-bottom:0;*/
 }
 .subtopics ul {
-  margin-top:0;
-  margin-left:1em;
+  margin-left:0;
   padding-left:0;
-}
-.subtopics li {
-  list-style:none;
-}
-.subtopics a {   
-  text-decoration: none; 
-  color: black;
-}
-.subtopics ul {
   font-weight:bold;
 }
 .subtopics ul ul {
   font-weight:normal; 
   font-size:0.9em;
+}
+.outline ul {
+  margin-left:1em;
+  padding-left:0;
+}
+.outline li {
+  list-style:none;
+}
+.outline a {   
+  text-decoration: none; 
+  color: black;
 }
 .expandable {
 }

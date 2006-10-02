@@ -13,8 +13,8 @@
       <div class="formcontent">
         <span tal:replace="structure options/hierarchy">page hierarchy..</span>
         <div tal:condition="options/singletons">
-          <h3 i18n:translate="">Singletons</h3> 
-          <ul>
+          <h4 i18n:translate="">Singletons:</h4> 
+          <ul class="outline">
             <li tal:repeat="singleton options/singletons">
               <span tal:replace="structure singleton">singleton..</span>
             </li>

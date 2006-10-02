@@ -859,7 +859,7 @@ class OutlineRendering:
             return ''
         if did is None: did = []
         if got is None:
-            got = ['<ul class="subtopics expandable">']
+            got = ['<ul class="outline expandable">']
             recursing = 0
         else:
             recursing = 1
@@ -869,7 +869,7 @@ class OutlineRendering:
                     got.append('%s <li>%s' % (indent,renderContentsLink(n[0])))
                 if len(n) > 1:
                     if not (n[0]==here and suppress_current): #XXX temp
-                        got.append('<ul class="subtopics expandable">')
+                        got.append('<ul class="outline expandable">')
                     for i in n[1:]:
                         if type(i) == ListType:
                             got = self.renderNesting(
