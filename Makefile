@@ -242,6 +242,7 @@ tags:
 	  -o -name .old     -prune -type f \
 	  -o -name doxygen -prune -type f \
 	  -o -name .doxygen -prune -type f \
+	  -o -name NOTES     -prune -type f \
 	  | xargs etags
 
 zopetags:
