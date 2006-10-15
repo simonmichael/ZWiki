@@ -203,7 +203,7 @@ class ZWikiPage(
         """Return the page type object with this id (or the default)"""
         match = filter(lambda x:x._id==id,PAGETYPES)
         return (match and match[0]) or DEFAULT_PAGETYPE
-    security.declarePublic('pageType') # useful for troubleshooting
+    security.declarePublic('pageTypeId') # useful for troubleshooting
     def pageTypeId(self):
         """Return the short id for this page's page type."""
         return self.pageType().id()
