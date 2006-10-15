@@ -28,6 +28,9 @@ from email.Iterators import typed_subpart_iterator
 
 from Products.ZWiki.Regexps import wikiname1,wikiname2,bracketedexpr,urlchars
 from Products.ZWiki.Utils import BLATHER
+from Products.ZWiki.plugins.tracker.tracker import ISSUE_SEVERITIES
+DEFAULT_SEVERITY = ISSUE_SEVERITIES[len(ISSUE_SEVERITIES)/2]
+
 
 # use email aliases like these to influence delivery
 WIKIADDREXP =    r'(wiki|mailin)@'         # comments and new pages
@@ -529,6 +532,7 @@ def mailin(self, msg):
         # - post the issue details as a comment, not as the initial page
         #   text. Hey, that makes sense.        
         pagename = m.workingpage.createNextIssue(subject,
+                                                 severity=DEFAULT_SEVERITY,
                                                  REQUEST=self.REQUEST,
                                                  sendmail=0)
         m.destpage = m.workingpage.pageWithName(pagename)
