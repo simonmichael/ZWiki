@@ -329,15 +329,24 @@ class PageUtils:
     def contentsUrl(self, scroll=1):
         """
         Return the url of zwiki's contents method.
-        
-        By default we put the current page name as a target and scroll
-        there, note in a large public wiki that generates a lot of unique
-        urls for robots, if robots are dumb enough to crawl both
-        url#target1 and url#target2.
-        """
-        return self.defaultPageUrl() + '/contents' + \
-               (scroll and ('#%s' % quote(self.pageName())) or '')
 
+        In general, we try to keep these urls stable, so as to minimise
+        useless work done for web robots. For the contents page, this was
+        tricky because we like it to know what page we were looking at
+        (for you are here), and to scroll there. Here's what we do now:
+
+        - use front page url as our fixed base
+
+        - add #PageName so the browser will scroll; most robots ignore
+          this part, we think
+
+        - have the contents page figure out"you are here" from the http referer
+
+        """
+        url = self.defaultPageUrl() + '/contents'
+        if scroll: url += '#' + quote(self.pageName())
+        return url
+    
     security.declareProtected(Permissions.View, 'changesUrl')
     def changesUrl(self):
         return self.urlForDtmlPageOrMethod('RecentChanges','recentchanges')

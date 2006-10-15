@@ -642,11 +642,20 @@ class OutlineRendering:
                        self.formatWikiname(i)))
             else:
                 combos.append(i)
-        here = (here and unquote(here)) or self.pageName()
+        
         return self.contentspage(
-            self.renderNesting(combos, here),
+            self.renderNesting(combos,
+                               here=unquote(here or self.wikiPageFromReferrer(REQUEST) or '')),
             singletons,
             REQUEST=REQUEST)
+
+    def wikiPageFromReferrer(self,REQUEST):
+        if not REQUEST: return None
+        referrer = REQUEST.get('HTTP_REFERER', None)
+        if not referrer: return None
+        m = re.match(r'^'+re.escape(self.wikiUrl())+r'/?([^?#]*)', referrer)
+        if m: return m.group(1)
+        else: return None
 
     security.declareProtected(Permissions.View, 'context')
     def context(self, REQUEST=None, with_siblings=0, enlarge_current=0):
