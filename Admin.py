@@ -18,16 +18,6 @@ from pagetypes import PAGE_TYPE_UPGRADES
 from Defaults import PAGE_METADATA, \
      TEXTINDEXES, FIELDINDEXES, KEYWORDINDEXES, DATEINDEXES, PATHINDEXES
 
-# copied from Wikis.py
-def _addDTMLMethod(self, id, title='', file=''):
-    id=str(id)
-    title=str(title)
-    ob = DTMLMethod(source_string=file, __name__=id)
-    ob.title = title
-    username = getSecurityManager().getUser().getUserName()
-    ob.manage_addLocalRoles(username, ['Owner'])
-    #ob.setSubOwner('both') #?
-    self._setObject(id, ob)
 
 class PageAdminSupport:
     """
@@ -300,7 +290,7 @@ class PageAdminSupport:
         """
         Install some default wiki pages to help get a wiki started.
         """
-        # copied from Wikis.py
+        # copied from ...
         dir = package_home(globals()) + os.sep + 'wikis' + os.sep + 'basic'
         filenames = os.listdir(dir)
         for filename in filenames:
@@ -364,7 +354,7 @@ class PageAdminSupport:
         for m in dtmlmethods:
             # avoid acquisition.. self.folder().aq_base won't work
             if m not in ids:
-                _addDTMLMethod(
+                addDTMLMethod(
                     self.folder(),
                     m,
                     title='',
@@ -469,3 +459,18 @@ class PageAdminSupport:
         self.REQUEST.RESPONSE.redirect(self.REQUEST['URL1'])
 
 InitializeClass(PageAdminSupport)
+
+
+# misc admin functions.. see also __init__.py
+# things are here and there to avoid circular imports
+
+def addDTMLMethod(self, id, title='', file=''):
+    id=str(id)
+    title=str(title)
+    ob = DTMLMethod(source_string=file, __name__=id)
+    ob.title = title
+    username = getSecurityManager().getUser().getUserName()
+    ob.manage_addLocalRoles(username, ['Owner'])
+    #ob.setSubOwner('both') #?
+    self._setObject(id, ob)
+
