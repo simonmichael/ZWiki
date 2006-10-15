@@ -190,12 +190,11 @@ class ZWikiPage(
     def pageType(self):
         """Return this page's page type object."""
         # check for page type problems
-        # I'd rather do this in upgrade(), but need to make
-        # sure the page is always viewable
         # old-style page type string ?
         if type(self.page_type) == StringType:
-            BLATHER('upgraded page_type attribute of '+self.id())
-            self.setPageType(self.page_type)
+            new = self.newPageTypeIdFor(self.page_type)
+            BLATHER("upgrading %s's page type from %s to %s" % (self.id(),self.page_type,new))
+            self.setPageType(new)
         # page type whose plugin is no longer installed ?
         elif not hasattr(self.page_type,'render'):
             self.setPageType(DEFAULT_PAGETYPE)

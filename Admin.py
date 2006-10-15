@@ -41,20 +41,26 @@ class PageAdminSupport:
         """
         Update, upgrade, pre-render and re-index all pages and data structures.
 
-        Requires 'Manage properties' permission on the folder.
-        Normally pages are upgraded/pre-rendered as needed when viewed.
+        Normally individual pages are upgraded and pre-rendered on
+        demand, when viewed. An administrator may want to do this for
+        all pages ahead of time, particularly after a zwiki upgrade,
+        to ensure all pages have the latest properties and have been
+        rendered by the latest code, minimizing delay and possible
+        problems later on.
 
-        An administrator may want to call this ahead of time, particularly
-        after a zwiki upgrade, to ensure all pages have the latest
-        properties and have been rendered by the latest code, minimizing
-        delay and possible problems later on. If you don't need to
-        re-render every page, set render=0 to complete much faster on
-        large wikis. Also validates parents, re-catalogs each page, and
-        rebuilds the cached wiki outline.
+        Also installs a wiki catalog if not present, re-indexes each
+        page, validates page parents, and rebuilds the wiki outline
+        cache. Also installs the index_html and standard_error_message
+        dtml methods. XXX split ? 
+
+        You can set render=0 to skip the page pre-rendering part,
+        completing much faster on large wikis.
 
         The optional batch argument forces a commit every N pages.
         This may be useful to get a complete run in large/busy wikis,
-        which can be difficult due to conflict errors, memory usage etc.
+        which can be difficult due to conflict errors or memory usage.
+
+        Requires 'Manage properties' permission on the folder.
         """
         if not self.checkPermission(Permissions.manage_properties,
                                      self.folder()):
@@ -63,15 +69,17 @@ class PageAdminSupport:
              _('(folder -> Manage properties)'))
         
         batch = int(batch)
-        if render: BLATHER('upgrading and pre-rendering all pages:')
-        else: BLATHER('upgrading all pages:')
+        if render: BLATHER('upgrading/reindexing/pre-rendering all pages:')
+        else: BLATHER('upgrading/reindexing all pages:')
         starttime = clock()
         n, total = 0, self.pageCount()
+        self.setupCatalog(reindex=0)
         for p in self.pageObjects(): # poor caching (not a problem here)
             n += 1
             try:
                 p.upgrade(REQUEST)
                 p.upgradeId(REQUEST)
+                p.fixPageEncoding()
                 if render:
                     p.preRender(clear_cache=1)
                     msg = 'upgraded and pre-rendered page'
@@ -88,6 +96,7 @@ class PageAdminSupport:
                 get_transaction().commit()
 
         self.updateWikiOutline()
+        self.setupDtmlMethods()
         endtime = clock()
         BLATHER('upgrade complete, %d pages processed in %fs, %f pages/s' \
                 %(n, endtime-starttime, n/(endtime-starttime)))
@@ -126,6 +135,9 @@ class PageAdminSupport:
             BLATHER(
                 'upgradeId for "%s" (%s) failed - does %s already exist ?' \
                 % (self.pageName(),self.getId(),self.canonicalIdFrom(name)))
+
+    def newPageTypeIdFor(self,oldpagetypeid):
+        return PAGE_TYPE_UPGRADES[oldpagetypeid]
 
     # allow extra actions to be added to this method
     # upgrade hooks return non-null if the page object was changed
@@ -176,8 +188,9 @@ class PageAdminSupport:
             changed = 1
 
         # upgrade old page types
-        if self.pageTypeId() in PAGE_TYPE_UPGRADES.keys():
-            self.setPageType(PAGE_TYPE_UPGRADES[self.pageTypeId()])
+        pagetype = self.pageTypeId()
+        if pagetype in PAGE_TYPE_UPGRADES.keys():
+            self.setPageType(self.newPageTypeIdFor(pagetype))
             # clear render cache; don't bother prerendering just now
             self.clearCache()
             changed = 1
@@ -424,4 +437,35 @@ class PageAdminSupport:
         if REQUEST:
             REQUEST.RESPONSE.redirect(self.pageUrl())
             
+    def fixPageEncoding(self, FROM='iso8859-1', TO='utf-8'):
+        """
+        Try to fix any character encoding problems in this page's name or text.
+
+        FROM is the encoding that we will try to convert from if there is trouble
+        TO is the encoding we prefer to use in this wiki
+        """
+        try: 
+            # are there characters in the name or text not using our preferred encoding ?
+            t = unicode(self.pageName(),TO)
+            t = unicode(self.text(),TO)
+            return False
+        except UnicodeDecodeError:
+            # yes - convert 
+            log = "converting %s from %s to %s encoding" % (self.pageName(), FROM, TO)
+            BLATHER(log)
+            # this will send mail and set last editor
+            #self.edit(text=unicode(self.text(), FROM).encode(TO),
+            #       title=unicode(self.pageName(), FROM).encode(TO),
+            #       log=log)
+            # this won't
+            self.setText(unicode(self.text(), FROM).encode(TO), REQUEST=REQUEST)
+            # this will (if the name really needs fixing)
+            self.rename(unicode(self.pageName(), FROM).encode(TO), sendmail=0, REQUEST=REQUEST)
+            return True
+
+    def fixAllPagesEncoding(self):
+        for p in self.pageObjects():
+            fixPageEncoding(p)
+        self.REQUEST.RESPONSE.redirect(self.REQUEST['URL1'])
+
 InitializeClass(PageAdminSupport)
