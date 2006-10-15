@@ -76,6 +76,7 @@ authors_sans_name =
 canonize_author :: String -> String
 canonize_author s
     | s `contains` "simon@blue"        = "Simon Michael <simon@joyful.com>"
+    | s `contains` "simon@dynabook.joyful.com"        = "Simon Michael <simon@joyful.com>"
     | s `contains` "sendencolpe.degoute" = "Encolpe Degoute <encolpe.degoute@ingeniweb.com>"
 canonize_author s =
   if (not.null) eaLst 
