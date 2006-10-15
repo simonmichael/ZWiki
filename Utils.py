@@ -337,14 +337,14 @@ class PageUtils:
 
         - use front page url as our fixed base
 
-        - add #PageName so the browser will scroll; most robots ignore
+        - add #PageId so the browser will scroll; most robots ignore
           this part, we think
 
         - have the contents page figure out"you are here" from the http referer
 
         """
         url = self.defaultPageUrl() + '/contents'
-        if scroll: url += '#' + quote(self.pageName())
+        if scroll: url += '#' + self.pageId()
         return url
     
     security.declareProtected(Permissions.View, 'changesUrl')

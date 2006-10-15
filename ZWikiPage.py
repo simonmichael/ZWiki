@@ -847,6 +847,9 @@ class ZWikiPage(
         to handle eg pages created via the ZMI.
         """
         return self.title_or_id()
+
+    def pageId(self):
+        return self.id()
     
     security.declareProtected(Permissions.View, 'spacedPageName')
     def spacedPageName(self):

@@ -642,20 +642,36 @@ class OutlineRendering:
                        self.formatWikiname(i)))
             else:
                 combos.append(i)
-        
+        # this view is often invoked via a default page, not the current one,
+        # to reduce bot traffic (see contentsUrl). Try to figure out the
+        # current page for "you are here".
+        here = unquote(here or self.referringPageName() or '')
         return self.contentspage(
-            self.renderNesting(combos,
-                               here=unquote(here or self.wikiPageFromReferrer(REQUEST) or '')),
+            self.renderNesting(combos,here=here),
             singletons,
             REQUEST=REQUEST)
 
-    def wikiPageFromReferrer(self,REQUEST):
+    def referringPageId(self,REQUEST=None):
+        """
+        If the referrer was a page in this wiki, return its id, or None.
+        """
+        if not REQUEST: REQUEST = self.REQUEST
         if not REQUEST: return None
         referrer = REQUEST.get('HTTP_REFERER', None)
         if not referrer: return None
-        m = re.match(r'^'+re.escape(self.wikiUrl())+r'/?([^?#]*)', referrer)
+        m = re.match(r'^'+re.escape(self.wikiUrl())+r'/?([^?#/]*)', referrer)
         if m: return m.group(1)
         else: return None
+
+    def referringPageName(self,REQUEST=None):
+        """
+        If the referrer was a page in this wiki, return its name, or None.
+        """
+        id = self.referringPageId(REQUEST=REQUEST)
+        if id:
+            p = self.pageWithId(id)
+            if p: return p.pageName()
+        return None
 
     security.declareProtected(Permissions.View, 'context')
     def context(self, REQUEST=None, with_siblings=0, enlarge_current=0):
@@ -820,7 +836,7 @@ class OutlineRendering:
         Format a nesting structure as HTML unordered lists of wiki links.
 
         - nesting is the nesting to be formatted
-        - here is the page name to highlight with "you are here", if any
+        - here is the name of the page to highlight with "you are here", if any
         - if enlarge_current is true, here will be enlarged instead
         - if suppress_hyperlink is true, here will not be linked
           (backwards compatibility for old editforms)
@@ -838,9 +854,9 @@ class OutlineRendering:
             # quicker than renderLinkToPage, since we know it exists:
             wikiurl = self.wiki_url()
             def quicklink(page):
+                id = self.canonicalIdFrom(page)
                 return '<a href="%s/%s" name="%s">%s</a>' \
-                       % (wikiurl,self.canonicalIdFrom(page),quote(page),
-                          self.formatWikiname(page))
+                       % (wikiurl,id,id,self.formatWikiname(page))
             if here and page == here: 
                 if enlarge_current:
                     # just assume we are in the page header, and link to
