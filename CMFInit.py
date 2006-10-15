@@ -11,7 +11,6 @@ from Products.CMFCore.DirectoryView import registerDirectory
 from ZWikiPage import ZWikiPage
 import Permissions
 from Defaults import PAGE_METATYPE, PAGE_PORTALTYPE
-from Wikis import _addDTMLMethod, _addZWikiPage
 from I18n import _
 
 # no longer used, but maybe later.
