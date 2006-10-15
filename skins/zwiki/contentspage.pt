@@ -1,7 +1,19 @@
-<html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki" >
+<html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki"
+      tal:define="title python:container.title and gettext('Wiki contents for')+' '+container.title or gettext('Wiki contents')
+# XXX splicing translated and dynamic text - how to pass title in to fill-slot ?
+# XXX for now, complicated spans
+">
   <head>
-    <title metal:fill-slot="title_slot" tal:content="
-                                                     string:${container/title} ${here/pageName} wiki contents" />
+    <title metal:fill-slot="title_slot">
+
+       <span tal:condition="container/title" tal:omit-tag="">
+         <span i18n:translate="" tal:omit-tag="">Wiki contents for</span> <span tal:replace="container/title" />
+       </span>
+       <span tal:condition="not:container/title" tal:omit-tag="">
+         <span i18n:translate="" tal:omit-tag="">Wiki contents</span>
+       </span>
+
+    </title>
     <metal:block metal:fill-slot="head_slot">
       <metal:block metal:use-macro="here/macros/formsearchtags" />
     </metal:block>
@@ -9,18 +21,30 @@
   <body>
     <metal:block metal:fill-slot="main">
       <metal:macro metal:use-macro="here/macros/accesskeys" />
-      <h1 i18n:translate="">Wiki contents</h1>
+      <h1>
+
+       <span tal:condition="container/title" tal:omit-tag="">
+         <span i18n:translate="" tal:omit-tag="">Wiki contents for</span> <span tal:replace="container/title" />
+       </span>
+       <span tal:condition="not:container/title" tal:omit-tag="">
+         <span i18n:translate="" tal:omit-tag="">Wiki contents</span>
+       </span>
+
+      </h1>
       <div class="formcontent">
-        <span tal:replace="structure options/hierarchy">page hierarchy..</span>
-        <div tal:condition="options/singletons">
-          <h4 i18n:translate="">Singletons:</h4> 
-          <ul class="outline">
-            <li tal:repeat="singleton options/singletons">
-              <span tal:replace="structure singleton">singleton..</span>
-            </li>
-          </ul>
+        <div class="subtopics">
+          <div style="font-size:large" tal:content="structure options/hierarchy">
+            page hierarchy..
+          </div>
+          <div tal:condition="options/singletons">
+            <h4 i18n:translate="">Singletons:</h4>
+            <ul class="outline">
+              <li tal:repeat="singleton options/singletons">
+                <span tal:replace="structure singleton">singleton..</span>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
     </metal:block>
   </body>
 </html>

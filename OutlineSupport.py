@@ -855,7 +855,7 @@ class OutlineRendering:
                              self.formatWikiname(page)))
                 else:
                     # just highlight "here"
-                    return '%s <b><-- %s.</b>' % \
+                    return '%s <span id="youarehere"><-- %s.</span>' % \
                            ((suppress_hyperlink and page) # another special case
                             or quicklink(page),
                             _("You are here"))
