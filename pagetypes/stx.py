@@ -72,7 +72,7 @@ class PageTypeStx(PageTypeBaseHtml):
         This normally works on page's source, but can be also invoked on
         arbitrary text.
         """
-        t = text or (page.document()+'\n'+MIDSECTIONMARKER+ \
+        t = text or (page.document()+'\n\n'+MIDSECTIONMARKER+ \
                      self.preRenderMessages(page))
         t = page.applyWikiLinkLineEscapesIn(t)
         t = self.format(t)
