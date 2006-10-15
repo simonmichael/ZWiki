@@ -155,7 +155,7 @@
               <tr>
                 <td valign="" align="left" colspan="1">
                   <span i18n:translate="">For editing help, see</span> 
-                  <a tal:attributes="href string:${wiki_url}/HelpPage#editing"
+                  <a tal:attributes="href string:${here/helpUrl}#editing"
                      ><span i18n:translate="">HelpPage</span></a> 
                   <span tal:omit-tag="" 
                         tal:condition="python:
