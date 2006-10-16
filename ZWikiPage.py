@@ -64,7 +64,7 @@ import Permissions
 from Defaults import AUTO_UPGRADE, IDS_TO_AVOID, \
      PAGE_METATYPE, LINK_TO_ALL_CATALOGED, LINK_TO_ALL_OBJECTS, \
      WIKINAME_LINKS, BRACKET_LINKS, DOUBLE_BRACKET_LINKS, \
-     DOUBLE_PARENTHESIS_LINKS
+     DOUBLE_PARENTHESIS_LINKS, ISSUE_LINKS
 from Regexps import url, bracketedexpr, singlebracketedexpr, \
      doublebracketedexpr, doubleparenthesisexpr, wikiname, wikilink, \
      interwikilink, remotewikiurl, protected_line, zwikiidcharsexpr, \
@@ -433,6 +433,10 @@ class ZWikiPage(
         """Are wikinames linked in this wiki ?"""
         return getattr(self,'use_wikiname_links',WIKINAME_LINKS)
 
+    def issueLinksAllowed(self):
+        """Are issue numbers (#NNNN) linked in this wiki ?"""
+        return getattr(self,'use_issue_links',ISSUE_LINKS)
+
     def bracketLinksAllowed(self):
         """Are bracketed freeform names linked in this wiki ?"""
         return getattr(self,'use_bracket_links',BRACKET_LINKS)
@@ -454,8 +458,10 @@ class ZWikiPage(
         """Does link look a valid wiki link syntax for this wiki ?
         """
         return ((
-            self.wikinameLinksAllowed() and
-                re.match(wikiname,link)
+            (self.wikinameLinksAllowed() and
+                re.match(wikiname,link))
+            or (self.issueLinksAllowed() and
+                re.match(hashnumberexpr,link))
             or (self.bracketLinksAllowed() and
                 re.match(singlebracketedexpr,link))
             or (self.doubleBracketLinksAllowed() and
