@@ -493,7 +493,6 @@ class ZWikiPage(
                 if (link[0]=='!'
                     or not (self.isValidWikiLinkSyntax(link)
                             or (urls and re.match(url,link))
-                            or re.match(hashnumberexpr,link)
                             )
                     or within_literal(linkstart,linkend-1,state,text) # XXX these
                     or withinSgmlOrDtml((linkstart,linkend),text)):   # overlap ?
