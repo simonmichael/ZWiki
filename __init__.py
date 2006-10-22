@@ -276,7 +276,8 @@ def addWikiFromFs(self, new_id, title='', wiki_type='zwikidotorg',
         elif re.match(r'(?:jpe?g|gif|png)', type):
             f._setObject(id, Image(id, '', text))
         else:
-            f._setObject(id, File(id, '', text))
+            id = f._setObject(id, File(id, '', text))
+            if type == 'css': f[id].content_type = 'text/css'
 
 def addZWikiPage(self, id, title='',
                   page_type=PAGETYPES[0]._id, file=''):
