@@ -56,10 +56,10 @@ class Tests(ZwikiTestCase):
         self.assertEquals(self.wiki.RootPage.context(),
                           '&nbsp;') # XXX should be as below I think
         self.assertEquals(self.wiki.RootPage.context(with_siblings=1),
-                          '<small><ul class="outline expandable">\n <li><a href="http://nohost/test_folder_1_/wiki/RootPage" name="RootPage">RootPage</a> <b><-- You are here.</b> ...\n </li>\n</ul>\n</small>'
+                          '<small><ul class="outline expandable">\n <li><a href="http://nohost/test_folder_1_/wiki/RootPage" name="RootPage">RootPage</a> <span id="youarehere"><-- You are here.</span> ...\n </li>\n</ul>\n</small>'
                           )
         self.assertEquals(self.wiki.ChildPage.context(),
-                          '<small><ul class="outline expandable">\n <li><a href="http://nohost/test_folder_1_/wiki/RootPage" name="RootPage">RootPage</a>\n<ul class="outline expandable">\n <li><a href="http://nohost/test_folder_1_/wiki/ChildPage" name="ChildPage">ChildPage</a> <b><-- You are here.</b></li>\n</ul>\n </li>\n</ul>\n</small>'
+                          '<small><ul class="outline expandable">\n <li><a href="http://nohost/test_folder_1_/wiki/RootPage" name="RootPage">RootPage</a>\n<ul class="outline expandable">\n <li><a href="http://nohost/test_folder_1_/wiki/ChildPage" name="ChildPage">ChildPage</a> <span id="youarehere"><-- You are here.</span></li>\n</ul>\n </li>\n</ul>\n</small>'
                           )
         
     def test_reparent(self):
