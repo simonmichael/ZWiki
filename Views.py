@@ -669,21 +669,25 @@ class SkinUtils:
         """
         Get the named skin template from the ZODB or filesystem.
 
-        This will find either a Page Template or DTML Method (XXX still ?
-        test) with the specified name, preferring the former, and return
-        it wrapped in the current page's context (container=folder,
-        here=page).
+        This will find either a Page Template or DTML Method with the
+        specified name. We look first for a template with this name in the
+        ZODB acquisition context, trying the .pt, .dtml or no suffix in
+        that order. Then we look in skins/zwiki on the filesystem. If no
+        matching template can be found, we return a generic error template.
 
-        We look first in the ZODB acquisition context; then in skins/zwiki
-        on the filesystem.If the template can't be found, return a generic
-        error template.  
-
+        For convenient skin development, we return the template wrapped in
+        the current page's context (so here will be the page, container
+        will be the folder, etc).
+                
         This is basically duplicating the CMF skin mechanism, but in a
         way that works everywhere, and with some extra error-handling
         to help skin customizers. Still evolving, it will all shake
         out in the end.
         """
-        obj = getattr(self.folder(), name, None)
+        obj = getattr(self.folder(), name+'.pt',
+                      getattr(self.folder(), name+'.dtml',
+                              getattr(self.folder(), name,
+                                      None)))
         if not isTemplate(obj): # don't accept a non-template object
             obj = TEMPLATES.get(name, TEMPLATES['badtemplate'])
         # return it with both folder and page in the acquisition context,
