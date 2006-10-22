@@ -700,38 +700,18 @@ class SkinUtils:
     security.declareProtected(Permissions.View, 'addSkinTo')
     def addSkinTo(self,body,**kw):
         """
-        Add the main wiki page skin to some rendered body text.
+        Add the main wiki page skin to some body text, unless 'bare' is set.
 
-        Unless the 'bare' keyword is found in REQUEST. Also the 'skin'
-        keyword may be used to select a template other than wikipage.  If
-        no wikipage template is found in the zodb, then we look for a
-        standard_wiki_header/standard_wiki_footer dtml method pair
-        (backwards compatibility), otherwise the wikipage template on the
-        filesystem is used.
-
-        XXX This is used only for the main page view. Perhaps the wikipage
-        view method should replace it ?
+        XXX used only for the main page view. Perhaps a wikipage view
+        method should replace it ? Well for now this is called by the page
+        type render methods, which lets them say whether the skin is
+        applied or not.
         """
         REQUEST = getattr(self,'REQUEST',None)
-        folder = self.folder()
-        # allow skin to be turned off for this request
         if (hasattr(REQUEST,'bare') or kw.has_key('bare')):
             return body
-        # or, use of a template other than wikipage
-        skintemplate = kw.get('skin','wikipage')
-        # get the zodb template, zodb dtml methods, or fs template, and
-        # render in the context of this page
-        if (hasattr(folder,skintemplate) and
-            isPageTemplate(getattr(folder,skintemplate))):
-            return getattr(folder,skintemplate).__of__(self)(
-                self,REQUEST,body=body,**kw)
-        elif (hasattr(folder,'standard_wiki_header') and
-              hasattr(folder,'standard_wiki_footer')):
-            return self.getSkinTemplate('standard_wiki_header')(self,REQUEST)+\
-                   body + \
-                   self.getSkinTemplate('standard_wiki_footer')(self,REQUEST)
         else:
-            return TEMPLATES['wikipage'].__of__(self.folder()).__of__(self)(body=body,**kw)
+            return self.getSkinTemplate('wikipage')(self,REQUEST,body=body,**kw)
 
 InitializeClass(SkinUtils)
 
