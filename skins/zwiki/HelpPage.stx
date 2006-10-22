@@ -1,16 +1,10 @@
+This is the quick help page for Zwiki version 0.57.
+<dtml-var "'(This site is currently running '"><dtml-var zwiki_version><dtml-var "').'"> 
+See also the more complete docs at http://zwiki.org .
+
 <ol>
 
-<a name="1"><li>**About this help**</li></a>
-
- This help page corresponds to Zwiki version 0.57.0 and its standard skin.
- <dtml-var "'(This site is currently running '"><dtml-var zwiki_version><dtml-var "').'"> 
-
- Links
- beginning with "!ZWiki:..." lead to additional documentation on
- zwiki.org. (This page also serves as the master template for the help 
- shipped with Zwiki, hence the generic links).
-
-<a name="2"><li>What is a wiki ?</li></a>
+<li>What is a wiki ?</li>
 
   This site is an example of a wiki - a kind of collaborative website. 
   (*wiki wiki* means quick.)
@@ -23,7 +17,7 @@
   This site is running Zwiki, a particular kind of wiki software.
   For some more definitions, try the ZWiki:ZwikiGlossary.
 
-<a name="3"><li>User interface</li></a>
+<li>User interface</li>
 
   Zwiki's user interface comes in two main flavours: 
   "standard":http://zwiki.org and "plone":http://plone.demo.zwiki.org .
@@ -31,9 +25,8 @@
 
   You can set your user name, time zone and other things by clicking "options".
   (Some sites require this before you can make changes.)
-  
 
-<a name="4"><li>Navigation</li></a>
+<li>Navigation</li>
 
   Each page in a wiki has a unique name, most often a !WikiName - 
   two or more capitalized words joined together. 
@@ -50,7 +43,7 @@
 
   Click "backlinks" or the page title to see the list of pages which link to this one.
 
-<a name="5"><li>Page hierarchy</li></a>
+<li>Page hierarchy</li>
 
   Zwiki arranges pages in a hierarchy (outline), which helps to organize
   things when there are many pages.  You can always see the overall wiki
@@ -65,7 +58,7 @@
   If enabled by the site admin, you'll also see a list of subtopics on each page.
   You can use your browser's "n", "p", and "u" access keys to go to next page, to previous page, or up.
 
-<a name="6"><li>Subscription</li></a>
+<li>Subscription</li>
 
   If you see a "subscribe" link, you can subscribe to receive comments by mail.
   You can choose to receive comments just from that page or from the whole wiki.
@@ -82,7 +75,7 @@
   Your mail will go to the page named in brackets in the subject
   (or to a default page).
 
-<a name="7"><li>Editing</li></a>
+<li>Editing</li>
 
   You have full editing rights to any page, unless restricted by the site
   admin. Note your comments may be received by many subscribers. To avoid
@@ -99,7 +92,7 @@
   
   - There are best practices for wiki editing which you'll get to know over time.
 
-<a name="8"><li>Formatting rules</li></a>
+<li>Formatting rules</li>
 
    When you save a page, Zwiki formats and links your text according to some standard rules.
    Different rules are applied depending on the *page type*;
@@ -144,7 +137,7 @@
       when it does something unexpected, tweak it until it looks right; 
       go to the docs or ask for help when you get really stuck or curious.
 
-<a name="9"><li>Finding out more</li></a>
+<li>Finding out more</li>
 
   More about Zwiki: http://zwiki.org
 
