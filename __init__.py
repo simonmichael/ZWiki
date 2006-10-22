@@ -214,9 +214,6 @@ def manage_addWiki(self, new_id, new_title='', wiki_type='zwikidotorg',
                 try: u=self.DestinationURL()
                 except: u=REQUEST['URL1']
                 REQUEST.RESPONSE.redirect(u+'/manage_main?update_menu=1')
-        #why do this ?
-        #else:
-        #    return ''
 
 def addWikiFromZodb(self,new_id, new_title='', wiki_type='zwikidotorg',
                         REQUEST=None):
