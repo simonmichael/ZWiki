@@ -105,62 +105,6 @@ def initialize(context):
                                      ''))
         del type, val, tb
 
-#def autoImport(context):
-#    """Import any files in our import directory
-#       into /Control_Panel/Products/PRODUCT.
-#       Called at product startup and refresh.
-#       XXX auto-refresh too ?
-#
-#       How to handle versions & upgrades of imported content nicely ?
-#       Don't want to overwrite anything the zope admin has in place.
-#       Try to KISS..
-#       
-#       Here's the plan for zwiki: sample wiki zexp filenames will end
-#       in a version number corresponding to the zwiki release they
-#       shipped with (eg). The imported id is based on this so newer
-#       versions will import cleanly. The Add Zwiki Web form will use
-#       the latest version of each sample wiki that it finds. The admin
-#       can clean out old versions at will.
-#       """
-#
-#    importdir = Globals.package_home(globals()) + os.sep + 'import'
-#    if 0: #XXX not exists(importdir)
-#        return
-#
-#    # sneaky, or dumb, way to get to the zodb
-#    obj = context.getProductHelp()
-#    productfolder = obj.getPhysicalRoot().Control_Panel.Products['ZWiki']
-#                                #XXX should find product name dynamically
-#
-#    # based on manage_importObject
-#    # locate a valid connection
-#    connection=obj._p_jar
-#    while connection is None:
-#        obj=obj.aq_parent
-#        connection=obj._p_jar
-#
-#    # try to import any and all files found
-#    # will fail if the object is already in the ZODB
-#    files = os.listdir(importdir)  
-#    for filename in files:
-#        filepath = importdir + os.sep + filename
-#        # how do we get these to show in undo ?
-#        #get_transaction().begin()
-#        try:
-#            ob=connection.importFile(filepath, customImporters=customImporters)
-#            id = filename[:-5]  # assume files are named something.zexp
-#            productfolder._setObject(id, ob, set_owner=0)
-#            
-#            # try to make ownership implicit if possible
-#            ob=productfolder._getOb(id)
-#            ob.manage_changeOwnershipType(explicit=0)
-#            #get_transaction().commit()
-#            #XXX log it
-#            
-#        except:
-#            #get_transaction().abort()
-#            #XXX log it
-#            pass
 
 # set up hooks for ZMI operations on zwiki objects, for:
 #
