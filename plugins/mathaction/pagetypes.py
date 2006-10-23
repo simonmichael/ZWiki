@@ -19,7 +19,7 @@ class PageTypeStxMath(PageTypeStx):
     docstring
     """
     _id = 'stxmath'
-    _name = 'Structured Text + Math'
+    _name = 'Structured Text + LaTeX + Math'
     supportsLaTeX = yes
     supportsPlone = yes
 
@@ -47,6 +47,7 @@ class PageTypeStxMath(PageTypeStx):
         # PROTECT all preformatted areas from LaTeX, Axiom etc.
 	savePre=[]
 	t = re.sub(r'<pre(?: .*?)?>.*?</pre>',hidePre,t,reConsts)
+        # replace latex and also axiom, reduce, maxima etc. markup
         t = replaceInlineLatex(t, getattr(page.folder(),'latex_font_size',defaultcharsizepx), \
                                   getattr(page.folder(),'latex_align_fudge',0), 
                                   getattr(page.folder(),'latex_res_fudge',1.03), latexTemplate)

@@ -26,7 +26,7 @@ from Products.ZWiki.pagetypes import registerPageType
 
 class PageTypeMoin(PageTypeBase):
     _id = 'moin'
-    _name = 'MoinMoin markup'
+    _name = 'MoinMoin'
     supportsMoin = yes
     supportsWikiLinks = yes
 

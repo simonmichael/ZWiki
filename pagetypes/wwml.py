@@ -7,7 +7,7 @@ from Products.ZWiki.pagetypes import registerPageType
 
 class PageTypeWwml(PageTypeBase):
     _id = 'wwml'
-    _name = 'WikiWikiWeb markup'
+    _name = 'WikiWikiWeb'
     supportsWwml = yes
     supportsWikiLinks = yes
 
