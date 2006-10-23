@@ -68,7 +68,7 @@
                 <td valign="middle" align="right">
                   <span tal:condition="python:
                                        user.has_permission('Zwiki: Change page types',here)">
-                    <span i18n:translate="">type</span>:
+                    <span i18n:translate="">markup</span>:
                     <select name="type" tabindex="" class="formfield"
                             title="select the formatting and rendering style for this page"
                             i18n:attributes="title" >
