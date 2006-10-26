@@ -53,6 +53,11 @@ class PluginRating:
         """Private accessor."""
         self.setVotes({})
 
+    security.declarePublic('numericVotes') # XXX better name ?
+    def numericVotes(self):
+        """Get just the numeric votes without the usernames."""
+        return self.votes().values()
+
     # api methods
     
     security.declareProtected(Permissions.Rate, 'vote')
