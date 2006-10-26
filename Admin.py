@@ -127,7 +127,10 @@ class PageAdminSupport:
                 % (self.pageName(),self.getId(),self.canonicalIdFrom(name)))
 
     def newPageTypeIdFor(self,oldpagetypeid):
-        return PAGE_TYPE_UPGRADES[oldpagetypeid]
+        """
+        Find the best modern equivalent for some arbitrary old page type.
+        """
+        return PAGE_TYPE_UPGRADES.get(oldpagetypeid, self.defaultPageType())
 
     # allow extra actions to be added to this method
     # upgrade hooks return non-null if the page object was changed
