@@ -207,7 +207,7 @@ releasenotes:
 # changes in these files
 version:
 	@echo bumping version to $(VERSIONNO)
-	@(echo 'Zwiki' $(VERSIONNO) `date +%Y/%m/%d`; echo)|cat - CHANGES \
+	@(echo 'Zwiki' $(VERSIONNO) `date +%Y/%m/%d`; echo; echo '======================='; echo)|cat - CHANGES \
 	  >.temp; mv .temp CHANGES
 	@perl -pi -e "s/__version__='.*?'/__version__='$(VERSIONNO)'/" \
 	  __init__.py
