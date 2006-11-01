@@ -7,7 +7,7 @@
 # check tests pass
 # check for late tracker issues
 # check showAccessKeys,README,wikis/,skins/,zwiki.org HelpPage,QuickReference
-# update CHANGES from darcs changes --from-tag=0.xx
+# darcs changes --from-tag=release into CHANGES
 # update version.txt
 # make Release
 # update KnownIssues,OldKnownIssues,#zwiki
