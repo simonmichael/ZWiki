@@ -21,7 +21,7 @@
 <dtml-let 
   active="lastEditIntervalInDays() < 7"
   bold="active and 'font-weight:bold;' or ''"
-  star="active and '<img src=star.gif align=right />' or ''"
+  star="active and '<img src=/misc_/ZWiki/star_icon align=right />' or ''"
   creationdate="'%s/%s/%s' % (creationTime().year(),creationTime().month(),creationTime().day())"
 >
 <tr style="background-color:#eeffdd;">
