@@ -1,19 +1,46 @@
+Simpler skin customization, bugfixes, cleanups.
+
+Upgrade notes
+  If you have a very old zwiki relying on standard_wiki_header &
+  standard_wiki_footer dtml methods, these will now be ignored;
+  you must use a wikipage page template to customise the skin.
+  I don't think this will affect anyone (let me know if it did!) 
+	
+Installing
+  * remove bad import from CMFInit breaking CMF/Plone installation (#1291,
+    #1295)
+  * /upgradeAll now sets up a catalog and tries to fix some common
+    character encoding problems
+
+Configuring
+  * accept zodb skin templates with .pt or .dtml suffixes too, for easy upload
+  * when adding a wiki, keep image and file suffixes
+  * when adding a wiki, set the stylesheet's content type to text/css
+  * code cleanup, drop standard_wiki_header/standard_wiki_footer support
+  * add use_issue_links boolean property
+
+Browsing
+  * help page cleanups, link UsersGuide
+  * clarify username option help
+  * fix subtopics layout interference from unterminated stx lists &
+    literal blocks (#625)
+  * improve contents page styling, make it like subtopics (but bigger)
+  * fix star image in message-board-style subtopics template (#1305)
+
+Editing
+  * fix editform helppage link
+  * clarify page type names, change "type" to "markup"
+
+Issue tracking
+  * set a "medium" severity when mailing in a new issue (kludgy, just
+    picks the middle list element)
+
+General
   * use a more stable contents url to reduce bot traffic (#762, #699) 
     (Simon Michael, Daniel Yount, Michael Haubenwallner, Sascha Welter)
-
-  * improve contents page styling, make it like subtopics (but bigger)
-
+  * handle unrecognised page types properly
+  * numericVotes method to get votes without voter identities
   * merge Wikis.py into __init__ and Admin
-
-  * remove bad import from CMFInit, should fix #1295, maybe #1291
-
-  * set a "medium" severity when mailing in a new issue (kludgy, just picks the middle list element)
-
-  * help page fixes and updates
-
-  * fix editform helppage link
-
-  * upgradeAll now sets up a catalog and tries to fix some common character encoding problems
 
 
 Zwiki 0.57.0 2006/10/01
