@@ -65,29 +65,29 @@ class Tests(ZwikiTestCase):
 
 class AddWikiTests(unittest.TestCase):
 
-    TEMPLATES = (
-        ('zwikidotorg',
-         (('AnnoyingQuote',       'structuredtext'),
-          ('BookMarks',           'structuredtext'),
-          ('FrontPage',           'structuredtext'),
-          ('HelpPage',            'structuredtext'),
-          ('HierarchalStructure', 'structuredtext'),
-          ('JumpSearch',          'htmldtml'),
-          ('RecentChanges',       'htmldtml'),
-          ('RemoteWikiLinks',     'structuredtext'),
-          ('RemoteWikiURL',       'structuredtext'),
-          ('SearchPage',          'htmldtml'),
-          ('StructuredTextRules', 'structuredtext'),
-          ('TextFormattingRules', 'structuredtext'),
-          ('TimeZone',            'structuredtext'),
-          ('UserName',            'structuredtext'),
-          ('UserOptions',         'structuredtextdtml'),
-          ('WikiName',            'structuredtext'),
-          ('WikiWikiWeb',         'structuredtext'),
-          ('ZWiki',               'structuredtext'),
-          ('ZopeDotOrg',          'structuredtext'),
-          )),
-        )                               # add parents
+#     TEMPLATES = (
+#         ('zwikidotorg',
+#          (('AnnoyingQuote',       'structuredtext'),
+#           ('BookMarks',           'structuredtext'),
+#           ('FrontPage',           'structuredtext'),
+#           ('HelpPage',            'structuredtext'),
+#           ('HierarchalStructure', 'structuredtext'),
+#           ('JumpSearch',          'htmldtml'),
+#           ('RecentChanges',       'htmldtml'),
+#           ('RemoteWikiLinks',     'structuredtext'),
+#           ('RemoteWikiURL',       'structuredtext'),
+#           ('SearchPage',          'htmldtml'),
+#           ('StructuredTextRules', 'structuredtext'),
+#           ('TextFormattingRules', 'structuredtext'),
+#           ('TimeZone',            'structuredtext'),
+#           ('UserName',            'structuredtext'),
+#           ('UserOptions',         'structuredtextdtml'),
+#           ('WikiName',            'structuredtext'),
+#           ('WikiWikiWeb',         'structuredtext'),
+#           ('ZWiki',               'structuredtext'),
+#           ('ZopeDotOrg',          'structuredtext'),
+#           )),
+#         )                               # add parents
 
 #I think I've had enough
 #
