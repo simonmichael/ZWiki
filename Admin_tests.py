@@ -64,6 +64,7 @@ class Tests(ZwikiTestCase):
         self.assertEqual(self.page.newPageTypeIdFor('nosuchtype'), self.page.defaultPageType())
 
 class AddWikiTests(unittest.TestCase):
+    pass
 
 #     TEMPLATES = (
 #         ('zwikidotorg',
