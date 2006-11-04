@@ -11,7 +11,7 @@ class Tests(ZwikiTestCase):
 
     def test_templatesHaveMetaType(self):
         TEMPLATES = ZWiki.Views.TEMPLATES
-        # do all default templates have meta_type ? this has been fragile
+        # make sure all default templates have meta_type
         self.failIf(filter(lambda x:not hasattr(x,'meta_type'),TEMPLATES.values()))
 
 class BindingsTests(ZwikiTestCase):
