@@ -278,6 +278,7 @@ def addWikiFromFs(self, new_id, title='', wiki_type='zwikidotorg',
         else:
             id = f._setObject(filename, File(filename, '', text))
             if type == 'css': f[filename].content_type = 'text/css'
+    f.objectValues(spec='ZWiki Page')[0].updatecontents()
 
 def addZWikiPage(self, id, title='',
                   page_type=PAGETYPES[0]._id, file=''):
