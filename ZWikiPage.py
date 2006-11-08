@@ -700,8 +700,9 @@ class ZWikiPage(
         if not self.isValidWikiLinkSyntax(local): return link
         local = re.sub(bracketedexpr, r'\1', local) #XXX should support ((..))
         # look for a RemoteWikiURL definition
-        if hasattr(self.folder(), local): 
-            m = re.search(remotewikiurl,getattr(self.folder(),local).text())
+        localpage = self.pageWithName(local)
+        if localpage:
+            m = re.search(remotewikiurl, localpage.text())
             if m:
                 return '<a href="%s%s">%s:%s</a>' \
                        % (m.group('remoteurl'),remote,local,remote)
