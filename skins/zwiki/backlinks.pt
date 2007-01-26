@@ -9,7 +9,7 @@
   <body>
     <div metal:fill-slot="main"
          tal:define="
-                     canreparent python:user.has_permission('Zwiki: Reparent pages',here);
+                     canreparent python:user.has_permission('Zwiki: Reparent pages',here) and here.checkSufficientId(request);
                      thispage here/pageName;
                      thisparents here/parents;
                      backlinks python:here.backlinksFor(thispage);
