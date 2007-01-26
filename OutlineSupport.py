@@ -371,6 +371,10 @@ class OutlineManager:
         Page names may be ids, or fuzzy, even partial. Any which do not
         resolve to an existing page or are duplicates will be ignored.
         """
+        if not self.checkSufficientId(REQUEST):
+            return self.denied(
+                _("Sorry, this wiki doesn't allow anonymous reparenting. Please configure a username in options first."))
+
         oldparents = self.getParents()
         # clean the arguments carefully to avoid parenting anomalies
         # page mgmt form must use pagename field:
