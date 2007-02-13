@@ -101,7 +101,7 @@
   <dl>
   <dtml-try>
     <dt><a href="&dtml-wikiurl;/&dtml.url_quote-id;"><dtml-var "formatWikiname(Title)"></a></dt>
-    <dd><small><em><dtml-var "pageWithName(id).excerptAt(cleanexpr,size=500)"></em></small></dd>
+    <dd><small><em><dtml-var "pageWithName(Title).excerptAt(cleanexpr,size=500)"></em></small></dd>
   </dl>
   <dtml-except>
     <dt>error</dt>
