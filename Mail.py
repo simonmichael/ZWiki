@@ -503,7 +503,8 @@ class PageMailSupport:
         address = (self.fromProperty() or
                    #self.usersEmailAddress() or
                    self.replyToProperty())
-        realname = self.usernameFrom(REQUEST,ip_address=0) or _('anonymous')
+        realname = self.usernameFrom(REQUEST,ip_address=0).splitlines()[0] or _('anonymous')
+        # splitlines to fend off header injection attacks from spammers
         return '%s (%s)' % (address, realname)
 
     def replyToHeader(self):
@@ -766,7 +767,8 @@ Content-Type: text/plain; charset="utf-8"
            self.bccHeader(recipients),
            self.subjectHeader(subject,subjectSuffix),
            msgid,
-           (in_reply_to and '\nIn-reply-to: %s' % in_reply_to) or '',
+           (in_reply_to and '\nIn-reply-to: %s' % in_reply_to.splitlines()[0]) or '',
+           # splitlines to fend off header injection attacks from spammers
            self.zwiki_version(),
            self.xBeenThereHeader(),
            self.listIdHeader(),
