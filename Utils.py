@@ -126,7 +126,7 @@ class PageUtils:
         strings = filter(lambda x:type(x)==type(''), strings)
         return len(join(strings,''))
 
-    def summary(self,size=200,paragraphs=1):
+    def summary(self,size=200,paragraphs=1,charset="utf-8"):
         """
         Give a short plaintext summary of this page's content.
 
@@ -137,11 +137,13 @@ class PageUtils:
         """
         size, paragraphs = int(size), int(paragraphs)
         t = self.documentPart()
+        t = t.decode(charset)  # go to unicode.
         t = re.sub(r'<(?=\S)[^>]+>','',t).strip() # strip html tags
         if paragraphs: t = join(split(t,'\n\n')[:paragraphs],'\n\n')
         if len(t) > size:
             t = t[:size]
             t = re.sub(r'\w*$',r'',t) + '...'
+        t = t.encode(charset)  # get back from unicode.
         return html_quote(t)
 
     def renderedSummary(self,size=500,paragraphs=1):
