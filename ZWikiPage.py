@@ -822,7 +822,8 @@ class ZWikiPage(
                 s = _('last edited %(interval)s ago') % {"interval": interval}
                 
         if (last_editor and
-            not re.match(r'^[0-9\.\s]*$',last_editor)):
+            # anonymous? try to find out by somehow matching an ip address:
+            not re.match(r'^(?:\d{1,3}\.){3}\d{1,3}$',last_editor)):
             # escape some things that might cause trouble in an attribute
             editor = re.sub(r'"',r'',last_editor)
 
