@@ -307,17 +307,21 @@ class Outline:
         parents = self.parentmap().get(node,None)
         if parents: return parents[0]
         else: return None
-    def siblings(self,node): 
+    def siblings(self,node,include_me=False,sort_alpha=True): 
         """
         Return a nesting/list representing node's siblings.
 
         Ie, any other children of node's first parent. Any siblings by the
         other parents are not included.
+        Optionally include the current page (node) in the list.
+        Optionally suppress alphabetical sorting of result.
         """
         parent = self.firstParent(node)
         sibs = self.children(parent)
-        sibs.remove(node)
-        sibs.sort()
+        if not include_me:
+            sibs.remove(node)
+        if sort_alpha:
+            sibs.sort()
         return sibs
     def children(self,node=None):
         """

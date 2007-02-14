@@ -532,13 +532,16 @@ class OutlineManager:
         except: return [] # XXX temp, get rid of
 
     security.declareProtected(Permissions.View, 'siblingsAsList')
-    def siblingsAsList(self):
+    def siblingsAsList(self,include_me=False,sort_alpha=True):
         """
         Return the names of other pages sharing my first parent.
 
         Siblings by my other parents are ignored.
+        Optionally include the current page in the list.
+        Optionally suppress alphabetical sorting of result.
         """
-        return self.wikiOutline().siblings(self.pageName())
+        return self.wikiOutline().siblings(self.pageName(), \
+                include_me=include_me,sort_alpha=sort_alpha)
 
     security.declareProtected(Permissions.View, 'childrenAsList')
     def childrenAsList(self):
