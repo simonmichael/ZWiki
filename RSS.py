@@ -28,9 +28,9 @@ class PageRSSSupport:
         feedtitle = self.folder().title_or_id() + ' new pages'
         feeddescription = feedtitle
         feedlanguage = 'en'
-        feeddate = str(self.folder().bobobase_modification_time()) #XXX ?
+        feeddate = self.folder().bobobase_modification_time().rfc822()
         wikiurl = self.wikiUrl()
-        REQUEST.RESPONSE.setHeader('Content-Type','text/xml')
+        REQUEST.RESPONSE.setHeader('Content-Type','text/xml; charset=utf-8')
         t = """\
 <rss version="2.0">
 <channel>
@@ -55,6 +55,7 @@ class PageRSSSupport:
 <item>
 <title>%(title)s</title>
 <link>%(wikiurl)s/%(id)s</link>
+<guid>%(wikiurl)s/%(id)s</guid>
 <description><![CDATA[%(summary)s]]></description>
 <pubDate>%(creation_time)s</pubDate>
 </item>
@@ -82,9 +83,9 @@ class PageRSSSupport:
         feedtitle = self.folder().title_or_id() + ' changed pages'
         feeddescription = feedtitle
         feedlanguage = 'en'
-        feeddate = str(self.folder().bobobase_modification_time()) #XXX ?
+        feeddate = self.folder().bobobase_modification_time().rfc822()
         wikiurl = self.wikiUrl()
-        REQUEST.RESPONSE.setHeader('Content-Type','text/xml')
+        REQUEST.RESPONSE.setHeader('Content-Type','text/xml; charset=utf-8')
         t = """\
 <rss version="2.0">
 <channel>
@@ -109,6 +110,7 @@ class PageRSSSupport:
 <item>
 <title>%(title)s</title>
 <link>%(wikiurl)s/%(id)s</link>
+<guid>%(wikiurl)s/%(id)s</guid>
 <description>%(last_log)s</description>
 <pubDate>%(last_edit_time)s</pubDate>
 </item>
