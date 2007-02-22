@@ -30,7 +30,7 @@ class PageTypeHtml(PageTypeBaseHtml):
                            subject, username, time, 
                            message_id=None,in_reply_to=None):
         """
-        Generate restructured text markup for a comment heading in a HTML page.
+        Generate HTML markup for a comment heading in a HTML page.
 
         Note that we just work on the comment heading here. The content of the 
         comment is left as is, not certain what to do with it. Users likely 
