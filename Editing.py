@@ -161,7 +161,7 @@ class PageEditingSupport:
         oldtext = self.read()
         if not username:
             username = self.usernameFrom(REQUEST)
-            if re.match(r'^[0-9\.\s]*$',username): username = ''
+            if re.match(r'^(?:\d{1,3}\.){3}\d{1,3}$',username): username = ''
         subject_heading = self.cleanupText(subject_heading)
         text = self.cleanupText(text)
         # some subtleties here: we ensure the page comment and mail-out
