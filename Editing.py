@@ -910,7 +910,7 @@ class PageEditingSupport:
             # if we have no REQUEST, at least update last editor
             self.last_editor_ip = ''
             self.last_editor = ''
-        self.last_edit_time = DateTime(time.time()).ISO()
+        self.last_edit_time = DateTime(time.time()).toZone('UTC').ISO()
 
     def hasCreatorInfo(self):
         """

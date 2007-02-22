@@ -56,9 +56,9 @@ else:
         security.declarePrivate('setModificationDate')
         def setModificationDate(self, modification_date=None):
             if modification_date is None:
-                self.last_edit_time = DateTime().ISO()
+                self.last_edit_time = DateTime().toZone('UTC').ISO()
             else:
-                self.last_edit_time = self._datify(modification_date).ISO()
+                self.last_edit_time = self._datify(modification_date).toZone('UTC').ISO()
 
         security.declarePublic('modified')
         def modified(self):
