@@ -499,7 +499,7 @@ class PluginTracker:
     # setup methods
 
     security.declareProtected('Manage properties', 'setupTracker')
-    def setupTracker(self,REQUEST=None,pages=0):
+    def setupTracker(self,REQUEST=None,pages=0,dtml=0):
         """
         Configure this wiki for issue tracking.
 
@@ -560,9 +560,14 @@ class PluginTracker:
                 if not self.pageWithName(page):
                     self.create(page,
                                 text=open(os.path.join(dir,page+'.dtml'),'r').read(),
-                                sendmail=0)
+                                sendmail=0,
+                                type='stx')
+                    if dtml:
+                        self.pageWithName(page).manage_addProperty('allow_dtml',1,'boolean')
+
             # also, disable subtopics display under IssueTracker
             self.IssueTracker.setSubtopicsPropertyStatus(0)
+
         # index each page, to make all indexes and metadata current
         # may duplicate some work in setupCatalog
         n = 0
