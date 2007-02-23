@@ -823,7 +823,6 @@ Content-Type: text/plain; charset="utf-8"
                     # e.g. if the MailHost is configured to an inexisting mail server
                     # only the BLATHER would do anything in that case, 
                     # admin mails fail too of course
-                print 'excepted'
                 BLATHER('failed to send mail to %s: %s' % (recipients,
                                                            formattedTraceback()))
                 admin = getattr(self.folder(),'mail_admin',None)
