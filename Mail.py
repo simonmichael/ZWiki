@@ -741,7 +741,37 @@ class PageMailSupport:
         #        unique.append(r)
         #if self.toProperty() in unique: unique.remove(self.toProperty())
 
-        msg = """\
+        mailhost = self.mailhost()
+        if mailhost.meta_type == 'Secure Mail Host':
+            msg = text + "\n\n" +  self.signature(msgid)
+            additional_headers = {
+                                'Reply-To':self.replyToHeader(), \
+                                'X-Zwiki-Version':self.zwiki_version(), \
+                                'X-BeenThere':self.xBeenThereHeader(), \
+                                'List-Id':self.listIdHeader(), \
+                                'List-Post':self.listPostHeader(), \
+                                'List-Subscribe':'<'+self.pageUrl()+'/subscribeform>', \
+                                'List-Unsubscribe': '<'+self.pageUrl()+'/subscribeform>', \
+                                'List-Archive':'<'+self.pageUrl()+'>', \
+                                'List-Help':'<'+self.wikiUrl()+'>' }
+            if not in_reply_to:
+                additional_headers['Message-ID']=msgid
+            else:
+                additional_headers['Message-ID']=msgid + \
+                    '\nIn-reply-to: %s' % in_reply_to.splitlines()[0]
+            # XXX should we do error checking and reporting here, similar to below
+            # where we do it for normal mail hosts?
+            mailhost.secureSend(msg,
+                                mto=tohdr,
+                                mfrom=self.fromHeader(REQUEST), \
+                                subject=self.subjectHeader(subject,subjectSuffix), \
+                                mbcc=self.bccHeader(recipients), \
+                                charset='utf-8', \
+                                **additional_headers )
+
+        else: # normal "Mail Host" or "Maildrop Host"
+
+            msg = """\
 From: %s
 Reply-To: %s
 To: %s
@@ -761,45 +791,51 @@ Content-Type: text/plain; charset="utf-8"
 %s
 %s
 """ \
-        % (self.fromHeader(REQUEST),
-           self.replyToHeader(),
-           tohdr,
-           self.bccHeader(recipients),
-           self.subjectHeader(subject,subjectSuffix),
-           msgid,
-           (in_reply_to and '\nIn-reply-to: %s' % in_reply_to.splitlines()[0]) or '',
-           # splitlines to fend off header injection attacks from spammers
-           self.zwiki_version(),
-           self.xBeenThereHeader(),
-           self.listIdHeader(),
-           self.listPostHeader(),
-           self.pageUrl(),
-           self.pageUrl(),
-           self.pageUrl(),
-           self.wikiUrl(),
-           text,
-           self.signature(msgid),
-           )
-        # send
-        try:
-            self.mailhost().send(msg)
-            #BLATHER('sent mail:\n%s' % msg)
-            BLATHER('sent mail to subscribers:\nTo: %s\nBcc: %s' % (
-                tohdr,self.bccHeader(recipients)))
-        # if there is any failure, notify admin or log
-        except:
-            BLATHER('failed to send mail to %s: %s' % (recipients,
-                                                       formattedTraceback()))
-            admin = getattr(self.folder(),'mail_admin',None)
-            if admin:
-                try:
-                    self.sendMailTo( #XXX possible infinite recursion ?
-                        [],text,REQUEST,
-                        subjectSuffix='ERROR, subscriber mailout failed',
-                        to=admin)
-                except:
-                    BLATHER('failed to send error report to admin: %s' % \
-                            formattedTraceback())
+            % (self.fromHeader(REQUEST),
+               self.replyToHeader(),
+               tohdr,
+               self.bccHeader(recipients),
+               self.subjectHeader(subject,subjectSuffix),
+               msgid,
+               (in_reply_to and '\nIn-reply-to: %s' % in_reply_to.splitlines()[0]) or '',
+               # splitlines to fend off header injection attacks from spammers
+               self.zwiki_version(),
+               self.xBeenThereHeader(),
+               self.listIdHeader(),
+               self.listPostHeader(),
+               self.pageUrl(),
+               self.pageUrl(),
+               self.pageUrl(),
+               self.wikiUrl(),
+               text,
+               self.signature(msgid),
+               )
+
+            # send
+            try:
+                mailhost.send(msg)
+                #BLATHER('sent mail:\n%s' % msg)
+                BLATHER('sent mail to subscribers:\nTo: %s\nBcc: %s' % (
+                    tohdr,self.bccHeader(recipients)))
+
+            # if there is any failure, notify admin or log
+            except: # XXX this bare except doesn't help for a lot of stuff!
+                    # e.g. if the MailHost is configured to an inexisting mail server
+                    # only the BLATHER would do anything in that case, 
+                    # admin mails fail too of course
+                print 'excepted'
+                BLATHER('failed to send mail to %s: %s' % (recipients,
+                                                           formattedTraceback()))
+                admin = getattr(self.folder(),'mail_admin',None)
+                if admin:
+                    try:
+                        self.sendMailTo( #XXX possible infinite recursion ?
+                            [],text,REQUEST,
+                            subjectSuffix='ERROR, subscriber mailout failed',
+                            to=admin)
+                    except:
+                        BLATHER('failed to send error report to admin: %s' % \
+                                formattedTraceback())
 
 
         # XXX experimental
