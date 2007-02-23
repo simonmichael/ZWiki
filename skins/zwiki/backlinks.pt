@@ -24,10 +24,7 @@
             <td width="50%">
               <p>
                 <b i18n:translate="">Parents</b><br />
-                <a href="page_url" title="linkTitle"
-                   tal:attributes="href here/pageUrl; title here/linkTitle;" 
-                   tal:content="thispage"
-                   >thispage</a> 
+		<a tal:replace="structure python:here.wikilink('['+thispage+']')"> </a> 
                 <span tal:condition="not:here/parents" i18n:translate="">is a top-level topic.</span>
                 <span tal:condition="here/parents" i18n:translate="">is a subtopic of:</span>
               </p>
@@ -41,12 +38,8 @@
                     <input type="checkbox" name="parents" value="parent" checked="checked" class="formfield"
                            tal:attributes="value parent;"
                            tal:condition="canreparent" />
-                    <a href="" title=""
-                       tal:attributes="href python:here.wiki_url()+'/'+here.canonicalIdFrom(parent);
-                                       title nothing;"
-                       tal:content="parent"
-                       >parent</a>
-                    <br />
+		    <a tal:replace="structure python:here.wikilink('['+parent+']')"> </a> 
+       		    <br />
                   </span>
                 </li>
               </ol>
@@ -65,13 +58,8 @@
                     <input type="checkbox" name="parents" value="blpage" class="formfield"
                            tal:attributes="checked blisparent; value blpage;"
                            tal:condition="canreparent" />
-                    <a href="blurl" title=""
-                       tal:define="blid bl/id"
-                       tal:attributes="href python:here.wiki_url()+'/'+blid;
-                                       title bl/linkTitle|nothing;"
-                       tal:content="blpage"
-                       >blpage</a>
-                    <br />
+		    <a tal:define="bltitle bl/Title" tal:replace="structure python:here.wikilink('['+bltitle+']')"> </a> 
+       		    <br />
                   </span>
                 </li>
               </ol>
@@ -127,12 +115,8 @@
                   <input type="submit" value="^" style="padding:0px;visibility:hidden;" tal:condition="not:repeat/cname/index" />
                   <input type="submit" value="^" style="padding:0px;" tal:condition="repeat/cname/index" />
                 </form>
-                <a tal:define="cpage python:here.pageWithName(cname);"
-                   tal:attributes="href cpage/pageUrl;
-                                   title cpage/linkTitle|nothing;"
-                   tal:content="cname"
-                   >cpage</a>
-                <br />
+		<a tal:replace="structure python:here.wikilink('['+cname+']')"> </a>
+		<br />
               </li>
             </ol>
           </td>
