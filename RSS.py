@@ -40,8 +40,8 @@ class PageRSSSupport:
 <language>%(feedlanguage)s</language>
 <pubDate>%(feeddate)s</pubDate>
 """ % {
-            'feedtitle':feedtitle,
-            'feeddescription':feeddescription,
+            'feedtitle':html_quote(feedtitle),
+            'feeddescription':html_quote(feeddescription),
             'feedurl':wikiurl,
             'feedlanguage':feedlanguage,
             'feeddate':feeddate,
@@ -60,7 +60,7 @@ class PageRSSSupport:
 <pubDate>%(creation_time)s</pubDate>
 </item>
 """ % {
-            'title':p.Title,
+            'title':html_quote(p.Title),
             'wikiurl':wikiurl,
             'id':p.id,
             'summary':pobj.summary(1000),
@@ -95,8 +95,8 @@ class PageRSSSupport:
 <language>%(feedlanguage)s</language>
 <pubDate>%(feeddate)s</pubDate>
 """ % {
-            'feedtitle':feedtitle,
-            'feeddescription':feeddescription,
+            'feedtitle':html_quote(feedtitle),
+            'feeddescription':html_quote(feeddescription),
             'feedurl':wikiurl,
             'feedlanguage':feedlanguage,
             'feeddate':feeddate,
@@ -115,7 +115,7 @@ class PageRSSSupport:
 <pubDate>%(last_edit_time)s</pubDate>
 </item>
 """ % {
-            'title':'[%s] %s' % (p.Title,html_quote(p.last_log)),
+            'title':'[%s] %s' % (html_quote(p.Title),html_quote(p.last_log)),
             'wikiurl':wikiurl,
             'id':p.id,
             'last_log':html_quote(pobj.textDiff()),
