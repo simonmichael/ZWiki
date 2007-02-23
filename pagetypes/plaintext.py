@@ -18,6 +18,8 @@ class PageTypePlaintext(PageTypeBase):
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):
         t = page.preRendered()
+        if page.isIssue() and kw.get('show_issueproperties',1):
+            t = page.addIssueFormTo(t)
         t = page.renderMidsectionIn(t,**kw)
         t = page.addSkinTo(t,**kw)
         return t
