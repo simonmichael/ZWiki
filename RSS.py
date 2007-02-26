@@ -20,6 +20,21 @@ class PageRSSSupport:
     """
     security = ClassSecurityInfo()
 
+    def title_quote(self, title):
+        """
+        Quote a string suitable for a title element in an RSS feed.
+        We replace only &, > and <
+        this is according to RSS specs in
+        http://www.rssboard.org/rss-profile#data-types-characterdata
+        Nonetheless, http://feedvalidator.org/ claims there is html in 
+        those encoded titles.
+        """
+        title = title.replace('&', '&#x26;', -1)
+        title = title.replace('<', '&#x3C;', -1)
+        title = title.replace('>', '&#x3E;', -1)
+        return title
+
+
     security.declareProtected(Permissions.View, 'pages_rss')
     def pages_rss(self, num=10, REQUEST=None):
         """
@@ -40,7 +55,7 @@ class PageRSSSupport:
 <language>%(feedlanguage)s</language>
 <pubDate>%(feeddate)s</pubDate>
 """ % {
-            'feedtitle':html_quote(feedtitle),
+            'feedtitle':self.title_quote(feedtitle),
             'feeddescription':html_quote(feeddescription),
             'feedurl':wikiurl,
             'feedlanguage':feedlanguage,
@@ -60,7 +75,7 @@ class PageRSSSupport:
 <pubDate>%(creation_time)s</pubDate>
 </item>
 """ % {
-            'title':html_quote(p.Title),
+            'title':self.title_quote(p.Title),
             'wikiurl':wikiurl,
             'id':p.id,
             'summary':pobj.summary(1000),
@@ -95,7 +110,7 @@ class PageRSSSupport:
 <language>%(feedlanguage)s</language>
 <pubDate>%(feeddate)s</pubDate>
 """ % {
-            'feedtitle':html_quote(feedtitle),
+            'feedtitle':self.title_quote(feedtitle),
             'feeddescription':html_quote(feeddescription),
             'feedurl':wikiurl,
             'feedlanguage':feedlanguage,
@@ -115,7 +130,7 @@ class PageRSSSupport:
 <pubDate>%(last_edit_time)s</pubDate>
 </item>
 """ % {
-            'title':'[%s] %s' % (html_quote(p.Title),html_quote(p.last_log)),
+            'title':'[%s] %s' % (self.title_quote(p.Title),self.title_quote(p.last_log)),
             'wikiurl':wikiurl,
             'id':p.id,
             'last_log':html_quote(pobj.textDiff()),
