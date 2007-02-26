@@ -1,4 +1,23 @@
 <dtml-call "RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
+
+<dtml-comment>
+
+--------------------------------------
+
+**dtml not enabled**
+
+This page looks **broken**, because dtml needs to be enabled for it to work.
+
+You can enable dtml by setting a true boolean property called allow_dtml
+on this page only. 
+
+You might then want to lock the page by disallowing edits for non-manager users 
+(in the ZMI security tab) if you are security conscious.
+
+--------------------------------------
+
+</dtml-comment>
+
 <dtml-let
  scrollto="'' #'#tracker'"
  issueCount=issueCount 
