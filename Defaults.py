@@ -23,6 +23,10 @@ DOUBLE_BRACKET_LINKS = 1
 DOUBLE_PARENTHESIS_LINKS = 0
 BORING_PAGES = ['TestPage','SandBox'] # pages we don't want to see/hear much
 IDS_TO_AVOID = ['RESPONSE','REQUEST','Epoz','epoz','URL','outline','recycle_bin']
+CONDITIONAL_HTTP_GET = 0     # handle If-modified-since headers with 304 responses
+CONDITIONAL_HTTP_GET_IGNORE = [ 'allow_dtml' ] 
+                             # ignore pages with these properties set to 
+                             # non-False values
 
 # Standard metadata fields which Zwiki will expect in page brain objects.
 # Plugins will add more of these.

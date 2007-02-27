@@ -64,7 +64,8 @@ import Permissions
 from Defaults import AUTO_UPGRADE, IDS_TO_AVOID, \
      PAGE_METATYPE, LINK_TO_ALL_CATALOGED, LINK_TO_ALL_OBJECTS, \
      WIKINAME_LINKS, BRACKET_LINKS, DOUBLE_BRACKET_LINKS, \
-     DOUBLE_PARENTHESIS_LINKS, ISSUE_LINKS
+     DOUBLE_PARENTHESIS_LINKS, ISSUE_LINKS, \
+     CONDITIONAL_HTTP_GET, CONDITIONAL_HTTP_GET_IGNORE
 from Regexps import url, bracketedexpr, singlebracketedexpr, \
      doublebracketedexpr, doubleparenthesisexpr, wikiname, wikilink, \
      interwikilink, remotewikiurl, protected_line, zwikiidcharsexpr, \
@@ -246,6 +247,8 @@ class ZWikiPage(
         """
         Render this zwiki page, also upgrading it on the fly if needed.
         """
+        if self.handle_modified_headers(REQUEST=REQUEST):
+            return '' # return a 304 response with no content
         if AUTO_UPGRADE: self.upgrade(REQUEST)
         rendered = self.render(client,REQUEST,RESPONSE,**kw)
         return rendered
@@ -426,7 +429,56 @@ class ZWikiPage(
         """Is Epoz installed ?"""
         return hasattr(self,'Epoz')
 
-    ######################################################################
+    def handle_modified_headers(self, last_mod=None, REQUEST=None):
+        """
+        Check if the headers indicate we have changed content.
+
+        Return True if nothing changed, False otherwise. Set Headers as needed.
+        Methods using this should call this before returning any content,
+        then if a 304 is called for this method returns True and
+        the calling method should give no content to the browser.
+        """
+        RESPONSE=REQUEST.RESPONSE
+        # do we handle things at all?
+        if not getattr(self, 'conditional_http_get', CONDITIONAL_HTTP_GET):
+            return False
+        # admins can specify a list of property names that make us ignore
+        # "Conditional HTTP Get" processing if they are set
+        # especially useful for ignoring pages with allow_dtml
+        ignore = getattr(self, 'conditional_http_get_ignore', \
+                                        CONDITIONAL_HTTP_GET_IGNORE)
+        for ignore_property in ignore:
+            if getattr(self, ignore_property, False): return False
+        if last_mod == None:
+            try:
+                last_mod = DateTime(self.last_edit_time)
+            except SyntaxError:
+                # if anything goes wrong with the stored date, we just
+                # ignore all 304 handling and go on as if nothing happened
+                return False
+        last_mod = long(DateTime(last_mod).timeTime())
+        header=REQUEST.get_header('If-Modified-Since', None)
+        if header is not None:
+            header=header.split( ';')[0]
+            # Some proxies seem to send invalid date strings for this
+            # header. If the date string is not valid, we ignore it
+            # rather than raise an error to be generally consistent
+            # with common servers such as Apache (which can usually
+            # understand the screwy date string as a lucky side effect
+            # of the way they parse it).
+            # This happens to be what RFC2616 tells us to do in the face of an
+            # invalid date.
+            try:    mod_since=long(DateTime(header).timeTime())
+            except: mod_since=None
+            if mod_since is not None:
+                if last_mod > 0 and last_mod <= mod_since:
+                    RESPONSE.setHeader('Last-Modified',
+                                       rfc1123_date(last_mod))
+                    RESPONSE.setStatus(304)
+                    return True
+        RESPONSE.setHeader('Last-Modified', rfc1123_date(last_mod))
+        return False
+
     # link rendering and handling
 
     def wikinameLinksAllowed(self):
