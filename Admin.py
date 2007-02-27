@@ -212,11 +212,11 @@ class PageAdminSupport:
         if not self.creation_time:
             pass
         elif type(self.creation_time) is not StringType:
-            self.creation_time = self.creation_time.ISO()
+            self.creation_time = self.creation_time.toZone('UTC').ISO()
             changed = 1
         elif len(self.creation_time) != 19:
             try: 
-                self.creation_time = DateTime(self.creation_time).ISO()
+                self.creation_time = DateTime(self.creation_time).toZone('UTC').ISO()
                 changed = 1
             except DateTimeSyntaxError:
                 # can't convert to ISO, just leave it be

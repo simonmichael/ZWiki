@@ -925,7 +925,7 @@ class PageEditingSupport:
         """
         record my creator, creator_ip & creation_time
         """
-        self.creation_time = DateTime(time.time()).ISO()
+        self.creation_time = DateTime(time.time()).toZone('UTC').ISO()
         if REQUEST:
             self.creator_ip = REQUEST.REMOTE_ADDR
             self.creator = self.usernameFrom(REQUEST)
