@@ -40,6 +40,16 @@ class PageRSSSupport:
         """
         Provide an RSS feed showing this wiki's recently created pages.
         """
+        pages = self.pages(sort_on='creation_time',
+                            sort_order='reverse',
+                            sort_limit=num,
+                            isBoring=0)
+        if len(pages) > 0:
+            last_mod = pages[0].getObject().creationTime()
+        else:
+            last_mod = DateTime()
+        if self.handle_modified_headers(last_mod=last_mod, REQUEST=REQUEST):
+            return ''
         feedtitle = self.folder().title_or_id() + ' new pages'
         feeddescription = feedtitle
         feedlanguage = 'en'
@@ -61,10 +71,7 @@ class PageRSSSupport:
             'feedlanguage':feedlanguage,
             'feeddate':feeddate,
             }
-        for p in self.pages(sort_on='creation_time',
-                            sort_order='reverse',
-                            sort_limit=num,
-                            isBoring=0):
+        for p in pages:
             pobj = p.getObject()
             t += """\
 <item>
@@ -95,6 +102,16 @@ class PageRSSSupport:
 
         This is not the same as all recent edits.
         """
+        pages = self.pages(sort_on='last_edit_time',
+                            sort_order='reverse',
+                            sort_limit=num,
+                            isBoring=0)
+        if len(pages) > 0:
+            last_mod = pages[0].getObject().lastEditTime()
+        else:
+            last_mod = DateTime()
+        if self.handle_modified_headers(last_mod=last_mod, REQUEST=REQUEST):
+            return ''
         feedtitle = self.folder().title_or_id() + ' changed pages'
         feeddescription = feedtitle
         feedlanguage = 'en'
@@ -116,10 +133,7 @@ class PageRSSSupport:
             'feedlanguage':feedlanguage,
             'feeddate':feeddate,
             }
-        for p in self.pages(sort_on='last_edit_time',
-                            sort_order='reverse',
-                            sort_limit=num,
-                            isBoring=0):
+        for p in pages:
             pobj = p.getObject()
             t += """\
 <item>
