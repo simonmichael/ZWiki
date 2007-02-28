@@ -451,7 +451,9 @@ class ZWikiPage(
             if getattr(self, ignore_property, False): return False
         if last_mod == None:
             try:
-                last_mod = DateTime(self.last_edit_time)
+                # bobobase_modification_time reflects also changes
+                # to voting, not like last_edit_time
+                last_mod = self.bobobase_modification_time()
             except SyntaxError:
                 # if anything goes wrong with the stored date, we just
                 # ignore all 304 handling and go on as if nothing happened
