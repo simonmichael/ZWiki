@@ -589,8 +589,8 @@ class SkinViews:
         else: # a File
             if REQUEST:
                 modified = form.bobobase_modification_time()
-                REQUEST.RESPONSE.setHeader('Last-Modified',
-                                           rfc1123_date(modified))
+                if self.handle_modified_headers(last_mod=modified, REQUEST=REQUEST):
+                    return ''
             return form.index_html(REQUEST,REQUEST.RESPONSE)
 
     security.declareProtected(Permissions.View, 'subscribeform')
