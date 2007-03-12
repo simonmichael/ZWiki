@@ -189,8 +189,14 @@ from non-manager users if you are security conscious.
   sortonend="_.string.find(QUERY_STRING,'&',sortonstart)"
   sortonend="(sortonend != -1) and (sortonend+1) or _.len(QUERY_STRING)"
   query="(sortonstart == -1) and QUERY_STRING or (QUERY_STRING[:sortonstart]+QUERY_STRING[sortonend:])"
+  sortorderstart="_.string.find(query,'sort_order')"
+  sortorderend="_.string.find(query,'&',sortorderstart)"
+  sortorderend="(sortorderend != -1) and (sortorderend+1) or _.len(query)"
+  amp="(sortorderstart == -1) and '*' or query[sortorderstart-1]"
+  sortorderstart="(amp == '&') and sortorderstart-1 or sortorderstart"
+  query="(sortorderstart == -1) and query or (query[:sortorderstart]+query[sortorderend:])"
   query="query and ('&'+query) or ''"
-  order="REQUEST.get('sort_order','') and '&sort_order=' or '&sort_order=reverse' #not used"
+  order="(not (REQUEST.get('sort_order','') == 'reverse')) and '&sort_order=reverse' or '&sort_order=ascending' "
   issues="
   (searchexpr and
    (pages(isIssue=1, sort_on=sort_on, sort_limit=num, Title=searchexpr) +
@@ -214,45 +220,52 @@ from non-manager users if you are security conscious.
   >
    <table border=0 width="100%">
      <tr>
-       <td align=left valign=top>
+       <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='issueNumber'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=issueNumber&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>#</dtml-translate></a>
+         <a href="&dtml-URL;?sort_on=issueNumber&dtml-query;&dtml-order;&dtml-scrollto;"><dtml-translate domain=zwiki>#</dtml-translate></a>
+         <dtml-var "bold and '</b>' or ''">
+         </dtml-let>
+       </td>
+       <td align=left valign=top>
+         <dtml-let bold="sort_on=='issuename'">
+         <dtml-var "bold and '<b>' or ''">
+         <a href="&dtml-URL;?sort_on=issuename&dtml-query;&dtml-order;&dtml-scrollto;"><dtml-translate domain=zwiki>name</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
        <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='category_index'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=category_index&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>category</dtml-translate></a>
+         <a href="&dtml-URL;?sort_on=category_index&dtml-query;&dtml-order;&dtml-scrollto;"><dtml-translate domain=zwiki>category</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
        <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='severity_index'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=severity_index&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>severity</dtml-translate></a>
+         <a href="&dtml-URL;?sort_on=severity_index&dtml-query;&dtml-order;&dtml-scrollto;"><dtml-translate domain=zwiki>severity</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
        <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='status_index'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=status_index&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>status</dtml-translate></a>
+         <a href="&dtml-URL;?sort_on=status_index&dtml-query;&dtml-order;&dtml-scrollto;"><dtml-translate domain=zwiki>status</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
        <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='creation_time'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=creation_time&dtml-query;&dtml-scrollto;"><dtml-translate domain=zwiki>age</dtml-translate></a>
+         <a href="&dtml-URL;?sort_on=creation_time&dtml-query;&dtml-order;&dtml-scrollto;"><dtml-translate domain=zwiki>age</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
        <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='lastEditTime'">
          <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=lastEditTime&dtml-query;&sort_order=reverse&dtml-scrollto;"><dtml-translate domain=zwiki>modified</dtml-translate></a>
+         <a href="&dtml-URL;?sort_on=lastEditTime&dtml-query;&dtml-order;&dtml-scrollto;"><dtml-translate domain=zwiki>modified</dtml-translate></a>
          <dtml-var "bold and '</b>' or ''">
          </dtml-let>
        </td>
@@ -263,7 +276,10 @@ from non-manager users if you are security conscious.
           linktitle="'' #getObject().linkTitle()"
           bold="0#(status in ('open','pending') and 
           #severity not in ('wishlist',) and 
-          #page.ageInDays() > 60)"
+	  #page.ageInDays() > 60)"
+	  titleseparator="_.string.find(Title,' ')"
+	  issuenmbr="titleseparator != -1 and Title[:titleseparator] or 'None'"
+	  issuenam="titleseparator != -1 and Title[titleseparator+1:] or 'None'"
           >
            <tr bgcolor="&dtml-issueColour;">
              <td align=left valign=top>
@@ -272,7 +288,16 @@ from non-manager users if you are security conscious.
                </dtml-comment>
                <dtml-var "bold and '<b>' or ''"
                ><a href="&dtml-wiki_url;/&dtml-id;" 
-                   title="<dtml-var "'' #page.linkTitle()">">&dtml-Title;</a>
+                   title="<dtml-var "'' #page.linkTitle()">">&dtml-issuenmbr;</a>
+               <dtml-var "bold and '</b>' or ''">
+             </td>
+             <td align=left valign=top>
+               <dtml-comment>
+               <dtml-var "wikilink('['+Title+']')">
+               </dtml-comment>
+               <dtml-var "bold and '<b>' or ''"
+               ><a href="&dtml-wiki_url;/&dtml-id;" 
+                   title="<dtml-var "'' #page.linkTitle()">">&dtml-issuenam;</a>
                <dtml-var "bold and '</b>' or ''">
              </td>
              <td align=left valign=top nowrap><dtml-var category></td>
