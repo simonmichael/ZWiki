@@ -180,6 +180,7 @@ class PageDiffSupport:
                     _('You are not authorized to rename this ZWiki Page.'))
             self.rename(old.pageName())
         self.setLastEditor(REQUEST)
+        self.last_edit_time = old.last_edit_time
         self.setLastLog('revert')
         self.index_object()
         self.sendMailToEditSubscribers(
