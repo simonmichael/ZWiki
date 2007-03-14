@@ -859,11 +859,12 @@ class ZWikiPage(
             try:
                 #XXX do timezone conversion ?
                 lastlog = self.lastlog()
-                if lastlog: lastlog = ' ('+lastlog+')'
+                if lastlog and len(lastlog)>0:
+                    lastlog = ' ('+lastlog+')'
                 
                 # build the link around the interval
                 linked_interval = (
-                    ' <a href="%s/diff" title="%s (%s)" >%s</a>' % (
+                    ' <a href="%s/diff" title="%s%s" >%s</a>' % (
                     self.pageUrl(),
                     _('show last edit'),
                     lastlog, 
