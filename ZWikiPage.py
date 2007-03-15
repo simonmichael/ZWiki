@@ -629,6 +629,11 @@ class ZWikiPage(
         if link[0] == '!':
             return link[1:]
 
+        # ignore certain WikiNames from a property ('Lines' type property)
+        ignore_wikinames = getattr(self, 'ignore_wikinames', [])
+        if link in ignore_wikinames:
+            return link
+
         # is it an interwiki link ?
         if re.match(interwikilink,link):
             return self.renderInterwikiLink(link)
