@@ -120,11 +120,16 @@ class PageDiffSupport:
         rev = int(rev)
         try:
             historyentry = self.history()[rev]
-            key = historyentry['key']
-            serial = apply(pack, ('>HHHH',)+tuple(map(atoi, split(key,'.'))))
-            return historicalRevision(self, serial)
-        except: # we don't have a version that old
+        except (IndexError, AttributeError):
+            # IndexError - we don't have a version that old
+            # AttributeError - new object, no history yet,
+            # due to creation of page in unit tests without
+            # editing them yet - doesn't really happen in real use
+            # I guess
             return None
+        key = historyentry['key']
+        serial = apply(pack, ('>HHHH',)+tuple(map(atoi, split(key,'.'))))
+        return historicalRevision(self, serial)
 
     security.declareProtected(Permissions.View, 'revisionInfoFor')
     def revisionInfoFor(self, rev):
