@@ -224,7 +224,11 @@ class PageDiffSupport:
                 n += 1
                 try:
                     p.revertEditsBy(username,REQUEST=REQUEST)
-                except:
+                except (IndexError, AttributeError):
+                    # IndexError - we don't have a version that old
+                    # AttributeError - new object, no history yet,
+                    # due to creation of page in unit tests
+                    # - doesn't really happen in real use I guess
                     BLATHER('failed to revert edits by %s at %s: %s' \
                             % (username,p.id(),formattedTraceback()))
                 if batch and n % batch == 0:
