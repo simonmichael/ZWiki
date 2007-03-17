@@ -244,14 +244,19 @@ class PageDiffSupport:
         rev = int(rev)
         try:
             note = self.history()[rev]['description']
-            match = re.search(r'"(.*)"',note)
-            if match:
-                if withQuotes: return match.group()
-                else: return match.group(1)
-            else:
-                return ''
-        except:
+        except (IndexError, AttributeError):
+            # IndexError - we don't have a version that old
+            # AttributeError - new object, no history yet,
+            # due to creation of page in unit tests without
+            # editing them yet - doesn't really happen in real use
+            # I guess
             return '' # we don't have a version that old
+        match = re.search(r'"(.*)"',note)
+        if match:
+            if withQuotes: return match.group()
+            else: return match.group(1)
+        else:
+            return ''
 
     def htmlDiff(self,revA=1,revB=0,a=None,b=None):
         """
