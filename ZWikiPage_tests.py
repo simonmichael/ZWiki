@@ -224,3 +224,19 @@ class Tests(ZwikiTestCase):
         self.p.edit(text='&dtml-subtopics')
         self.failUnless(self.p.displaysSubtopicsWithDtml())
 
+    def test_linkTitleFrom(self):
+        edittime = DateTime.DateTime() - 0.2
+        edittime = edittime.toZone('UTC').ISO()
+        r = self.p.linkTitleFrom()
+        self.assertEquals( r, 'last edited some time ago')
+        r = self.p.linkTitleFrom(prettyprint=1) 
+        self.failUnless( 'some time' in r )
+        self.failUnless( '<a href=' in r )
+        r = self.p.linkTitleFrom(last_edit_time=edittime, prettyprint=1)
+        self.failUnless( '4 hours' in r )
+        r = self.p.linkTitleFrom(last_edit_time=edittime, \
+                                   last_editor='fred', prettyprint=1)
+        self.failUnless( 'fred' in r )
+        edittime = 'not valid'
+        r = self.p.linkTitleFrom(last_edit_time=edittime)
+        self.failUnless( 'some time' in r )

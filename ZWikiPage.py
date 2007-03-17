@@ -857,30 +857,29 @@ class ZWikiPage(
         
         with prettyprint=1, format it for use in the standard header.
         """
-        interval = self.asAgeString(last_edit_time)
+        try:
+            interval = self.asAgeString(last_edit_time)
+        except DateTime.SyntaxError:
+            # we got fed with a non-valid date
+            interval = self.asAgeString(None)
         if not prettyprint:
             s = _("last edited %(interval)s ago") % {"interval":interval}
         else:
-            try:
-                #XXX do timezone conversion ?
-                lastlog = self.lastlog()
-                if lastlog and len(lastlog)>0:
-                    lastlog = ' ('+lastlog+')'
-                
-                # build the link around the interval
-                linked_interval = (
-                    ' <a href="%s/diff" title="%s%s" >%s</a>' % (
-                    self.pageUrl(),
-                    _('show last edit'),
-                    lastlog, 
-                    interval))
-                
-                # use the link in a clear i18n way                                                                         
-                s =  _('last edited %(interval)s ago')  % {"interval": linked_interval}
+            lastlog = self.lastlog()
+            if lastlog and len(lastlog)>0:
+                lastlog = ' ('+lastlog+')'
 
-            except:
-                s = _('last edited %(interval)s ago') % {"interval": interval}
-                
+            # build the link around the interval
+            linked_interval = (
+                ' <a href="%s/diff" title="%s%s" >%s</a>' % (
+                self.pageUrl(),
+                _('show last edit'),
+                lastlog, 
+                interval))
+
+            # use the link in a clear i18n way
+            s =  _('last edited %(interval)s ago')  % {"interval": linked_interval}
+
         if (last_editor and
             # anonymous? try to find out by somehow matching an ip address:
             not re.match(r'^(?:\d{1,3}\.){3}\d{1,3}$',last_editor)):
