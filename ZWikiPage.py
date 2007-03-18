@@ -454,11 +454,17 @@ class ZWikiPage(
                 # bobobase_modification_time reflects also changes
                 # to voting, not like last_edit_time
                 last_mod = self.bobobase_modification_time()
-            except SyntaxError:
+            except DateTime.SyntaxError:
                 # if anything goes wrong with the stored date, we just
                 # ignore all 304 handling and go on as if nothing happened
+                BLATHER("invalid bobobase_modification time in page %s" \
+                            % (self.id()))
                 return False
-        last_mod = long(DateTime(last_mod).timeTime())
+        try: # we could have been fed an illegal date string
+            last_mod = long(DateTime(last_mod).timeTime())
+        except DateTime.SyntaxError:
+            BLATHER("invalid date input on page %s" % (self.id()))
+            return False
         header=REQUEST.get_header('If-Modified-Since', None)
         if header is not None:
             header=header.split( ';')[0]
@@ -470,8 +476,8 @@ class ZWikiPage(
             # of the way they parse it).
             # This happens to be what RFC2616 tells us to do in the face of an
             # invalid date.
-            try:    mod_since=long(DateTime(header).timeTime())
-            except: mod_since=None
+            try:   mod_since=long(DateTime(header).timeTime())
+            except DateTime.SyntaxError: mod_since=None
             if mod_since is not None:
                 if last_mod > 0 and last_mod <= mod_since:
                     RESPONSE.setHeader('Last-Modified',
