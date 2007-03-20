@@ -135,7 +135,7 @@ for m in modules:
     else:
         try:
             __import__('Products.ZWiki.pagetypes.%s' % m)
-        except:
+        except ImportError:
             BLATHER('could not load %s page type, skipping (traceback follows)\n%s' % (
                 m, formattedTraceback()))
 

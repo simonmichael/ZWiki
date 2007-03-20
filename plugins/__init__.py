@@ -86,6 +86,6 @@ for m in modules:
     else:
         try:
             __import__('Products.ZWiki.plugins.%s' % m)
-        except:
+        except ImportError:
             BLATHER('could not load %s plugin, skipping (traceback follows)\n%s' % (
                 m, formattedTraceback()))
