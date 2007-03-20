@@ -216,23 +216,25 @@ class ShowSubtopicsProperty:
                 return getattr(self.REQUEST,prop) and 1
             elif hasattr(self.aq_base,prop):
                 return getattr(self,prop) and 1
-            elif self.primaryParent():
-                # poor caching
-                try: return self.primaryParent().subtopicsEnabled() 
-                except:
-                    # experimental: support all-brains
-                    try: return self.primaryParent().getObject().subtopicsEnabled() 
-                    except: # XXX still run into errors here, investigate
-                        BLATHER('DEBUG: error in subtopicsEnabled for %s, primaryParent is: %s'\
-                             % (self.id(),`self.primaryParent()`))
-                        return not (getattr(getattr(self,'REQUEST',None),
-                                            'zwiki_displaymode',
-                                            None) == 'minimal')
             else:
-                #return not (getattr(getattr(self,'REQUEST',None),
-                #                    'zwiki_displaymode',
-                #                    None) == 'minimal')
-                return 1
+                primaryParent = self.primaryParent() # call only once
+                if primaryParent:
+                    try: return primaryParent.subtopicsEnabled()
+                    except AttributeError:
+                        # experimental: support all-brains
+                        try: return primaryParent.getObject().subtopicsEnabled()
+                        except AttributeError: # XXX still run into errors here, investigate
+                            BLATHER('DEBUG: error in subtopicsEnabled for %s, primaryParent is: %s'\
+                                 % (self.id(),`primaryParent`))
+                            return not (getattr(getattr(self,'REQUEST',None),
+                                                'zwiki_displaymode',
+                                                None) == 'minimal')
+                else:
+                    #return not (getattr(getattr(self,'REQUEST',None),
+                    #                    'zwiki_displaymode',
+                    #                    None) == 'minimal')
+                    return 1
+
         else:
             return 0
 

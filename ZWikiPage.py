@@ -664,7 +664,7 @@ class ZWikiPage(
             p = self.issuePageWithNumber(self.issueNumberFrom(link))
             if p:
                 try: link = p.getId() # XXX poor caching
-                except: link = p.id   # all-brains
+                except AttributeError: link = p.id   # all-brains
                 return self.renderLinkToPage(link,
                                              linkorig=linkorig,
                                              link_title=link_title,
@@ -686,7 +686,7 @@ class ZWikiPage(
             p = self.pageWithFuzzyName(link)
             if p:
                 try: link = p.getId() # XXX poor caching
-                except: link = p.id   # all-brains
+                except AttributeError: link = p.id   # all-brains
                 # and fall through
             
         # must be either a WikiName link, or an existing page's id from above
@@ -712,7 +712,7 @@ class ZWikiPage(
             # make sure we have the page's id
             if not self.pageWithId(page): # XXX this check helps avoid zodb loads ?
                 try: page = p.getId() # XXX poor caching
-                except: page = p.id   # all-brains
+                except AttributeError: page = p.id   # all-brains
             title     = (link_title and ' title="%s"' % link_title) or '' #' title="%s"' % self.pageWithId(page).linkTitle()
             name      = (name and ' name="%s"' % name) or ''
             accesskey = (access_key and ' accesskey="%s"' % access_key) or ''
@@ -720,7 +720,7 @@ class ZWikiPage(
             if p.isIssue():
                 try:
                     style=' style="background-color:%s;"' % p.issueColour() # poor caching
-                except:
+                except AttributeError:
                     style=' style="background-color:%s;"' % p.issueColour # all-brains
             else:
                 style = ''
@@ -1330,7 +1330,7 @@ class ZWikiPage(
         p = self.pageWithNameOrId(page)
         if p:
             try: id = p.getId() # poor caching
-            except: id = p.id #all-brains
+            except AttributeError: id = p.id #all-brains
         else: id = page
         if self.hasCatalogIndexesMetadata(
             (['meta_type','path','canonicalLinks'], [])):
