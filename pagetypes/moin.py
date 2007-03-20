@@ -1493,7 +1493,7 @@ class MoinFormatter(MoinFormatterBase):
     def endContent(self):
         try:
             cid = self._content_ids.pop()
-        except:
+        except IndexError:
             cid = 'content'
         if cid!='content':
             aid = 'bottom_%s' % (cid,)
