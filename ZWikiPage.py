@@ -71,7 +71,7 @@ from Regexps import url, bracketedexpr, singlebracketedexpr, \
      interwikilink, remotewikiurl, protected_line, zwikiidcharsexpr, \
      anywikilinkexpr, markedwikilinkexpr, localwikilink, \
      spaceandlowerexpr, dtmlorsgmlexpr, wikinamewords, hashnumberexpr
-from Utils import PageUtils, BLATHER
+from Utils import PageUtils, BLATHER, DateTimeSyntaxError
 from Views import PageViews
 from OutlineSupport import PageOutlineSupport
 from Diff import PageDiffSupport
@@ -454,7 +454,7 @@ class ZWikiPage(
                 # bobobase_modification_time reflects also changes
                 # to voting, not like last_edit_time
                 last_mod = self.bobobase_modification_time()
-            except DateTime.SyntaxError:
+            except DateTimeSyntaxError:
                 # if anything goes wrong with the stored date, we just
                 # ignore all 304 handling and go on as if nothing happened
                 BLATHER("invalid bobobase_modification time in page %s" \
@@ -462,7 +462,7 @@ class ZWikiPage(
                 return False
         try: # we could have been fed an illegal date string
             last_mod = long(DateTime(last_mod).timeTime())
-        except DateTime.SyntaxError:
+        except DateTimeSyntaxError:
             BLATHER("invalid date input on page %s" % (self.id()))
             return False
         header=REQUEST.get_header('If-Modified-Since', None)
@@ -477,7 +477,7 @@ class ZWikiPage(
             # This happens to be what RFC2616 tells us to do in the face of an
             # invalid date.
             try:   mod_since=long(DateTime(header).timeTime())
-            except DateTime.SyntaxError: mod_since=None
+            except DateTimeSyntaxError: mod_since=None
             if mod_since is not None:
                 if last_mod > 0 and last_mod <= mod_since:
                     RESPONSE.setHeader('Last-Modified',
@@ -865,7 +865,7 @@ class ZWikiPage(
         """
         try:
             interval = self.asAgeString(last_edit_time)
-        except DateTime.SyntaxError:
+        except DateTimeSyntaxError:
             # we got fed with a non-valid date
             interval = self.asAgeString(None)
         if not prettyprint:
