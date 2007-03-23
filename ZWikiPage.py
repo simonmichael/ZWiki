@@ -1462,12 +1462,26 @@ def within_literal(upto, after, state, text,
 
     # Check whether '<a href...>' is currently (possibly, still) prevailing.
     #XXX make this more robust
-    opening = rfind(text, '<a href', lastend, upto)
-    if (opening != -1) or inanchor:
+    opening = rfind(text, '<a ', lastend, upto)
+    got_anchor = opening != -1
+    # we used to be looking for '<a href', but attribute order can
+    # actually be the other way around, e.g. RST generating <a name=...
+    href_too = False
+    if got_anchor or inanchor: # found or already in anchor
+        if got_anchor: # found it here
+            # it might just have been <a name...>
+            href_too = -1 != rfind(text, 'href', opening, upto)
+            # if not href_too: opening = -1
         if opening != -1: opening = opening + 5
         else: opening = lastend
-        if -1 == rfind(text, '</a>', opening, upto):
-            newinanchor = 1
+        got_anchor_closing = -1 == rfind(text, '</a>', opening, upto)
+        if href_too and got_anchor_closing:
+            newinanchor = 1 # the <a name=... href=...>WikiName</a> case
+        elif got_anchor_closing:
+            newinanchor = 0 # the <a name>WikiName</a> case
+        # this would be: elif got_anchor and not got_anchor_closing:
+            # the "<a name>WikiName - no closing" case is handled implicitly
+            # newinanchor stays the same as initialized = 0
     state['inanchor'] = newinanchor
 
     state['lastend'] = after
