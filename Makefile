@@ -440,5 +440,5 @@ reinstall:
 
 fixperms:
 	chgrp -R zwiki *
-	chmod -R g+w *
+	chmod -R ug+rw *
 	find . -type d -exec chmod g+s {}  \; 
