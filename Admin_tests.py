@@ -66,7 +66,7 @@ class Tests(ZwikiTestCase):
 class AddWikiTests(unittest.TestCase):
     pass
 
-#     TEMPLATES = (
+#     PAGES = (
 #         ('zwikidotorg',
 #          (('AnnoyingQuote',       'structuredtext'),
 #           ('BookMarks',           'structuredtext'),
@@ -119,7 +119,7 @@ class AddWikiTests(unittest.TestCase):
 #        zc = self.ZopeContext
 #
 #        # for each sample wikiweb,
-#        for wikitype, pages in self.TEMPLATES:
+#        for wikitype, pages in self.PAGES:
 #
 #            # create one
 #            # fake form input
