@@ -533,20 +533,12 @@ InitializeClass(PageUtils)
 
 
 # generic utilities
-def BLATHER(*args):
-    tmp = []
-    for arg in args: tmp.append(str(arg))
-    zLOG.LOG('ZWiki',zLOG.BLATHER,' '.join(tmp))
 
-def WARN(*args):
-    tmp = []
-    for arg in args: tmp.append(str(arg))
-    zLOG.LOG('ZWiki',zLOG.WARNING,' '.join(tmp))
-
-def DEBUG(*args):
-    tmp = []
-    for arg in args: tmp.append(str(arg))
-    zLOG.LOG('ZWiki',zLOG.DEBUG,' '.join(tmp))
+#logging
+def STDERR(*args):  sys.stderr.write(' '.join(map(str,args)) + '\n')
+def BLATHER(*args): zLOG.LOG('ZWiki',zLOG.BLATHER,' '.join(map(str,args)))
+def WARN(*args):    zLOG.LOG('ZWiki',zLOG.WARNING,' '.join(map(str,args)))
+def DEBUG(*args):   zLOG.LOG('ZWiki',zLOG.DEBUG,' '.join(map(str,args)))
 
 def formattedTraceback():
     type,val,tb = sys.exc_info()
