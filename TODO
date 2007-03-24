@@ -1,7 +1,7 @@
-General plans and todos for the zwiki project.
+General plans and todos for the zwiki project. -*- rst -*-
 
 PROCESS
--------
+=======
 repo speedups
  partial pulling too many patches, check checkpoints
  try darcs optimize # --reorder-patches
@@ -21,6 +21,7 @@ hosting stats & cost reporting
 lighter monthly release, perhaps a more thoroughly polished quarterly release
 
 DOCS
+====
 clarify division/integration between fs and wiki docs
 publish fs docs online - darcsweb ? epydoc ? trac ? zwiki ?
 get epydoc working
@@ -29,6 +30,7 @@ generally rename code files to lower-case
 simpler more focussed wiki docs
 
 SITES
+=====
 profile, speed up, simplify
 good stats.. bite google analytics bullet ?
 better tracking of free wikis
@@ -36,14 +38,33 @@ better free wiki signup/marketing/maintenance
 close down dead wikis
 
 PRODUCT
--------
+=======
 fix 1284 acquisition bug - Views_tests
 built-in helppage, editform help
 
 VIEWS AND SKINS
+---------------
 keep cleaning up and simplifying
 
+nautica
+.......
+- make stylesheet work in nautica wiki template, with/without CURRENTSKIN
+- commit nautica template
+
+tichu
+.....
+- ask kevin to confirm name
+- genericise
+- install for other wikis
+- change side bar button text
+
+skin selection
+..............
+- select default skin from option
+- select skin from request
+
 TESTS
+-----
 fix cmf tests
 aftersetup -> setup ? clarify in all fixtures
 bring back doctests ?
