@@ -214,92 +214,93 @@ def addErrorTo(text,error):
     return """<div class="error">%s</div>\n%s""" % (error,text)
 
 
-# the standard zwiki skin templates
-TEMPLATES = {}
-for t in [
-    # main view templates
-    'badtemplate', # should be first
-    'backlinks',
-    'contentspage',
-    'denied',
-    'diffform',
-    'editform',
-    'recentchanges',
-    'searchwiki',
-    'helppage',
-    'subscribeform',
-    'useroptions',
-    'wikipage',
-    # additional macro-providing templates
-    'accesskeys',
-    'commentform',
-    'content',
-    'head',
-    'hierarchylinks',
-    'links',
-    'maintemplate',
-    'pageheader',
-    'pagemanagementform',
-    'siteheader',
-    'testtemplate',
-    ]:
-    TEMPLATES[t] = loadPageTemplate(t)
+# load built-in zwiki skin templates from the filesystem
+# skins/zwiki/ defines all of these, other skins need not
 
-# helper dtml methods
-for t in [
-    'RecentChanges',
-    'SearchPage',
-    'UserOptions',
-    'subtopics_outline',
-    'subtopics_board',
-    ]:
-    TEMPLATES[t] = loadDtmlMethod(t)
+SKINS = {}
+for s in os.listdir('skins'):
+    SKINS[s] = {}
+    skindir = os.path.join('skins',s)
+    for template in [
+        # main view templates
+        # these usually have a similarly named publish method
+        'backlinks',
+        'contentspage',
+        'denied',
+        'diffform',
+        'editform',
+        'recentchanges',
+        'searchwiki',
+        'helppage',
+        'subscribeform',
+        'useroptions',
+        'wikipage',
+        # macro-providing templates
+        'accesskeys',
+        'commentform',
+        'content',
+        'head',
+        'hierarchylinks',
+        'links',
+        'maintemplate',
+        'pageheader',
+        'pagemanagementform',
+        'siteheader',
+        'testtemplate',
+        'badtemplate',
+        ]:
+        obj = loadPageTemplate(template,dir=skindir)
+        if obj: SKINS[s][template] = obj
+    for template in [
+        # helper dtml methods
+        'RecentChanges',
+        'SearchPage',
+        'UserOptions',
+        'subtopics_outline',
+        'subtopics_board',
+        'stylesheet',
+        ]:
+        obj = loadDtmlMethod(template,dir=skindir)
+        if obj: SKINS[s][template] = obj
+    # extras
+    if s=='zwiki':
+        SKINS[s]['stylesheet'] = loadStylesheet('stylesheet.css')
+        # XXX this really expects to be a full wiki page
+        # for now, read it as a file and format it in helppage.pt
+        # one issue: File does not refresh in debug mode ?
+        SKINS[s]['HelpPage'] = loadFile('HelpPage.stx',dir=skindir)
 
-# other things
-TEMPLATES['stylesheet'] = loadStylesheet('stylesheet.css')
-# XXX this really expects to be a full wiki page
-# for now, read it as a file and format it in helppage.pt
-# one issue: File does not refresh in debug mode ?
-TEMPLATES['HelpPage'] = loadFile('HelpPage.stx')
+TEMPLATES = SKINS['zwiki'] # backwards compatibility
 
+#XXX get from request
+CURRENTSKIN = 'zwiki'
+#CURRENTSKIN = 'nautica'
 
-# set up easy access to all macros via here/macros.
-# XXX We use a computed attribute (below) to call getmacros on each
-# access, to ensure they are always fresh in debug mode - or when a zodb
-# template is customized. Right ?  So we have to check for customized
-# templates each time. getmacros is called a lot, are we getting into
-# performance concerns yet ? This seems a lot of work, there must
-# be some simpler acceptable setup we can offer.
-# we'll save the list of initial ZPT ids and check only these
-PAGETEMPLATEIDS = [t for t in TEMPLATES.keys()
-                   if isinstance(TEMPLATES[t],PageTemplateFile)]
-#XXX temp - need at least this too, it defines a macro
-PAGETEMPLATEIDS.extend(['ratingform'])
-MACROS = {}
+# set up easy access to all PT macros via here/macros.
+MACROS = {} # a flat dictionary of all macros defined in all templates
+# need to initialise it for some backwards compatibility assignments at startup
+[MACROS.update(t.pt_macros()) for t in TEMPLATES.values() if isPageTemplate(t)]
 def getmacros(self):
     """
-    Return a dictionary of all the latest macros from our PageTemplateFiles.
+    Return a dictionary of all the PT macros in the skin.
 
-    This is called for each access to here/macros (MACROS)
+    XXX here/macros is a computed attribute calling this for each access,
+    to ensure we always get the fresh macro in debug mode or when a
+    template is customised in the zodb. Are we getting into performance
+    concerns yet ?  Any simpler acceptable setup we can offer?
     """
-    if not self:
-        # for initialisation, just use standard templates
-        [MACROS.update(t.pt_macros())
-         for t in TEMPLATES.values() if isinstance(t,PageTemplateFile)]
-    else:
-        # when called in zope context, reflect any zodb customizations
-        for id in PAGETEMPLATEIDS:
-            MACROS.update(self.getSkinTemplate(id).pt_macros())
+    skin = SKINS[CURRENTSKIN]
+    for t in skin.keys():
+        if isPageTemplate(skin[t]):
+            MACROS.update(self.getSkinTemplate(t).pt_macros())
     return MACROS
 
 # provide old macros for backwards compatibility
 # pre-0.52 these were defined in wikipage, old custom templates may need them
 # two more were defined in contentspage, we won't support those
-getmacros(None)
 MACROS['linkpanel']   = MACROS['links']
 MACROS['navpanel']    = MACROS['hierarchylinks']
-nullmacro = ZopePageTemplate(
-    'null','<div metal:define-macro="null" />').pt_macros()['null']
+nullmacro = ZopePageTemplate('null','<div metal:define-macro="null" />').pt_macros()['null']
 MACROS['favicon']     = nullmacro
 MACROS['logolink']    = nullmacro
 MACROS['pagelinks']   = nullmacro
@@ -666,33 +667,38 @@ class SkinUtils:
             return self.getSkinTemplate('maintemplate')  # zwiki's
     main_template = ComputedAttribute(getmaintemplate,1)
 
-    def getSkinTemplate(self,name):
+    def getSkinTemplate(self, name, suffixes=['.pt','.dtml','']):
         """
         Get the named skin template from the ZODB or filesystem.
 
-        This will find either a Page Template or DTML Method with the
-        specified name. We look first for a template with this name in the
-        ZODB acquisition context, trying the .pt, .dtml or no suffix in
-        that order. Then we look in skins/zwiki on the filesystem. If no
-        matching template can be found, we return a generic error template.
+        A 'skin template' is responsible for some part of the Zwiki user
+        interface; it may be a Page Template, DTML Method or File.  We
+        look for a template with this name, first in the ZODB acquisition
+        context, trying the suffixes in the order given; then in
+        CURRENTSKIN on the filesystem, if CURRENTSKIN is set; and finally
+        in skins/zwiki on the filesystem.  For convenient skin
+        development, we return the template wrapped in the current page's
+        context (so here = the page, container = the folder, etc).  If no
+        matching template can be found, we return a generic error
+        template.
 
-        For convenient skin development, we return the template wrapped in
-        the current page's context (so here will be the page, container
-        will be the folder, etc).
-                
-        This is basically duplicating the CMF skin mechanism, but in a
-        way that works everywhere, and with some extra error-handling
-        to help skin customizers. Still evolving, it will all shake
-        out in the end.
+        This somewhat duplicates the CMF skin system, but will always be
+        available, and provides extra handling useful to zwiki skin
+        customisers.
         """
-        obj = getattr(self.folder(), name+'.pt',
-                      getattr(self.folder(), name+'.dtml',
-                              getattr(self.folder(), name,
-                                      None)))
-        if not isTemplate(obj): # don't accept a non-template object
-            obj = TEMPLATES.get(name, TEMPLATES['badtemplate'])
-        # return it with both folder and page in the acquisition context,
-        # setting container and here
+        # look for a similarly-named template in the zodb
+        for s in suffixes:
+            obj = getattr(self.folder(), name+s, None)
+            if obj and (isTemplate(obj) or isFile(obj)): break
+            else: obj = None
+        if not obj:
+            # look in the selected filesystem skin, or finally in the
+            # standard zwiki skin
+            currentskin = CURRENTSKIN #XXX get from request
+            obj = SKINS[currentskin].get(name,
+                              SKINS['zwiki'].get(name,
+                                            SKINS['zwiki']['badtemplate']))
+        # return it, with both folder and page in the acquisition context
         return obj.__of__(self.folder()).__of__(self)
 
     def hasSkinTemplate(self,name):
