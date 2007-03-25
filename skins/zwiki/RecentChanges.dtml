@@ -2,7 +2,7 @@
 <dtml-let 
  wikiurl=wiki_url
  summaries="REQUEST.get('summaries',0)"
- period="_.string.lower(REQUEST.get('period','day'))"
+ period="_.string.lower(REQUEST.get('period','week'))"
  days="{
    'day':1,
    'week':7,
