@@ -11,9 +11,10 @@ View methods
 - editform, diffform, the main page view, etc. These define the standard
 wiki page views which are always available no matter what kind of site we
 are in. Three examples: the main page view, the edit form, the backlinks
-form, rendered by __call__(), editform(), and backlinks()
-respectively. Most view methods are defined by the SkinViews mixin below;
-others are defined by plugins.
+form, rendered by __call__(), editform(), and backlinks() respectively. We
+also have helper view methods which render smaller parts of the UI. Most
+view methods are defined by the SkinViews mixin below; others are defined
+by plugins.
 
 Skin templates
 --------------
@@ -24,15 +25,18 @@ folder, acquisition context, CMF skin layers), then on the filesystem
 (plugins, ZWiki/skins/<current skin>, ZWiki/skins/zwiki) - see
 getSkinTemplate for more details. The default zwiki skin provides all
 the standard templates, and these may be overridden selectively.
+They are listed here: http://zwiki.org/QuickReference#skin-templates
 
 Skin macros
 -----------
 the standard zwiki skin uses METAL macros to break things into into
 manageable pieces. These are chunks of page template which can be reused
 in other page templates, in one of two ways:
+
 1. including - the called template fills a space within the caller
 2. wrapping - the called template takes over, and caller fills spaces
    (slots) within it
+
 All of the macros in the current skin are made available to all skin
 templates as here/macros.
 
