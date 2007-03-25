@@ -7,7 +7,7 @@
 # check tests pass
 # check for late tracker issues
 # check showAccessKeys,README,wikis/,skins/,zwiki.org HelpPage,QuickReference
-# darcs changes --from-tag=release into CHANGES
+# darcs changes --from-tag NN into CHANGES & edit; don't add header at top
 # update version.txt
 # make Release
 # update KnownIssues,OldKnownIssues,#zwiki
@@ -161,10 +161,10 @@ testresults:
 ## upload (rsync and darcs)
 
 rcheck:
-	rsync -ruvC -e ssh -n . $(RSYNCPATH)
+	rsync -ruvC -e ssh -n releases $(RSYNCPATH)/releases
 
 rpush:
-	rsync -ruvC -e ssh . $(RSYNCPATH)
+	rsync -ruvC -e ssh releases $(RSYNCPATH)/releases
 
 check: 
 	darcs whatsnew --summary
