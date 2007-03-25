@@ -3,7 +3,7 @@ Zwiki's skin mechanism and main UI view methods.
 
 Zwiki has a built-in skin mechanism which aims to just work and be easily
 customizable, whether in standard zope, CMF or Plone, without requiring
-any extra products or setup. Here are more details:
+any extra products or setup. Here's the scoop:
 
 View methods
 ------------
@@ -68,13 +68,13 @@ Other notes
 -----------
 - several of the standard Zwiki page templates call a dtml method to do
   their work.  This is simply a convenience so that these views may be
-  installed either in the skin or as editable dtml-enable wiki pages,
+  installed either in the skin or as editable dtml-enabled wiki pages,
   allowing more agile development and tweaking.  Eg: recentchanges.pt and
   RecentChanges.dtml.
 
 - the stylesheet method looks for a skin template object named
-  ``stylesheet.css``, ``stylesheet``, ``stylesheet.dtml`` in that order.
-  See also http://zwiki.org/HowToSetUpAnEditableStylesheet .
+  ``stylesheet.css``, ``stylesheet``, or ``stylesheet.dtml``, in that
+  order.  See also http://zwiki.org/HowToSetUpAnEditableStylesheet .
 
 - when running zope in debug mode, all filesystem-based skin templates and
   macros will refresh, showing changes immediately without a zope restart.
