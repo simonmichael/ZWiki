@@ -568,32 +568,23 @@ class SkinViews:
     security.declareProtected(Permissions.View, 'stylesheet')
     def stylesheet(self, REQUEST=None):
         """
-        Return the style sheet used by the other templates.
+        Return the style sheet used by the other skin templates.
 
-        Template-customizable. Unlike the other skin methods, this one can
-        be overridden by either a 'stylesheet' or a 'stylesheet.css'
-        template - this is a little annoying.
-
-        Also the template in this case is usually a File (but can also be
-        a page template or dtml method for a dynamic stylesheet). When a
-        File is used the Last-modified header is set to help caching.
-        (Also, all pages use a single stylesheet url -
-        DEFAULTPAGE/stylesheet).
+        Looks for a skin template object named stylesheet.css, stylesheet
+        or stylesheet.dtml in that order. If it is a File (the usual
+        case), send appropriate headers/reponses for good caching
+        behaviour.
         """
-        if REQUEST: REQUEST.RESPONSE.setHeader('Content-Type', 'text/css')
-        #XXX self.getSkinTemplate('stylesheet')
-        form = getattr(self.folder(),'stylesheet',
-                       getattr(self.folder(),'stylesheet.css',
-                               TEMPLATES['stylesheet']
-                               ))
-        if isPageTemplate(form) or isDtmlMethod(form):
-            return form.__of__(self)(self,REQUEST)
-        else: # a File
-            if REQUEST:
-                modified = form.bobobase_modification_time()
-                if self.handle_modified_headers(last_mod=modified, REQUEST=REQUEST):
-                    return ''
-            return form.index_html(REQUEST,REQUEST.RESPONSE)
+        REQUEST.RESPONSE.setHeader('Content-Type', 'text/css')
+        form = self.getSkinTemplate('stylesheet',suffixes=['css','','dtml'])
+        if isFile(form):
+            if self.handle_modified_headers(
+                last_mod=form.bobobase_modification_time(), REQUEST=REQUEST):
+                return ''
+            else:
+                return form.index_html(REQUEST,REQUEST.RESPONSE)
+        else:
+            return form(self,REQUEST)
 
     security.declareProtected(Permissions.View, 'subscribeform')
     def subscribeform(self, REQUEST=None):
