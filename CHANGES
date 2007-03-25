@@ -1,184 +1,48 @@
-Catchup since the last release in november. Many bugfixes from Sascha,
-Frank and myself, support for alternate filesystem skins, and more.
+Catchup since the last release in november. 
+A truckload of bugfixes from Sascha Welter, Frank Laurijssens and many
+others (YAY!), support for conditional http get, alternate filesystem
+skins, and more.
 
 Upgrade notes
-  Nothing special ?
+  Nothing special.
   
 Installing
 
+  * #1313, updated FrontPage template (Frank Laurijssens)
+
+  * show the page hierarchy accurately after adding a new wiki
+
 Configuring
 
-Browsing
+  * reparent now obeys the edits_need_username option, so reparenting will
+    require a username when that property is true
 
-Editing
-
-Mail
-
-Issue tracking
-
-Translations
-
-General
-
-  * typos
-
-  * rewrite zwiki skin system docs
-
-  * clean up stylesheet lookup; we look for stylesheet.css, stylesheet or
-    (convenient for filesystem skins) stylesheet.dtml, in that order
-
-  * make skin/template/macro handling more general, add support for
-    alternate filesystem skins
-
-  * clean up/fix the loadFile/PageTemplate/DtmlMethod/Stylesheet functions
-
-  * refactor commented out code.. I'm losing it
-
-  * simplify logging macros, add STDERR
-
-  * fix linkTitleFrom test
-
-  * todos
-
-  * better fixperms rule
-
-  * catch only ImportError on plugin loading - not so sure about this one
-    (Sascha Welter)
-
-  * "covered" a bunch of excepts that are related to "all-brains" make
-    test runs, my test site works with/without plone, but of course some
-    exceptions might be bubbling up now, please test and review. (Sascha
-    Welter)
-
-  * clarify relicensing clause
-
-  * catch only IndexError - seems to be what we're fishing for here
-    (Sascha Welter)
-
-  * use DateTimeSyntaxError from Utils.py for 2.7 compatibility 
-    (Sascha Welter)
-
-  * setupTracker: removed try-except around index_page() which already
-    catches exceptions (Sascha Welter)
-
-  * more specific except catching in 304 handling code This is "my own"
-    code even, grmbl. We are specifically catching for
-    DateTime.SyntaxErrors here - illegal date strings that is. Also added
-    an extra try-except block in case we get manually fed an illegal date
-    string. BLATHERing about problems now. (Sascha Welter)
-
-  * linkTitleFrom - removed except:, added test (Sascha Welter)
-
-  * bumped year in copyright statement (Sascha Welter)
-
-  * lastlog - more specific expcept (same as in other cases in Diff.py) (Sascha Welter)
-
-  * revertEditsEverywhereBy specific except should catch only more or less
-    expected stuff IndexError could be expected here, if for some reason
-    we got out of the available range of revisions for a
-    page. AttributeError is happening in the tests, for some reason the
-    test page does not have real revisions (?) (Sascha Welter)
-
-  * in pageRevision except: should catch only what's really needed 
-    (Sascha Welter)
-
-  * removed blank except - index_object() already catches the
-    index_object() method already has a (blank) except: clause so we can
-    safely remove this one, gotta check what we can do about the one in
-    index_object() later. (Sascha Welter)
+  * #1077 implement Conditional HTTP Get handling (aka If-modified-since /
+    304) for pages, stylesheet and RSS feeds.  This feature makes zwiki
+    pages more browser- and spider-cache friendly, which can potentially
+    greatly reduce page rendering time and load on your zope server.  It
+    is off by default as it doesn't yet work with Firefox's default
+    settings (requiring a reload after each edit).  See
+    http://zwiki.org/HowToEnableConditionalHTTPGET (Sascha Welter)
 
   * 974 Property to ignore certain WikiNames Credits to Matt Kunze from
     DataSplice. Patch logic is from him, I just simplified it a bit and
     tested it. This has yet to be documented somewhere. (Sascha Welter)
 
-  * Signed CONTRIBUTORS (Frank Laurijssens)
+  * #1227 comment form vulnerability (Sascha Welter)
 
-  * #14 make the zwikitracker list allow filtering & sorting (Frank Laurijssens)
+Browsing
 
-  * 976 cosmetics on "last edited xx ago" link credits to "Andreas", we
+  * #976 cosmetics on "last edited xx ago" link credits to "Andreas", we
     check if lastlog contains anything and omit the parentheses if
     not. (Sascha Welter)
 
-  * 1157 after reverting changes, reset last edit time make test passes,
-    tested on my zwiki and plone-zwiki instance. (Sascha Welter)
-
-  * #1313, updated FrontPage template (Frank Laurijssens)
-
-  * switched 304 handling to bobobase_modification_time With the previous
-    setup voting wasn't immediately reflected.  Switching to
-    bobobase_modification_time should "catch" that case and in the worst
-    case we have a little bit of extra traffic. (Sascha Welter)
-
-  * "conditional HTTP GET" handling for stylesheet if it's a File (Sascha Welter)
-
-  * Revert allow_dtml change (#1281) (Frank Laurijssens)
-
-  * enable "conditional HTTP GET" for RSS feeds (Sascha Welter)
-
-  * removed "when I get this working" - it's working (Sascha Welter)
-
-  * 1077 implement Conditional HTTP Get handling (aka If-modified-since /
-    304). By default this code is off.  I'll add documentation how to
-    enable it now. (Sascha Welter)
-
-  * 1314 use UTC for creation_time too (Sascha Welter)
-
-  * self-document the IssueTracker pages for missing allow_dtml -
-    corrected wording by kosh (Sascha Welter)
-
-  * self-document the IssueTracker pages for missing allow_dtml (Sascha Welter)
-
-  * 1083 feed validation: encode & and < (Sascha Welter)
-
-  * 1281 Frank's patch to set up dtml for IssueTracker pages with extra
-    check (Sascha Welter)
-
-  * 1043 Frank's patch to color issue links in "backlinks" (Sascha Welter)
-
-  * 1083 escape html in rss feeds (Sascha Welter)
-
-  * 1008 show issue form on plaintext issues, patch from Bill Page
-    (Sascha Welter)
-
-  * deleted a leftover print statement (Sascha Welter)
-
-  * 1299 - mail out in plone works, could use more error handling though
-    (Sascha Welter)
-
-  * Fix docstring (Sascha Welter)
-
-  * #1186 fix for last_edited_date losing time zone information -
-    converting to UTC This might be only relevant at hosts that do not
-    have locale support on their operating system (e.g. *BSD, Mac OS
-    X). Further tests in that direction might be necessary. It definitely
-    fixes the problem on Mac OS X. (Sascha Welter)
-
-  * changed regex, better IP address detection (similar to #1304)
-    (Sascha Welter)
-
   * format comment header for HTML pages #1085 (Sascha Welter)
 
-  * 1294 - changes to get rss feeds to validate pages_rss and changes_rss
-    made to validate with feedvalidator.org
-    - Date formats in head section had to be adjusted
-    - feedvalidator.org wanted a guid element (even though specs say it's
-      optional) 
+  * #1304 last-edited-by is not shown when user ID is numerical 
     (Sascha Welter)
 
-  * siblingsAsList can include current page + sorting optional This is
-    useful mainly for "nautica" style wikipage.pt. In those one often
-    wants to make a list of pages "on the same level" as the current
-    page. That list usually includes the current page and is not sorted
-    alphabetically, but instead left in the order defined in the
-    /backlinks page. (Sascha Welter)
-  
-
-  * changed regex for 1304 last-edited-by is not shown when user ID is
-    numerical (Sascha Welter)
-
-  * signed (Sascha Welter)
-
-  * 1303 Illegal utf-8 handling in Utils.py summary - Credits go to Hideo
+  * #1303 Illegal utf-8 handling in Utils.py summary - Credits go to Hideo
     at Yokohama! This patch had us worried about performance, since taking
     a summary of a long wiki page might be slow. Some preliminary testing
     showed that the performance price is rather low, but for sites with
@@ -189,19 +53,88 @@ General
   * #1298 non-ascii characters in page names are breaking search functionality
     (Sascha Welter)
 
-  * #1227 comment form vulnerability (Sascha Welter)
-
-  * make backlinks form respect identification requirement for reparent
-
-  * update outline cache after adding a wiki 
-
-  * require a username for reparenting
-
-  * syntax error
-
-  * missing " in standard_error_message
-
   * don't let a non-wiki page break interwiki link rendering
+
+Editing
+
+  * #1157 after reverting changes, reset last edit time make test passes,
+    tested on my zwiki and plone-zwiki instance. (Sascha Welter)
+
+  * #1314 use UTC for creation_time too (Sascha Welter)
+
+  * #1186 fix for last_edited_date losing time zone information -
+    converting to UTC This might be only relevant at hosts that do not
+    have locale support on their operating system (e.g. *BSD, Mac OS
+    X). Further tests in that direction might be necessary. It definitely
+    fixes the problem on Mac OS X. (Sascha Welter)
+
+Mail
+
+  * #1299 - mail out in plone works, could use more error handling though
+    (Sascha Welter)
+
+Feeds
+
+  * #1083 feed validation: encode & and < (Sascha Welter)
+
+  * #1083 escape html in rss feeds (Sascha Welter)
+
+  * #1294 - changes to get rss feeds to validate pages_rss and changes_rss
+    made to validate with feedvalidator.org
+    - Date formats in head section had to be adjusted
+    - feedvalidator.org wanted a guid element (even though specs say it's
+      optional) 
+    (Sascha Welter)
+
+Issue tracking
+
+  * #14 make the zwikitracker list allow filtering & sorting
+    (Frank Laurijssens)
+
+  * Revert allow_dtml change (#1281) (Frank Laurijssens)
+
+  * self-document the IssueTracker pages for missing allow_dtml (Sascha Welter)
+
+  * #1281 Frank's patch to set up dtml for IssueTracker pages with extra
+    check (Sascha Welter)
+
+  * #1043 Frank's patch to color issue links in "backlinks" (Sascha Welter)
+
+  * #1008 show issue form on plaintext issues, patch from Bill Page
+    (Sascha Welter)
+
+General
+
+  * make skin/template/macro handling more general, add support for
+    alternate filesystem skins, rewrite skin system developer docs
+
+  * clean up stylesheet lookup; we look for stylesheet.css, stylesheet or
+    (convenient for filesystem skins) stylesheet.dtml, in that order
+
+  * siblingsAsList can include current page + sorting optional This is
+    useful mainly for "nautica" style wikipage.pt. In those one often
+    wants to make a list of pages "on the same level" as the current
+    page. That list usually includes the current page and is not sorted
+    alphabetically, but instead left in the order defined in the
+    /backlinks page. (Sascha Welter)
+  
+  * many fixes to make Zwiki's exception handling more precise. This may
+    reveal some new failure scenarios which were previously hidden
+    (Sascha Welter)
+
+  * fix a syntax error in tests
+
+  * fix a missing doublequote in standard_error_message
+
+  * clarify relicensing clause
+
+  * bumped year in copyright statement (Sascha Welter)
+
+  * signed (Sascha Welter)
+
+  * Signed CONTRIBUTORS (Frank Laurijssens)
+
+Translations
 
 
 Zwiki 0.58.0 2006/11/01
