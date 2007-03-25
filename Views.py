@@ -196,9 +196,9 @@ def addErrorTo(text,error):
 # skins/zwiki/ defines all of these, other skins need not
 
 SKINS = {}
-for s in os.listdir('skins'):
+for s in os.listdir(abszwikipath('skins')):
     SKINS[s] = {}
-    skindir = os.path.join('skins',s)
+    skindir = os.path.join(abszwikipath('skins'),s)
     for template in [
         # main view templates
         # these usually have a similarly named publish method
