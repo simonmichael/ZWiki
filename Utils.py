@@ -35,6 +35,9 @@ except ImportError: get_transaction = get_transaction
 
 ZWIKI_BIRTHDATE='1999/11/05'
 
+ZWIKIDIR = os.path.dirname(__file__)
+def abszwikipath(path): return os.path.join(ZWIKIDIR,path)
+
 
 class PageUtils:
     """

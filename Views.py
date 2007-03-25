@@ -120,64 +120,65 @@ from Products.PageTemplates.Expressions import SecureModuleImporter
 from ComputedAttribute import ComputedAttribute
 
 from Defaults import PAGE_METATYPE
-from Utils import BLATHER, formattedTraceback
+from Utils import BLATHER, formattedTraceback, abszwikipath
 from I18n import _, DTMLFile, HTMLFile
 
 
-# utilities
-
 def loadPageTemplate(name,dir='skins/zwiki'):
     """
-    Load the named page template from the filesystem.
+    Load the named page template from the filesystem and return it, or None.
     """
-    return PageTemplateFile(
-        os.path.join(dir,'%s.pt' % name),
-        globals(),
-        __name__=name)
+    f = os.path.join(abszwikipath(dir),'%s.pt' % name)
+    if os.path.exists(f):
+        return PageTemplateFile(f,globals(),__name__=name)
+    else:
+        return None
 
 def loadDtmlMethod(name,dir='skins/zwiki'):
     """
-    Load the named DTML method from the filesystem.
+    Load the named dtml method from the filesystem and return it, or None.
     """
-    # need this one for i18n gettext patch to work ?
-    #dm = DTMLFile(os.path.join(dir,name), globals())
-    dm = HTMLFile(os.path.join(dir,name), globals())
-    # work around some (2.7 ?) glitch
-    if not hasattr(dm,'meta_type'): dm.meta_type = 'DTML Method (File)'
-    return dm
+    f = os.path.join(abszwikipath(dir),name)
+    if os.path.exists('%s.dtml' % f):
+        # need this one for i18n gettext patch to work ?
+        #dm = DTMLFile(os.path.join(dir,name), globals())
+        dm = HTMLFile(f, globals())
+        # work around some (2.7 ?) glitch
+        if not hasattr(dm,'meta_type'): dm.meta_type = 'DTML Method (File)'
+        return dm
+    else:
+        return None
 
 def loadStylesheet(name,dir='skins/zwiki'):
     """
     Load the stylesheet file from the filesystem.
     """
     f = loadFile(name,dir=dir)
-    if f:
-        f.content_type = 'text/css'
-        return f
+    if f: f.content_type = 'text/css'
+    return f
 
 def loadFile(name,dir='skins/zwiki'):
     """
-    Load a File from the filesystem.
-
-    Also work around a modification time bug.
+    Load and return a File from the filesystem, or None.
     """
-    THISDIR = os.path.split(os.path.abspath(__file__))[0]
-    filepath = os.path.join(THISDIR,dir,name)
-    data,mtime = '',0
-    try:
+    filepath = os.path.join(abszwikipath(dir),name)
+    if os.path.exists(filepath):
+        f = None
         try:
-            fp = open(filepath,'rb')
-            data = fp.read()
-            mtime = os.path.getmtime(filepath)
-            file = File('stylesheet','',data)
-            # bug workaround: bobobase_modification_time will otherwise be current time
-            file.bobobase_modification_time = lambda:mtime
-            return file # whee! does the finally first
-        except:
-            return None
-    finally:
-        fp.close()
-
+            try:
+                f = open(filepath,'rb')
+                data = f.read()
+                mtime = os.path.getmtime(filepath)
+                file = File(name,'',data)
+                # bug workaround: bobobase_modification_time will otherwise be current time
+                file.bobobase_modification_time = lambda:mtime
+                return file
+            except IOError:
+                return None
+        finally:
+            if f: f.close()
+    else:
+        return None
 
 def isPageTemplate(obj):
     return getattr(obj,'meta_type',None) in (
