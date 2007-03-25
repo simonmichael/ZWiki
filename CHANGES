@@ -1,6 +1,11 @@
-Zwiki 0.59.0rc1 2007/03/24
+  * ack, a template loading fix I missed, initialization broke unless
+    you ran from the ZWiki directory
 
-=======================
+  * recent changes default period is now a week, not a day
+
+
+Zwiki 0.59.0rc1 2007/03/24
+==========================
 
 Catchup since the last release in november. 
 A truckload of bugfixes from Sascha Welter, Frank Laurijssens and many
@@ -51,7 +56,7 @@ Browsing
     a summary of a long wiki page might be slow. Some preliminary testing
     showed that the performance price is rather low, but for sites with
     non-ascii content the patch is really worth it. Not only will it stop
-    producing illegal utf-8, but without the patch the lenght of the
+    producing illegal utf-8, but without the patch the length of the
     summary will never be right. (Sascha Welter)
 
   * #1298 non-ascii characters in page names are breaking search functionality
@@ -85,6 +90,7 @@ Feeds
 
   * #1294 - changes to get rss feeds to validate pages_rss and changes_rss
     made to validate with feedvalidator.org
+
     - Date formats in head section had to be adjusted
     - feedvalidator.org wanted a guid element (even though specs say it's
       optional) 
