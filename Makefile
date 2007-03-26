@@ -161,10 +161,10 @@ testresults:
 ## upload (rsync and darcs)
 
 rcheck:
-	rsync -ruvC -e ssh -n releases $(RSYNCPATH)/releases
+	rsync -ruvC -e ssh -n releases $(RSYNCPATH)
 
 rpush:
-	rsync -ruvC -e ssh releases $(RSYNCPATH)/releases
+	rsync -ruvC -e ssh releases $(RSYNCPATH)
 
 check: 
 	darcs whatsnew --summary
