@@ -77,8 +77,8 @@ Other notes
   RecentChanges.dtml.
 
 - the stylesheet method looks for a skin template object named
-  ``stylesheet.css``, ``stylesheet``, or ``stylesheet.dtml``, in that
-  order.  See also http://zwiki.org/HowToSetUpAnEditableStylesheet .
+  ``stylesheet.css`` of ``stylesheet``, in that order.  See also
+  http://zwiki.org/HowToSetUpAnEditableStylesheet .
 
 - when running zope in debug mode, all filesystem-based skin templates and
   macros will refresh, showing changes immediately without a zope restart.
@@ -552,13 +552,12 @@ class SkinViews:
         """
         Return the style sheet used by the other skin templates.
 
-        Looks for a skin template object named stylesheet.css, stylesheet
-        or stylesheet.dtml in that order. If it is a File (the usual
-        case), send appropriate headers/reponses for good caching
-        behaviour.
+        Looks for a skin template object named stylesheet.css or
+        stylesheet in that order. If it is a File (the usual case), send
+        appropriate headers/reponses for good caching behaviour.
         """
         REQUEST.RESPONSE.setHeader('Content-Type', 'text/css')
-        form = self.getSkinTemplate('stylesheet',suffixes=['css','','dtml'])
+        form = self.getSkinTemplate('stylesheet',suffixes=['.css',''])
         if isFile(form):
             if self.handle_modified_headers(
                 last_mod=form.bobobase_modification_time(), REQUEST=REQUEST):
