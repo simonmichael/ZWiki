@@ -27,13 +27,16 @@ msgstr "（目录 -> 管理性质）"
 msgid "You are not authorized to reparent this ZWiki Page."
 msgstr "您没有权力删除此页。"
 
-#: src/ZWiki/Diff.py:180 src/ZWiki/plugins/tracker/tracker.py:332
+#: src/ZWiki/Diff.py:180
+#: src/ZWiki/plugins/tracker/tracker.py:332
 #, fuzzy
 msgid "You are not authorized to rename this ZWiki Page."
 msgstr "您没有权力删除此页。"
 
-#: src/ZWiki/Editing.py:156 src/ZWiki/Editing.py:294 src/ZWiki/Views.py:332
-#: src/ZWiki/Views.py:435 src/ZWiki/plugins/tracker/tracker.py:321
+#: src/ZWiki/Editing.py:156 src/ZWiki/Editing.py:294
+#: src/ZWiki/Views.py:332
+#: src/ZWiki/Views.py:435
+#: src/ZWiki/plugins/tracker/tracker.py:321
 #, fuzzy
 msgid ""
 "Sorry, this wiki doesn't allow anonymous edits. Please configure a username "
@@ -50,7 +53,8 @@ msgstr "您没有权力在这页更动父页或子主题连结。"
 msgid "You are not authorized to change this ZWiki Page's type."
 msgstr "您没有权力变更页面型态。"
 
-#: src/ZWiki/Editing.py:383 src/ZWiki/Editing.py:410
+#: src/ZWiki/Editing.py:383
+#: src/ZWiki/Editing.py:410
 #: src/ZWiki/plugins/tracker/tracker.py:340
 #: src/ZWiki/plugins/tracker/tracker.py:347
 #: src/ZWiki/plugins/tracker/tracker.py:354
@@ -116,11 +120,13 @@ msgid ""
 "administrator for help."
 msgstr ""
 
-#: src/ZWiki/Mail.py:506 src/ZWiki/skins/dtmlmessages.pt:58
+#: src/ZWiki/Mail.py:506
+#: src/ZWiki/skins/dtmlmessages.pt:58
 msgid "anonymous"
 msgstr "访客"
 
-#: src/ZWiki/OutlineSupport.py:843 src/ZWiki/skins/zwiki/links.pt:56
+#: src/ZWiki/OutlineSupport.py:843
+#: src/ZWiki/skins/zwiki/links.pt:56
 msgid "which pages link to this one ?"
 msgstr "那个页面连结到这一页？"
 
@@ -241,7 +247,8 @@ msgstr "贴上您所修改的内容，在最新变更的内容里头"
 msgid "Click the Change button again"
 msgstr "再按一次变更按钮（Change）"
 
-#: src/ZWiki/Views.py:420 src/ZWiki/skins/zwiki/editform.pt:163
+#: src/ZWiki/Views.py:420
+#: src/ZWiki/skins/zwiki/editform.pt:163
 msgid "or"
 msgstr "或"
 
@@ -361,7 +368,8 @@ msgstr "未知的类型"
 msgid "create this page"
 msgstr "建立页面"
 
-#: src/ZWiki/ZWikiPage.py:798 src/ZWiki/ZWikiPage.py:814
+#: src/ZWiki/ZWikiPage.py:798
+#: src/ZWiki/ZWikiPage.py:814
 #: src/ZWiki/ZWikiPage.py:817
 msgid "last edited %(interval)s ago"
 msgstr "%(interval)s 前修改"
@@ -370,7 +378,8 @@ msgstr "%(interval)s 前修改"
 msgid "show last edit"
 msgstr "显示最新修改"
 
-#: src/ZWiki/ZWikiPage.py:826 src/ZWiki/ZWikiPage.py:828
+#: src/ZWiki/ZWikiPage.py:826
+#: src/ZWiki/ZWikiPage.py:828
 msgid "by %(editor)s"
 msgstr "作者 %(editor)s"
 
@@ -410,7 +419,8 @@ msgstr "建立新图片 \"%(filename)s\""
 msgid "Upload new attachment \"%(filename)s\""
 msgstr "上传新附件 \"%(filename)s\""
 
-#: src/ZWiki/pagetypes/moin.py:335 src/ZWiki/pagetypes/moin.py:345
+#: src/ZWiki/pagetypes/moin.py:335
+#: src/ZWiki/pagetypes/moin.py:345
 msgid "Edit drawing %(filename)s"
 msgstr "修改图片 \"%(filename)s\""
 
@@ -422,7 +432,8 @@ msgstr "期待在 \"%(key)s\" 之后的 \"%(wanted)s\" 能够取得 \"%(token)s\
 msgid "Expected an integer \"%(key)s\" before \"%(token)s\""
 msgstr "期待在 \"%(token)s\" 之前的 \"%(key)s\" 为整数值"
 
-#: src/ZWiki/pagetypes/moin.py:745 src/ZWiki/pagetypes/moin.py:754
+#: src/ZWiki/pagetypes/moin.py:745
+#: src/ZWiki/pagetypes/moin.py:754
 msgid "Expected an integer \"%(arg)s\" after \"%(key)s\""
 msgstr "期待在 \"%(key)s\" 之后的 \"%(arg)s\" 为整数值"
 
@@ -532,27 +543,32 @@ msgstr "事例追踪"
 msgid "You are not authorized to comment on this ZWiki Page."
 msgstr "您没有权力修改此页。"
 
-#: src/ZWiki/skins/dtmlmessages.pt:10 src/ZWiki/skins/dtmlmessages.pt:32
+#: src/ZWiki/skins/dtmlmessages.pt:10
+#: src/ZWiki/skins/dtmlmessages.pt:32
 #, fuzzy
 msgid "category"
 msgstr "分类"
 
-#: src/ZWiki/skins/dtmlmessages.pt:11 src/ZWiki/skins/dtmlmessages.pt:33
+#: src/ZWiki/skins/dtmlmessages.pt:11
+#: src/ZWiki/skins/dtmlmessages.pt:33
 #, fuzzy
 msgid "severity"
 msgstr "程度"
 
-#: src/ZWiki/skins/dtmlmessages.pt:12 src/ZWiki/skins/dtmlmessages.pt:34
+#: src/ZWiki/skins/dtmlmessages.pt:12
+#: src/ZWiki/skins/dtmlmessages.pt:34
 #, fuzzy
 msgid "status"
 msgstr "状态"
 
-#: src/ZWiki/skins/dtmlmessages.pt:13 src/ZWiki/skins/dtmlmessages.pt:35
+#: src/ZWiki/skins/dtmlmessages.pt:13
+#: src/ZWiki/skins/dtmlmessages.pt:35
 #, fuzzy
 msgid "age"
 msgstr "页面"
 
-#: src/ZWiki/skins/dtmlmessages.pt:14 src/ZWiki/skins/dtmlmessages.pt:36
+#: src/ZWiki/skins/dtmlmessages.pt:14
+#: src/ZWiki/skins/dtmlmessages.pt:36
 #, fuzzy
 msgid "modified"
 msgstr "变更"
@@ -682,7 +698,8 @@ msgstr "变更注记（选项）"
 msgid "Optional comment"
 msgstr "可选注释（选项）"
 
-#: src/ZWiki/skins/dtmlmessages.pt:44 src/ZWiki/skins/dtmlmessages.pt:45
+#: src/ZWiki/skins/dtmlmessages.pt:44
+#: src/ZWiki/skins/dtmlmessages.pt:45
 #, fuzzy
 msgid "Add ZWiki"
 msgstr "新增快纪"
@@ -772,7 +789,8 @@ msgstr "大小写无关与万用字元，依您的目录索引设定而定，也
 msgid "Leave it blank to list all pages."
 msgstr "如果让它空白的话，可列出所有页面。"
 
-#: src/ZWiki/skins/dtmlmessages.pt:65 src/ZWiki/skins/dtmlmessages.pt:66
+#: src/ZWiki/skins/dtmlmessages.pt:65
+#: src/ZWiki/skins/dtmlmessages.pt:66
 msgid "Search"
 msgstr "搜寻"
 
@@ -842,7 +860,8 @@ msgstr "全部"
 msgid "Forget options"
 msgstr "预设设定"
 
-#: src/ZWiki/skins/dtmlmessages.pt:81 src/ZWiki/skins/dtmlmessages.pt:82
+#: src/ZWiki/skins/dtmlmessages.pt:81
+#: src/ZWiki/skins/dtmlmessages.pt:82
 msgid "Add ZWiki Page"
 msgstr "新增快纪页面"
 
@@ -876,12 +895,14 @@ msgstr "检视"
 msgid "Created"
 msgstr "建立"
 
-#: src/ZWiki/skins/dtmlmessages.pt:9 src/ZWiki/skins/dtmlmessages.pt:31
+#: src/ZWiki/skins/dtmlmessages.pt:9
+#: src/ZWiki/skins/dtmlmessages.pt:31
 #, fuzzy
 msgid "#"
 msgstr "#"
 
-#: src/ZWiki/skins/dtmlmessages.pt:90 src/ZWiki/skins/dtmlmessages.pt:92
+#: src/ZWiki/skins/dtmlmessages.pt:90
+#: src/ZWiki/skins/dtmlmessages.pt:92
 msgid "by"
 msgstr "作者"
 
@@ -1032,12 +1053,14 @@ msgid "Edit:"
 msgstr "修改"
 
 #. Default: "<<"
-#: src/ZWiki/skins/zwiki/diffform.pt:34 src/ZWiki/skins/zwiki/diffform.pt:38
+#: src/ZWiki/skins/zwiki/diffform.pt:34
+#: src/ZWiki/skins/zwiki/diffform.pt:38
 msgid " << "
 msgstr ""
 
 #. Default: ">>"
-#: src/ZWiki/skins/zwiki/diffform.pt:52 src/ZWiki/skins/zwiki/diffform.pt:56
+#: src/ZWiki/skins/zwiki/diffform.pt:52
+#: src/ZWiki/skins/zwiki/diffform.pt:56
 msgid " >> "
 msgstr ""
 
@@ -1126,11 +1149,16 @@ msgid "create this wiki page"
 msgstr "建立这快纪页面"
 
 #. Default: "PREVIEW"
-#: src/ZWiki/skins/zwiki/editform.pt:203 src/ZWiki/skins/zwiki/editform.pt:204
-#: src/ZWiki/skins/zwiki/editform.pt:205 src/ZWiki/skins/zwiki/editform.pt:206
-#: src/ZWiki/skins/zwiki/editform.pt:207 src/ZWiki/skins/zwiki/editform.pt:216
-#: src/ZWiki/skins/zwiki/editform.pt:217 src/ZWiki/skins/zwiki/editform.pt:218
-#: src/ZWiki/skins/zwiki/editform.pt:219 src/ZWiki/skins/zwiki/editform.pt:220
+#: src/ZWiki/skins/zwiki/editform.pt:203
+#: src/ZWiki/skins/zwiki/editform.pt:204
+#: src/ZWiki/skins/zwiki/editform.pt:205
+#: src/ZWiki/skins/zwiki/editform.pt:206
+#: src/ZWiki/skins/zwiki/editform.pt:207
+#: src/ZWiki/skins/zwiki/editform.pt:216
+#: src/ZWiki/skins/zwiki/editform.pt:217
+#: src/ZWiki/skins/zwiki/editform.pt:218
+#: src/ZWiki/skins/zwiki/editform.pt:219
+#: src/ZWiki/skins/zwiki/editform.pt:220
 msgid "label_preview"
 msgstr "【预览】"
 

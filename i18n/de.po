@@ -36,13 +36,17 @@ msgstr "(folder -> Manage properties)"
 msgid "You are not authorized to reparent this ZWiki Page."
 msgstr "Sie sind nicht berechtigt, diese ZWiki-Seite zu löschen."
 
-#: src/ZWiki/Diff.py:180 src/ZWiki/plugins/tracker/tracker.py:332
+#: src/ZWiki/Diff.py:180 
+#: src/ZWiki/plugins/tracker/tracker.py:332
 #, fuzzy
 msgid "You are not authorized to rename this ZWiki Page."
 msgstr "Sie sind nicht berechtigt, diese ZWiki-Seite zu löschen."
 
-#: src/ZWiki/Editing.py:156 src/ZWiki/Editing.py:294 src/ZWiki/Views.py:332
-#: src/ZWiki/Views.py:435 src/ZWiki/plugins/tracker/tracker.py:321
+#: src/ZWiki/Editing.py:156
+#: src/ZWiki/Editing.py:294
+#: src/ZWiki/Views.py:332
+#: src/ZWiki/Views.py:435
+#: src/ZWiki/plugins/tracker/tracker.py:321
 #, fuzzy
 msgid ""
 "Sorry, this wiki doesn't allow anonymous edits. Please configure a username "
@@ -62,7 +66,8 @@ msgstr ""
 msgid "You are not authorized to change this ZWiki Page's type."
 msgstr "Sie sind nicht berechtigt, das Format dieser ZWiki-Seite zu ändern."
 
-#: src/ZWiki/Editing.py:383 src/ZWiki/Editing.py:410
+#: src/ZWiki/Editing.py:383
+#: src/ZWiki/Editing.py:410
 #: src/ZWiki/plugins/tracker/tracker.py:340
 #: src/ZWiki/plugins/tracker/tracker.py:347
 #: src/ZWiki/plugins/tracker/tracker.py:354
@@ -129,11 +134,13 @@ msgid ""
 "administrator for help."
 msgstr ""
 
-#: src/ZWiki/Mail.py:506 src/ZWiki/skins/dtmlmessages.pt:58
+#: src/ZWiki/Mail.py:506
+#: src/ZWiki/skins/dtmlmessages.pt:58
 msgid "anonymous"
 msgstr "anonym"
 
-#: src/ZWiki/OutlineSupport.py:843 src/ZWiki/skins/zwiki/links.pt:56
+#: src/ZWiki/OutlineSupport.py:843
+#: src/ZWiki/skins/zwiki/links.pt:56
 msgid "which pages link to this one ?"
 msgstr "Welche Seiten verweisen auf diese?"
 
@@ -264,7 +271,8 @@ msgstr ""
 msgid "Click the Change button again"
 msgstr "Speichern Sie die Seite mit Ihren Änderungen erneut."
 
-#: src/ZWiki/Views.py:420 src/ZWiki/skins/zwiki/editform.pt:163
+#: src/ZWiki/Views.py:420
+#: src/ZWiki/skins/zwiki/editform.pt:163
 msgid "or"
 msgstr "oder"
 
@@ -392,7 +400,8 @@ msgstr "Unbekanntes Wiki Format"
 msgid "create this page"
 msgstr "Diese Seite erstellen"
 
-#: src/ZWiki/ZWikiPage.py:798 src/ZWiki/ZWikiPage.py:814
+#: src/ZWiki/ZWikiPage.py:798
+#: src/ZWiki/ZWikiPage.py:814
 #: src/ZWiki/ZWikiPage.py:817
 msgid "last edited %(interval)s ago"
 msgstr "Zuletzt geändert vor %(interval)s"
@@ -401,7 +410,8 @@ msgstr "Zuletzt geändert vor %(interval)s"
 msgid "show last edit"
 msgstr "Letzte Änderung zeigen"
 
-#: src/ZWiki/ZWikiPage.py:826 src/ZWiki/ZWikiPage.py:828
+#: src/ZWiki/ZWikiPage.py:826
+#: src/ZWiki/ZWikiPage.py:828
 msgid "by %(editor)s"
 msgstr "von %(editor)s"
 
@@ -442,7 +452,8 @@ msgstr "Erstelle neue Zeichnung \"%(filename)s\""
 msgid "Upload new attachment \"%(filename)s\""
 msgstr "Lade neuen Anhang \"%(filename)s\" hoch"
 
-#: src/ZWiki/pagetypes/moin.py:335 src/ZWiki/pagetypes/moin.py:345
+#: src/ZWiki/pagetypes/moin.py:335
+#: src/ZWiki/pagetypes/moin.py:345
 msgid "Edit drawing %(filename)s"
 msgstr "Bearbeite Zeichnung %(filename)s"
 
@@ -454,7 +465,8 @@ msgstr "Erwartete \"%(wanted)s\" nach \"%(key)s\", erhielt aber \"%(token)s\""
 msgid "Expected an integer \"%(key)s\" before \"%(token)s\""
 msgstr "Erwartete einen Integerwert \"%(key)s\" vor \"%(token)s\""
 
-#: src/ZWiki/pagetypes/moin.py:745 src/ZWiki/pagetypes/moin.py:754
+#: src/ZWiki/pagetypes/moin.py:745
+#: src/ZWiki/pagetypes/moin.py:754
 msgid "Expected an integer \"%(arg)s\" after \"%(key)s\""
 msgstr "Erwatete einen Integerwert \"%(arg)s\" nach \"%(key)s\""
 
@@ -564,27 +576,32 @@ msgstr "Problemliste"
 msgid "You are not authorized to comment on this ZWiki Page."
 msgstr "Sie sind nicht berechtigt, diese ZWiki-Seite zu bearbeiten."
 
-#: src/ZWiki/skins/dtmlmessages.pt:10 src/ZWiki/skins/dtmlmessages.pt:32
+#: src/ZWiki/skins/dtmlmessages.pt:10
+#: src/ZWiki/skins/dtmlmessages.pt:32
 #, fuzzy
 msgid "category"
 msgstr "Kategorie"
 
-#: src/ZWiki/skins/dtmlmessages.pt:11 src/ZWiki/skins/dtmlmessages.pt:33
+#: src/ZWiki/skins/dtmlmessages.pt:11
+#: src/ZWiki/skins/dtmlmessages.pt:33
 #, fuzzy
 msgid "severity"
 msgstr "Schweregrad"
 
-#: src/ZWiki/skins/dtmlmessages.pt:12 src/ZWiki/skins/dtmlmessages.pt:34
+#: src/ZWiki/skins/dtmlmessages.pt:12
+#: src/ZWiki/skins/dtmlmessages.pt:34
 #, fuzzy
 msgid "status"
 msgstr "Status"
 
-#: src/ZWiki/skins/dtmlmessages.pt:13 src/ZWiki/skins/dtmlmessages.pt:35
+#: src/ZWiki/skins/dtmlmessages.pt:13
+#: src/ZWiki/skins/dtmlmessages.pt:35
 #, fuzzy
 msgid "age"
 msgstr "Seite"
 
-#: src/ZWiki/skins/dtmlmessages.pt:14 src/ZWiki/skins/dtmlmessages.pt:36
+#: src/ZWiki/skins/dtmlmessages.pt:14
+#: src/ZWiki/skins/dtmlmessages.pt:36
 #, fuzzy
 msgid "modified"
 msgstr "Geändert"
@@ -713,7 +730,8 @@ msgstr "Notiz zu den Änderungen (optional)"
 msgid "Optional comment"
 msgstr "Notiz zu den Änderungen (optional)"
 
-#: src/ZWiki/skins/dtmlmessages.pt:44 src/ZWiki/skins/dtmlmessages.pt:45
+#: src/ZWiki/skins/dtmlmessages.pt:44
+#: src/ZWiki/skins/dtmlmessages.pt:45
 #, fuzzy
 msgid "Add ZWiki"
 msgstr "Wiki hinzufügen"
@@ -813,7 +831,8 @@ msgstr ""
 msgid "Leave it blank to list all pages."
 msgstr "Mit einem leeren Suchfeld erhalten Sie eine Liste aller Seiten."
 
-#: src/ZWiki/skins/dtmlmessages.pt:65 src/ZWiki/skins/dtmlmessages.pt:66
+#: src/ZWiki/skins/dtmlmessages.pt:65
+#: src/ZWiki/skins/dtmlmessages.pt:66
 msgid "Search"
 msgstr "Suchen"
 
@@ -883,7 +902,8 @@ msgstr "Alle"
 msgid "Forget options"
 msgstr "Einstellungen löschen"
 
-#: src/ZWiki/skins/dtmlmessages.pt:81 src/ZWiki/skins/dtmlmessages.pt:82
+#: src/ZWiki/skins/dtmlmessages.pt:81
+#: src/ZWiki/skins/dtmlmessages.pt:82
 msgid "Add ZWiki Page"
 msgstr "ZWiki-Seite hinzufügen"
 
@@ -917,11 +937,13 @@ msgstr "Ansichten"
 msgid "Created"
 msgstr "Erstellt"
 
-#: src/ZWiki/skins/dtmlmessages.pt:9 src/ZWiki/skins/dtmlmessages.pt:31
+#: src/ZWiki/skins/dtmlmessages.pt:9
+#: src/ZWiki/skins/dtmlmessages.pt:31
 msgid "#"
 msgstr "#"
 
-#: src/ZWiki/skins/dtmlmessages.pt:90 src/ZWiki/skins/dtmlmessages.pt:92
+#: src/ZWiki/skins/dtmlmessages.pt:90
+#: src/ZWiki/skins/dtmlmessages.pt:92
 msgid "by"
 msgstr "von"
 
@@ -1086,12 +1108,14 @@ msgid "Edit:"
 msgstr "Bearbeiten"
 
 #. Default: "<<"
-#: src/ZWiki/skins/zwiki/diffform.pt:34 src/ZWiki/skins/zwiki/diffform.pt:38
+#: src/ZWiki/skins/zwiki/diffform.pt:34
+#: src/ZWiki/skins/zwiki/diffform.pt:38
 msgid " << "
 msgstr ""
 
 #. Default: ">>"
-#: src/ZWiki/skins/zwiki/diffform.pt:52 src/ZWiki/skins/zwiki/diffform.pt:56
+#: src/ZWiki/skins/zwiki/diffform.pt:52
+#: src/ZWiki/skins/zwiki/diffform.pt:56
 msgid " >> "
 msgstr ""
 
@@ -1182,11 +1206,16 @@ msgid "create this wiki page"
 msgstr "Diese Wiki-Seite erstellen"
 
 #. Default: "PREVIEW"
-#: src/ZWiki/skins/zwiki/editform.pt:203 src/ZWiki/skins/zwiki/editform.pt:204
-#: src/ZWiki/skins/zwiki/editform.pt:205 src/ZWiki/skins/zwiki/editform.pt:206
-#: src/ZWiki/skins/zwiki/editform.pt:207 src/ZWiki/skins/zwiki/editform.pt:216
-#: src/ZWiki/skins/zwiki/editform.pt:217 src/ZWiki/skins/zwiki/editform.pt:218
-#: src/ZWiki/skins/zwiki/editform.pt:219 src/ZWiki/skins/zwiki/editform.pt:220
+#: src/ZWiki/skins/zwiki/editform.pt:203
+#: src/ZWiki/skins/zwiki/editform.pt:204
+#: src/ZWiki/skins/zwiki/editform.pt:205
+#: src/ZWiki/skins/zwiki/editform.pt:206
+#: src/ZWiki/skins/zwiki/editform.pt:207
+#: src/ZWiki/skins/zwiki/editform.pt:216
+#: src/ZWiki/skins/zwiki/editform.pt:217
+#: src/ZWiki/skins/zwiki/editform.pt:218
+#: src/ZWiki/skins/zwiki/editform.pt:219
+#: src/ZWiki/skins/zwiki/editform.pt:220
 msgid "label_preview"
 msgstr "VORSCHAU"
 
