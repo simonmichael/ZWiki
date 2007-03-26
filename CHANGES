@@ -73,8 +73,7 @@ Browsing
 
 Editing
 
-  * #1157 after reverting changes, reset last edit time make test passes,
-    tested on my zwiki and plone-zwiki instance. (Sascha Welter)
+  * #1157 after reverting changes, reset last edit time. (Sascha Welter)
 
   * #1314 use UTC for creation_time too (Sascha Welter)
 
@@ -91,12 +90,10 @@ Mail
 
 Feeds
 
-  * #1083 feed validation: encode & and < (Sascha Welter)
-
   * #1083 escape html in rss feeds (Sascha Welter)
 
-  * #1294 - changes to get rss feeds to validate pages_rss and changes_rss
-    made to validate with feedvalidator.org
+  * #1294 - changes to get rss feeds to validate. pages_rss and changes_rss
+    now validate with feedvalidator.org.
 
     - Date formats in head section had to be adjusted
     - feedvalidator.org wanted a guid element (even though specs say it's
@@ -115,7 +112,7 @@ Issue tracking
   * #1281 Frank's patch to set up dtml for IssueTracker pages with extra
     check (Sascha Welter)
 
-  * #1043 Frank's patch to color issue links in "backlinks" (Sascha Welter)
+  * #1043 Color issue links in "backlinks" (Frank Laurijssens)
 
   * #1008 show issue form on plaintext issues, patch from Bill Page
     (Sascha Welter)
@@ -128,7 +125,7 @@ General
   * clean up stylesheet lookup: look for a template named "stylesheet.css"
     or "stylesheet" in that order
 
-  * siblingsAsList can include current page + sorting optional This is
+  * siblingsAsList can include current page + sorting optional. This is
     useful mainly for "nautica" style wikipage.pt. In those one often
     wants to make a list of pages "on the same level" as the current
     page. That list usually includes the current page and is not sorted
