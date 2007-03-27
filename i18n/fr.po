@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zwiki-fr\n"
 "POT-Creation-Date: Sat Sep  2 18:10:16 2006\n"
-"PO-Revision-Date: 2006-02-26 09:02+0000\n"
-"Last-Translator: Encolpe Degoute <encolpe@colpi.info>\n"
+"PO-Revision-Date: 2006-10-07 19:02+0000\n"
+"Last-Translator: Nicolas Velin <nsv@fr.st>\n"
 "Language-Team: French <support@ingeniweb.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -487,13 +487,14 @@ msgid "Revert this change and all successive changes"
 msgstr "Revenir à cette précédente version et"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:169
+#, fuzzy
 msgid "show plone skin"
-msgstr ""
+msgstr "afficher dans le style plone"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:172
 #, fuzzy
 msgid "plone"
-msgstr "Note de l'historique:"
+msgstr "plone"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:173
 #, fuzzy
@@ -502,7 +503,7 @@ msgstr "rechercher dans toutes les pages"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:179
 msgid "full"
-msgstr ""
+msgstr "complet"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:180
 #, fuzzy
@@ -512,15 +513,15 @@ msgstr "afficher la dernière modification"
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:186
 #, fuzzy
 msgid "simple"
-msgstr "Fichier"
+msgstr "simple"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:187
 msgid "show only essential features"
-msgstr ""
+msgstr "Afficher uniquement les fonctionnalités essentielles"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:193
 msgid "minimal"
-msgstr ""
+msgstr "minimal"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:507
 #, fuzzy
@@ -528,18 +529,16 @@ msgid "subtopic"
 msgstr "est une sous-rubrique de:"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:512
-#, fuzzy
 msgid "for this page"
-msgstr "créer cette page"
+msgstr "pour cette page"
 
 #. Default: "reparent"
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:520
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:525
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:530
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:535
-#, fuzzy
 msgid "title"
-msgstr "Titre"
+msgstr "titre"
 
 #: src/ZWiki/plugins/tracker/filterissues.pt:12
 #: src/ZWiki/skins/dtmlmessages.pt:30
@@ -651,7 +650,8 @@ msgstr "Statuts :"
 #: src/ZWiki/skins/dtmlmessages.pt:3
 #, fuzzy
 msgid "Enter a search term, click the numbers to the right,"
-msgstr "Entrez un terme de recherche, ou cliquez sur les nombres à droite, ou"
+msgstr ""
+"Entrez un terme de recherche, ou cliquez sur les nombres à droite, ou"
 
 #: src/ZWiki/skins/dtmlmessages.pt:37
 msgid "Submitted by"
@@ -697,13 +697,12 @@ msgid "Id:"
 msgstr "Identifiant"
 
 #: src/ZWiki/skins/dtmlmessages.pt:47
-#, fuzzy
 msgid "Title:"
-msgstr "Titre"
+msgstr "Titre :"
 
 #: src/ZWiki/skins/dtmlmessages.pt:48
 msgid "Template:"
-msgstr ""
+msgstr "Modèle :"
 
 #: src/ZWiki/skins/dtmlmessages.pt:49
 #, fuzzy
@@ -748,7 +747,8 @@ msgstr "NOUVEAU"
 
 #: src/ZWiki/skins/dtmlmessages.pt:59
 msgid "Pages marked (NEW) have been created within the last week"
-msgstr "Les pages marquées (NOUVEAU) ont été créées il y a moins d'une semaine"
+msgstr ""
+"Les pages marquées (NOUVEAU) ont été créées il y a moins d'une semaine"
 
 #: src/ZWiki/skins/dtmlmessages.pt:6
 msgid "search issues"
@@ -800,7 +800,8 @@ msgstr "Concordances dans le texte"
 
 #: src/ZWiki/skins/dtmlmessages.pt:69
 msgid "Thorough (non-catalog) search for text matching"
-msgstr "Recherche complète, sans le catalogue, pour la correspondance de texte"
+msgstr ""
+"Recherche complète, sans le catalogue, pour la correspondance de texte"
 
 #: src/ZWiki/skins/dtmlmessages.pt:7
 msgid "recent"
@@ -1047,21 +1048,20 @@ msgid "Edit history"
 msgstr "Historique complet"
 
 #: src/ZWiki/skins/zwiki/diffform.pt:32
-#, fuzzy
 msgid "Edit:"
-msgstr "éditer"
+msgstr "Éditer :"
 
 #. Default: "<<"
 #: src/ZWiki/skins/zwiki/diffform.pt:34
 #: src/ZWiki/skins/zwiki/diffform.pt:38
 msgid " << "
-msgstr ""
+msgstr " << "
 
 #. Default: ">>"
 #: src/ZWiki/skins/zwiki/diffform.pt:52
 #: src/ZWiki/skins/zwiki/diffform.pt:56
 msgid " >> "
-msgstr ""
+msgstr " >> "
 
 #: src/ZWiki/skins/zwiki/diffform.pt:61
 #, fuzzy
@@ -1083,9 +1083,8 @@ msgid "Time:"
 msgstr "Date"
 
 #: src/ZWiki/skins/zwiki/diffform.pt:90
-#, fuzzy
 msgid "Note:"
-msgstr "Nom :"
+msgstr "Note :"
 
 #: src/ZWiki/skins/zwiki/editform.pt:121
 msgid "toggle source/WYSIWYG mode"
@@ -1510,13 +1509,13 @@ msgstr "options de recherche"
 
 #~ msgid ""
 #~ "You may create a new ZWiki Page object using the form below. You may also "
-#~ "choose to upload an existing html file from your local computer by "
-#~ "clicking the <i>Browse</i> button."
+#~ "choose to upload an existing html file from your local computer by clicking "
+#~ "the <i>Browse</i> button."
 #~ msgstr ""
-#~ "Vous pouvez créer un nouvel object de page ZWiki en utilisant le "
-#~ "formulaire ci-dessous. Vous pouvez aussi choisir de transférer un fichier "
-#~ "html existant, depuis votre ordinateur vers le Wiki, en cliquant sur le "
-#~ "boutton <i>Parcourir</i>."
+#~ "Vous pouvez créer un nouvel object de page ZWiki en utilisant le formulaire "
+#~ "ci-dessous. Vous pouvez aussi choisir de transférer un fichier html "
+#~ "existant, depuis votre ordinateur vers le Wiki, en cliquant sur le boutton "
+#~ "<i>Parcourir</i>."
 
 #~ msgid "Add"
 #~ msgstr "Ajouter"
@@ -1528,8 +1527,7 @@ msgstr "options de recherche"
 #~ msgstr "Rétroliens pour"
 
 #~ msgid "singleton_desc"
-#~ msgstr ""
-#~ "Les singletons sont des pages qui ne sont pas connectées à d'autres."
+#~ msgstr "Les singletons sont des pages qui ne sont pas connectées à d'autres."
 
 #~ msgid "History for"
 #~ msgstr "Historique pour"
@@ -1547,8 +1545,8 @@ msgstr "options de recherche"
 
 #~ msgid "help_wikibody"
 #~ msgstr ""
-#~ "Dans une page Wiki, utilisez des [crochets] pour créer des liens. Quand "
-#~ "vous enregistrerez la page, le nom entre crochets sera suffixé par un "
+#~ "Dans une page Wiki, utilisez des [crochets] pour créer des liens. Quand vous "
+#~ "enregistrerez la page, le nom entre crochets sera suffixé par un "
 #~ "<code>?</code>. Quand vous cliquerez dessus, une nouvelle page sera créée "
 #~ "avec ce nom."
 

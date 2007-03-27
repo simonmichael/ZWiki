@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zwiki\n"
 "POT-Creation-Date: Sat Sep  2 18:10:16 2006\n"
-"PO-Revision-Date: 2006-03-15 19:03+0000\n"
-"Last-Translator: Pablo Puppo <ilpuppo@gmail.com>\n"
+"PO-Revision-Date: 2007-01-06 20:40+0000\n"
+"Last-Translator: Francisco Mañas <dbtoke@gmail.com>\n"
 "Language-Team: spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -12,6 +12,7 @@ msgstr ""
 "Language-name: Spanish\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: zwiki\n"
+"X-Rosetta-Export-Date: 2007-03-26 20:58+0000\n"
 
 #: src/ZWiki/Admin.py:62
 msgid "You are not authorized to upgrade all pages."
@@ -39,7 +40,7 @@ msgid ""
 "Sorry, this wiki doesn't allow anonymous edits. Please configure a username "
 "in options first."
 msgstr ""
-"Disculpa, pero este wiki no admite ediciones anónimas.Por favor primero "
+"Disculpa, pero este wiki no admite ediciones anónimas. Por favor primero "
 "configura un usuario en las opciones."
 
 #: src/ZWiki/Editing.py:327
@@ -82,7 +83,7 @@ msgstr "No estás autorizado a añadir un enlace en esta página ZWiki."
 
 #: src/ZWiki/Editing.py:822
 msgid "There was a problem: %s"
-msgstr ""
+msgstr "Había un problema: %s"
 
 #: src/ZWiki/Editing.py:829
 msgid "banned_links match"
@@ -107,6 +108,9 @@ msgid ""
 "and remove some of the http urls you added, or contact the site "
 "administrator for help."
 msgstr ""
+"la adición de enlaces externos de los usuarios no identificados es "
+"restricto. Por favor respalde y remueva algunas de las urls http que usted "
+"agregó, o contacte con el administrador del sitio para ayuda."
 
 #: src/ZWiki/Editing.py:853
 #, fuzzy
@@ -119,6 +123,9 @@ msgid ""
 "back up and remove some of the http urls you added, or contact the site "
 "administrator for help."
 msgstr ""
+"la adición de enlaces externos es restricto, hasta para los usuarios "
+"identificados. Por favor respalde y remueva algunas de las urls http que "
+"usted agregó, o contacte con el administrador del sitio para ayuda."
 
 #: src/ZWiki/Mail.py:506
 #: src/ZWiki/skins/dtmlmessages.pt:58
@@ -243,7 +250,8 @@ msgstr "Pulsa el botón de refresco de tu navegador"
 
 #: src/ZWiki/Views.py:418
 msgid "Paste in your edits again, being mindful of the latest changes"
-msgstr "Pega en tus ediciones otra vez, presta atención a los últimos cambios"
+msgstr ""
+"Pega en tus ediciones otra vez, presta atención a los últimos cambios"
 
 #: src/ZWiki/Views.py:419
 msgid "Click the Change button again"
@@ -368,7 +376,7 @@ msgstr ""
 
 #: src/ZWiki/Wikis.py:49
 msgid "Unknown wiki type"
-msgstr ""
+msgstr "Tipo de wiki desconocido"
 
 #: src/ZWiki/ZWikiPage.py:675
 msgid "create this page"
@@ -391,7 +399,7 @@ msgstr "por %(editor)s"
 
 #: src/ZWiki/__init__.py:34
 msgid "No need to add a Zwiki Outline Cache"
-msgstr ""
+msgstr "Ninguna necesidad de agregar un caché de contorno a Zwiki"
 
 #: src/ZWiki/__init__.py:35
 msgid ""
@@ -400,6 +408,10 @@ msgid ""
 "        Zwiki will create it for you as needed.\n"
 "        "
 msgstr ""
+"Caché de Contorno de Zwiki aparece en el menú de añadir de ZMI\n"
+"por razones de implementación, pero no debe ser agregado directamente.\n"
+"Zwiki creará para usted según lo necesite.\n"
+"        "
 
 #: src/ZWiki/pagetypes/common.py:253
 msgid "comments"
@@ -630,7 +642,8 @@ msgstr "Estados:"
 #: src/ZWiki/skins/dtmlmessages.pt:3
 #, fuzzy
 msgid "Enter a search term, click the numbers to the right,"
-msgstr "Introduce un término de búsqueda, o pulsa los números a la derecha, o"
+msgstr ""
+"Introduce un término de búsqueda, o pulsa los números a la derecha, o"
 
 #: src/ZWiki/skins/dtmlmessages.pt:37
 msgid "Submitted by"
@@ -745,7 +758,8 @@ msgstr ""
 
 #: src/ZWiki/skins/dtmlmessages.pt:62
 msgid "Tips: A single word works best for matching page names."
-msgstr "Consejos: Una única palabra va mejor para encontrar nombres de página."
+msgstr ""
+"Consejos: Una única palabra va mejor para encontrar nombres de página."
 
 #: src/ZWiki/skins/dtmlmessages.pt:63
 msgid ""
@@ -954,7 +968,7 @@ msgstr "Cambiar padre"
 
 #: src/ZWiki/skins/zwiki/badtemplate.pt:12
 msgid "Bad template"
-msgstr ""
+msgstr "Mala plantilla"
 
 #: src/ZWiki/skins/zwiki/badtemplate.pt:13
 #, fuzzy
@@ -1005,11 +1019,11 @@ msgstr "Contenidos del wiki"
 
 #: src/ZWiki/skins/zwiki/contentspage.pt:16
 msgid "Singletons"
-msgstr ""
+msgstr "Semifallos"
 
 #: src/ZWiki/skins/zwiki/denied.pt:12
 msgid "Not permitted"
-msgstr ""
+msgstr "No permitido"
 
 #: src/ZWiki/skins/zwiki/diffform.pt:24
 #, fuzzy
@@ -1025,13 +1039,13 @@ msgstr "Editar"
 #: src/ZWiki/skins/zwiki/diffform.pt:34
 #: src/ZWiki/skins/zwiki/diffform.pt:38
 msgid " << "
-msgstr ""
+msgstr " << "
 
 #. Default: ">>"
 #: src/ZWiki/skins/zwiki/diffform.pt:52
 #: src/ZWiki/skins/zwiki/diffform.pt:56
 msgid " >> "
-msgstr ""
+msgstr " >> "
 
 #: src/ZWiki/skins/zwiki/diffform.pt:61
 #, fuzzy
@@ -1201,7 +1215,7 @@ msgstr "mostrar página cargada"
 
 #: src/ZWiki/skins/zwiki/links.pt:42
 msgid "uploads"
-msgstr ""
+msgstr "subidas"
 
 #: src/ZWiki/skins/zwiki/links.pt:43
 msgid "show help page"
@@ -1281,7 +1295,8 @@ msgid "page"
 msgstr "creada"
 
 #: src/ZWiki/skins/zwiki/pagemanagementform.pt:40
-msgid "enter a page name and click buttons to the right (mouse over for help)"
+msgid ""
+"enter a page name and click buttons to the right (mouse over for help)"
 msgstr ""
 "introduce un nombre de página y pulsa los botones de la derecha (pasa sobre "
 "ellos para ayuda)"
@@ -1306,7 +1321,7 @@ msgstr "cambiar nombre,"
 
 #: src/ZWiki/skins/zwiki/pagemanagementform.pt:55
 msgid "delete!"
-msgstr ""
+msgstr "eliminar!"
 
 #: src/ZWiki/skins/zwiki/pagemanagementform.pt:55
 msgid ""
@@ -1315,7 +1330,8 @@ msgstr ""
 "borrar esta página y redirigir los enlaces a la página introducida, si la hay"
 
 #: src/ZWiki/skins/zwiki/pagemanagementform.pt:60
-msgid "create a page with the name you have entered, as a subtopic of this one"
+msgid ""
+"create a page with the name you have entered, as a subtopic of this one"
 msgstr "crear una página con el nombre introducido, como subtema de ésta"
 
 #: src/ZWiki/skins/zwiki/pagemanagementform.pt:60
@@ -1406,6 +1422,8 @@ msgstr ""
 #: src/ZWiki/skins/zwiki/subscribeform.pt:53
 msgid "Email will go to the address you have configured in site preferences."
 msgstr ""
+"El email sera enviado a la dirección que usted ha configurado en las "
+"preferencias del sitio"
 
 #: src/ZWiki/skins/zwiki/subscribeform.pt:58
 msgid "Your email address"
@@ -1506,8 +1524,8 @@ msgstr "opciones de búsqueda"
 
 #~ msgid "help_shortname"
 #~ msgstr ""
-#~ "Nota: Renombrar una página en un wiki grande puede ser lento. Otras "
-#~ "páginas serán modificadas si es posible."
+#~ "Nota: Renombrar una página en un wiki grande puede ser lento. Otras páginas "
+#~ "serán modificadas si es posible."
 
 #~ msgid "label_body_text"
 #~ msgstr "Texto"
@@ -1720,8 +1738,7 @@ msgstr "opciones de búsqueda"
 #~ msgstr "No estás autorizado a añadir páginas ZWiki aquí."
 
 #~ msgid "You are not authorized to set this ZWiki Page's regulations."
-#~ msgstr ""
-#~ "No estás autorizado a cambiar las regulaciones de esta página Zwiki."
+#~ msgstr "No estás autorizado a cambiar las regulaciones de esta página Zwiki."
 
 #~ msgid "Add a ZWiki web.."
 #~ msgstr "Añadir una web ZWiki.."

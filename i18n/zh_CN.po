@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-45-0\n"
 "POT-Creation-Date: Sat Sep  2 18:10:16 2006\n"
-"PO-Revision-Date: 2006-03-21 16:22+0000\n"
-"Last-Translator: feilfly <feilfly@gmail.com>\n"
+"PO-Revision-Date: 2006-10-07 15:00+0000\n"
+"Last-Translator: nwind <ourseablue@163.com>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -80,7 +80,7 @@ msgstr "您没有权力在此页增加连接。"
 
 #: src/ZWiki/Editing.py:822
 msgid "There was a problem: %s"
-msgstr ""
+msgstr "这曾是一个问题:%s"
 
 #: src/ZWiki/Editing.py:829
 msgid "banned_links match"
@@ -95,9 +95,7 @@ msgstr "发生一个问题: %s。请联系管理者，协助处理这问题。"
 
 #: src/ZWiki/Editing.py:841
 msgid "exceeded max_anonymous_links"
-msgstr ""
-"您所编辑的发生一个问题：它包含一个被阻挡的连结（网址）样式。请连络网站管理"
-"者，以取得适当协助。"
+msgstr "您所编辑的发生一个问题：它包含一个被阻挡的连结（网址）样式。请连络网站管理者，以取得适当协助。"
 
 #: src/ZWiki/Editing.py:842
 msgid ""
@@ -109,9 +107,7 @@ msgstr ""
 #: src/ZWiki/Editing.py:853
 #, fuzzy
 msgid "exceeded max_identified_links"
-msgstr ""
-"您所编辑的发生一个问题：它包含一个被阻挡的连结（网址）样式。请连络网站管理"
-"者，以取得适当协助。"
+msgstr "您所编辑的发生一个问题：它包含一个被阻挡的连结（网址）样式。请连络网站管理者，以取得适当协助。"
 
 #: src/ZWiki/Editing.py:854
 msgid ""
@@ -472,7 +468,7 @@ msgstr "回溯到这个版本及相关变更"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:169
 msgid "show plone skin"
-msgstr ""
+msgstr "显示Plone外观"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:172
 #, fuzzy
@@ -486,7 +482,7 @@ msgstr "搜寻所有页面"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:179
 msgid "full"
-msgstr ""
+msgstr "完全"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:180
 #, fuzzy
@@ -500,11 +496,11 @@ msgstr "档案"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:187
 msgid "show only essential features"
-msgstr ""
+msgstr "只显示必要功能"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:193
 msgid "minimal"
-msgstr ""
+msgstr "极简"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/wikipage.pt:507
 #, fuzzy
@@ -725,7 +721,7 @@ msgstr "新增快纪"
 
 #: src/ZWiki/skins/dtmlmessages.pt:5
 msgid "browse open issues"
-msgstr ""
+msgstr "打开浏览器出错"
 
 #: src/ZWiki/skins/dtmlmessages.pt:50
 msgid "Pages changed in the last"
@@ -974,7 +970,7 @@ msgstr ""
 
 #: src/ZWiki/skins/zwiki/backlinks.pt:88
 msgid "Enter a page name here and click the button."
-msgstr ""
+msgstr "输入页面名然后点击按钮"
 
 #: src/ZWiki/skins/zwiki/backlinks.pt:91
 msgid ""
@@ -996,9 +992,8 @@ msgid ""
 "obscuring the template. Or the template may be missing on the filesystem (an "
 "incomplete Zwiki installation)."
 msgstr ""
-"这 Wiki 的风格（skin）样板有些问题。也许有页面或其它非 ZPT / 非 DTML 方法的对"
-"象有相同 ID，隐藏在样板里头。也或许是样板在档案系统中遗漏了（安装 Zwiki 不完"
-"全造成的）。"
+"这 Wiki 的风格（skin）样板有些问题。也许有页面或其它非 ZPT / 非 DTML 方法的对象有相同 "
+"ID，隐藏在样板里头。也或许是样板在档案系统中遗漏了（安装 Zwiki 不完全造成的）。"
 
 #: src/ZWiki/skins/zwiki/commentform.pt:21
 msgid "subject"
@@ -1014,8 +1009,7 @@ msgstr "回复"
 
 #: src/ZWiki/skins/zwiki/commentform.pt:36
 msgid "to comment (and cc any subscribers) enter text here and click add"
-msgstr ""
-"想写留言（并且给所有订阅者邮件复本）请在这里输入文字然后点选 新增（add）按钮"
+msgstr "想写留言（并且给所有订阅者邮件复本）请在这里输入文字然后点选 新增（add）按钮"
 
 #: src/ZWiki/skins/zwiki/commentform.pt:56
 msgid "${nb} subscribers"
