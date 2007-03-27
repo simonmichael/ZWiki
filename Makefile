@@ -74,7 +74,7 @@ pot:
 	echo '<div i18n:domain="zwiki">' >skins/dtmlmessages.pt # dtml extraction hack
 	find plugins skins wikis -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt
 	echo '</div>' >>skins/dtmlmessages.pt
-	$(I18NEXTRACT) -d zwiki -p . -o ./i18n -x _darcs -x releases -x misc -x MYNOTES
+	$(I18NEXTRACT) -d zwiki -p . -o ./i18n -x _darcs -x releases -x misc -x .NOTES -x tichu -x nautica
 	tail +12 i18n/zwiki-manual.pot >>i18n/zwiki.pot
 	python -c \
 	   "import re; \
@@ -92,8 +92,8 @@ pot:
 po:
 	cd i18n; \
 	for L in $(LANGUAGES); do \
-	 msgmerge -U $$L.po zwiki.pot; \
-	 msgmerge -U plone-$$L.po zwiki-plone.pot; \
+	 msgmerge -U --no-wrap $$L.po zwiki.pot; \
+	 msgmerge -U --no-wrap plone-$$L.po zwiki-plone.pot; \
 	 done
 
 # PTS auto-generates these, this is here just for sanity checking and stats
@@ -241,7 +241,7 @@ tags:
 	  -o -name .old     -prune -type f \
 	  -o -name doxygen -prune -type f \
 	  -o -name .doxygen -prune -type f \
-	  -o -name NOTES     -prune -type f \
+	  -o -name .NOTES     -prune -type f \
 	  | xargs etags
 
 zopetags:
