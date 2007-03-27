@@ -18,14 +18,15 @@ skins, and more.
 Upgrade notes
 
   * The standard issuetracker and filterissues pages now support sorting
-    on issue name and reverse sorting (#14). For this to work, the catalog
-    needs to be extended. Be sure to visit SOMEPAGE/upgradeAll and
-    SOMEPAGE/setupTracker (as manager), or both pages will break.
+    on issue name and reverse sorting (#14). To enable sorting by name,
+    visit SOMEPAGE/setupTracker (as manager) to add a required catalog
+    field.
 
   * If you have customized IssueTracker and/or FilterIssues pages, you
-    might want to replace them with the standard pages. To do this,
-    carefully review the changes you made. Make backup copies if you
-    wish. Then, delete both pages, and visit somepage/setupTracker?pages=1
+    might want to replace them with the latest code. To do this, review
+    and back up the changes you made. Then delete both pages, reinstall
+    them with SOMEPAGE/setupTracker?pages=1 (as manager), and re-apply
+    your customizations.
   
 Installing
 

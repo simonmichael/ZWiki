@@ -248,10 +248,9 @@ class PluginTracker:
                            sendmail=sendmail)
         if name:
             issue = self.pageWithName(pageid)
-	    issue.manage_addProperty('category','issue_categories','selection')
+            issue.manage_addProperty('category','issue_categories','selection')
             issue.manage_addProperty('severity','issue_severities','selection')
             issue.manage_addProperty('status','issue_statuses','selection')
-            issue.manage_addProperty('issuename',self.issueNameFrom(pageid),'string')
             issue.manage_changeProperties(title=pageid,
                                           category=category,
                                           severity=severity,
@@ -333,8 +332,6 @@ class PluginTracker:
                     raise 'Unauthorized', (_('You are not authorized to rename this ZWiki Page.'))
                 self.rename(newpagename, updatebacklinks=1, sendmail=0,
                             REQUEST=REQUEST)
-
-		self.manage_changeProperties(issuename=self.issueNameFrom(newpagename))
  
         if category:
             old = getattr(self,'category','')
@@ -527,7 +524,7 @@ class PluginTracker:
             'severity_index',
             'status',
             'status_index',
-	    'issuename']
+            'issueName']
         KeywordIndexes = [
             ]
         DateIndexes = [
@@ -629,10 +626,6 @@ class PluginTracker:
                     self.manage_addProperty(prop,values,'selection')
                     if default: setattr(self,prop,default)
                     changed = 1
-	    if not 'issuename' in existingprops:
-	       self.manage_addProperty('issuename',self.issueNameFrom(self.title),'string')
-	       changed = 1
-
 
         return changed
 

@@ -228,11 +228,15 @@ from non-manager users if you are security conscious.
          </dtml-let>
        </td>
        <td align=left valign=top>
-         <dtml-let bold="sort_on=='issuename'">
-         <dtml-var "bold and '<b>' or ''">
-         <a href="&dtml-URL;?sort_on=issuename&dtml-query;&dtml-order;&dtml-scrollto;"><dtml-translate domain=zwiki>name</dtml-translate></a>
-         <dtml-var "bold and '</b>' or ''">
-         </dtml-let>
+         <dtml-if "hasCatalogIndexesMetadata((['issueName'],[]))">
+           <dtml-let bold="sort_on=='issueName'">
+           <dtml-var "bold and '<b>' or ''">
+           <a href="&dtml-URL;?sort_on=issueName&dtml-query;&dtml-order;&dtml-scrollto;"><dtml-translate domain=zwiki>name</dtml-translate></a>
+           <dtml-var "bold and '</b>' or ''">
+           </dtml-let>
+         <dtml-else>
+           <span style="font-size:small; font-style:italic; color: gray">visit /setupTracker to sort by name</span>
+         </dtml-if>
        </td>
        <td align=left valign=top width="1%">
          <dtml-let bold="sort_on=='category_index'">
