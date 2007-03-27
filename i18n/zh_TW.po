@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ZWiki-0-45-0\n"
-"POT-Creation-Date: Sat Sep  2 18:10:16 2006\n"
+"POT-Creation-Date: Tue Mar 27 14:50:46 2007\n"
 "PO-Revision-Date: 2006-09-04 01:45+0000\n"
 "Last-Translator: Simon Michael <simon@joyful.com>\n"
 "Language-Team: <zwiki@zwiki.org>\n"
@@ -14,49 +14,41 @@ msgstr ""
 "Preferred-encodings: utf-8\n"
 "Domain: zwiki\n"
 
-#: src/ZWiki/Admin.py:62
+#: src/ZWiki/Admin.py:58
 msgid "You are not authorized to upgrade all pages."
 msgstr "您沒有權力升級所有頁面。"
 
-#: src/ZWiki/Admin.py:63
+#: src/ZWiki/Admin.py:59
 msgid "(folder -> Manage properties)"
 msgstr "（目錄 -> 管理性質）"
 
-#: src/ZWiki/Diff.py:174
+#: src/ZWiki/Diff.py:179
 #, fuzzy
 msgid "You are not authorized to reparent this ZWiki Page."
 msgstr "您沒有權力刪除此頁。"
 
-#: src/ZWiki/Diff.py:180
-#: src/ZWiki/plugins/tracker/tracker.py:332
+#: src/ZWiki/Diff.py:185 src/ZWiki/plugins/tracker/tracker.py:333
 #, fuzzy
 msgid "You are not authorized to rename this ZWiki Page."
 msgstr "您沒有權力刪除此頁。"
 
-#: src/ZWiki/Editing.py:156 src/ZWiki/Editing.py:294
-#: src/ZWiki/Views.py:332
-#: src/ZWiki/Views.py:435
-#: src/ZWiki/plugins/tracker/tracker.py:321
-msgid ""
-"Sorry, this wiki doesn't allow anonymous edits. Please configure a username "
-"in options first."
+#: src/ZWiki/Editing.py:156 src/ZWiki/Editing.py:294 src/ZWiki/Views.py:336
+#: src/ZWiki/Views.py:439 src/ZWiki/plugins/tracker/tracker.py:322
+msgid "Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."
 msgstr ""
 
 #: src/ZWiki/Editing.py:327
-msgid ""
-"You are not authorized to reparent or change subtopics links on this ZWiki "
-"Page."
+msgid "You are not authorized to reparent or change subtopics links on this ZWiki Page."
 msgstr "您沒有權力在這頁更動父頁或子主題連結。"
 
 #: src/ZWiki/Editing.py:349
 msgid "You are not authorized to change this ZWiki Page's type."
 msgstr "您沒有權力變更頁面型態。"
 
-#: src/ZWiki/Editing.py:383
-#: src/ZWiki/Editing.py:410
-#: src/ZWiki/plugins/tracker/tracker.py:340
-#: src/ZWiki/plugins/tracker/tracker.py:347
-#: src/ZWiki/plugins/tracker/tracker.py:354
+#: src/ZWiki/Editing.py:383 src/ZWiki/Editing.py:410
+#: src/ZWiki/plugins/tracker/tracker.py:344
+#: src/ZWiki/plugins/tracker/tracker.py:351
+#: src/ZWiki/plugins/tracker/tracker.py:358
 msgid "You are not authorized to edit this ZWiki Page."
 msgstr "您沒有權力修改此頁。"
 
@@ -65,8 +57,7 @@ msgid "You are not authorized to delete this ZWiki Page."
 msgstr "您沒有權力刪除此頁。"
 
 #: src/ZWiki/Editing.py:563
-msgid ""
-"This page was renamed to %s. You can delete this one if no longer needed.\n"
+msgid "This page was renamed to %s. You can delete this one if no longer needed.\n"
 msgstr "這頁已被改名為 %s。如果此頁不需要，您可以刪除。\n"
 
 #: src/ZWiki/Editing.py:659
@@ -87,9 +78,7 @@ msgstr "發現被拒絕的連結"
 
 #: src/ZWiki/Editing.py:830
 #, fuzzy
-msgid ""
-"your edit contained a banned link pattern. Please contact the site "
-"administrator for help."
+msgid "your edit contained a banned link pattern. Please contact the site administrator for help."
 msgstr "發生一個問題: %s。請聯繫管理者，協助處理這問題。"
 
 #: src/ZWiki/Editing.py:841
@@ -97,10 +86,7 @@ msgid "exceeded max_anonymous_links"
 msgstr "您所編輯的發生一個問題：它包含一個被阻擋的連結（網址）樣式。請連絡網站管理者，以取得適當協助。"
 
 #: src/ZWiki/Editing.py:842
-msgid ""
-"adding of external links by unidentified users is restricted. Please back up "
-"and remove some of the http urls you added, or contact the site "
-"administrator for help."
+msgid "adding of external links by unidentified users is restricted. Please back up and remove some of the http urls you added, or contact the site administrator for help."
 msgstr ""
 
 #: src/ZWiki/Editing.py:853
@@ -109,87 +95,86 @@ msgid "exceeded max_identified_links"
 msgstr "您所編輯的發生一個問題：它包含一個被阻擋的連結（網址）樣式。請連絡網站管理者，以取得適當協助。"
 
 #: src/ZWiki/Editing.py:854
-msgid ""
-"adding of external links is restricted, even for identified users. Please "
-"back up and remove some of the http urls you added, or contact the site "
-"administrator for help."
+msgid "adding of external links is restricted, even for identified users. Please back up and remove some of the http urls you added, or contact the site administrator for help."
 msgstr ""
 
-#: src/ZWiki/Mail.py:506
-#: src/ZWiki/skins/dtmlmessages.pt:58
+#: src/ZWiki/Mail.py:506 src/ZWiki/skins/dtmlmessages.pt:60
 msgid "anonymous"
 msgstr "訪客"
 
-#: src/ZWiki/OutlineSupport.py:843
-#: src/ZWiki/skins/zwiki/links.pt:56
+#: src/ZWiki/OutlineSupport.py:378
+msgid "Sorry, this wiki doesn't allow anonymous reparenting. Please configure a username in options first."
+msgstr ""
+
+#: src/ZWiki/OutlineSupport.py:878 src/ZWiki/skins/zwiki/links.pt:56
 msgid "which pages link to this one ?"
 msgstr "那個頁面連結到這一頁？"
 
-#: src/ZWiki/OutlineSupport.py:851
+#: src/ZWiki/OutlineSupport.py:886
 msgid "You are here"
 msgstr "您現在位置"
 
-#: src/ZWiki/Utils.py:465
+#: src/ZWiki/Utils.py:487
 msgid "years"
 msgstr "年"
 
-#: src/ZWiki/Utils.py:465
+#: src/ZWiki/Utils.py:487
 msgid "year"
 msgstr "年"
 
-#: src/ZWiki/Utils.py:467
+#: src/ZWiki/Utils.py:489
 msgid "month"
 msgstr "月"
 
-#: src/ZWiki/Utils.py:467
+#: src/ZWiki/Utils.py:489
 msgid "months"
 msgstr "月"
 
-#: src/ZWiki/Utils.py:469
+#: src/ZWiki/Utils.py:491
 msgid "weeks"
 msgstr "週"
 
-#: src/ZWiki/Utils.py:469
+#: src/ZWiki/Utils.py:491
 msgid "week"
 msgstr "週"
 
-#: src/ZWiki/Utils.py:471
+#: src/ZWiki/Utils.py:493
 msgid "day"
 msgstr "天"
 
-#: src/ZWiki/Utils.py:471
+#: src/ZWiki/Utils.py:493
 msgid "days"
 msgstr "天"
 
-#: src/ZWiki/Utils.py:473
+#: src/ZWiki/Utils.py:495
 msgid "hours"
 msgstr "小時"
 
-#: src/ZWiki/Utils.py:473
+#: src/ZWiki/Utils.py:495
 msgid "hour"
 msgstr "小時"
 
-#: src/ZWiki/Utils.py:475
+#: src/ZWiki/Utils.py:497
 msgid "minute"
 msgstr "分"
 
-#: src/ZWiki/Utils.py:475
+#: src/ZWiki/Utils.py:497
 msgid "minutes"
 msgstr "分"
 
-#: src/ZWiki/Utils.py:477
+#: src/ZWiki/Utils.py:499
 msgid "second"
 msgstr "秒"
 
-#: src/ZWiki/Utils.py:477
+#: src/ZWiki/Utils.py:499
 msgid "seconds"
 msgstr "秒"
 
-#: src/ZWiki/Views.py:346
+#: src/ZWiki/Views.py:350
 msgid "Page is locked"
 msgstr "頁面被鎖"
 
-#: src/ZWiki/Views.py:357
+#: src/ZWiki/Views.py:361
 msgid ""
 "\n"
 "            This page has a webDAV lock. Someone is probably editing it\n"
@@ -206,61 +191,58 @@ msgstr ""
 "            來，以文字的方式拷貝，好做為重新修改的參考。\n"
 "            "
 
-#: src/ZWiki/Views.py:364
+#: src/ZWiki/Views.py:368
 msgid "To discard your changes and try again, click OK."
 msgstr "放棄您變更的內容，並且再試一次，點選確認按鈕（OK）。"
 
-#: src/ZWiki/Views.py:393
+#: src/ZWiki/Views.py:397
 msgid "Edit conflict"
 msgstr "修改衝突"
 
-#: src/ZWiki/Views.py:413
+#: src/ZWiki/Views.py:417
 msgid "Someone else has saved this page while you were editing"
 msgstr "當您修改時，已經有人存入新的頁面"
 
-#: src/ZWiki/Views.py:414
+#: src/ZWiki/Views.py:418
 msgid "To resolve the conflict, do this"
 msgstr "要解決衝突問題，請按以下步驟"
 
-#: src/ZWiki/Views.py:415
+#: src/ZWiki/Views.py:419
 msgid "Click your browser's back button"
 msgstr "點選您瀏覽器的上ㄧ頁按鈕（Back）"
 
-#: src/ZWiki/Views.py:416
+#: src/ZWiki/Views.py:420
 msgid "Copy your recent edits to the clipboard"
 msgstr "複製您最近修改的內容到剪貼簿"
 
-#: src/ZWiki/Views.py:417
+#: src/ZWiki/Views.py:421
 msgid "Click your browser's refresh button"
 msgstr "點選您瀏覽器更新頁面按鈕（Refresh）"
 
-#: src/ZWiki/Views.py:418
+#: src/ZWiki/Views.py:422
 msgid "Paste in your edits again, being mindful of the latest changes"
 msgstr "貼上您所修改的內容，在最新變更的內容裡頭"
 
-#: src/ZWiki/Views.py:419
+#: src/ZWiki/Views.py:423
 msgid "Click the Change button again"
 msgstr "再按一次變更按鈕（Change）"
 
-#: src/ZWiki/Views.py:420
-#: src/ZWiki/skins/zwiki/editform.pt:163
+#: src/ZWiki/Views.py:424 src/ZWiki/skins/zwiki/editform.pt:163
 msgid "or"
 msgstr "或"
 
-#: src/ZWiki/Views.py:421
+#: src/ZWiki/Views.py:425
 msgid "To discard your changes and start again, click OK"
 msgstr "放棄所有您變更的內容，並重新再讀一次，點選確認按鈕（OK）"
 
-#: src/ZWiki/Views.py:490
+#: src/ZWiki/Views.py:501
 msgid ""
 "\n"
-"        Access keys can be accessed in mozilla-based browsers by pressing "
-"alt-<key>\n"
+"        Access keys can be accessed in mozilla-based browsers by pressing alt-<key>\n"
 "        IE users: must also press enter\n"
 "        Mac users: command-<key>\n"
 "        Opera users: shift-escape-<key>\n"
-"        These won't work here, back up to the previous page to try them "
-"out.\n"
+"        These won't work here, back up to the previous page to try them out.\n"
 "\n"
 "        0    show these access key assignments\n"
 "\n"
@@ -276,10 +258,8 @@ msgid ""
 "        s    go to search field\n"
 "        \n"
 "        page functions:\n"
-"        +    (in a plone/cmf site with skin switching set up) use zwiki's "
-"plone/cmf skin\n"
-"        -    (in a plone/cmf site with skin switching set up) use zwiki's "
-"standard skin\n"
+"        +    (in a plone/cmf site with skin switching set up) use zwiki's plone/cmf skin\n"
+"        -    (in a plone/cmf site with skin switching set up) use zwiki's standard skin\n"
 "        v    view page\n"
 "        m    mail subscription\n"
 "        b    show backlinks (links to this page)\n"
@@ -355,34 +335,31 @@ msgstr ""
 "        p    前一修改\n"
 "        "
 
-#: src/ZWiki/Wikis.py:49
-msgid "Unknown wiki type"
-msgstr ""
-
-#: src/ZWiki/ZWikiPage.py:675
+#: src/ZWiki/ZWikiPage.py:744
 msgid "create this page"
 msgstr "建立頁面"
 
-#: src/ZWiki/ZWikiPage.py:798
-#: src/ZWiki/ZWikiPage.py:814
-#: src/ZWiki/ZWikiPage.py:817
+#: src/ZWiki/ZWikiPage.py:872 src/ZWiki/ZWikiPage.py:887
 msgid "last edited %(interval)s ago"
 msgstr "%(interval)s 前修改"
 
-#: src/ZWiki/ZWikiPage.py:809
+#: src/ZWiki/ZWikiPage.py:882
 msgid "show last edit"
 msgstr "顯示最新修改"
 
-#: src/ZWiki/ZWikiPage.py:826
-#: src/ZWiki/ZWikiPage.py:828
+#: src/ZWiki/ZWikiPage.py:897 src/ZWiki/ZWikiPage.py:899
 msgid "by %(editor)s"
 msgstr "作者 %(editor)s"
 
-#: src/ZWiki/__init__.py:34
+#: src/ZWiki/__init__.py:200
+msgid "Unknown wiki type"
+msgstr ""
+
+#: src/ZWiki/__init__.py:39
 msgid "No need to add a Zwiki Outline Cache"
 msgstr "不需要新增 Zwiki 大綱快取"
 
-#: src/ZWiki/__init__.py:35
+#: src/ZWiki/__init__.py:40
 msgid ""
 "Zwiki Outline Cache appears in the ZMI Add menu\n"
 "        for implementation reasons, but should not be added directly.\n"
@@ -397,6 +374,10 @@ msgstr ""
 #: src/ZWiki/pagetypes/common.py:253
 msgid "comments"
 msgstr "留言"
+
+#: src/ZWiki/pagetypes/html.py:50 src/ZWiki/pagetypes/rst.py:85
+msgid "reply"
+msgstr "回覆"
 
 #: src/ZWiki/pagetypes/moin.py:1990
 msgid "Expected \"=\" to follow \"%(token)s\""
@@ -414,8 +395,7 @@ msgstr "建立新圖片 \"%(filename)s\""
 msgid "Upload new attachment \"%(filename)s\""
 msgstr "上傳新附件 \"%(filename)s\""
 
-#: src/ZWiki/pagetypes/moin.py:335
-#: src/ZWiki/pagetypes/moin.py:345
+#: src/ZWiki/pagetypes/moin.py:335 src/ZWiki/pagetypes/moin.py:345
 msgid "Edit drawing %(filename)s"
 msgstr "修改圖片 \"%(filename)s\""
 
@@ -427,18 +407,13 @@ msgstr "期待在 \"%(key)s\" 之後的 \"%(wanted)s\" 能夠取得 \"%(token)s\
 msgid "Expected an integer \"%(key)s\" before \"%(token)s\""
 msgstr "期待在 \"%(token)s\" 之前的 \"%(key)s\" 為整數值"
 
-#: src/ZWiki/pagetypes/moin.py:745
-#: src/ZWiki/pagetypes/moin.py:754
+#: src/ZWiki/pagetypes/moin.py:745 src/ZWiki/pagetypes/moin.py:754
 msgid "Expected an integer \"%(arg)s\" after \"%(key)s\""
 msgstr "期待在 \"%(key)s\" 之後的 \"%(arg)s\" 為整數值"
 
 #: src/ZWiki/pagetypes/moin.py:774
 msgid "Expected a color value \"%(arg)s\" after \"%(key)s\""
 msgstr "期待在 \"%(key)s\" 之後的 \"%(args)s\" 為色彩指定值"
-
-#: src/ZWiki/pagetypes/rst.py:85
-msgid "reply"
-msgstr "回覆"
 
 #: src/ZWiki/plugins/latexwiki/wikis/latexwiki/diffform.pt:127
 #: src/ZWiki/plugins/mathaction/wikis/mathaction/old-diffform.pt:127
@@ -521,7 +496,7 @@ msgid "title"
 msgstr "標題"
 
 #: src/ZWiki/plugins/tracker/filterissues.pt:12
-#: src/ZWiki/skins/dtmlmessages.pt:30
+#: src/ZWiki/skins/dtmlmessages.pt:31
 msgid "Filter issues"
 msgstr "過濾事例"
 
@@ -533,65 +508,60 @@ msgstr "事例瀏覽"
 msgid "Issue tracker"
 msgstr "事例追蹤"
 
-#: src/ZWiki/plugins/tracker/tracker.py:361
+#: src/ZWiki/plugins/tracker/tracker.py:365
 #, fuzzy
 msgid "You are not authorized to comment on this ZWiki Page."
 msgstr "您沒有權力修改此頁。"
 
-#: src/ZWiki/skins/dtmlmessages.pt:10
-#: src/ZWiki/skins/dtmlmessages.pt:32
+#: src/ZWiki/skins/dtmlmessages.pt:10 src/ZWiki/skins/dtmlmessages.pt:33
+#, fuzzy
+msgid "name"
+msgstr "名稱,"
+
+#: src/ZWiki/skins/dtmlmessages.pt:11 src/ZWiki/skins/dtmlmessages.pt:34
 #, fuzzy
 msgid "category"
 msgstr "分類"
 
-#: src/ZWiki/skins/dtmlmessages.pt:11
-#: src/ZWiki/skins/dtmlmessages.pt:33
+#: src/ZWiki/skins/dtmlmessages.pt:12 src/ZWiki/skins/dtmlmessages.pt:35
 #, fuzzy
 msgid "severity"
 msgstr "程度"
 
-#: src/ZWiki/skins/dtmlmessages.pt:12
-#: src/ZWiki/skins/dtmlmessages.pt:34
+#: src/ZWiki/skins/dtmlmessages.pt:13 src/ZWiki/skins/dtmlmessages.pt:36
 #, fuzzy
 msgid "status"
 msgstr "狀態"
 
-#: src/ZWiki/skins/dtmlmessages.pt:13
-#: src/ZWiki/skins/dtmlmessages.pt:35
+#: src/ZWiki/skins/dtmlmessages.pt:14 src/ZWiki/skins/dtmlmessages.pt:37
 #, fuzzy
 msgid "age"
 msgstr "頁面"
 
-#: src/ZWiki/skins/dtmlmessages.pt:14
-#: src/ZWiki/skins/dtmlmessages.pt:36
+#: src/ZWiki/skins/dtmlmessages.pt:15 src/ZWiki/skins/dtmlmessages.pt:38
 #, fuzzy
 msgid "modified"
 msgstr "變更"
 
-#: src/ZWiki/skins/dtmlmessages.pt:15
+#: src/ZWiki/skins/dtmlmessages.pt:16
 #, fuzzy
 msgid "Add a new issue:"
 msgstr "新增一則事例:"
 
-#: src/ZWiki/skins/dtmlmessages.pt:16
+#: src/ZWiki/skins/dtmlmessages.pt:17
 #, fuzzy
 msgid "Name:"
 msgstr "名稱,"
 
-#: src/ZWiki/skins/dtmlmessages.pt:17
+#: src/ZWiki/skins/dtmlmessages.pt:18
 #, fuzzy
 msgid "Category:"
 msgstr "分類:"
 
-#: src/ZWiki/skins/dtmlmessages.pt:18
+#: src/ZWiki/skins/dtmlmessages.pt:19
 #, fuzzy
 msgid "Severity:"
 msgstr "程度:"
-
-#: src/ZWiki/skins/dtmlmessages.pt:19
-#, fuzzy
-msgid "Status:"
-msgstr "狀態:"
 
 #: src/ZWiki/skins/dtmlmessages.pt:2
 #, fuzzy
@@ -600,73 +570,68 @@ msgstr "建立這快紀頁面"
 
 #: src/ZWiki/skins/dtmlmessages.pt:20
 #, fuzzy
+msgid "Status:"
+msgstr "狀態:"
+
+#: src/ZWiki/skins/dtmlmessages.pt:21
+#, fuzzy
 msgid "Details:"
 msgstr "細節:"
 
-#: src/ZWiki/skins/dtmlmessages.pt:21
+#: src/ZWiki/skins/dtmlmessages.pt:22
 #, fuzzy
 msgid "add issue"
 msgstr "事例"
 
-#: src/ZWiki/skins/dtmlmessages.pt:22
+#: src/ZWiki/skins/dtmlmessages.pt:23
 #, fuzzy
 msgid "More advanced"
 msgstr "更多進階的"
 
-#: src/ZWiki/skins/dtmlmessages.pt:23
+#: src/ZWiki/skins/dtmlmessages.pt:24
 #, fuzzy
 msgid "issue tracker"
 msgstr "事例追蹤"
 
-#: src/ZWiki/skins/dtmlmessages.pt:24
+#: src/ZWiki/skins/dtmlmessages.pt:25
 #, fuzzy
 msgid "search options"
 msgstr "儲存設定"
 
-#: src/ZWiki/skins/dtmlmessages.pt:25
+#: src/ZWiki/skins/dtmlmessages.pt:26
 #, fuzzy
 msgid "Name contains any of:"
 msgstr "頁面名稱包含任意的:"
 
-#: src/ZWiki/skins/dtmlmessages.pt:26
+#: src/ZWiki/skins/dtmlmessages.pt:27
 #, fuzzy
 msgid "Page text contains any of:"
 msgstr "頁面文字包含任意的:"
 
-#: src/ZWiki/skins/dtmlmessages.pt:27
+#: src/ZWiki/skins/dtmlmessages.pt:28
 #, fuzzy
 msgid "Categories:"
 msgstr "分類:"
 
-#: src/ZWiki/skins/dtmlmessages.pt:28
+#: src/ZWiki/skins/dtmlmessages.pt:29
 #, fuzzy
 msgid "Severities:"
 msgstr "程度:"
-
-#: src/ZWiki/skins/dtmlmessages.pt:29
-#, fuzzy
-msgid "Statuses:"
-msgstr "狀態:"
 
 #: src/ZWiki/skins/dtmlmessages.pt:3
 #, fuzzy
 msgid "Enter a search term, click the numbers to the right,"
 msgstr "輸入搜尋的字詞, 或點選右邊的數字, 或"
 
-#: src/ZWiki/skins/dtmlmessages.pt:37
+#: src/ZWiki/skins/dtmlmessages.pt:30
 #, fuzzy
-msgid "Submitted by"
-msgstr "提出者"
-
-#: src/ZWiki/skins/dtmlmessages.pt:38
-#, fuzzy
-msgid "Name"
-msgstr "名稱,"
+msgid "Statuses:"
+msgstr "狀態:"
 
 #: src/ZWiki/skins/dtmlmessages.pt:39
 #, fuzzy
-msgid "Category"
-msgstr "分類"
+msgid "Submitted by"
+msgstr "提出者"
 
 #: src/ZWiki/skins/dtmlmessages.pt:4
 #, fuzzy
@@ -675,132 +640,130 @@ msgstr "過濾事例"
 
 #: src/ZWiki/skins/dtmlmessages.pt:40
 #, fuzzy
+msgid "Name"
+msgstr "名稱,"
+
+#: src/ZWiki/skins/dtmlmessages.pt:41
+#, fuzzy
+msgid "Category"
+msgstr "分類"
+
+#: src/ZWiki/skins/dtmlmessages.pt:42
+#, fuzzy
 msgid "Severity"
 msgstr "程度"
 
-#: src/ZWiki/skins/dtmlmessages.pt:41
+#: src/ZWiki/skins/dtmlmessages.pt:43
 #, fuzzy
 msgid "Status"
 msgstr "狀態"
 
-#: src/ZWiki/skins/dtmlmessages.pt:42
+#: src/ZWiki/skins/dtmlmessages.pt:44
 #, fuzzy
 msgid "Optional subject"
 msgstr "變更註記（選項）"
 
-#: src/ZWiki/skins/dtmlmessages.pt:43
+#: src/ZWiki/skins/dtmlmessages.pt:45
 #, fuzzy
 msgid "Optional comment"
 msgstr "變更註記（選項）"
 
-#: src/ZWiki/skins/dtmlmessages.pt:44
-#: src/ZWiki/skins/dtmlmessages.pt:45
+#: src/ZWiki/skins/dtmlmessages.pt:46 src/ZWiki/skins/dtmlmessages.pt:47
 #, fuzzy
 msgid "Add ZWiki"
 msgstr "新增快紀"
 
-#: src/ZWiki/skins/dtmlmessages.pt:46
+#: src/ZWiki/skins/dtmlmessages.pt:48
 #, fuzzy
 msgid "Id:"
 msgstr "名稱"
 
-#: src/ZWiki/skins/dtmlmessages.pt:47
+#: src/ZWiki/skins/dtmlmessages.pt:49
 #, fuzzy
 msgid "Title:"
 msgstr "標題"
-
-#: src/ZWiki/skins/dtmlmessages.pt:48
-msgid "Template:"
-msgstr ""
-
-#: src/ZWiki/skins/dtmlmessages.pt:49
-#, fuzzy
-msgid "Add wiki"
-msgstr "新增快紀"
 
 #: src/ZWiki/skins/dtmlmessages.pt:5
 msgid "browse open issues"
 msgstr ""
 
 #: src/ZWiki/skins/dtmlmessages.pt:50
+msgid "Template:"
+msgstr ""
+
+#: src/ZWiki/skins/dtmlmessages.pt:51
+#, fuzzy
+msgid "Add wiki"
+msgstr "新增快紀"
+
+#: src/ZWiki/skins/dtmlmessages.pt:52
 msgid "Pages changed in the last"
 msgstr "最近更動的頁面"
 
-#: src/ZWiki/skins/dtmlmessages.pt:51
+#: src/ZWiki/skins/dtmlmessages.pt:53
 msgid "Recently changed pages, with summaries"
 msgstr "最近變更的頁面, 包含概略的摘要"
 
-#: src/ZWiki/skins/dtmlmessages.pt:52
+#: src/ZWiki/skins/dtmlmessages.pt:54
 msgid "Show summaries ?"
 msgstr "顯示摘要？"
 
-#: src/ZWiki/skins/dtmlmessages.pt:53
+#: src/ZWiki/skins/dtmlmessages.pt:55
 msgid "Refresh"
 msgstr "更新"
 
-#: src/ZWiki/skins/dtmlmessages.pt:54
+#: src/ZWiki/skins/dtmlmessages.pt:56
 msgid "Page"
 msgstr "頁面"
 
-#: src/ZWiki/skins/dtmlmessages.pt:55
+#: src/ZWiki/skins/dtmlmessages.pt:57
 msgid "Edited&nbsp;by"
 msgstr "修改者"
 
-#: src/ZWiki/skins/dtmlmessages.pt:56
+#: src/ZWiki/skins/dtmlmessages.pt:58
 msgid "Time"
 msgstr "時間"
 
-#: src/ZWiki/skins/dtmlmessages.pt:57
+#: src/ZWiki/skins/dtmlmessages.pt:59
 msgid "NEW"
 msgstr "新的"
-
-#: src/ZWiki/skins/dtmlmessages.pt:59
-msgid "Pages marked (NEW) have been created within the last week"
-msgstr "頁面註記（新的）表示是在最近一週內所建立的"
 
 #: src/ZWiki/skins/dtmlmessages.pt:6
 #, fuzzy
 msgid "search issues"
 msgstr "過濾事例"
 
-#: src/ZWiki/skins/dtmlmessages.pt:60
+#: src/ZWiki/skins/dtmlmessages.pt:61
+msgid "Pages marked (NEW) have been created within the last week"
+msgstr "頁面註記（新的）表示是在最近一週內所建立的"
+
+#: src/ZWiki/skins/dtmlmessages.pt:62
 msgid "Enter a word or phrase and hit enter to search the entire wiki."
 msgstr "輸入一個字或一段話，並且點選 輸入 開始搜尋整個wiki。"
 
-#: src/ZWiki/skins/dtmlmessages.pt:61
+#: src/ZWiki/skins/dtmlmessages.pt:63
 msgid "This is the same as using the search field at top right."
 msgstr "這和在右上角搜尋欄位的作用是一樣的。"
 
-#: src/ZWiki/skins/dtmlmessages.pt:62
+#: src/ZWiki/skins/dtmlmessages.pt:64
 msgid "Tips: A single word works best for matching page names."
 msgstr "技巧：使用單獨的字，對於按頁面名稱搜尋來說最好。"
 
-#: src/ZWiki/skins/dtmlmessages.pt:63
-msgid ""
-"Case-insensitivity and wildcards may be supported depending on your catalog "
-"configuration."
+#: src/ZWiki/skins/dtmlmessages.pt:65
+msgid "Case-insensitivity and wildcards may be supported depending on your catalog configuration."
 msgstr "大小寫無關與萬用字元，依您的目錄索引設定而定，也許會被支援。"
 
-#: src/ZWiki/skins/dtmlmessages.pt:64
+#: src/ZWiki/skins/dtmlmessages.pt:66
 msgid "Leave it blank to list all pages."
 msgstr "如果讓它空白的話，可列出所有頁面。"
 
-#: src/ZWiki/skins/dtmlmessages.pt:65
-#: src/ZWiki/skins/dtmlmessages.pt:66
+#: src/ZWiki/skins/dtmlmessages.pt:67 src/ZWiki/skins/dtmlmessages.pt:68
 msgid "Search"
 msgstr "搜尋"
 
-#: src/ZWiki/skins/dtmlmessages.pt:67
+#: src/ZWiki/skins/dtmlmessages.pt:69
 msgid "Page names matching"
 msgstr "頁面名稱相符"
-
-#: src/ZWiki/skins/dtmlmessages.pt:68
-msgid "Text matching"
-msgstr "文字相符"
-
-#: src/ZWiki/skins/dtmlmessages.pt:69
-msgid "Thorough (non-catalog) search for text matching"
-msgstr "透過（非編目方式）搜尋得到文字相符"
 
 #: src/ZWiki/skins/dtmlmessages.pt:7
 #, fuzzy
@@ -808,44 +771,44 @@ msgid "recent"
 msgstr "變更父層"
 
 #: src/ZWiki/skins/dtmlmessages.pt:70
+msgid "Text matching"
+msgstr "文字相符"
+
+#: src/ZWiki/skins/dtmlmessages.pt:71
+msgid "Thorough (non-catalog) search for text matching"
+msgstr "透過（非編目方式）搜尋得到文字相符"
+
+#: src/ZWiki/skins/dtmlmessages.pt:72
 msgid "Set your preferences for this wiki:"
 msgstr "設定在這個站台個人相關偏好。"
 
-#: src/ZWiki/skins/dtmlmessages.pt:71
+#: src/ZWiki/skins/dtmlmessages.pt:73
 msgid "User name:"
 msgstr "使用者名稱："
 
-#: src/ZWiki/skins/dtmlmessages.pt:72
-msgid "(identifies your edits)"
-msgstr "（您編輯文章時的名稱）"
+#: src/ZWiki/skins/dtmlmessages.pt:74
+msgid "(identifies your edits, saves your votes, may be required)"
+msgstr ""
 
-#: src/ZWiki/skins/dtmlmessages.pt:73
+#: src/ZWiki/skins/dtmlmessages.pt:75
 msgid "Email address:"
 msgstr "電子郵件："
 
-#: src/ZWiki/skins/dtmlmessages.pt:74
+#: src/ZWiki/skins/dtmlmessages.pt:76
 msgid "(allows mail subscription)"
 msgstr "（得以訂閱郵件）"
 
-#: src/ZWiki/skins/dtmlmessages.pt:75
+#: src/ZWiki/skins/dtmlmessages.pt:77
 msgid "Your time zone:"
 msgstr "您所在時區："
 
-#: src/ZWiki/skins/dtmlmessages.pt:76
+#: src/ZWiki/skins/dtmlmessages.pt:78
 msgid "(localizes most times)"
 msgstr "（選擇接近的時間）"
 
-#: src/ZWiki/skins/dtmlmessages.pt:77
+#: src/ZWiki/skins/dtmlmessages.pt:79
 msgid "Edit form height:"
 msgstr "修改欄位高度："
-
-#: src/ZWiki/skins/dtmlmessages.pt:78
-msgid "(adjusts form size)"
-msgstr "（調整表格大小）"
-
-#: src/ZWiki/skins/dtmlmessages.pt:79
-msgid "Save options"
-msgstr "儲存設定"
 
 #: src/ZWiki/skins/dtmlmessages.pt:8
 #, fuzzy
@@ -853,77 +816,74 @@ msgid "all"
 msgstr "全部"
 
 #: src/ZWiki/skins/dtmlmessages.pt:80
+msgid "(adjusts form size)"
+msgstr "（調整表格大小）"
+
+#: src/ZWiki/skins/dtmlmessages.pt:81
+msgid "Save options"
+msgstr "儲存設定"
+
+#: src/ZWiki/skins/dtmlmessages.pt:82
 msgid "Forget options"
 msgstr "預設設定"
 
-#: src/ZWiki/skins/dtmlmessages.pt:81
-#: src/ZWiki/skins/dtmlmessages.pt:82
+#: src/ZWiki/skins/dtmlmessages.pt:83 src/ZWiki/skins/dtmlmessages.pt:84
 msgid "Add ZWiki Page"
 msgstr "新增快紀頁面"
 
-#: src/ZWiki/skins/dtmlmessages.pt:83
+#: src/ZWiki/skins/dtmlmessages.pt:85
 #, fuzzy
 msgid "Page&nbsp;name:"
 msgstr "頁面名稱"
 
-#: src/ZWiki/skins/dtmlmessages.pt:84
+#: src/ZWiki/skins/dtmlmessages.pt:86
 #, fuzzy
 msgid "Add wiki page"
 msgstr "新增快紀頁面"
 
-#: src/ZWiki/skins/dtmlmessages.pt:85
+#: src/ZWiki/skins/dtmlmessages.pt:87
 msgid "Topic"
 msgstr "主題"
 
-#: src/ZWiki/skins/dtmlmessages.pt:86
+#: src/ZWiki/skins/dtmlmessages.pt:88
 msgid "Last updated"
 msgstr "最近更新"
 
-#: src/ZWiki/skins/dtmlmessages.pt:87
+#: src/ZWiki/skins/dtmlmessages.pt:89
 msgid "Comments"
 msgstr "留言"
 
-#: src/ZWiki/skins/dtmlmessages.pt:88
-msgid "Views"
-msgstr "檢視"
-
-#: src/ZWiki/skins/dtmlmessages.pt:89
-msgid "Created"
-msgstr "建立"
-
-#: src/ZWiki/skins/dtmlmessages.pt:9
-#: src/ZWiki/skins/dtmlmessages.pt:31
+#: src/ZWiki/skins/dtmlmessages.pt:9 src/ZWiki/skins/dtmlmessages.pt:32
 #, fuzzy
 msgid "#"
 msgstr "#"
 
 #: src/ZWiki/skins/dtmlmessages.pt:90
-#: src/ZWiki/skins/dtmlmessages.pt:92
+msgid "Views"
+msgstr "檢視"
+
+#: src/ZWiki/skins/dtmlmessages.pt:91
+msgid "Created"
+msgstr "建立"
+
+#: src/ZWiki/skins/dtmlmessages.pt:92 src/ZWiki/skins/dtmlmessages.pt:94
 msgid "by"
 msgstr "作者"
 
-#: src/ZWiki/skins/dtmlmessages.pt:91
+#: src/ZWiki/skins/dtmlmessages.pt:93
 msgid "<dtml-var lasteditinterval> ago</dtml-var>"
 msgstr "<dtml-var lasteditinterval> 之前</dtml-var>"
 
-#: src/ZWiki/skins/dtmlmessages.pt:93
+#: src/ZWiki/skins/dtmlmessages.pt:95
 msgid "on"
 msgstr "在"
 
-#: src/ZWiki/skins/zwiki/backlinks.pt:108
-msgid "Subtopics"
-msgstr "子頁面"
-
-#: src/ZWiki/skins/zwiki/backlinks.pt:111
-msgid "This page has no subtopics."
-msgstr "這頁沒有任何子頁面。"
-
-#: src/ZWiki/skins/zwiki/backlinks.pt:114
+#: src/ZWiki/skins/zwiki/backlinks.pt:102
 #, fuzzy
 msgid "Here are it's subtopics."
 msgstr "這是它的子頁面："
 
-#: src/ZWiki/skins/zwiki/backlinks.pt:117
+#: src/ZWiki/skins/zwiki/backlinks.pt:105
 #, fuzzy
 msgid "You can reorder them by clicking the ^ buttons."
 msgstr "您可以透過點選 ^ 按鈕，變更子頁面順序。"
@@ -937,63 +897,61 @@ msgstr "建立頁面"
 msgid "Parents"
 msgstr "父層"
 
-#: src/ZWiki/skins/zwiki/backlinks.pt:31
+#: src/ZWiki/skins/zwiki/backlinks.pt:28
 msgid "is a top-level topic."
 msgstr "是最頂層主題。"
 
-#: src/ZWiki/skins/zwiki/backlinks.pt:32
+#: src/ZWiki/skins/zwiki/backlinks.pt:29
 msgid "is a subtopic of:"
 msgstr "子主題上層為："
 
-#: src/ZWiki/skins/zwiki/backlinks.pt:55
+#: src/ZWiki/skins/zwiki/backlinks.pt:48
 msgid "Backlinks"
 msgstr "回溯"
 
-#: src/ZWiki/skins/zwiki/backlinks.pt:56
+#: src/ZWiki/skins/zwiki/backlinks.pt:49
 msgid "Here are the pages which link to it:"
 msgstr "底下是相關連結到的頁面："
 
-#: src/ZWiki/skins/zwiki/backlinks.pt:57
+#: src/ZWiki/skins/zwiki/backlinks.pt:50
 msgid "No other pages link to this one."
 msgstr "沒有任何其他頁面連到這一頁。"
 
-#: src/ZWiki/skins/zwiki/backlinks.pt:82
-msgid ""
-"You can set this page's parent(s) to place it within the overall page "
-"hierarchy."
+#: src/ZWiki/skins/zwiki/backlinks.pt:70
+msgid "You can set this page's parent(s) to place it within the overall page hierarchy."
 msgstr ""
 
-#: src/ZWiki/skins/zwiki/backlinks.pt:85
-msgid ""
-"Check one or more checkboxes or enter a page name here, and click the button."
+#: src/ZWiki/skins/zwiki/backlinks.pt:73
+msgid "Check one or more checkboxes or enter a page name here, and click the button."
 msgstr ""
 
-#: src/ZWiki/skins/zwiki/backlinks.pt:88
+#: src/ZWiki/skins/zwiki/backlinks.pt:76
 msgid "Enter a page name here and click the button."
 msgstr ""
 
-#: src/ZWiki/skins/zwiki/backlinks.pt:91
-msgid ""
-"You can type just the first few letters, case and punctuation are ignored."
+#: src/ZWiki/skins/zwiki/backlinks.pt:79
+msgid "You can type just the first few letters, case and punctuation are ignored."
 msgstr ""
 
-#: src/ZWiki/skins/zwiki/backlinks.pt:98
+#: src/ZWiki/skins/zwiki/backlinks.pt:86
 msgid "Reparent"
 msgstr "變更父層"
+
+#: src/ZWiki/skins/zwiki/backlinks.pt:96
+msgid "Subtopics"
+msgstr "子頁面"
+
+#: src/ZWiki/skins/zwiki/backlinks.pt:99
+msgid "This page has no subtopics."
+msgstr "這頁沒有任何子頁面。"
 
 #: src/ZWiki/skins/zwiki/badtemplate.pt:12
 msgid "Bad template"
 msgstr ""
 
 #: src/ZWiki/skins/zwiki/badtemplate.pt:13
-msgid ""
-"There was a problem locating one of this wiki's skin templates. There may be "
-"a page or other non-page-template/non-dtml-method object with the same ID, "
-"obscuring the template. Or the template may be missing on the filesystem (an "
-"incomplete Zwiki installation)."
-msgstr ""
-"這 Wiki 的風格（skin）樣板有些問題。也許有頁面或其他非 ZPT / 非 DTML 方法的物件有相同 "
-"ID，隱藏在樣板裡頭。也或許是樣板在檔案系統中遺漏了（安裝 Zwiki 不完全造成的）。"
+msgid "There was a problem locating one of this wiki's skin templates. There may be a page or other non-page-template/non-dtml-method object with the same ID, obscuring the template. Or the template may be missing on the filesystem (an incomplete Zwiki installation)."
+msgstr "這 Wiki 的風格（skin）樣板有些問題。也許有頁面或其他非 ZPT / 非 DTML 方法的物件有相同 ID，隱藏在樣板裡頭。也或許是樣板在檔案系統中遺漏了（安裝 Zwiki 不完全造成的）。"
 
 #: src/ZWiki/skins/zwiki/commentform.pt:21
 msgid "subject"
@@ -1024,12 +982,20 @@ msgstr "1 位訂閱者"
 msgid "add-comment"
 msgstr "新增留言"
 
-#: src/ZWiki/skins/zwiki/contentspage.pt:12
+#: src/ZWiki/skins/zwiki/contentspage.pt:10
+#: src/ZWiki/skins/zwiki/contentspage.pt:27
+#, fuzzy
+msgid "Wiki contents for"
+msgstr "快紀內容"
+
+#: src/ZWiki/skins/zwiki/contentspage.pt:13
+#: src/ZWiki/skins/zwiki/contentspage.pt:30
 msgid "Wiki contents"
 msgstr "快紀內容"
 
-#: src/ZWiki/skins/zwiki/contentspage.pt:16
-msgid "Singletons"
+#: src/ZWiki/skins/zwiki/contentspage.pt:40
+#, fuzzy
+msgid "Singletons:"
 msgstr "獨立頁面"
 
 #: src/ZWiki/skins/zwiki/denied.pt:12
@@ -1047,14 +1013,12 @@ msgid "Edit:"
 msgstr "修改"
 
 #. Default: "<<"
-#: src/ZWiki/skins/zwiki/diffform.pt:34
-#: src/ZWiki/skins/zwiki/diffform.pt:38
+#: src/ZWiki/skins/zwiki/diffform.pt:34 src/ZWiki/skins/zwiki/diffform.pt:38
 msgid " << "
 msgstr ""
 
 #. Default: ">>"
-#: src/ZWiki/skins/zwiki/diffform.pt:52
-#: src/ZWiki/skins/zwiki/diffform.pt:56
+#: src/ZWiki/skins/zwiki/diffform.pt:52 src/ZWiki/skins/zwiki/diffform.pt:56
 msgid " >> "
 msgstr ""
 
@@ -1119,12 +1083,12 @@ msgid "${DYNAMIC_CONTENT}"
 msgstr "${DYNAMIC_CONTENT}"
 
 #: src/ZWiki/skins/zwiki/editform.pt:178
-msgid "preview this edit"
-msgstr "預覽這份編輯文件"
-
-#: src/ZWiki/skins/zwiki/editform.pt:178
 msgid "Preview"
 msgstr "預覽"
+
+#: src/ZWiki/skins/zwiki/editform.pt:178
+msgid "preview this edit"
+msgstr "預覽這份編輯文件"
 
 #: src/ZWiki/skins/zwiki/editform.pt:183
 msgid "Cancel"
@@ -1143,16 +1107,11 @@ msgid "create this wiki page"
 msgstr "建立這快紀頁面"
 
 #. Default: "PREVIEW"
-#: src/ZWiki/skins/zwiki/editform.pt:203
-#: src/ZWiki/skins/zwiki/editform.pt:204
-#: src/ZWiki/skins/zwiki/editform.pt:205
-#: src/ZWiki/skins/zwiki/editform.pt:206
-#: src/ZWiki/skins/zwiki/editform.pt:207
-#: src/ZWiki/skins/zwiki/editform.pt:216
-#: src/ZWiki/skins/zwiki/editform.pt:217
-#: src/ZWiki/skins/zwiki/editform.pt:218
-#: src/ZWiki/skins/zwiki/editform.pt:219
-#: src/ZWiki/skins/zwiki/editform.pt:220
+#: src/ZWiki/skins/zwiki/editform.pt:203 src/ZWiki/skins/zwiki/editform.pt:204
+#: src/ZWiki/skins/zwiki/editform.pt:205 src/ZWiki/skins/zwiki/editform.pt:206
+#: src/ZWiki/skins/zwiki/editform.pt:207 src/ZWiki/skins/zwiki/editform.pt:216
+#: src/ZWiki/skins/zwiki/editform.pt:217 src/ZWiki/skins/zwiki/editform.pt:218
+#: src/ZWiki/skins/zwiki/editform.pt:219 src/ZWiki/skins/zwiki/editform.pt:220
 msgid "label_preview"
 msgstr "【預覽】"
 
@@ -1165,12 +1124,17 @@ msgid "the name of this wiki page (changing this may be slow!)"
 msgstr "這頁快紀的名稱（進行變更也許很慢！）"
 
 #: src/ZWiki/skins/zwiki/editform.pt:71
-msgid "type"
-msgstr "型態"
+msgid "markup"
+msgstr ""
 
 #: src/ZWiki/skins/zwiki/editform.pt:72
 msgid "select the formatting and rendering style for this page"
 msgstr "選擇這頁的格式與表現方式"
+
+#: src/ZWiki/skins/zwiki/helppage.pt:12
+#, fuzzy
+msgid "Help page"
+msgstr "輔助頁面"
 
 #: src/ZWiki/skins/zwiki/links.pt:102
 msgid "(external edit)"
@@ -1309,12 +1273,12 @@ msgid "enter a page name and click buttons to the right (mouse over for help)"
 msgstr "輸入一頁面名稱並點選右邊按鈕（游標停駐出現相關訊息）"
 
 #: src/ZWiki/skins/zwiki/pagemanagementform.pt:45
-msgid "reparent"
-msgstr "變更父層"
-
-#: src/ZWiki/skins/zwiki/pagemanagementform.pt:45
 msgid "make this page a subtopic of the page you have entered"
 msgstr "變更這個頁面成為你進入頁面之下的子主題頁面"
+
+#: src/ZWiki/skins/zwiki/pagemanagementform.pt:45
+msgid "reparent"
+msgstr "變更父層"
 
 #: src/ZWiki/skins/zwiki/pagemanagementform.pt:50
 msgid "rename this page to the name you have entered, updating all links"
@@ -1329,8 +1293,7 @@ msgid "delete!"
 msgstr "刪除!"
 
 #: src/ZWiki/skins/zwiki/pagemanagementform.pt:55
-msgid ""
-"delete this page, and redirect links to the page you have entered, if any"
+msgid "delete this page, and redirect links to the page you have entered, if any"
 msgstr "刪除這個頁面，如果存在你所輸入的頁面名稱，將會轉址進入"
 
 #: src/ZWiki/skins/zwiki/pagemanagementform.pt:60
@@ -1459,13 +1422,17 @@ msgstr " 訂閱這個頁面 "
 msgid "User options"
 msgstr "儲存設定"
 
+#~ msgid "(identifies your edits)"
+#~ msgstr "（您編輯文章時的名稱）"
+
+#~ msgid "type"
+#~ msgstr "型態"
+
 #~ msgid "your edit contained a banned link pattern"
 #~ msgstr "您所編輯的內容，含有一個被拒絕出現的連結"
 
 #~ msgid "adding of external links by anonymous authors is restricted"
-#~ msgstr ""
-#~ "您所編輯的發生一個問題：這個網站不允許匿名使用者能夠新增對外連結網址。請連"
-#~ "絡網站管理者，以取得適當協助。"
+#~ msgstr "您所編輯的發生一個問題：這個網站不允許匿名使用者能夠新增對外連結網址。請連絡網站管理者，以取得適當協助。"
 
 #~ msgid "Add a ZWiki web"
 #~ msgstr "新增一快紀網站"
@@ -1479,10 +1446,7 @@ msgstr "儲存設定"
 #~ msgid "and enter"
 #~ msgstr "並輸入"
 
-#~ msgid ""
-#~ "You may create a new ZWiki Page object using the form below. You may also "
-#~ "choose to upload an existing html file from your local computer by "
-#~ "clicking the <i>Browse</i> button."
+#~ msgid "You may create a new ZWiki Page object using the form below. You may also choose to upload an existing html file from your local computer by clicking the <i>Browse</i> button."
 #~ msgstr ""
 #~ "您可以用下面的表單建立新的ZWiki頁面。您也可以點選 <i>瀏覽</i> 按鈕\n"
 #~ "上傳您電腦中已經存在的 HTML 檔案。"
@@ -1506,9 +1470,7 @@ msgstr "儲存設定"
 #~ msgstr "回到頁面"
 
 #~ msgid "help_shortname"
-#~ msgstr ""
-#~ "注意: 在一個有很多內容的Wiki頁面，變更名稱將會非常慢。因為其他頁面有可能都"
-#~ "需要更新。"
+#~ msgstr "注意: 在一個有很多內容的Wiki頁面，變更名稱將會非常慢。因為其他頁面有可能都需要更新。"
 
 #~ msgid "label_body_text"
 #~ msgstr "主體內容"
