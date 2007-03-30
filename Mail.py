@@ -503,8 +503,9 @@ class PageMailSupport:
         address = (self.fromProperty() or
                    #self.usersEmailAddress() or
                    self.replyToProperty())
-        realname = self.usernameFrom(REQUEST,ip_address=0).splitlines()[0] or _('anonymous')
         # splitlines to fend off header injection attacks from spammers
+        lines = self.usernameFrom(REQUEST,ip_address=0).splitlines()
+        realname = lines and lines[0] or _('anonymous')
         return '%s (%s)' % (address, realname)
 
     def replyToHeader(self):
