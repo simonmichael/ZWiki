@@ -19,6 +19,7 @@ import Admin, Defaults, OutlineSupport, Permissions, ZWikiPage
 from Admin import addDTMLMethod
 from I18n import _, DTMLFile
 from pagetypes import PAGETYPES
+from Utils import parseHeadersBody
 
 
 misc_ = {
@@ -237,6 +238,51 @@ def addWikiFromZodb(self,new_id, new_title='', wiki_type='zwikidotorg',
     # could do stuff with ownership here
     # set it to low-privileged "nobody" by default ?
 
+def createFilesFromFsFolder(self, f, dir):
+    """
+    Recursively put the files from a fs folder into a ZODB folder.
+    """
+    filenames = os.listdir(dir)
+    for filename in filenames:
+        if re.match(r'(?:\..*|CVS|_darcs)', filename): continue
+        m = re.search(r'(.+)\.(.+)',filename) # XXX use os. routines
+        id, type = filename, ''
+        if m: id, type = m.groups()
+        this_path = dir + os.sep + filename
+        if os.path.isdir(this_path):
+            f.manage_addFolder(filename) # add folder
+            createFilesFromFsFolder(self, f[filename], this_path) # recurse
+        else:
+            text = open(this_path, 'r').read()
+            if type == 'dtml':
+                addDTMLMethod(f, filename[:-5], title='', file=text)
+            elif re.match(r'(?:(?:rst|stx|html|latex)(?:dtml)?|txt)', type):
+                headers, body = parseHeadersBody(text)
+                if headers.has_key('title'):
+                    title = headers['title']
+                else:
+                    title = ''
+                if headers.has_key('parents'):
+                    parents = headers['parents']
+                    parents = parents.split(',')
+                else:
+                    parents = []
+                addZWikiPage(f,id,title=title,page_type=type,file=body,parents=parents)
+            elif type == 'pt':
+                f._setObject(id, ZopePageTemplate(id, text, 'text/html'))
+            elif type == 'py':
+                f._setObject(id, PythonScript(id))
+                f._getOb(id).write(text)
+            elif type == 'zexp' or type == 'xml':
+                connection = self.getPhysicalRoot()._p_jar
+                f._setObject(id, connection.importFile(dir + os.sep + filename, 
+                    customImporters=customImporters))
+                #self._getOb(id).manage_changeOwnershipType(explicit=0)
+            elif re.match(r'(?:jpe?g|gif|png)', type):
+                f._setObject(filename, Image(filename, '', text))
+            else:
+                id = f._setObject(filename, File(filename, '', text))
+                if type == 'css': f[filename].content_type = 'text/css'
 
 def addWikiFromFs(self, new_id, title='', wiki_type='zwikidotorg',
                       REQUEST=None):
@@ -250,59 +296,36 @@ def addWikiFromFs(self, new_id, title='', wiki_type='zwikidotorg',
     #str(new_id),str(title))
     # No - the standard folder's UI is more useful for small wikis,
     # and more importantly BTreeFolder2 isn't standard until 2.8.0b2
-    f = Folder()
-    f.id, f.title = str(new_id), str(title)
-    new_id = parent._setObject(f.id, f)
+    parent.manage_addFolder(str(new_id))
     f = parent[new_id]
+    f.title = str(title)
+    
     # add objects from wiki template
     # cataloging really slows this down!
     dir = os.path.join(package_home(globals()),'wikis',wiki_type)
-    filenames = os.listdir(dir)
-    for filename in filenames:
-        if re.match(r'(?:\..*|CVS|_darcs)', filename): continue
-        m = re.search(r'(.+)\.(.+)',filename)
-        id, type = filename, ''
-        if m: id, type = m.groups()
-        text = open(dir + os.sep + filename, 'r').read()
-        if type == 'dtml':
-            addDTMLMethod(f, filename[:-5], title='', file=text)
-        elif re.match(r'(?:(?:stx|html|latex)(?:dtml)?|txt)', type):
-            addZWikiPage(f,id,title='',page_type=type,file=text)
-        elif type == 'pt':
-            f._setObject(id, ZopePageTemplate(id, text, 'text/html'))
-        elif type == 'py':
-            f._setObject(id, PythonScript(id))
-            f._getOb(id).write(text)
-        elif type == 'zexp' or type == 'xml':
-            connection = self.getPhysicalRoot()._p_jar
-            f._setObject(id, connection.importFile(dir + os.sep + filename, 
-                customImporters=customImporters))
-            #self._getOb(id).manage_changeOwnershipType(explicit=0)
-        elif re.match(r'(?:jpe?g|gif|png)', type):
-            f._setObject(filename, Image(filename, '', text))
-        else:
-            id = f._setObject(filename, File(filename, '', text))
-            if type == 'css': f[filename].content_type = 'text/css'
+    createFilesFromFsFolder(self, f, dir) # recurses
     f.objectValues(spec='ZWiki Page')[0].updatecontents()
 
 def addZWikiPage(self, id, title='',
-                  page_type=PAGETYPES[0]._id, file=''):
+                  page_type=PAGETYPES[0]._id, file='', parents=[]):
     id=str(id)
     title=str(title)
 
-    # parse optional parents list
-    m = re.match(r'(?si)(^#parents:(.*?)\n)?(.*)',file)
-    if m.group(2):
-        parents = string.split(string.strip(m.group(2)),',')
+    if len(parents) == 0:
+        # parse optional parents list, the old way XXX can this be removed?
+        m = re.match(r'(?si)(^#parents:(.*?)\n)?(.*)',file)
+        if m.group(2):
+            parents = string.split(string.strip(m.group(2)),',')
+        else:
+            parents = []
+        text = m.group(3)
     else:
-        parents = []
-    text = m.group(3)
+        text = file
 
     # create zwiki page in this folder
     ob = ZWikiPage.ZWikiPage(source_string=text, __name__=id)
     ob.title = title
     ob.setPageType(page_type)
-    ob.parents = parents
 
     username = getSecurityManager().getUser().getUserName()
     ob.manage_addLocalRoles(username, ['Owner'])
@@ -313,6 +336,7 @@ def addZWikiPage(self, id, title='',
     ob._deleteOwnershipAfterAdd() # or _owner=UnownableOwner ?
     #ob.setSubOwner('both') # regulations setup ?
     self._setObject(id, ob)
+    self[id].parents = parents # setting this earlier lost it for some pages (??)
 
     return getattr(self, id)
 
