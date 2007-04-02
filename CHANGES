@@ -1,35 +1,6 @@
-Zwiki 0.59.0rc3 2007/03/27
-=======================
-
-  * simplify issuetracker sorting-by-name setup
-
-  * update pot and po files from code.. hmm, all po line wrapping changed again
-
-  * translation updates from rosetta
-
-  * stylesheet.css was ignored; look only for "stylesheet.css" or "stylesheet", in that order
-
-  * New nl.po (Frank Laurijssens)
-
-  * upgrade notes for issue tracker (Frank Laurijssens)
-
-
-Zwiki 0.59.0rc2 2007/03/25
-==========================
-
-  * ack, a template loading fix I missed, initialization broke unless
-    you ran from the ZWiki directory
-
-  * recent changes default period is now a week, not a day
-
-
-Zwiki 0.59.0rc1 2007/03/24
-==========================
-
-Catchup since the last release in november. 
-A truckload of bugfixes from Sascha Welter, Frank Laurijssens and many
-others (YAY!), support for conditional http get, alternate filesystem
-skins, and more.
+Catchup since the last release in november: a truckload of bugfixes from
+Sascha Welter, Frank Laurijssens and many others (YAY!), support for
+conditional http get, skins code cleanup, translation updates and more.
 
 Upgrade notes
 
@@ -46,9 +17,9 @@ Upgrade notes
   
 Installing
 
-  * #1313, updated FrontPage template (Frank Laurijssens)
+  * show accurate page hierarchy after adding a new wiki
 
-  * show the page hierarchy accurately after adding a new wiki
+  * #1313, updated FrontPage links in basic wiki template (Frank Laurijssens)
 
 Configuring
 
@@ -63,13 +34,17 @@ Configuring
     settings (requiring a reload after each edit).  See
     http://zwiki.org/HowToEnableConditionalHTTPGET (Sascha Welter)
 
-  * 974 Property to ignore certain WikiNames Credits to Matt Kunze from
+  * #974 Property to ignore certain WikiNames Credits to Matt Kunze from
     DataSplice. Patch logic is from him, I just simplified it a bit and
     tested it. This has yet to be documented somewhere. (Sascha Welter)
 
   * #1227 comment form vulnerability (Sascha Welter)
 
 Browsing
+
+  * make default site logo work with zope 2.10 (zope bug 2302)
+
+  * recent changes default period is now a week, not a day
 
   * #976 cosmetics on "last edited xx ago" link credits to "Andreas", we
     check if lastlog contains anything and omit the parentheses if
@@ -147,8 +122,8 @@ General
   * make skin/template/macro handling more general, add support for
     alternate filesystem skins, rewrite skin system developer docs
 
-  * clean up stylesheet lookup; we look for stylesheet.css, stylesheet or
-    (convenient for filesystem skins) stylesheet.dtml, in that order
+  * clean up stylesheet lookup: look for a template named "stylesheet.css"
+    or "stylesheet" in that order
 
   * siblingsAsList can include current page + sorting optional This is
     useful mainly for "nautica" style wikipage.pt. In those one often
@@ -174,6 +149,16 @@ General
   * Signed CONTRIBUTORS (Frank Laurijssens)
 
 Translations
+
+  * de (Stefan Kose)
+
+  * es (Francisco Mañas)
+
+  * fr (Nicolas Velin)
+
+  * zh_CN, zh_TW (nwind)
+
+  * nl (Frank Laurijssens)
 
 
 Zwiki 0.58.0 2006/11/01
