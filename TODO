@@ -2,6 +2,17 @@ General plans and todos for the zwiki project. -*- rst -*-
 
 PROCESS
 =======
+efficient wiki system announcements
+ send by mail
+ possible recipients
+  zope-web 
+  wiki.zope.org
+  wiki.zope.org/zope3
+  wiki.zope.org/zope2
+  zwiki.org
+  *.zwiki.org/*.joyful.com ?
+ off-zope/off-site location
+
 repo speedups
  partial pulling too many patches, check checkpoints
  try darcs optimize # --reorder-patches
@@ -41,6 +52,12 @@ PRODUCT
 =======
 fix 1284 acquisition bug - Views_tests
 built-in helppage, editform help
+
+I18N
+----
+reduce rosetta diffs
+ handle rosetta stripping default lines
+  convert defaults to one line
 
 VIEWS AND SKINS
 ---------------
