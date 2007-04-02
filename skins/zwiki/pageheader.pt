@@ -22,9 +22,15 @@
                 <a tal:attributes="href here/wiki_url"
                    title="go to home page" 
                    i18n:attributes="title">
-                  <img src="misc_/ZWiki/ZWikiPage_icon" height="48" width="48" 
+                  <p tal:condition="nothing">workaround for zope bug http://www.zope.org/Collectors/Zope/2302</p>
+                  <img tal:condition="here/site_logo|nothing"
+                       tal:replace="structure here/site_logo"
+                       />
+                  <img tal:condition="not:here/site_logo|nothing"
+                       src="misc_/ZWiki/ZWikiPage_icon" height="48" width="48"
                        border="0" alt="home" i18n:attributes="alt"
-                       tal:replace="structure here/site_logo|default" /></a>
+                       />
+                </a>
                 &nbsp;
               </span>
             </td>
