@@ -9,9 +9,13 @@
 # check showAccessKeys,README,wikis/,skins/,zwiki.org HelpPage,QuickReference
 # darcs changes --from-tag NN into CHANGES & edit; don't add header at top
 # update version.txt
-# make Release
-# update KnownIssues,OldKnownIssues,#zwiki
-# mail announcement to zwiki@zwiki.org, zope-announce@zope.org
+# make release
+# test restart server
+# announce
+#  copy CHANGES to ReleaseNotes
+#  check FrontPage, KnownIssues, OldKnownIssues
+#  #zwiki, zwiki@zwiki.org (rc)
+#  #zwiki, zwiki@zwiki.org, zope-announce@zope.org (final)
 
 PRODUCT=ZWiki
 HOST=zwiki.org
@@ -197,17 +201,17 @@ MAJORVERSION:=$(shell echo $(VERSION) | sed -e's/-[^-]*$$//')
 VERSIONNO:=$(shell echo $(VERSION) | sed -e's/-/./g')
 FILE:=$(PRODUCT)-$(VERSIONNO).tgz
 
-Release: releasenotes version releasetag tarball push rpush
+release: releasenotes version releasetag tarball push rpush
 
 releasenotes:
 	@echo recording release notes
-	@darcs record -am 'update release notes' CHANGES
+	@darcs record -am 'release notes' CHANGES
 
 # bump version number in various places and record; don't have other
 # changes in these files
 version:
 	@echo bumping version to $(VERSIONNO)
-	@(echo 'Zwiki' $(VERSIONNO) `date +%Y/%m/%d`; echo; echo '======================='; echo)|cat - CHANGES \
+	@(echo 'Zwiki' $(VERSIONNO) `date +%Y/%m/%d`; echo '======================='; echo)|cat - CHANGES \
 	  >.temp; mv .temp CHANGES
 	@perl -pi -e "s/__version__='.*?'/__version__='$(VERSIONNO)'/" \
 	  __init__.py
