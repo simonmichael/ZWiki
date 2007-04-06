@@ -307,6 +307,8 @@ class SkinViews:
         """
         Render the backlinks form (template-customizable).
         """
+        self.ensureCatalog()
+        self.ensureWikiOutline()
         return self.getSkinTemplate('backlinks')(self,REQUEST)
 
     security.declareProtected(Permissions.View, 'contentspage')
@@ -316,6 +318,7 @@ class SkinViews:
 
         hierarchy and singletons parameters are required.
         """
+        self.ensureWikiOutline()
         return self.getSkinTemplate('contentspage')(self,REQUEST,
                                                     hierarchy=hierarchy,
                                                     singletons=singletons)
@@ -474,6 +477,7 @@ class SkinViews:
         """
         Render the recentchanges form (template-customizable).
         """
+        self.ensureCatalog()
         return self.getSkinTemplate('recentchanges')(self,REQUEST)
 
     # we call this searchwiki, not searchpage, for clarity
@@ -482,6 +486,7 @@ class SkinViews:
         """
         Render the searchwiki form (template-customizable).
         """
+        self.ensureCatalog()
         return self.getSkinTemplate('searchwiki')(self,REQUEST)
 
     searchpage = searchwiki # alias

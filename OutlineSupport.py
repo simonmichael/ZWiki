@@ -302,20 +302,22 @@ class OutlineManager:
     def wikiOutline(self):
         """
         Get the outline cache which holds details of the wiki's page hierarchy.
+        """
+        self.ensureWikiOutline()
+        return self.folder().outline
+
+    def ensureWikiOutline(self):
+        """
+        Ensure this wiki has an outline cache, for fast page hierarchy.
 
         We'll generate it if needed, ie if it's missing or if it's one of
         the older types which get lost during a folder rename or when
-        moving pages to a new folder.
-
-        This is called by any method which requires the outline cache, and
-        also by upgrade() on each page view, to ensure that renaming or
-        moving an old wiki just works without requiring the user to
-        manually updateWikiOutline.
+        moving pages to a new folder. This gets called before any use of
+        the outline cache, so that it is always present and current.
         """
         if (not hasattr(self.folder().aq_base,'outline')
             or not self.folder().outline):
             self.updateWikiOutline()
-        return self.folder().outline
 
     security.declareProtected(Permissions.View, 'updateWikiOutline')
     def updateWikiOutline(self):

@@ -285,8 +285,11 @@ class PageAdminSupport:
         # PageMailSupport does a bit more (merge here ?)
         self._upgradeSubscribers()
 
-        # also make sure there is an up-to-date outline cache
-        self.wikiOutline()
+        # make sure there is a catalog for this wiki
+        self.ensureCatalog()
+
+        # make sure there is an up-to-date outline cache
+        self.ensureWikiOutline()
 
     security.declareProtected('Manage properties', 'setupPages')
     def setupPages(self,REQUEST=None):
@@ -426,6 +429,17 @@ class PageAdminSupport:
         if REQUEST:
             REQUEST.RESPONSE.redirect(self.pageUrl())
             
+    def ensureCatalog(self):
+        """
+        Ensure this wiki has a zcatalog, for fast standardized searching.
+
+        We'll create one if needed, and index all current pages. This
+        could take a while (minutes) in a large wiki.
+        """
+        if not self.hasCatalog():
+            BLATHER('creating catalog for wiki',self.folder().getId())
+            self.setupCatalog()
+
     def fixPageEncoding(self, FROM='iso8859-1', TO='utf-8'):
         """
         Try to fix any character encoding problems in this page's name or text.
