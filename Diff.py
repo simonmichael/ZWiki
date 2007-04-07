@@ -164,6 +164,9 @@ class PageDiffSupport:
         spam incidents (cf issues #1157, #1293, #1324).
         """
         if not currentRevision: return
+        if not self.checkSufficientId(REQUEST):
+            return self.denied(
+                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
         old = self.pageRevision(currentRevision)
         self.setText(old.text())
         self.setPageType(old.pageTypeId())
@@ -219,7 +222,7 @@ class PageDiffSupport:
                 return r
         return None
 
-    # restrict this one to managers, too powerful for passers-by
+    # restrict this one to managers, it is too powerful for passers-by
     security.declareProtected(Permissions.manage_properties, 'revertEditsEverywhereBy')
     def revertEditsEverywhereBy(self, username, REQUEST=None, batch=0):
         """
