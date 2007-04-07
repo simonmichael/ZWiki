@@ -92,15 +92,11 @@ class PageDiffSupport:
         ZODB. When the ZODB is packed, history and revisions disappear.
         The maximum number of history entries we can get is 20.
         """
-        class EditRecord:
-            """
-            A brain-like object representing an edit (or other transaction).
-
-            Combines the contents of manage_change_history entries,
-            """
-            pass
-            
-        return self.manage_change_history()
+        # workaround till #1325 is fixed and we have zodb history:
+        try:
+            return self.manage_change_history()
+        except AttributeError:
+            return []
 
     def revisionCount(self):
         """
@@ -118,15 +114,8 @@ class PageDiffSupport:
         the version before that, etc.
         """
         rev = int(rev)
-        try:
-            historyentry = self.history()[rev]
-        except (IndexError, AttributeError):
-            # IndexError - we don't have a version that old
-            # AttributeError - new object, no history yet,
-            # due to creation of page in unit tests without
-            # editing them yet - doesn't really happen in real use
-            # I guess
-            return None
+        try: historyentry = self.history()[rev]
+        except IndexError: return None
         key = historyentry['key']
         serial = apply(pack, ('>HHHH',)+tuple(map(atoi, split(key,'.'))))
         return historicalRevision(self, serial)
@@ -243,11 +232,8 @@ class PageDiffSupport:
                 n += 1
                 try:
                     p.revertEditsBy(username,REQUEST=REQUEST)
-                except (IndexError, AttributeError):
+                except IndexError:
                     # IndexError - we don't have a version that old
-                    # AttributeError - new object, no history yet,
-                    # due to creation of page in unit tests
-                    # - doesn't really happen in real use I guess
                     BLATHER('failed to revert edits by %s at %s: %s' \
                             % (username,p.id(),formattedTraceback()))
                 if batch and n % batch == 0:
@@ -263,13 +249,8 @@ class PageDiffSupport:
         rev = int(rev)
         try:
             note = self.history()[rev]['description']
-        except (IndexError, AttributeError):
-            # IndexError - we don't have a version that old
-            # AttributeError - new object, no history yet,
-            # due to creation of page in unit tests without
-            # editing them yet - doesn't really happen in real use
-            # I guess
-            return '' # we don't have a version that old
+        except IndexError:
+            return ''
         match = re.search(r'"(.*)"',note)
         if match:
             if withQuotes: return match.group()

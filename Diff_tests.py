@@ -55,25 +55,30 @@ class Tests(ZwikiTestCase):
 
     def test_revertEditsEverywhereBy(self):
         p = self.page
+
+        # fred edits
         p.last_editor = 'fred'
         p.REQUEST.cookies['zwiki_username'] = 'fred'
         p.edit(text='test',REQUEST=p.REQUEST)
         p.append(text='1',REQUEST=p.REQUEST)
         self.assertEqual(p.last_editor,'fred')
-        # if the user in question didn't edit: no change
-        before = p.read()
+
+        # revert edits by joe - no change
+        freds = p.read()
         p.revertEditsEverywhereBy('joe')
-        self.assertEqual(p.read(), before)
-        # now let him change something
+        self.assertEqual(p.read(), freds)
+        
+        # joe edits
         p.REQUEST.cookies['zwiki_username'] = 'joe'
         p.edit(text='2',REQUEST=p.REQUEST)
         self.assertEqual(p.last_editor,'joe')
-        self.assertNotEqual(p.read(), before)
-        # reverting should get us to where we were before:
-        p.revertEditsEverywhereBy('joe')
-        # self.assertEqual(p.read(), before)
-        # self.assertEqual(p.last_editor,'fred')
-        # this doesn't really work
-        # because the page objects in the tests don't have
-        # real history?
-        # for the moment we're just testing the "except" clause
+        self.assertNotEqual(p.read(), freds)
+        
+        # revert edits by joe - back to fred's version
+        #can't test this yet, cf #1325
+        #p.revertEditsEverywhereBy('joe')
+        #self.assertEqual(p.read(), freds)
+        #self.assertEqual(p.last_editor,'fred')
+
+        # test again with a brand new page
+        #new = p.create('NewPage', REQUEST=p.REQUEST)
