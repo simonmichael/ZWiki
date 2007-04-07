@@ -169,6 +169,7 @@ class PageDiffSupport:
         it records new last editor details (and sends a mailout, etc)
         instead of just restoring the old ones.
         """
+        if not currentRevision: return
         old = self.pageRevision(currentRevision)
         self.setText(old.text())
         self.setPageType(old.pageTypeId())
@@ -196,20 +197,33 @@ class PageDiffSupport:
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(self.pageUrl())
 
+# keep around a little longer, to help test the test when it's testable
+#     security.declareProtected(Permissions.Edit, 'revertEditsBy')
+#     def revertEditsBy(self, username, REQUEST=None):
+#         """
+#         Revert all recent edits (the longest continuous sequence) by username.
+#         """
+#         # find the revision immediately before the latest continuous
+#         # sequence of edits by username, if any.
+#         if self.last_editor == username:
+#             numrevs = self.revisionCount()
+#             rev = 1
+#             while rev <= numrevs and self.revisionInfoFor(rev)['last_editor'] == username:
+#                 rev += 1
+#             if rev <= numrevs:
+#                 self.revert(rev,REQUEST=REQUEST) # got one, revert it
+
     security.declareProtected(Permissions.Edit, 'revertEditsBy')
     def revertEditsBy(self, username, REQUEST=None):
-        """
-        Revert all recent edits (the longest continuous sequence) by username.
-        """
-        # find the revision immediately before the latest continuous
-        # sequence of edits by username, if any.
-        if self.last_editor == username:
-            numrevs = self.revisionCount()
-            rev = 1
-            while rev <= numrevs and self.revisionInfoFor(rev)['last_editor'] == username:
-                rev += 1
-            if rev <= numrevs:
-                self.revert(rev,REQUEST=REQUEST) # got one, revert it
+        """Revert to the latest edit by someone other than username, if any."""
+        self.revert(self.revisionBefore(username), REQUEST=REQUEST)
+
+    def revisionBefore(self, username):
+        """The revision number of the last edit not by username, or None."""
+        for r in range(self.revisionCount()):
+            if self.revisionInfoFor(r)['last_editor'] != username:
+                return r
+        return None
 
     # restrict this one to managers, too powerful for passers-by
     security.declareProtected(Permissions.manage_properties, 'revertEditsEverywhereBy')
