@@ -165,9 +165,14 @@ class PageDiffSupport:
 
         Copies a bunch of attributes from the old page object, and even
         renames and reparents if needed.  Very useful for cleaning spam.
-        This is different from ZODB undo: it should be more reliable, and
-        it records new last editor details (and sends a mailout, etc)
-        instead of just restoring the old ones.
+        We do this corrective edit instead of a simple ZODB undo because:
+        it is more reliable (no failures due to transaction dependencies),
+        it reverts page renames and reparents, it sends a mailout, and it
+        records the reverter as last editor.  Note we currently do restore
+        the last edit time from the earlier revision, though. This may
+        seem a bit counterintuitive, but it's a practical measure so that
+        you don't end up losing a lot of useful last edit time info from
+        spam incidents (cf issues #1157, #1293, #1324).
         """
         if not currentRevision: return
         old = self.pageRevision(currentRevision)
