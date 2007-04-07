@@ -120,14 +120,15 @@ class PageDiffSupport:
         serial = apply(pack, ('>HHHH',)+tuple(map(atoi, split(key,'.'))))
         return historicalRevision(self, serial)
 
-    security.declareProtected(Permissions.View, 'revisionInfoFor')
-    def revisionInfoFor(self, rev):
+    security.declareProtected(Permissions.View, 'revisionInfo')
+    def revisionInfo(self, rev):
         """
         A helper for the diffform view, fetches revision details for display.
 
-        This fetches the actual object, and is called on demand for each
-        revision.  Restricted code can't access the attributes directly.
-        Returns a dictionary of some useful and non-sensitive information.
+        This touches the actual object (loading it into zodb cache), and
+        is called on demand for each revision.  It returns a dictionary of
+        some useful and non-sensitive information which can be accessed by
+        restricted code.
         """
         old = self.pageRevision(rev)
         if old:
@@ -205,7 +206,7 @@ class PageDiffSupport:
 #         if self.last_editor == username:
 #             numrevs = self.revisionCount()
 #             rev = 1
-#             while rev <= numrevs and self.revisionInfoFor(rev)['last_editor'] == username:
+#             while rev <= numrevs and self.revisionInfo(rev)['last_editor'] == username:
 #                 rev += 1
 #             if rev <= numrevs:
 #                 self.revert(rev,REQUEST=REQUEST) # got one, revert it
@@ -218,7 +219,7 @@ class PageDiffSupport:
     def revisionBefore(self, username):
         """The revision number of the last edit not by username, or None."""
         for r in range(self.revisionCount()):
-            if self.revisionInfoFor(r)['last_editor'] != username:
+            if self.revisionInfo(r)['last_editor'] != username:
                 return r
         return None
 
