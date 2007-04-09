@@ -22,7 +22,6 @@
   </head>
   <body>
     <div metal:use-macro="here/macros/siteheader" />
-    <div metal:use-macro="here/macros/links" />
     <div metal:define-slot="main" />
   </body>
 </html>

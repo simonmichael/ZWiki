@@ -8,8 +8,8 @@
     </metal:block>
     <!-- override plone styles via main_template's css_slot:  -->
     <metal:block metal:fill-slot="css_slot">
-      <link rel="stylesheet" type="text/css" href="" 
-            tal:attributes="href string:${here/defaultPageUrl}/stylesheet" 
+      <link rel="stylesheet" type="text/css" href=""
+            tal:attributes="href string:${here/defaultPageUrl}/stylesheet"
             tal:condition="python:0 # add the full Zwiki stylesheet to plone's ? no" />
       <style type="text/css">
         <!-- .documentActions {margin-top:0} /* fix layout in plone 2.0 */-->
@@ -19,6 +19,7 @@
   <body>
     <div metal:fill-slot="main" tal:omit-tag="">
       <div metal:use-macro="here/macros/accesskeys" />
+      <div metal:use-macro="here/macros/links" />
       <div metal:use-macro="here/macros/pageheader" />
       <div metal:use-macro="here/macros/ratingform" />
       <br tal:condition="here/usingPloneSkin" />
