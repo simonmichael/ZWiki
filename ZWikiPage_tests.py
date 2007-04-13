@@ -226,7 +226,7 @@ class Tests(ZwikiTestCase):
 
     def test_linkTitleFrom(self):
         edittime = DateTime.DateTime() - 0.2
-        edittime = edittime.ISO()
+        edittime = edittime.toZone('UTC').ISO()
         r = self.p.linkTitleFrom()
         self.assertEquals( r, 'last edited some time ago')
         r = self.p.linkTitleFrom(prettyprint=1) 
