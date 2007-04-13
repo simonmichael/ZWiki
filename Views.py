@@ -3,29 +3,28 @@ Zwiki's skin mechanism and main UI view methods.
 
 Zwiki has a built-in skin mechanism which aims to just work and be easily
 customizable, whether in standard zope, CMF or Plone, without requiring
-any extra products or setup. Here's the scoop:
+any extra products or setup. Here are details:
 
 View methods
 ------------
 *view methods* are methods which render a particular screen in Zwiki's UI
-- editform, diffform, the main page view, etc. These define the standard
-wiki page views which are always available no matter what kind of site we
-are in. Three examples: the main page view, the edit form, the backlinks
-form, rendered by __call__(), editform(), and backlinks() respectively. We
-also have helper view methods which render smaller parts of the UI. Most
-view methods are defined by the SkinViews mixin below; others are defined
-by plugins.
+- for example the main page view, /editform, /backlinks (rendered by
+__call__(), editform(), and backlinks() respectively). These define the
+standard wiki page views which are always available no matter what kind of
+site we are in. There are also helper methods which render smaller parts
+of the UI. Most view methods are defined by the SkinViews mixin below,
+while others are defined by plugins.
 
 Skin templates
 --------------
 view methods use a *skin template* to control their rendering.  This is a
-page template, dtml method or file of the same name as the method (perhaps
-with a suffix added). It is found by looking first in the ZODB (current
-folder, acquisition context, CMF skin layers), then on the filesystem
-(plugins, ZWiki/skins/<current skin>, ZWiki/skins/zwiki) - see
-getSkinTemplate for more details. The default zwiki skin provides all
-the standard templates, and these may be overridden selectively.
-They are listed here: http://zwiki.org/QuickReference#skin-templates
+page template, dtml method or file of the same name as the method
+(optionally with the standard suffix added). It is found by looking first
+in the ZODB (current folder, acquisition context, CMF skin layers), then
+on the filesystem (plugins, ZWiki/skins/<current skin>, ZWiki/skins/zwiki)
+- see getSkinTemplate for more details. The default zwiki skin provides
+all the standard templates, and these may be overridden selectively.  They
+are listed at http://zwiki.org/QuickReference#skin-templates .
 
 Skin macros
 -----------
@@ -77,11 +76,11 @@ Other notes
   RecentChanges.dtml.
 
 - the stylesheet method looks for a skin template object named
-  ``stylesheet.css`` of ``stylesheet``, in that order.  See also
+  ``stylesheet.css`` or ``stylesheet`` in that order.  See also
   http://zwiki.org/HowToSetUpAnEditableStylesheet .
 
 - when running zope in debug mode, all filesystem-based skin templates and
-  macros will refresh, showing changes immediately without a zope restart.
+  macros will show changes immediately without a zope restart.
 
 """
 
