@@ -17,7 +17,7 @@
                      histinfo   python:history[revA-1];
                      time       histinfo/time/ISO;
                      description histinfo/description;
-                     revinfo    python:here.revisionInfoFor(revA-1);
+                     revinfo    python:here.revisionInfo(revA-1);
                      editor     revinfo/last_editor;
                      ">
       <metal:macro metal:use-macro="here/macros/accesskeys" />
