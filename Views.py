@@ -701,7 +701,16 @@ class SkinUtils:
         if (hasattr(REQUEST,'bare') or kw.has_key('bare')):
             return body
         else:
-            return self.getSkinTemplate('wikipage')(self,REQUEST,body=body,**kw)
+            # XXX temporary hack for #1330
+            # content.pt's "structure options/body" won't accept utf-8 since zope 2.10
+            # cram it in any way we can
+            try:
+                t = unicode(body)
+                return self.getSkinTemplate('wikipage')(self,REQUEST,body=body,**kw)
+            except UnicodeDecodeError:
+                return re.sub(r'SCARYUTF',
+                              unicode(body,'utf-8'),
+                              self.getSkinTemplate('wikipage')(self,REQUEST,body='SCARYUTF',**kw))
 
 InitializeClass(SkinUtils)
 
