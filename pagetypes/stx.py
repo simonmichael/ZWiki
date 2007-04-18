@@ -4,9 +4,14 @@ from Products.ZWiki.pagetypes import registerPageType
 
 from Globals import MessageDialog
 import StructuredText
-from StructuredText.DocumentWithImages import DocumentWithImages
-try: from StructuredText.DocumentClass import StructuredTextTable
-except ImportError: pass #older zope, won't need it
+try:
+    from zope.structuredtext.document import DocumentWithImages
+except ImportError:
+    from StructuredText.DocumentWithImages import DocumentWithImages
+try:
+    from StructuredText.DocumentClass import StructuredTextTable
+except ImportError:
+    pass #older zope, won't need it
 
 class PageTypeStx(PageTypeBaseHtml):
     _id = 'stx'

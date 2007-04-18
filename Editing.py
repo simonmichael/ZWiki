@@ -16,9 +16,12 @@ from App.Common import rfc1123_date
 from DateTime import DateTime
 from Globals import InitializeClass
 try:
-    from zope.app.content_types import guess_content_type
+    from zope.contenttype import guess_content_type
 except ImportError:
-    from OFS.content_types import guess_content_type
+    try:
+        from zope.app.content_types import guess_content_type
+    except ImportError:
+        from OFS.content_types import guess_content_type
 from OFS.DTMLDocument import DTMLDocument
 from OFS.ObjectManager import BadRequestException
 import OFS.Image
