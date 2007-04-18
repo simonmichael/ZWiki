@@ -216,6 +216,13 @@ class ZWikiPage(
         # cope with non-existing or None attribute on old instances - needed ?
         return getattr(self,'_prerendered','') or ''
 
+    # for unit tests: never pickle REQUEST, so zodb save works
+    def __getstate__(self):
+        odict = self.__dict__.copy()
+        try: del odict['REQUEST']
+        except KeyError: pass
+        return odict
+
     ######################################################################
     # initialization
 
