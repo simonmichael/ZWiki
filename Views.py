@@ -92,7 +92,6 @@ from string import split,join,find,lower,rfind,atoi,strip
 
 from App.Common import rfc1123_date
 from AccessControl import getSecurityManager, ClassSecurityInfo
-import Permissions
 from OFS.Image import File
 from Globals import InitializeClass, MessageDialog
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -100,6 +99,7 @@ from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from Products.PageTemplates.Expressions import SecureModuleImporter
 from ComputedAttribute import ComputedAttribute
 
+import Permissions
 from Defaults import PAGE_METATYPE
 from Utils import BLATHER, formattedTraceback, abszwikipath
 from I18n import _, DTMLFile, HTMLFile
@@ -322,7 +322,7 @@ class SkinViews:
                                                     hierarchy=hierarchy,
                                                     singletons=singletons)
 
-    security.declareProtected(Permissions.Add, 'createform')
+    security.declarePublic('createform')      # check permissions at runtime
     def createform(self, REQUEST=None, page=None, text=None, pagename=None):
         """
         Render the create form (template-customizable).
@@ -333,6 +333,9 @@ class SkinViews:
         It may also be customized by a createform skin template, in
         which case page creation and page editing forms are different.
         """
+        if not self.checkPermission(Permissions.Add, self.folder()):
+            raise 'Unauthorized', (
+                _('You are not authorized to add pages in this wiki.'))
         if not self.checkSufficientId(REQUEST):
             return self.denied(
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))

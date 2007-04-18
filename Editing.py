@@ -37,7 +37,7 @@ class PageEditingSupport:
     def checkPermission(self, permission, object):
         return getSecurityManager().checkPermission(permission,object)
 
-    security.declareProtected(Permissions.Add, 'create') 
+    security.declarePublic('createform')      # check permissions at runtime
     def create(self,page=None,text='',type=None,title='',REQUEST=None,log='',
                sendmail=1, parents=None, subtopics=None, pagename=None):
         """
@@ -66,6 +66,9 @@ class PageEditingSupport:
         - returns the new page's name or None
 
         """
+        if not self.checkPermission(Permissions.Add, self.folder()):
+            raise 'Unauthorized', (
+                _('You are not authorized to add pages in this wiki.'))
         if not self.checkSufficientId(REQUEST):
             if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl()+'/denied')
             return None
