@@ -1,13 +1,13 @@
 <html>
   <body>
 
-    <div metal:define-macro="content" class="content">
-      <!-- page content (main text, subtopics links, comments) -->
-      <!--
-      <div metal:use-macro="here/macros/maintext" />
-      <div metal:use-macro="here/macros/subtopics" />
-      <div metal:use-macro="here/macros/comments" />
+    <!-- page content (main text, subtopics links, comments)
+         should probably split into
+         <div metal:use-macro="here/macros/maintext" />
+         <div metal:use-macro="here/macros/subtopics" />
+         <div metal:use-macro="here/macros/comments" />
       -->
+    <div metal:define-macro="content" class="content">
       <div tal:replace="structure options/body">
         main text, subtopics links, comments
       </div>
