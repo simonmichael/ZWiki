@@ -74,7 +74,8 @@ from Regexps import url, bracketedexpr, singlebracketedexpr, \
 from Utils import PageUtils, BLATHER, DateTimeSyntaxError
 from Views import PageViews
 from OutlineSupport import PageOutlineSupport
-from Diff import PageDiffSupport
+from Diff import PageDiffSupport # XXX to be replaced by..
+from History import PageHistorySupport
 from Mail import PageSubscriptionSupport, PageMailSupport
 from Catalog import PageCatalogSupport
 from CMF import PageCMFSupport
@@ -110,7 +111,8 @@ class ZWikiPage(
     PLUGINS[15],
     PageEditingSupport, 
     PageOutlineSupport,
-    PageDiffSupport,
+    PageDiffSupport, # XXX to be replaced by..
+    PageHistorySupport,
     PageMailSupport,
     PageSubscriptionSupport,
     PageCatalogSupport,

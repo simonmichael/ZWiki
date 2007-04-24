@@ -98,12 +98,6 @@ class PageDiffSupport:
         except AttributeError:
             return []
 
-    def revisionCount(self):
-        """
-        How many old revisions are available in the ZODB ?
-        """
-        return len(self.history())
-
     security.declareProtected(Permissions.View, 'pageRevision')
     def pageRevision(self, rev):
         """

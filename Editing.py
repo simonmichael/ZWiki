@@ -266,7 +266,6 @@ class PageEditingSupport:
         attributes if a change is made
 
         - If the text begins with "DeleteMe", delete this page
-        (move it to the /recycle_bin)
 
         - If file has been submitted in REQUEST, create a file or
         image object and link or inline it on the current page.
@@ -314,8 +313,8 @@ class PageEditingSupport:
         p.handleFileUpload(REQUEST,log)
         p.handleRename(title,leaveplaceholder,updatebacklinks,REQUEST,log)
         #if self.usingRegulations(): p.handleSetRegulations(REQUEST)
-
         p.index_object()
+        p.saveRevision()
 
         # tell browser to reload the page (or redirect elsewhere)
         if REQUEST:
@@ -405,34 +404,6 @@ class PageEditingSupport:
                 REQUEST=REQUEST,
                 subject='(edit) %s' % log)
 
-    def handleDeleteMe(self,text,REQUEST=None,log=''):
-        if not text or not re.match('(?m)^DeleteMe', text):
-            return 0
-        if (not
-            (self.checkPermission(Permissions.Edit, self) or
-             (self.checkPermission(Permissions.Comment, self)
-              and find(self.cleanupText(text),self.read()) == 0))):
-            raise 'Unauthorized', (
-                _('You are not authorized to edit this ZWiki Page.'))
-        if not self.checkPermission(Permissions.Delete, self):
-            raise 'Unauthorized', (
-                _('You are not authorized to delete this ZWiki Page.'))
-        self.setLastLog(log)
-        self.recycle(REQUEST)
-
-        if REQUEST:
-            # redirect to first existing parent, or front page
-            destpage = ''
-            for p in self.parents:
-                if hasattr(self.folder(),p):
-                    destpage = p
-                    break
-            REQUEST.RESPONSE.redirect(self.wiki_url()+'/'+quote(destpage))
-            # I used to think redirect did not return, guess I was wrong
-
-        # return true to terminate edit processing
-        return 1
-
     def handleRename(self,newname,leaveplaceholder,updatebacklinks,
                       REQUEST=None,log=''):
         # rename does everything we need
@@ -441,55 +412,51 @@ class PageEditingSupport:
                            updatebacklinks=updatebacklinks,
                            REQUEST=REQUEST)
 
+    def handleDeleteMe(self,text,REQUEST=None,log=''):
+        if not text or not re.match('(?m)^DeleteMe', text):
+            return 0
+        if not self.checkPermission(Permissions.Edit, self):
+            raise 'Unauthorized', (
+                _('You are not authorized to edit this ZWiki Page.'))
+        if not self.checkPermission(Permissions.Delete, self):
+            raise 'Unauthorized', (
+                _('You are not authorized to delete this ZWiki Page.'))
+        self.setLastLog(log)
+        self.delete(REQUEST=REQUEST)
+        return 1 # terminate edit processing
+
     security.declareProtected(Permissions.Delete, 'delete')
     def delete(self,REQUEST=None, updatebacklinks=1, pagename=None):
         """
-        Delete (move to recycle_bin) this page, if permissions allow.
+        Delete this page, if permissions allow.
+
+        The last revision will be archived.
 
         If the pagename argument is provided (so named due to the page
         management form), we will try to redirect all links which point to
         this page, to that one. This is like doing a rename except this
         page vanishes in a puff of smoke. See also rename. As with that
         method, an updatebacklinks=0 argument will disable this.
-
         XXX no it won't ? also, need a flag to disable reparenting
         """
-        oldname, oldid = self.pageName(), self.getId()
-        # update parents attributes to avoid orphans
+        oldname,oldid,redirecturl = self.pageName(),self.getId(),self.upUrl()
+        # reparent my children, if any
         self.moveMyChildrenTo(self.primaryParentName())
-        # if a replacement page is specified, redirect all our backlinks there
+        # if a replacement pagename is specified, redirect my backlinks there
         if pagename and string.strip(pagename):
             self.replaceLinksThroughoutWiki(oldname,pagename,REQUEST)
-        # get parent url while we still can
-        redirecturl = self.upUrl()
-        # unindex (and remove from outline) and move to the recycle bin folder
-        self.recycle(REQUEST)
+        # archive my last revision
+        self.saveRevision()
+        # delete me - hopefully this updates outline and catalog too
+        self.folder().manage_delObjects([self.getId()])
         # notify subscribers if appropriate
         self.sendMailToEditSubscribers(
             'This page was deleted.\n',
             REQUEST=REQUEST,
             subjectSuffix='',
             subject='(deleted)')
+        # redirect somewhere sensible
         if REQUEST: REQUEST.RESPONSE.redirect(redirecturl)
-
-    def ensureRecycleBin(self):
-        if not hasattr(self.folder().aq_base,'recycle_bin'):
-            self.folder().manage_addFolder('recycle_bin', 'deleted wiki pages')
-
-    def recycle(self, REQUEST=None):
-        """
-        Move this page to the recycle_bin subfolder, creating it if necessary.
-        """
-        self.ensureRecycleBin()
-        f = self.folder()
-        # cut or paste also unindexes, I believe
-        cb = f.manage_cutObjects(self.getId())
-        # kludge! don't let manage_pasteObjects catalog the new location
-        # (or add it to wiki outline)
-        save = self.__class__.manage_afterAdd
-        self.__class__.manage_afterAdd = lambda self,item,container: None
-        f.recycle_bin.manage_pasteObjects(cb)
-        self.__class__.manage_afterAdd = save
 
     security.declareProtected(Permissions.Rename, 'rename')
     def rename(self,pagename,
