@@ -171,7 +171,6 @@ class Tests(ZwikiTestCase):
                           '<a href="http://a.b.c/d">http://a.b.c/d</a>')
         self.assertEquals(self.p.renderLinksIn('mailto://a@b.c'),
                           '<a href="mailto://a@b.c">mailto://a@b.c</a>')
-        #import pdb; pdb.set_trace()
         self.assertEquals(self.p.renderLinksIn('TestPage'),
                           '<a href="http://nohost/test_folder_1_/wiki/TestPage">TestPage</a>')
 #                          '<a href="/test_folder_1_/wiki/TestPage" title="" style="background-color:;">TestPage</a>')

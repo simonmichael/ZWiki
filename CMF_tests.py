@@ -99,7 +99,6 @@ else:
             #app = ZopeTestCase.app()
             #ZopeTestCase.utils.setupSiteErrorLog(app)
             #ZopeTestCase.close(app)
-            #import pdb; pdb.set_trace()
             import ZPublisher
             t = ZPublisher.test('Zope',self.portal.TestPage.getPath())
             # can't make this work either.. TestPage seems to be disappearing
