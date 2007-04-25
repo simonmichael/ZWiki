@@ -12,9 +12,9 @@
       <h1 i18n:translate="">Bad template</h1>
       <p i18n:translate="">
         There was a problem locating one of this wiki's skin templates.
-        There may be a page or other non-page-template/non-dtml-method object
-        with the same ID, obscuring the template. Or the template may be
-        missing on the filesystem (an incomplete Zwiki installation).
+        There may be another object in the ZODB with the the same ID,
+        obscuring the skin template. Or the template may be missing on the
+        filesystem due to an incomplete Zwiki installation.
       </p>
     </div>
   </body>
