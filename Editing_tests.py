@@ -2,6 +2,8 @@ from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 
+from Diff import textdiff
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(Tests))
@@ -543,7 +545,7 @@ long citations
         text = re.sub(r'Message-ID: <[^>]+>',r'Message-ID: <>',text)
         text = re.sub(r'In-reply-to: <[^>]+>',r'In-reply-to: <>',text)
         self.assertEqual(text,SHOULDWRITE)
-        diff = PageDiffSupport().textDiff(a=oldtext,b=text,verbose=0)
+        diff = textdiff(a=oldtext,b=text,verbose=0)
         self.assertEqual(diff,SHOULDDIFF)
         #self.assertEqual(p.formatMailout(diff), SHOULDMAILOUT)
 
@@ -554,7 +556,7 @@ long citations
         text = p.read()
         text = re.sub(r'Message-ID: <[^>]+>',r'Message-ID: <>',text)
         text = re.sub(r'In-reply-to: <[^>]+>',r'In-reply-to: <>',text)
-        diff = PageDiffSupport().textDiff(a=oldtext,b=text,verbose=0)
+        diff = textdiff(a=oldtext,b=text,verbose=0)
         #self.assertEqual(p.formatMailout(diff),
 #                         """\
 #From me Fri Dec 31 00:00:00 +0000 1999 From: me Date: Fri, 31 Dec 1999
@@ -572,7 +574,7 @@ long citations
         text = re.sub(r'Message-ID: <[^>]+>',r'Message-ID: <>',text)
         text = re.sub(r'In-reply-to: <[^>]+>',r'In-reply-to: <>',text)
         self.assertEqual(text,SHOULDWRITE)
-        diff = PageDiffSupport().textDiff(a=oldtext,b=text,verbose=0)
+        diff = textdiff(a=oldtext,b=text,verbose=0)
         self.assertEqual(diff,SHOULDDIFF)
         #self.assertEqual(p.formatMailout(diff), SHOULDMAILOUT)
 

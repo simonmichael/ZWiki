@@ -20,7 +20,12 @@ class PageHistorySupport:
     security.declareProtected(Permissions.View, 'revision')
     def revision(self):
         """This page's revision number, starting from 1."""
-        return self.revisionCount()
+        m = re.match(r'.*\.(\d+)', self.getId())
+        if m:
+            # I am a page revision object, get the revision from my id
+            return int(m.group(1))
+        else:
+            return self.revisionCount()
 
     security.declareProtected(Permissions.View, 'revisionCount')
     def revisionCount(self):
@@ -75,5 +80,37 @@ class PageHistorySupport:
         self.__class__.manage_afterAdd = manage_afterAdd
         self.__class__.wikiOutline = wikiOutline
 
+    # backwards compatibility / temporary
+
+    def forwardRev(self,rev): return self.revisionCount() - rev - 1
+
+    security.declareProtected(Permissions.View, 'pageRevision')
+    def pageRevision(self, rev):
+        """
+        Get one of the previous revisions of this page object.
+
+        The argument increases to select older revisions, eg revision 1 is
+        the most recent version prior to the current one, revision 2 is
+        the version before that, etc.
+        """
+        rev = self.forwardRev(int(rev))
+        return self.revisions()[rev]
+
+    def lastlog(self, rev=0, withQuotes=0):
+        """
+        Get the log note from an earlier revision of this page.
+
+        Just a quick helper for diff browsing.
+        """
+        rev = self.forwardRev(int(rev))
+        note = self.revisions()[rev].lastLog()
+        match = re.search(r'"(.*)"',note)
+        if match:
+            if withQuotes: return match.group()
+            else: return match.group(1)
+        else:
+            return ''
 
 InitializeClass(PageHistorySupport)
+
+

@@ -1,35 +1,37 @@
 from testsupport import *
+ZopeTestCase.installProduct('ZWiki')
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(TestsOfMailout))
-    suite.addTest(unittest.makeSuite(TestsOfSubscription))
+#    suite.addTest(unittest.makeSuite(TestsOfMailout))
+    suite.addTest(unittest.makeSuite(Tests))
     return suite
 
-class TestsOfMailout(unittest.TestCase):
-    def setUp(self):
-        self.p = mockPage()
-        # mock up and record mail sending
-        # XXX hacks MockZWikiPage class!
-        self.p.mock_mailout_happened = 0
-        def mock_sendMailToSubscribers(self, text, REQUEST, subjectSuffix='',
-                                       subject='',message_id=None,in_reply_to=None,
-                                       exclude_address=None):
-            self.mock_mailout_happened = 1
-            self.mock_mailout_text = text
-            self.mock_mailout_REQUEST = REQUEST
-            self.mock_mailout_subjectSuffix = subjectSuffix
-            self.mock_mailout_subject = subject
-        self.savemethod = self.p.__class__.sendMailToSubscribers
-        self.p.__class__.sendMailToSubscribers = mock_sendMailToSubscribers
+# class TestsOfMailout(ZwikiTestCase):
+#     def setUp(self):
+# #         self.p = mockPage()
+#         super(TestsOfMailout,self).setUp()
+#         # mock up and record mail sending
+#         # XXX hacks MockZWikiPage class!
+#         self.p.mock_mailout_happened = 0
+#         def mock_sendMailToSubscribers(self, text, REQUEST, subjectSuffix='',
+#                                        subject='',message_id=None,in_reply_to=None,
+#                                        exclude_address=None):
+#             self.mock_mailout_happened = 1
+#             self.mock_mailout_text = text
+#             self.mock_mailout_REQUEST = REQUEST
+#             self.mock_mailout_subjectSuffix = subjectSuffix
+#             self.mock_mailout_subject = subject
+#         self.savemethod = self.p.__class__.sendMailToSubscribers
+#         self.p.__class__.sendMailToSubscribers = mock_sendMailToSubscribers
 
-    def tearDown(self):
-        self.p.__class__.sendMailToSubscribers = self.savemethod
+#     def tearDown(self):
+#         self.p.__class__.sendMailToSubscribers = self.savemethod
         
-    # see also testCommentFormatting
-    def testCommentMailout(self):
-        self.p.comment(text='comment',username='me',time='1999/12/31 GMT')
-        self.assertEquals(self.p.mock_mailout_happened,1)
+#     # see also testCommentFormatting
+#     def testCommentMailout(self):
+#         self.p.comment(text='comment',username='me',time='1999/12/31 GMT')
+#         self.assertEquals(self.p.mock_mailout_happened,1)
 
     #def testMailoutCommentWithOrWithoutSubjectField(self):
     # need to call the real sendMailToSubscribers
@@ -39,55 +41,8 @@ class TestsOfMailout(unittest.TestCase):
     #    self.p.comment(text='comment',username='me',time='now')
     #    self.assertEquals(self.p.mock_mailout_happened,1)
 
-    def testTextFormatter(self):
-        # what's textformatter really doing ?
-        from Products.ZWiki.TextFormatter import TextFormatter
-        formatter = TextFormatter((
-            {'width':78, 'fill':0, 'pad':0},
-            ))
-        self.assertEqual(formatter.compose(('',)),'')
-        self.assertEqual(formatter.compose(('sometext',)),'sometext')
-        self.assertEqual(formatter.compose(('sometext\n',)),'sometext')
-        self.assertEqual(formatter.compose(('sometext\n\n',)),'sometext\n')
-        self.assertEqual(formatter.compose(('sometext\n\n\n',)),'sometext\n\n')
-        self.assertEqual(formatter.compose(('\nsometext',)),'\n sometext')
-        self.assertEqual(formatter.compose(('\n\nsometext',)),'\n\nsometext')
-        # chops a trailing newline and inserts a space after a single
-        # leading newline
 
-    # see also testZWikiPage.testCommentFormatting
-    #def test_formatMailout(self):
-    #    #fmt = self.p.formatMailout
-    #    fmt = PageMailSupport().formatMailout
-    #    # formatting nothing is ok
-    #    self.assertEqual(fmt(' '),'')
-    #    # fill paragraphs, strip leading and trailing newlines,
-    #    # don't touch indented paragraphs or citations
-    #    self.assertEqual(
-    #        fmt('''
-#
-#long long long long long long long long long long long long long long long
-#long long long line
-#long long long long long long long long long long long long long long long
-#long long long line
-#
-# long long long long long long long long long long long long long long long
-#
-#>long long long long long long long long long long long long long long long
-#'''),
-#            '''\
-#long long long long long long long long long long long long long long
-#long long long long line long long long long long long long long long
-#long long long long long long long long long line
-#
-# long long long long long long long long long long long long long long long
-#
-#>long long long long long long long long long long long long long long
-#>long
-#''')
-
-
-class TestsOfSubscription(unittest.TestCase):
+class Tests(ZwikiTestCase):
     def test_isSubscriber(self):
         sl = mockPage()
         sl._setSubscribers(['a','b'])
@@ -152,3 +107,49 @@ class TestsOfSubscription(unittest.TestCase):
         p.unsubscribe('b@b.b')
         self.assert_('a@a.a' in p.subscriberList(edits=1))
         
+    def test_TextFormatter(self):
+        # what's textformatter really doing ?
+        from TextFormatter import TextFormatter
+        formatter = TextFormatter((
+            {'width':78, 'fill':0, 'pad':0},
+            ))
+        self.assertEqual(formatter.compose(('',)),'')
+        self.assertEqual(formatter.compose(('sometext',)),'sometext')
+        self.assertEqual(formatter.compose(('sometext\n',)),'sometext')
+        self.assertEqual(formatter.compose(('sometext\n\n',)),'sometext\n')
+        self.assertEqual(formatter.compose(('sometext\n\n\n',)),'sometext\n\n')
+        self.assertEqual(formatter.compose(('\nsometext',)),'\n sometext')
+        self.assertEqual(formatter.compose(('\n\nsometext',)),'\n\nsometext')
+        # chops a trailing newline and inserts a space after a single
+        # leading newline
+
+    # see also testZWikiPage.testCommentFormatting
+    #def test_formatMailout(self):
+    #    #fmt = self.p.formatMailout
+    #    fmt = PageMailSupport().formatMailout
+    #    # formatting nothing is ok
+    #    self.assertEqual(fmt(' '),'')
+    #    # fill paragraphs, strip leading and trailing newlines,
+    #    # don't touch indented paragraphs or citations
+    #    self.assertEqual(
+    #        fmt('''
+#
+#long long long long long long long long long long long long long long long
+#long long long line
+#long long long long long long long long long long long long long long long
+#long long long line
+#
+# long long long long long long long long long long long long long long long
+#
+#>long long long long long long long long long long long long long long long
+#'''),
+#            '''\
+#long long long long long long long long long long long long long long
+#long long long long line long long long long long long long long long
+#long long long long long long long long long line
+#
+# long long long long long long long long long long long long long long long
+#
+#>long long long long long long long long long long long long long long
+#>long
+#''')

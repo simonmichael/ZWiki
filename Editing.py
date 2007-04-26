@@ -32,6 +32,7 @@ import Permissions
 from Regexps import javascriptexpr, htmlheaderexpr, htmlfooterexpr
 from Utils import get_transaction, BLATHER, parseHeadersBody
 from I18n import _
+from Diff import textdiff
 
 
 class PageEditingSupport:
@@ -197,6 +198,7 @@ class PageEditingSupport:
         # it to both source and _prerendered cached without re-rendering
         # the whole thing! This might not be legal for all future page
         # types.
+        self.saveRevision()
         # add to source, in standard rfc2822 format:
         t = str(m)
         self.checkForSpam(t)
@@ -307,14 +309,13 @@ class PageEditingSupport:
         # ok, changing p. We may do several things at once; each of these
         # handlers checks permissions and does the necessary.
         if p.handleDeleteMe(text,REQUEST,log): return
+        p.saveRevision()
         p.handleEditPageType(type,REQUEST,log)
         if text != None: p.handleEditText(text,REQUEST,subjectSuffix,log)
         p.handleSubtopicsProperty(subtopics,REQUEST)
         p.handleFileUpload(REQUEST,log)
         p.handleRename(title,leaveplaceholder,updatebacklinks,REQUEST,log)
-        #if self.usingRegulations(): p.handleSetRegulations(REQUEST)
         p.index_object()
-        p.saveRevision()
 
         # tell browser to reload the page (or redirect elsewhere)
         if REQUEST:
@@ -362,10 +363,9 @@ class PageEditingSupport:
             self.setLastEditor(REQUEST)
             self.setLastLog(log)
 
-        """
-        Note log message, if provided.
-        """
+    security.declarePrivate('setLastLog')
     def setLastLog(self,log):
+        """Save an edit log message, if provided."""
         if log and string.strip(log):
             log = string.strip(log)
             get_transaction().note('"%s"' % log)
@@ -373,6 +373,9 @@ class PageEditingSupport:
         else:
             self.last_log = ''
 
+    def lastLog(self):
+        """Accessor for this page's last edit log message."""
+        return self.last_log
 
     def handleEditText(self,text,REQUEST=None, subjectSuffix='', log=''):
         old = self.read()
@@ -400,7 +403,7 @@ class PageEditingSupport:
 
             # send mail if appropriate
             self.sendMailToEditSubscribers(
-                self.textDiff(a=old,b=self.read()),
+                textdiff(a=old,b=self.read()),
                 REQUEST=REQUEST,
                 subject='(edit) %s' % log)
 

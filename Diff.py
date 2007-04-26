@@ -60,7 +60,7 @@ class PageDiffSupport:
         """
         Display a diff between two revisions of this page, as a web page.
         
-        Uses the diffform template. See rawDiff for more.
+        Uses the diffform template. See rawdiff for more.
 
         XXX should skip uninteresting transactions
         if re.search(r'(/edit|/comment|/append|PUT)',lastrevision['description']):
@@ -80,39 +80,6 @@ class PageDiffSupport:
         helpers for form buttons
         """
         return self.diff(int(currentRevision)-1,int(currentRevision)-2)
-
-    def history(self):
-        """
-        Return the list of ZODB transaction history entries.
-
-        This is an alias for manage_change_history and is fairly
-        limited. History entries may relate to things other than text
-        changes, eg a property change. They contain some basic information
-        and may be used to fetch the old object (revision) from the
-        ZODB. When the ZODB is packed, history and revisions disappear.
-        The maximum number of history entries we can get is 20.
-        """
-        # workaround till #1325 is fixed and we have zodb history:
-        try:
-            return self.manage_change_history()
-        except AttributeError:
-            return []
-
-    security.declareProtected(Permissions.View, 'pageRevision')
-    def pageRevision(self, rev):
-        """
-        Get one of the previous revisions of this page object.
-
-        The argument increases to select older revisions, eg revision 1 is
-        the most recent version prior to the current one, revision 2 is
-        the version before that, etc.
-        """
-        rev = int(rev)
-        try: historyentry = self.history()[rev]
-        except IndexError: return None
-        key = historyentry['key']
-        serial = apply(pack, ('>HHHH',)+tuple(map(atoi, split(key,'.'))))
-        return historicalRevision(self, serial)
 
     security.declareProtected(Permissions.View, 'revisionInfo')
     def revisionInfo(self, rev):
@@ -238,24 +205,6 @@ class PageDiffSupport:
                     BLATHER('committing after %d reverts' % n)
                     get_transaction().commit()
         
-    def lastlog(self, rev=0, withQuotes=0):
-        """
-        Get the log note from an earlier revision of this page.
-
-        Just a quick helper for diff browsing.
-        """
-        rev = int(rev)
-        try:
-            note = self.history()[rev]['description']
-        except IndexError:
-            return ''
-        match = re.search(r'"(.*)"',note)
-        if match:
-            if withQuotes: return match.group()
-            else: return match.group(1)
-        else:
-            return ''
-
     def htmlDiff(self,revA=1,revB=0,a=None,b=None):
         """
         Generate a readable HTML-formatted diff of this page's revisions.
@@ -276,7 +225,7 @@ class PageDiffSupport:
         # diffform encloses all this in a pre, so need to avoid line
         # breaks for now
         def addnobr(s): r[-1] += s
-        for tag, alo, ahi, blo, bhi in self.rawDiff(a,b):
+        for tag, alo, ahi, blo, bhi in rawdiff(a,b):
             if tag == 'replace':
                 add('<b>changed:</b>')
                 addnobr('<span style="color:red;text-decoration:line-through">')
@@ -307,39 +256,13 @@ class PageDiffSupport:
         """
         Generate readable a plain text diff of this page's revisions.
 
-        This should optimize for human readability, as people may be
-        getting a lot of these in mail-outs.
-
         Revisions are numbered backwards from the latest (0).
         Alternately, a and/or b texts can be specified.
-        verbose adds more decoration.
-
-        Each text segment is abbreviated according to built in constants,
-        to avoid eg generating monster mail-outs. This can be annoying.
+        See textdiff.
         """
         a = a or self.lasttext(rev=revA)
         b = b or self.lasttext(rev=revB)
-        a = split(a,'\n')
-        b = split(b,'\n')
-        r = []
-        add, addm = r.append, r.extend
-        for tag, alo, ahi, blo, bhi in self.rawDiff(a,b):
-            if tag == 'replace':
-                if verbose: add('??changed:')
-                addm(abbreviate(a[alo:ahi],'-',MAX_OLD_LINES_DISPLAY))
-                addm(abbreviate(b[blo:bhi],'',MAX_NEW_LINES_DISPLAY))
-                add('')
-            elif tag == 'delete':
-                if verbose: add('--removed:')
-                addm(abbreviate(a[alo:ahi],'-',MAX_OLD_LINES_DISPLAY))
-                add('')
-            elif tag == 'insert':
-                if verbose: add('++added:')
-                addm(abbreviate(b[blo:bhi],'',MAX_NEW_LINES_DISPLAY))
-                add('')
-            else: # tag == 'equal'
-                pass 
-        return '\n' + join(r,'\n')
+        return textdiff(a,b,verbose)
 
     def addedText(self,a,b):
         """
@@ -348,20 +271,10 @@ class PageDiffSupport:
         a = split(a,'\n')
         b = split(b,'\n')
         r = []
-        for tag, alo, ahi, blo, bhi in self.rawDiff(a,b):
+        for tag, alo, ahi, blo, bhi in rawdiff(a,b):
             if tag in ('insert','replace'): r.extend((b[blo:bhi]))
             else: pass
         return '\n' + join(r,'\n')
-
-    def rawDiff(self,a,b):
-        """
-        Return a diff between two texts, as difflib opcodes.
-        """
-        return ndiff.SequenceMatcher(
-            #isjunk=lambda x: x in " \\t", # requires newer difflib
-            isjunk=ISJUNK,
-            a=a,
-            b=b).get_opcodes()
 
     # wikifornow stuff - roll em in, sort em out later
 #    def wfn_get_page_history(self, mode='condensed',
@@ -521,4 +434,48 @@ class PageDiffSupport:
 
 
 InitializeClass(PageDiffSupport)
+
+def rawdiff(a,b):
+    """
+    Return a diff between two texts, as difflib opcodes.
+    """
+    return ndiff.SequenceMatcher(
+        #isjunk=lambda x: x in " \\t", # requires newer difflib
+        isjunk=ISJUNK,
+        a=a,
+        b=b).get_opcodes()
+
+def textdiff(a, b, verbose=1):
+    """
+    Generate readable a plain text diff between two texts.
+
+    This should optimize for human readability, as people may be
+    getting a lot of these in mail-outs.
+
+    verbose adds more decoration.
+
+    Each text segment is abbreviated according to built in constants,
+    to avoid eg generating monster mail-outs. This can be annoying.
+    """
+    a = split(a,'\n')
+    b = split(b,'\n')
+    r = []
+    add, addm = r.append, r.extend
+    for tag, alo, ahi, blo, bhi in rawdiff(a,b):
+        if tag == 'replace':
+            if verbose: add('??changed:')
+            addm(abbreviate(a[alo:ahi],'-',MAX_OLD_LINES_DISPLAY))
+            addm(abbreviate(b[blo:bhi],'',MAX_NEW_LINES_DISPLAY))
+            add('')
+        elif tag == 'delete':
+            if verbose: add('--removed:')
+            addm(abbreviate(a[alo:ahi],'-',MAX_OLD_LINES_DISPLAY))
+            add('')
+        elif tag == 'insert':
+            if verbose: add('++added:')
+            addm(abbreviate(b[blo:bhi],'',MAX_NEW_LINES_DISPLAY))
+            add('')
+        else: # tag == 'equal'
+            pass 
+    return '\n' + join(r,'\n')
 

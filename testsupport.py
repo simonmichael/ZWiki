@@ -105,20 +105,21 @@ class MockUser:
 
 class MockZWikiPage(ZWikiPage):
     """
-    A mock ZWikiPage object for use in testing.
+    A mock ZWikiPage object used by some tests.
 
     Notes:
     - use mockPage() to instantiate these with a real acquisition context
     - some zopish things don't work and are too much work to mock
-    - much time wasted debugging obscure mockup-related problems
+    - much time wasted debugging obscure mockup-related problems,
+      hardly worth bothering with imho
     """
     def __init__(self, source_string='', mapping=None, __name__='TestPage'):
         apply(ZWikiPage.__init__,(self,source_string,mapping,__name__))
         self.REQUEST = MockRequest()
-    def checkPermission(self, permission, object):
-        return 1
-    def cb_isMoveable(self):
-        return 1
+    def checkPermission(self, permission, object): return 1
+    def cb_isMoveable(self): return 1
+    def cb_isCopyable(self): return 1
+    def getPhysicalRoot(self): return self.folder()
     ZopeTime = DateTime.DateTime
 
 def mockPage(source_string='', mapping=None, __name__='TestPage', folder=None):

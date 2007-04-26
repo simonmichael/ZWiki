@@ -1,5 +1,11 @@
 from Products.ZWiki.testsupport import *
 from Products.ZWiki.Extensions import mailin
+ZopeTestCase.installProduct('ZWiki')
+
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(Tests))
+    return suite
 
 THISPAGE    = 'TestPage'
 TESTSENDER  = 'sender'
@@ -9,11 +15,6 @@ TESTSUBJECT = 'subject'
 TESTBODY    = 'mailin comment\n'
 LONGSUBJECT = """\
 a long long long long long long long long long long long long long subject"""
-
-def test_suite():
-    suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(Tests))
-    return suite
 
 class TestMessage:
     def __init__(self,sender=TESTSENDER,to=TESTTO,cc='',bcc='',
@@ -43,17 +44,11 @@ Subject: %s
 TESTMSG = str(TestMessage())
 
 
-class Tests(unittest.TestCase):
-
-    def setUp(self):
-        self.p = mockPage(__name__=THISPAGE)
-        self.p.folder().mailin_policy='open'
+class Tests(ZwikiTestCase):
+    def afterSetUp(self):
+        ZwikiTestCase.afterSetUp(self)
+        self.wiki.mailin_policy='open'
         
-    def tearDown(self):
-        del self.p
-
-    # test the mailin delivery rules
-
     # from mailin.py:    
     #"decide which of the recipients is us, as follows:
     #

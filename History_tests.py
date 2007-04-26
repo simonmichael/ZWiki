@@ -8,9 +8,12 @@ def test_suite():
 
 class Tests(ZwikiTestCase):
 
-    def test_revision(self):
+    def test_revisionsFolder(self):
         p = self.page
-        self.assertEqual(p.revision(), 1)
+        self.failIf(p.revisionsFolder())
+        p.ensureRevisionsFolder()
+        self.assert_(p.revisionsFolder())
+        self.assert_(p.revisionsFolder().isPrincipiaFolderish)
 
     def test_revisionCount(self):
         p = self.page
@@ -26,12 +29,13 @@ class Tests(ZwikiTestCase):
         self.assertEqual(p.revisionCount(), 2)
         self.assertEqual(p.revisions()[-1].text(), p.text())
         
-    def test_revisionsFolder(self):
+    def test_revision(self):
         p = self.page
-        self.failIf(p.revisionsFolder())
-        p.ensureRevisionsFolder()
-        self.assert_(p.revisionsFolder())
-        self.assert_(p.revisionsFolder().isPrincipiaFolderish)
+        self.assertEqual(p.revision(), 1)
+        p.edit(text='new text')
+        self.assertEqual(p.revision(), 2)
+        self.assertEqual(p.revisions()[0].revision(), 1)
+        self.assertEqual(p.revisions()[1].revision(), 2)
 
     def test_saveRevision(self):
         p = self.page

@@ -210,6 +210,7 @@ for s in os.listdir(abszwikipath('skins')):
         'denied',
         'diffform',
         'editform',
+        'history',
         'recentchanges',
         'searchwiki',
         'helppage',
@@ -391,6 +392,13 @@ class SkinViews:
         return self.getSkinTemplate('diffform')(self,REQUEST,
                                                  revA=revA,
                                                  difftext=difftext)
+
+    security.declareProtected(Permissions.View, 'history')
+    def history(self, REQUEST=None):
+        """
+        Render the edit history view (template-customizable).
+        """
+        return self.getSkinTemplate('history')(self,REQUEST)
 
     security.declareProtected(Permissions.View, 'editConflictDialog')
     def editConflictDialog(self):
