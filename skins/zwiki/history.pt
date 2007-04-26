@@ -1,0 +1,30 @@
+<html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki" >
+  <head>
+    <title metal:fill-slot="title_slot" tal:content="
+           string:${container/title} ${here/pageName} edit history" />
+    <metal:block metal:fill-slot="head_slot">
+      <metal:block metal:use-macro="here/macros/formsearchtags" />
+    </metal:block>
+  </head>
+  <body>
+    <!-- the diff browser -->
+    <div metal:fill-slot="main">
+      <metal:macro metal:use-macro="here/macros/accesskeys" />
+      <h1 i18n:translate="">Edit history</h1>
+      <div class="formcontent">
+        <form method="GET" action="" tal:attributes="action here/pageUrl">
+
+          <ul>
+            <li tal:repeat="rev here/revisions">
+              <span tal:replace="rev/revision" />
+              <span tal:replace="rev/getId" />
+              <span tal:replace="rev/lastEditTime" />
+              <span tal:replace="rev/lastLog" />
+            </li>
+          </ul>
+
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

@@ -20,7 +20,7 @@
       <a tal:attributes="href string:${here/pageUrl}/subscribeform" accesskey="m"></a>
       <a tal:attributes="href string:${here/pageUrl}/backlinks" accesskey="b"></a>
       <a tal:attributes="href string:${here/pageUrl}/diff" accesskey="d"></a>
-      <a tal:attributes="href string:${here/pageUrl}/manage_change_history_page" accesskey="y"></a>
+      <a tal:attributes="href string:${here/pageUrl}/history" accesskey="y"></a>
       <a tal:attributes="href string:${here/pageUrl}/editform" accesskey="e"></a>
       <a tal:attributes="href python:here.wikiUrl() + '/externalEdit_/' +
                          modules['Products.PythonScripts.standard'].url_quote(here.id()) +
