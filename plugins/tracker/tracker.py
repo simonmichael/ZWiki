@@ -562,7 +562,7 @@ class PluginTracker:
                     self.create(page,
                                 text=open(os.path.join(dir,page+'.dtml'),'r').read(),
                                 sendmail=0,
-                                type='stx')
+                                type='html')
 
             # also, disable subtopics display under IssueTracker
             self.IssueTracker.setSubtopicsPropertyStatus(0)
