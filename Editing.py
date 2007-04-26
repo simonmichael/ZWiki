@@ -32,7 +32,7 @@ import Permissions
 from Regexps import javascriptexpr, htmlheaderexpr, htmlfooterexpr
 from Utils import get_transaction, BLATHER, parseHeadersBody
 from I18n import _
-from Diff import textdiff
+from Diff import addedtext, textdiff
 
 
 class PageEditingSupport:
@@ -394,7 +394,7 @@ class PageEditingSupport:
             # Tries to count the links added by this edit. Not perfect -
             # existing links on a line that you tweak will be counted.
             # Not sure what happens if you replace existing links.
-            self.checkForSpam(self.addedText(old, new))
+            self.checkForSpam(addedtext(old, new))
                 
             # change it
             self.setText(text,REQUEST)

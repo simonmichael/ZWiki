@@ -14,13 +14,10 @@ from __future__ import nested_scopes
 from string import join, split, atoi
 import re
 from struct import pack, unpack
+import difflib
 
 from DocumentTemplate.DT_Util import html_quote
 from OFS.History import historicalRevision
-# Tim Peters' ndiff is now python 2.1's difflib module
-# use the former for compatibility with older zopes
-# XXX we don't support 1.5.2 now, change
-from OFS import ndiff
 from AccessControl import getSecurityManager, ClassSecurityInfo
 from Globals import InitializeClass
 
@@ -28,8 +25,87 @@ from Defaults import MAX_OLD_LINES_DISPLAY, MAX_NEW_LINES_DISPLAY
 import Permissions
 from Utils import get_transaction, BLATHER, formattedTraceback
 
-def ISJUNK(line, pat=re.compile(r"\s*$").match):
-    return pat(line) is not None
+
+class PageDiffSupport:
+    """
+    I provide methods for browsing a zwiki page's edit history details,
+    showing differences between edits.
+    """
+    security = ClassSecurityInfo()
+    
+    def diff(self,revA=1,revB=0,REQUEST=None,
+             test=None, # for testing
+             ):
+        """
+        Display a diff between two revisions of this page, as a web page.
+        
+        Uses the diffform template. See diffcodes for more.
+
+        XXX should skip uninteresting transactions
+        if re.search(r'(/edit|/comment|/append|PUT)',lastrevision['description']):
+        """
+        revA, revB = str(revA), str(revB)
+        t = test or self.htmlDiff(revA=revA,revB=revB)
+        return self.diffform(revA,t,REQUEST=REQUEST)
+
+    def prevDiff(self,currentRevision):
+        """A helper for the diffform view."""
+        return self.diff(int(currentRevision)+1,int(currentRevision))
+
+    def nextDiff(self,currentRevision):
+        """A helper for the diffform view."""
+        return self.diff(int(currentRevision)-1,int(currentRevision)-2)
+
+    security.declareProtected(Permissions.View, 'revisionInfo')
+    def revisionInfo(self, rev):
+        """A helper for the diffform view, accesses some revision details."""
+        old = self.pageRevision(rev)
+        if old:
+            return {
+                'last_editor':old.last_editor,
+                'last_edit_time':old.last_edit_time,
+                'lastEditTime':old.lastEditTime(),
+                }
+        else:
+            return None
+
+    security.declareProtected(Permissions.View, 'lasttext')
+    def lasttext(self, rev=1):
+        """Return the text of the last or an earlier revision of this page."""
+        revision = self.pageRevision(rev)
+        return revision and revision.text() or ''
+    
+    def textDiff(self,revA=1,revB=0,a=None,b=None, verbose=1):
+        """
+        Generate readable a plain text diff of this page's revisions.
+
+        Revisions are numbered backwards from the latest (0).
+        Alternately, a and/or b texts can be specified.
+        See textdiff.
+        """
+        a = a or self.lasttext(rev=revA)
+        b = b or self.lasttext(rev=revB)
+        return textdiff(a,b,verbose)
+
+    def htmlDiff(self,revA=1,revB=0,a=None,b=None):
+        """
+        Generate a readable HTML-formatted diff of this page's revisions.
+
+        Revisions are numbered backwards from the latest (0).
+        Alternately, a and/or b texts can be specified.
+
+        We don't bother abbreviating text segments like textDiff does.
+        Should it use a page template ?
+
+        See htmldiff.
+        """
+        # XXX doesn't allow a=''
+        a = a or self.lasttext(rev=revA)
+        b = b or self.lasttext(rev=revB)
+        return htmldiff(a,b)
+
+InitializeClass(PageDiffSupport)
+
 
 def prefix(lines,prefix): return map(lambda x:prefix+x,lines)
 
@@ -46,402 +122,20 @@ def abbreviate(lines,prefix,maxlines=5):
             output.append(prefix + line)
     return output
 
+def addedtext(a,b):
+    """Return any lines which are in b but not in a, according to difflib."""
+    a = split(a,'\n')
+    b = split(b,'\n')
+    r = []
+    for tag, alo, ahi, blo, bhi in diffcodes(a,b):
+        if tag in ('insert','replace'): r.extend((b[blo:bhi]))
+        else: pass
+    return '\n' + join(r,'\n')
 
-class PageDiffSupport:
-    """
-    I provide methods for browsing a zwiki page's 'edit history', or at
-    least the differences between recent edits.
-    """
-    security = ClassSecurityInfo()
-    
-    def diff(self,revA=1,revB=0,REQUEST=None,
-             test=None, # for testing
-             ):
-        """
-        Display a diff between two revisions of this page, as a web page.
-        
-        Uses the diffform template. See rawdiff for more.
-
-        XXX should skip uninteresting transactions
-        if re.search(r'(/edit|/comment|/append|PUT)',lastrevision['description']):
-        """
-        revA, revB = str(revA), str(revB)
-        t = test or self.htmlDiff(revA=revA,revB=revB)
-        return self.diffform(revA,t,REQUEST=REQUEST)
-
-    def prevDiff(self,currentRevision):
-        """
-        helpers for form buttons
-        """
-        return self.diff(int(currentRevision)+1,int(currentRevision))
-
-    def nextDiff(self,currentRevision):
-        """
-        helpers for form buttons
-        """
-        return self.diff(int(currentRevision)-1,int(currentRevision)-2)
-
-    security.declareProtected(Permissions.View, 'revisionInfo')
-    def revisionInfo(self, rev):
-        """
-        A helper for the diffform view, fetches revision details for display.
-
-        This touches the actual object (loading it into zodb cache), and
-        is called on demand for each revision.  It returns a dictionary of
-        some useful and non-sensitive information which can be accessed by
-        restricted code.
-        """
-        old = self.pageRevision(rev)
-        if old:
-            return {
-                'last_editor':old.last_editor,
-                'last_edit_time':old.last_edit_time,
-                'lastEditTime':old.lastEditTime(),
-                }
-        else:
-            return None
-
-    security.declareProtected(Permissions.View, 'lasttext')
-    def lasttext(self, rev=1):
-        """
-        Return the text of the last or an earlier revision of this page.
-        """
-        revision = self.pageRevision(rev)
-        return revision and revision.text() or ''
-    
-    security.declareProtected(Permissions.Edit, 'revert')
-    def revert(self, currentRevision, REQUEST=None):
-        """
-        Revert to the state of the specified revision.
-
-        Copies a bunch of attributes from the old page object, and even
-        renames and reparents if needed.  Very useful for cleaning spam.
-        We do this corrective edit instead of a simple ZODB undo because:
-        it is more reliable (no failures due to transaction dependencies),
-        it reverts page renames and reparents, it sends a mailout, and it
-        records the reverter as last editor.  Note we currently do restore
-        the last edit time from the earlier revision, though. This may
-        seem a bit counterintuitive, but it's a practical measure so that
-        you don't end up losing a lot of useful last edit time info from
-        spam incidents (cf issues #1157, #1293, #1324).
-        """
-        if not currentRevision: return
-        if not self.checkSufficientId(REQUEST):
-            return self.denied(
-                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
-        old = self.pageRevision(currentRevision)
-        self.setText(old.text())
-        self.setPageType(old.pageTypeId())
-        self.setVotes(old.votes())
-        if self.getParents() != old.getParents():
-            if not self.checkPermission(Permissions.Reparent, self):
-                raise 'Unauthorized', (
-                    _('You are not authorized to reparent this ZWiki Page.'))
-            self.setParents(old.getParents())
-            self.updateWikiOutline()
-        if self.pageName() != old.pageName():
-            if not self.checkPermission(Permissions.Rename, self):
-                raise 'Unauthorized', (
-                    _('You are not authorized to rename this ZWiki Page.'))
-            self.rename(old.pageName())
-        self.setLastEditor(REQUEST)
-        self.last_edit_time = old.last_edit_time
-        self.setLastLog('revert')
-        self.index_object()
-        self.sendMailToEditSubscribers(
-            'This page was reverted to the %s version.\n' % old.last_edit_time,
-            REQUEST=REQUEST,
-            subjectSuffix='',
-            subject='(reverted)')
-        if REQUEST is not None:
-            REQUEST.RESPONSE.redirect(self.pageUrl())
-
-# keep around a little longer, to help test the test when it's testable
-#     security.declareProtected(Permissions.Edit, 'revertEditsBy')
-#     def revertEditsBy(self, username, REQUEST=None):
-#         """
-#         Revert all recent edits (the longest continuous sequence) by username.
-#         """
-#         # find the revision immediately before the latest continuous
-#         # sequence of edits by username, if any.
-#         if self.last_editor == username:
-#             numrevs = self.revisionCount()
-#             rev = 1
-#             while rev <= numrevs and self.revisionInfo(rev)['last_editor'] == username:
-#                 rev += 1
-#             if rev <= numrevs:
-#                 self.revert(rev,REQUEST=REQUEST) # got one, revert it
-
-    security.declareProtected(Permissions.Edit, 'revertEditsBy')
-    def revertEditsBy(self, username, REQUEST=None):
-        """Revert to the latest edit by someone other than username, if any."""
-        self.revert(self.revisionBefore(username), REQUEST=REQUEST)
-
-    def revisionBefore(self, username):
-        """The revision number of the last edit not by username, or None."""
-        for r in range(self.revisionCount()):
-            if self.revisionInfo(r)['last_editor'] != username:
-                return r
-        return None
-
-    # restrict this one to managers, it is too powerful for passers-by
-    security.declareProtected(Permissions.manage_properties, 'revertEditsEverywhereBy')
-    def revertEditsEverywhereBy(self, username, REQUEST=None, batch=0):
-        """
-        Revert all the most recent edits by username throughout the wiki.
-        """
-        batch = int(batch)
-        n = 0
-        for p in self.pageObjects():
-            if p.last_editor == username:
-                n += 1
-                try:
-                    p.revertEditsBy(username,REQUEST=REQUEST)
-                except IndexError:
-                    # IndexError - we don't have a version that old
-                    BLATHER('failed to revert edits by %s at %s: %s' \
-                            % (username,p.id(),formattedTraceback()))
-                if batch and n % batch == 0:
-                    BLATHER('committing after %d reverts' % n)
-                    get_transaction().commit()
-        
-    def htmlDiff(self,revA=1,revB=0,a=None,b=None):
-        """
-        Generate a readable HTML-formatted diff of this page's revisions.
-
-        Revisions are numbered backwards from the latest (0).
-        Alternately, a and/or b texts can be specified.
-
-        We don't bother abbreviating text segments like textDiff does.
-        Should it use a page template ?
-        """
-        # XXX doesn't allow a=''
-        a = a or self.lasttext(rev=revA)
-        b = b or self.lasttext(rev=revB)
-        a = split(a,'\n')
-        b = split(b,'\n')
-        r = []
-        add, addm = r.append, r.extend
-        # diffform encloses all this in a pre, so need to avoid line
-        # breaks for now
-        def addnobr(s): r[-1] += s
-        for tag, alo, ahi, blo, bhi in rawdiff(a,b):
-            if tag == 'replace':
-                add('<b>changed:</b>')
-                addnobr('<span style="color:red;text-decoration:line-through">')
-                # remember to html-quote the diff segments
-                addm(prefix(map(html_quote, a[alo:ahi]),'-')) 
-                addnobr('</span>')
-                addnobr('<span style="color:green">')
-                addm(map(html_quote, b[blo:bhi]))
-                addnobr('</span>')
-                add('')
-            elif tag == 'delete':
-                add('<b>removed:</b>')
-                addnobr('<span style="color:red;text-decoration:line-through">')
-                addm(prefix(map(html_quote, a[alo:ahi]),'-'))
-                addnobr('</span>')
-                add('')
-            elif tag == 'insert':
-                add('<b>added:</b>')
-                addnobr('<span style="color:green">')
-                addm(map(html_quote, b[blo:bhi]))
-                addnobr('</span>')
-                add('')
-            else: # tag == 'equal'
-                pass
-        return '\n' + join(r,'\n')
-
-    def textDiff(self,revA=1,revB=0,a=None,b=None, verbose=1):
-        """
-        Generate readable a plain text diff of this page's revisions.
-
-        Revisions are numbered backwards from the latest (0).
-        Alternately, a and/or b texts can be specified.
-        See textdiff.
-        """
-        a = a or self.lasttext(rev=revA)
-        b = b or self.lasttext(rev=revB)
-        return textdiff(a,b,verbose)
-
-    def addedText(self,a,b):
-        """
-        Return any lines which are in b but not in a, according to difflib.
-        """
-        a = split(a,'\n')
-        b = split(b,'\n')
-        r = []
-        for tag, alo, ahi, blo, bhi in rawdiff(a,b):
-            if tag in ('insert','replace'): r.extend((b[blo:bhi]))
-            else: pass
-        return '\n' + join(r,'\n')
-
-    # wikifornow stuff - roll em in, sort em out later
-#    def wfn_get_page_history(self, mode='condensed',
-#                         batchsize=30, first=0, last=30):
-#        """\
-#        Return history records for a page, culling according to mode param.
-#
-#        'complete': all records.
-#
-#        'condensed': Omit showing prior versions of page replaced
-#                     subsequently and soon after by the same person
-#                     using same (possibly empty) log entry
-#
-#        Currently 
-#        """
-#        r = self._p_jar.db().history(self._p_oid, None, 5000)
-#        for i in range(len(r)): r[i]['tacked_on_index'] = i
-#
-#        if mode == 'complete':
-#            pass
-#        elif mode == 'condensed':
-#            # Each entry may:
-#            #  - either continue an existing session or start a new one, and
-#            #  - either be a landmark or not.
-#            got = []
-#            carrying = None
-#            prevdescr = None
-#            # Put in least-recent-first order:
-#            r.reverse()
-#            for entry in r:
-#
-#                curdescr = split(entry['description'], '\012')[1:]
-#
-#                # Handle prior retained stuff:
-#                if carrying:
-#                    if carrying['user_name'] != entry['user_name']:
-#                        # Different user:
-#                        got.append(carrying)
-#                    elif curdescr != prevdescr:
-#                        # Different log entry:
-#                        got.append(carrying)
-#                    else:
-#                        itime, ctime = entry['time'], carrying['time']
-#                        if type(itime) == FloatType:
-#                            itime = entry['time'] = DateTime(itime)
-#                        if type(ctime) == FloatType:
-#                            ctime = carrying['time'] = DateTime(ctime)
-#                        if (float(itime - ctime) * 60 * 24) > 30:
-#                            # Enough time elapsed:
-#                            # XXX klm "Enough time" should be configurable...
-#                            got.append(carrying)
-#
-#                # Old-session, if any, was handled - move forward:
-#                carrying = entry
-#                prevdescr = curdescr
-#
-#            if carrying:
-#                # Retain final item
-#                got.append(carrying)
-#
-#            # Put back in most-recent-first order:
-#            got.reverse()
-#            r = got
-#        else:
-#            raise ValueError, "Unknown mode '%s'" % mode
-#
-#        for d in r:
-#            if type(d['time']) == FloatType:
-#                d['time'] = DateTime(d['time'])
-#            d['key']=join(map(str, unpack(">HHHH", d['serial'])),'.')
-#
-#        r=r[first:first+batchsize+1]
-#
-#        return r
-#    def wfn_history_copy_page_to_present(self, keys=[], REQUEST=None):
-#        """Create a new object copy with the contents of an historic copy."""
-#        request=getattr(self, 'REQUEST', None)
-#        if not self.isAllowed('edit', request):
-#            raise 'Unauthorized', "You're not allowed to edit this page"
-#        self.manage_historyCopy(keys=keys)
-#        if REQUEST is not None:
-#            REQUEST.RESPONSE.redirect(self.wiki_page_url())
-#    def wfn_history_compare_versions(self, keys=[], REQUEST=None):
-#        """Do history comparisons.
-#
-#        Mostly stuff adapted from OFS.History - manage_historicalComparison() 
-#        and manage_historyCompare(), with a bit of direct calling of
-#        html_diff."""
-#        from OFS.History import historicalRevision, html_diff
-#        if not keys:
-#            raise HistorySelectionError, (
-#                "No historical revision was selected.<p>")
-#        if len(keys) > 2:
-#            raise HistorySelectionError, (
-#                "Only two historical revision can be compared<p>")
-#        
-#        serial=apply(pack, ('>HHHH',)+tuple(map(string.atoi,
-#                                                split(keys[-1],'.'))))
-#        rev1=historicalRevision(self, serial)
-#        
-#        if len(keys)==2:
-#            serial=apply(pack,
-#                         ('>HHHH',)+tuple(map(string.atoi,
-#                                              split(keys[0],'.'))))
-#
-#            rev2=historicalRevision(self, serial)
-#        else:
-#            rev2=self
-#
-#        dt1=DateTime(rev1._p_mtime)
-#        dt2=DateTime(rev2._p_mtime)
-#        t1, t2 = rev1._st_data, rev2._st_data
-#        if t1 is None or t2 is None:
-#            t1, t2 = rev1.xread(), rev2.xread()
-#        top = self._manage_historyComparePage(
-#            self, REQUEST,
-#            dt1=dt1, dt2=dt2,
-#            historyComparisonResults=html_diff(t1, t2),
-#            manage_tabs=self.standard_wiki_header)
-#        bottom = self.standard_wiki_footer(self, REQUEST=REQUEST)
-#        return top + bottom
-#
-#
-#def dump(tag, x, lo, hi, r):
-#    r1=[]
-#    r2=[]
-#    for i in xrange(lo, hi):
-#        r1.append(tag)
-#        r2.append(x[i])
-#    r.append("<tr>\n"
-#            "<td valign=top width=1%%><pre>\n%s\n</pre></td>\n"
-#            "<td valign=top width=99%%><pre>\n%s\n</pre></td>\n"
-#            "</tr>\n"
-#            % (join(r1,'\n'), html_quote(join(r2, '\n'))))
-#
-#def replace(x, xlo, xhi, y, ylo, yhi, r):
-#
-#    rx1=[]
-#    rx2=[]
-#    for i in xrange(xlo, xhi):
-#        rx1.append('-')
-#        rx2.append(x[i])
-#
-#    ry1=[]
-#    ry2=[]
-#    for i in xrange(ylo, yhi):
-#        ry1.append('+')
-#        ry2.append(y[i])
-#
-#
-#    r.append("<tr>\n"
-#            "<td valign=top width=1%%><pre>\n%s\n%s\n</pre></td>\n"
-#            "<td valign=top width=99%%><pre>\n%s\n%s\n</pre></td>\n"
-#            "</tr>\n"
-#            % (join(rx1, '\n'), join(ry1, '\n'),
-#               html_quote(join(rx2, '\n')), html_quote(join(ry2, '\n'))))
-
-
-InitializeClass(PageDiffSupport)
-
-def rawdiff(a,b):
-    """
-    Return a diff between two texts, as difflib opcodes.
-    """
-    return ndiff.SequenceMatcher(
-        #isjunk=lambda x: x in " \\t", # requires newer difflib
-        isjunk=ISJUNK,
+def diffcodes(a,b):
+    """Return a diff between two texts, as difflib opcodes."""
+    return difflib.SequenceMatcher(
+        isjunk=re.compile(r"\s*$").match,
         a=a,
         b=b).get_opcodes()
 
@@ -461,7 +155,7 @@ def textdiff(a, b, verbose=1):
     b = split(b,'\n')
     r = []
     add, addm = r.append, r.extend
-    for tag, alo, ahi, blo, bhi in rawdiff(a,b):
+    for tag, alo, ahi, blo, bhi in diffcodes(a,b):
         if tag == 'replace':
             if verbose: add('??changed:')
             addm(abbreviate(a[alo:ahi],'-',MAX_OLD_LINES_DISPLAY))
@@ -477,5 +171,52 @@ def textdiff(a, b, verbose=1):
             add('')
         else: # tag == 'equal'
             pass 
+    return '\n' + join(r,'\n')
+
+def htmldiff(a,b):
+    """
+    Generate a readable HTML-formatted diff between two texts.
+
+    Revisions are numbered backwards from the latest (0).
+    Alternately, a and/or b texts can be specified.
+
+    We don't bother abbreviating text segments like textDiff does.
+    Should it use a page template ?
+    """
+    # XXX doesn't allow a=''
+    a = a or self.lasttext(rev=revA)
+    b = b or self.lasttext(rev=revB)
+    a = split(a,'\n')
+    b = split(b,'\n')
+    r = []
+    add, addm = r.append, r.extend
+    # diffform encloses all this in a pre, so need to avoid line
+    # breaks for now
+    def addnobr(s): r[-1] += s
+    for tag, alo, ahi, blo, bhi in diffcodes(a,b):
+        if tag == 'replace':
+            add('<b>changed:</b>')
+            addnobr('<span style="color:red;text-decoration:line-through">')
+            # remember to html-quote the diff segments
+            addm(prefix(map(html_quote, a[alo:ahi]),'-')) 
+            addnobr('</span>')
+            addnobr('<span style="color:green">')
+            addm(map(html_quote, b[blo:bhi]))
+            addnobr('</span>')
+            add('')
+        elif tag == 'delete':
+            add('<b>removed:</b>')
+            addnobr('<span style="color:red;text-decoration:line-through">')
+            addm(prefix(map(html_quote, a[alo:ahi]),'-'))
+            addnobr('</span>')
+            add('')
+        elif tag == 'insert':
+            add('<b>added:</b>')
+            addnobr('<span style="color:green">')
+            addm(map(html_quote, b[blo:bhi]))
+            addnobr('</span>')
+            add('')
+        else: # tag == 'equal'
+            pass
     return '\n' + join(r,'\n')
 
