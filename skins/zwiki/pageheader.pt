@@ -3,10 +3,10 @@
 
     <div metal:define-macro="pageheader" class="pageheader" >
       <!-- page header -->
-      <form method="GET" 
+      <form method="GET"
             tal:define="
                         methodname string:searchwiki;
-                        pagename string:SearchPage; 
+                        pagename string:SearchPage;
                         page python:here.pageWithName(pagename);
                         pagehasdtml python:page and page.dtmlAllowed() and page.hasDynamicContent();
                         url python:(pagehasdtml and page.id()) or (here.defaultPageId()+'/'+methodname);
@@ -20,7 +20,7 @@
                 tal:condition="not:here/usingPloneSkin">
               <span metal:define-macro="logolink" tal:omit-tag="">
                 <a tal:attributes="href here/wiki_url"
-                   title="go to home page" 
+                   title="go to home page"
                    i18n:attributes="title">
                   <p tal:condition="nothing">workaround for zope bug http://www.zope.org/Collectors/Zope/2302</p>
                   <img tal:condition="here/site_logo|nothing"
@@ -37,7 +37,7 @@
             <!-- page name and context (parent topics) -->
             <td align="left" width="79%" tal:define="COMPACT_PARENTS python:0">
               <tal:block tal:condition="not:COMPACT_PARENTS">
-                <ul tal:replace="structure 
+                <ul tal:replace="structure
                                  python:here.context(request,enlarge_current=1)">
                   <li>context<ul><li><h1 style="display:inline">page name</h1></li></ul></li>
                 </ul>
@@ -57,21 +57,21 @@
             <td class="searchbox" width="20%" align="right">
               <tal:block tal:condition="not:here/usingPloneSkin">
                 <input id="searchinput" class="formfield"
-                       name="expr" type="text" size="20" maxlength="100" value="" 
+                       name="expr" type="text" size="20" maxlength="100" value=""
                        title="search all pages" accesskey="s" i18n:attributes="title" /><br />
-                <span class="lasteditor" 
+                <span class="lasteditor"
                       tal:content="structure python:here.linkTitle(prettyprint=1)">
                   last edited n days ago by by so-and-so
                 </span>
               </tal:block>
               <tal:block tal:condition="here/usingPloneSkin">
-                <span class="lasteditor" 
+                <span class="lasteditor"
                       tal:content="structure python:here.linkTitle(prettyprint=1)">
                   last edited n days ago by by so-and-so
                 </span>
                 <div metal:use-macro="python:
                                       (hasattr(here,'document_actions')
-                                      and here.document_actions.macros['document_actions']) 
+                                      and here.document_actions.macros['document_actions'])
                                       or default
                                       # degrade gracefully. By all means make this more elegant.." />
               </tal:block>
