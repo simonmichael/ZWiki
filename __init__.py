@@ -180,15 +180,16 @@ def manage_addWiki(self, new_id, new_title='', wiki_type='zwikidotorg',
     """
     Create a new zwiki web of the specified type
     """
-    if not REQUEST: REQUEST = self.REQUEST
+    REQUEST = REQUEST or getattr(self,'REQUEST',None)
     
     # check for a configuration wizard
     if hasattr(self,wiki_type+'_config'):
-        REQUEST.RESPONSE.redirect('%s/%s_config?new_id=%s&new_title=%s' % \
-                                  (REQUEST['URL1'],
-                                   wiki_type,
-                                   urllib.quote(new_id),
-                                   urllib.quote(new_title)))
+        if REQUEST:
+            REQUEST.RESPONSE.redirect('%s/%s_config?new_id=%s&new_title=%s' % \
+                                      (REQUEST['URL1'],
+                                       wiki_type,
+                                       urllib.quote(new_id),
+                                       urllib.quote(new_title)))
         
     else:
         if wiki_type in self.listFsWikis():
@@ -202,7 +203,7 @@ def manage_addWiki(self, new_id, new_title='', wiki_type='zwikidotorg',
                 action=''
                 )
 
-        if REQUEST is not None:
+        if REQUEST:
             folder = getattr(self, new_id)
             if hasattr(folder, 'setup_%s'%(wiki_type)):
                 REQUEST.RESPONSE.redirect(REQUEST['URL3']+'/'+new_id+'/setup_%s'%(wiki_type))
