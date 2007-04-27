@@ -1,7 +1,7 @@
 <html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki" >
   <head>
     <title metal:fill-slot="title_slot" tal:content="
-                                                     string:${container/title} ${here/pageName} edit history" />
+                                                     string:${container/title} ${here/pageName} edit detail" />
     <metal:block metal:fill-slot="head_slot">
       <metal:block metal:use-macro="here/macros/formsearchtags" />
     </metal:block>
