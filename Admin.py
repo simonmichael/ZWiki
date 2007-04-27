@@ -69,7 +69,7 @@ class PageAdminSupport:
             try:
                 p.upgrade(REQUEST)
                 p.upgradeId(REQUEST)
-                p.fixPageEncoding()
+                p.fixEncoding()
                 if render:
                     p.preRender(clear_cache=1)
                     msg = 'upgraded and pre-rendered page'
@@ -440,7 +440,7 @@ class PageAdminSupport:
             BLATHER('creating catalog for wiki',self.folder().getId())
             self.setupCatalog()
 
-    def fixPageEncoding(self, FROM='iso8859-1', TO='utf-8'):
+    def fixEncoding(self, FROM='iso8859-1', TO='utf-8'):
         """
         Try to fix any character encoding problems in this page's name or text.
 
@@ -461,14 +461,14 @@ class PageAdminSupport:
             #       title=unicode(self.pageName(), FROM).encode(TO),
             #       log=log)
             # this won't
-            self.setText(unicode(self.text(), FROM).encode(TO), REQUEST=REQUEST)
+            self.setText(unicode(self.text(), FROM).encode(TO))
             # this will (if the name really needs fixing)
-            self.rename(unicode(self.pageName(), FROM).encode(TO), sendmail=0, REQUEST=REQUEST)
+            self.rename(unicode(self.pageName(), FROM).encode(TO))
             return True
 
     def fixAllPagesEncoding(self):
         for p in self.pageObjects():
-            fixPageEncoding(p)
+            fixEncoding(p)
         self.REQUEST.RESPONSE.redirect(self.REQUEST['URL1'])
 
 InitializeClass(PageAdminSupport)
