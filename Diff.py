@@ -68,11 +68,13 @@ class PageDiffSupport:
         Alternately, a and/or b texts can be specified.
         See textdiff.
         """
-        a = a or self.lasttext(rev=revA)
-        b = b or self.lasttext(rev=revB)
+        revA = revA or (self.revision() - 1) or 1
+        revB = revB or self.revision()
+        a = a or self.lasttext(revA)
+        b = b or self.lasttext(revB)
         return textdiff(a,b,verbose)
 
-    def htmlDiff(self,revA=1,revB=0,a=None,b=None):
+    def htmlDiff(self,revA=None,revB=None,a=None,b=None):
         """
         Generate a readable HTML-formatted diff of this page's revisions.
 
@@ -84,9 +86,10 @@ class PageDiffSupport:
 
         See htmldiff.
         """
-        # XXX doesn't allow a=''
-        a = a or self.lasttext(rev=revA)
-        b = b or self.lasttext(rev=revB)
+        revA = revA or (self.revision() - 1) or 1
+        revB = revB or self.revision()
+        a = a or self.lasttext(revA)
+        b = b or self.lasttext(revB)
         return htmldiff(a,b)
 
 InitializeClass(PageDiffSupport)
