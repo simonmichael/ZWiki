@@ -18,10 +18,3 @@ class Tests(ZwikiTestCase):
         p.comment('test')
         self.assertEqual(p.commentCount(),2)
 
-    def test_unicodeInComments(self):
-        p = self.page
-        u = unicode(string.uppercase,'utf8')
-        p.comment(text=u)
-        self.assertEqual(p.commentCount(),1)
-        self.assertEqual(p.comments()[-1].get_payload(),u)
-

@@ -911,8 +911,11 @@ class PageEditingSupport:
 
     def cleanupText(self, t):
         """
-        Do some cleanup of incoming text, also block spam links.
+        Clean up incoming text and convert it to unicode.
         """
+        # we expect utf8-encoded text always, refuse anything else early
+        unicode(t,'utf-8')
+
         # strip any browser-appended ^M's
         t = re.sub('\r\n', '\n', t)
 
