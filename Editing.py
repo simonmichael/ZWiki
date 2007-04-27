@@ -461,6 +461,86 @@ class PageEditingSupport:
         # redirect somewhere sensible
         if REQUEST: REQUEST.RESPONSE.redirect(redirecturl)
 
+    security.declareProtected(Permissions.Edit, 'revert')
+    def revert(self, rev, REQUEST=None):
+        """
+        Revert this page to the specified revision's state, updating history.
+
+        We do this by looking at the old page revision object and applying
+        a corrective edit to the current page. This records a new page
+        revision, reverts text, reverts parents, sends a mailout, etc.
+        Last editor, last editor ip, last edit time are updated, cf #1157.
+
+        Page renames are not reverted since the new revisions
+        implementation, stand by.
+        """
+        if not rev: return
+        if not self.checkSufficientId(REQUEST):
+            return self.denied(
+                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
+        old = self.pageRevision(rev)
+        reparent = self.getParents() != old.getParents()
+        if reparent and not self.checkPermission(Permissions.Reparent, self):
+            raise 'Unauthorized', (
+                _('You are not authorized to reparent this ZWiki Page.'))
+        #rename = self.pageName() != old.pageName():
+        #if rename and not self.checkPermission(Permissions.Rename, self):
+        #    raise 'Unauthorized', (
+        #        _('You are not authorized to rename this ZWiki Page.'))
+
+        self.saveRevision()
+        self.setText(old.text())
+        self.setPageType(old.pageTypeId())
+        self.setVotes(old.votes())
+        if reparent:
+            self.setParents(old.getParents())
+            self.updateWikiOutline()
+        #if rename:
+        #    self.rename(old.pageName())
+        self.setLastEditor(REQUEST)
+#         self.last_editor    = old.last_editor
+#         self.last_editor_ip = old.last_editor_ip
+#         self.last_edit_time = old.last_edit_time
+        self.setLastLog('reverted by %s' % self.usernameFrom(REQUEST))
+        self.index_object()
+        self.sendMailToEditSubscribers(
+            'This page was reverted to the %s version.\n' % old.last_edit_time,
+            REQUEST=REQUEST,
+            subjectSuffix='',
+            subject='(reverted)')
+        if REQUEST is not None:
+            REQUEST.RESPONSE.redirect(self.pageUrl())
+
+    security.declareProtected(Permissions.Edit, 'revertEditsBy')
+    def revertEditsBy(self, username, REQUEST=None):
+        """Revert to the latest edit by someone other than username, if any."""
+        self.revert(self.revisionBefore(username), REQUEST=REQUEST)
+
+    # restrict this one to managers, it is too powerful for passers-by
+    security.declareProtected(Permissions.manage_properties, 'revertEditsEverywhereBy')
+    def revertEditsEverywhereBy(self, username, REQUEST=None, batch=0):
+        """
+        Revert all the most recent edits by username throughout the wiki.
+
+        This is a spam repair tool for managers. It records a new revision
+        for each page, but should probably roll back history instead,
+        removing all the spammer's page revisions. See #1157.
+        """
+        batch = int(batch)
+        n = 0
+        for p in self.pageObjects():
+            if p.last_editor == username:
+                n += 1
+                try:
+                    p.revertEditsBy(username,REQUEST=REQUEST)
+                except IndexError:
+                    # IndexError - we don't have a version that old
+                    BLATHER('failed to revert edits by %s at %s: %s' \
+                            % (username,p.id(),formattedTraceback()))
+                if batch and n % batch == 0:
+                    BLATHER('committing after %d reverts' % n)
+                    get_transaction().commit()
+        
     security.declareProtected(Permissions.Rename, 'rename')
     def rename(self,pagename,
                leaveplaceholder=LEAVE_PLACEHOLDER,

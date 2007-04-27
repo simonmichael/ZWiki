@@ -54,6 +54,13 @@ class PageHistorySupport:
         if not hasattr(self.folder().aq_base,'revisions'):
             self.folder().manage_addFolder('revisions', 'wiki page revisions')
 
+    security.declareProtected(Permissions.View, 'pageRevision')
+    def pageRevision(self, rev):
+        """
+        Get the specified previous revision of this page object.
+        """
+        return self.revisions()[int(rev)-1]
+
     def saveRevision(self, REQUEST=None):
         """
         Save a snapshot of this page in the revisions folder.
@@ -82,97 +89,14 @@ class PageHistorySupport:
 
     def revisionBefore(self, username):
         """The revision number of the last edit not by username, or None."""
-        for r in range(self.revisionCount()):
-            if self.revisionInfo(r)['last_editor'] != username:
+        for r in range(self.revisionCount(),0,-1):
+            if self.pageRevision(r).last_editor != username:
                 return r
         return None
 
-    security.declareProtected(Permissions.Edit, 'revert')
-    def revert(self, currentRevision, REQUEST=None):
-        """
-        Revert this page to the state of the specified revision.
-
-        We do this by looking at the old page revision and applying a
-        corrective edit to the current one. This will rename and reparent
-        if needed, send a mailout, restore the old last edit time and
-        record the reverter as last editor (XXX this should change, see
-        issues #1157, #1293, #1324).
-
-        Actually renames and reparents may no longer happen due to the new
-        History.py revisions implementation; stand by.
-        """
-        if not currentRevision: return
-        if not self.checkSufficientId(REQUEST):
-            return self.denied(
-                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
-        old = self.pageRevision(currentRevision)
-        self.setText(old.text())
-        self.setPageType(old.pageTypeId())
-        self.setVotes(old.votes())
-        if self.getParents() != old.getParents():
-            if not self.checkPermission(Permissions.Reparent, self):
-                raise 'Unauthorized', (
-                    _('You are not authorized to reparent this ZWiki Page.'))
-            self.setParents(old.getParents())
-            self.updateWikiOutline()
-        if self.pageName() != old.pageName():
-            if not self.checkPermission(Permissions.Rename, self):
-                raise 'Unauthorized', (
-                    _('You are not authorized to rename this ZWiki Page.'))
-            self.rename(old.pageName())
-        self.setLastEditor(REQUEST)
-        self.last_edit_time = old.last_edit_time
-        self.setLastLog('revert')
-        self.index_object()
-        self.sendMailToEditSubscribers(
-            'This page was reverted to the %s version.\n' % old.last_edit_time,
-            REQUEST=REQUEST,
-            subjectSuffix='',
-            subject='(reverted)')
-        if REQUEST is not None:
-            REQUEST.RESPONSE.redirect(self.pageUrl())
-
-    security.declareProtected(Permissions.Edit, 'revertEditsBy')
-    def revertEditsBy(self, username, REQUEST=None):
-        """Revert to the latest edit by someone other than username, if any."""
-        self.revert(self.revisionBefore(username), REQUEST=REQUEST)
-
-    # restrict this one to managers, it is too powerful for passers-by
-    security.declareProtected(Permissions.manage_properties, 'revertEditsEverywhereBy')
-    def revertEditsEverywhereBy(self, username, REQUEST=None, batch=0):
-        """
-        Revert all the most recent edits by username throughout the wiki.
-        """
-        batch = int(batch)
-        n = 0
-        for p in self.pageObjects():
-            if p.last_editor == username:
-                n += 1
-                try:
-                    p.revertEditsBy(username,REQUEST=REQUEST)
-                except IndexError:
-                    # IndexError - we don't have a version that old
-                    BLATHER('failed to revert edits by %s at %s: %s' \
-                            % (username,p.id(),formattedTraceback()))
-                if batch and n % batch == 0:
-                    BLATHER('committing after %d reverts' % n)
-                    get_transaction().commit()
-        
     # backwards compatibility / temporary
 
     def forwardRev(self,rev): return self.revisionCount() - rev - 1
-
-    security.declareProtected(Permissions.View, 'pageRevision')
-    def pageRevision(self, rev):
-        """
-        Get one of the previous revisions of this page object.
-
-        The argument increases to select older revisions, eg revision 1 is
-        the most recent version prior to the current one, revision 2 is
-        the version before that, etc.
-        """
-        rev = self.forwardRev(int(rev))
-        return self.revisions()[rev]
 
     def lastlog(self, rev=0, withQuotes=0):
         """

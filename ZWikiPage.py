@@ -886,7 +886,7 @@ class ZWikiPage(
 
             # build the link around the interval
             linked_interval = (
-                ' <a href="%s/diff" title="%s%s" >%s</a>' % (
+                ' <a href="%s/history" title="%s%s" >%s</a>' % (
                 self.pageUrl(),
                 _('show last edit'),
                 lastlog, 

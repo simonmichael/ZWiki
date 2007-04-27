@@ -383,14 +383,14 @@ class SkinViews:
         return self.getSkinTemplate('denied')(self,REQUEST,reason=reason)
 
     security.declareProtected(Permissions.View, 'diffform')
-    def diffform(self, revA, difftext, REQUEST=None):
+    def diffform(self, rev, difftext, REQUEST=None):
         """
         Render the diff form (template-customizable).
 
-        revA and difftext parameters are required.
+        rev and difftext parameters are required.
         """
         return self.getSkinTemplate('diffform')(self,REQUEST,
-                                                 revA=revA,
+                                                 rev=rev,
                                                  difftext=difftext)
 
     security.declareProtected(Permissions.View, 'history')

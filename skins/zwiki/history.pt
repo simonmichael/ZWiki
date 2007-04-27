@@ -10,20 +10,33 @@
     <!-- the diff browser -->
     <div metal:fill-slot="main">
       <metal:macro metal:use-macro="here/macros/accesskeys" />
-      <h1 i18n:translate="">Edit history</h1>
+      <h1 i18n:translate="" tal:content="string:Edit history for ${here/pageName}" />
       <div class="formcontent">
-        <form method="GET" action="" tal:attributes="action here/pageUrl">
-
-          <ul>
-            <li tal:repeat="rev here/revisions">
-              <span tal:replace="rev/revision" />
-              <span tal:replace="rev/getId" />
-              <span tal:replace="rev/lastEditTime" />
-              <span tal:replace="rev/lastLog" />
-            </li>
-          </ul>
-
+        <form tal:attributes="action here/pageUrl">
+          <input type="submit" value="Return to page" i18n:attributes="value" />
         </form>
+        <br>
+        <table>
+          <tr style="text-align:left;">
+            <th style="padding-right:1em;">Version</th>
+            <th style="padding-right:1em;">Note</th>
+            <th style="padding-right:1em;">Size</th>
+            <th style="padding-right:1em;">Editor</th>
+            <th style="padding-right:1em;">Time</th>
+          </tr>
+          <tr tal:repeat="rev python:here.revisions()[::-1]">
+            <td style="padding-right:1em;">
+              <form tal:attributes="action string:${here/pageUrl}/diff">
+                <input type="hidden" name="rev" tal:attributes="value rev/revision" />
+                <input type="submit" tal:attributes="value rev/revision" />
+              </form>
+            </td>
+            <td style="padding-right:1em; font-weight:bold;font-style:italic;" tal:content="rev/last_log" ></td>
+            <td style="padding-right:1em;" tal:content="rev/size" style="text-align:right;"></td>
+            <td style="padding-right:1em;" tal:content="rev/last_editor"></td>
+            <td style="padding-right:1em;" tal:content="rev/lastEditTime"></td>
+          </tr>
+        </table>
       </div>
     </div>
   </body>

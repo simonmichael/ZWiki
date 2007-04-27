@@ -33,47 +33,32 @@ class PageDiffSupport:
     """
     security = ClassSecurityInfo()
     
-    def diff(self,revA=1,revB=0,REQUEST=None,
+    def diff(self, rev=None, REQUEST=None,
              test=None, # for testing
              ):
         """
-        Display a diff between two revisions of this page, as a web page.
+        Show what changed in the latest or specified revision of this page.
         
-        Uses the diffform template. See diffcodes for more.
-
-        XXX should skip uninteresting transactions
-        if re.search(r'(/edit|/comment|/append|PUT)',lastrevision['description']):
+        Uses the diffform template.
         """
-        revA, revB = str(revA), str(revB)
-        t = test or self.htmlDiff(revA=revA,revB=revB)
-        return self.diffform(revA,t,REQUEST=REQUEST)
+        if rev == None: rev = self.revision()
+        else: rev = int(rev)
+        difftext = test or self.htmlDiff(revA=rev-1,revB=rev)
+        return self.diffform(rev, difftext, REQUEST=REQUEST)
 
-    def prevDiff(self,currentRevision):
+    def prevDiff(self,rev):
         """A helper for the diffform view."""
-        return self.diff(int(currentRevision)+1,int(currentRevision))
+        return self.diff(int(rev)-1)
 
-    def nextDiff(self,currentRevision):
+    def nextDiff(self,rev):
         """A helper for the diffform view."""
-        return self.diff(int(currentRevision)-1,int(currentRevision)-2)
-
-    security.declareProtected(Permissions.View, 'revisionInfo')
-    def revisionInfo(self, rev):
-        """A helper for the diffform view, accesses some revision details."""
-        old = self.pageRevision(rev)
-        if old:
-            return {
-                'last_editor':old.last_editor,
-                'last_edit_time':old.last_edit_time,
-                'lastEditTime':old.lastEditTime(),
-                }
-        else:
-            return None
+        return self.diff(int(rev)+1)
 
     security.declareProtected(Permissions.View, 'lasttext')
-    def lasttext(self, rev=1):
+    def lasttext(self, rev=None):
         """Return the text of the last or an earlier revision of this page."""
-        revision = self.pageRevision(rev)
-        return revision and revision.text() or ''
+        rev = rev or (self.revision() - 1) or 1
+        return self.pageRevision(rev).text()
     
     def textDiff(self,revA=1,revB=0,a=None,b=None, verbose=1):
         """
@@ -183,9 +168,6 @@ def htmldiff(a,b):
     We don't bother abbreviating text segments like textDiff does.
     Should it use a page template ?
     """
-    # XXX doesn't allow a=''
-    a = a or self.lasttext(rev=revA)
-    b = b or self.lasttext(rev=revB)
     a = split(a,'\n')
     b = split(b,'\n')
     r = []
