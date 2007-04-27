@@ -440,7 +440,7 @@ class PageAdminSupport:
             BLATHER('creating catalog for wiki',self.folder().getId())
             self.setupCatalog()
 
-    def fixEncoding(self, FROM='iso8859-1', TO='utf-8'):
+    def fixEncoding(self, FROM='iso8859-1', TO='utf-8', REQUEST=None):
         """
         Try to fix any character encoding problems in this page's name or text.
 
@@ -465,11 +465,11 @@ class PageAdminSupport:
             # this will (if the name really needs fixing)
             self.rename(unicode(self.pageName(), FROM).encode(TO))
             return True
+        if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl())
 
-    def fixAllPagesEncoding(self):
-        for p in self.pageObjects():
-            fixEncoding(p)
-        self.REQUEST.RESPONSE.redirect(self.REQUEST['URL1'])
+    def fixAllPagesEncoding(self, REQUEST=None):
+        for p in self.pageObjects(): fixEncoding(p)
+        if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1'])
 
 InitializeClass(PageAdminSupport)
 
