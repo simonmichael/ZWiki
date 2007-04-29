@@ -84,7 +84,7 @@ class PluginTracker:
         """
         True if this wiki has any issue pages.
         """
-        return self.issueCount() > 0
+        return hasattr(self.folder(),'issue_categories')
 
     security.declareProtected(Permissions.View, 'issueCount')
     def issueCount(self):
