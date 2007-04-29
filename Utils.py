@@ -358,7 +358,7 @@ class PageUtils:
 
     security.declareProtected(Permissions.View, 'discussionUrl')
     def discussionUrl(self):
-        p = self.pageWithName('UserDiscussion') or self.pageWithName('GeneralDiscussion')
+        p = self.pageWithName('GeneralDiscussion')
         return (p and p.pageUrl()) or ''
 
     security.declareProtected(Permissions.View, 'indexUrl')
