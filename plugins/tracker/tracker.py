@@ -80,11 +80,18 @@ class PluginTracker:
     security = ClassSecurityInfo()
     
     security.declareProtected(Permissions.View, 'hasIssues')
-    def hasIssues(self): # likely.
+    def hasIssueTracker(self): # likely.
         """
-        True if this wiki has any issue pages.
+        Does this wiki have an issue tracker configured ?
         """
         return hasattr(self.folder(),'issue_categories')
+
+    security.declareProtected(Permissions.View, 'hasIssues')
+    def hasIssues(self): # likely.
+        """
+        Does this wiki have any issue pages ?
+        """
+        return self.issueCount() > 0
 
     security.declareProtected(Permissions.View, 'issueCount')
     def issueCount(self):

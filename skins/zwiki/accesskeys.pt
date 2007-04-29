@@ -9,7 +9,7 @@
       <a tal:attributes="href here/contentsUrl" accesskey="c"></a>
       <a tal:attributes="href here/changesUrl" accesskey="r"></a>
       <a tal:attributes="href here/discussionUrl" accesskey="" tal:condition="here/discussionUrl"></a>
-      <a tal:attributes="href here/trackerUrl" accesskey="t" tal:condition="here/hasIssues"></a>
+      <a tal:attributes="href here/trackerUrl" accesskey="t" tal:condition="here/hasIssueTracker"></a>
       <a tal:attributes="href here/indexUrl" accesskey="i" tal:condition="here/indexUrl"></a>
       <a tal:attributes="href here/uploadsUrl" accesskey="" tal:condition="python:0 #here/uploadsUrl"></a>
       <a tal:attributes="href here/preferencesUrl" accesskey="o"></a>
