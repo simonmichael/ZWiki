@@ -532,6 +532,23 @@ class PageUtils:
                 return 1
         return 0
 
+    def talsafe(self,s):
+        """
+        Sanitize a string for use with TAL's structure keyword.
+
+        Zope versions before 2.10 expect such data to be an ordinary
+        string.  Zope 2.10 expects it to be unicode, or to at least be
+        convertible to unicode using the default encoding.  We can't
+        guarantee the latter, so convert to unicode preemptively assuming
+        our standard encoding in that case.  (cf issue #1330)
+
+        This is idempotent, safe to call repeatedly.
+        """ 
+        if ZOPEVERSION < (2,10) or type(s) is UnicodeType:
+            return s
+        else:
+            return unicode(s, 'utf-8')
+        
 InitializeClass(PageUtils)
 
 
@@ -817,3 +834,4 @@ def callHooks(hooks, arg):
                 'could not call hook, skipping (traceback follows)\n%s' % (
                 formattedTraceback()))
     return err
+

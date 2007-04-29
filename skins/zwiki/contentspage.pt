@@ -33,14 +33,14 @@
       </h1>
       <div class="formcontent">
         <div class="subtopics">
-          <div style="font-size:large" tal:content="structure options/hierarchy">
+          <div style="font-size:large" tal:content="structure python:here.talsafe(options['hierarchy'])">
             page hierarchy..
           </div>
           <div tal:condition="options/singletons">
             <h4 i18n:translate="">Singletons:</h4>
             <ul class="outline">
               <li tal:repeat="singleton options/singletons">
-                <span tal:replace="structure singleton">singleton..</span>
+                <span tal:replace="structure python:here.talsafe(singleton)">singleton..</span>
               </li>
             </ul>
           </div>

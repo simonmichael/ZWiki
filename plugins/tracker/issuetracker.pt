@@ -11,8 +11,8 @@
       <metal:macro metal:use-macro="here/macros/accesskeys" />
       <h1 i18n:translate="">Issue tracker</h1>
       <div class="formcontent"
-           tal:content="structure python:
-                        here.getSkinTemplate('IssueTracker')(here,request)" />
+           tal:content="structure python:here.talsafe(
+                        here.getSkinTemplate('IssueTracker')(here,request))" />
     </div>
   </body>
 </html>

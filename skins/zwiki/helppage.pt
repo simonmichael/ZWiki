@@ -11,8 +11,8 @@
       <metal:macro metal:use-macro="here/macros/accesskeys" />
       <h1 i18n:translate="">Help page</h1>
       <div class="formcontent" 
-           tal:content="structure python:
-			here.wikilink(here.stxToHtml(str(here.getSkinTemplate('HelpPage'))))
+           tal:content="structure python:here.talsafe(
+			here.wikilink(here.stxToHtml(str(here.getSkinTemplate('HelpPage')))))
 			# for now - HelpPage really expects to be a wiki page
 			">
         content goes here..

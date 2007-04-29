@@ -10,9 +10,9 @@
     <div metal:fill-slot="main">
       <metal:macro metal:use-macro="here/macros/accesskeys" />
       <h1 i18n:translate="">Search this wiki</h1>
-      <div class="formcontent" 
-           tal:content="structure python:
-                        here.getSkinTemplate('SearchPage')(here,request)">
+      <div class="formcontent"
+           tal:content="structure python:here.talsafe(
+                        here.getSkinTemplate('SearchPage')(here,request))">
         content goes here..
       </div>
     </div>

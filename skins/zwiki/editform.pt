@@ -105,14 +105,14 @@
                             tal:attributes="rows rows;"
                             tal:content="text">text...</textarea>
                   <span tal:condition="useEpoz"
-                        tal:replace="structure python:
+                        tal:replace="structure python: here.talsafe(
                                      here.Epoz(
                                      'text',
                                      data=text,
                                      style='background:white;border:thin solid black;
                                      width:100%;height:'+str(rows)+'em;',
                                      css=here.defaultPageUrl()+'/stylesheet',
-                                     )"></span>
+                                     ))"></span>
                 </td>
               </tr>
               <!-- better-positioned epoz source-mode checkbox -->
@@ -208,8 +208,8 @@
           </tr></table>
           <table border="4" width="100%" cellpadding="10" class="preview">
             <tr>
-              <td tal:content="structure python:here.renderText(
-                               text,type,REQUEST=request,RESPONSE=request.RESPONSE)"></td>
+              <td tal:content="structure python:here.talsafe(here.renderText(
+                               text,type,REQUEST=request,RESPONSE=request.RESPONSE))"></td>
             </tr>
           </table>
           <table border="0" width="100%" class="dimtext"><tr>

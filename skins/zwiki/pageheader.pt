@@ -22,7 +22,7 @@
                 <a tal:attributes="href here/wiki_url"
                    title="go to home page"
                    i18n:attributes="title">
-                  <p tal:condition="nothing">workaround for zope bug http://www.zope.org/Collectors/Zope/2302</p>
+                  <p tal:condition="nothing">workaround for zope bug http://www.zope.org/Collectors/Zope/2302 XXX use talsafe, also in latexwiki, mathaction </p>
                   <img tal:condition="here/site_logo|nothing"
                        tal:replace="structure here/site_logo"
                        />
@@ -45,7 +45,7 @@
               <tal:block tal:condition="COMPACT_PARENTS">
                 <tal:block condition="here/ancestorsAsList"
                            repeat="ancestor here/ancestorsAsList">
-                  <span tal:replace="structure python:here.wikilink('['+ancestor+']')" />
+                  <span tal:replace="structure python:here.talsafe(here.wikilink('['+ancestor+']'))" />
                   <small>>></small>
                 </tal:block>
                 <br />
@@ -60,13 +60,13 @@
                        name="expr" type="text" size="20" maxlength="100" value=""
                        title="search all pages" accesskey="s" i18n:attributes="title" /><br />
                 <span class="lasteditor"
-                      tal:content="structure python:here.linkTitle(prettyprint=1)">
+                      tal:content="structure python:here.talsafe(here.linkTitle(prettyprint=1))">
                   last edited n days ago by by so-and-so
                 </span>
               </tal:block>
               <tal:block tal:condition="here/usingPloneSkin">
                 <span class="lasteditor"
-                      tal:content="structure python:here.linkTitle(prettyprint=1)">
+                      tal:content="structure python:here.talsafe(here.linkTitle(prettyprint=1))">
                   last edited n days ago by by so-and-so
                 </span>
                 <div metal:use-macro="python:

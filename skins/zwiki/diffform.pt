@@ -90,9 +90,9 @@
           </tr>
         </table>
         <hr />
-        <pre tal:content="structure difftext"></pre>
+        <pre tal:content="structure python:here.talsafe(difftext)"></pre>
         <hr />
-        <div tal:content="structure python:revision(REQUEST=request,bare=1,show_subtopics=0)"></div>
+        <div tal:content="structure python:here.talsafe(revision(REQUEST=request,bare=1,show_subtopics=0))"></div>
       </div>
     </div>
   </body>

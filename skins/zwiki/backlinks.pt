@@ -24,7 +24,7 @@
             <td width="50%">
               <p>
                 <b i18n:translate="">Parents</b><br />
-		<a tal:replace="structure python:here.wikilink('['+thispage+']')"> </a> 
+		<a tal:replace="structure python:here.talsafe(here.wikilink('['+thispage+']'))"> </a> 
                 <span tal:condition="not:here/parents" i18n:translate="">is a top-level topic.</span>
                 <span tal:condition="here/parents" i18n:translate="">is a subtopic of:</span>
               </p>
@@ -38,7 +38,7 @@
                     <input type="checkbox" name="parents" value="parent" checked="checked" class="formfield"
                            tal:attributes="value parent;"
                            tal:condition="canreparent" />
-		    <a tal:replace="structure python:here.wikilink('['+parent+']')"> </a> 
+		    <a tal:replace="structure python:here.talsafe(here.wikilink('['+parent+']'))"> </a> 
        		    <br />
                   </span>
                 </li>
@@ -58,7 +58,7 @@
                     <input type="checkbox" name="parents" value="blpage" class="formfield"
                            tal:attributes="checked blisparent; value blpage;"
                            tal:condition="canreparent" />
-		    <a tal:define="bltitle bl/Title" tal:replace="structure python:here.wikilink('['+bltitle+']')"> </a> 
+		    <a tal:define="bltitle bl/Title" tal:replace="structure python:here.talsafe(here.wikilink('['+bltitle+']'))"> </a> 
        		    <br />
                   </span>
                 </li>
@@ -115,7 +115,7 @@
                   <input type="submit" value="^" style="padding:0px;visibility:hidden;" tal:condition="not:repeat/cname/index" />
                   <input type="submit" value="^" style="padding:0px;" tal:condition="repeat/cname/index" />
                 </form>
-		<a tal:replace="structure python:here.wikilink('['+cname+']')"> </a>
+		<a tal:replace="structure python:here.talsafe(here.wikilink('['+cname+']'))"> </a>
 		<br />
               </li>
             </ol>
