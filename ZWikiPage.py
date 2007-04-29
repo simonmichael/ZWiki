@@ -64,7 +64,7 @@ import Permissions
 from Defaults import AUTO_UPGRADE, IDS_TO_AVOID, \
      PAGE_METATYPE, LINK_TO_ALL_CATALOGED, LINK_TO_ALL_OBJECTS, \
      WIKINAME_LINKS, BRACKET_LINKS, DOUBLE_BRACKET_LINKS, \
-     DOUBLE_PARENTHESIS_LINKS, ISSUE_LINKS, \
+     DOUBLE_PARENTHESIS_LINKS, ISSUE_LINKS, PAGE_METADATA, \
      CONDITIONAL_HTTP_GET, CONDITIONAL_HTTP_GET_IGNORE
 from Regexps import url, bracketedexpr, singlebracketedexpr, \
      doublebracketedexpr, doubleparenthesisexpr, wikiname, wikilink, \
@@ -1030,6 +1030,11 @@ class ZWikiPage(
         """
         return self.getPath()[:self.getPath().rfind('/')]
 
+    def hasAllCatalogFields(self):
+        """Does our catalog have all the fields needed for fast queries ?"""
+        return self.hasCatalogIndexesMetadata(
+            (['meta_type','path'],PAGE_METADATA))
+
     security.declareProtected(Permissions.View, 'pages')
     def pages(self, **kw):
         """
@@ -1063,23 +1068,15 @@ class ZWikiPage(
         insensitive, partial matching in page names and page text.
         
         """
-        if self.hasCatalogIndexesMetadata((['meta_type','path'], [])):
-            if self.linkToAllCataloged():
-                # look at all cataloged pages ?
-                return filter(lambda x:x is not None,
-                              map(lambda x:self.ensureCompleteMetadataIn(x),
-                                  self.searchCatalog(meta_type=self.meta_type,
-                                                     **kw)))
-            else:
-                # or (usually) just the ones in this folder
-                wikipath = self.wikiPath()
-                def folderpath(s): return s[:s.rfind('/')]
-                return filter(lambda x:x is not None,
-                              map(lambda x:self.ensureCompleteMetadataIn(x),
-                                  filter(lambda x:folderpath(x.getPath())==wikipath,
-                                         self.searchCatalog(meta_type=self.meta_type,
-                                                            path=wikipath,
-                                                            **kw))))
+        if self.hasAllCatalogFields():
+            wikipath = self.wikiPath()
+            def inthiswiki(b):
+                p = b.getPath()
+                return p[:p.rfind('/')] == wikipath
+            return [b for b in
+                    self.searchCatalog(meta_type=self.meta_type,path=wikipath,**kw)
+                    if inthiswiki(b)]
+
         else:
             results = []
             for p in self.pageObjects(): results.append(self.metadataFor(p))
