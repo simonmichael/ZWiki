@@ -17,7 +17,7 @@
       <a tal:attributes="href python:'%s/setskin?skin=zwiki&came_from=%s' % (pageurl,thisurl)" accesskey="-" tal:condition="here/inCMF"></a>
       <a tal:attributes="href python:'%s/setskin?skin=plone&came_from=%s' % (pageurl,thisurl)" accesskey="+" tal:condition="here/inCMF"></a>
       <a tal:attributes="href here/pageUrl" accesskey="v"></a>
-      <a tal:attributes="href string:${here/pageUrl}/subscribeform" accesskey="m"></a>
+      <a tal:attributes="href string:${here/pageUrl}/subscribeform" accesskey="m" tal:condition="here/isMailoutEnabled"></a>
       <a tal:attributes="href string:${here/pageUrl}/backlinks" accesskey="b"></a>
       <a tal:attributes="href string:${here/pageUrl}/diff" accesskey="d"></a>
       <a tal:attributes="href string:${here/pageUrl}/history" accesskey="y"></a>

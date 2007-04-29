@@ -60,7 +60,7 @@
                i18n:attributes="title"
                accesskey="b"
                ><span i18n:translate="">backlinks</span></a>
-            <a tal:condition="python:here.isMailoutEnabled()"
+            <a tal:condition="here/isMailoutEnabled"
                tal:attributes="href python:here.pageUrl() + '/subscribeform'"
                href="page_url/subscribeform" 
                accesskey="m"
