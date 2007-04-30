@@ -1119,10 +1119,8 @@ class ZWikiPage(
         If there's junk in the catalog, pages could return a page with id
         None; we guard against that.
         """
-        # faster, & more robust
-        return self.folder().objectIds(spec=self.meta_type) 
-        # catalog-driven, so could work across folders (cf ALLBRAINS etc.)
-        #return filter(lambda x:x is not None, map(lambda x:x.id,self.pages())) 
+        # note btreefolders don't always give a list
+        return list(self.folder().objectIds(spec=self.meta_type))
 
     security.declareProtected(Permissions.View, 'pageNames')
     def pageNames(self):
@@ -1281,36 +1279,41 @@ class ZWikiPage(
         """
         Return the page in this folder for which name is a fuzzy link, or None.
 
-        A fuzzy link ignores whitespace, case and punctuation.  If there
-        are multiple fuzzy matches, return the page whose name is
-        alphabetically first.  The allow_partial flag allows even fuzzier
-        matching. As of 0.17 ignore_case is not used and kept only for
-        backward compatibility. numeric_match modifies partial matching so
-        that [1] does not match a page "12...".
+        A fuzzy link ignores capitalization, punctuation and whitespace.
+        If there are multiple fuzzy matches, return the page whose name is
+        alphabetically first.
 
-        performance-sensitive
+        The allow_partial flag allows even fuzzier matching. numeric_match
+        modifies partial matching so that numbers match exactly, eg 1 does
+        not match a page named 100.  ignore_case is not used and kept only
+        for backward compatibility.
+
+        performance-sensitive, at least the allow_partial=0 case
         """
-        if url_quoted:
-            name = unquote(name)
+        if url_quoted: name = unquote(name)
+
+        # try common fast case first
         p = self.pageWithName(name)
         if p: return p
+
+        # not quite as simple as you'd think
         id = self.canonicalIdFrom(name)
-        idlower = string.lower(id)
-        ids = self.pageIds()
-        # in case this is a BTreeFolder (& old zope ?), work around as per
-        # IssueNo0535PageWithFuzzyNameAndBTreeFolder.. may not return
-        # the alphabetically first page in this case
-        try:
-            ids.sort()
-        except AttributeError:
-            pass
+        idlower = id.lower()
+        if allow_partial and name.isdigit():
+            names = self.pageNames()
+            names.sort()
+            ids = [self.canonicalIdFrom(name) for name in names]
+        else:
+            ids = self.pageIds()
+
         for i in ids:
-            ilower = string.lower(i)
+            ilower = i.lower()
             if (ilower == idlower or 
                 ((allow_partial and ilower[:len(idlower)] == idlower) and not
                  (numeric_match and re.match(r'[0-9]',ilower[len(idlower):])))
                 ):
                 return self.pageWithId(i)
+
         return None
         
     security.declareProtected(Permissions.View, 'backlinksFor')

@@ -93,3 +93,12 @@ class Tests(ZwikiTestCase):
         # all digits are required
         self.failIf(link('#9')[-6:].endswith('</a>'))
 
+    def test_fuzzy_urls_for_issues(self):
+        p = self.page
+        issue2 = p.pageWithName(p.create('#2 x'))
+        issue20 = p.pageWithName(p.create('#20 x'))
+        issue200 = p.pageWithName(p.create('#200 x'))
+        self.assertEqual(issue2, p.pageWithFuzzyName('2', allow_partial=1))
+        issue2.delete()
+        self.assertEqual(issue20, p.pageWithFuzzyName('2', allow_partial=1))
+        
