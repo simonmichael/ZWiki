@@ -38,7 +38,7 @@
             <td align="left" width="79%" tal:define="COMPACT_PARENTS python:0">
               <tal:block tal:condition="not:COMPACT_PARENTS">
                 <ul tal:replace="structure
-                                 python:here.context(request,enlarge_current=1)">
+                                 python:here.talsafe(here.context(request,enlarge_current=1))">
                   <li>context<ul><li><h1 style="display:inline">page name</h1></li></ul></li>
                 </ul>
               </tal:block>
