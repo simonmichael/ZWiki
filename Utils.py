@@ -835,3 +835,8 @@ def callHooks(hooks, arg):
                 formattedTraceback()))
     return err
 
+if not hasattr(__builtins__,'sorted'):
+    def sorted(L):
+        L = L[:]
+        L.sort()
+        return L
