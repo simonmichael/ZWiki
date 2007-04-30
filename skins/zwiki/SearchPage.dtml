@@ -80,13 +80,15 @@
  titlesearchexpr=wildcardexpr
  textsearchexpr=expr
  titlehits="((cleanexpr and pages(Title=titlesearchexpr)+['dummy']) or pages()+['dummy'])[:-1]" 
+ titlehits="_.sequence.sort(titlehits,(('Title','nocase','asc'),)) # locale_nocase if locale configured in zope.conf"
  texthits="((cleanexpr and pages(text=textsearchexpr)+['dummy']) or ['dummy'])[:-1]" 
+ texthits="_.sequence.sort(texthits,(('Title','nocase','asc'),))"
  >
 
 <p>
 <b><dtml-translate domain=zwiki>Page names matching</dtml-translate> &dtml-titlesearchexpr; (<dtml-var "_.len(titlehits)">):</b>
 <br /><br />
-<dtml-in titlehits sort=Title>
+<dtml-in titlehits>
   <dtml-try>
     <a href="&dtml-wikiurl;/&dtml.url_quote-id;"><dtml-var "excerptAt(cleanexpr,text=formatWikiname(Title))"></a><br />
   <dtml-except>
@@ -97,7 +99,7 @@
 <p>
 <b><dtml-translate domain=zwiki>Text matching</dtml-translate> &dtml-textsearchexpr; (<dtml-var "_.len(texthits)">):</b>
 <br /><br />
-<dtml-in texthits sort=Title>
+<dtml-in texthits>
   <dl>
   <dtml-try>
     <dt><a href="&dtml-wikiurl;/&dtml.url_quote-id;"><dtml-var "formatWikiname(Title)"></a></dt>
@@ -112,12 +114,16 @@
 </dtml-if>
 
 <dtml-if "_.has_key('thoroughexpr')">
-<dtml-let wikiurl=wikiUrl>
+<dtml-let 
+  wikiurl=wikiUrl
+  results="aq_parent.objectValues(spec='ZWiki Page')"
+  results="_.sequence.sort(results,(('Title','nocase','asc'),))"
+  >
 <p>
 <b><dtml-translate domain=zwiki>Thorough (non-catalog) search for text matching</dtml-translate> &dtml.html_quote-thoroughexpr;:</b>
 <br /><br />
 <dtml-call "REQUEST.set('count',0)">
-<dtml-in "aq_parent.objectValues(spec='ZWiki Page')" sort=Title>
+<dtml-in results>
   <dtml-unless "_.string.find(_.string.lower(_.getitem('sequence-item').raw),_.string.lower(thoroughexpr)) == -1 and _.string.find(_.string.lower(id()),_.string.lower(thoroughexpr)) == -1">
     <dtml-call "REQUEST.set('count',REQUEST.count + 1)">
     <a href="&dtml-wikiurl;/&dtml.url_quote-id;">&dtml-Title;</a>
