@@ -28,6 +28,15 @@ from Products.ZWiki.ZWikiPage import ZWikiPage
 from Products import ZWiki
 
 
+# pickling REQUEST causes problems for tests
+def __getstate__(self):
+    odict = self.__dict__.copy()
+    try: del odict['REQUEST']
+    except KeyError: pass
+    return odict
+ZWikiPage.__getstate__ = __getstate__
+
+
 def afterSetUp(self):
     """
     Do common setup for our ZopeTestCase-based unit tests.
