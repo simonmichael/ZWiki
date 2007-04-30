@@ -81,25 +81,25 @@ class Tests(ZwikiTestCase):
     def test_pageWithId(self):
         p = self.page
         self.failIf(p.pageWithId('nosuchid'))
-        self.failUnless(p.pageWithId('TestPage'))
+        self.assert_(p.pageWithId('TestPage'))
         self.failIf(p.pageWithId('testpage'))
-        self.failUnless(p.pageWithId('testpage',ignore_case=1))
+        self.assert_(p.pageWithId('testpage',ignore_case=1))
 
     def test_pageWithName(self):
         p = self.page
         p.title = 'Test page'
-        self.failUnless(p.pageWithName(p.title))
+        self.assert_(p.pageWithName(p.title))
 
     def test_pageWithFuzzyName(self):
         p = self.page
         p.title = 'Test page'
-        self.failUnless(p.pageWithFuzzyName('Test page'))
-        self.failUnless(p.pageWithFuzzyName(' Test  page\t'))
-        self.failUnless(p.pageWithFuzzyName('TestPage'))
-        self.failUnless(p.pageWithFuzzyName('TEST Page'))
-        self.failUnless(p.pageWithFuzzyName('Testpage'))
+        self.assert_(p.pageWithFuzzyName('Test page'))
+        self.assert_(p.pageWithFuzzyName(' Test  page\t'))
+        self.assert_(p.pageWithFuzzyName('TestPage'))
+        self.assert_(p.pageWithFuzzyName('TEST Page'))
+        self.assert_(p.pageWithFuzzyName('Testpage'))
         self.failIf(p.pageWithFuzzyName('test'))
-        self.failUnless(p.pageWithFuzzyName('test',allow_partial=1))
+        self.assert_(p.pageWithFuzzyName('test',allow_partial=1))
 
     def test_backlinksFor(self):
         p = self.page
@@ -219,9 +219,9 @@ class Tests(ZwikiTestCase):
         self.failIf(self.p.displaysSubtopicsWithDtml())
         self.p.allow_dtml = 1
         self.p.edit(text='<dtml-var subtopics')
-        self.failUnless(self.p.displaysSubtopicsWithDtml())
+        self.assert_(self.p.displaysSubtopicsWithDtml())
         self.p.edit(text='&dtml-subtopics')
-        self.failUnless(self.p.displaysSubtopicsWithDtml())
+        self.assert_(self.p.displaysSubtopicsWithDtml())
 
     def test_linkTitleFrom(self):
         edittime = DateTime.DateTime() - 0.2
@@ -229,13 +229,13 @@ class Tests(ZwikiTestCase):
         r = self.p.linkTitleFrom()
         self.assertEquals( r, 'last edited some time ago')
         r = self.p.linkTitleFrom(prettyprint=1) 
-        self.failUnless( 'some time' in r )
-        self.failUnless( '<a href=' in r )
+        self.assert_( 'some time' in r )
+        self.assert_( '<a href=' in r )
         r = self.p.linkTitleFrom(last_edit_time=edittime, prettyprint=1)
-        self.failUnless( '4 hours' in r )
+        self.assert_( '4 hours' in r )
         r = self.p.linkTitleFrom(last_edit_time=edittime, \
                                  last_editor='fred', prettyprint=1)
-        self.failUnless( 'fred' in r )
+        self.assert_( 'fred' in r )
         edittime = 'not valid'
         r = self.p.linkTitleFrom(last_edit_time=edittime)
-        self.failUnless( 'some time' in r )
+        self.assert_( 'some time' in r )
