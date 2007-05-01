@@ -15,34 +15,37 @@ What is this ?
   spot.  It is often possible to upload files and pictures and get email
   notifications as well.
 
-User interface
+Getting around a zwiki
 
   Zwiki's user interface comes in two main flavours:
   "standard":http://zwiki.org and "plone":http://plone.demo.zwiki.org , or
-  it may be customized by site administrators.  You can set your time
-  zone, editform height and other things by clicking "options".
-
-Navigating
-
-  Some standard links are always available: "home" for the front page,
-  "contents" for an overview of the wiki, "changes" for a list of
-  recently-changed pages, etc.  You can also use the convenient "access
-  keys":http://zwiki.org/QuickReference#access-keys for these and other
-  functions.
+  it may be customized by site administrators.  Some standard links are
+  almost always available, such as "home" for the front page, "contents"
+  for an overview of the wiki, and "changes" for a list of
+  recently-changed pages. 
 
   Each page in a wiki has a unique name, most often a !WikiName - two or
   more capitalized words joined together.  Free-form names - any word or
   phrase enclosed in brackets - may also be used here (unless disabled).
   Wiki page names which appear in text automatically link to that page.
   Click "backlinks" or the page title or use the "b" access key to see
-  which pages link to this one.
+  which pages link to this one.  You'll also see ordinary links made with
+  bare urls, HTML, text formatting markup, or ZWiki:RemoteWikiLinks .
 
-  You'll also see ordinary links made with bare urls, HTML, text
-  formatting markup, or ZWiki:RemoteWikiLinks .
+  Some more tips:
+
+  - use the convenient 
+    "access keys":http://zwiki.org/QuickReference#access-keys for navigation
+    and other functions
+
+  - set your time zone, editform height and other things by clicking "options"
+
+  - leave your mouse pointer over most user interface elements to see
+    informative tooltips
 
 Page hierarchy
 
-  Zwiki displays pages in a hierarchy, like an outliner, which helps to
+  Zwiki keeps pages in a hierarchy, like an outliner, which helps to
   organize large amounts of content.  Unless disabled by the site
   administrator, you can:
 
@@ -87,7 +90,8 @@ Editing
     for tests.
 
   - Click "edit" to change the page's text.  You may also be able to
-    rename the page, upload a file, or choose other options here.
+    rename the page, select the text formatting rules, or upload a file
+    here. It's useful to enter a short "change note" as well.
   
   - When you write a wiki page name in wiki text, it automatically forms a
     link to that page (remember, free-form names must be enclosed in
