@@ -1,7 +1,7 @@
-General plans and todos for the zwiki project. -*- rst -*-
+General plans and todos for the zwiki project. -*- org -*-
 
-PROCESS
-=======
+* PROCESS
+
 efficient wiki system announcements
  send by mail
  possible recipients
@@ -31,8 +31,8 @@ use ruby and haskell
 hosting stats & cost reporting
 lighter monthly release, perhaps a more thoroughly polished quarterly release
 
-DOCS
-====
+* DOCS
+
 clarify division/integration between fs and wiki docs
 publish fs docs online - darcsweb ? epydoc ? trac ? zwiki ?
 get epydoc working
@@ -40,48 +40,46 @@ pursue literate-programming-like wins
 generally rename code files to lower-case
 simpler more focussed wiki docs
 
-SITES
-=====
+* SITES
+
 profile, speed up, simplify
 good stats.. bite google analytics bullet ?
 better tracking of free wikis
 better free wiki signup/marketing/maintenance
 close down dead wikis
 
-PRODUCT
-=======
+* PRODUCT
+
 fix 1284 acquisition bug - Views_tests
 built-in helppage, editform help
 
-I18N
-----
+** I18N
+
 reduce rosetta diffs
  handle rosetta stripping default lines
   convert defaults to one line
 
-VIEWS AND SKINS
----------------
+** VIEWS AND SKINS
+
 keep cleaning up and simplifying
 
-nautica
-.......
+*** nautica
+
 - make stylesheet work in nautica wiki template, with/without CURRENTSKIN
 - commit nautica template
 
-tichu
-.....
+*** tichu
 - ask kevin to confirm name
 - genericise
 - install for other wikis
 - change side bar button text
 
-skin selection
-..............
+*** skin selection
 - select default skin from option
 - select skin from request
 
-TESTS
------
+** TESTS
+
 fix cmf tests
 aftersetup -> setup ? clarify in all fixtures
 bring back doctests ?
