@@ -3,16 +3,17 @@ This is the quick help page for Zwiki version 0.59.0
 See also the more complete docs at http://zwiki.org , such as the 
 "UsersGuide":http://zwiki.org/UsersGuide .
 
-What is a wiki ?
+What is this ?
 
-  This site is a wiki, a kind of collaborative website, running the Zwiki wiki software.
-  *wiki wiki* means *quick*.
+  This site is a wiki, a kind of collaborative website, running the Zwiki
+  wiki software.  *wiki wiki* means *quick*.
 
-  Wikis try to make it as simple as possible to write and share useful content,
-  using intuitive page naming and text formatting conventions.
-  Wikis are usually (but not always) wide open and assume a cooperating community.
-  Anyone can edit, add comments, and make new pages on the spot.
-  It is often possible to upload files and pictures and get email notifications as well.
+  Wikis try to make it as simple as possible to write and share useful
+  content, using intuitive page naming and text formatting conventions.
+  Wikis are usually (but not always) wide open and assume a cooperating
+  community.  Anyone can edit, add comments, and make new pages on the
+  spot.  It is often possible to upload files and pictures and get email
+  notifications as well.
 
 User interface
 
@@ -21,7 +22,13 @@ User interface
   it may be customized by site administrators.  You can set your time
   zone, editform height and other things by clicking "options".
 
-Navigation
+Navigating
+
+  Some standard links are always available: "home" for the front page,
+  "contents" for an overview of the wiki, "changes" for a list of
+  recently-changed pages, etc.  You can also use the convenient "access
+  keys":http://zwiki.org/QuickReference#access-keys for these and other
+  functions.
 
   Each page in a wiki has a unique name, most often a !WikiName - two or
   more capitalized words joined together.  Free-form names - any word or
@@ -30,37 +37,32 @@ Navigation
   Click "backlinks" or the page title or use the "b" access key to see
   which pages link to this one.
 
-  You'll also see ordinary links made with HTML, bare urls, markup syntax,
-  or ZWiki:RemoteWikiLinks .
-
-  Some special links are always available: "home" for the front page,
-  "contents" for an overview of the wiki, "changes" for a list of
-  recently-changed pages etc.  You can also use the convenient 
-  "access keys":http://zwiki.org/QuickReference#access-keys for these and
-  other functions.
+  You'll also see ordinary links made with bare urls, HTML, text
+  formatting markup, or ZWiki:RemoteWikiLinks .
 
 Page hierarchy
 
-  Zwiki keeps pages in a hierarchy, like an outliner, which helps to
+  Zwiki displays pages in a hierarchy, like an outliner, which helps to
   organize large amounts of content.  Unless disabled by the site
   administrator, you can:
 
-  - see the overall wiki outline by clicking "contents"
+  - see the overall wiki outline, by clicking "contents" or using the "c"
+    access key
 
-  - *reparent* the current page to move it in the hierarchy, using either
-    the backlinks screen or the page management form at the bottom of each
-    page
+  - see a page's subtopics, if any, linked just below the main text
 
-  - see the current page's subtopics, linked just below the main text
+  - go to the next page, the previous page, or up, using the "n", "p", and
+    "u" access keys
 
-  - use your browser's "n", "p", and "u" access keys to go to the next
-    page, the previous page, or up.
+  - *reparent* the current page to move it (with subtopics) to a new place
+    in the hierarchy, using the backlinks screen or the page management
+    form at the bottom of the page
 
-Subscription
+Subscribing
 
   If you see a "subscribe" link, you can subscribe to receive comments (or
-  all edits) by mail.  You can subscribe to just one or two pages, or to
-  the whole wiki.
+  all edits) by email.  You can subscribe to individual pages, or to the
+  whole wiki.
 
   1. Click "subscribe"
 
@@ -75,9 +77,10 @@ Subscription
 
 Editing
 
-  You will have full editing rights to any page, unless restricted by the
-  site administrator. Note some zwikis require that you set a username in
-  "options" before you can make changes. Tips:
+  You will be able to create, edit, rename, reparent, delete any page,
+  upload files and images, and more - except where restricted by the site
+  administrator. Many zwikis require that you set a username in "options"
+  before you can make changes. Tips:
 
   - Add a comment using the form at the bottom of the page. Note this may
     be received by many subscribers - to avoid this, use the SandBox page
@@ -88,15 +91,17 @@ Editing
   
   - When you write a wiki page name in wiki text, it automatically forms a
     link to that page (remember, free-form names must be enclosed in
-    square brackets).  If that page does not yet exist, a ? link will
-    appear; click that when you are ready to create it.
+    square brackets).  
+
+  - If the named page does not yet exist, a ? link will appear; click that
+    when you are ready to create it.
   
 Formatting rules
 
    When you save a page, Zwiki formats and links your text according to
-   some standard rules.  Different rules are applied depending on the
-   *page type*; they are described at ZWiki:TextFormattingRules.  Here is
-   a quick primer for ZWiki:StructuredText (but zwikis increasingly use
+   some standard markup rules.  Different rules are applied depending on
+   the *page type*; they are described at ZWiki:TextFormattingRules.  Here
+   is a quick primer for ZWiki:StructuredText (but zwikis increasingly use
    ZWiki:RestructuredText which has some differences..).
 
    1. non-blank lines are run together to form a paragraph; 
@@ -121,9 +126,9 @@ Formatting rules
    6. HTML tags may be added if necessary; on sites which permit it,
       DTML (server-side code) may also be used <br />
 
-   7. short text enclosed in single quotes is quoted, ie
-      displayed in monospace font and protected from some of the above formatting. 
-      For reliable quoting of a body of text, indent it after a paragraph 
+   7. short text enclosed in single quotes is quoted, ie displayed in
+      monospace font and protected from some of the above formatting.  For
+      reliable quoting of a body of text, indent it after a paragraph
       ending with a double colon ::
 
        Like this (edit this page to see source).
