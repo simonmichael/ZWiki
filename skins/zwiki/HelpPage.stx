@@ -5,8 +5,8 @@ See also the more complete docs at http://zwiki.org , such as the
 
 What is a wiki ?
 
-  This site is an example of a wiki - a kind of collaborative website. 
-  (*wiki wiki* means quick.) It is running Zwiki, a particular kind of wiki software.
+  This site is a wiki, a kind of collaborative website, running the Zwiki wiki software.
+  *wiki wiki* means *quick*.
 
   Wikis try to make it as simple as possible to write and share useful content,
   using intuitive page naming and text formatting conventions.
@@ -16,85 +16,88 @@ What is a wiki ?
 
 User interface
 
-  Zwiki's user interface comes in two main flavours: 
-  "standard":http://zwiki.org and "plone":http://plone.demo.zwiki.org .
-  It may be further customized (skinned) by site administrators.
-
-  You can set your user name, time zone and other things by clicking "options".
-  (Some sites require this before you can make changes.)
+  Zwiki's user interface comes in two main flavours:
+  "standard":http://zwiki.org and "plone":http://plone.demo.zwiki.org , or
+  it may be customized by site administrators.  You can set your time
+  zone, editform height and other things by clicking "options".
 
 Navigation
 
-  Each page in a wiki has a unique name, most often a !WikiName - 
-  two or more capitalized words joined together. 
-  Free-form names, which can be any word or phrase, 
-  may also be used. A page name automatically links to that page.
-  ZWiki:RemoteWikiLinks - two wikinames joined by a colon - are links to other sites. 
-  You'll also see standard HTML links and URL links.
+  Each page in a wiki has a unique name, most often a !WikiName - two or
+  more capitalized words joined together.  Free-form names - any word or
+  phrase enclosed in brackets - may also be used here (unless disabled).
+  Wiki page names which appear in text automatically link to that page.
+  Click "backlinks" or the page title or use the "b" access key to see
+  which pages link to this one.
 
-  Certain standard links provide special functions such as an overview
-  of the wiki ("contents") or list of recently-changed pages
-  ("changes").  You can use the convenient "access keys":http://zwiki.org/QuickReference#access-keys 
-  to navigate.
-  
+  You'll also see ordinary links made with HTML, bare urls, markup syntax,
+  or ZWiki:RemoteWikiLinks .
 
-  Click "backlinks" or the page title to see the list of pages which link to this one.
+  Some special links are always available: "home" for the front page,
+  "contents" for an overview of the wiki, "changes" for a list of
+  recently-changed pages etc.  You can also use the convenient 
+  "access keys":http://zwiki.org/QuickReference#access-keys for these and
+  other functions.
 
 Page hierarchy
 
-  Zwiki arranges pages in a hierarchy (outline), which helps to organize
-  things when there are many pages.  You can always see the overall wiki
-  outline by clicking "contents".  Some hierarchy features are hidden
-  unless you have reparent permission. Usually, you can
+  Zwiki keeps pages in a hierarchy, like an outliner, which helps to
+  organize large amounts of content.  Unless disabled by the site
+  administrator, you can:
 
-  - visit the backlinks screen to *reparent* the current page (place it in the hierarchy)
+  - see the overall wiki outline by clicking "contents"
 
-  - or, use the page management form at the bottom of the screen to reparent (create/rename/delete) pages. 
+  - *reparent* the current page to move it in the hierarchy, using either
+    the backlinks screen or the page management form at the bottom of each
+    page
 
-  If enabled by the site admin, you'll also see a list of subtopics on each page.
-  You can use your browser's "n", "p", and "u" access keys to go to next page, to previous page, or up.
+  - see the current page's subtopics, linked just below the main text
+
+  - use your browser's "n", "p", and "u" access keys to go to the next
+    page, the previous page, or up.
 
 Subscription
 
-  If you see a "subscribe" link, you can subscribe to receive comments by mail.
-  You can choose to receive comments just from that page or from the whole wiki.
+  If you see a "subscribe" link, you can subscribe to receive comments (or
+  all edits) by mail.  You can subscribe to just one or two pages, or to
+  the whole wiki.
 
   1. Click "subscribe"
 
   2. if needed, enter your email address and click "Change"
 
   3. click the button to toggle your page or wiki subscription status
-    (green means you are subscribed).
 
-  If configured by the site admin, subscribers may also send comments by mail.
-  Just reply to a comment, or send mail to the wiki's mail-in address.
-  Your mail will go to the page named in brackets in the subject
-  (or to a default page).
+  If the site administrator has configured it, subscribers may also send
+  comments by mail.  Just reply to a mail from the wiki, or send mail to
+  the wiki's mail-in address.  Your mail will go to the page named in
+  brackets in the subject (or to a default page).
 
 Editing
 
-  You have full editing rights to any page, unless restricted by the site
-  admin. Note your comments may be received by many subscribers. To avoid
-  this, please use SandBox for test comments. Tips:
+  You will have full editing rights to any page, unless restricted by the
+  site administrator. Note some zwikis require that you set a username in
+  "options" before you can make changes. Tips:
 
-  - Add a comment using the form at the bottom of the page
+  - Add a comment using the form at the bottom of the page. Note this may
+    be received by many subscribers - to avoid this, use the SandBox page
+    for tests.
 
-  - Click "edit" to change the page's text.
-    You may also be able to rename the page, upload a file, or choose other options here.
+  - Click "edit" to change the page's text.  You may also be able to
+    rename the page, upload a file, or choose other options here.
   
-  - When you write a page name in wiki text, it automatically forms a link to that page
-    (free-form names must be enclosed in square brackets).
-    If that page does not yet exist, a ? link will appear; click that when you are ready to create it.
+  - When you write a wiki page name in wiki text, it automatically forms a
+    link to that page (remember, free-form names must be enclosed in
+    square brackets).  If that page does not yet exist, a ? link will
+    appear; click that when you are ready to create it.
   
-  - There are best practices for wiki editing which you'll get to know over time.
-
 Formatting rules
 
-   When you save a page, Zwiki formats and links your text according to some standard rules.
-   Different rules are applied depending on the *page type*;
-   they are described at ZWiki:TextFormattingRules.
-   Here is a quick primer for ZWiki:StructuredText 
-   (but note many zwikis now use ZWiki:RestructuredText which has some differences).
+   When you save a page, Zwiki formats and links your text according to
+   some standard rules.  Different rules are applied depending on the
+   *page type*; they are described at ZWiki:TextFormattingRules.  Here is
+   a quick primer for ZWiki:StructuredText (but zwikis increasingly use
+   ZWiki:RestructuredText which has some differences..).
 
    1. non-blank lines are run together to form a paragraph; 
       paragraphs are separated by blank lines<br />
@@ -128,13 +131,16 @@ Formatting rules
         and preserve
          fixed-width formatting.
 
-   8. don't bother trying to learn all the text formatting rules and 
-      their interactions. Mimic the text around you;
-      when it does something unexpected, tweak it until it looks right; 
-      go to the docs or ask for help when you get really stuck or curious.
+   8. don't worry about learning all the rules and their interactions -
+      just mimic the text around you; when it does something unexpected,
+      try some tweaks; go to the docs or ask for help when you get really
+      stuck or curious about why it's doing something.
 
 Find out more
 
-  More about Zwiki: http://zwiki.org
+  About Zwiki: http://zwiki.org
 
-  More about wiki in general: WikiWikiWeb:FrontPage , WikiWikiWeb:EvolutionOfaWikizen
+  About wiki in general: 
+  http://en.wikipedia.org/wiki/Wiki , 
+  http://www.c2.com/cgi/wiki?FrontPage ,
+  http://www.c2.com/cgi/wiki?EvolutionOfaWikizen 
