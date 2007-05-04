@@ -969,7 +969,7 @@ class PageEditingSupport:
             # if we have no REQUEST, at least update last editor
             self.last_editor_ip = ''
             self.last_editor = ''
-        self.last_edit_time = DateTime(time.time()).toZone('UTC').ISO()
+        self.last_edit_time = DateTime().ISO8601()
 
     def hasCreatorInfo(self):
         """
@@ -984,7 +984,7 @@ class PageEditingSupport:
         """
         record my creator, creator_ip & creation_time
         """
-        self.creation_time = DateTime(time.time()).toZone('UTC').ISO()
+        self.creation_time = DateTime().ISO8601()
         if REQUEST:
             self.creator_ip = REQUEST.REMOTE_ADDR
             self.creator = self.usernameFrom(REQUEST)

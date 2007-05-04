@@ -190,21 +190,31 @@ class PageAdminSupport:
 
         # Pre-0.9.10, creation_time has been a string in custom format and
         # last_edit_time has been a DateTime. Now both are kept as
-        # ISO-format strings. Might not be strictly necessary to upgrade
+        # ISO 8601-format strings. Might not be strictly necessary to upgrade
         # in all cases.. will cause a lot of bobobase_mod_time
         # updates.. do it anyway.
         if not self.last_edit_time:
-            self.last_edit_time = self.bobobase_modification_time().ISO()
+            self.last_edit_time = self.bobobase_modification_time().ISO8601()
             changed = 1
         elif type(self.last_edit_time) is not StringType:
-            self.last_edit_time = self.last_edit_time.ISO()
+            self.last_edit_time = self.last_edit_time.ISO8601()
             changed = 1
-        elif len(self.last_edit_time) != 19:
+        elif len(self.last_edit_time) != 25:
             try: 
-                self.last_edit_time = DateTime(self.last_edit_time).ISO()
+                if len(self.last_edit_time) == 19: # older "ISO()" format
+                    # we're using the behaviour that was standard in
+                    # Zope <= 2.9, where a timestamp without timezone
+                    # information was assumed to be in UTC (aka GMT)
+                    self.last_edit_time = \
+                    DateTime(self.last_edit_time+' GMT+0').ISO8601()
+                else:
+                    # some other timestamp format, leave tz information
+                    # untouched, or let DateTime guess at it
+                    self.last_edit_time = \
+                    DateTime(self.last_edit_time).ISO8601()
                 changed = 1
             except DateTimeSyntaxError:
-                # can't convert to ISO, just leave it be
+                # can't convert to ISO 8601, just leave it be
                 pass
 
         # If no creation_time, just leave it blank for now.
@@ -212,14 +222,19 @@ class PageAdminSupport:
         if not self.creation_time:
             pass
         elif type(self.creation_time) is not StringType:
-            self.creation_time = self.creation_time.toZone('UTC').ISO()
+            self.creation_time = self.creation_time.ISO8601()
             changed = 1
-        elif len(self.creation_time) != 19:
+        elif len(self.creation_time) != 25:
             try: 
-                self.creation_time = DateTime(self.creation_time).toZone('UTC').ISO()
+                if len(self.creation_time) == 19: # older "ISO()" format
+                    self.creation_time = \
+                    DateTime(self.creation_time+' GMT+0').ISO8601()
+                else:
+                    self.creation_time = \
+                    DateTime(self.creation_time).ISO8601()
                 changed = 1
             except DateTimeSyntaxError:
-                # can't convert to ISO, just leave it be
+                # can't convert to ISO 8601, just leave it be
                 pass
 
         # _wikilinks, _links and _prelinked are no longer used

@@ -56,9 +56,9 @@ else:
         security.declarePrivate('setModificationDate')
         def setModificationDate(self, modification_date=None):
             if modification_date is None:
-                self.last_edit_time = DateTime().toZone('UTC').ISO()
+                self.last_edit_time = DateTime().ISO8601()
             else:
-                self.last_edit_time = self._datify(modification_date).toZone('UTC').ISO()
+                self.last_edit_time = self._datify(modification_date).ISO8601()
 
         security.declarePublic('modified')
         def modified(self):
@@ -74,7 +74,7 @@ else:
 
         security.declarePublic( 'CreationDate' )
         def CreationDate(self):
-            return self.creationTime().ISO()
+            return self.creationTime().ISO8601()
 
         security.declarePublic( 'getPageTitle' )
         def getPageTitle(self, here=None, template=None, portal_title=None):
