@@ -175,13 +175,11 @@ ZWikiPage.ZWikiPage.manage_editProperties = manage_editProperties
 
 manage_addWikiForm = DTMLFile('skins/zwiki/addwikiform', globals())
 
-def manage_addWiki(self, new_id, new_title='', wiki_type='zwikidotorg',
+def manage_addWiki(self, new_id, new_title='', wiki_type='basic',
                        REQUEST=None, enter=0):
     """
     Create a new zwiki web of the specified type
     """
-    REQUEST = REQUEST or getattr(self,'REQUEST',None)
-    
     # check for a configuration wizard
     if hasattr(self,wiki_type+'_config'):
         if REQUEST:
@@ -197,13 +195,17 @@ def manage_addWiki(self, new_id, new_title='', wiki_type='zwikidotorg',
         elif wiki_type in self.listZodbWikis():
             self.addWikiFromZodb(new_id,new_title,wiki_type,REQUEST)
         else:
-            return MessageDialog(
-                title=_('Unknown wiki type'),
-                message='',
-                action=''
-                )
+            if REQUEST:
+                return MessageDialog(
+                    title=_('Unknown wiki type'),
+                    message='',
+                    action=''
+                    )
+            else:
+                raise AttributeError, (
+                    _('The requested wiki type does not exist.'))
 
-        if hasattr(self,wiki_type+'_config') and REQUEST:
+        if REQUEST:
             folder = getattr(self, new_id)
             if hasattr(folder, 'setup_%s'%(wiki_type)):
                 REQUEST.RESPONSE.redirect(REQUEST['URL3']+'/'+new_id+'/setup_%s'%(wiki_type))
@@ -215,7 +217,7 @@ def manage_addWiki(self, new_id, new_title='', wiki_type='zwikidotorg',
                 try: u=self.DestinationURL()
                 except: u=REQUEST['URL1']
                 REQUEST.RESPONSE.redirect(u+'/manage_main?update_menu=1')
-        else:
+        else: # we're called programmatically through xx.manage_addProduct...
             return new_id
 
 def addWikiFromZodb(self,new_id, new_title='', wiki_type='zwikidotorg',

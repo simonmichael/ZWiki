@@ -105,6 +105,10 @@ class AddWikiTests(ZwikiTestCase):
             id, 'Fred\s Wiki', 'basic')
         self.assert_(output == id)
         self.assert_(id in self.folder.objectIds())
+        self.assertRaises(\
+            AttributeError,
+            self.folder.manage_addProduct['ZWiki'].manage_addWiki,
+            'anotherid', 'title', 'no-such-wiki-type')
 
 #     PAGES = (
 #         ('zwikidotorg',
