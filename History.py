@@ -52,7 +52,10 @@ class PageHistorySupport:
             
     def ensureRevisionsFolder(self):
         if not hasattr(self.folder().aq_base,'revisions'):
-            self.folder().manage_addFolder('revisions', 'wiki page revisions')
+            self.folder().manage_addFolder( # XXX make it a btree
+                'revisions',
+                'wiki page revisions',
+                REQUEST=getattr(self,'REQUEST',None))
 
     security.declareProtected(Permissions.View, 'pageRevision')
     def pageRevision(self, rev):
@@ -67,8 +70,10 @@ class PageHistorySupport:
 
         The folder will be created if necessary.
         """
+        # first cut
+
         f = self.folder()
-        cb = f.manage_copyObjects(self.getId())
+        cb = f.manage_copyObjects(self.getId(), REQUEST=REQUEST)
         self.ensureRevisionsFolder()
 
         # kludge so the following paste & rename operations won't meddle
@@ -79,10 +84,12 @@ class PageHistorySupport:
         wikiOutline = self.__class__.wikiOutline
         self.__class__.wikiOutline = lambda self: PersistentOutline()
 
-        self.revisionsFolder().manage_pasteObjects(cb)
+        self.revisionsFolder().manage_pasteObjects(cb, REQUEST=REQUEST)
         # add revision number to the id
         rid = '%s.%d' % (self.getId(), self.revision())
-        self.revisionsFolder().manage_renameObjects([self.getId()],[rid])
+        self.revisionsFolder().manage_renameObjects([self.getId()],
+                                                    [rid],
+                                                    REQUEST=REQUEST)
 
         self.__class__.manage_afterAdd = manage_afterAdd
         self.__class__.wikiOutline = wikiOutline
