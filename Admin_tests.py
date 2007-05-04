@@ -95,8 +95,16 @@ class Tests(ZwikiTestCase):
         #self.assertRaises(UnicodeError,self.p.render)
 
 
-class AddWikiTests(unittest.TestCase):
-    pass
+class AddWikiTests(ZwikiTestCase):
+
+    def test_manage_addWiki_programmatically(self):
+        # programmatically adding a Zwiki should work too!
+        id = 'wiki2'
+        output = \
+            self.folder.manage_addProduct['ZWiki'].manage_addWiki(\
+            id, 'Fred\s Wiki', 'basic')
+        self.assert_(output == id)
+        self.assert_(id in self.folder.objectIds())
 
 #     PAGES = (
 #         ('zwikidotorg',

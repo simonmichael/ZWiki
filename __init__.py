@@ -203,7 +203,7 @@ def manage_addWiki(self, new_id, new_title='', wiki_type='zwikidotorg',
                 action=''
                 )
 
-        if REQUEST:
+        if hasattr(self,wiki_type+'_config') and REQUEST:
             folder = getattr(self, new_id)
             if hasattr(folder, 'setup_%s'%(wiki_type)):
                 REQUEST.RESPONSE.redirect(REQUEST['URL3']+'/'+new_id+'/setup_%s'%(wiki_type))
@@ -215,6 +215,8 @@ def manage_addWiki(self, new_id, new_title='', wiki_type='zwikidotorg',
                 try: u=self.DestinationURL()
                 except: u=REQUEST['URL1']
                 REQUEST.RESPONSE.redirect(u+'/manage_main?update_menu=1')
+        else:
+            return new_id
 
 def addWikiFromZodb(self,new_id, new_title='', wiki_type='zwikidotorg',
                         REQUEST=None):
