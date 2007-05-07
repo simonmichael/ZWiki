@@ -245,10 +245,9 @@ def createFilesFromFsFolder(self, f, dir):
     filenames = os.listdir(dir)
     for filename in filenames:
         if re.match(r'(?:\..*|CVS|_darcs)', filename): continue
-        m = re.search(r'(.+)\.(.+)',filename) # XXX use os. routines
-        id, type = filename, ''
-        if m: id, type = m.groups()
-        this_path = dir + os.sep + filename
+        id, type = os.path.splitext(filename)
+        type = type.lstrip('.')
+        this_path = os.path.join(dir, filename)
         if os.path.isdir(this_path):
             f.manage_addFolder(filename) # add folder
             createFilesFromFsFolder(self, f[filename], this_path) # recurse
@@ -278,7 +277,7 @@ def createFilesFromFsFolder(self, f, dir):
                 f._setObject(id, connection.importFile(dir + os.sep + filename, 
                     customImporters=customImporters))
                 #self._getOb(id).manage_changeOwnershipType(explicit=0)
-            elif re.match(r'(?:jpe?g|gif|png)', type):
+            elif type in ['jpg','gif','png']:
                 f._setObject(filename, Image(filename, '', text))
             else:
                 id = f._setObject(filename, File(filename, '', text))
