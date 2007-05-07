@@ -70,29 +70,23 @@ class PageHistorySupport:
 
         The folder will be created if necessary.
         """
-        # first cut
-
-        f = self.folder()
-        cb = f.manage_copyObjects(self.getId(), REQUEST=REQUEST)
         self.ensureRevisionsFolder()
-
-        # kludge so the following paste & rename operations won't meddle
-        # with the catalog or page hierarchy (hopefully thread-safe,
-        # otherwise escalate to "horrible kludge"):
-        manage_afterAdd = self.__class__.manage_afterAdd
-        self.__class__.manage_afterAdd = lambda self,item,container: None
-        wikiOutline = self.__class__.wikiOutline
-        self.__class__.wikiOutline = lambda self: PersistentOutline()
-
-        self.revisionsFolder().manage_pasteObjects(cb, REQUEST=REQUEST)
-        # add revision number to the id
         rid = '%s.%d' % (self.getId(), self.revision())
-        self.revisionsFolder().manage_renameObjects([self.getId()],
-                                                    [rid],
-                                                    REQUEST=REQUEST)
+        ob = self._getCopy(self.folder())
+        ob._setId(rid)
+
+        # kludge so the following won't update a catalog or outline cache
+        # in the revisions folder (hopefully thread-safe, oherwise
+        # escalate to "horrible kludge"):
+        manage_afterAdd = self.__class__.manage_afterAdd
+        wikiOutline     = self.__class__.wikiOutline
+        self.__class__.manage_afterAdd = lambda self,item,container:None
+        self.__class__.wikiOutline     = lambda self:PersistentOutline()
+
+        self.revisionsFolder()._setObject(rid, ob)
 
         self.__class__.manage_afterAdd = manage_afterAdd
-        self.__class__.wikiOutline = wikiOutline
+        self.__class__.wikiOutline     = wikiOutline
 
     def revisionBefore(self, username):
         """The revision number of the last edit not by username, or None."""

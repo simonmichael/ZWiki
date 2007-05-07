@@ -1,5 +1,6 @@
 from testsupport import *
 ZopeTestCase.installProduct('ZWiki')
+ZopeTestCase.installProduct('ZCatalog')
 
 def test_suite():
     suite = unittest.TestSuite()
@@ -40,9 +41,47 @@ class Tests(ZwikiTestCase):
     def test_saveRevision(self):
         p = self.page
         p.saveRevision()
-        self.assert_(p.revisionsFolder())
+        rf = p.revisionsFolder()
+        self.assert_(rf)
         self.assertEqual(p.revisionCount(), 2)
-        self.assert_(hasattr(p.revisionsFolder(), p.getId()+'.1'))
+        self.assert_(hasattr(rf, p.getId()+'.1'))
+
+        # should not require create permission
+        self.folder.manage_permission('Zwiki: Add pages',[],acquire=0)
+        # rely on test output, should test for some exception or condition
+        p.saveRevision() 
+
+        # should not update catalog in the wiki folder
+        p.ensureCatalog()
+        p.saveRevision()
+        def catalogedids(p): return [b.id for b in p.pages()]
+        self.assertEqual(['TestPage'], catalogedids(p))
+
+        # should not create a catalog in the revisions folder
+        self.failIf(hasattr(rf.aq_base, 'Catalog'))
+
+        # nor update it if it happens to be there
+        rev = rf['TestPage.1']
+        rev.setupCatalog(reindex=0)
+        p.saveRevision()
+        self.assertEqual([], catalogedids(rev))
+        
+        # same thing for the outline cache -
+        # should not update the one in the wiki folder
+        p.ensureWikiOutline()
+        p.saveRevision()
+        self.assertEqual(['TestPage'], p.wikiOutline().nodes())
+
+        # should not create one in the revisions folder
+        self.failIf(hasattr(rf.aq_base, 'outline'))
+
+        # should not update it if it's there
+        rev.ensureWikiOutline()
+        revoutline = rev.wikiOutline()
+        revoutline.setParentmap({})
+        self.assertEqual([], revoutline.nodes())
+        p.saveRevision()
+        self.assertEqual([], revoutline.nodes())
 
     def test_deleteMeSavesRevision(self):
         p = self.page
