@@ -27,8 +27,8 @@ following would be good to figure out and make easy:
 ** access control testing
    being able to configure permissions and test that certain operations
    succeed/fail
-** why on earth is a catalog instance false during tests ? see setupCatalog,
-   #1349
+** rendering views
+   calling a view method like diff() fails trying to render the master template
 """
 
 import sys, re, unittest
