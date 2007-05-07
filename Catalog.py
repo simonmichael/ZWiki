@@ -75,7 +75,8 @@ class PageCatalogSupport:
         (['index1','index2'],['metadata1'])
         """
         catalog = self.catalog()
-        if not catalog: return 0
+        #if not catalog: return 0  #see #1349
+        if self.catalogId()=='NONE': return 0
         catalogindexes, catalogmetadata = catalog.indexes(), catalog.schema()
         indexes, metadata = indexesAndMetadata
         for i in indexes:

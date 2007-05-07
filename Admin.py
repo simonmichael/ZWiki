@@ -409,7 +409,7 @@ class PageAdminSupport:
         items. For simplicity we install all metadata for plugins (like
         Tracker) here as well.
         """                
-        #XXX during unit testing, somehow a non-None catalog is false
+        #XXX during unit testing, somehow a non-None catalog is false (#1349)
         #if not self.catalog():
         if self.catalogId() == 'NONE':
             self.folder().manage_addProduct['ZCatalog'].manage_addZCatalog('Catalog','')

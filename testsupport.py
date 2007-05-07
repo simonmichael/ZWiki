@@ -11,13 +11,13 @@ NOTES
 
 * what is the reason for using afterSetUp instead of setUp ? 
 
-* various, too many test fixture classes are used in zwiki tests right now:
+* too many test fixture variants are used in zwiki tests right now:
 - ZwikiTestCase
 - PloneTestCase
 - ZopeTestCase
 - TestCase
 
-* things too hard to test
+* testing challenges
 Some things are hard to do quickly and prevent tests being written. The
 following would be good to figure out and make easy:
 
@@ -27,7 +27,8 @@ following would be good to figure out and make easy:
 ** access control testing
    being able to configure permissions and test that certain operations
    succeed/fail
-
+** why on earth is a catalog instance false during tests ? see setupCatalog,
+   #1349
 """
 
 import sys, re, unittest
