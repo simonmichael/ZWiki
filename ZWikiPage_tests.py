@@ -9,6 +9,13 @@ def test_suite():
 
 class Tests(ZwikiTestCase):
 
+    def test_manage_addZWikiPage(self):
+        self.folder.manage_addProduct['ZWiki'].manage_addZWikiPage(\
+            'ZmiTestPage')
+        self.assert_('ZmiTestPage' in self.folder.objectIds('ZWiki Page'))
+        # the wiki outline object is also updated
+        self.assert_(self.folder.ZmiTestPage.wikiOutline().hasNode('ZmiTestPage'))
+
     def test_excerptAt(self):
         self.page.edit(text='This is a test of the<br />\n excerptAt method,')
         self.assertEquals(self.page.excerptAt('excerptat',size=10,highlight=0),

@@ -123,13 +123,6 @@ class Tests(ZwikiTestCase):
     #    child.REQUEST.cookies['zwiki_username'] = 'someusername'
     #    child.delete(REQUEST=child.REQUEST)
     #    self.assertEquals(grandchild.parents,['Page'])
-        
-    def test_manage_addZWikiPage(self):
-        from Products.ZWiki.ZWikiPage import manage_addZWikiPage
-        manage_addZWikiPage(self.folder,'ZmiTestPage')
-        assert hasattr(self.folder,'ZmiTestPage')
-        # the wiki outline object is also updated
-        self.assert_(self.folder.ZmiTestPage.wikiOutline().hasNode('ZmiTestPage'))
 
     def test_edit(self):
         p = self.page
