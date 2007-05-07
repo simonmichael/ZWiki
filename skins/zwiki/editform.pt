@@ -103,7 +103,7 @@
                             style="width:100%; background-color:#f0f0f0" 
                             tabindex=""
                             tal:attributes="rows rows;"
-                            tal:content="text">text...</textarea>
+                            tal:content="python:here.talsafe(text)">text...</textarea>
                   <span tal:condition="useEpoz"
                         tal:replace="structure python: here.talsafe(
                                      here.Epoz(
