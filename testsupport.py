@@ -7,13 +7,26 @@ whichever zope products they need. (We let each test module install
 just it's required products so that individual tests may be run more
 quickly.)
 
-what is the reason for using afterSetUp instead of setUp ? 
+NOTES
 
-XXX various, too many test fixture classes are used in zwiki tests right now:
+* what is the reason for using afterSetUp instead of setUp ? 
+
+* various, too many test fixture classes are used in zwiki tests right now:
 - ZwikiTestCase
 - PloneTestCase
 - ZopeTestCase
 - TestCase
+
+* things too hard to test
+Some things are hard to do quickly and prevent tests being written. The
+following would be good to figure out and make easy:
+
+** low-level copy/move
+   being able to copy/move objects, without security checks, with control
+   over catalog & wiki outline updating
+** access control testing
+   being able to configure permissions and test that certain operations
+   succeed/fail
 
 """
 
