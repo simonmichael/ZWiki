@@ -37,7 +37,6 @@ class PageCatalogSupport:
         or above (will acquire).
         """
         folder = self.folder()
-        #if not folder: return None ?
         folderaqbase = getattr(folder,'aq_base',
                                folder) # make tests work
         if hasattr(folderaqbase,'Catalog') and hasattr(folderaqbase.Catalog,'indexes'):
