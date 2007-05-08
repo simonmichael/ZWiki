@@ -476,6 +476,7 @@ class PageEditingSupport:
         implementation, stand by.
         """
         if not rev: return
+        rev = int(rev)
         if not self.checkSufficientId(REQUEST):
             return self.denied(
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
@@ -512,20 +513,43 @@ class PageEditingSupport:
         if REQUEST is not None:
             REQUEST.RESPONSE.redirect(self.pageUrl())
 
-    security.declareProtected(Permissions.Edit, 'revertEditsBy')
-    def revertEditsBy(self, username, REQUEST=None):
-        """Revert to the latest edit by someone other than username, if any."""
-        self.revert(self.revisionBefore(username), REQUEST=REQUEST)
-
-    # restrict this one to managers, it is too powerful for passers-by
-    security.declareProtected(Permissions.manage_properties, 'revertEditsEverywhereBy')
-    def revertEditsEverywhereBy(self, username, REQUEST=None, batch=0):
+    security.declareProtected(Permissions.manage_properties, 'expunge')
+    def expunge(self, rev, REQUEST=None):
         """
-        Revert all the most recent edits by username throughout the wiki.
+        Revert this page to the specified revision, discarding later history.
+        """
+        if not rev: return
+        rev = int(rev)
+        savedrevs = self.revisionNumbers()[:-1]
+        if not rev in savedrevs: return
+        id = self.getId()
+        old = self.revision(rev)
+        old._setId(id)
+        self.folder()._delObject(id)
+        self.folder()._setObject(id,old)
+        # delete history
+        rf = self.revisionsFolder()
+        deadrevs = savedrevs[savedrevs.index(rev):]
+        for r in deadrevs:
+            rf._delObject('%s.%d' % (id,r))
+        BLATHER('expunged %s history after revision %d' % (id,rev))
+        if REQUEST is not None:
+            REQUEST.RESPONSE.redirect(self.pageUrl())
 
-        This is a spam repair tool for managers. It records a new revision
-        for each page, but should probably roll back history instead,
-        removing all the spammer's page revisions. See #1157.
+    security.declareProtected(Permissions.manage_properties, 'expungeEditsBy')
+    def expungeEditsBy(self, username, REQUEST=None):
+        """Expunge all the recent edits to this page by username, if any."""
+        self.expunge(self.revisionNumberBefore(username), REQUEST=REQUEST)
+
+    security.declareProtected(Permissions.manage_properties, 'expungeEditsEverywhereBy')
+    def expungeEditsEverywhereBy(self, username, REQUEST=None, batch=0):
+        """
+        Expunge all the most recent edits by username throughout the wiki.
+
+        This is a powerful spam repair tool for managers. It removes all
+        recent consecutive edits by username from each page in the
+        wiki. The corresponding revisions will disappear from the page
+        history.  See #1157.
         """
         batch = int(batch)
         n = 0
@@ -533,13 +557,13 @@ class PageEditingSupport:
             if p.last_editor == username:
                 n += 1
                 try:
-                    p.revertEditsBy(username,REQUEST=REQUEST)
+                    p.expungeEditsBy(username,REQUEST=REQUEST)
                 except IndexError:
                     # IndexError - we don't have a version that old
-                    BLATHER('failed to revert edits by %s at %s: %s' \
+                    BLATHER('failed to expunge edits by %s at %s: %s' \
                             % (username,p.id(),formattedTraceback()))
                 if batch and n % batch == 0:
-                    BLATHER('committing after %d reverts' % n)
+                    BLATHER('committing after %d expunges' % n)
                     get_transaction().commit()
         
     security.declareProtected(Permissions.Rename, 'rename')

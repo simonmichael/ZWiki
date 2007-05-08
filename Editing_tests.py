@@ -622,3 +622,43 @@ bbb
         #p.merge()
         #self.assertEquals(p.text(),TEXT)
 
+    def test_expunge(self):
+        p = self.page
+        p.append(text='x')
+        p.append(text='x')
+        p.append(text='x')
+        self.assertEqual(4,p.revisionCount())
+        p.expunge(1)
+        p = p.pageWithId(p.getId()) # the object has been replaced
+        self.assertEqual(1,p.revisionCount())
+        self.assertEqual(1,p.revisionNumber())
+
+    def test_expungeEditsBy(self):
+        p = self.page
+
+        # fred edits
+        p.last_editor = 'fred'
+        p.REQUEST.cookies['zwiki_username'] = 'fred'
+        p.edit(text='test',REQUEST=p.REQUEST)
+        p.append(text='1',REQUEST=p.REQUEST)
+        self.assertEqual(p.last_editor,'fred')
+
+        # expunge edits by joe - no change
+        freds = p.read()
+        p.expungeEditsBy('joe')
+        self.assertEqual(p.read(), freds)
+        
+        # joe edits
+        p.REQUEST.cookies['zwiki_username'] = 'joe'
+        p.edit(text='2',REQUEST=p.REQUEST)
+        self.assertEqual(p.last_editor,'joe')
+        self.assertNotEqual(p.read(), freds)
+        
+        # expunge edits by joe - back to fred's version
+        #can't test this yet, cf #1325
+        #p.expungeEditsBy('joe')
+        #self.assertEqual(p.read(), freds)
+        #self.assertEqual(p.last_editor,'fred')
+
+        # test again with a brand new page
+        #new = p.create('NewPage', REQUEST=p.REQUEST)
