@@ -475,12 +475,13 @@ class PageEditingSupport:
         Page renames are not reverted since the new revisions
         implementation, stand by.
         """
-        if not rev: return
-        rev = int(rev)
         if not self.checkSufficientId(REQUEST):
             return self.denied(
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
+        if not rev: return
+        rev = int(rev)
         old = self.revision(rev)
+        if not old: return
         reparent = self.getParents() != old.getParents()
         if reparent and not self.checkPermission(Permissions.Reparent, self):
             raise 'Unauthorized', (
