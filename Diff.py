@@ -40,7 +40,7 @@ class PageDiffSupport:
             a = b.previousRevision()
             if a:
                 atext = a.text()
-        difftext     = htmldiff(atext,btext), 
+        difftext     = htmldiff(atext,btext)
         # wiki links won't find their targets in the revisions folder
         # (unless prerendered is still intact). Oh well.
         bodytext = b(REQUEST=REQUEST,bare=1,show_subtopics=0)
