@@ -28,6 +28,11 @@ CURL=curl -o.curllog -sS -n
 
 default: test
 
+docs: doxygen
+
+doxygen:
+	doxygen doxygen.conf
+
 epydoc:
 	PYTHONPATH=/zope/lib/python \
 	 epydoc --docformat restructuredtext \
@@ -243,8 +248,7 @@ tags:
 	  -o -name misc    -prune -type f \
 	  -o -name old     -prune -type f \
 	  -o -name .old     -prune -type f \
-	  -o -name doxygen -prune -type f \
-	  -o -name .doxygen -prune -type f \
+	  -o -name doc     -prune -type f \
 	  -o -name .NOTES     -prune -type f \
 	  | xargs etags
 
