@@ -181,6 +181,7 @@ class ZWikiPage(
     last_editor_ip = ''
     last_edit_time = ''
     last_log = ''
+    revision_number = 1
     PAGE_TYPES = PAGE_TYPES # used by skin templates
     # page_type used to be a string used to select a render method. 
     # As of 0.25 it is an object which encapsulates the page's formatting

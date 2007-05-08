@@ -11,6 +11,7 @@
                      log        revision/lastLog;
                      editor     revision/last_editor;
                      difftext   options/difftext;
+                     bodytext   options/bodytext;
                      ">
       <metal:macro metal:use-macro="here/macros/accesskeys" />
       <h1 i18n:translate="" tal:content="string:Edit detail for ${here/pageName} revision ${rev} of ${revs}" />
@@ -87,7 +88,7 @@
         <hr />
         <pre tal:content="structure python:here.talsafe(difftext)"></pre>
         <hr />
-        <div tal:content="structure python:here.talsafe(revision(REQUEST=request,bare=1,show_subtopics=0))"></div>
+        <div tal:content="structure python:here.talsafe(bodytext)"></div>
       </div>
     </div>
   </body>

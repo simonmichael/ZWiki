@@ -40,7 +40,11 @@ class PageDiffSupport:
             a = b.previousRevision()
             if a:
                 atext = a.text()
-        return self.diffform(brev, htmldiff(atext,btext), REQUEST=REQUEST)
+        difftext     = htmldiff(atext,btext), 
+        # wiki links won't find their targets in the revisions folder
+        # (unless prerendered is still intact). Oh well.
+        bodytext = b(REQUEST=REQUEST,bare=1,show_subtopics=0)
+        return self.diffform(brev, difftext, bodytext, REQUEST=REQUEST)
 
     def textDiff(self, a='', b='', verbose=1):
         """

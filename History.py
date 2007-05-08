@@ -74,7 +74,7 @@ class PageHistorySupport:
             return []
         else:
             isrev = re.compile(r'%s\.\d+$' % self.getIdBase()).match
-            ids = filter(isrev, f.objectIds(spec=self.meta_type))
+            ids = filter(isrev, list(f.objectIds(spec=self.meta_type)))
             # probably in the right order, but let's make sure
             ids.sort(lambda a,b: cmp(int(a.split('.')[1]), int(b.split('.')[1])))
             return [f[id] for id in ids]
