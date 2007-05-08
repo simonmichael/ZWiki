@@ -221,7 +221,7 @@ def manage_addWiki(self, new_id, new_title='', wiki_type='basic',
         else: # we're called programmatically through xx.manage_addProduct...
             return new_id
 
-def addWikiFromZodb(self,new_id, new_title='', wiki_type='zwikidotorg',
+def addWikiFromZodb(self,new_id, new_title='', wiki_type='basic',
                         REQUEST=None):
     """
     Create a new zwiki web by cloning the specified template
@@ -277,13 +277,13 @@ def createFilesFromFsFolder(self, f, dir):
                 f._setObject(id, connection.importFile(dir + os.sep + filename, 
                     customImporters=customImporters))
                 #self._getOb(id).manage_changeOwnershipType(explicit=0)
-            elif type in ['jpg','gif','png']:
+            elif type in ['jpg','jpeg','gif','png']:
                 f._setObject(filename, Image(filename, '', text))
             else:
                 id = f._setObject(filename, File(filename, '', text))
                 if type == 'css': f[filename].content_type = 'text/css'
 
-def addWikiFromFs(self, new_id, title='', wiki_type='zwikidotorg',
+def addWikiFromFs(self, new_id, title='', wiki_type='basic',
                       REQUEST=None):
     """
     Create a new zwiki web from the specified template on the filesystem.
