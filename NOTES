@@ -1,4 +1,37 @@
-General plans and todos for the zwiki project. -*- org -*-
+Todos and notes for the zwiki project. -*- org -*-
+
+* PRODUCT
+** I18N
+*** unicode inside
+*** easier translations process
+reduce rosetta diffs
+ handle rosetta stripping default lines
+  convert defaults to one line
+
+** TESTS
+
+fix cmf tests
+aftersetup -> setup ? clarify in all fixtures
+bring back doctests ?
+
+** VIEWS AND SKINS
+
+keep cleaning up and simplifying
+
+*** nautica
+
+- make stylesheet work in nautica wiki template, with/without CURRENTSKIN
+- commit nautica template
+
+*** tichu
+- ask kevin to confirm name
+- genericise
+- install for other wikis
+- change side bar button text
+
+*** skin selection
+- select default skin from option
+- select skin from request
 
 * PROCESS
 
@@ -46,43 +79,6 @@ profile, speed up, simplify
 good stats.. bite google analytics bullet ?
 better tracking of free wikis
 better free wiki signup/marketing/maintenance
-close down dead wikis
-
-* PRODUCT
-
-fix 1284 acquisition bug - Views_tests
-built-in helppage, editform help
-
-** I18N
-
-reduce rosetta diffs
- handle rosetta stripping default lines
-  convert defaults to one line
-
-** VIEWS AND SKINS
-
-keep cleaning up and simplifying
-
-*** nautica
-
-- make stylesheet work in nautica wiki template, with/without CURRENTSKIN
-- commit nautica template
-
-*** tichu
-- ask kevin to confirm name
-- genericise
-- install for other wikis
-- change side bar button text
-
-*** skin selection
-- select default skin from option
-- select skin from request
-
-** TESTS
-
-fix cmf tests
-aftersetup -> setup ? clarify in all fixtures
-bring back doctests ?
 
 * NOTES
 ** unicode 
