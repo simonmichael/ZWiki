@@ -1,18 +1,12 @@
-<html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki" >
-  <head>
-    <title metal:fill-slot="title_slot" tal:content="
-                                                     string:${container/title} ${here/pageName} edit detail" />
-    <metal:block metal:fill-slot="head_slot">
-      <metal:block metal:use-macro="here/macros/formsearchtags" />
-    </metal:block>
-  </head>
+<html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki">
   <body>
-    <!-- the diff browser -->
     <div metal:fill-slot="main"
-         tal:define="rev        python:int(options['rev']);
+         tal:define="pageurl    here/pageUrl;
+                     rev        python:int(options['rev']);
+                     minrev     here/firstRevisionNumber;
+                     maxrev     here/lastRevisionNumber;
                      revs       here/revisionCount;
-                     pageurl    here/pageUrl;
-                     revision   python:here.pageRevision(rev);
+                     revision   python:here.revision(rev);
                      time       revision/lastEditTime;
                      log        revision/lastLog;
                      editor     revision/last_editor;
@@ -25,50 +19,51 @@
           <tr valign=top>
 
             <td align="left">
-              <form tal:attributes="action here/pageUrl">
+              <form tal:attributes="action here/pageUrl" style="display:inline">
                 <input type="submit" name="history:method" value="Return to edit history" i18n:attributes="value"/>
-                <input tal:condition="python:0 #too confusing user.has_permission('View History',here)"
+                <input tal:condition="python:0 #too confusing #user.has_permission('View History',here)"
                        value="ZODB history" name="manage_UndoForm:method"
                        type="submit" i18n:attributes="value" />
               </form>
             </td>
 
             <td align="center">
-              <form tal:attributes="action here/pageUrl">
-                <input type="hidden" name="rev" tal:attributes="value rev" />
-                <input tal:condition="python:rev>1"
-                       name="prevDiff:method"
+              <form tal:attributes="action string:${pageurl}/diff" style="display:inline">
+                <input type="hidden" name="rev" tal:attributes="value revision/previousRevisionNumber" />
+                <input tal:condition="python:rev > minrev"
                        value=" &lt;&lt; "
-                       type="submit" i18n:attributes="value" accesskey="p" />
-                <input tal:condition="not:python:rev>1"
+                       type="submit"
+                       accesskey="p" />
+                <input tal:condition="not:python:rev > minrev"
                        disabled="1"
                        value=" &lt;&lt; "
-                       type="submit" i18n:attributes="value" accesskey="p" />
-                <a tal:repeat="r python:range(1,revs+1)"
-                   tal:content="r"
-                   tal:attributes="href string:${pageurl}/diff?rev=${r};
-                                   style python:rev==r and 'font-weight:bold' or '';
-                                   " />
-                <input tal:condition="python:rev<revs"
-                       name="nextDiff:method"
-                       value=" &gt;&gt; "
-                       type="submit" i18n:attributes="value" accesskey="n" />
-                <input tal:condition="not:python:rev<revs"
-                       disabled="1"
-                       value=" &gt;&gt; "
-                       type="submit" i18n:attributes="value" accesskey="n" />
+                       type="submit"
+                       accesskey="p" />
               </form>
-              <form tal:attributes="action string:${pageurl}/diff" tal:condition="nothing">
-                <input tal:repeat="r python:range(1,revs+1)"
-                       tal:attributes="value r; style python:rev==r and 'font-weight:bold' or '';" />
+              <a tal:repeat="r here/revisionNumbers"
+                 tal:content="r"
+                 tal:attributes="href string:${pageurl}/diff?rev=${r};
+                                 style python:rev==r and 'font-weight:bold' or '';
+                                 " />
+              <form tal:attributes="action string:${pageurl}/diff" style="display:inline">
+                <input type="hidden" name="rev" tal:attributes="value revision/nextRevisionNumber" />
+                <input tal:condition="python:rev < maxrev"
+                       value=" &gt;&gt; "
+                       type="submit"
+                       accesskey="n" />
+                <input tal:condition="not:python:rev < maxrev"
+                       disabled="1"
+                       value=" &gt;&gt; "
+                       type="submit"
+                       accesskey="n" />
               </form>
             </td>
 
             <td align="right">
-              <form tal:attributes="action here/pageUrl">
+              <form tal:attributes="action here/pageUrl" style="display:inline">
                 <input type="hidden" name="rev" tal:attributes="value rev" />
                 <input tal:condition="python:user.has_permission('Zwiki: Edit pages', here)"
-                       tal:attributes="disabled python:(rev==revs) and 1 or nothing;"
+                       tal:attributes="disabled python:(rev==maxrev) and 1 or nothing;"
                        value="Revert to this version"
                        type="submit" name="revert:method"
                        i18n:attributes="value" />

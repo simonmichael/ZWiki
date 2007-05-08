@@ -27,8 +27,8 @@
           <tr tal:repeat="rev python:here.revisions()[::-1]">
             <td style="padding-right:1em;">
               <form tal:attributes="action string:${here/pageUrl}/diff">
-                <input type="hidden" name="rev" tal:attributes="value rev/revision" />
-                <input type="submit" tal:attributes="value rev/revision" />
+                <input type="hidden" name="rev" tal:attributes="value rev/revisionNumber" />
+                <input type="submit" tal:attributes="value rev/revisionNumber" />
               </form>
             </td>
             <td style="padding-right:1em; font-weight:bold;font-style:italic;" tal:content="rev/last_log" ></td>

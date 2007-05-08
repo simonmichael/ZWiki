@@ -13,7 +13,7 @@ class Tests(ZwikiTestCase):
         p = self.page
         self.failIf(p.revisionsFolder())
         p.ensureRevisionsFolder()
-        self.assert_(p.revisionsFolder())
+        self.assert_(p.revisionsFolder() is not None)
         self.assert_(p.revisionsFolder().isPrincipiaFolderish)
 
     def test_revisionCount(self):
@@ -22,25 +22,48 @@ class Tests(ZwikiTestCase):
 
     def test_revisions(self):
         p = self.page
-
-        self.assertEqual(p.revisionCount(), 1)
-        self.assertEqual(p.revisions()[-1].text(), p.text())
-
+        self.assertEqual(1, len(p.revisions()))
+        self.assertEqual(p, p.revisions()[0])
         p.edit(text='new text')
-        self.assertEqual(p.revisionCount(), 2)
-        self.assertEqual(p.revisions()[-1].text(), p.text())
+        self.assertEqual(2, len(p.revisions()))
+        self.assertEqual(p.getId()+'.1', p.revisions()[0].getId())
+        self.assertEqual(p, p.revisions()[1])
         
-    def test_revision(self):
-        p = self.page
-        self.assertEqual(p.revision(), 1)
-        p.edit(text='new text')
-        self.assertEqual(p.revision(), 2)
-        self.assertEqual(p.revisions()[0].revision(), 1)
-        self.assertEqual(p.revisions()[1].revision(), 2)
+    def test_revisionNumber(self):
+        p = self.page.folder()[self.page.create('NewPage')]
+        self.assertEqual(p.revisionNumber(),         1)
+        self.assertEqual(p.previousRevisionNumber(), None)
+        self.assertEqual(p.nextRevisionNumber(),     None)
+
+        p.edit(text='x')
+        self.assertEqual(p.revisionNumber(),         2)
+        self.assertEqual(p.previousRevisionNumber(), 1)
+        self.assertEqual(p.nextRevisionNumber(),     None)
+
+        p.edit(text='x')
+        self.assertEqual(p.revisionNumber(),         3)
+        self.assertEqual(p.previousRevisionNumber(), 2)
+        self.assertEqual(p.nextRevisionNumber(),     None)
+
+        # these work on the revision objects too
+        revs = p.revisions()
+        self.assertEqual(revs[0].revisionNumber(),         1)
+        self.assertEqual(revs[0].previousRevisionNumber(), None)
+        self.assertEqual(revs[0].nextRevisionNumber(),     2)
+
+        self.assertEqual(revs[1].revisionNumber(),         2)
+        self.assertEqual(revs[1].previousRevisionNumber(), 1)
+        self.assertEqual(revs[1].nextRevisionNumber(),     3)
+
+        self.assertEqual(revs[2].revisionNumber(),         3)
+        self.assertEqual(revs[2].previousRevisionNumber(), 2)
+        self.assertEqual(revs[2].nextRevisionNumber(),     None)
 
     def test_saveRevision(self):
         p = self.page
+        r = p.revisionNumber()
         p.saveRevision()
+        self.assertEqual(r+1, p.revisionNumber())
         rf = p.revisionsFolder()
         self.assert_(rf)
         self.assertEqual(p.revisionCount(), 2)
@@ -83,12 +106,29 @@ class Tests(ZwikiTestCase):
         p.saveRevision()
         self.assertEqual([], revoutline.nodes())
 
-    def test_deleteMeSavesRevision(self):
-        p = self.page
-        p.handleDeleteMe('DeleteMe')
-        self.assertEqual(p.revisionCount(), 2)
-
     def test_deleteSavesRevision(self):
+        self.assert_('revisions' not in self.wiki.objectIds())
+        self.page.delete()
+        self.assert_('TestPage.1' in self.wiki.revisions.objectIds())
+
+    def test_missingRevisions(self):
+        # things should still work when revisions are deleted
         p = self.page
-        p.delete()
+        p.append(text='x')
+        p.append(text='x')
+        p.append(text='x')
+
+        self.assertEqual(p.revisionCount(), 4)
+        self.assertEqual(p.previousRevisionNumber(), 3)
+        self.assertEqual(p.revision(1).nextRevisionNumber(), 2)
+
+        # delete revisions 2 and 3
+        p.revisionsFolder().manage_delObjects(
+            ids=[r.getId() for r in p.revisions()[1:3]])
+
         self.assertEqual(p.revisionCount(), 2)
+        self.assertEqual(p.revisionNumber(), 4)
+        self.assertEqual(p.previousRevisionNumber(), 1)
+        self.assertEqual(p.revision(1).nextRevisionNumber(), 4)
+        self.assertEqual(4, p.revision(4).revisionNumber())
+        

@@ -87,6 +87,7 @@ class PageEditingSupport:
         p = self.__class__(__name__=id)
         # set title now since manage_afterAdd will use it for wiki outline
         p.title = name
+        p.revision_number = 1
         # newid should be the same as id, but don't assume
         newid = self.folder()._setObject(id,p)
         p = getattr(self.folder(),newid)
@@ -478,7 +479,7 @@ class PageEditingSupport:
         if not self.checkSufficientId(REQUEST):
             return self.denied(
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
-        old = self.pageRevision(rev)
+        old = self.revision(rev)
         reparent = self.getParents() != old.getParents()
         if reparent and not self.checkPermission(Permissions.Reparent, self):
             raise 'Unauthorized', (

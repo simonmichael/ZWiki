@@ -166,6 +166,7 @@ class ZWikiPage(
         {'id':'last_editor_ip', 'type': 'string', 'mode': 'r'},
         {'id':'last_edit_time', 'type': 'string', 'mode': 'r'},
         {'id':'last_log', 'type': 'string', 'mode': 'r'},
+        {'id':'revision_number', 'type': 'int', 'mode': 'r'},
         ) \
         + PageOutlineSupport._properties \
         + PageSubscriptionSupport._properties \

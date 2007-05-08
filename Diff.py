@@ -1,13 +1,5 @@
 """
-Simple revisions support for zwiki pages.
-
-Provides methods to look up and revert to old versions from the ZODB history,
-and a diff-browsing form.
-
-todo:
-- clean up 
-- separate out html vs. email diff methods
-
+A diff-browsing view and utilities for use with History.
 """
 
 from __future__ import nested_scopes
@@ -32,65 +24,35 @@ class PageDiffSupport:
     showing differences between edits.
     """
     security = ClassSecurityInfo()
-    
-    def diff(self, rev=None, REQUEST=None,
-             test=None, # for testing
-             ):
+
+    def diff(self, rev=None, REQUEST=None):
         """
         Show what changed in the latest or specified revision of this page.
         
         Uses the diffform template.
         """
-        if rev == None: rev = self.revision()
-        else: rev = int(rev)
-        difftext = test or self.htmlDiff(revA=rev-1,revB=rev)
-        return self.diffform(rev, difftext, REQUEST=REQUEST)
+        if rev: brev = int(rev)
+        else:   brev = self.revisionNumber()
+        atext, btext = '', ''
+        b = self.revision(brev)
+        if b:
+            btext = b.text()
+            a = b.previousRevision()
+            if a:
+                atext = a.text()
+        return self.diffform(brev, htmldiff(atext,btext), REQUEST=REQUEST)
 
-    def prevDiff(self,rev):
-        """A helper for the diffform view."""
-        return self.diff(int(rev)-1)
-
-    def nextDiff(self,rev):
-        """A helper for the diffform view."""
-        return self.diff(int(rev)+1)
-
-    security.declareProtected(Permissions.View, 'lasttext')
-    def lasttext(self, rev=None):
-        """Return the text of the last or an earlier revision of this page."""
-        rev = rev or (self.revision() - 1) or 1
-        return self.pageRevision(rev).text()
-    
-    def textDiff(self,revA=1,revB=0,a=None,b=None, verbose=1):
+    def textDiff(self, a='', b='', verbose=1):
         """
-        Generate readable a plain text diff of this page's revisions.
+        Generate a readable plain text diff for this page's last edit.
 
-        Revisions are numbered backwards from the latest (0).
-        Alternately, a and/or b texts can be specified.
-        See textdiff.
+        Or, between two specified texts. See textdiff.
         """
-        revA = revA or (self.revision() - 1) or 1
-        revB = revB or self.revision()
-        a = a or self.lasttext(revA)
-        b = b or self.lasttext(revB)
+        if not (a or b):
+            b = self.text()
+            arev = self.revision(self.previousRevisionNumber())
+            a = arev and arev.text() or ''
         return textdiff(a,b,verbose)
-
-    def htmlDiff(self,revA=None,revB=None,a=None,b=None):
-        """
-        Generate a readable HTML-formatted diff of this page's revisions.
-
-        Revisions are numbered backwards from the latest (0).
-        Alternately, a and/or b texts can be specified.
-
-        We don't bother abbreviating text segments like textDiff does.
-        Should it use a page template ?
-
-        See htmldiff.
-        """
-        revA = revA or (self.revision() - 1) or 1
-        revB = revB or self.revision()
-        a = a or self.lasttext(revA)
-        b = b or self.lasttext(revB)
-        return htmldiff(a,b)
 
 InitializeClass(PageDiffSupport)
 
