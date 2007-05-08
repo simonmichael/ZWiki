@@ -46,7 +46,7 @@
                title="show help page"
                i18n:attributes="title">
             <span i18n:translate="">help</span></a>
-            <a tal:attributes="href here/preferencesUrl" 
+            <a tal:attributes="href python:here.preferencesUrl()+'?redirectURL='+here.pageUrl()" 
                accesskey="o"
                title="show wiki options"
                i18n:attributes="title">

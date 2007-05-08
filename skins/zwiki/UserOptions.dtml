@@ -49,6 +49,10 @@
 </dtml-let>
 <form action="&dtml-URL;" METHOD="POST" ENCTYPE="multipart/form-data" style="border:none;">
 
+<dtml-if redirectURL>
+<input type=hidden name="redirectURL" value="&dtml-redirectURL;" />
+</dtml-if>
+
 <p>
 <dtml-translate domain="zwiki">User name:</dtml-translate>
 <input type="text" name="zwiki_username" size="20" maxlength="20"
