@@ -28,7 +28,7 @@ CURL=curl -o.curllog -sS -n
 
 default: test
 
-docs: doxygen
+docs: doxygen epydoc
 
 doxygen:
 	rm -rf doc/doxygen/*
@@ -36,7 +36,7 @@ doxygen:
 
 epydoc:
 	rm -rf doc/epydoc/*
-	epydoc --parse-only --docformat=restructuredtext -o doc/epydoc --name=Zwiki --url=http://zwiki.org --graph=all .
+	epydoc --parse-only --exclude='_tests' --docformat=restructuredtext -o doc/epydoc --name=Zwiki --url=http://zwiki.org --graph=all .
 
 
 ## i18n
