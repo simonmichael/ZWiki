@@ -31,23 +31,12 @@ default: test
 docs: doxygen
 
 doxygen:
+	rm -rf doc/doxygen/*
 	doxygen doxygen.conf
 
 epydoc:
-	PYTHONPATH=/zope/lib/python \
-	 epydoc --docformat restructuredtext \
-	        --output /var/www/zopewiki.org/epydoc  \
-	        /zope/lib/python/Products/* /zope2/Products/*
-
-epydoc2:
-	PYTHONPATH=. \
-	cd /zope/lib/python; \
-	epydoc \
-	-o /var/www/zopewiki.org/epydoc \
-	-n Zope-2.7.1b2 \
-	AccessControl/ App BDBStorage/ DateTime/ DBTab/ DocumentTemplate/ HelpSys/ OFS/ Persistence/ SearchIndex/ Shared/ Signals/ StructuredText/ TAL/ webdav/ ZClasses/ ZConfig/ zExceptions/ zLOG/ Zope ZopeUndo/ ZPublisher/ ZServer/ ZTUtils/ PageTemplates ExternalMethod Mailhost MIMETools OFSP PluginIndexes PythonScripts Sessions SiteAccess SiteErrorLog
-
-
+	rm -rf doc/epydoc/*
+	epydoc --parse-only --docformat=restructuredtext -o doc/epydoc --name=Zwiki --url=http://zwiki.org --graph=all .
 
 
 ## i18n

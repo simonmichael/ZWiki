@@ -91,9 +91,12 @@ from plugins import PLUGINS
 
 DEFAULT_PAGETYPE = PAGETYPES[0]
 
-
+# see plugins/__init__.py    
+#
+# PageCMFSupport is last to avoid PortalContent.id overriding
+# DTMLDocument.id() as older code expects ZWikiPage.id() to be callable.
 class ZWikiPage(    
-    PLUGINS[0], ## see plugins/__init__.py    
+    PLUGINS[0],
     PLUGINS[1],
     PLUGINS[2],
     PLUGINS[3],
@@ -111,7 +114,7 @@ class ZWikiPage(
     PLUGINS[15],
     PageEditingSupport, 
     PageOutlineSupport,
-    PageDiffSupport, ## XXX to be replaced by..
+    PageDiffSupport,
     PageHistorySupport,
     PageMailSupport,
     PageSubscriptionSupport,
@@ -122,8 +125,6 @@ class ZWikiPage(
     PageUtils,
     PageViews,
     DTMLDocument,
-    ## XXX last to avoid PortalContent.id overriding DTMLDocument.id(),
-    ## as older code expects ZWikiPage.id() to be callable.
     PageCMFSupport,
     ):
     """
