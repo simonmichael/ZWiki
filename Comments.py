@@ -13,7 +13,8 @@ from Globals import InitializeClass
 import Permissions
 from Regexps import fromlineexpr
 from Utils import BLATHER, html_quote, DateTimeSyntaxError, \
-  stringBefore, stringBeforeAndIncluding, stringAfter, stringAfterAndIncluding
+  stringBefore, stringBeforeAndIncluding, stringAfter, \
+  stringAfterAndIncluding, safe_hasattr
 
 
 class PageCommentsSupport:
@@ -123,7 +124,7 @@ class PageCommentsSupport:
         Generate a somewhat unique email message-id based on a DateTime
         """
         msgid = time.strftime('%Y%m%d%H%M%S')+time.rfc822()[-5:]+'@'
-        if hasattr(self,'REQUEST'):
+        if safe_hasattr(self,'REQUEST'):
             msgid += re.sub(r'http://','',self.REQUEST.get('SERVER_URL',''))
         msgid = '<%s>' % msgid
         return msgid

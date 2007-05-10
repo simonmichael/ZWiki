@@ -9,6 +9,7 @@ from AccessControl import getSecurityManager, ClassSecurityInfo
 from Globals import InitializeClass
 try:    from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2 as Folder
 except: from OFS.Folder import Folder # zope 2.7
+from Utils import safe_hasattr
 
 import re
 import Permissions
@@ -38,7 +39,7 @@ class PageHistorySupport:
         """Get the revisions subfolder, even called from within it."""
         if self.inRevisionsFolder():
             return self.folder()
-        elif hasattr(self.folder().aq_base, 'revisions'):
+        elif safe_hasattr(self.folder().aq_base, 'revisions'):
             f = self.folder().revisions
             if f.isPrincipiaFolderish:
                 return f

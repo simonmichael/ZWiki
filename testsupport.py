@@ -40,6 +40,7 @@ from ZPublisher.HTTPResponse import HTTPResponse
 
 from Products.ZWiki.ZWikiPage import ZWikiPage
 from Products import ZWiki
+from Products.ZWiki.Utils import safe_hasattr
 
 
 # pickling REQUEST causes problems for tests

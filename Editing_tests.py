@@ -29,7 +29,7 @@ def test_rename(self):
     #UnpickleableError: Cannot pickle <type 'file'> objects
     #get_transaction().commit(1)
     self.wiki.TestPage.rename(pagename='NewName',REQUEST=req)
-    self.assert_(hasattr(self.wiki,'NewName'))
+    self.assert_(safe_hasattr(self.wiki,'NewName'))
     # the wiki outline object is also updated
     self.assert_(not self.wiki.NewName.wikiOutline().hasNode('TestPage'))
     self.assert_(self.wiki.NewName.wikiOutline().hasNode('NewName'))
@@ -37,7 +37,7 @@ def test_rename(self):
     self.wiki.NewName.create('NewNameChild')
     self.wiki.NewNameChild.create('NewNameGrandChild')
     self.wiki.NewNameChild.rename(pagename='NewNameChildRenamed',REQUEST=req)
-    self.assert_(hasattr(self.wiki,'NewNameChildRenamed'))
+    self.assert_(safe_hasattr(self.wiki,'NewNameChildRenamed'))
     self.assert_('NewNameChildRenamed' in self.wiki.NewNameGrandChild.parents)
     # the wiki outline object is also updated
     self.assert_('NewNameChildRenamed' in \
@@ -138,7 +138,7 @@ class Tests(ZwikiTestCase):
         file = OFS.Image.Pdata('test file data')
 
         # our test page/folder initially has no uploads attr.
-        self.assert_(not hasattr(p,'uploads'))
+        self.assert_(not safe_hasattr(p,'uploads'))
 
         # calling with an unnamed file should do nothing much
         self.assertEqual(p._createFileOrImage(file),(None, None, None))
@@ -182,7 +182,7 @@ class Tests(ZwikiTestCase):
         p.edit(REQUEST=p.REQUEST)
 
         # the new file should exist
-        self.assert_(hasattr(f,'edittestfile'))
+        self.assert_(safe_hasattr(f,'edittestfile'))
         # with the right data
         self.assertEqual(str(f['edittestfile']),'test file data')
         # and a link should have been added to the page
@@ -202,7 +202,7 @@ class Tests(ZwikiTestCase):
         file.filename = 'edittestimage.jpg'
         p.REQUEST.file = file
         p.edit(REQUEST=p.REQUEST)
-        self.assert_(hasattr(f,'edittestimage.jpg'))
+        self.assert_(safe_hasattr(f,'edittestimage.jpg'))
         self.assertEqual(f['edittestimage.jpg'].content_type,'image/jpeg')
         #self.assertEqual(p.read(),'\n\n<img src="edittestimage.jpg" />\n') #stx
         self.assertEqual(p.read(),'\n\n.. image:: edittestimage.jpg\n')     #rst
@@ -253,7 +253,7 @@ class Tests(ZwikiTestCase):
         
         # create a blank page
         p.create('TestPage1',text='')
-        self.assert_(hasattr(f,'TestPage1'))
+        self.assert_(safe_hasattr(f,'TestPage1'))
         self.assertEqual(f.TestPage1.text(),'')
         # the wiki outline object is also updated
         self.assert_(p.wikiOutline().hasNode('TestPage1'))
@@ -267,7 +267,7 @@ class Tests(ZwikiTestCase):
         
         # create a wwml page with some text
         p.create('TestPage2',text='test page data',type='wwml')
-        self.assert_(hasattr(f,'TestPage1'))
+        self.assert_(safe_hasattr(f,'TestPage1'))
         self.assertEqual(f.TestPage2.read(),'test page data')
         self.assertEqual(f.TestPage2.pageTypeId(),'wwml')
 

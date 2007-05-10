@@ -7,7 +7,7 @@ from types import *
 from I18n import _
 from TextFormatter import TextFormatter
 from Utils import html_unquote,BLATHER,formattedTraceback,stripList, \
-     isIpAddress,isEmailAddress,isUsername
+     isIpAddress,isEmailAddress,isUsername,safe_hasattr
 from Defaults import AUTO_UPGRADE, PAGE_METATYPE
 
 
@@ -40,7 +40,7 @@ class PageSubscriptionSupport:
         """
         if AUTO_UPGRADE: self._upgradeSubscribers()
         if parent:
-            if hasattr(self.folder(),'subscriber_list'):
+            if safe_hasattr(self.folder(),'subscriber_list'):
                 return stripList(self.folder().subscriber_list)
             else:
                 return []
@@ -80,7 +80,7 @@ class PageSubscriptionSupport:
 
         # migrate an old zwiki subscribers or wikifornow _subscribers attribute
         oldsubs = None
-        if (hasattr(f, 'subscribers') and
+        if (safe_hasattr(f, 'subscribers') and
             type(f.subscribers) is StringType):
             if f.subscribers:
                 oldsubs = split(re.sub(r'[ \t]+',r'',f.subscribers),',')
@@ -89,7 +89,7 @@ class PageSubscriptionSupport:
             except KeyError:
                 BLATHER('failed to delete self.folder().subscribers')
             changed = 1
-        elif hasattr(f, '_subscribers'):
+        elif safe_hasattr(f, '_subscribers'):
             oldsubs = f._subscribers.keys()
             try:
                 del f._subscribers
@@ -97,7 +97,7 @@ class PageSubscriptionSupport:
                 BLATHER('failed to delete self.folder()._subscribers')
             changed = 1
         # ensure a subscriber_list attribute
-        if not hasattr(f, 'subscriber_list'): f.subscriber_list = []
+        if not safe_hasattr(f, 'subscriber_list'): f.subscriber_list = []
         # transfer old subscribers to subscriber_list, unless it's already
         # populated in which case discard them
         if oldsubs and not f.subscriber_list: f.subscriber_list = oldsubs
@@ -121,7 +121,7 @@ class PageSubscriptionSupport:
 
         # migrate an old zwiki subscribers attribute
         oldsubs = None
-        if (hasattr(self, 'subscribers') and
+        if (safe_hasattr(self, 'subscribers') and
             type(self.subscribers) is StringType):
             if self.subscribers:
                 oldsubs = split(re.sub(r'[ \t]+',r'',self.subscribers),',')
@@ -138,7 +138,7 @@ class PageSubscriptionSupport:
 
         # migrate a wikifornow _subscribers attribute
         oldsubs = None
-        if hasattr(self, '_subscribers'):
+        if safe_hasattr(self, '_subscribers'):
             oldsubs = self._subscribers.keys()
             try:
                 del self._subscribers
@@ -396,7 +396,7 @@ class PageSubscriptionSupport:
             if not member:
                 # also check for a pseudo-member (a user acquired from above)
                 # NB doesn't work with CMFMember
-                if hasattr(memberdata,'_members'):
+                if safe_hasattr(memberdata,'_members'):
                     member = memberdata._members.get(subscriber,None)
             email = getattr(member,'email','')
         else:
@@ -629,7 +629,7 @@ class PageMailSupport:
         mhost = None
         folder = self.folder()
         # XXX folder might not have objectValues, don't know why (#938)
-        while (not mhost) and folder and hasattr(folder,'objectValues'):
+        while (not mhost) and folder and safe_hasattr(folder,'objectValues'):
             mhosts = folder.objectValues(
                 spec=['Mail Host', 'Secure Mail Host', 'Maildrop Host'])
             if mhosts: mhost = mhosts[0]

@@ -7,6 +7,7 @@
 from types import *
 import string, re, os
 from Globals import InitializeClass
+from Utils import safe_hasattr
 
 try:
     from Products import CMFCore
@@ -118,7 +119,7 @@ else:
         security.declarePublic('inCMF')
         def inCMF(self):
             """return true if this page is in a CMF portal"""
-            return hasattr(self.aq_inner.aq_parent,'portal_membership')
+            return safe_hasattr(self.aq_inner.aq_parent,'portal_membership')
 
         def __init__(self, source_string='', mapping=None, __name__=''):
             DTMLDocument.__init__(self,

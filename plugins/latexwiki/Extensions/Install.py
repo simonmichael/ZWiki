@@ -41,6 +41,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.ZWiki.CMFInit import wiki_globals, factory_type_information
 from Products.ZWiki.ZWikiPage import ZWikiPage
 from Products.ZWiki.ZWikiWeb import _addDTMLMethod
+from Products.ZWiki.Utils import safe_hasattr
 from Products.ZWiki.Defaults import PAGE_PORTALTYPE#,ALLOWED_PAGE_TYPES_IN_PLONE
 
 
@@ -99,7 +100,7 @@ def install(self):
     self._setObject('pngbehavior.htc', connection.importFile(dir + os.sep + filename, 
         customImporters=customImporters))
     id = 'ploneCustom.css'
-    if hasattr(self,id):
+    if safe_hasattr(self,id):
         ploneCustom = self._getOb(id)
         self._setObject(id, File(id, '', '@import url("latexwiki.css");'))
     else:

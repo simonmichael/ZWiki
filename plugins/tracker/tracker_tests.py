@@ -15,7 +15,7 @@ class TestsOfTrackerSetup(ZwikiTestCase):
         self.assertEqual(p.issueCount(),0)
         p.setupTracker()
         self.assertEqual(p.issueCount(),1)
-        self.assert_(hasattr(p.folder(),'issue_severities'))
+        self.assert_(safe_hasattr(p.folder(),'issue_severities'))
 
     def test_issueParentageWithSkinBasedTracker(self):
         f = self.p.folder()
@@ -36,9 +36,9 @@ class TestsOfTrackerSetup(ZwikiTestCase):
     def test_upgradeIssueProperties(self):
         self.p.create('IssueNo0001')
         p = self.p.pageWithName('IssueNo0001')
-        self.assert_(not hasattr(p,'severity'))
+        self.assert_(not safe_hasattr(p,'severity'))
         p.upgradeIssueProperties()
-        self.assert_(hasattr(p,'severity'))
+        self.assert_(safe_hasattr(p,'severity'))
         self.assertEqual(p.severity,'normal')
 
 

@@ -23,6 +23,7 @@ import os, re, string
 from common import *
 from Products.ZWiki.I18n import _
 from Products.ZWiki.pagetypes import registerPageType
+from Products.ZWiki.Utils import safe_hasattr
 
 class PageTypeMoin(PageTypeBase):
     _id = 'moin'
@@ -1470,7 +1471,7 @@ class MoinFormatter(MoinFormatterBase):
         self.request = request
         self.cfg = request.cfg
 
-        if not hasattr(request, '_fmt_hd_counters'):
+        if not safe_hasattr(request, '_fmt_hd_counters'):
             request._fmt_hd_counters = []
 
     def _langAttr(self):

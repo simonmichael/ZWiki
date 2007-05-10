@@ -47,7 +47,7 @@ else:
 
         def testInstallViaExternalMethod(self):
             cmf_install_zwiki(self.portal)
-            self.assert_(hasattr(self.portal.portal_types,'Wiki Page'))
+            self.assert_(safe_hasattr(self.portal.portal_types,'Wiki Page'))
 
         #def testInstallViaQuickInstaller(self):
 

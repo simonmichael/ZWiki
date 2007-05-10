@@ -15,3 +15,10 @@ class Tests(ZwikiTestCase):
         self.failIf(p.checkSufficientId(r))
         p.edits_need_username = 0
         self.assert_(p.checkSufficientId(r))
+
+    def test_safe_hasattr(self):
+        from Utils import safe_hasattr
+        p = self.page
+        self.failIf(safe_hasattr(p,'muppets'))
+        setattr(p, 'muppets', 'gonzo')
+        self.assert_(safe_hasattr(p,'muppets'))

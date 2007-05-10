@@ -3,12 +3,13 @@
 # This file is compatible with both classic and new-style classes.
 
 import _texbreaker
+from Products.ZWiki.Utils import safe_hasattr
 
 def _swig_setattr(self,class_type,name,value):
     if (name == "this"):
         if isinstance(value, class_type):
             self.__dict__[name] = value.this
-            if hasattr(value,"thisown"): self.__dict__["thisown"] = value.thisown
+            if safe_hasattr(value,"thisown"): self.__dict__["thisown"] = value.thisown
             del value.thisown
             return
     method = class_type.__swig_setmethods__.get(name,None)

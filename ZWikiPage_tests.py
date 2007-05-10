@@ -44,7 +44,7 @@ class Tests(ZwikiTestCase):
         self.page.setupCatalog()
         self.page.catalog().manage_delColumn('parents')
         brain = self.page.pages()[0]
-        self.assert_(hasattr(brain,'parents'))
+        self.assert_(safe_hasattr(brain,'parents'))
 
     def test_canonicalIdFrom(self):
         p = self.page

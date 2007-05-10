@@ -71,7 +71,7 @@ from Regexps import url, bracketedexpr, singlebracketedexpr, \
      interwikilink, remotewikiurl, protected_line, zwikiidcharsexpr, \
      anywikilinkexpr, markedwikilinkexpr, localwikilink, \
      spaceandlowerexpr, dtmlorsgmlexpr, wikinamewords, hashnumberexpr
-from Utils import PageUtils, BLATHER, DateTimeSyntaxError
+from Utils import PageUtils, BLATHER, DateTimeSyntaxError, safe_hasattr
 from Views import PageViews
 from OutlineSupport import PageOutlineSupport
 from Diff import PageDiffSupport # XXX to be replaced by..
@@ -202,7 +202,7 @@ class ZWikiPage(
             BLATHER("upgrading %s's page type from %s to %s" % (self.id(),self.page_type,new))
             self.setPageType(new)
         # page type whose plugin is no longer installed ?
-        elif not hasattr(self.page_type,'render'):
+        elif not safe_hasattr(self.page_type,'render'):
             self.setPageType(DEFAULT_PAGETYPE)
         return self.page_type
     def lookupPageType(self,id=None):
@@ -270,7 +270,7 @@ class ZWikiPage(
         if not self.preRendered(): self.preRender()
         r = self.pageType().render(self, REQUEST, RESPONSE, **kw)
         if RESPONSE:
-            if hasattr(self,'zwiki_content_type'):
+            if safe_hasattr(self,'zwiki_content_type'):
                 RESPONSE.setHeader('content-type',getattr(self,'zwiki_content_type'))
             elif not RESPONSE.getHeader('content-type'):
                 RESPONSE.setHeader('content-type','text/html')
@@ -298,7 +298,7 @@ class ZWikiPage(
         forcibly clear out any cached render data for this page
         """
         self.setPreRendered('')
-        if hasattr(self,'_v_cooked'):
+        if safe_hasattr(self,'_v_cooked'):
             delattr(self,'_v_cooked')
             delattr(self,'_v_blocks')
         if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl())
@@ -421,7 +421,7 @@ class ZWikiPage(
         """Is embedded DTML permitted on this page ?"""
         return (
             getattr(self,'allow_dtml',0) and
-            not hasattr(self,'no_dtml')
+            not safe_hasattr(self,'no_dtml')
             )
 
     security.declareProtected(Permissions.View, 'supportsEpoz')
@@ -432,7 +432,7 @@ class ZWikiPage(
     security.declareProtected(Permissions.View, 'epozInstalled')
     def epozInstalled(self):
         """Is Epoz installed ?"""
-        return hasattr(self,'Epoz')
+        return safe_hasattr(self,'Epoz')
 
     def handle_modified_headers(self, last_mod=None, REQUEST=None):
         """

@@ -13,10 +13,8 @@ from Products.CMFCore.DirectoryView import addDirectoryViews
 from Products.CMFCore.utils import getToolByName
 from Products.ZWiki.CMFInit import wiki_globals
 from Products.ZWiki.ZWikiPage import ZWikiPage
-from Products.ZWiki.Defaults import PAGE_PORTALTYPE
-try:    from Products.CMFCore import permissions as CMFCorePermissions 
-except: from Products.CMFCore import CMFCorePermissions
-    
+from Products.ZWiki.Defaults import PAGE_PORTALTYPE#,ALLOWED_PAGE_TYPES_IN_PLONE
+from Products.CMFCore import CMFCorePermissions
 
 def install(self):
     out          = StringIO()
@@ -49,7 +47,7 @@ def install(self):
     out.write("Disabled workflow on Wiki Page\n")
 
     # make wiki pages use External Editor, if installed, 
-    if hasattr(self.Control_Panel.Products, 'ExternalEditor'):
+    if safe_hasattr(self.Control_Panel.Products, 'ExternalEditor'):
         # XXX Uses addAction and portal_migration, which are plonisms.
         # How should we do this for vanilla CMF ? Do nothing for now.
         try:

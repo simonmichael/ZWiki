@@ -19,7 +19,7 @@ import Admin, Defaults, OutlineSupport, Permissions, ZWikiPage
 from Admin import addDTMLMethod
 from I18n import _, DTMLFile
 from pagetypes import PAGETYPES
-from Utils import parseHeadersBody
+from Utils import parseHeadersBody, safe_hasattr
 
 
 misc_ = {
@@ -182,7 +182,7 @@ def manage_addWiki(self, new_id, new_title='', wiki_type='basic',
     Create a new zwiki web of the specified type
     """
     # check for a configuration wizard
-    if hasattr(self,wiki_type+'_config'):
+    if safe_hasattr(self,wiki_type+'_config'):
         if REQUEST:
             REQUEST.RESPONSE.redirect('%s/%s_config?new_id=%s&new_title=%s' % \
                                       (REQUEST['URL1'],
@@ -208,7 +208,7 @@ def manage_addWiki(self, new_id, new_title='', wiki_type='basic',
 
         if REQUEST:
             folder = getattr(self, new_id)
-            if hasattr(folder, 'setup_%s'%(wiki_type)):
+            if safe_hasattr(folder, 'setup_%s'%(wiki_type)):
                 REQUEST.RESPONSE.redirect(REQUEST['URL3']+'/'+new_id+'/setup_%s'%(wiki_type))
             elif enter:
                 # can't see why this doesn't work after addWikiFromFs

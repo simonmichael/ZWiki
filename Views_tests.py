@@ -12,7 +12,7 @@ class Tests(ZwikiTestCase):
     def test_templatesHaveMetaType(self):
         TEMPLATES = ZWiki.Views.TEMPLATES
         # make sure all default templates have meta_type
-        self.failIf(filter(lambda x:not hasattr(x,'meta_type'),TEMPLATES.values()))
+        self.failIf(filter(lambda x:not safe_hasattr(x,'meta_type'),TEMPLATES.values()))
 
 class BindingsTests(ZwikiTestCase):
     """

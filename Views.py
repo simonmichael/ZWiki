@@ -101,7 +101,7 @@ from ComputedAttribute import ComputedAttribute
 
 import Permissions
 from Defaults import PAGE_METATYPE
-from Utils import BLATHER, formattedTraceback, abszwikipath
+from Utils import BLATHER, formattedTraceback, abszwikipath, safe_hasattr
 from I18n import _, DTMLFile, HTMLFile
 
 
@@ -125,7 +125,7 @@ def loadDtmlMethod(name,dir='skins/zwiki'):
         #dm = DTMLFile(os.path.join(dir,name), globals())
         dm = HTMLFile(f, globals())
         # work around some (2.7 ?) glitch
-        if not hasattr(dm,'meta_type'): dm.meta_type = 'DTML Method (File)'
+        if not safe_hasattr(dm,'meta_type'): dm.meta_type = 'DTML Method (File)'
         return dm
     else:
         return None
@@ -453,7 +453,7 @@ class SkinViews:
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
         
         if ((not page or page == self.pageName()) and
-            hasattr(self,'wl_isLocked') and self.wl_isLocked()):
+            safe_hasattr(self,'wl_isLocked') and self.wl_isLocked()):
             return self.davLockDialog()
 
         # what are we going to do ? set up page, text & action accordingly
@@ -707,7 +707,7 @@ class SkinUtils:
         applied or not.
         """
         REQUEST = getattr(self,'REQUEST',None)
-        if (hasattr(REQUEST,'bare') or kw.has_key('bare')):
+        if (safe_hasattr(REQUEST,'bare') or kw.has_key('bare')):
             return body
         else:
             return self.getSkinTemplate('wikipage')(self,REQUEST,body=body,**kw)
@@ -793,7 +793,7 @@ class SkinSwitchingUtils:
         if not hasSkin(skin): return
         # is the user logged in ? if not, return harmlessly
         member = portal_membership.getAuthenticatedMember()
-        if not hasattr(member,'setProperties'): return
+        if not safe_hasattr(member,'setProperties'): return
         # change their skin preference and reload page
         REQUEST.form['portal_skin'] = skin
         member.setProperties(REQUEST)

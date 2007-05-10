@@ -2,25 +2,26 @@
 
 import os, zLOG
 from Products.ZWiki.plugins.mathaction.util import workingDir
+from Products.ZWiki.Utils import safe_hasattr
 # for equations-in-ZODB
 #from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2
 
 def setup_latexwiki(self): 
     """ Add required attributes to new LatexWiki site, and then remove this method 
     """ 
-    if not hasattr(self,'allow_dtml'):
+    if not safe_hasattr(self,'allow_dtml'):
         self.manage_addProperty('allow_dtml', 'true', 'boolean') 
-    if not hasattr(self,'latex_font_size'):
+    if not safe_hasattr(self,'latex_font_size'):
         self.manage_addProperty('latex_font_size', 18, 'int')
-    if not hasattr(self,'latex_align_fudge'):
+    if not safe_hasattr(self,'latex_align_fudge'):
         self.manage_addProperty('latex_align_fudge', 0.0, 'float')
-    if not hasattr(self,'latex_res_fudge'):
+    if not safe_hasattr(self,'latex_res_fudge'):
         self.manage_addProperty('latex_res_fudge', 0.97, 'float') 
     if(not os.access(workingDir, os.F_OK)): 
         os.mkdir(workingDir)
         zLOG.LOG('LatexWiki',zLOG.DEBUG, 'LatexWiki image directory %s created'%(workingDir)) 
     id = 'images'
-    if not hasattr(self,'images'):
+    if not safe_hasattr(self,'images'):
         ob = None 
         try: 
             from Products.LocalFS.LocalFS import LocalFS 

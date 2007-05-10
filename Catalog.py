@@ -7,7 +7,7 @@ from AccessControl import getSecurityManager, ClassSecurityInfo
 from Globals import InitializeClass
 
 import Permissions
-from Utils import BLATHER,formattedTraceback
+from Utils import BLATHER,formattedTraceback,safe_hasattr
 
 
 class PageCatalogSupport:
@@ -40,7 +40,7 @@ class PageCatalogSupport:
         folder = self.folder()
         folderaqbase = getattr(folder,'aq_base',
                                folder) # make tests work
-        if hasattr(folderaqbase,'Catalog') and hasattr(folderaqbase.Catalog,'indexes'):
+        if safe_hasattr(folderaqbase,'Catalog') and safe_hasattr(folderaqbase.Catalog,'indexes'):
             return folder.Catalog
         else:
             try:

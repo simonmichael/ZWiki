@@ -68,7 +68,7 @@ class Tests(ZwikiTestCase):
         rf = p.revisionsFolder()
         self.assert_(rf)
         self.assertEqual(p.revisionCount(), 2)
-        self.assert_(hasattr(rf, p.getId()+'.1'))
+        self.assert_(safe_hasattr(rf, p.getId()+'.1'))
 
         # should not require create permission
         f.manage_permission('Zwiki: Add pages',[],acquire=0)
@@ -83,7 +83,7 @@ class Tests(ZwikiTestCase):
         self.assertEqual(['TestPage'], catalogedids(p))
 
         # nor create one in the revisions folder
-        self.failIf(hasattr(rf.aq_base, 'Catalog'))
+        self.failIf(safe_hasattr(rf.aq_base, 'Catalog'))
 
         # same thing for the outline cache -
         # should not update the one in the wiki folder
@@ -92,7 +92,7 @@ class Tests(ZwikiTestCase):
         self.assertEqual(['TestPage'], p.wikiOutline().nodes())
 
         # nore create one in the revisions folder
-        self.failIf(hasattr(rf.aq_base, 'outline'))
+        self.failIf(safe_hasattr(rf.aq_base, 'outline'))
 
         # if revision object(s) already exist, jump to the next available number
         # when renaming..

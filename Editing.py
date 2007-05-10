@@ -30,7 +30,7 @@ from pagetypes import PAGETYPES
 from Defaults import DISABLE_JAVASCRIPT, LARGE_FILE_SIZE, LEAVE_PLACEHOLDER
 import Permissions
 from Regexps import javascriptexpr, htmlheaderexpr, htmlfooterexpr
-from Utils import get_transaction, BLATHER, parseHeadersBody
+from Utils import get_transaction, BLATHER, parseHeadersBody, safe_hasattr
 from I18n import _
 from Diff import addedtext, textdiff
 
@@ -150,7 +150,7 @@ class PageEditingSupport:
 
     security.declarePublic('isDavLocked')
     def isDavLocked(self):
-        return hasattr(self,'wl_isLocked') and self.wl_isLocked()
+        return safe_hasattr(self,'wl_isLocked') and self.wl_isLocked()
 
     security.declareProtected(Permissions.Comment, 'comment')
     def comment(self, text='', username='', time='',
@@ -721,12 +721,12 @@ class PageEditingSupport:
     def handleFileUpload(self,REQUEST,log=''):
         # is there a file upload ?
         if (REQUEST and
-            hasattr(REQUEST,'file') and
-            hasattr(REQUEST.file,'filename') and
+            safe_hasattr(REQUEST,'file') and
+            safe_hasattr(REQUEST.file,'filename') and
             REQUEST.file.filename):     # XXX do something
 
             # figure out the upload destination
-            if hasattr(self,'uploads'):
+            if safe_hasattr(self,'uploads'):
                 uploaddir = self.uploads
             else:
                 uploaddir = self.folder()
@@ -773,7 +773,7 @@ class PageEditingSupport:
         size, or (None,None,None).
         """
         # macro to check folder contents without acquiring
-        folderHas = lambda folder,id: hasattr(folder.aq_base,id)
+        folderHas = lambda folder,id: safe_hasattr(folder.aq_base,id)
 
         # set id & title from filename
         title=str(title)
@@ -823,11 +823,11 @@ class PageEditingSupport:
         """
         if re.search(r'(src|href)="%s"' % file_id,self.text()): return
 
-        if hasattr(self,'uploads'): folder = 'uploads/'
+        if safe_hasattr(self,'uploads'): folder = 'uploads/'
         else: folder = ''
 
         if content_type[0:5] == 'image' and \
-           not (hasattr(REQUEST,'dontinline') and REQUEST.dontinline) and \
+           not (safe_hasattr(REQUEST,'dontinline') and REQUEST.dontinline) and \
            size <= LARGE_FILE_SIZE :
             linktxt = self.pageType().inlineImage(self, file_id, folder+file_id)
         else:
@@ -907,7 +907,7 @@ class PageEditingSupport:
         prop = 'max_anonymous_links'
         # we'll handle either an int or string property
         if (not self.requestHasUsername(REQUEST) and
-            hasattr(self.folder(), prop)):
+            safe_hasattr(self.folder(), prop)):
             try: max = int(getattr(self.folder(), prop))
             except ValueError: max = None
             if max is not None:
@@ -919,7 +919,7 @@ class PageEditingSupport:
         # XXX simplify ? one property for both ?
         prop = 'max_identified_links'
         # we'll handle either an int or string property
-        if (hasattr(self.folder(), prop)):
+        if (safe_hasattr(self.folder(), prop)):
             try: max = int(getattr(self.folder(), prop))
             except ValueError: max = None
             if max is not None:
@@ -993,9 +993,9 @@ class PageEditingSupport:
         """
         True if this page already has creator attributes.
         """
-        return (hasattr(self,'creator') and
-                hasattr(self,'creation_time') and
-                hasattr(self,'creator_ip'))
+        return (safe_hasattr(self,'creator') and
+                safe_hasattr(self,'creation_time') and
+                safe_hasattr(self,'creator_ip'))
                 
 
     def setCreator(self, REQUEST=None):
@@ -1045,8 +1045,8 @@ class PageEditingSupport:
         username = self.usernameFrom(REQUEST)
         if (timeStamp is not None and
             timeStamp != self.timeStamp() and
-            (not hasattr(self,'last_editor') or
-             not hasattr(self,'last_editor_ip') or
+            (not safe_hasattr(self,'last_editor') or
+             not safe_hasattr(self,'last_editor_ip') or
              username != self.last_editor or
              REQUEST.REMOTE_ADDR != self.last_editor_ip)):
             return 1

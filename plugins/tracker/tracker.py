@@ -12,7 +12,8 @@ from Globals import InitializeClass, package_home
 from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki import Permissions
-from Products.ZWiki.Utils import BLATHER, formattedTraceback, addHook
+from Products.ZWiki.Utils import BLATHER, formattedTraceback, \
+    addHook, safe_hasattr
 from Products.ZWiki.Views import loadDtmlMethod, loadPageTemplate, TEMPLATES
      
 from Products.ZWiki.I18n import _
@@ -85,7 +86,7 @@ class PluginTracker:
         """
         Does this wiki have an issue tracker configured ?
         """
-        return hasattr(self.folder(),'issue_categories')
+        return safe_hasattr(self.folder(),'issue_categories')
 
     security.declareProtected(Permissions.View, 'hasIssues')
     def hasIssues(self): # likely.
@@ -108,7 +109,7 @@ class PluginTracker:
         """
         return (
             self.issueNumberFrom(pagename or self.pageName()) or
-            hasattr(self.aq_base,'status')
+            safe_hasattr(self.aq_base,'status')
             ) and 1
             #hasattr(getattr(self,'aq_base',self),'status') if tests break
 

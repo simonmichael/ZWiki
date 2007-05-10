@@ -57,7 +57,7 @@ import Persistence
 from OFS.SimpleItem import SimpleItem
 
 import Permissions
-from Utils import flatten, BLATHER
+from Utils import flatten, BLATHER, safe_hasattr
 from Defaults import PAGE_METATYPE
 from Regexps import bracketedexpr
 import Outline
@@ -212,9 +212,9 @@ class ShowSubtopicsProperty:
         if getattr(self.folder(),prop,1):
             if kw.has_key(prop):
                 return kw[prop] and 1
-            elif hasattr(self,'REQUEST') and hasattr(self.REQUEST,prop):
+            elif safe_hasattr(self,'REQUEST') and safe_hasattr(self.REQUEST,prop):
                 return getattr(self.REQUEST,prop) and 1
-            elif hasattr(self.aq_base,prop):
+            elif safe_hasattr(self.aq_base,prop):
                 return getattr(self,prop) and 1
             else:
                 primaryParent = self.primaryParent() # call only once
@@ -246,7 +246,7 @@ class ShowSubtopicsProperty:
         true property:   1 ("always")
         false property:  0 ("never")
         """
-        if not hasattr(self.aq_base,'show_subtopics'): return -1
+        if not safe_hasattr(self.aq_base,'show_subtopics'): return -1
         else: return self.show_subtopics and 1
 
     def setSubtopicsPropertyStatus(self,status,REQUEST=None):
@@ -315,7 +315,7 @@ class OutlineManager:
         moving pages to a new folder. This gets called before any use of
         the outline cache, so that it is always present and current.
         """
-        if (not hasattr(self.folder().aq_base,'outline')
+        if (not safe_hasattr(self.folder().aq_base,'outline')
             or not self.folder().outline):
             self.updateWikiOutline()
 
@@ -342,12 +342,12 @@ class OutlineManager:
         # non-SimpleItem-based PersistentOutline object, and
         # SimpleItem-based PersistentOutline object
         # a pre-0.39 outline is just an attribute, delete (but save childmap)
-        if (hasattr(self.folder().aq_base,'outline') and
+        if (safe_hasattr(self.folder().aq_base,'outline') and
             not 'outline' in self.folder().objectIds()):
             oldchildmap = self.folder().outline.childmap()
             del self.folder().outline
         # if there's no outline object, make one
-        if not hasattr(self.folder().aq_base,'outline'):
+        if not safe_hasattr(self.folder().aq_base,'outline'):
             self.folder()._setObject('outline', PersistentOutline())
             self.folder().outline.setChildmap(oldchildmap)
         # regenerate the parentmap

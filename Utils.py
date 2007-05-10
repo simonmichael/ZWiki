@@ -239,7 +239,7 @@ class PageUtils:
         If getObject() returns None (a stale catalog entry), we return None.
         """
         for attr in PAGE_METADATA:
-            if not hasattr(brain,attr):
+            if not safe_hasattr(brain,attr):
                 # incomplete brain - make a PageBrain
                 p = brain.getObject()
                 if p: return self.metadataFor(p)
@@ -565,6 +565,19 @@ def formattedTraceback():
     try:     return join(traceback.format_exception(type,val,tb),'')
     finally: del tb  # Clean up circular reference, avoid IssueNo0536
 
+def safe_hasattr(obj, name, _marker=object()): 
+    """
+    Make sure we don't mask exceptions like hasattr(). 
+    We don't want exceptions other than AttributeError to be masked, 
+    since that too often masks other programming errors. 
+    Three-argument getattr() doesn't mask those, so we use that to 
+    implement our own hasattr() replacement.
+    Boldly lifted this from Dieter Maurer, see here:
+    http://www.zope.org/Collectors/Zope/742
+    """
+    return getattr(obj, name, _marker) is not _marker
+
+
 from cgi import escape
 def html_quote(s): return escape(str(s))
 def html_unquote(s,
@@ -651,9 +664,9 @@ def flattenDtmlParse(i):
     if type(i) in (ListType,TupleType):
         if len(i) > 0: flatList.extend(flattenDtmlParse(i[0]))
         if len(i) > 1: flatList.extend(flattenDtmlParse(i[1:]))
-    elif hasattr(i,'section'):
+    elif safe_hasattr(i,'section'):
         flatList.extend(flattenDtmlParse(i.section))
-    elif hasattr(i,'im_self'):
+    elif safe_hasattr(i,'im_self'):
         flatList.extend(flattenDtmlParse(i.im_self))
     else:
         flatList.append(i)
@@ -835,7 +848,7 @@ def callHooks(hooks, arg):
                 formattedTraceback()))
     return err
 
-if not hasattr(__builtins__,'sorted'):
+if not safe_hasattr(__builtins__,'sorted'):
     def sorted(L):
         L = L[:]
         L.sort()

@@ -27,7 +27,7 @@ from email.Utils import parseaddr, getaddresses
 from email.Iterators import typed_subpart_iterator
 
 from Products.ZWiki.Regexps import wikiname1,wikiname2,bracketedexpr,urlchars
-from Products.ZWiki.Utils import BLATHER
+from Products.ZWiki.Utils import BLATHER, safe_hasattr
 from Products.ZWiki.plugins.tracker.tracker import ISSUE_SEVERITIES
 DEFAULT_SEVERITY = ISSUE_SEVERITIES[len(ISSUE_SEVERITIES)/2]
 
@@ -229,7 +229,7 @@ class MailIn:
         
         """
         # update the banned links property
-        if hasattr(self.folder(),'banned_links'):
+        if safe_hasattr(self.folder(),'banned_links'):
             banned_links = list(self.folder().banned_links)
             spam_links = re.findall(
                 r'((?:http|https|ftp|mailto|file):/*%s)' % urlchars,
@@ -243,7 +243,7 @@ class MailIn:
             if added_links:
                 # update property - need to find the real  owner
                 folder = self.folder()
-                while not hasattr(folder.aq_base,'banned_links'):
+                while not safe_hasattr(folder.aq_base,'banned_links'):
                     folder = folder.aq_parent
                 folder.manage_changeProperties(banned_links=banned_links)
                 # log, also try to notify admin by mail, for now

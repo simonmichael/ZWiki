@@ -13,7 +13,7 @@ from DateTime import DateTime
 
 from I18n import _
 import Permissions
-from Utils import get_transaction, BLATHER, formattedTraceback, DateTimeSyntaxError, callHooks
+from Utils import get_transaction, BLATHER, formattedTraceback, DateTimeSyntaxError, callHooks, safe_hasattr
 from pagetypes import PAGE_TYPE_UPGRADES
 from Defaults import PAGE_METADATA, \
      TEXTINDEXES, FIELDINDEXES, KEYWORDINDEXES, DATEINDEXES, PATHINDEXES
@@ -175,7 +175,7 @@ class PageAdminSupport:
         # NB be a bit careful about  acquisition while doing this
 
         # migrate a WikiForNow _st_data attribute
-        if hasattr(self.aq_base, '_st_data'):
+        if safe_hasattr(self.aq_base, '_st_data'):
             self.raw = self._st_data
             del self._st_data
             changed = 1
@@ -243,7 +243,7 @@ class PageAdminSupport:
             '_links',
             '_prelinked',
             ):
-            if hasattr(self.aq_base,a): 
+            if safe_hasattr(self.aq_base,a): 
                 delattr(self,a)
                 self.clearCache()
                 changed = 1 

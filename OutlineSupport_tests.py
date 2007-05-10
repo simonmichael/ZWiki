@@ -28,7 +28,7 @@ class Tests(ZwikiTestCase):
         self.wiki._delObject('outline')
 
     def test_wikiOutline(self):
-        self.assert_(hasattr(self.wiki,'outline'))
+        self.assert_(safe_hasattr(self.wiki,'outline'))
         o = self.page.wikiOutline()
         self.assertEquals(o,self.wiki.outline)
         self.assertEquals(o.nesting(),
