@@ -1,8 +1,6 @@
 # catalog awareness for zwiki pages
 # originally based on Casey Duncan's DTMLDocumentExt 0.1
 
-import string
-
 from AccessControl import getSecurityManager, ClassSecurityInfo
 from Globals import InitializeClass
 
@@ -94,7 +92,7 @@ class PageCatalogSupport:
 
     def url(self):
         """Return the absolute object path"""
-        return string.join(self.getPhysicalPath(),'/')
+        return '/'.join(self.getPhysicalPath())
 
     getPath = url
 

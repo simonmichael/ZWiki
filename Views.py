@@ -86,9 +86,7 @@ Other notes
 
 
 from __future__ import nested_scopes
-import os, sys, re, string, time, math
-import string
-from string import split,join,find,lower,rfind,atoi,strip
+import os
 
 from App.Common import rfc1123_date
 from AccessControl import getSecurityManager, ClassSecurityInfo

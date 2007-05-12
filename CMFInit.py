@@ -2,7 +2,6 @@
 # __init__ tries to import this, will ignore any errors
 
 from types import *
-import string, re, os
 from AccessControl import getSecurityManager
 from DateTime import DateTime
 import Products.CMFCore.utils

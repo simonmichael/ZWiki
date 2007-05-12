@@ -12,8 +12,6 @@ left, center and right alignment.
 SKWM made filling & padding optional, tweaked some edge cases
 """
 
-import string
-
 left  = 0
 center = centre = 1
 right  = 2
@@ -73,12 +71,12 @@ class TextFormatter:
 
         def align(self, line):
             if self.alignment == center:
-                return string.center(line, self.width)
+                return line.center(self.width)
             elif self.alignment == right:
-                return string.rjust(line, self.width)
+                return line.rjust(self.width)
             else:
                 if self.pad:
-                    return string.ljust(line, self.width)
+                    return line.ljust(self.width)
                 else:
                     return line
 
@@ -86,15 +84,15 @@ class TextFormatter:
             self.lines = []
             words = []
             if self.fill:               # SKWM
-                for word in string.split(text):
+                for word in text.split():
                     if word <= self.width:  # don't understand this
                         words.append(word)
                     else:
                         for i in range(0, len(word), self.width):
                             words.append(word[i:i+self.width])
             else:
-                for line in string.split(text,'\n'):
-                    for word in string.split(line):
+                for line in text.split('\n'):
+                    for word in line.split():
                         for i in range(0, len(word), self.width):
                             words.append(word[i:i+self.width])
                     words.append('\n')
@@ -147,7 +145,7 @@ class TextFormatter:
             for column in self.columns:
                 complines[ln] = complines[ln] + column.getline(ln)
         #return string.join(complines, '\n') + '\n'
-        return string.join(complines, '\n')
+        return '\n'.join(complines)
 
 
 def test():

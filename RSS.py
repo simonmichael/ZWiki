@@ -1,8 +1,6 @@
 # zwiki RSS feed functionality
 
 from __future__ import nested_scopes
-import string, re
-from string import join
 from types import *
 from urllib import quote, unquote
 from DateTime import DateTime

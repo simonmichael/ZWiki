@@ -5,7 +5,6 @@
 # move CMFInstall into the skin ?
 
 from types import *
-import string, re, os
 from Globals import InitializeClass
 from Utils import safe_hasattr
 

@@ -1,7 +1,6 @@
 # PageMailSupport mixin
 
-import string, re, sys
-from string import split,join,find,lower,rfind,atoi,strip,lstrip
+import re, sys
 from types import *
 
 from I18n import _
@@ -83,7 +82,7 @@ class PageSubscriptionSupport:
         if (safe_hasattr(f, 'subscribers') and
             type(f.subscribers) is StringType):
             if f.subscribers:
-                oldsubs = split(re.sub(r'[ \t]+',r'',f.subscribers),',')
+                oldsubs = re.sub(r'[ \t]+',r'',f.subscribers).split(',')
             try:
                 del f.subscribers
             except KeyError:
@@ -124,7 +123,7 @@ class PageSubscriptionSupport:
         if (safe_hasattr(self, 'subscribers') and
             type(self.subscribers) is StringType):
             if self.subscribers:
-                oldsubs = split(re.sub(r'[ \t]+',r'',self.subscribers),',')
+                oldsubs = re.sub(r'[ \t]+',r'',self.subscribers).split(',')
             try:
                 del self.subscribers
             except KeyError:
@@ -246,7 +245,7 @@ class PageSubscriptionSupport:
         If parent flag is true, remove it from the parent folder's
         subscriber list instead.
         """
-        subscriber = string.lower(email)
+        subscriber = email.lower()
         if self.isSubscriber(subscriber,parent):
             sl = self._getSubscribers(parent)
             for s in sl:
@@ -401,7 +400,7 @@ class PageSubscriptionSupport:
             email = getattr(member,'email','')
         else:
             email = ''
-        return string.lower(email) or None
+        return email.lower() or None
 
     def emailAddressesFrom(self,subscribers):
         """
@@ -544,7 +543,7 @@ class PageMailSupport:
 
         Expects a list of recipient addresses.
         """
-        return join(stripList(recipients), ', ')
+        return ', '.join(stripList(recipients))
 
     def subjectHeader(self,subject='',subjectSuffix=''):
         """
@@ -572,10 +571,10 @@ class PageMailSupport:
             # page name has been suppressed
             pagename = ''
         return (
-            strip(getattr(self.folder(),'mail_subject_prefix','')) +
+            getattr(self.folder(),'mail_subject_prefix','').strip() +
             pagename +
             subject +
-            strip(subjectSuffix))
+            subjectSuffix.strip())
 
     def toHeader(self):
         """
