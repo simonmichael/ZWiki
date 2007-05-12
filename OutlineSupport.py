@@ -44,8 +44,7 @@
 # refactor/simplify OutlineRendering
 
 from __future__ import nested_scopes
-import string, re
-from string import join
+import re
 from types import *
 from urllib import quote, unquote
 
@@ -932,7 +931,7 @@ class OutlineRendering:
             return got
         else:
             got.append("</ul>")
-            return join(got, "\n")
+            return "\n".join(got)
 
     security.declareProtected(Permissions.View, 'nestingAsRenderList')
     def nestingAsRenderList(self, nesting, here=None, suppress_current=0,
