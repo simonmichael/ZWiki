@@ -8,7 +8,7 @@ increase.
 from AccessControl import getSecurityManager, ClassSecurityInfo
 from Globals import InitializeClass
 try:    from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2 as Folder
-except: from OFS.Folder import Folder # zope 2.7
+except ImportError: from OFS.Folder import Folder # zope 2.7
 from Utils import safe_hasattr
 
 import re
