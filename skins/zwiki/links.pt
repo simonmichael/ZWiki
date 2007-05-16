@@ -5,48 +5,48 @@
         <tr>
           <td align="right">
             <!-- standard wiki links -->
-            <a href="" tal:attributes="href here/homeUrl" 
+            <a href="" tal:attributes="href here/homeUrl"
                accesskey="f"
                title="show front page"
                i18n:attributes="title">
             <span i18n:translate="">home</span></a>
-            <a href="" tal:attributes="href here/changesUrl" 
+            <a href="" tal:attributes="href here/changesUrl"
                accesskey="r"
                title="show wiki recent changes"
                i18n:attributes="title">
             <span i18n:translate="">changes</span></a>
-            <a href="" tal:attributes="href here/discussionUrl" 
+            <a href="" tal:attributes="href here/discussionUrl"
                tal:condition="here/discussionUrl"
                title="show discussion page"
                i18n:attributes="title">
             <span i18n:translate="">discussion</span></a>
-            <a href="" tal:attributes="href here/trackerUrl" 
+            <a href="" tal:attributes="href here/trackerUrl"
                tal:condition="here/hasIssueTracker"
                title="show issue tracker"
                i18n:attributes="title">
             <span i18n:translate="">issues</span></a>
-            <a href="" tal:attributes="href here/contentsUrl" 
+            <a href="" tal:attributes="href here/contentsUrl"
                accesskey="c"
                title="show wiki contents"
                i18n:attributes="title">
             <span i18n:translate="">contents</span></a>
-            <a tal:attributes="href here/indexUrl" accesskey="i" 
+            <a tal:attributes="href here/indexUrl" accesskey="i"
                tal:condition="here/indexUrl"
                title="show wiki index"
                i18n:attributes="title">
             <span i18n:translate="">index</span></a>
-            <a href="" tal:attributes="href here/uploadsUrl" 
+            <a href="" tal:attributes="href here/uploadsUrl"
                tal:condition="here/uploadsUrl"
                title="show upload page"
                i18n:attributes="title">
             <span i18n:translate="">uploads</span></a>
-            <a tal:attributes="href here/helpUrl" 
-               accesskey="h" 
+            <a tal:attributes="href here/helpUrl"
+               accesskey="h"
                tal:condition="here/helpUrl"
                title="show help page"
                i18n:attributes="title">
             <span i18n:translate="">help</span></a>
-            <a tal:attributes="href python:here.preferencesUrl()+'?redirectURL='+here.pageUrl()" 
+            <a tal:attributes="href python:here.preferencesUrl()+'?redirectURL='+here.pageUrl()"
                accesskey="o"
                title="show wiki options"
                i18n:attributes="title">
@@ -55,26 +55,26 @@
             <!-- standard page links -->
             <a tal:condition="python:0"
                tal:attributes="href python:here.pageUrl() + '/backlinks';"
-               href="" 
-               title="which pages link to this one ?" 
+               href=""
+               title="which pages link to this one ?"
                i18n:attributes="title"
                accesskey="b"
                ><span i18n:translate="">backlinks</span></a>
             <a tal:condition="here/isMailoutEnabled"
                tal:attributes="href python:here.pageUrl() + '/subscribeform'"
-               href="page_url/subscribeform" 
+               href="page_url/subscribeform"
                accesskey="m"
-               title="configure email subscription to this page or site" 
+               title="configure email subscription to this page or site"
                i18n:attributes="title"
                >
-              <span tal:condition="python:0 
+              <span tal:condition="python:0
                                    #here.allSubscriptionsFor(request.get('email',''))
                                    #show subscription status - too expensive " >(un)</span >
             <span i18n:translate="">subscribe</span></a>
             <a tal:condition="python:0 #user.has_permission('Zwiki: Edit pages',here)"
                tal:attributes="href python:here.pageUrl() + '/diff';"
-               href="" 
-               title="show this page's change history" 
+               href=""
+               title="show this page's change history"
                i18n:attributes="title"
                accesskey="d"
                ><span i18n:translate="">diff</span></a>
@@ -82,7 +82,7 @@
                tal:attributes="
                                href python:here.pageUrl() + '/editform';
                                title python: here.translateHelper('edit-page') + ' (' + here.linkTitle() + ')'"
-               href="page_url/editform" 
+               href="page_url/editform"
                title="edit this page (last edited n days ago by so-and-so)"
                accesskey="e"
                >
@@ -95,15 +95,15 @@
                                here.wiki_url() + '/externalEdit_/' +
                                modules['Products.PythonScripts.standard'].url_quote(here.id()) +
                                '?borrow_lock=1'"
-               href="wiki_url/externalEdit_/id" 
-               title="edit using external editor" 
+               href="wiki_url/externalEdit_/id"
+               title="edit using external editor"
                i18n:attributes="title"
                accesskey="x"
-               ><img src="misc_/ExternalEditor/edit_icon" border="0" 
+               ><img src="misc_/ExternalEditor/edit_icon" border="0"
                alt="(external edit)" i18n:attributes="alt" /></a>
           </td>
         </tr>
       </table>
-    </div> 
+    </div>
   </body>
 </html>
