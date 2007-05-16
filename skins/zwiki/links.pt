@@ -10,6 +10,11 @@
                title="show front page"
                i18n:attributes="title">
             <span i18n:translate="">home</span></a>
+            <a href="" tal:attributes="href here/contentsUrl"
+               accesskey="c"
+               title="show wiki contents"
+               i18n:attributes="title">
+            <span i18n:translate="">contents</span></a>
             <a href="" tal:attributes="href here/changesUrl"
                accesskey="r"
                title="show wiki recent changes"
@@ -25,11 +30,6 @@
                title="show issue tracker"
                i18n:attributes="title">
             <span i18n:translate="">issues</span></a>
-            <a href="" tal:attributes="href here/contentsUrl"
-               accesskey="c"
-               title="show wiki contents"
-               i18n:attributes="title">
-            <span i18n:translate="">contents</span></a>
             <a tal:attributes="href here/indexUrl" accesskey="i"
                tal:condition="here/indexUrl"
                title="show wiki index"
@@ -40,17 +40,17 @@
                title="show upload page"
                i18n:attributes="title">
             <span i18n:translate="">uploads</span></a>
+            <a tal:attributes="href python:here.preferencesUrl()+'?redirectURL='+here.pageUrl()"
+               accesskey="o"
+               title="show wiki options"
+               i18n:attributes="title">
+            <span i18n:translate="">options</span></a>
             <a tal:attributes="href here/helpUrl"
                accesskey="h"
                tal:condition="here/helpUrl"
                title="show help page"
                i18n:attributes="title">
             <span i18n:translate="">help</span></a>
-            <a tal:attributes="href python:here.preferencesUrl()+'?redirectURL='+here.pageUrl()"
-               accesskey="o"
-               title="show wiki options"
-               i18n:attributes="title">
-            <span i18n:translate="">options</span></a>
 
             <!-- standard page links -->
             <a tal:condition="python:0"
