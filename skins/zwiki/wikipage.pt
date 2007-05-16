@@ -1,8 +1,8 @@
 <html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki" >
   <!-- the main view for wiki pages. -->
   <head>
-    <title metal:fill-slot="title_slot" tal:content="
-           string:${container/title} ${here/pageName}" />
+    <title metal:fill-slot="title_slot" tal:content="python:
+      '%s %s' % (here.talsafe(container.title),here.talsafe(here.pageName()))" />
     <metal:block metal:fill-slot="head_slot">
       <metal:block metal:use-macro="here/macros/pagesearchtags" />
     </metal:block>
