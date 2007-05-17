@@ -10,7 +10,8 @@ class PageTypeHtml(PageTypeBaseHtml):
     supportsEpoz = yes
 
     def preRender(self, page, text=None):
-        t = text or (page.read()+'\n'+MIDSECTIONMARKER)
+        t = text or (page.document()+'\n'+MIDSECTIONMARKER + \
+                    self.preRenderMessages(page))
         t = page.applyWikiLinkLineEscapesIn(t)
         t = page.markLinksIn(t)
         t = self.protectEmailAddresses(page,t)
