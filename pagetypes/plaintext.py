@@ -10,9 +10,9 @@ class PageTypePlaintext(PageTypeBase):
         return "<pre>\n%s\n</pre>\n" % html_quote(t)
 
     def preRender(self, page, text=None):
-        t = text or page.read()
+        t = text or (page.document() + '\n'+MIDSECTIONMARKER + \
+                    self.preRenderMessages(page))
         t = self.format(t)
-        if not text: t += '\n'+MIDSECTIONMARKER
         t = self.protectEmailAddresses(page,t)
         return t
 
