@@ -763,6 +763,12 @@ class PageEditingSupport:
                 self._addFileLink(file_id, content_type, size, REQUEST)
                 self.setLastLog(log)
                 self.index_object()
+                self.sendMailToEditSubscribers(
+                    'Uploaded file "%s" on page "%s".\n' %
+                                        (file_id,self.pageName()),
+                    REQUEST=REQUEST,
+                    subjectSuffix='',
+                    subject='(renamed)')
             else:
                 # failed to create - give up (what about an error)
                 pass
