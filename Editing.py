@@ -9,6 +9,7 @@ from urllib import quote, unquote
 from types import *
 from email.Message import Message
 from copy import deepcopy
+import os.path
 
 import ZODB # need this for pychecker
 from AccessControl import getSecurityManager, ClassSecurityInfo
@@ -24,6 +25,8 @@ except ImportError:
         from OFS.content_types import guess_content_type
 from OFS.DTMLDocument import DTMLDocument
 from OFS.ObjectManager import BadRequestException
+from OFS.ObjectManager import checkValidId
+from zExceptions import BadRequest
 import OFS.Image
 
 from pagetypes import PAGETYPES
@@ -787,6 +790,15 @@ class PageEditingSupport:
         if (folderHas(folder,'uploads') and
             folder.uploads.isPrincipiaFolderish):
             folder = folder.uploads
+
+        # make sure we have an acceptable name,
+        # but do not insist on unique names:
+        try:
+            checkValidId(folder,id, allow_dup=1)
+        except BadRequest:
+            id, ext = os.path.splitext(id)
+            id = self.canonicalIdFrom(id)
+            id = id + ext
 
         # unless it already exists, create the file or image object
         # use the CMF/Plone types if appropriate
