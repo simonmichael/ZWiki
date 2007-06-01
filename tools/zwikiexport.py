@@ -1,3 +1,5 @@
+# just a placeholder.. in progress
+
 """ 
 zwikiexport.py - export a set of zwiki pages as static files.
 
@@ -26,8 +28,6 @@ page type is reflected in file suffix
 allow exporting only newer objects
 allow round trip with zwikiimport
 """
-
-# placeholder.. in progress
 
 import os, re
 from optparse import OptionParser
