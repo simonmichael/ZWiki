@@ -293,13 +293,7 @@ class Outline:
         """
         Return a nesting/list representing node's immediate parents.
         """
-        #XXX temporary nasty kludge: there seems no obvious way to prevent
-        #zcatalog from trying to index this object, calling any methods
-        #which (like this one) match catalog index names, when a user does
-        #find all objects. So don't break when that happens.
-        if not node: return None
         return self.parentmap().get(node,[])[:]
-            
     def firstParent(self,node):
         """
         Return the first parent of node, if any.
@@ -364,7 +358,9 @@ class Outline:
             else:
                 got.append(n)
         return got
-
+    # never index this object, so find all object in the catalog doesn't break
+    def index_object(self,idxs=[],log=1): pass
+    
 # helper functions
 
 def descend_ancestors(page, ancestors, did, children):
