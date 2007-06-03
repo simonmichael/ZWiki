@@ -34,8 +34,9 @@ class PageCatalogSupport:
 
         By default, Zwiki looks for a catalog named 'Catalog' in this
         folder (will not acquire) or a 'portal_catalog' in this folder
-        or above (will acquire).
+        or above (will acquire). Revision objects never have a catalog.
         """
+        if self.inRevisionsFolder(): return None
         folder = self.folder()
         folderaqbase = getattr(folder,'aq_base',
                                folder) # make tests work
@@ -99,13 +100,11 @@ class PageCatalogSupport:
 
     security.declareProtected(Permissions.View, 'index_object')
     def index_object(self,idxs=[],log=1):
-        """Index this page in the wiki's catalog, if any, and log problems.
-
-        Updates only certain indexes, if specified. 
+        """Index this page in the wiki's catalog, if any, and log
+        problems.  Updates only certain indexes, if specified.
         """
         if self.hasCatalog() and self.isCatalogable():
-            if log:
-                BLATHER('indexing',self.url())
+            if log: BLATHER('indexing',self.url())
             try:
                 self.catalog().catalog_object(self,self.url(),idxs)
             except:
