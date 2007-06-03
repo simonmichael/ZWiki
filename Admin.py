@@ -408,7 +408,8 @@ class PageAdminSupport:
         Safe to call more than once; will ignore any already existing
         items. For simplicity we install all metadata for plugins (like
         Tracker) here as well.
-        """                
+        """
+        if self.inRevisionsFolder(): return
         if not self.hasCatalog():
             self.folder().manage_addProduct['ZCatalog'].manage_addZCatalog('Catalog','')
         catalog = self.catalog()
@@ -449,7 +450,7 @@ class PageAdminSupport:
         We'll create one if needed, and index all current pages. This
         could take a while (minutes) in a large wiki.
         """
-        if not self.hasCatalog():
+        if not self.hasCatalog() and not self.inRevisionsFolder():
             BLATHER('creating catalog for wiki',self.folder().getId())
             self.setupCatalog()
 
