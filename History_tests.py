@@ -61,6 +61,7 @@ class Tests(ZwikiTestCase):
 
     def test_saveRevision(self):
         p = self.page
+        f = p.folder()
         r = p.revisionNumber()
         p.saveRevision()
         self.assertEqual(r+1, p.revisionNumber())
@@ -70,41 +71,51 @@ class Tests(ZwikiTestCase):
         self.assert_(hasattr(rf, p.getId()+'.1'))
 
         # should not require create permission
-        self.folder.manage_permission('Zwiki: Add pages',[],acquire=0)
-        # rely on test output, should test for some exception or condition
+        f.manage_permission('Zwiki: Add pages',[],acquire=0)
+        # XXX failure here will only show up in test output, should fail the test
         p.saveRevision() 
+        f.manage_permission('Zwiki: Add pages',['Anonymous'],acquire=0)
 
         # should not update catalog in the wiki folder
         p.ensureCatalog()
         p.saveRevision()
-        def catalogedids(p): return [b.id for b in p.pages()]
+        catalogedids = lambda p: [b.id for b in p.pages()]
         self.assertEqual(['TestPage'], catalogedids(p))
 
-        # should not create a catalog in the revisions folder
+        # nor create one in the revisions folder
         self.failIf(hasattr(rf.aq_base, 'Catalog'))
 
-        # nor update it if it happens to be there
-        rev = rf['TestPage.1']
-        rev.setupCatalog(reindex=0)
-        p.saveRevision()
-        self.assertEqual([], catalogedids(rev))
-        
         # same thing for the outline cache -
         # should not update the one in the wiki folder
         p.ensureWikiOutline()
         p.saveRevision()
         self.assertEqual(['TestPage'], p.wikiOutline().nodes())
 
-        # should not create one in the revisions folder
+        # nore create one in the revisions folder
         self.failIf(hasattr(rf.aq_base, 'outline'))
 
-        # should not update it if it's there
-        rev.ensureWikiOutline()
-        revoutline = rev.wikiOutline()
-        revoutline.setParentmap({})
-        self.assertEqual([], revoutline.nodes())
-        p.saveRevision()
-        self.assertEqual([], revoutline.nodes())
+        # if revision object(s) already exist, jump to the next available number
+        # when renaming..
+        a = f[p.create('A')]
+        self.assertEqual([1], a.revisionNumbers())
+        b = f[p.create('B')]
+        b.append(' ')
+        b.append(' ')
+        b.append(' ')
+        rf['B.2'].delete()
+        self.assertEqual([1,3,4], b.revisionNumbers())
+        b.delete()
+        a.rename('B')
+        self.assertEqual([1,3,4,5], a.revisionNumbers())
+        # or saving..
+        b5 = ZWikiPage(__name__='B')
+        b5.revision_number = 5
+        rf._setObject('B.5', b5)
+        b8 = ZWikiPage(__name__='B')
+        b8.revision_number = 8
+        rf._setObject('B.8', b8)
+        a.append(' ')
+        self.assertEqual([1,3,4,5,8,9,10], a.revisionNumbers())
 
     def test_deleteSavesRevision(self):
         self.assert_('revisions' not in self.wiki.objectIds())

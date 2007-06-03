@@ -122,7 +122,12 @@ class PageHistorySupport:
         else: return None
 
     def revisionNumbers(self):
+        """The revision numbers of all available revisions of this page."""
         return [r.revisionNumber() for r in self.revisions()]
+
+    def oldRevisionNumbers(self):
+        """The revision numbers of all old revisions, excluding the latest one."""
+        return [r.revisionNumber() for r in self.oldRevisions()]
 
     def firstRevisionNumber(self):
         """The revision number of the earliest saved revision of this page."""
@@ -153,18 +158,32 @@ class PageHistorySupport:
                 return r
         return None
 
-    def saveRevision(self, REQUEST=None):
-        """
-        Copy this page to the revisions folder and increment its revision no.
+    def ensureMyRevisionNumberIsLatest(self):
+        """Make sure this page's revision number is the largest of all the
+        existing revision numbers, altering it if necessary. We assume
+        someone else will update the catalog."""
+        oldrevs = self.oldRevisionNumbers()
+        if self.revisionNumber() in oldrevs:
+            self.revision_number = max(oldrevs) + 1
 
-        Will (should) not work if called on an old revision.
+    def saveRevision(self, REQUEST=None):
+        """Save a copy of this page as a new revision in the revisions
+        folder and increment its revision number.  This has no effect if
+        called on a revision object.
+
+        NB normally the revision number just increments by 1, but if there
+        is already a revision object with that number (which can happen
+        from renaming, eg), we first bump this page's revision number to
+        the number after all existing revisions.
         """
+        if self.inRevisionsFolder(): return
         self.ensureRevisionsFolder()
+        self.ensureMyRevisionNumberIsLatest()
         rid = '%s.%d' % (self.getId(), self.revisionNumber())
         ob = self._getCopy(self.folder())
         ob._setId(rid)
 
-        # kludge so the following won't update a catalog or outline cache
+        # kludge so the following won't update an outline cache
         # in the revisions folder (hopefully thread-safe, oherwise
         # escalate to "horrible kludge"):
         manage_afterAdd                = self.__class__.manage_afterAdd
@@ -174,7 +193,7 @@ class PageHistorySupport:
 
         self.revisionsFolder()._setObject(rid, ob)
 
-        # end kludge
+        # clean up after kludge
         self.__class__.manage_afterAdd = manage_afterAdd
         self.__class__.wikiOutline     = wikiOutline
 
