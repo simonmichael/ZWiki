@@ -660,7 +660,8 @@ class ZWikiPage(
 
         # is it a bare URL ?
         if re.match(url,link):
-            return '<a href="%s">%s</a>' % (link, link)
+            label = re.sub(r'^mailto:','',link)
+            return '<a href="%s">%s</a>' % (link, label)
 
         # is it a hash number issue link (#123) ?
         if re.match(hashnumberexpr,link):
