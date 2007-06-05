@@ -50,15 +50,7 @@ def makeWikiPage(id, title, file):
     ob.parents = []
     username = getSecurityManager().getUser().getUserName()
     ob.manage_addLocalRoles(username, ['Owner'])
-    #ob._getRegs().setSubOwner('both')
     initPageMetadata(ob)
-    #XXX sets up default permissions/regulations
-    #for name, perm in ob._perms.items():
-    #    pseudoperm = default_perms[name]
-    #    local_roles_map = ob._local_roles_map
-    #    roles_map = ob._roles_map
-    #    roles = (local_roles_map[name],) + roles_map[pseudoperm]
-    #    ob.manage_permission(perm, roles=roles)
     return ob
 
 def addWikiPage(self, id, title='', page_type=None, file=''):

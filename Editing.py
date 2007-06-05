@@ -116,7 +116,7 @@ class PageEditingSupport:
         p.handleFileUpload(REQUEST)
         p.handleSubtopicsProperty(subtopics,REQUEST)
         if p.autoSubscriptionEnabled(): p.subscribeThisUser(REQUEST)
-        #if p.usingRegulations(): p.setRegulations(REQUEST,new=1)
+
         # users can alter the page name in the creation form; allow that.
         # We do a full rename, only after all the above, to make sure
         # everything gets handled properly.  We must first commit though,
@@ -343,17 +343,6 @@ class PageEditingSupport:
                     _('You are not authorized to reparent or change subtopics links on this ZWiki Page.'))
             subtopics = int(subtopics or '0')
             self.setSubtopicsPropertyStatus(subtopics,REQUEST)
-
-    # see Regulations.py
-    #def handleSetRegulations(self,REQUEST):
-    #    if REQUEST.get('who_owns_subs',None) != None:
-    #        # do we have permission ?
-    #        if not self.checkPermission(Permissions.ChangeRegs,self):
-    #            raise 'Unauthorized', (
-    #              _("You are not authorized to set this ZWiki Page's regulations."))
-    #        self.setRegulations(REQUEST)
-    #        self.preRender(clear_cache=1)
-    #        #self.setLastEditor(REQUEST)
 
     def handleEditPageType(self,type,REQUEST=None,log=''):
         # is the new page type valid and different ?
@@ -853,12 +842,6 @@ class PageEditingSupport:
         # To help control executable content, make sure the new page
         # acquires it's owner from the parent folder.
         self._deleteOwnershipAfterAdd()
-        #if not self.usingRegulations():
-        #    # To help control executable content, make sure the new page
-        #    # acquires it's owner from the parent folder.
-        #    self._deleteOwnershipAfterAdd()
-        #else:
-        #    self._setOwnerRole(REQUEST)
             
     # for IssueNo0157
     _old_read = DTMLDocument.read

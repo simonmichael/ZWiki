@@ -333,7 +333,6 @@ def addZWikiPage(self, id, title='',
     # ownership so that the page will acquire it's owner from the parent
     # folder.
     ob._deleteOwnershipAfterAdd() # or _owner=UnownableOwner ?
-    #ob.setSubOwner('both') # regulations setup ?
     self._setObject(id, ob)
     self[id].parents = parents # setting this earlier lost it for some pages (??)
 
