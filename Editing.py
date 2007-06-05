@@ -44,31 +44,40 @@ class PageEditingSupport:
     security.declarePublic('createform')      # check permissions at runtime
     def create(self,page=None,text='',type=None,title='',REQUEST=None,log='',
                sendmail=1, parents=None, subtopics=None, pagename=None):
-        """
-        Create a new wiki page, with optional extras.
+        """Create a new wiki page, and optionally do extra stuff. Normally
+        called via edit().
 
-        Normally edit() will call this for you. 
+        The page name arguments are confusing. Here's the situation as I
+        understand it: XXX cleanup
 
-        We assume the page name comes url-quoted. If it's not a url-safe
-        name, we will create the page with a similar url-safe id, which we
-        assume won't match any existing page (or zwiki would have linked
-        instead of offering to create). Also it allows the alternate pagename
-        argument, to support the page management form (XXX temporary).
+        - page:     the "original" name of the page we are to create.
+        - pagename: an alternate spelling of the above, to ease page 
+                    management form implementation. Pass one or the other.
+        - title:    optional "new" name to rename to after creation.
+                    This allows us to handle the zwiki and CMF/plone
+                    edit forms smoothly, supporting rename during creation.
+
+        Page names are assumed to come url-quoted. For the new page id, we use
+        a url-safe canonical id derived from the name. (This name and id are
+        assumed to be available, or Zwiki would not be calling create.)
+
+        Other arguments:
+
+        - text:      initial content for the new page
+        - type:      id of the page type to use (rst, html...)
+        - REQUEST:   standard zope argument, pass this to preserve any
+                     user authentication. Also, may include file upload
+                     data in which case the file is uploaded to the wiki.
+        - log:       optional note for edit history and mail-out subject
+        - sendmail:  sends mail-out to wiki subscribers, unless disabled
+        - parents:   the names of the new page's parent(s), if any
+        - subtopics: if non-None, sets the subtopics display property
+
         Other features:
 
-        - can upload a file at the same time.  
-
-        - can set the subtopics display property
-
-        - can handle a rename during page creation. This helps CMF/Plone
-        and is occasionally useful.
-        
-        - checks the edit_needs_username property as well as permissions.
-
-        - redirects to the new page or to the denied view if appropriate
-
-        - returns the new page's name or None
-
+        - checks the edit_needs_username property as well as permissions
+        - redirects to the new page, or to the denied view
+        - returns the new page's name, or None
         """
         if not self.checkPermission(Permissions.Add, self.folder()):
             raise 'Unauthorized', (
