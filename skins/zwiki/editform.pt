@@ -10,7 +10,7 @@
     </metal:block>
   </head>
   <body>
-    <div metal:fill-slot="main" 
+    <div metal:fill-slot="main"
          tal:define="
       action     request/form/action|options/action;
       creating   python:action == 'Create';
@@ -41,9 +41,9 @@
       >
       <metal:macro metal:use-macro="here/macros/accesskeys" />
       <div class="formcontent">
-        <form method="post" enctype="multipart/form-data" action="" 
+        <form method="post" enctype="multipart/form-data" action=""
               tal:attributes="action string:${here/pageUrl}">
-          <input name="timeStamp" type="hidden" value="" 
+          <input name="timeStamp" type="hidden" value=""
                  tal:attributes="value timestamp" />
           <input name="page" type="hidden" value="page"
                  tal:attributes="value page" />
@@ -56,9 +56,9 @@
                 <td valign="middle" align="left">
                   <span tal:condition="python:
                                        user.has_permission('Zwiki: Rename pages',here)">
-                    <span i18n:translate="">Page name</span>: 
-                    <input name="title" size="30" maxlength="300" value="" 
-                           title="the name of this wiki page (changing this may be slow!)"                          
+                    <span i18n:translate="">Page name</span>:
+                    <input name="title" size="30" maxlength="300" value=""
+                           title="the name of this wiki page (changing this may be slow!)"
                            tabindex="" class="formfield" style="font-weight:bold;"
                            i18n:attributes="title"
                            tal:attributes="value python:newname;" />
@@ -84,7 +84,7 @@
                #   (here.lookupPageType(t).supportsDtml() and here.dtmlAllowed()   and ' (+ DTML)')
                #or (here.lookupPageType(t).supportsEpoz() and here.epozInstalled() and ' (WYSIWYG)')
                #or '' ;"
-                                tal:attributes="value t; 
+                                tal:attributes="value t;
                                                 selected python:t==type"
                                 tal:content="python:here.PAGE_TYPES.get(t,t) + extrasuffix">
                           type
@@ -99,7 +99,7 @@
                 <td colspan="2" align="center">
                   <textarea tal:condition="not:useEpoz"
                             wrap="virtual" name="text" rows="20" cols="60"
-                            style="width:100%; background-color:#f0f0f0" 
+                            style="width:100%; background-color:#f0f0f0"
                             tabindex=""
                             tal:attributes="rows rows;"
                             tal:content="python:here.talsafe(text)">text...</textarea>
@@ -118,22 +118,22 @@
               <tr tal:condition="python:0 #here/supportsEpoz">
                 <td valign="top" align="right" colspan="2"
                     ><input id="EpozViewMode" type="checkbox" class="formfield"
-                    onclick="SwitchViewMode(this.checked)" 
-                    title="toggle source/WYSIWYG mode" 
+                    onclick="SwitchViewMode(this.checked)"
+                    title="toggle source/WYSIWYG mode"
                     i18n:attributes="title"
                     tabindex=""
                     /></td>
               </tr>
               <!-- optional note -->
               <tr>
-                <td valign="middle" align="left" colspan="2" 
+                <td valign="middle" align="left" colspan="2"
                     nowrap="nowrap">
-                  <span i18n:translate="">Optional change note</span>: 
-                  <input name="log" size="50" maxlength="100" value="" 
+                  <span i18n:translate="">Optional change note</span>:
+                  <input name="log" size="50" maxlength="100" value=""
                          tabindex="" class="formfield"
-                         title="a note makes RecentChanges more useful" 
+                         title="a note makes RecentChanges more useful"
                          i18n:attributes="title"
-                         tal:attributes="value log;" 
+                         tal:attributes="value log;"
                          />
                 </td>
               </tr>
@@ -142,9 +142,9 @@
                                  user.has_permission('Add Documents, Images, and Files',
                                  uploaddir)">
                 <td valign="middle" align="left" colspan="2" nowrap="nowrap">
-                  <span i18n:translate="">Upload a file or image</span>: 
+                  <span i18n:translate="">Upload a file or image</span>:
                   <input type="file" name="file" size="30" value="" tabindex=""
-                         title="upload a file and link it on this page ?" 
+                         title="upload a file and link it on this page ?"
                          class="formfield" i18n:attributes="title"
                          tal:attributes="value file;"
                          />
@@ -153,36 +153,36 @@
               <!-- help links, save and cancel buttons -->
               <tr>
                 <td valign="" align="left" colspan="1">
-                  <span i18n:translate="">For editing help, see</span> 
+                  <span i18n:translate="">For editing help, see</span>
                   <a tal:attributes="href string:${here/helpUrl}#editing"
-                     ><span i18n:translate="">HelpPage</span></a> 
-                  <span tal:omit-tag="" 
+                     ><span i18n:translate="">HelpPage</span></a>
+                  <span tal:omit-tag=""
                         tal:condition="python:
                                        here.pageWithId('TextFormattingRules')">
-                    <span i18n:translate="">or</span> 
-                    <a 
+                    <span i18n:translate="">or</span>
+                    <a
                         tal:attributes="href string:${wiki_url}/TextFormattingRules"
-                        ><span i18n:translate="">TextFormattingRules</span></a> 
+                        ><span i18n:translate="">TextFormattingRules</span></a>
                     </span>.
                 </td>
                 <td valign="top" align="right" colspan="1">
-                  <strong><input 
-                  type="submit" name="edit:method" 
+                  <strong><input
+                  type="submit" name="edit:method"
                   value="Save" title="change this wiki page"
                   tabindex="" style="font-weight:bold" accesskey="s"
                   tal:attributes="
                   value python:creating and ('Create') or default;
                   title python:creating and ('create this wiki page') or default;"
                   i18n:attributes="title;value"
-                  /></strong>&nbsp;<input 
-                  type="submit" name="editform:method" 
+                  /></strong>&nbsp;<input
+                  type="submit" name="editform:method"
                   value="Preview" title="preview this edit"
                   tabindex="" accesskey="p"
                   i18n:attributes="title;value"
-                  />&nbsp;<input 
-                  type="submit" value="Cancel" 
+                  />&nbsp;<input
+                  type="submit" value="Cancel"
                   title="cancel this edit and return to the page"
-                  tabindex="" 
+                  tabindex=""
                   i18n:attributes="title;value"
                   />
                   <span tal:condition="python: False">
