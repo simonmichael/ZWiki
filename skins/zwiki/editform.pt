@@ -27,11 +27,10 @@
                                            or (creating and type=='html'))
                  #here.supportsEpoz();
       timestamp  request/form/timeStamp|here/timeStamp;
-      log        python:request.form.get('log',
-      ((editing and 
-      here.usernameFrom(request) == here.last_editor and
-      here.ZopeTime() - here.lastEditTime() < 1) and here.last_log) or ''
-      );
+      isfollowupedit python:editing
+                            and here.usernameFrom(request) == here.last_editor
+                            and here.ZopeTime() - here.lastEditTime() < 1;
+      log        python:(request.form.get('log', (isfollowupedit and here.last_log) or ''));
       file       python:'' #doesn't work too well request/form/file|nothing ;
       pagetypes  here/allowedPageTypes;
       wiki_url   here/wikiUrl;
