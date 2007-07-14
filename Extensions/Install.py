@@ -13,8 +13,11 @@ from Products.CMFCore.DirectoryView import addDirectoryViews
 from Products.CMFCore.utils import getToolByName
 from Products.ZWiki.CMFInit import wiki_globals
 from Products.ZWiki.ZWikiPage import ZWikiPage
-from Products.ZWiki.Defaults import PAGE_PORTALTYPE#,ALLOWED_PAGE_TYPES_IN_PLONE
-from Products.CMFCore import CMFCorePermissions
+from Products.ZWiki.Defaults import PAGE_PORTALTYPE
+try:    from Products.CMFCore import permissions as CMFCorePermissions 
+except: from Products.CMFCore import CMFCorePermissions
+from Products.ZWiki.Utils import safe_hasattr
+
 
 def install(self):
     out          = StringIO()
