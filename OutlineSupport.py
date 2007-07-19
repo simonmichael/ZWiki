@@ -217,6 +217,8 @@ class ShowSubtopicsProperty:
                 return getattr(self,prop) and 1
             else:
                 primaryParent = self.primaryParent() # call only once
+                if primaryParent and primaryParent.getId() == self.getId(): # circular self-reference
+                    return 1
                 if primaryParent:
                     try: return primaryParent.subtopicsEnabled()
                     except AttributeError:
