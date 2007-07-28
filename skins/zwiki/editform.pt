@@ -61,7 +61,7 @@
                            title="the name of this wiki page (changing this may be slow!)"
                            tabindex="" class="formfield" style="font-weight:bold;"
                            i18n:attributes="title"
-                           tal:attributes="value python:newname;" />
+                           tal:attributes="value python:here.talsafe(newname)" />
                   </span>
                 </td>
                 <td valign="middle" align="right">
