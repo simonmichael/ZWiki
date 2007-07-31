@@ -123,12 +123,14 @@ class PageHistorySupport:
         else: return None
 
     def revisionNumbers(self):
-        """The revision numbers of all available revisions of this page."""
-        return [r.revisionNumber() for r in self.revisions()]
+        """The revision numbers of all available revisions of this page
+        (sorted)."""
+        return sorted([r.revisionNumber() for r in self.revisions()])
 
     def oldRevisionNumbers(self):
-        """The revision numbers of all old revisions, excluding the latest one."""
-        return [r.revisionNumber() for r in self.oldRevisions()]
+        """The revision numbers of all old revisions, excluding the latest
+        one (sorted)."""
+        return sorted([r.revisionNumber() for r in self.oldRevisions()])
 
     def firstRevisionNumber(self):
         """The revision number of the earliest saved revision of this page."""
@@ -160,12 +162,11 @@ class PageHistorySupport:
         return None
 
     def ensureMyRevisionNumberIsLatest(self):
-        """Make sure this page's revision number is the largest of all the
-        existing revision numbers, altering it if necessary. We assume
-        someone else will update the catalog."""
+        """Make sure this page's revision number is larger than that of
+        any existing revisions. Don't bother updating catalog."""
         oldrevs = self.oldRevisionNumbers()
-        if self.revisionNumber() in oldrevs:
-            self.revision_number = max(oldrevs) + 1
+        r = oldrevs and (oldrevs[-1] + 1) or 1
+        if self.revisionNumber() != r: self.revision_number = r
 
     def saveRevision(self, REQUEST=None):
         """Save a copy of this page as a new revision in the revisions

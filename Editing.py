@@ -81,6 +81,7 @@ class PageEditingSupport:
         - checks the edit_needs_username property as well as permissions
         - redirects to the new page, or to the denied view
         - returns the new page's name, or None
+        - if old revisions with this name exist, takes the next revision number
         """
         if not self.checkPermission(Permissions.Add, self.folder()):
             raise 'Unauthorized', (
@@ -99,12 +100,14 @@ class PageEditingSupport:
         p = self.__class__(__name__=id)
         # set title now since manage_afterAdd will use it for wiki outline
         p.title = name
-        p.revision_number = 1
-        # newid should be the same as id, but don't assume
+        # place it in the folder
+        # newid should be the same as id, but we won't assume
         newid = self.folder()._setObject(id,p)
         p = getattr(self.folder(),newid)
-
+        # check and abort if text is spammy (after name is set up, for logging)
         p.checkForSpam(text)
+
+        p.ensureMyRevisionNumberIsLatest()
         p.setCreator(REQUEST)
         p.setLastEditor(REQUEST)
         p.setLastLog(log)
@@ -668,6 +671,7 @@ class PageEditingSupport:
         self.folder().manage_renameObject(self.getId(),newid)
         self.creation_time, self.creator, self.creator_ip = \
           creation_time, creator, creator_ip
+        self.ensureMyRevisionNumberIsLatest()
 
     def moveMyChildrenTo(self,newparent):
         children = self.childrenIdsAsList()
