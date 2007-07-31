@@ -176,8 +176,8 @@ class Tests(ZwikiTestCase):
         self.assertEquals(self.p.renderLinksIn('nolink'),'nolink')
         self.assertEquals(self.p.renderLinksIn('http://a.b.c/d'),
                           '<a href="http://a.b.c/d">http://a.b.c/d</a>')
-        self.assertEquals(self.p.renderLinksIn('mailto://a@b.c'),
-                          '<a href="mailto://a@b.c">mailto://a@b.c</a>')
+        self.assertEquals(self.p.renderLinksIn('mailto:a@b.c'),
+                          '<a href="mailto:a@b.c">a@b.c</a>')
         self.assertEquals(self.p.renderLinksIn('TestPage'),
                           '<a href="http://nohost/test_folder_1_/wiki/TestPage">TestPage</a>')
 #                          '<a href="/test_folder_1_/wiki/TestPage" title="" style="background-color:;">TestPage</a>')

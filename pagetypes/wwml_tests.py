@@ -54,7 +54,7 @@ and now this is another normal paragraph.
 Let's see if AutomaticURLLinking works yet:
 	* http://www.palladion.com
 	* ftp://www.neosoft.com/pub/users/t/tseaver
-	* mailto:tseaver@palladion.com
+	* mailto:tseaver@example.com
 
 And [these words] should be linked, too.
 """)
@@ -117,7 +117,7 @@ Let's see if AutomaticURLLinking<a class="new visualNoPrint" href="http://nohost
   <UL>
     <LI> <a href="http://www.palladion.com">http://www.palladion.com</a>
     <LI> <a href="ftp://www.neosoft.com/pub/users/t/tseaver">ftp://www.neosoft.com/pub/users/t/tseaver</a>
-    <LI> <a href="mailto:tseaver@palladion.com">mailto:tseaver@palladion.com</a>
+    <LI> <a href="mailto:tseaver@example.com">tseaver@example.com</a>
   </UL>
 <P>
 And [these words]<a class="new visualNoPrint" href="http://nohost/test_folder_1_/wiki/TestPage/createform?page=these%20words" title="create this page">?</a> should be linked, too.
