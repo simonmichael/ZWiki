@@ -634,6 +634,7 @@ class ZWikiPage(
                 withinSgmlOrDtml(match.span(),text)):
                 return link
         link = linkorig = re.sub(markedwikilinkexpr, r'\1', link)
+        label = None
 
         # here we go
         # is this link escaped ?
@@ -684,11 +685,20 @@ class ZWikiPage(
             # no - we have exhausted our linking arsenal, give up
             return linkorig
 
-        # is it a freeform wiki link ?
+        # is it a freeform (bracketed) wiki link ?
         if not self.isWikiName(link):
             # yes - use fuzzy matching to match an existing page if possible.
             # strip brackets/parentheses
             link = stripDelimitersFrom(linkorig)
+            # XXX experimental MW-style link labels
+            def linkTargetAndLabel(link):
+                """Return target and label from link text possibly containing |."""
+                l = link.split("|")
+                if len(l) < 2: l = l + ['']
+                if len(l) > 2: l = [l[0], '|'.join(l[1:])]
+                return l[0], l[1]
+            link, label = linkTargetAndLabel(link)
+            # end
             p = self.pageWithFuzzyName(link)
             if p:
                 try: link = p.getId() # XXX poor caching
@@ -699,11 +709,12 @@ class ZWikiPage(
         return self.renderLinkToPage(link,
                                      linkorig=linkorig,
                                      link_title=link_title,
-                                     access_key=access_key)
+                                     access_key=access_key,
+                                     label=label)
 
     # XXX helper for above
     def renderLinkToPage(self,page,linkorig=None,link_title=None,
-                         access_key=None,name=None):
+                         access_key=None,name=None,label=None):
                          
         """
         Render a wiki link to page, which may or may not exist.
@@ -731,6 +742,7 @@ class ZWikiPage(
             else:
                 style = ''
             link      = stripDelimitersFrom(linkorig or page)
+            label     = label and label or self.formatWikiname(link)
             return '<a href="%s/%s"%s%s%s%s>%s</a>' % (
                 self.wikiUrl(),
                 quote(page),
@@ -738,7 +750,7 @@ class ZWikiPage(
                 name,
                 accesskey,
                 style,
-                self.formatWikiname(link))
+                label)
         else:
             # no - provide a creation link
             return (
