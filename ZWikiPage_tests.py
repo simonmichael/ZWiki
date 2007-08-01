@@ -169,8 +169,11 @@ class Tests(ZwikiTestCase):
         self.assertEquals(
             self.p.renderLink('http://some.url'),
             '<a href="http://some.url">http://some.url</a>')
-        #self.p.folder().space_wikinames = 1
-        #self.assertEquals(self.p.renderLink('CamelCase')[:10],'Camel Case')
+        self.assertEquals(
+            self.p.renderLink('[testpage | the label]'),
+            '<a href="http://nohost/test_folder_1_/wiki/TestPage"> the label</a>')
+        self.p.folder().space_wikinames = 1
+        self.assertEquals(self.p.renderLink('CamelCase')[:10],'Camel Case')
         
     def test_renderLinksIn(self):
         self.assertEquals(self.p.renderLinksIn('nolink'),'nolink')
