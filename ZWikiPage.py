@@ -701,11 +701,16 @@ class ZWikiPage(
             # end
             p = self.pageWithFuzzyName(link)
             if p:
+                # found the page, use its id for linking
                 try: link = p.getId() # XXX poor caching
                 except AttributeError: link = p.id   # all-brains
-                # and fall through
-            
-        # must be either a WikiName link, or an existing page's id from above
+            else:
+                # no such page, maybe this is an external link ?
+                if re.match(url,link):
+                    label = re.sub(r'^mailto:','',label)
+                    return '<a href="%s">%s</a>' % (link, label)
+                # no - treat it as an uncreated page
+
         return self.renderLinkToPage(link,
                                      linkorig=linkorig,
                                      link_title=link_title,
