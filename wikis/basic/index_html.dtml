@@ -1,1 +1,3 @@
-<dtml-call "RESPONSE.redirect(_['URL1'] + '/FrontPage')">
+<dtml-with "_.this[objectIds(spec='ZWiki Page')[0]]">
+<dtml-call "RESPONSE.redirect(homeUrl())">
+</dtml-with>

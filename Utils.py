@@ -328,7 +328,7 @@ class PageUtils:
     # but way too cumbersome right now
     security.declareProtected(Permissions.View, 'homeUrl')
     def homeUrl(self):
-        return self.urlForPageOrDefault('FrontPage',self.wikiUrl())
+        return self.defaultPageUrl()
 
     security.declareProtected(Permissions.View, 'contentsUrl')
     def contentsUrl(self, scroll=1):

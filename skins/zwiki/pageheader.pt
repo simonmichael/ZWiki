@@ -19,7 +19,7 @@
             <td id="logo" width="1%" valign="top" class="logo"
                 tal:condition="not:here/usingPloneSkin">
               <span metal:define-macro="logolink" tal:omit-tag="">
-                <a tal:attributes="href here/wiki_url"
+                <a tal:attributes="href here/homeUrl"
                    title="go to home page"
                    i18n:attributes="title">
                   <p tal:condition="nothing">workaround for zope bug http://www.zope.org/Collectors/Zope/2302 XXX use talsafe, also in latexwiki, mathaction </p>
