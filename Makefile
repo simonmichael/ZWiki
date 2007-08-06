@@ -229,7 +229,9 @@ tarball: clean
 
 # misc
 
-tags:
+tags: xtags
+
+etags:
 	find $$PWD/ -name '*.py' -o  -name '*dtml' -o -name '*.pt' \
 	  -o -name '*.css' -o -name '*.pot' -o -name '*.po' \
 	  -o -name _darcs  -prune -type f \
@@ -240,6 +242,10 @@ tags:
 	  -o -name doc     -prune -type f \
 	  -o -name .NOTES     -prune -type f \
 	  | xargs etags
+
+XTAGS=ctags-exuberant -e --langmap=c:+.css,html:+.pt.dtml -R
+xtags:
+	$(XTAGS) --exclude=@.tagsexclude * || $(XTAGS) *
 
 zopetags:
 	cd /zope/lib/python; \
