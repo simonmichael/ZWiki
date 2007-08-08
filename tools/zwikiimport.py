@@ -16,6 +16,7 @@ Options:
   --debug        Print additional debug information.
   --replace      When objects already exist, replace them.
   --delete       Delete existing objects instead of importing.
+  --type         Valid values are "moin"
 
 Notes/stories/todos:
 -zope root folder or root page is specified as an argument
@@ -70,6 +71,7 @@ def parseArgs():
                       help="Print additional debug information")
     #parser.add_option('--ignore', action='store_true',
     #                  help="When objects already exist, ignore and continue")
+    parser.add_option('--type', dest="type", help="Specify wiki type for source. Valid values currently are 'moin'")
     parser.add_option('--replace', action='store_true',
                       help="When objects already exist, replace them")
     parser.add_option('--delete', action='store_true',
@@ -219,11 +221,15 @@ def importFile(context,filepath):
         # create(/replace/delete) a wiki page based on file name & content
         filename = os.path.basename(filepath)
         pagename,ext = os.path.splitext(os.path.basename(filepath))
-        if re.match('(?i).htm',ext):
+        if re.match('(?i).html',ext):
             text = bodyFromHtml(open(filepath).read())
             if text != None:
                 vlog(filepath,newline=False)
                 doPage(context,pagename, text, 'html')
+	elif re.match('(?i).moin', ext):
+            text = open(filepath).read()
+            vlog(filepath,newline=False)
+            doPage(context,pagename, text, 'moin')
         else:
             vlog(filepath,newline=False)
             doFile(context, filename, open(filepath).read())
@@ -234,8 +240,9 @@ def importFile(context,filepath):
         # index.htm, we will use that for content.
         vlog(filepath,newline=False)
         dirpagename = pageNameFromPath(filepath)
-        if dirpagename == '' or doPage(context, dirpagename, '', 'html'):
-            dirpage = context.pageWithName(dirpagename) or context
+        if dirpagename == '' or doPage(context, dirpagename, '', 'moin'):
+            #dirpage = context.pageWithName(dirpagename) or context
+            dirpage = context
             dirpagetext = ''
             for f in os.listdir(filepath):
                 pagename,ext = os.path.splitext(os.path.basename(f))
