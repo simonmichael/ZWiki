@@ -557,6 +557,7 @@ InitializeClass(PageUtils)
 #logging
 def STDERR(*args):  sys.stderr.write(' '.join(map(str,args)) + '\n')
 def BLATHER(*args): zLOG.LOG('ZWiki',zLOG.BLATHER,' '.join(map(str,args)))
+def INFO(*args):    zLOG.LOG('ZWiki',zLOG.INFO,' '.join(map(str,args)))
 def WARN(*args):    zLOG.LOG('ZWiki',zLOG.WARNING,' '.join(map(str,args)))
 def DEBUG(*args):   zLOG.LOG('ZWiki',zLOG.DEBUG,' '.join(map(str,args)))
 
