@@ -38,7 +38,6 @@ from ZODB.PersistentMapping import PersistentMapping
 from Products.CMFCore.TypesTool import ContentFactoryMetadata
 from Products.CMFCore.DirectoryView import addDirectoryViews
 from Products.CMFCore.utils import getToolByName
-from Products.ZWiki.CMFInit import wiki_globals, factory_type_information
 from Products.ZWiki.ZWikiPage import ZWikiPage
 from Products.ZWiki.ZWikiWeb import _addDTMLMethod
 from Products.ZWiki.Defaults import PAGE_PORTALTYPE#,ALLOWED_PAGE_TYPES_IN_PLONE
