@@ -168,6 +168,9 @@ testresults:
 	cat .stderr >>$(TESTRESULTS)
 	rm -f .stderr
 
+testhelp:
+	$(INSTANCE)/bin/zopectl test --help
+
 ## upload (rsync and darcs)
 
 rcheck:
