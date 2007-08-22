@@ -119,34 +119,46 @@ rosettatarballs:
 
 
 ## testing
-# To run Zwiki unit tests, you need Zope 2.9 or greater. Some additional
-# tests will run if you have CMF, Plone, PlacelessTranslationService.
-# For quicker testing, you may want to use a zope instance with minimal
-# products installed. Also note the testrunner will run code from
-# zopectl's INSTANCE_HOME, regardless of your current dir or testrunner
-# args. You'll need to adjust the zopectl file paths below.
 
-# our tests are in _tests.py at the same level
-TESTARGS=test --tests-pattern='_tests$$' --test-file-pattern='_tests$$'
-# zope instance with few products
-QUICKTEST=/zope1/bin/zopectl $(TESTARGS) --keepbytecode #--nowarnings
-# zope instance with plone etc.
-ALLTEST= /zope2/bin/zopectl $(TESTARGS) -a 3 -vv
+# To run Zwiki unit tests, you need Zope 2.9 or greater. Some additional
+# tests will run only if Plone is installed.  
+
+# The testrunner will test code in this INSTANCE, regardless of your
+# current dir or testrunner args. Adjust the path as needed.
+# For quicker testing, you may want to keep only minimal products here..
+INSTANCE=/zope1
+
+# ..and all products (eg Plone) here.
+BIGINSTANCE=/zope2
+
+# zwiki tests are kept in *_tests.py in the same directory as code
+ZWIKITESTS=--tests-pattern='_tests$$' --test-file-pattern='_tests$$'
+
+# run tests as quickly as possible
+TEST=$(INSTANCE)/bin/zopectl test $(ZWIKITESTS) --keepbytecode -v #--nowarnings
+
+# run all tests verbosely and thoroughly
+TESTALL=$(BIGINSTANCE)/bin/zopectl test $(ZWIKITESTS) -a 3 -vv
 
 test:
-	$(QUICKTEST) -m Products.ZWiki
-
-# allows test limiting and additional args. Examples:
-# make test-Mail
-# make test-"pagetypes.rst -vv -D"
-test-%:
-	$(QUICKTEST) -m Products.ZWiki.$*
+	$(TEST) -m Products.ZWiki
 
 testall:
-	$(ALLTEST) -m Products.ZWiki
+	$(TESTALL) -m Products.ZWiki
 
-testall-%:
-	$(ALLTEST) -m Products.ZWiki.$*
+# test one module (or all matching modules):
+#   make testmod-Mail
+# in a subdirectory:
+#   make testmod-Extensions.Install
+# with additional testrunner args:
+#   make testmod-"pagetypes.rst -vv -D"
+testmod-%:
+	$(TEST) -m Products.ZWiki.$*
+
+# test one test (or all matching tests):
+#   make test-test_install
+test-%:
+	$(TEST) -m Products.ZWiki -t $*
 
 # silliness to properly capture output of a test run
 TESTRESULTS=TESTRESULTS
