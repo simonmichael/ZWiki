@@ -229,6 +229,10 @@ tarball: clean
 
 # misc
 
+PYFILES=*.py [A-Za-z]*/*.py [A-Za-z]*/*/*.py [A-Za-z]*/*/*/*.py
+pyflakes:
+	pyflakes $(PYFILES)
+
 tags: xtags
 
 etags:
