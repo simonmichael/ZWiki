@@ -5,7 +5,7 @@ ZWiki product
 """
 __version__='0.59.0'
 
-import os, re, os.path, string, urllib
+import re, os.path, string, urllib
 
 from AccessControl import getSecurityManager
 from Globals import package_home, MessageDialog, ImageFile
@@ -15,11 +15,12 @@ from OFS.ObjectManager import customImporters
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from Products.PythonScripts.PythonScript import PythonScript
 
-import Admin, Defaults, OutlineSupport, Permissions, ZWikiPage
+import Defaults, OutlineSupport, Permissions, ZWikiPage
 from Admin import addDTMLMethod
 from I18n import _, DTMLFile
 from pagetypes import PAGETYPES
-from Utils import parseHeadersBody, safe_hasattr, BLATHER, formattedTraceback
+from Utils import parseHeadersBody, safe_hasattr, INFO, BLATHER, \
+     formattedTraceback
 
 
 misc_ = {
@@ -30,18 +31,6 @@ misc_ = {
     'star_icon': ImageFile(os.path.join('skins','zwiki','star.png'),globals()),
     'blank_star_icon': ImageFile(os.path.join('skins','zwiki','blank_star.png'),globals()),
     }
-
-def dummyOutlineConstructor(self):
-    """Stub so we can get PersistentOutline registered with ZMI.
-
-    The real constructor is a zwikipage method and is called automatically.
-    """
-    return MessageDialog(
-        title=_("No need to add a Zwiki Outline Cache"),
-        message=_("""Zwiki Outline Cache appears in the ZMI Add menu
-        for implementation reasons, but should not be added directly.
-        Zwiki will create it for you as needed.
-        """))
 
 def initialize(context): 
     """Initialize the ZWiki product.
@@ -59,14 +48,18 @@ def initialize(context):
                 ZWikiPage.manage_addZWikiPage,
                 ),
             )
-        # and the PersistentOutline class, so it's zmi-manageable
+        # also the PersistentOutline class, so it's zmi-manageable
+        def outlineConstructorStub(self):
+            return MessageDialog(
+                title=_("No need to add a Zwiki Outline Cache"),
+                message=_("""Zwiki Outline Cache appears in the ZMI Add menu
+                for implementation reasons, but should not be added directly.
+                Zwiki will create it for you as needed."""))
         context.registerClass(
             OutlineSupport.PersistentOutline,
             permission=Permissions.manage_properties,
             #icon = 'images/ZWikiPage_icon.gif',
-            constructors = (
-                dummyOutlineConstructor,
-                ),
+            constructors = (outlineConstructorStub,)
             )
         # set up an "add wiki" menu item
         context.registerClass(
@@ -84,29 +77,68 @@ def initialize(context):
                 addWikiFromZodb,
                 )
             )
-        # do CMF initialisation if installed
-        try:
-            import CMFInit
-            CMFInit.initialize(context)
-        except ImportError:
-            INFO('failed to import CMFInit, Plone/CMF sites will not recognise Zwiki')
-            BLATHER(formattedTraceback())
-        # register skin as customizable dir if FileSystemSite is installed
-        try:
-            from Products.FileSystemSite.DirectoryView import registerDirectory
-            registerDirectory('skins/zwiki', globals())
-            INFO('registered zwiki skin layer with FileSystemSite')
-        except ImportError:
-            pass
+        initializeForCMF(context)
+        initializeForFSS(context)
 
-    # don't let any error prevent initialisation
+    # don't let any error prevent initialization
     except:
-        # log it
-        import sys, traceback, string
-        type, val, tb = sys.exc_info()
-        sys.stderr.write(string.join(traceback.format_exception(type, val, tb),
-                                     ''))
-        del type, val, tb
+        INFO('failed to initialise',formattedTraceback())
+
+# default_perms = {
+#     'create': 'nonanon',
+#     'edit': 'nonanon',
+#     'comment': 'nonanon',
+#     'move': 'owners', # rename/delete/reparent
+#     'regulate': 'owners'
+#     }
+
+def initializeForCMF(context):
+    """Do global CMF/Plone-specific initialization, if they are installed."""
+    try:
+        import Products.CMFCore.DirectoryView
+        from Products.CMFCore.utils import ContentInit
+        #from Products.CMFCore.permissions import AddPortalContent
+        from Products.Archetypes.public import listTypes, process_types
+        from Products.CMFPlone.interfaces import IPloneSiteRoot
+        from Products.GenericSetup import EXTENSION, profile_registry
+
+        # register our GenericSetup profile
+        profile_registry.registerProfile('default',
+                                         'ZWiki',
+                                         'Extension profile for default Zwiki-in-Plone/CMF setup',
+                                         'profiles/default',
+                                         'ZWiki',
+                                         EXTENSION,
+                                         for_=IPloneSiteRoot)
+
+        # register our skin layer(s)
+        Products.CMFCore.DirectoryView.registerDirectory('skins', globals())
+
+        # initialize portal content XXX
+        PROJECT = 'Zwiki'
+        types, cons, ftis = process_types(listTypes(PROJECT),PROJECT)
+        ContentInit(
+            PROJECT + ' Content',
+            content_types      = types, # (ZWikiPage,),
+            #permission         = AddPortalContent, # Add portal content
+            permission         = Permissions.Add,   # Zwiki: Add pages
+            extra_constructors = cons, #  (addWikiPageInCMF,),
+            fti                = ftis, # ignored by current CMF ?
+            ).initialize(context)
+
+    except ImportError:
+        INFO('failed to initialise for Plone/CMF, Plone/CMF sites will not recognise Zwiki')
+        BLATHER(formattedTraceback())
+
+def initializeForFSS(context):
+    """Do FileSystemSite-specific initialization, if it is installed."""
+    try:
+        from Products.FileSystemSite.DirectoryView import registerDirectory
+        # register our skin layer as a customizable directory
+        registerDirectory('skins/zwiki', globals())
+        INFO('registered zwiki skin layer with FileSystemSite')
+    except ImportError:
+        pass
 
 
 # set up hooks for ZMI operations on zwiki objects, for:
@@ -119,6 +151,8 @@ def initialize(context):
 # Note: manage_renameObject will lose parentage in the wiki outline (?)
 #
 # 3. catalog awareness
+#
+# XXX convert to events
 
 def manage_afterAdd(self, item, container):
     if not self.hasCreatorInfo():

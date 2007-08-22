@@ -1,18 +1,23 @@
-# CMF compatibility
-# this is split between CMF.py, CMFInit.py and Extensions/cmf_install_zwiki.py
-# (unfortunately) and it's still not right (need to import makeWikiPage
-# for PUT_factory ?). 
-# move CMFInstall into the skin ?
+# CMF/Plone compatibility
+# See also __init__.py and Extensions/Install.py
 
-from types import *
+#from types import *
 from Globals import InitializeClass
 from Utils import safe_hasattr
 
 try:
     from Products import CMFCore
-    HAS_CMF = 1
+    CMFCore = CMFCore # pyflakes
+    HAS_CMF = True
 except ImportError:
-    HAS_CMF = 0
+    HAS_CMF = False
+
+try:
+    from Products import CMFPlone
+    CMFPlone = CMFPlone # pyflakes
+    HAS_PLONE = True
+except ImportError:
+    HAS_PLONE = False
 
 # XXX also need to skip when running unit tests ?
 if not HAS_CMF:    
@@ -23,13 +28,10 @@ if not HAS_CMF:
 
 else:
     from AccessControl import ClassSecurityInfo
-    from Acquisition import aq_base, aq_inner, aq_parent
     from OFS.DTMLDocument import DTMLDocument
     from Products.CMFCore.PortalContent import PortalContent
     from Products.CMFDefault.SkinnedFolder import SkinnedFolder
-    from Products import CMFDefault
     from Products.CMFDefault.DublinCore import DefaultDublinCoreImpl
-    from AccessControl import getSecurityManager, ClassSecurityInfo
     from DateTime import DateTime
     import Permissions
     from Defaults import PAGE_PORTALTYPE

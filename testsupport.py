@@ -29,6 +29,8 @@ following would be good to figure out and make easy:
    succeed/fail
 ** rendering views
    calling a view method like diff() fails trying to render the master template
+
+* http://plone.org/documentation/how-to/reducing-unit-test-times
 """
 
 import sys, re, unittest

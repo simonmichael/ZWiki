@@ -1,63 +1,38 @@
-# This should be testInstall.py to correspond with Install.py, but we need
-# a place for general CMF/Plone tests and may as well gather them here.
-# Only tests specific to CMF and/or Plone should go in here; it's better
+# Only tests specific to Plone and/or CMF should go in here; it's better
 # to write a generic test elsewhere if possible.
 #
-# We can no longer set up a test plone ourselves with plone 2 - rely on
-# PloneTestCase instead.
+# Actually these require Plone (for PloneTestCase ?)  and will be skipped
+# if it is not present.
 #
-# Skip these tests if plone 2 & all required products are not present
-# XXX CMF still covered adequately ?
+# XXX CMF covered adequately ?
 
-try:
-    from Products import CMFPlone
-    HAS_PLONE = 1
-except ImportError:
-    HAS_PLONE = 0
+from CMF import HAS_PLONE
 
 if not HAS_PLONE:
-    # dummy test suite
     import unittest
-    def test_suite():
-        return unittest.TestSuite()
+    def test_suite(): return unittest.TestSuite()
 
 else:
+    from Products.CMFPlone.tests import PloneTestCase
+
+    from Extensions.Install_tests import install_via_external_method
+    from Editing_tests import test_rename
     from testsupport import *
+
     ZopeTestCase.installProduct('ZWiki')
     ZopeTestCase.installProduct('TextIndexNG2')
 
-    from Products.CMFPlone.tests import PloneTestCase
-
-    from Editing_tests import test_rename
-
     def test_suite():
         suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(TestsOfCMFPloneInstall))
         suite.addTest(unittest.makeSuite(Tests))
         return suite
 
-    def cmf_install_zwiki(site):
-        site.manage_addProduct['ExternalMethod'].manage_addExternalMethod(
-            'cmf_install_zwiki','','ZWiki.Install','install')
-        site.cmf_install_zwiki()
-
-    # this fixture provides a plone site without zwiki installed
-    class TestsOfCMFPloneInstall(PloneTestCase.PloneTestCase):
-        afterSetUp = afterSetUp
-
-        def testInstallViaExternalMethod(self):
-            cmf_install_zwiki(self.portal)
-            self.assert_(safe_hasattr(self.portal.portal_types,'Wiki Page'))
-
-        #def testInstallViaQuickInstaller(self):
-
-    # and this one comes with zwiki installed
     class Tests(PloneTestCase.PloneTestCase):
         def afterSetUp(self):
             afterSetUp(self)
             # install zwiki and set the site up as our one-page test wiki
             # probably don't need to do this every time now
-            cmf_install_zwiki(self.portal)
+            install_via_external_method(self.portal)
             self.wiki = self.portal
             self.portal.manage_addProduct['ZWiki'].manage_addZWikiPage('TestPage')
             self.page = self.portal.TestPage
