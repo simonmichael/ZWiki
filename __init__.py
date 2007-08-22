@@ -19,7 +19,7 @@ import Admin, Defaults, OutlineSupport, Permissions, ZWikiPage
 from Admin import addDTMLMethod
 from I18n import _, DTMLFile
 from pagetypes import PAGETYPES
-from Utils import parseHeadersBody, safe_hasattr
+from Utils import parseHeadersBody, safe_hasattr, BLATHER, formattedTraceback
 
 
 misc_ = {
@@ -89,11 +89,13 @@ def initialize(context):
             import CMFInit
             CMFInit.initialize(context)
         except ImportError:
-            pass
+            INFO('failed to import CMFInit, Plone/CMF sites will not recognise Zwiki')
+            BLATHER(formattedTraceback())
         # register skin as customizable dir if FileSystemSite is installed
         try:
             from Products.FileSystemSite.DirectoryView import registerDirectory
             registerDirectory('skins/zwiki', globals())
+            INFO('registered zwiki skin layer with FileSystemSite')
         except ImportError:
             pass
 
