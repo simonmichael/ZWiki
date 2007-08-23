@@ -262,7 +262,7 @@ etags:
 	  -o -name .NOTES     -prune -type f \
 	  | xargs etags
 
-XTAGS=ctags-exuberant -e --langmap=c:+.css,html:+.pt.dtml -R
+XTAGS=ctags-exuberant -eR --langmap=python:+.cpy.vpy,c:+.css,html:+.pt.cpt.dtml.xml.zcml 
 xtags:
 	$(XTAGS) --exclude=@.tagsexclude * || $(XTAGS) *
 
