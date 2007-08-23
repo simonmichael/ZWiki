@@ -20,36 +20,134 @@
  </property>
  <property name="default_view_fallback">False</property>
  <alias from="(Default)" to="(dynamic view)"/>
-<!--
- <alias from="edit" to="atct_edit"/>
- <alias from="sharing" to="@@sharing"/>
- <alias from="view" to="(selected layout)"/>
--->
  <action title="View" action_id="view" category="object" condition_expr=""
     url_expr="string:${object_url}" visible="True">
   <permission value="View"/>
  </action>
-<!--
  <action title="Edit" action_id="edit" category="object"
     condition_expr="not:object/@@plone_lock_info/is_locked_for_current_user|python:True"
-    url_expr="string:${object_url}/edit" visible="True">
-  <permission value="Modify portal content"/>
+    url_expr="string:${object_url}/editform" visible="True">
+  <permission value="Zwiki: Edit pages"/>
  </action>
- <action title="References" action_id="references" category="object"
-    condition_expr="object/archetype_tool/has_graphviz"
-    url_expr="string:${object_url}/reference_graph" visible="True">
-  <permission value="Modify portal content"/>
-  <permission value="Review portal content"/>
+ <action title="Subscribe" action_id="subscribe" category="object"
+    condition_expr="object/isMailoutEnabled"
+    url_expr="string:${object_url}/subscribeform" visible="True">
+  <permission value="View"/>
+ </action>
+ <action title="Related" action_id="related" category="object"
+    condition_expr="" url_expr="string:${object_url}/backlinks"
+    visible="True">
+  <permission value="View"/>
  </action>
  <action title="History" action_id="history" category="object"
-    condition_expr="" url_expr="string:${object_url}/atct_history"
-    visible="False">
-  <permission value="ATContentTypes: View history"/>
+    condition_expr="" url_expr="string:${object_url}/diff"
+    visible="True">
+  <permission value="View"/>
  </action>
  <action title="External Edit" action_id="external_edit" category="object"
     condition_expr="object/externalEditorEnabled"
     url_expr="string:${object_url}/external_edit" visible="False">
   <permission value="Modify portal content"/>
  </action>
--->
 </object>
+
+<!-- old factory info
+
+default_perms = {
+    'create': 'nonanon',
+    'edit': 'nonanon',
+    'comment': 'nonanon',
+    'move': 'owners', # rename/delete/reparent
+    'regulate': 'owners'
+    }
+
+factory_type_information = (
+    {
+     'id':             PAGE_PORTALTYPE,
+     'meta_type':      PAGE_METATYPE,
+     'content_icon':   'wikipage_icon.gif',
+     'product':        'ZWiki',
+     'factory':        'addWikiPageInCMF',
+     'immediate_view': '',
+     'actions':        (
+                        {
+                         'name'        : 'View',
+                         'id'          : 'view',
+                         'action'      : '',
+                         'permissions' : (Permissions.View,),
+                         'category'    : 'object',
+                         },
+                        {
+                         'name'        : 'Edit',
+                         'id'          : 'edit',
+                         'action'      : 'editform',
+                         'permissions' : (Permissions.Edit,),
+                         'category'    : 'object',
+                         },
+                        {
+                         'name'        : 'Subscribe',
+                         'id'          : 'subscribe',
+                         'action'      : 'subscribeform',
+                         'permissions' : (Permissions.View,),
+                         'condition'   : 'object/isMailoutEnabled',
+                         'category'    : 'object',
+                         },
+                         # NB object_actions actions display in reverse order!
+                        # (last will be left-most)
+                        {
+                         'visible'     : 0,
+                         'name'        : 'Wiki options',
+                         'id'          : 'useroptions',
+                         'action'      : 'python:object.preferencesUrl()',
+                         'permissions' : (Permissions.View,),
+                         'category'    : 'object_actions',
+                         },
+                        {
+                         'visible'     : 0,
+                         'name'        : 'Wiki search',
+                         'id'          : 'searchwiki',
+                         'action'      : 'python:object.searchUrl()',
+                         'permissions' : (Permissions.View,),
+                         'category'    : 'object_actions',
+                         },
+                        {
+                         'name'        : 'Issue pages',
+                         'id'          : 'issuetracker',
+                         'action'      : 'python:object.trackerUrl()',
+                         'permissions' : (Permissions.View,),
+                         'condition'   : 'object/hasIssues',
+                         'category'    : 'object_actions',
+                         },
+                        {
+                         'name'        : 'Wiki changes',
+                         'id'          : 'recentchanges',
+                         'action'      : 'python:object.changesUrl()',
+                         'permissions' : (Permissions.View,),
+                         'category'    : 'object_actions',
+                         },
+                        {
+                         'name'        : 'Wiki contents',
+                         'id'          : 'contents',
+                         'action'      : 'python:object.contentsUrl()',
+                         'permissions' : (Permissions.View,),
+                         'category'    : 'object_actions',
+                         },
+                        {
+                         'name'        : 'Related pages',
+                         'id'          : 'backlinks',
+                         'action'      : 'backlinks',
+                         'permissions' : (Permissions.View,),
+                         'category'    : 'object_actions',
+                         },
+                        {
+                         'name'        : 'History',
+                         'id'          : 'history',
+                         'action'      : 'diff',
+                         'permissions' : (Permissions.View,),
+                         'category'    : 'object_actions',
+                         },
+                        ),
+     },
+    )
+
+-->
