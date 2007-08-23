@@ -28,7 +28,7 @@ http://SITEURL/cmf_install_latexwiki . The install function will execute and
 give information about the steps it took.
 """
 
-import string, os, sys
+import string, os, sys, re
 from Products.LatexWiki.util import workingDir
 from cStringIO import StringIO
 from OFS.DTMLMethod import DTMLMethod
