@@ -53,7 +53,7 @@ try:
         from Globals import HTMLFile, DTMLFile
         BLATHER('using PlacelessTranslationService for i18n')
 
-    elif USE_LOCALIZER: # not supported at the moment
+    elif 0: #USE_LOCALIZER: # not supported at the moment
         from Products.Localizer import Gettext
         _ = Gettext.translation(globals())
         from Products.Localizer import LocalPageTemplateFile as PageTemplateFile
@@ -81,7 +81,7 @@ except (ImportError, NameError):
                 __traceback_info__=tname
                 r.append(section(None, md))
             if r:
-                if len(r) > 1: r = "(%s)\n" % join(r,' ')
+                if len(r) > 1: r = "(%s)\n" % ' '.join(r)
                 else: r = r[0]
             else:
                 r = ''
