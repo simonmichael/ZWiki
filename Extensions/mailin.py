@@ -151,12 +151,15 @@ class MailIn:
 
         # raises an exception if there's no text part
         try:
-            plaintextpart = typed_subpart_iterator(self.msg,
-                                                   'text',
-                                                   'plain').next().get_payload(decode=1)
+            firstplaintextpart = typed_subpart_iterator(self.msg,
+                                                        'text',
+                                                        'plain').next()
+            payload = firstplaintextpart.get_payload(decode=1)
+            content_encoding = self.msg.get_content_charset('ascii')
+            payloadutf8 = payload.decode(content_encoding).encode('utf-8')
         except StopIteration:
-            plaintextpart = ''
-        self.body = self.cleanupBody(plaintextpart)
+            payloadutf8 = ''
+        self.body = self.cleanupBody(payloadutf8)
         
     def isJunk(self):
         """
