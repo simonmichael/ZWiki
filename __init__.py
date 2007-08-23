@@ -102,7 +102,7 @@ def initializeForCMF(context):
         from Products.CMFPlone.interfaces import IPloneSiteRoot
         from Products.GenericSetup import EXTENSION, profile_registry
 
-        # register our GenericSetup profile
+        # register our GenericSetup profiles
         profile_registry.registerProfile('default',
                                          'ZWiki',
                                          'Extension profile for default Zwiki-in-Plone/CMF setup',
@@ -110,25 +110,62 @@ def initializeForCMF(context):
                                          'ZWiki',
                                          EXTENSION,
                                          for_=IPloneSiteRoot)
+        profile_registry.registerProfile('uninstall',
+                                         'ZWiki',
+                                         'Extension profile for removing default Zwiki-in-Plone/CMF setup',
+                                         'profiles/uninstall',
+                                         'ZWiki',
+                                         EXTENSION,
+                                         for_=IPloneSiteRoot)
 
         # register our skin layer(s)
         Products.CMFCore.DirectoryView.registerDirectory('skins', globals())
 
-        # initialize portal content XXX
+        # initialize portal content
         PROJECT = 'Zwiki'
-        types, cons, ftis = process_types(listTypes(PROJECT),PROJECT)
+        #types, cons, ftis = process_types(listTypes(PROJECT),PROJECT)
         ContentInit(
             PROJECT + ' Content',
-            content_types      = types, # (ZWikiPage,),
-            #permission         = AddPortalContent, # Add portal content
-            permission         = Permissions.Add,   # Zwiki: Add pages
-            extra_constructors = cons, #  (addWikiPageInCMF,),
-            fti                = ftis, # ignored by current CMF ?
+            content_types      = (ZWikiPage,),        # types,
+            #permission         = AddPortalContent,   # Add portal content
+            permission         = Permissions.Add,     # Zwiki: Add pages
+            extra_constructors = (addWikiPageInCMF,), # cons
+            #fti                = ftis,               # ignored
             ).initialize(context)
 
     except ImportError:
         INFO('failed to initialise for Plone/CMF, Plone/CMF sites will not recognise Zwiki')
         BLATHER(formattedTraceback())
+
+# a (old-style) CMF factory method
+def addWikiPageInCMF(self, id, title='', page_type=None, file=''):
+    def makeWikiPage(id, title, file):
+        def initPageMetadata(page):
+            page.creation_date = DateTime()
+            page._editMetadata(title='',
+                               subject=(),
+                               description='',
+                               contributors=(),
+                               effective_date=None,
+                               expiration_date=None,
+                               format='text_html',
+                               language='',
+                               rights = '')
+
+        ob = ZWikiPage(source_string=file, __name__=id)
+        ob.title = title
+        ob.parents = []
+        username = getSecurityManager().getUser().getUserName()
+        ob.manage_addLocalRoles(username, ['Owner'])
+        initPageMetadata(ob)
+        return ob
+
+    id=str(id)
+    title=str(title)
+    ob = makeWikiPage(id, title, file)
+    ob.setPageType(
+        page_type or getattr(self,'allowed_page_types',[None])[0])
+    self._setObject(id, ob)
 
 def initializeForFSS(context):
     """Do FileSystemSite-specific initialization, if it is installed."""

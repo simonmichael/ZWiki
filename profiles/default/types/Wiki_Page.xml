@@ -4,11 +4,11 @@
         i18n:domain="zwiki" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
  <property name="title" i18n:translate="">Wiki Page</property>
  <property name="description"
-           i18n:translate="">A wiki page, which cooperates with other wiki pages in the same folder.</property>
+           i18n:translate="">A zwiki page. Cooperates with other zwiki pages in the same folder.</property>
  <property name="content_icon">wikipage_icon.gif</property>
  <property name="content_meta_type">ZWiki Page</property>
  <property name="product">ZWiki</property>
- <property name="factory">addWikiPage</property>
+ <property name="factory">addWikiPageInCMF</property>
  <property name="immediate_view"></property>
  <property name="global_allow">True</property>
  <property name="filter_content_types">True</property>
