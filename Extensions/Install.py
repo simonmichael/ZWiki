@@ -23,8 +23,9 @@ def install(portal):
     
     portal_setup.runAllImportStepsFromProfile('profile-ZWiki:default')
 
-    # XXX move the following into the profile above..
-
+    # XXX move the following into the profile above.. cf
+    # http://dev.plone.org/plone/browser/CMFPlone/trunk/profiles/default/types/Discussion_Item.xml
+    
     # register our skin layer(s) and add to each existing skin
     if 'zwiki' not in portal_skins.objectIds():
         addDirectoryViews(portal_skins, 'skins', {'__name__':'Products.ZWiki'})

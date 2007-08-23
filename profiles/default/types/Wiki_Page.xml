@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <object name="Wiki Page"
-        meta_type="Factory-based Type Information with dynamic views"
+        meta_type="Factory-based Type Information"
         i18n:domain="zwiki" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
  <property name="title" i18n:translate="">Wiki Page</property>
- <property name="description"
-           i18n:translate="">A zwiki page. Cooperates with other zwiki pages in the same folder.</property>
+ <property name="description" i18n:translate="">
+   A zwiki page. Cooperates with other zwiki pages in the same folder.
+ </property>
  <property name="content_icon">wikipage_icon.gif</property>
  <property name="content_meta_type">ZWiki Page</property>
  <property name="product">ZWiki</property>
@@ -14,18 +15,15 @@
  <property name="filter_content_types">True</property>
  <property name="allowed_content_types"/>
  <property name="allow_discussion">False</property>
- <property name="default_view">view</property>
- <property name="view_methods">
-  <element value="view"/>
- </property>
- <property name="default_view_fallback">False</property>
- <alias from="(Default)" to="(dynamic view)"/>
+<!-- <alias from="(Default)" to="view"/> -->
+ <alias from="edit" to="editform"/>
  <action title="View" action_id="view" category="object" condition_expr=""
     url_expr="string:${object_url}" visible="True">
   <permission value="View"/>
  </action>
  <action title="Edit" action_id="edit" category="object"
-    condition_expr="not:object/@@plone_lock_info/is_locked_for_current_user|python:True"
+    condition_expr=""
+<!--     condition_expr="not:object/@@plone_lock_info/is_locked_for_current_user|python:True" -->
     url_expr="string:${object_url}/editform" visible="True">
   <permission value="Zwiki: Edit pages"/>
  </action>
@@ -44,11 +42,11 @@
     visible="True">
   <permission value="View"/>
  </action>
- <action title="External Edit" action_id="external_edit" category="object"
-    condition_expr="object/externalEditorEnabled"
-    url_expr="string:${object_url}/external_edit" visible="False">
-  <permission value="Modify portal content"/>
- </action>
+<!--  <action title="External Edit" action_id="external_edit" category="object" -->
+<!--     condition_expr="object/externalEditorEnabled" -->
+<!--     url_expr="string:${object_url}/external_edit" visible="False"> -->
+<!--   <permission value="Modify portal content"/> -->
+<!--  </action> -->
 </object>
 
 <!-- old factory info

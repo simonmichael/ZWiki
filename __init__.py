@@ -8,6 +8,7 @@ __version__='0.59.0'
 import re, os.path, string, urllib
 
 from AccessControl import getSecurityManager
+from DateTime import DateTime
 from Globals import package_home, MessageDialog, ImageFile
 from OFS.Folder import Folder
 from OFS.Image import Image, File
@@ -98,7 +99,7 @@ def initializeForCMF(context):
         import Products.CMFCore.DirectoryView
         from Products.CMFCore.utils import ContentInit
         #from Products.CMFCore.permissions import AddPortalContent
-        from Products.Archetypes.public import listTypes, process_types
+        #from Products.Archetypes.public import listTypes, process_types
         from Products.CMFPlone.interfaces import IPloneSiteRoot
         from Products.GenericSetup import EXTENSION, profile_registry
 
@@ -126,7 +127,7 @@ def initializeForCMF(context):
         #types, cons, ftis = process_types(listTypes(PROJECT),PROJECT)
         ContentInit(
             PROJECT + ' Content',
-            content_types      = (ZWikiPage,),        # types,
+            content_types      = (ZWikiPage.ZWikiPage,), # types,
             #permission         = AddPortalContent,   # Add portal content
             permission         = Permissions.Add,     # Zwiki: Add pages
             extra_constructors = (addWikiPageInCMF,), # cons
@@ -152,7 +153,7 @@ def addWikiPageInCMF(self, id, title='', page_type=None, file=''):
                                language='',
                                rights = '')
 
-        ob = ZWikiPage(source_string=file, __name__=id)
+        ob = ZWikiPage.ZWikiPage(source_string=file, __name__=id)
         ob.title = title
         ob.parents = []
         username = getSecurityManager().getUser().getUserName()

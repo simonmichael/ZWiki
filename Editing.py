@@ -341,6 +341,10 @@ class PageEditingSupport:
                      REQUEST['URL2']+'/'+ quote(p.id())))
             except KeyError: pass
 
+    # This alternate spelling exists so that we can define an "edit" alias
+    # in Plone 3, needed to work around a createObject bug
+    update = edit
+
     def handleSubtopicsProperty(self,subtopics,REQUEST=None):
         if subtopics is not None:
             # do we have permission ?
