@@ -171,14 +171,15 @@ class PageHistorySupport:
     def saveRevision(self, REQUEST=None):
         """Save a copy of this page as a new revision in the revisions
         folder and increment its revision number.  This has no effect if
-        called on a revision object.
+        called on a revision object, or a non-ZODB object (such as a
+        temporary page object created by plone's portal_factory).
 
         NB normally the revision number just increments by 1, but if there
         is already a revision object with that number (which can happen
         from renaming, eg), we first bump this page's revision number to
         the number after all existing revisions.
         """
-        if self.inRevisionsFolder(): return
+        if self.inRevisionsFolder() or self._p_jar is None: return
         self.ensureRevisionsFolder()
         self.ensureMyRevisionNumberIsLatest()
         rid = '%s.%d' % (self.getId(), self.revisionNumber())
