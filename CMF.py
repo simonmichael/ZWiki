@@ -25,6 +25,7 @@ if not HAS_CMF:
         __implements__ = ()
         def supportsCMF(self): return 0
         def inCMF(self): return 0
+        def inPlone(self): return 0
 
 else:
     from AccessControl import ClassSecurityInfo
@@ -119,8 +120,13 @@ else:
 
         security.declarePublic('inCMF')
         def inCMF(self):
-            """return true if this page is in a CMF portal"""
+            """return true if this page is in a CMF site"""
             return safe_hasattr(self.aq_inner.aq_parent,'portal_membership')
+
+        security.declarePublic('inPlone')
+        def inPlone(self):
+            """return true if this page is in a Plone site"""
+            return self.inCMF() and safe_hasattr(self.aq_inner.aq_parent,'plone_utils')
 
         def __init__(self, source_string='', mapping=None, __name__=''):
             DTMLDocument.__init__(self,
@@ -187,5 +193,6 @@ else:
             """
             return self == self.defaultPage()
 
+            
 InitializeClass(PageCMFSupport)
 
