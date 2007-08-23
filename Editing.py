@@ -987,17 +987,19 @@ class PageEditingSupport:
         if DISABLE_JAVASCRIPT:
             t = re.sub(javascriptexpr,r'&lt;disabled \1&gt;',t)
 
-        # strip out HTML header tags if present
-        def onlyBodyFrom(t):
-            # XXX these can be expensive, for now just skip if there's a problem
-            try:
-                t = re.sub(htmlheaderexpr,'',t)
-                t = re.sub(htmlfooterexpr,'',t)
-            except RuntimeError: pass
-            return t
-            # maybe better, but more inclined to mess with valid text ?
-            #return re.sub(htmlbodyexpr, r'\1', t)
-        t = onlyBodyFrom(t)
+        # for convenient pasting from external html editors: discard
+        # anything outside of HTML body tags, if they are present
+        # Actually, gets in the way when showing HTML examples; disabled.
+#         def onlyBodyFrom(t):
+#             # XXX these can be expensive, for now just skip if there's a problem
+#             try:
+#                 t = re.sub(htmlheaderexpr,'',t)
+#                 t = re.sub(htmlfooterexpr,'',t)
+#             except RuntimeError: pass
+#             return t
+#             # maybe better, but more inclined to mess with valid text ?
+#             #return re.sub(htmlbodyexpr, r'\1', t)
+#         t = onlyBodyFrom(t)
 
         return t
 
