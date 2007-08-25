@@ -116,8 +116,7 @@ def initializeForCMF(context):
                                          'Extension profile for removing default Zwiki-in-Plone/CMF setup',
                                          'profiles/uninstall',
                                          'ZWiki',
-                                         EXTENSION,
-                                         for_=IPloneSiteRoot)
+                                         EXTENSION)
 
         # register our skin layer(s)
         Products.CMFCore.DirectoryView.registerDirectory('skins', globals())
