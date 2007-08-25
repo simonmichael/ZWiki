@@ -179,7 +179,9 @@ class PageHistorySupport:
         from renaming, eg), we first bump this page's revision number to
         the number after all existing revisions.
         """
-        if self.inRevisionsFolder() or self._p_jar is None: return
+        def inPortalFactory(self):
+            return self.inCMF() and self.folder().getId() == 'portal_factory'
+        if self.inRevisionsFolder() or inPortalFactory(self): return
         self.ensureRevisionsFolder()
         self.ensureMyRevisionNumberIsLatest()
         rid = '%s.%d' % (self.getId(), self.revisionNumber())
