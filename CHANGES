@@ -1,3 +1,499 @@
+Sat Aug 25 02:03:30 PDT 2007  simon@joyful.com
+  * unicodegeddon: fix last two unicode-related test failures
+
+Sat Aug 25 02:02:47 PDT 2007  simon@joyful.com
+  * don't show our uninstall profile in the add plone site form
+
+Sat Aug 25 02:02:23 PDT 2007  simon@joyful.com
+  * try to refine saveRevisions - skip it in either the revisions folder or under portal_factory
+
+Fri Aug 24 17:05:48 PDT 2007  simon@joyful.com
+  * fix an xml bug preventing plone installation
+
+Thu Aug 23 12:54:04 PDT 2007  simon@joyful.com
+  * handle mailins with encodings other than utf8 (#1256)
+
+Wed Aug  8 15:45:28 PDT 2007  m.pedersen@icelus.org
+  * MoinExportAndImport
+
+Thu Aug 23 04:06:21 PDT 2007  simon@joyful.com
+  * stop discarding content outside of html body tags - they may be part of the content
+
+Thu Aug 23 02:46:01 PDT 2007  simon@joyful.com
+  * make basic wiki page adding & editing work in plone 3 (#1322)
+
+Thu Aug 23 02:45:00 PDT 2007  simon@joyful.com
+  * inPlone
+
+Thu Aug 23 02:44:46 PDT 2007  simon@joyful.com
+  * don't save a revision for temporary non-zodb page objects (eg with portal_factory)
+
+Thu Aug 23 02:43:42 PDT 2007  simon@joyful.com
+  * pyflakes cleanup
+
+Thu Aug 23 02:43:24 PDT 2007  simon@joyful.com
+  * pyflakes cleanups
+
+Thu Aug 23 00:27:49 PDT 2007  simon@joyful.com
+  * better tag coverage
+
+Wed Aug 22 19:41:16 PDT 2007  simon@joyful.com
+  * add more actions to wiki page installation profile (#1322)
+
+Wed Aug 22 19:40:37 PDT 2007  simon@joyful.com
+  * make Wiki Page show up in plone 3 add menu (#1322)
+
+Wed Aug 22 16:04:47 PDT 2007  simon@joyful.com
+  * notes
+
+Wed Aug 22 16:04:39 PDT 2007  simon@joyful.com
+  * testhelp rule
+
+Wed Aug 22 16:04:24 PDT 2007  simon@joyful.com
+  * clean up product initialisation, begin using GenericSetup (and drop compatibility with older CMF/Plones)
+
+Wed Aug 22 13:15:26 PDT 2007  simon@joyful.com
+  * clean up testrunner make rules
+
+Wed Aug 22 13:14:55 PDT 2007  simon@joyful.com
+  * pyflakes make rule
+
+Wed Aug 22 13:13:58 PDT 2007  simon@joyful.com
+  * small plugin imports cleanup
+
+Wed Aug 22 09:30:00 PDT 2007  simon@joyful.com
+  * better logging of plone/cmf registration
+
+Wed Aug 22 09:28:58 PDT 2007  simon@joyful.com
+  * update version
+
+Mon Aug  6 16:58:02 PDT 2007  simon@joyful.com
+  * unicodegeddon: fix test errors
+
+Mon Aug  6 16:04:09 PDT 2007  simon@joyful.com
+  * unicodegeddon: use last editor accessors in templates (custom RecentChanges, editform, history templates may need upgrading)
+
+Mon Aug  6 15:28:35 PDT 2007  simon@joyful.com
+  * robust exuberant etags rule
+
+Wed Aug  1 19:57:27 PDT 2007  simon@joyful.com
+  * make the home link, wiki logo and index_html use the default page url consistently
+
+Wed Aug  1 12:16:31 PDT 2007  simon@joyful.com
+  * update renderLink test
+
+Wed Aug  1 11:41:52 PDT 2007  root <simon@joyful.com>
+  * update test_renderLink
+
+Wed Aug  1 12:10:19 PDT 2007  simon@joyful.com
+  * allow arbitrary urls in bracket links (#1370)
+
+Wed Aug  1 11:33:05 PDT 2007  simon@joyful.com
+  * optional bracket link labels after |
+
+Tue Jul 31 16:04:14 PDT 2007  simon@joyful.com
+  * choose revision number after any old revs when renaming or creating a page
+
+Tue Jul 31 16:00:55 PDT 2007  simon@joyful.com
+  * fix two tests broken by mailto change
+
+Sat Jul 28 14:22:02 PDT 2007  betabug.darcs@betabug.ch
+  * 1365 use talsafe() on newname in /editform to avoid UnicodeDecodeError.
+  This problem appeared in localized browsers only for some reason, but
+  the fix likely is necessary for 2.10 too.
+
+Thu Jul 19 10:47:30 PDT 2007  simon@joyful.com
+  * add noindex keyword to diffform
+
+Thu Jul 19 10:01:05 PDT 2007  Simon Michael <simon@joyful.com>
+  * avoid infinite recursion error when a page is reparented to itself  (Sascha Welter, #965)
+
+Wed Jul 18 09:41:20 PDT 2007  Simon Michael <simon@joyful.com>
+  * don't log body of mail-ins by default
+
+Sat Jul 14 10:36:43 PDT 2007  simon@joyful.com
+  * notes
+
+Sat Jul 14 10:33:27 PDT 2007  simon@joyful.com
+  * resolve unicode/safe_hasattr conflicts
+
+Sat Jul 14 10:17:16 PDT 2007  simon@joyful.com
+  * resolve Install.py conflict
+
+Sat May 19 04:07:27 PDT 2007  betabug.darcs@betabug.ch
+  * 141 - Uploading a file causes an "edit" mailout now.
+
+Sat May 19 03:45:02 PDT 2007  betabug.darcs@betabug.ch
+  * 570 - Ensure valid id with file uploads.
+  But meanwhile try to mess with uploaded file's names as little as
+  possible. We check first if the name is acceptable to Zope, and only
+  if it isn't we change it.
+
+Tue May 15 06:15:12 PDT 2007  betabug.darcs@betabug.ch
+  * removed another bare except
+
+Thu May 17 11:35:27 PDT 2007  betabug.darcs@betabug.ch
+  * 1085 - Comments are now properly formatted in HTML pagetype.
+  Now it's possible to use comments in HTML pagetype pages and have the
+  comments still properly formatted after page edits.
+  Similar to #1079 and therefore again credits and thanks to Martijn Pieters.
+  We are in the same manner using preRenderMessages to add the comments.
+
+Thu May 17 11:25:41 PDT 2007  betabug.darcs@betabug.ch
+  * 1079 - Plaintext comments work now.
+  Commenting on plaintext pages would work until you edited the page itself,
+  then the prerendering method lost the comment rendering. Credits go to 
+  Martijn Peters for this patch, a bit adapted to code that had moved on.
+  I had to tweak the output test, as the exact placement of blank lines at
+  end of the page content has changed minimally.
+
+Sat May 12 03:35:14 PDT 2007  betabug.darcs@betabug.ch
+  * Eliminated unnused and unnecessary imports.
+  Mostly string (whose functions are accessed directly now), but also 
+  some unnused sys, re, math are gone.
+
+Sat May 12 03:15:00 PDT 2007  betabug.darcs@betabug.ch
+  * Eliminate unnecessary import string.
+
+Thu May 10 05:25:06 PDT 2007  betabug.darcs@betabug.ch
+  * Replace hasattr() with safe_hasattr() everywhere.
+  Problem with hasattr() is that it masks exceptions, which is known
+  to be problematic. "Our" new safe_hasattr() is from
+  http://www.zope.org/Collectors/Zope/742 - with thanks and credits to
+  Dieter Maurer.
+
+Sat Jul 14 10:08:48 PDT 2007  simon@joyful.com
+  * unicode-aware lastEditor, lastEditorIp methods
+
+Sat Jul 14 10:03:55 PDT 2007  simon@joyful.com
+  * whitespace
+
+Sat Jul 14 10:03:47 PDT 2007  simon@joyful.com
+  * tal cleanup
+
+Mon Jun  4 15:26:22 PDT 2007  Simon Michael <simon@joyful.com>
+  * hide the prefix in mailto: email hyperlinks
+
+Wed Jun  6 09:19:54 PDT 2007  simon@joyful.com
+  * unicodegeddon: add proper conversions to all text handling methods as per notes
+
+Wed Jun  6 09:17:43 PDT 2007  simon@joyful.com
+  * notes
+
+Tue Jun  5 10:08:07 PDT 2007  simon@joyful.com
+  * remove old regulations comments
+
+Tue Jun  5 09:23:24 PDT 2007  simon@joyful.com
+  * clean up create docstring
+
+Mon Jun  4 09:04:16 PDT 2007  simon@joyful.com
+  * UnicodeGeddon! a big set of changes switching to unicode for internal text handling. Still in progress (#1347)
+
+Sun Jun  3 12:33:44 PDT 2007  simon@joyful.com
+  * revision objects never have a catalog, another fix
+
+Tue May  8 18:25:14 PDT 2007  simon@joyful.com
+  * exclude tests from api docs
+
+Sun Jun  3 12:18:22 PDT 2007  simon@joyful.com
+  * revision objects never have a catalog
+
+Sun Jun  3 12:11:49 PDT 2007  simon@joyful.com
+  * when saving or renaming, bump the revision number as needed to avoid revision number collisions (#47)
+
+Sun Jun  3 12:07:09 PDT 2007  simon@joyful.com
+  * prevent indexing of the outline cache in a cleaner way
+
+Fri Jun  1 10:00:25 PDT 2007  Simon Michael <simon@joyful.com>
+  * clarify zwikiexport status
+
+Fri Jun  1 09:40:27 PDT 2007  simon@joyful.com
+  * some plone 3 installation fixes
+
+Wed May 16 00:18:49 PDT 2007  Simon Michael <simon@joyful.com>
+  * change long-standing links order: contents before changes, help after options
+
+Wed May 16 00:16:22 PDT 2007  Simon Michael <simon@joyful.com>
+  * whitespace cleanup
+
+Tue May 15 21:04:56 PDT 2007  Simon Michael <simon@joyful.com>
+  * another talsafe: title in wikipage.pt
+
+Tue May  8 17:14:24 PDT 2007  simon@joyful.com
+  * doxygen/epydoc config
+
+Tue May  8 16:21:14 PDT 2007  simon@joyful.com
+  * make revert more robust
+
+Tue May  8 16:18:20 PDT 2007  simon@joyful.com
+  * stray comma broke diffform
+
+Tue May  8 00:27:55 PDT 2007  betabug.darcs@betabug.ch
+  * 1348 - redirect to original page after useroptions
+  We are always calling FrontPage/useroptions to limit bot traffic. Now
+  we are carrying the redirectURL through the REQUEST, so we know where to 
+  redirect in the end.
+
+Mon May  7 22:40:38 PDT 2007  betabug.darcs@betabug.ch
+  * Default wiki type is "basic" + added 'jpeg' fs templating.
+
+Mon May  7 22:29:47 PDT 2007  betabug.darcs@betabug.ch
+  * Added init_test.py - tests for adding zwikis/zwiki pages.
+
+Mon May  7 14:00:31 PDT 2007  betabug.darcs@betabug.ch
+  * 1339 - fixing text encoding for editform.pt textarea.
+
+Mon May  7 13:31:20 PDT 2007  betabug.darcs@betabug.ch
+  * Cleanup in createFilesFromFsFolder, using os methods instead of regex.
+  We are now using os.path.(splitext|join) and related methods and in
+  general reducing the use of regular expressions in this method.
+
+Mon May  7 13:29:40 PDT 2007  betabug.darcs@betabug.ch
+  * moved tests on wiki / wiki page creation to their proper test files
+
+Fri Mar 30 12:32:10 PDT 2007  betabug.darcs@betabug.ch
+  * Recursively add files/folders on addWikiFromFs.
+  This is used for "nautica" style templates. It's now possible to use
+  templates e.g. from openwebdesign.org without having to "unroll" 
+  images into a flat structure. Also we now can set document titles 
+  and parents from the filesystem pages.
+
+Tue May  8 15:28:27 PDT 2007  simon@joyful.com
+  * doxygen config
+
+Tue May  8 10:29:38 PDT 2007  simon@joyful.com
+  * TODO -> NOTES, cleanup
+
+Tue May  8 07:20:06 PDT 2007  simon@joyful.com
+  * notes
+
+Tue May  8 07:19:56 PDT 2007  simon@joyful.com
+  * drop old test
+
+Tue May  8 07:19:34 PDT 2007  simon@joyful.com
+  * small history fixes
+
+Tue May  8 00:06:32 PDT 2007  Simon Michael <simon@joyful.com>
+  * yellow color to make open funded issues stand out
+
+Mon May  7 23:43:14 PDT 2007  simon@joyful.com
+  * #1157: replace revertEdits[Everywhere]By with history-wiping expunge, expungeEditsBy, expungeEditsEverywhereBy methods
+
+Mon May  7 17:29:53 PDT 2007  simon@joyful.com
+  * more robust history
+  - allow partial history, revisions can safely be deleted
+  - use a btree folder for revisions if possible
+  - more zodb cache friendly
+  - richer history api
+
+Mon May  7 16:51:41 PDT 2007  Simon Michael <simon@joyful.com>
+  * test challenges update
+
+Mon May  7 16:42:44 PDT 2007  simon@joyful.com
+  * #1349 cleanup
+
+Mon May  7 15:25:13 PDT 2007  Simon Michael <simon@joyful.com>
+  * #1346: don't require create permission to edit a page, more robust saveRevision tests
+
+Mon May  7 15:24:07 PDT 2007  Simon Michael <simon@joyful.com>
+  * hasCatalogIndexesMetadata was always failing in tests, document #1349
+
+Mon May  7 12:27:14 PDT 2007  Simon Michael <simon@joyful.com>
+  * test docs
+
+Fri May  4 19:58:37 PDT 2007  simon@joyful.com
+  * IssueTracker cleanups
+
+Fri May  4 17:27:15 PDT 2007  simon@joyful.com
+  * #1333: make literal/code style more precise to avoid styling difform headings
+
+Fri May  4 14:04:06 PDT 2007  betabug.darcs@betabug.ch
+  * 1331, 1186 - last_edit_date / creation_date timestamps now in ISO6801.
+  We changed the timestamp format for last_edit_date and creation_date
+  to conform to ISO8601, in order to save time zone information along
+  with it. Special care is taken to upgrading old timestamps in Zope's 
+  DateTime's ISO() format.
+
+Fri May  4 07:19:44 PDT 2007  betabug.darcs@betabug.ch
+  * 1332 - fix for the fix + default wiki_type is "basic".
+  We're now not trying to grab the REQUEST from self any more -- just 
+  doesn't make sense to me. Also we have now the default wiki_type as 
+  "basic".
+
+Fri May  4 06:23:35 PDT 2007  betabug.darcs@betabug.ch
+  * 1332 - make manage_addWiki more programmatic + test.
+  We still grabbed the REQUEST and thus got a redirect at the 2nd chance. 
+  Now we're doing the same check as on the 1st test and also return the new 
+  id if we don't redirect. Added a test too.
+
+Fri May  4 08:11:27 PDT 2007  simon@joyful.com
+  * preserve authentication when saving a revision
+
+Tue May  1 14:04:16 PDT 2007  Simon Michael <simon@joyful.com>
+  * yet more help page cleanup
+
+Tue May  1 13:45:01 PDT 2007  Simon Michael <simon@joyful.com>
+  * more help page cleanups
+
+Tue May  1 12:45:43 PDT 2007  Simon Michael <simon@joyful.com>
+  * help page cleanup
+
+Tue May  1 01:35:26 PDT 2007  simon@joyful.com
+  * TODO -> org mode
+
+Tue May  1 01:31:15 PDT 2007  simon@joyful.com
+  * merge GPL with LICENSE, show current copyright policy
+
+Mon Apr 30 15:26:49 PDT 2007  Simon Michael <simon@joyful.com>
+  * #1330: fix unicode errors with non-ascii page names, missed this one
+
+Mon Apr 30 13:48:32 PDT 2007  simon@joyful.com
+  * #1145: avoid the broken dtml-in sort option in SearchPage, also, to avoid occasional search errors
+
+Mon Apr 30 12:08:14 PDT 2007  simon@joyful.com
+  * #1334: make fuzzy urls work better with issue numbers
+
+Mon Apr 30 11:40:35 PDT 2007  simon@joyful.com
+  * sorted function for python 2.3
+
+Mon Apr 30 10:24:08 PDT 2007  simon@joyful.com
+  * failUnless -> assert_
+
+Mon Apr 30 09:56:38 PDT 2007  simon@joyful.com
+  * #1337: move the unit test __getstate__ hack where it belongs, testsupport, fixing that obscure edit error (phew)
+
+Sun Apr 29 15:05:33 PDT 2007  simon@joyful.com
+  * #1330: a better fix for these unicode errors. Zope 2.10 expects TAL data
+  to be unicode, older zopes do not. This can lead to many obscure unicode
+  errors depending on your system locale, wiki content, cookies, phase of
+  the moon etc. This fix aims to make all the standard templates robust
+  against this. Wikis with old customized templates will still be vulnerable
+  to this problem after upgrading to zope 2.10, until those templates are
+  updated.
+
+Sun Apr 29 11:32:27 PDT 2007  simon@joyful.com
+  * most access keys are always available, but disable the s subscribeform key if mailout is not enabled, as an extra cue
+
+Sun Apr 29 04:07:07 PDT 2007  simon@joyful.com
+  * speed up pages by doing less work
+
+Sun Apr 29 04:06:31 PDT 2007  simon@joyful.com
+  * hasIssues change broke tests, use hasIssueTracker instead; old skins will need to switch to it to get the speedup
+
+Sun Apr 29 02:54:27 PDT 2007  Simon Michael <simon@joyful.com>
+  * slight discussionUrl speedup, don't look for UserDiscussion page
+
+Sun Apr 29 02:26:40 PDT 2007  simon@joyful.com
+  * speed up hasIssues, which was taking half the 2.5s skin render time on zwiki.org
+
+Fri Apr 27 17:24:13 PDT 2007  simon@joyful.com
+  * update stx code, may work better with zope 2.10
+
+Fri Apr 27 15:30:27 PDT 2007  Simon Michael <simon@joyful.com>
+  * redirect to the page after visiting fixEncoding
+
+Fri Apr 27 14:58:47 PDT 2007  simon@joyful.com
+  * refuse any incoming text that's not ascii or utf-8, to avoid problems later
+
+Fri Apr 27 14:57:44 PDT 2007  simon@joyful.com
+  * fixPageEncoding renamed to fixEncoding and fixed
+
+Fri Apr 27 08:09:32 PDT 2007  Simon Michael <simon@joyful.com>
+  * fix htmlDiff/textDiff defaults
+
+Thu Apr 26 19:27:32 PDT 2007  Simon Michael <simon@joyful.com>
+  * make manage_addWiki more programmatic (#1332)
+
+Thu Apr 26 18:52:11 PDT 2007  Simon Michael <simon@joyful.com>
+  * wording
+
+Thu Apr 26 18:45:12 PDT 2007  simon@joyful.com
+  * new history and diff views. History should now be at least as functional as before, and permanent
+
+Thu Apr 26 17:18:05 PDT 2007  Simon Michael <simon@joyful.com>
+  * pageheader whitespace
+
+Wed Apr 25 18:14:10 PDT 2007  simon@joyful.com
+  * more diff/history cleanups, switch to python's difflib
+
+Wed Apr 25 17:35:06 PDT 2007  simon@joyful.com
+  * rudimentary /history view
+
+Wed Apr 25 17:34:49 PDT 2007  simon@joyful.com
+  * history fixes, test/diff cleanups
+
+Wed Apr 25 17:27:47 PDT 2007  simon@joyful.com
+  * use html instead of stx page type when installing issue tracker as dtml pages, for a 4x speedup of the unit test on my system
+
+Wed Apr 25 14:43:17 PDT 2007  Simon Michael <simon@joyful.com>
+  * badtemplate wording
+
+Tue Apr 24 15:27:46 PDT 2007  simon@joyful.com
+  * simple permanent revisions model, use revisions folder instead of recycle_bin
+
+Tue Apr 24 11:07:24 PDT 2007  simon@joyful.com
+  * remove commented debug statements
+
+Wed Apr 18 14:11:18 PDT 2007  simon@joyful.com
+  * make zodb save work in unit tests
+
+Wed Apr 18 13:04:57 PDT 2007  simon@joyful.com
+  * fix two deprecation warnings
+
+Wed Apr 18 11:43:14 PDT 2007  simon@joyful.com
+  * partial workaround for #1330 UnicodeDecodeError
+
+Wed Apr 18 11:30:20 PDT 2007  simon@joyful.com
+  * hide comments in content template
+
+Tue Apr 17 17:30:35 PDT 2007  simon@joyful.com
+  * createform and create now look only at folder permissions, not the current
+  page, to be consistent with the page management form. The 'Zwiki: Add
+  pages' permission is meaningful only on folders, and ignored on pages.
+  
+
+Fri Apr 13 05:18:10 PDT 2007  betabug.darcs@betabug.ch
+  * #1327 - fixed /diff display raising AttributeError - caused by renaming of revisionInfoFor
+
+Fri Apr 13 04:59:29 PDT 2007  betabug.darcs@betabug.ch
+  * test_linkTitleFrom failed if the tester lives in a certain range of timezones.
+  The fix is the same as we have in the regular code, transfer the time to UTC
+  before converting it to .ISO().
+
+Mon Mar 26 01:10:00 PDT 2007  betabug.darcs@betabug.ch
+  * release note grammar edits and small corrections.
+
+Fri Mar 23 01:39:43 PDT 2007  betabug.darcs@betabug.ch
+  * 512 - fix footnotes with "create page" links in RST
+
+Fri Apr 13 09:57:42 PDT 2007  Simon Michael <simon@joyful.com>
+  * docstring cleanups
+
+Mon Apr  9 16:40:44 PDT 2007  simon@joyful.com
+  * move top links to wikipage template for easier customizing
+
+Sat Apr  7 13:59:22 PDT 2007  simon@joyful.com
+  * revisionInfoFor -> revisionInfo
+
+Sat Apr  7 12:57:45 PDT 2007  simon@joyful.com
+  * revert methods now obey the edits_need_username option (#1323)
+
+Sat Apr  7 12:42:55 PDT 2007  simon@joyful.com
+  * a cleaner workaround for no history in unit tests
+
+Sat Apr  7 11:43:09 PDT 2007  simon@joyful.com
+  * update revert docstring
+
+Sat Apr  7 11:04:20 PDT 2007  simon@joyful.com
+  * clean up revertEditsBy, don't break with new pages
+
+Fri Apr  6 14:41:48 PDT 2007  simon@joyful.com
+  * ensure a catalog and an outline cache are always present. (#1041, #1145)
+
+Mon Apr  2 11:54:06 PDT 2007  simon@joyful.com
+  tagged release-0-59-0
+
+
 Zwiki 0.59.0 2007/04/02
 =======================
 
