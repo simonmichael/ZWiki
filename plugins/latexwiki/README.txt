@@ -17,7 +17,7 @@ Requirements
 
 This Zwiki+latexwiki version has been tested with 
 
-   * Zope 2.9.x (http://www.zope.org)
+   * Zope >=2.9 (http://www.zope.org)
    
    * Python 2.4.x
 
@@ -37,64 +37,21 @@ This Zwiki+latexwiki version has been tested with
 For those running large distributions such as Red Hat Linux, many of
 the necessary tools (Ghostscript, LaTeX) are probably already
 installed. For those running FreeBSD, you will find the necessary
-items in the ports tree.  In debian-based systems try::
+items in the ports tree.  Debian/Ubuntu users, try::
 
   apt-get install tetex-base tetex-bin tetex-extra gs zope2.9 python-imaging dvipng
 
 
-Installing LatexWiki standalone
--------------------------------
+Installing
+----------
 
-  1. Make sure that you have the required components installed (see
-     above) and just install Zwiki as usual. LocalFS will probably
-     need to be installed manually.  (Just untar it into the Zope
-     Products directory.)
-
-  2. If you do not already have a Wiki, create one by going to the Zope
-     management interface and selecting ZWiki from the pulldown in the
-     upper right.  For "Type", select "latexwiki".
-     **WARNING: disabled, for now just make a basic wiki.**
+Make sure that you have the requirements installed (above) and follow the
+instructions at http://zwiki.org/LatexWiki .
      
-
-Installing LatexWiki in Plone 
------------------------------
-
-**WARNING: CMF/Plone support code needs review & updating**
-
-See also http://zwiki.org/PloneAndCMF .
-
-  1. If needed, create a 'Plone Site' from the dropdown in the ZMI.
-
-  2. Install Zwiki in your plone site using Plone's add/remove products.
-
-  3. If needed, create a Wiki Page.  You may have to press
-     shift-reload in your browser when viewing this new page in order
-     to get the new latexwiki stylesheets that get installed in step
-     2.
-
-I recommend removing one of the two sidebars in Plone.  LatexWiki
-requires a somewhat large font to make latex readable, which looks bad
-when put into Plone's narrow document window between two sidebars.  To
-do this:
-
-  1. Go to your plone folder in the ZMI
-
-  2. Click the "Properties" tab
-
-  3. Delete the lines in either the "right_slots" or "left_slots" properties.
-
-
-Other notes
------------
+Other notes:
 
  * You may get better results if you add the properties
    'latex_font_size' (int), 'latex_align_fudge' (float),
    'latex_res_fudge' (float), and 'allow_dtml' (boolean) to your wiki
    folder(s) (and set them to.. ?).  It may be useful to create a new
    wiki using the latexwiki template for comparison.
-
- * If you are using Ape or something else (FileSystemSite?) to allow access to
-   the images/ directory, this will still work but the site template will try
-   to create a LocalFS images directory.  Just delete it and replace it with
-   Ape, or whatever.  Appropriate patches to Extensions/setup_latexwiki.py
-   would be appreciated.
