@@ -314,7 +314,10 @@ class Tests(ZwikiTestCase):
     def test_setText(self):
         p = self.page
         p.edit(text='<html blah>\n<body blah>\ntest\n</body>\n</html>')
-        self.assertEqual(p.read(),'\ntest\n')
+        # since 0.60, we no longer strip things outside <body> tags
+        self.assertEqual(
+            p.read(),
+            '<html blah>\n<body blah>\ntest\n</body>\n</html>')
 
     def test_setLastEditor(self):
         p = self.page
