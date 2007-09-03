@@ -630,7 +630,7 @@ class PageMailSupport:
         # XXX folder might not have objectValues, don't know why (#938)
         while (not mhost) and folder and safe_hasattr(folder,'objectValues'):
             mhosts = folder.objectValues(
-                spec=['Mail Host', 'Secure Mail Host', 'Maildrop Host'])
+                spec=['Mail Host', 'Secure Mail Host', 'Maildrop Host', 'Secure Maildrop Host'])
             if mhosts: mhost = mhosts[0]
             folder = getattr(folder,'aq_parent',None)
         return mhost
@@ -742,7 +742,7 @@ class PageMailSupport:
         #if self.toProperty() in unique: unique.remove(self.toProperty())
 
         mailhost = self.mailhost()
-        if mailhost.meta_type == 'Secure Mail Host':
+        if mailhost.meta_type in ('Secure Mail Host', 'Secure Maildrop Host'):
             msg = text + "\n\n" +  self.signature(msgid)
             additional_headers = {
                                 'Reply-To':self.replyToHeader(), \
