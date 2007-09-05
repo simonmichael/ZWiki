@@ -849,8 +849,11 @@ def callHooks(hooks, arg):
                 formattedTraceback()))
     return err
 
+# provide sorted for python 2.3
 if not safe_hasattr(__builtins__,'sorted'):
     def sorted(L):
         L = L[:]
         L.sort()
         return L
+else:
+    sorted = sorted
