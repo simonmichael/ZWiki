@@ -59,6 +59,13 @@ class Tests(ZwikiTestCase):
         self.assertEqual(revs[2].previousRevisionNumber(), 2)
         self.assertEqual(revs[2].nextRevisionNumber(),     None)
 
+    def test_revisionNumbers(self):
+        p = self.page
+        self.assertEqual([1],p.revisionNumbers())
+        p.edit(text='x')
+        self.assertEqual([1,2],p.revisionNumbers())
+        
+        
     def test_saveRevision(self):
         p = self.page
         f = p.folder()
