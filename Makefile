@@ -160,6 +160,11 @@ testmod-%:
 test-%:
 	$(TEST) -m Products.ZWiki -t $*
 
+# as above, but just make testmethodname:
+#   make test_install
+test_%:
+	$(TEST) -m Products.ZWiki -t $@
+
 # silliness to properly capture output of a test run
 TESTRESULTS=TESTRESULTS
 testresults:
