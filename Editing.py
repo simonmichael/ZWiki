@@ -823,13 +823,15 @@ class PageEditingSupport:
                                          #'Portal File','Portal Image')):
             if guess_content_type(file.filename)[0][0:5] == 'image':
                 if self.inCMF():
-                    #XXX how ?
+                    #XXX need to use cmf/plone type here, how ?
+                    #from Products.ATContentTypes import ATFile, ATImage
+                    #folder.create(ATImage) ...
                     id = folder._setObject(id, OFS.Image.Image(id,title,'')) 
                 else:
                     id = folder._setObject(id, OFS.Image.Image(id,title,''))
             else:
                 if self.inCMF():
-                    #XXX how ?
+                    #XXX as above
                     id = folder._setObject(id, OFS.Image.File(id,title,''))
                 else:
                     id = folder._setObject(id, OFS.Image.File(id,title,''))
