@@ -64,6 +64,35 @@ use ruby and haskell
 hosting stats & cost reporting
 lighter monthly release, perhaps a more thoroughly polished quarterly release
 
+** better infrastructure
+*** SpecialPageFeatures wikibadge
+*** patch review
+**** set up PatchDiscussion page
+**** does it record patch content ?
+**** submissions
+***** make zwiki-repo forward there
+**** commits
+***** make darcs apply cc there
+**** allow mail-through of darcs patches
+***** investigate darcs mails
+****** implement attachment upload/mailout/pass-through if needed
+*** irc notifications
+**** general wiki activity
+***** zwikibot wiki subscriber which reports activity, with filters
+****** local/custom bot - supybot ? lambdabot ?
+***** comments
+***** issue changes
+**** submissions
+***** from PatchDiscussion
+**** commits
+***** from PatchDiscussion
+***** from darcs apply
+***** from CIA
+
+
+*** simple org-mode support
+
+*** issue reported-in, fixed-in fields
 * DOCS
 
 clarify division/integration between fs and wiki docs
