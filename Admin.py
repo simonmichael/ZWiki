@@ -306,6 +306,7 @@ class PageAdminSupport:
         # make sure there is an up-to-date outline cache
         self.ensureWikiOutline()
 
+    #XXX this is copied code which needs to be refactored after 0.60
     security.declareProtected('Manage properties', 'setupPages')
     def setupPages(self,REQUEST=None):
         """
@@ -327,11 +328,13 @@ class PageAdminSupport:
                         if m.group(2): parents = split(strip(m.group(2)),',')
                         else: parents = []
                         text = m.group(3)
+                        # XXX: this will choke if it tries to
+                        # create a page with a .png file
                         self.create(name,text=text)
         if REQUEST:
             REQUEST.RESPONSE.redirect(self.pageUrl())
 
-    #XXX does this not attempt to create everything ?
+    #XXX this is copied code which needs to be refactored after 0.60
     security.declareProtected('Manage properties', 'setupPages')
     def setupDtmlPages(self,REQUEST=None):
         """
@@ -344,17 +347,20 @@ class PageAdminSupport:
         dir = os.path.join(package_home(globals()),'skins','zwiki')
         filenames = os.listdir(dir)
         for filename in filenames:
-            m = re.search(r'(.+)\.(.+)',filename)
-            if m:
-                name, type = m.group(1), m.group(2)
-                if not self.pageWithName(name):
-                    text=open(os.path.join(dir,filename),'r').read()
-                    # parse optional parents list
-                    m = re.match(r'(?si)(^#parents:(.*?)\n)?(.*)',text)
-                    if m.group(2): parents = split(strip(m.group(2)),',')
-                    else: parents = []
-                    text = m.group(3)
-                    self.create(name,text=text)
+            if filename[-5:] != '.dtml':
+                pass
+            else:
+                m = re.search(r'(.+)\.(.+)',filename)
+                if m:
+                    name, type = m.group(1), m.group(2)
+                    if not self.pageWithName(name):
+                        text=open(os.path.join(dir,filename),'r').read()
+                        # parse optional parents list
+                        m = re.match(r'(?si)(^#parents:(.*?)\n)?(.*)',text)
+                        if m.group(2): parents = split(strip(m.group(2)),',')
+                        else: parents = []
+                        text = m.group(3)
+                        self.create(name,text=text)
         if REQUEST:
             REQUEST.RESPONSE.redirect(self.pageUrl())
 
