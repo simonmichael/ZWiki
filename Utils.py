@@ -25,7 +25,8 @@ except:
     ZOPEVERSION = (9,9,9) # (cvs)
 
 from Products.ZWiki import __version__
-from Defaults import PREFER_USERNAME_COOKIE, PAGE_METADATA, BORING_PAGES
+from Defaults import PREFER_USERNAME_COOKIE, PAGE_METADATA, BORING_PAGES, \
+                     PAGE_METATYPE
 import Permissions
 from I18n import _
 
@@ -206,7 +207,12 @@ class PageUtils:
 
         Warning: fields such as the parents list may be
         copies-by-reference, and should not be mutated.
+
+        Since we're ensuring that we always have a catalog now (since 0.60),
+        this thing should not be needed any more. XXX remove this method?
         """
+        if getattr(page, 'meta_type', None)!=PAGE_METATYPE:
+            raise TypeError(str(page)+' is not a '+PAGE_METATYPE)
         class PageBrain(SimpleItem): # XXX why a SimpleItem ?
             def __init__(self,obj): self._obj = obj
             def getObject(self): return self._obj
