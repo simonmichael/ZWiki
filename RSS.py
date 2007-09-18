@@ -93,12 +93,11 @@ class PageRSSSupport:
 """
         return t
 
-    security.declareProtected(Permissions.View, 'changes_rss')
-    def changes_rss(self, num=10, REQUEST=None):
-        """
-        Provide an RSS feed showing this wiki's recently edited pages.
-
-        This is not the same as all recent edits.
+    security.declareProtected(Permissions.View, 'edits_rss')
+    def edits_rss(self, num=10, REQUEST=None):
+        """Provide an RSS feed listing this wiki's N most recently edited
+        pages. May be useful for monitoring, as a (less detailed)
+        alternative to an all edits mail subscription.
         """
         pages = self.pages(sort_on='last_edit_time',
                             sort_order='reverse',
@@ -154,5 +153,7 @@ class PageRSSSupport:
 """
         return t
 
+    # backwards compatibility
+    changes_rss = edits_rss
 
 InitializeClass(PageRSSSupport) 
