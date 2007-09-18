@@ -7,6 +7,10 @@ def test_suite():
     suite.addTest(unittest.makeSuite(Tests))
     return suite
 
+
+########################################################
+# test data
+
 THISPAGE    = 'TestPage'
 TESTSENDER  = 'sender'
 TESTTO      = 'recipient'
@@ -42,6 +46,80 @@ Subject: %s
     __str__ = __call__
 
 TESTMSG = str(TestMessage())
+
+TESTDARCSMSG = str(TestMessage(body="""
+To: recipient
+From: sender
+Subject: darcs patch: rename changes_rss to edits_rss
+X-Mail-Originator: Darcs Version Control System
+X-Darcs-Version: 1.0.8 (stable branch)
+DarcsURL: zwiki.org:/repos/ZWiki
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="=_"
+Date: Tue, 18 Sep 2007 08:27:57 -0700
+
+--=_
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+
+Tue Sep 18 08:21:35 PDT 2007  simon@joyful.com
+  * rename changes_rss to edits_rss (with a backwards compatibility alias) =
+and
+  update the docstring. Also, test forwarding to the PatchDiscussion page.
+
+--=_
+Content-Type: text/x-darcs-patch; name="rename-changes_rss-to-edits_rss-_with-a-backwards-compatibility-alias_-and.dpatch"
+Content-Transfer-Encoding: quoted-printable
+Content-Description: A darcs patch for your repository!
+
+
+New patches:
+
+[rename changes_rss to edits_rss (with a backwards compatibility alias) and
+simon@joyful.com**20070918152135
+ update the docstring. Also, test forwarding to the PatchDiscussion page.
+] {
+hunk ./RSS.py 96
+-    security.declareProtected(Permissions.View, 'changes_rss')
+-    def changes_rss(self, num=3D10, REQUEST=3DNone):
+-        \"\"\"
+-        Provide an RSS feed showing this wiki's recently edited pages.
+-
+-        This is not the same as all recent edits.
++    security.declareProtected(Permissions.View, 'edits_rss')
++    def edits_rss(self, num=3D10, REQUEST=3DNone):
++        \"\"\"Provide an RSS feed listing this wiki's N most recently edited
++        pages. May be useful for monitoring, as a (less detailed)
++        alternative to an all edits mail subscription.
+hunk ./RSS.py 156
++    # backwards compatibility
++    changes_rss =3D edits_rss
+}
+
+Context:
+
+[1272 - create PageBrain only for Zwiki Pages.
+betabug.darcs@betabug.ch**20070917193709
+ Since we are now ensuring that there is always a catalog in a Zwiki,
+ the method metadataFor() shouldn't be needed any more. But I'm still
+ adding this patch (credits and thanks to koegler), in case some code
+ hits on it in the time between an upgrade and running the /upgradeAll
+ method.
+] =
+
+[TAG release-0-60-0
+simon@joyful.com**20070915222130] =
+
+Patch bundle hash:
+a639bc8070d08220e8db873a991da5f2955e58db
+
+--=_--
+
+.
+
+"""))
+########################################################
+
 
 
 class Tests(ZwikiTestCase):
@@ -255,7 +333,7 @@ Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
         
     def testMailinMultipart(self):
         p = self.p
-        self.p.subscribe(TESTSENDER)
+        p.subscribe(TESTSENDER)
         from email.MIMEText import MIMEText
         from email.MIMEMultipart import MIMEMultipart
         msg = MIMEMultipart()
@@ -266,6 +344,14 @@ Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
         mailin.mailin(p, msg.as_string())
         self.assertEqual(1, p.commentCount())
         self.assertEqual(1, len(re.findall(r'\*bold\*', p.text())))
+
+    def testMailinDarcsPatch(self):
+        p = self.p
+        p.subscribe(TESTSENDER)
+        mailin.mailin(p,TESTDARCSMSG)
+        self.assertEqual(1, p.commentCount())
+        self.assert_('rename changes_rss to edits_rss' in p.text())
+        self.assert_('+    def edits_rss(self, num=3D10, REQUEST=3DNone):' in p.text())
 
     def testMailinTrackerIssue(self):
         self.p.upgradeFolderIssueProperties()
