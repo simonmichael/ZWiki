@@ -20,7 +20,9 @@ TESTBODY    = 'mailin comment\n'
 LONGSUBJECT = """\
 a long long long long long long long long long long long long long subject"""
 
+# XXX use email lib instead ?
 class TestMessage:
+    """Builds an email message that we can adjust easily."""
     def __init__(self,sender=TESTSENDER,to=TESTTO,cc='',bcc='',
                  date=TESTDATE,subject=TESTSUBJECT,body=TESTBODY):
         self.sender,self.to,self.cc,self.bcc,self.date,self.subject,self.body=\
