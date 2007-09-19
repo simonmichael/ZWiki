@@ -149,7 +149,7 @@ class MailIn:
         # ..Type Error - configured ezmlm to provide beenthere instead (?)
         self.xbeenthere = self.msg.get('X-BeenThere')
 
-        # raises an exception if there's no text part
+        # the mailin body will be the message's first text/plain part
         try:
             firstplaintextpart = typed_subpart_iterator(self.msg,
                                                         'text',
@@ -159,6 +159,18 @@ class MailIn:
             payloadutf8 = payload.decode(content_encoding).encode('utf-8')
         except StopIteration:
             payloadutf8 = ''
+        # also, if there is a text/x-darcs-patch part, append that
+        try:
+            firstdarcspatchpart = typed_subpart_iterator(self.msg,
+                                                        'text',
+                                                        'x-darcs-patch').next()
+            payload = firstdarcspatchpart.get_payload(decode=1)
+            content_encoding = self.msg.get_content_charset('ascii')
+            payloadutf8 += '\n\n'
+            payloadutf8 += payload.decode(content_encoding).encode('utf-8')
+        except StopIteration:
+            payloadutf8 += ''
+
         self.body = self.cleanupBody(payloadutf8)
         
     def isJunk(self):

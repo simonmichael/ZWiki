@@ -351,8 +351,8 @@ Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
         mailin.mailin(p,TESTDARCSMSG)
         self.assertEqual(1, p.commentCount())
         self.assert_('rename changes_rss to edits_rss' in p.text())
-        # right now, should keep only first text part
-        self.failIf('+    def edits_rss(self, num=3D10, REQUEST=3DNone):' in p.text())
+        # keeps a darcs patch part as well as first plain text part
+        self.assert_('+    def edits_rss(self, num=10, REQUEST=None):' in p.text())
 
     def testMailinTrackerIssue(self):
         self.p.upgradeFolderIssueProperties()
