@@ -47,9 +47,9 @@ Subject: %s
 
 TESTMSG = str(TestMessage())
 
-TESTDARCSMSG = str(TestMessage(body="""
-To: recipient
-From: sender
+TESTDARCSMSG = """\
+To: a@b.com
+From: a@b.com
 Subject: darcs patch: rename changes_rss to edits_rss
 X-Mail-Originator: Darcs Version Control System
 X-Darcs-Version: 1.0.8 (stable branch)
@@ -117,7 +117,7 @@ a639bc8070d08220e8db873a991da5f2955e58db
 
 .
 
-"""))
+"""
 ########################################################
 
 
@@ -351,7 +351,8 @@ Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
         mailin.mailin(p,TESTDARCSMSG)
         self.assertEqual(1, p.commentCount())
         self.assert_('rename changes_rss to edits_rss' in p.text())
-        self.assert_('+    def edits_rss(self, num=3D10, REQUEST=3DNone):' in p.text())
+        # right now, should keep only first text part
+        self.failIf('+    def edits_rss(self, num=3D10, REQUEST=3DNone):' in p.text())
 
     def testMailinTrackerIssue(self):
         self.p.upgradeFolderIssueProperties()
