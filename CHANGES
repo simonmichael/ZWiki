@@ -1,32 +1,38 @@
 Zwiki 0.60.0 2007/09/15
 =======================
 
-Summary
+Fix TAL unicode errors with zope 2.10, 
+Plone 3/CMF 2.1 compatibility,
+quicker page rendering,
+permanent edit history,
+labelled bracket links,
+better support for custom wiki templates,
+a tool for importing MoinMoin wikis,
+many other improvements and code cleanups.
 
-
-  * 
+Upgrade notes
+  * this release no longer installs in Plone 2.x sites, see note below
+  * a wiki catalog is no longer optional, and will be added if missing
+  * skin customizers: the wiki navigation links are now in the wikipage template
 
 Installing
+  * #1322: Plone 3 & CMF 2.1 compatibility. Warning, this version of Zwiki
+    uses GenericSetup and is not compatible with older versions of
+    Plone/CMF.  This could be tackled in a future release if there is
+    demand, see the issue page.
 
-  * MoinExportAndImport (M. Pedersen)
+  * tools/prepmoin.py, imports MoinMoin wiki data to a zwiki (M. Pedersen)
 
-  * Plone 3 & CMF 2.1 compatibility. Warning, this version of Zwiki uses
-    GenericSetup and is not compatible with older versions of Plone/CMF.
-    This could be tackled in a future release if there is demand. (#1322)
-
-  * fix setupDtmlPages error (#1217, Sascha Welter)
+  * #1217: fix setupDtmlPages error (Sascha Welter)
 
 Configuring
-
   * fixPageEncoding renamed to fixEncoding and fixed
 
   * move wiki navigation links to wikipage template for easier customizing
 
-  * ensure a catalog and an outline cache are always present. (#1041,
-    #1145)
+  * #1041, #1145: ensure a catalog and an outline cache are always present. 
 
 Browsing
-
   * make the home link, wiki logo and index_html use the default page url
     consistently
 
@@ -59,7 +65,6 @@ Browsing
     zwiki.org
 
 Editing
-
   * #1157: replace revertEdits[Everywhere]By with history-wiping expunge,
     expungeEditsBy, expungeEditsEverywhereBy methods
 
@@ -79,12 +84,12 @@ Editing
   * stop discarding content outside of html body tags - they may be part
     of the content
 
-  * allow arbitrary urls in bracket links (#1370)
+  * #1370: allow arbitrary urls in bracket links
 
-  * optional bracket link labels after |
+  * optional link labels after | in bracket links
 
-  * avoid infinite recursion error when a page is reparented to itself
-    (Sascha Welter, #965)
+  * #965: avoid infinite recursion error when a page is reparented to itself
+    (Sascha Welter)
 
   * #570 - Ensure valid id with file uploads.  But meanwhile try to mess
     with uploaded file's names as little as possible. We check first if
@@ -115,13 +120,12 @@ Editing
   
   * #512 - fix footnotes with "create page" links in RST (Sascha Welter)
 
-  * revert methods now obey the edits_need_username option (#1323)
+  * #1323: revert methods now obey the edits_need_username option
 
   * clean up revertEditsBy, don't break with new pages
 
 Mail
-
-  * handle mailins with encodings other than utf8 (#1256)
+  * #1256: handle mailins with encodings other than utf8
 
   * don't log body of mail-ins by default
 
@@ -131,11 +135,9 @@ Mail
     Encolpe Degoute)
 
 Feeds
-
   * no updates
 
 Issue tracking
-
   * yellow color to make open funded issues stand out
 
   * IssueTracker cleanups
@@ -146,7 +148,6 @@ Issue tracking
     dtml pages, for a 4x speedup of the unit test on my system
 
 General
-
   * many code cleanups including imports, safe_hasattr, deprecation warnings, pyflakes warnings, tests
 
   * Replace hasattr() with safe_hasattr() everywhere.  Problem with
@@ -204,7 +205,6 @@ General
   * inPlone method
 
 Translations
-
   * no updates
 
 
@@ -216,7 +216,6 @@ Sascha Welter, Frank Laurijssens and many others (YAY!), support for
 conditional http get, skins code cleanup, translation updates and more.
 
 Upgrade notes
-
   * The standard issuetracker and filterissues pages now support sorting
     on issue name and reverse sorting (#14). To enable sorting by name,
     visit SOMEPAGE/setupTracker (as manager) to add a required catalog
@@ -229,13 +228,11 @@ Upgrade notes
     your customizations.
   
 Installing
-
   * show accurate page hierarchy after adding a new wiki
 
   * #1313, updated FrontPage links in basic wiki template (Frank Laurijssens)
 
 Configuring
-
   * reparent now obeys the edits_need_username option, so reparenting will
     require a username when that property is true
 
@@ -254,7 +251,6 @@ Configuring
   * #1227 comment form vulnerability (Sascha Welter)
 
 Browsing
-
   * make default site logo work with zope 2.10 (zope bug 2302)
 
   * recent changes default period is now a week, not a day
@@ -282,7 +278,6 @@ Browsing
   * don't let a non-wiki page break interwiki link rendering
 
 Editing
-
   * #1157 after reverting changes, reset last edit time. (Sascha Welter)
 
   * #1314 use UTC for creation_time too (Sascha Welter)
@@ -294,12 +289,10 @@ Editing
     fixes the problem on Mac OS X. (Sascha Welter)
 
 Mail
-
   * #1299 - mail out in plone works, could use more error handling though
     (Sascha Welter)
 
 Feeds
-
   * #1083 escape html in rss feeds (Sascha Welter)
 
   * #1294 - changes to get rss feeds to validate. pages_rss and changes_rss
@@ -311,7 +304,6 @@ Feeds
     (Sascha Welter)
 
 Issue tracking
-
   * #14 make the zwikitracker list allow filtering & sorting
     (Frank Laurijssens)
 
@@ -328,7 +320,6 @@ Issue tracking
     (Sascha Welter)
 
 General
-
   * make skin/template/macro handling more general, add support for
     alternate filesystem skins, rewrite skin system developer docs
 
@@ -359,7 +350,6 @@ General
   * Signed CONTRIBUTORS (Frank Laurijssens)
 
 Translations
-
   * de (Stefan Kose)
 
   * es (Francisco Mañas)
