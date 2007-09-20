@@ -1,25 +1,23 @@
 Zwiki 0.60.0 2007/09/15
 =======================
 
-Fix TAL unicode errors with zope 2.10, 
-Plone 3/CMF 2.1 compatibility,
-quicker page rendering,
-permanent edit history,
-labelled bracket links,
-better support for custom wiki templates,
-a tool for importing MoinMoin wikis,
-many other improvements and code cleanups.
+Fix TAL unicode errors with zope 2.10, Plone 3/CMF 2.1 compatibility,
+quicker page rendering, permanent edit history, labelled bracket links,
+better support for custom wiki templates, a tool for importing MoinMoin
+wikis, many other improvements and code cleanups.
 
 Upgrade notes
-  * this release no longer installs in Plone 2.x sites, see note below
+  * Zope >=2.10 users should upgrade to this release to avoid TAL unicode errors
+  * Plone 3/CMF 2.1 users should upgrade to this release
+  * Plone 2.x users will not be able to install this release in sites, see #1322 below
   * a wiki catalog is no longer optional, and will be added if missing
-  * skin customizers: the wiki navigation links are now in the wikipage template
+  * skin customizers should note the wiki navigation links are now in the wikipage template
 
 Installing
   * #1322: Plone 3 & CMF 2.1 compatibility. Warning, this version of Zwiki
     uses GenericSetup and is not compatible with older versions of
     Plone/CMF.  This could be tackled in a future release if there is
-    demand, see the issue page.
+    demand. See the issue page for discussion and possible workarounds.
 
   * tools/prepmoin.py, imports MoinMoin wiki data to a zwiki (M. Pedersen)
 
