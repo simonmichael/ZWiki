@@ -38,14 +38,9 @@
   </head>
 
   <!-- meta search tags for the page view's head -->
-  <metal:block metal:define-macro="pagesearchtags"
-               tal:define="fresh python:here.lastEditIntervalInHours() < 24">
-    <meta tal:condition="fresh" 
-          name="robots" content="noindex" />
-    <meta tal:condition="not:fresh" 
-          name="keywords" tal:attributes="content here/spacedPageName;" />
-    <meta tal:condition="not:fresh" 
-          name="description" tal:attributes="content here/summary;" />
+  <metal:block metal:define-macro="pagesearchtags">
+    <meta name="keywords" tal:attributes="content here/spacedPageName;" />
+    <meta name="description" tal:attributes="content here/summary;" />
   </metal:block>
 
   <!-- meta search tags for form views' head -->
