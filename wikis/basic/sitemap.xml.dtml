@@ -1,0 +1,30 @@
+<dtml-comment>generate a wiki index in Google Sitemaps format</dtml-comment>
+<?xml version="1.0" encoding="UTF-8"?> 
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
+http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" 
+xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"> 
+<dtml-let
+ folder="_.this #bah _.hasattr(_.this,'isFolderish') and _.this.isFolderish() and _.this or aq_parent"
+ wikipage="folder[folder.objectIds(spec='ZWiki Page')[0]]"
+ wikiurl="wikipage.wikiUrl()">
+<dtml-in "wikipage.pages(sort_on='lastEditTime',sort_order='reverse')">
+<url> 
+<loc><dtml-var wikiurl>/<dtml-var id></loc> 
+<lastmod><dtml-try> 
+<dtml-var "lastEditTime.toZone(zwiki_timezone)" fmt="ISO"> 
+<dtml-except> 
+<dtml-try> 
+<dtml-var lastEditTime fmt="ISO"> 
+<dtml-except> 
+<dtml-try> 
+<dtml-var "bobobase_modification_time.toZone(zwiki_timezone)" fmt="ISO"> 
+<dtml-except> 
+<dtml-var bobobase_modification_time fmt="ISO"> 
+</dtml-try> 
+</dtml-try> 
+</dtml-try></lastmod> 
+</url> 
+</dtml-in> 
+</dtml-let>
+</urlset>
