@@ -45,7 +45,7 @@ class PageCatalogSupport:
                 # acquisition wrapper is explicit in plone 2.1/ATCT or
                 # zope 2.8.1 (#1137)
                 return folder.aq_acquire('portal_catalog')
-            except:
+            except AttributeError:
                 return getattr(folder,'portal_catalog',None)
 
     security.declareProtected(Permissions.View, 'hasCatalog')
