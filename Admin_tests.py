@@ -29,11 +29,11 @@ class Tests(ZwikiTestCase):
         self.assert_(not safe_hasattr(self.page.folder().aq_base,'index_html'))
         self.assert_(not safe_hasattr(self.page.folder().aq_base,'standard_error_message'))
         self.page.setupDtmlMethods()
-        self.assertEqual(len(self.page.folder().objectIds(spec='DTML Method')),2)
+        self.assertEqual(len(self.page.folder().objectIds(spec='DTML Method')),3)
         self.assert_(safe_hasattr(self.page.folder().aq_base,'index_html'))
         self.assert_(safe_hasattr(self.page.folder().aq_base,'standard_error_message'))
         self.page.setupDtmlMethods()
-        self.assertEqual(len(self.page.folder().objectIds(spec='DTML Method')),2)
+        self.assertEqual(len(self.page.folder().objectIds(spec='DTML Method')),3)
 
     def test_setupCatalog(self):
         self.assert_(not self.page.catalog())
