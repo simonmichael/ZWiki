@@ -887,7 +887,7 @@ class PageEditingSupport:
         # XXX security ?
         """
         if RESPONSE is not None:
-            RESPONSE.setHeader('Content-Type', 'text/plain')
+            RESPONSE.setHeader('Content-Type', 'text/plain; charset=utf-8')
             #RESPONSE.setHeader('Last-Modified', rfc1123_date(self._p_mtime))
         return self.read()
 
