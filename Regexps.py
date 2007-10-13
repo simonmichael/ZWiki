@@ -100,13 +100,13 @@ try:
     Lbr = '[%s]' % ''.join([c.encode('utf8') for c in unicode(string.lowercase, encoding)])
     relocaleflag = r'(?L)'
     wordboundary = r'\b'
-except:
+except (TypeError,LookupError):
     # no locale is set, or there was a problem detecting it or a
     # problem decoding its letters.
     # XXX must be a less ugly way to do this:
     # if it's just that there's no locale, don't log a warning
     try: lang, encoding = locale.getlocale()
-    except: lang, encoding = -1,-1
+    except locale.Error: lang, encoding = -1,-1
     if (lang, encoding) == (None, None): pass
     else:
         BLATHER('the system locale gave a problem in Regexps.py, so WikiNames will not be locale-aware')
