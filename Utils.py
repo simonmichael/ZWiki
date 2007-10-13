@@ -18,10 +18,13 @@ try: # zope 2.7
 except ImportError:
     DateTimeSyntaxError = DateTime.SyntaxError
 try:
-    v = open(os.path.join(SOFTWARE_HOME,'version.txt')).read()
+    path = os.path.join(SOFTWARE_HOME,'Zope2','version.txt') # >=2.9
+    if not os.path.exists(path):
+        path = os.path.join(SOFTWARE_HOME,'version.txt') # <= 2.8
+    v = open(path).read()
     m = re.match(r'(?i)zope\s*([0-9]+)\.([0-9]+)\.([0-9]+)',v)
     ZOPEVERSION = (int(m.group(1)),int(m.group(2)),int(m.group(3)))
-except:
+except (IOError, AttributeError): # AttributeError: regex didn't match
     ZOPEVERSION = (9,9,9) # (cvs)
 
 from Products.ZWiki import __version__
