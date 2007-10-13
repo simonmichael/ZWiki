@@ -765,17 +765,6 @@ class ZWikiPage(
                 quote(self.id()),
                 quote(page),
                 _("create this page")))
-                  
-        # subwiki support: or does a matching page exist in the parent folder ?
-        # XXX this is dumber than the above; doesn't handle i18n
-        # characters, freeform names
-        #if (hasattr(self.folder(),'aq_parent') and
-        #      hasattr(self.folder().aq_parent, page) and
-        #      self.isZwikiPage(getattr(self.folder().aq_parent,page))): #XXX poor caching
-        #    return '<a href="%s/../%s" title="%s">../%s</a>'\
-        #           % (self.wiki_url(),quote(page),_("page in parent wiki"),
-        #              self.formatWikiname(linkorig))
-
 
     def renderInterwikiLink(self, link):
         """
@@ -816,13 +805,8 @@ class ZWikiPage(
         """
         Return pagename with spaces inserted if it's a WikiName, or unchanged.
 
-        Tries to be conformant with the wikiname regexp wrt. i18n, etc.
+        Uses the wikiname regexp to follow localised capitalisation.
         """
-        #spaced = pagename[0]
-        #for c in pagename[1:]:
-        #    if c in string.uppercase: spaced += ' '
-        #    spaced += c
-        #return spaced
         if re.match('^%s$' % wikiname, pagename):
             words = [x[0] for x in re.findall(wikinamewords,pagename)]
             return ' '.join(words)
@@ -840,9 +824,9 @@ class ZWikiPage(
         List the unique links occurring on this page - useful for cataloging.
 
         Includes urls & interwiki links but not structured text links.
-        Extracts the marked links from prerendered data.  Does not
-        generate this if missing - too expensive when cataloging ?
+        Extracts the marked links from prerendered data.
         """
+        # don't generate this if missing - too expensive when cataloging ?
         #if not self.preRendered(): self.preRender()
         links = []
         for l in re.findall(markedwikilinkexpr,self.preRendered()):
