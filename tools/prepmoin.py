@@ -44,7 +44,7 @@ if os.path.exists(destdir):
 
 try:
 	os.mkdir(destdir)
-except:
+except OSError:
 	usage(6, "Error making the destination directory %s" % (destdir))
 
 for file in locate("current", os.path.join(srcdir, "data")):
