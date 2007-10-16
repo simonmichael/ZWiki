@@ -203,41 +203,32 @@ class ShowSubtopicsProperty:
         and it's false, we will never show subtopics.  Otherwise look for
         a show_subtopics property
         - in REQUEST
-        - on the current page
+        - on the current page (don't acquire)
         - on our primary ancestor pages, all the way to the top,
         and return the first one we find. Otherwise return true.
         """
         prop = 'show_subtopics'
-        if getattr(self.folder(),prop,1):
-            if kw.has_key(prop):
-                return kw[prop] and 1
-            elif safe_hasattr(self,'REQUEST') and safe_hasattr(self.REQUEST,prop):
-                return getattr(self.REQUEST,prop) and 1
+        if not getattr(self.folder(),prop,1):
+            return 0
+        else:
+            if safe_hasattr(self,'REQUEST') and self.REQUEST.has_key(prop):
+                return self.REQUEST.get(prop)
             elif safe_hasattr(self.aq_base,prop):
                 return getattr(self,prop) and 1
             else:
-                primaryParent = self.primaryParent() # call only once
-                if primaryParent and primaryParent.getId() == self.getId(): # circular self-reference
-                    return 1
-                if primaryParent:
-                    try: return primaryParent.subtopicsEnabled()
-                    except AttributeError:
-                        # experimental: support all-brains
-                        try: return primaryParent.getObject().subtopicsEnabled()
+                parent = self.primaryParent()
+                if parent and not parent.getId() == self.getId(): # watch out for circular parents
+                    try: return parent.subtopicsEnabled()
+                    except AttributeError: # experimental: support all-brains
+                        try: return parent.getObject().subtopicsEnabled()
                         except AttributeError: # XXX still run into errors here, investigate
                             BLATHER('DEBUG: error in subtopicsEnabled for %s, primaryParent is: %s'\
-                                 % (self.id(),`primaryParent`))
+                                 % (self.id(),`parent`))
                             return not (getattr(getattr(self,'REQUEST',None),
                                                 'zwiki_displaymode',
                                                 None) == 'minimal')
                 else:
-                    #return not (getattr(getattr(self,'REQUEST',None),
-                    #                    'zwiki_displaymode',
-                    #                    None) == 'minimal')
                     return 1
-
-        else:
-            return 0
 
     def subtopicsPropertyStatus(self):
         """
