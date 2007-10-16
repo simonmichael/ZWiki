@@ -250,13 +250,12 @@ class ZWikiPage(
     security.declareProtected(Permissions.View, '__call__')
     def __call__(self, client=None, REQUEST={}, RESPONSE=None, **kw):
         """
-        Render this zwiki page, also upgrading it on the fly if needed.
+        Render this zwiki page, or, return a cache-friendly 304 response
+        if it seems appropriate. Also upgrade it on the fly if needed.
         """
-        if self.handle_modified_headers(REQUEST=REQUEST):
-            return '' # return a 304 response with no content
         if AUTO_UPGRADE: self.upgrade(REQUEST)
-        rendered = self.render(client,REQUEST,RESPONSE,**kw)
-        return rendered
+        if self.handle_modified_headers(REQUEST=REQUEST): return ''
+        else: return self.render(client,REQUEST,RESPONSE,**kw)
 
     def render(self, client=None, REQUEST={}, RESPONSE=None, **kw):
         """
@@ -443,15 +442,17 @@ class ZWikiPage(
         then if a 304 is called for this method returns True and
         the calling method should give no content to the browser.
         """
-        RESPONSE=REQUEST.RESPONSE
+        RESPONSE = getattr(REQUEST,'RESPONSE',None)
+        if not RESPONSE:return False
         # do we handle things at all?
         if not getattr(self, 'conditional_http_get', CONDITIONAL_HTTP_GET):
             return False
         # admins can specify a list of property names that make us ignore
         # "Conditional HTTP Get" processing if they are set
         # especially useful for ignoring pages with allow_dtml
-        ignore = getattr(self, 'conditional_http_get_ignore', \
-                                        CONDITIONAL_HTTP_GET_IGNORE)
+        ignore = getattr(
+            self, 'conditional_http_get_ignore', CONDITIONAL_HTTP_GET_IGNORE)
+                         
         for ignore_property in ignore:
             if getattr(self, ignore_property, False): return False
         if last_mod == None:
