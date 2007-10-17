@@ -956,54 +956,12 @@ class PageEditingSupport:
                                    _("adding of external links is restricted, even for identified users. Please back up and remove some of the http urls you added, or contact the site administrator for help."))
 
     def cleanupText(self, t):
-        """
-        Clean up incoming text and convert it to unicode.
-        """
-        # we expect utf8-encoded text always, refuse anything else early
-        unicode(t,'utf-8')
-
-        # strip any browser-appended ^M's
-        t = re.sub('\r\n', '\n', t)
-
-        # XXX epoz & dtml compatibility
-        # editing a page with Epoz changes
-        # <dtml-var "TestPage(bare=1,REQUEST=REQUEST)"> to
-        # <dtml-var ="" testpage(bare="1,REQUEST=REQUEST)&quot;"></dtml-var>
-        #
-        # <dtml-var expr="TestPage(bare=1,REQUEST=REQUEST)"> does better
-        # but still gets a </dtml-var> added.. we can strip this.  At
-        # least now a dtml page or method can be included safely in an
-        # epoz page.
-        #BLATHER('text from epoz:',t[:100])
-        #t = re.sub(r'</dtml-var>','',t)
-        #BLATHER('saving text:',t[:100])
-
-        # convert international characters to HTML entities for safekeeping
-        #for c,e in intl_char_entities:
-        #    t = re.sub(c, e, t)
-        # assume today's browsers will not harm these.. if this turns out
-        # to be false, do some smarter checking here
-
-        # here's the place to strip out any disallowed html/scripting elements
-        # XXX there are updates for this somewhere on zwiki.org
-        if DISABLE_JAVASCRIPT:
-            t = re.sub(javascriptexpr,r'&lt;disabled \1&gt;',t)
-
-        # for convenient pasting from external html editors: discard
-        # anything outside of HTML body tags, if they are present
-        # Actually, gets in the way when showing HTML examples; disabled.
-#         def onlyBodyFrom(t):
-#             # XXX these can be expensive, for now just skip if there's a problem
-#             try:
-#                 t = re.sub(htmlheaderexpr,'',t)
-#                 t = re.sub(htmlfooterexpr,'',t)
-#             except RuntimeError: pass
-#             return t
-#             # maybe better, but more inclined to mess with valid text ?
-#             #return re.sub(htmlbodyexpr, r'\1', t)
-#         t = onlyBodyFrom(t)
-
-        return t
+        """Clean up incoming text and make sure that it's utf8-encoded."""
+        def checkutf8(s): unicode(t,'utf-8')
+        def stripcr(t): return re.sub('\r\n','\n',t)
+        def disablejs(t): return re.sub(javascriptexpr,r'&lt;disabled \1&gt;',t)
+        checkutf8(t)
+        return disablejs(stripcr(t))
 
     def setLastEditor(self, REQUEST=None):
         """
