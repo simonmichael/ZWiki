@@ -453,10 +453,10 @@ class PageEditingSupport:
         """
         oldname,oldid,redirecturl = self.pageName(),self.getId(),self.upUrl()
         # reparent my children, if any
-        self.moveMyChildrenTo(self.primaryParentName())
+        self.reparentChildren(self.primaryParentName())
         # if a replacement pagename is specified, redirect my backlinks there
         if pagename and string.strip(pagename):
-            self.replaceLinksThroughoutWiki(oldname,pagename,REQUEST)
+            self.replaceLinksEverywhere(oldname,pagename,REQUEST)
         # archive my last revision
         self.saveRevision()
         # delete me - hopefully this updates outline and catalog too
@@ -576,108 +576,84 @@ class PageEditingSupport:
                     get_transaction().commit()
         
     security.declareProtected(Permissions.Rename, 'rename')
-    def rename(self,pagename,
-               leaveplaceholder=LEAVE_PLACEHOLDER,
-               updatebacklinks=1,
-               sendmail=1,
-               REQUEST=None):
-        """
-        Rename this page, if permissions allow.
+    def rename(self,pagename,leaveplaceholder=LEAVE_PLACEHOLDER,
+               updatebacklinks=1,sendmail=1,REQUEST=None):
+        """Rename this page, if permissions allow. Also ensure name/id
+        conformance, keep our children intact, and optionally
 
-        Another method that does quite a lot. Extras:
-        - preserve parentage of our children
-        - update links throughout the wiki. Warning, this may not be 100%
-        reliable. It replaces all occurrences of the old page name
-        beginning and ending with a word boundary. When changing between a
-        wikiname and freeform name, it should do the right thing with
-        brackets. It won't change a fuzzy freeform name though.
         - leave a placeholder page
-        - notify subscribers
-        - if called with the existing name, ensures that id conforms to
-        canonicalId(title).
-
-        XXX the sendmail argument doesn't stop mailouts from updating backlinks
+        - update links to this page throughout the wiki. Warning, this is
+          not 100% reliable.
+        - notify subscribers. Note the sendmail arg can stop the primary
+          creation mailout but not the ones that may result from
+          updatebacklinks.
         """
-        # anything to do ?
         oldname, oldid = self.pageName(), self.getId()
-        # newlines would cause glitches later..
-        pagename = re.sub(r'[\r\n]','',pagename)
-        newname, newid = pagename, self.canonicalIdFrom(pagename)
-        if not newname or (newname == oldname and newid == oldid): return 
-
+        oldnameisfreeform = oldname != oldid
+        def clean(s): return re.sub(r'[\r\n]','',s)
+        newname = clean(pagename)
+        newid = self.canonicalIdFrom(newname)
+        namechanged, idchanged = newname != oldname, newid != oldid
+        if not newname or not (namechanged or idchanged): return 
+        # sequence is important here
         BLATHER('renaming %s (%s) to %s (%s)...'%(oldname,oldid,newname,newid))
-
-        # an old page just might have an empty title attribute - set it to
-        # avoid problems
-        if not self.title: self.title = self.getId()
-
-        # has the page name changed ?
-        if newname != oldname:
-            # update parents attributes (before our name changes)
-            self.moveMyChildrenTo(newname)
-            # update all links to oldname
-            # any later problems will undo all this (yay transactions!)
+        def ensureTitle(p): p.title or setattr(p,'title',p.getId())
+        ensureTitle(self)
+        if idchanged:
+            self.changeIdCarefully(newid)
             if updatebacklinks:
-                self.replaceLinksThroughoutWiki(oldname,newname,REQUEST)
-
-        # update wiki outline
-        # changeIdPreservingCreator->manage_renameObject->_delObject/_setObject
-        # -> manage_after* has the effect of losing our place in the
-        # hierarchy, take a snapshot so we can fix it up later
-        savedparentmap = deepcopy(self.wikiOutline().parentmap())
-        savedchildmap = deepcopy(self.wikiOutline().childmap())
-
-        # has the page id changed ?
-        if newid != oldid:
-            # NB manage_renameObject probably does an index_object() too
-            self.changeIdPreservingCreator(newid)
-            # update wikilinks to our old id, too, if not already done
-            # XXX optimisation: this is expensive so do it in one pass
-            if updatebacklinks and oldid != oldname:
-                self.replaceLinksThroughoutWiki(oldid,newid,REQUEST)
-
-        # change our name
-        self.title = newname
-        # update catalog
-        self.index_object() # XXX creator info may need reindexing too
-        # update wiki outline, using the copy we saved earlier
-        # nb that outline may not have been up to date, but replace will forgive
-        self.wikiOutline().setParentmap(savedparentmap)
-        self.wikiOutline().setChildmap(savedchildmap)
-        self.wikiOutline().replace(oldname,newname)
-
-        # do this after the above so it will have correct parent
-        if (newid != oldid) and leaveplaceholder:
-            # the url has changed, leave a placeholder
-            try: self.create(oldid,
-                             _("This page was renamed to %s. You can delete this one if no longer needed.\n") % (newname),
-                             sendmail=0)
-            # special case: we'll end up here when first saving a
-            # page that was created via the CMF/Plone content
-            # management interface - we can't save a placeholder
-            # page since the canonical ID hasn't really changed
-            except BadRequestException: pass
-
-        # notify subscribers if appropriate
-        if sendmail and newname != oldname:
-            self.sendMailToEditSubscribers(
-                'This page was renamed from %s to %s.\n'%(oldname,newname),
-                REQUEST=REQUEST,
-                subjectSuffix='',
-                subject='(renamed)')
-
+                self.replaceLinksEverywhere(oldid,newid,REQUEST)
+        if namechanged:
+            self.changeNameCarefully(oldname,newname)
+            if updatebacklinks and oldnameisfreeform:
+                self.replaceLinksEverywhere(oldname,newname,REQUEST)
+        self.index_object() # update catalog XXX manage_renameObject may also, if idchanged
+        if idchanged and leaveplaceholder: 
+            def makeplaceholder(oldid,newname): 
+                try: self.create(
+                    oldid,
+                    _("This page was renamed to %s. You can delete this one if no longer needed.\n") % (newname),
+                    sendmail=0)
+                except BadRequestException:
+                    # special case for CMF/Plone: we'll end up here when first
+                    # saving a page that was created via the CMS ui - we can't
+                    # save a placeholder page since the canonical ID hasn't
+                    # really changed
+                    pass
+            makeplaceholder(oldid,newname)
+        if namechanged and sendmail:
+            def sendRenameNotification(oldname,newname,REQUEST):
+                self.sendMailToEditSubscribers(
+                    'This page was renamed from %s to %s.\n'%(oldname,newname),
+                    REQUEST=REQUEST,
+                    subjectSuffix='',
+                    subject='(renamed)')
+            sendRenameNotification(oldname,newname,REQUEST)
         BLATHER('rename complete')
         if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl())
 
-    def changeIdPreservingCreator(self,newid):
+    def changeNameCarefully(self,oldname,newname):
+        """Change this page's name, preserving important info."""
+        self.reparentChildren(newname)
+        self.wikiOutline().replace(oldname,newname)
+        self.title = newname
+
+    def changeIdCarefully(self,newid):
+        """Change this page's id, preserving important info."""
+        # changing id means replacing this object with a new one
         creation_time, creator, creator_ip = \
           self.creation_time, self.creator, self.creator_ip
+        # manage_after* has the effect of losing our place in the hierarchy
+        parentmap = deepcopy(self.wikiOutline().parentmap())
+        childmap = deepcopy(self.wikiOutline().childmap())
         self.folder().manage_renameObject(self.getId(),newid)
         self.creation_time, self.creator, self.creator_ip = \
           creation_time, creator, creator_ip
+        self.wikiOutline().setParentmap(parentmap)
+        self.wikiOutline().setChildmap(childmap)
         self.ensureMyRevisionNumberIsLatest()
 
-    def moveMyChildrenTo(self,newparent):
+    def reparentChildren(self,newparent):
         children = self.childrenIdsAsList()
         if children:
             BLATHER('reparenting children of',self.getId())
@@ -694,7 +670,7 @@ class PageEditingSupport:
         Comes with an appropriately big scary-sounding name. See
         replaceLinks for more.
         """
-    def replaceLinksThroughoutWiki(self,oldlink,newlink,REQUEST=None):
+    def replaceLinksEverywhere(self,oldlink,newlink,REQUEST=None):
         BLATHER('replacing all %s links with %s' % (oldlink,newlink))
         for p in self.backlinksFor(oldlink):
             # this is an extensive, risky operation which can fail for
