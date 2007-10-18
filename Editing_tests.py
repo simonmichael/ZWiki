@@ -131,44 +131,47 @@ class Tests(ZwikiTestCase):
         p.edit(text='')
         self.assertEqual(p.read(),'')
 
-    def test__createFileOrImage(self):
+    def test__addFileFromRequest(self):
         import OFS
         p = self.page
         f = p.aq_parent
         file = OFS.Image.Pdata('test file data')
+        p.REQUEST.file = file
 
         # our test page/folder initially has no uploads attr.
         self.assert_(not safe_hasattr(p,'uploads'))
 
         # calling with an unnamed file should do nothing much
-        self.assertEqual(p._createFileOrImage(file),(None, None, None))
+        self.assertEqual(p._addFileFromRequest(p.REQUEST),None)
         
         # ditto for a blank filename
         file.filename = ''
-        self.assertEqual(p._createFileOrImage(file),(None, None, None))
+        self.assertEqual(p._addFileFromRequest(p.REQUEST),None)
 
         # here, a file object of unknown type should be created
         name = 'testfile'
         file.filename = name
-        id, content_type,size = p._createFileOrImage(file)
-        self.assertEqual(str(getattr(f,id)),'test file data')
-        self.assertEqual(content_type ,'application/octet-stream')
-        self.assertEqual(size,14)
+        id = p._addFileFromRequest(p.REQUEST)
+        ob = f[id]
+        self.assertEqual(str(ob),'test file data')
+        self.assertEqual(ob.content_type ,'application/octet-stream')
+        self.assertEqual(ob.getSize(),14)
 
         # a text file
         name = 'testfile.txt'
         file.filename = name
-        id, content_type,size = p._createFileOrImage(file)
-        self.assertEqual(str(f[id]),'test file data')
-        self.assertEqual(content_type,'text/plain')
+        id = p._addFileFromRequest(p.REQUEST)
+        ob = f[id]
+        self.assertEqual(str(ob),'test file data')
+        self.assertEqual(ob.content_type,'text/plain')
 
         # an image
         name = 'testfile.gif'
         file.filename = name
-        id, content_type,size = p._createFileOrImage(file)
-        # evaluating an Image gives its html tag
+        id = p._addFileFromRequest(p.REQUEST)
         self.assert_(re.match(r'<img.*testfile\.gif',str(f[id])))
-        self.assertEqual(content_type,'image/gif')
+#XXX
+#         self.assertEqual(content_type,'image/gif')
 
     def testEditWithFileUpload(self):
         import OFS
@@ -186,9 +189,7 @@ class Tests(ZwikiTestCase):
         # with the right data
         self.assertEqual(str(f['edittestfile']),'test file data')
         # and a link should have been added to the page
-        #XXX do this test for each page type ?
-        #self.assertEqual(p.read(),'\n\n<a href="edittestfile">edittestfile</a>\n') # stx
-        self.assertEqual(p.read(),'\n\n!`edittestfile`__\n\n__ edittestfile\n')     # rst
+        self.assertEqual(p.read(),'\n\n!`edittestfile`__\n\n__ http://nohost/test_folder_1_/wiki/edittestfile\n')     # rst
 
         # a file with blank filename should be ignored
         p.REQUEST.file.filename = ''
@@ -205,7 +206,7 @@ class Tests(ZwikiTestCase):
         self.assert_(safe_hasattr(f,'edittestimage.jpg'))
         self.assertEqual(f['edittestimage.jpg'].content_type,'image/jpeg')
         #self.assertEqual(p.read(),'\n\n<img src="edittestimage.jpg" />\n') #stx
-        self.assertEqual(p.read(),'\n\n.. image:: edittestimage.jpg\n')     #rst
+        self.assertEqual(p.read(),'\n\n.. image:: http://nohost/test_folder_1_/wiki/edittestimage.jpg\n')     #rst
 
         # images should not be inlined if dontinline is set
         p.REQUEST.file.filename = 'edittestimage.png'
@@ -214,7 +215,7 @@ class Tests(ZwikiTestCase):
         #self.assertEqual(p.read(),
         #  '\n\n<img src="edittestimage.jpg" />\n\n\n<a href="edittestimage.png">edittestimage.png</a>\n') #stx
         self.assertEqual(p.read(),
-          '\n\n.. image:: edittestimage.jpg\n\n\n!`edittestimage.png`__\n\n__ edittestimage.png\n') #rst
+          '\n\n.. image:: http://nohost/test_folder_1_/wiki/edittestimage.jpg\n\n\n!`edittestimage.png`__\n\n__ http://nohost/test_folder_1_/wiki/edittestimage.png\n') #rst
 
     def testEditLastEditorStamping(self):
         # Username stamping

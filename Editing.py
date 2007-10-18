@@ -456,7 +456,7 @@ class PageEditingSupport:
         self.reparentChildren(self.primaryParentName())
         # if a replacement pagename is specified, redirect my backlinks there
         if pagename and string.strip(pagename):
-            self.replaceLinksEverywhere(oldname,pagename,REQUEST)
+            self._replaceLinksEverywhere(oldname,pagename,REQUEST)
         # archive my last revision
         self.saveRevision()
         # delete me - hopefully this updates outline and catalog too
@@ -575,6 +575,9 @@ class PageEditingSupport:
                     BLATHER('committing after %d expunges' % n)
                     get_transaction().commit()
         
+    def ensureTitle(self):
+        if not self.title: self.title = self.getId()
+
     security.declareProtected(Permissions.Rename, 'rename')
     def rename(self,pagename,leaveplaceholder=LEAVE_PLACEHOLDER,
                updatebacklinks=1,sendmail=1,REQUEST=None):
@@ -588,6 +591,7 @@ class PageEditingSupport:
           creation mailout but not the ones that may result from
           updatebacklinks.
         """
+        # figure out what's going on
         oldname, oldid = self.pageName(), self.getId()
         oldnameisfreeform = oldname != oldid
         def clean(s): return re.sub(r'[\r\n]','',s)
@@ -597,50 +601,51 @@ class PageEditingSupport:
         if not newname or not (namechanged or idchanged): return 
         # sequence is important here
         BLATHER('renaming %s (%s) to %s (%s)...'%(oldname,oldid,newname,newid))
-        def ensureTitle(p): p.title or setattr(p,'title',p.getId())
-        ensureTitle(self)
+        self.ensureTitle()
         if idchanged:
             self.changeIdCarefully(newid)
             if updatebacklinks:
-                self.replaceLinksEverywhere(oldid,newid,REQUEST)
+                self._replaceLinksEverywhere(oldid,newid,REQUEST)
         if namechanged:
-            self.changeNameCarefully(oldname,newname)
+            self.changeNameCarefully(newname)
             if updatebacklinks and oldnameisfreeform:
-                self.replaceLinksEverywhere(oldname,newname,REQUEST)
+                self._replaceLinksEverywhere(oldname,newname,REQUEST)
         self.index_object() # update catalog XXX manage_renameObject may also, if idchanged
         if idchanged and leaveplaceholder: 
-            def makeplaceholder(oldid,newname): 
-                try: self.create(
-                    oldid,
-                    _("This page was renamed to %s. You can delete this one if no longer needed.\n") % (newname),
-                    sendmail=0)
-                except BadRequestException:
-                    # special case for CMF/Plone: we'll end up here when first
-                    # saving a page that was created via the CMS ui - we can't
-                    # save a placeholder page since the canonical ID hasn't
-                    # really changed
-                    pass
-            makeplaceholder(oldid,newname)
+            try: self._makePlaceholder(oldid,newname)
+            except BadRequestException:
+                # special case for CMF/Plone: we'll end up here when first
+                # saving a page that was created via the CMS ui - we can't
+                # save a placeholder page since the canonical ID hasn't
+                # really changed
+                pass
         if namechanged and sendmail:
-            def sendRenameNotification(oldname,newname,REQUEST):
-                self.sendMailToEditSubscribers(
-                    'This page was renamed from %s to %s.\n'%(oldname,newname),
-                    REQUEST=REQUEST,
-                    subjectSuffix='',
-                    subject='(renamed)')
-            sendRenameNotification(oldname,newname,REQUEST)
+            self._sendRenameNotification(oldname,newname,REQUEST)
         BLATHER('rename complete')
         if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl())
 
-    def changeNameCarefully(self,oldname,newname):
+    def _makePlaceholder(self,oldid,newname): 
+        self.create(
+            oldid,
+            _("This page was renamed to %s. You can delete this one if no longer needed.\n") % (newname),
+            sendmail=0)
+
+    def _sendRenameNotification(self,oldname,newname,REQUEST):
+        self.sendMailToEditSubscribers(
+            'This page was renamed from %s to %s.\n'%(oldname,newname),
+            REQUEST=REQUEST,
+            subjectSuffix='',
+            subject='(renamed)')
+
+    def changeNameCarefully(self,newname):
         """Change this page's name, preserving important info."""
         self.reparentChildren(newname)
-        self.wikiOutline().replace(oldname,newname)
+        self.wikiOutline().replace(self.pageName(),newname)
         self.title = newname
 
     def changeIdCarefully(self,newid):
         """Change this page's id, preserving important info."""
-        # changing id means replacing this object with a new one
+        # this object will be replaced with another
         creation_time, creator, creator_ip = \
           self.creation_time, self.creator, self.creator_ip
         # manage_after* has the effect of losing our place in the hierarchy
@@ -663,27 +668,26 @@ class PageEditingSupport:
                 child.addParent(newparent)
                 child.index_object() # XXX need only reindex parents
                 
-        """
-        Replace one link with another throughout the wiki.
+    def _replaceLinksEverywhere(self,oldlink,newlink,REQUEST=None):
+        """Replace one link with another throughout the wiki.
 
         Freeform links should not be enclosed in brackets.
         Comes with an appropriately big scary-sounding name. See
-        replaceLinks for more.
+        _replaceLinks for more.
         """
-    def replaceLinksEverywhere(self,oldlink,newlink,REQUEST=None):
         BLATHER('replacing all %s links with %s' % (oldlink,newlink))
         for p in self.backlinksFor(oldlink):
             # this is an extensive, risky operation which can fail for
             # a number of reasons - carry on regardless so we don't
             # block renames
             # poor caching
-            try: p.getObject().replaceLinks(oldlink,newlink,REQUEST)
+            try: p.getObject()._replaceLinks(oldlink,newlink,REQUEST)
             except:
-                BLATHER('replaceLinks failed to update %s links in %s' \
+                BLATHER('_replaceLinks failed to update %s links in %s' \
                      % (oldlink,p.id))
 
-        """
-        Replace occurrences of oldlink with newlink in my text.
+    def _replaceLinks(self,oldlink,newlink,REQUEST=None):
+        """Replace occurrences of oldlink with newlink in my text.
 
         Freeform links should not be enclosed in brackets.
         We'll also replace bare wiki links to a freeform page's id,
@@ -692,7 +696,6 @@ class PageEditingSupport:
         Maybe it should use the pre-linking information.
         It's slow, since it re-renders every page it changes.
         """
-    def replaceLinks(self,oldlink,newlink,REQUEST=None):
         if self.isWikiName(oldlink):
             # add a \b to wikinames to make matches more accurate
             oldpat = r'\b%s\b' % oldlink
@@ -705,146 +708,108 @@ class PageEditingSupport:
         self.edit(text=re.sub(oldpat, newpat, self.read()),
                   REQUEST=REQUEST)
 
+    def folderContains(self,folder,id):
+        """check folder contents safely, without acquiring"""
+        return safe_hasattr(folder.aq_base,id)
+
+    def uploadFolder(self):
+        """Where to store uploaded files (an 'uploads' subfolder if
+        present, otherwise the wiki folder)."""
+        f = self.folder()
+        if (self.folderContains(f,'uploads') and f.uploads.isPrincipiaFolderish):
+            f = f.uploads
+        return f
+
+    def checkUploadPermissions(self):
+        """Raise an exception if the current user does not have permission
+        to upload to this wiki page."""
+        if not (self.checkPermission(Permissions.Upload,self.uploadFolder())):
+            raise 'Unauthorized', (_('You are not authorized to upload files here.'))
+        if not (self.checkPermission(Permissions.Edit, self) or
+                self.checkPermission(Permissions.Comment, self)):
+            raise 'Unauthorized', (_('You are not authorized to add a link on this ZWiki Page.'))
+
+    def requestHasFile(self,r):
+        return (r and safe_hasattr(r,'file') and safe_hasattr(r.file,'filename') and r.file.filename)
+
+    def _sendUploadNotification(self,newid,REQUEST):
+        self.sendMailToEditSubscribers(
+            'Uploaded file "%s" on page "%s".\n' % (newid,self.pageName()),
+            REQUEST=REQUEST,
+            subjectSuffix='',
+            subject='(upload)')
+
     def handleFileUpload(self,REQUEST,log=''):
-        # is there a file upload ?
-        if (REQUEST and
-            safe_hasattr(REQUEST,'file') and
-            safe_hasattr(REQUEST.file,'filename') and
-            REQUEST.file.filename):     # XXX do something
+        if not self.requestHasFile(REQUEST): return
+        self.checkUploadPermissions()
+        newid = self._addFileFromRequest(REQUEST,log=log)
+        if not newid: raise 'Error', (_('Sorry, file creation failed for some reason.'))
+        self._sendUploadNotification(newid,REQUEST)
 
-            # figure out the upload destination
-            if safe_hasattr(self,'uploads'):
-                uploaddir = self.uploads
-            else:
-                uploaddir = self.folder()
-
-            # do we have permission ?
-            if not (self.checkPermission(Permissions.Upload,uploaddir)):# or
-                    #self.checkPermission(Permissions.UploadSmallFiles,
-                    #                self.folder())):
-                raise 'Unauthorized', (
-                    _('You are not authorized to upload files here.'))
-            if not (self.checkPermission(Permissions.Edit, self) or
-                    self.checkPermission(Permissions.Comment, self)):
-                raise 'Unauthorized', (
-                    _('You are not authorized to add a link on this ZWiki Page.'))
-            # can we check file's size ?
-            # yes! len(REQUEST.file.read()), apparently
-            #if (len(REQUEST.file.read()) > LARGE_FILE_SIZE and
-            #    not self.checkPermission(Permissions.Upload,
-            #                        uploaddir)):
-            #    raise 'Unauthorized', (
-            #        _("""You are not authorized to add files larger than
-            #        %s here.""" % (LARGE_FILE_SIZE)))
-
-            # create the File or Image object
-            file_id, content_type, size = \
-                    self._createFileOrImage(REQUEST.file,
-                                            title=REQUEST.get('title', ''),
-                                            REQUEST=REQUEST)
-            if file_id:
-                # link it on the page and finish up
-                self._addFileLink(file_id, content_type, size, REQUEST)
-                self.setLastLog(log)
-                self.index_object()
-                self.sendMailToEditSubscribers(
-                    'Uploaded file "%s" on page "%s".\n' %
-                                        (file_id,self.pageName()),
-                    REQUEST=REQUEST,
-                    subjectSuffix='',
-                    subject='(renamed)')
-            else:
-                # failed to create - give up (what about an error)
-                pass
-
-    def _createFileOrImage(self,file,title='',REQUEST=None):
-        # based on WikiForNow which was based on
-        # OFS/Image.py:File:manage_addFile
-        """
-        Add a new File or Image object, depending on file's filename
+    def _addFileFromRequest(self,REQUEST,log=''):
+        """Add and link a new File or Image object, depending on file's filename
         suffix. Returns a tuple containing the new id, content type &
         size, or (None,None,None).
         """
-        # macro to check folder contents without acquiring
-        folderHas = lambda folder,id: safe_hasattr(folder.aq_base,id)
-
-        # set id & title from filename
-        title=str(title)
+        # ensure we have a suitable file, id and title
+        file, title = REQUEST.file, str(REQUEST.get('title',''))
         id, title = OFS.Image.cookId('', title, file)
-        if not id:
-            return None, None, None
-
-        # find out where to store files - in an 'uploads' subfolder if
-        # present, otherwise the wiki folder
-        folder = self.folder()
-        if (folderHas(folder,'uploads') and
-            folder.uploads.isPrincipiaFolderish):
-            folder = folder.uploads
-
-        # make sure we have an acceptable name,
-        # but do not insist on unique names:
-        try:
-            checkValidId(folder,id, allow_dup=1)
+        if not id: return None
+        folder = self.uploadFolder()
+        try: checkValidId(folder,id,allow_dup=1)
         except BadRequest:
             id, ext = os.path.splitext(id)
             id = self.canonicalIdFrom(id)
             id = id + ext
-
-        # unless it already exists, create the file or image object
-        # use the CMF/Plone types if appropriate
-        # it will be renamed if there is an id collision with some other
-        # kind of object
-        if not (folderHas(folder,id) and
-                folder[id].meta_type in ('File','Image')):#,
-                                         #'Portal File','Portal Image')):
+        # create the file or image object, unless it already exists
+        # XXX should use CMF/Plone content types when appropriate
+        if not (self.folderContains(folder,id) and
+                folder[id].meta_type in ('File','Image')): #'Portal File','Portal Image')):
             if guess_content_type(file.filename)[0][0:5] == 'image':
-                if self.inCMF():
-                    #XXX need to use cmf/plone type here, how ?
-                    #from Products.ATContentTypes import ATFile, ATImage
-                    #folder.create(ATImage) ...
-                    id = folder._setObject(id, OFS.Image.Image(id,title,'')) 
-                else:
-                    id = folder._setObject(id, OFS.Image.Image(id,title,''))
+#                 if self.inCMF():
+#                     #from Products.ATContentTypes import ATFile, ATImage
+#                     #folder.create(ATImage) ...
+#                 else:
+                id = folder._setObject(id, OFS.Image.Image(id,title,''))
             else:
-                if self.inCMF():
-                    #XXX as above
-                    id = folder._setObject(id, OFS.Image.File(id,title,''))
-                else:
-                    id = folder._setObject(id, OFS.Image.File(id,title,''))
-
-        # Now we "upload" the data.  By doing this in two steps, we
-        # can use a database trick to make the upload more efficient. (?)
+#                 if self.inCMF():
+#                 else:
+                id = folder._setObject(id, OFS.Image.File(id,title,''))
+        # adding the data after creation is more efficient, reportedly
         ob = folder._getOb(id)
         ob.manage_upload(file)
+        # and link/inline it
+        self._addFileOrImageToPage(id,ob.content_type,ob.getSize(),log,REQUEST)
+        return id
 
-        return (id, ob.content_type, ob.getSize())
-
-    def _addFileLink(self, file_id, content_type, size, REQUEST):
+    def _addFileOrImageToPage(self, id, content_type, size, log, REQUEST):
+        """Add a file link or image to this page, unless it's already
+        there.  Inline images which are not too big.
         """
-        Link a file or image at the end of this page, if not already linked.
+        alreadythere = re.search(r'(src|href)="%s"' % id,self.text())
+        if alreadythere: return
+        def fileOrImageLink():
+            folderurl = self.uploadFolder().absolute_url()
+            shouldinline = (
+                (content_type.startswith('image')
+                 and not (safe_hasattr(REQUEST,'dontinline') and REQUEST.dontinline)
+                 and size <= LARGE_FILE_SIZE))
+            if shouldinline:
+                return self.pageType().inlineImage(self,id,folderurl+'/'+id)
+            else:
+                return self.pageType().linkFile(self,id,folderurl+'/'+id)
+        def appendQuietly(linktxt,log,REQUEST):
+            self.setText(self.read()+linktxt,REQUEST)
+            self.setLastEditor(REQUEST)
+            self.setLastLog(log)
+            self.index_object()
+        appendQuietly(fileOrImageLink(),log,REQUEST)
         
-        If it's an image and not too big, display it inline.
-        """
-        if re.search(r'(src|href)="%s"' % file_id,self.text()): return
-
-        if safe_hasattr(self,'uploads'): folder = 'uploads/'
-        else: folder = ''
-
-        if content_type[0:5] == 'image' and \
-           not (safe_hasattr(REQUEST,'dontinline') and REQUEST.dontinline) and \
-           size <= LARGE_FILE_SIZE :
-            linktxt = self.pageType().inlineImage(self, file_id, folder+file_id)
-        else:
-            linktxt = self.pageType().linkFile(self, file_id, folder+file_id)
-        self.setText(self.read()+linktxt,REQUEST)
-        self.setLastEditor(REQUEST)
-
-        """
-        Set up the zope ownership of a new page appropriately.
-        """
     def _setOwnership(self, REQUEST=None):
-        # To help control executable content, make sure the new page
-        # acquires it's owner from the parent folder.
+        """Set appropriate ownership for a new page.  To help control
+        executable content, we make sure the new page acquires it's owner
+        from the parent folder.
+        """
         self._deleteOwnershipAfterAdd()
             
     # for IssueNo0157
