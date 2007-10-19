@@ -1004,33 +1004,19 @@ class PageEditingSupport:
 
     security.declareProtected(Permissions.Edit, 'PUT')
     def PUT(self, REQUEST, RESPONSE):
-        """
-        Handle HTTP/FTP/WebDav PUT requests.
-        """
+        """Handle HTTP/FTP/WebDav PUT requests."""
         self.dav__init(REQUEST, RESPONSE)
         self.dav__simpleifhandler(REQUEST, RESPONSE, refresh=1)
-        body=REQUEST.get('BODY', '')
         self._validateProxy(REQUEST)
-
+        body = REQUEST.get('BODY', '')
         headers, body = parseHeadersBody(body)
         log = string.strip(headers.get('Log', headers.get('log', ''))) or ''
-        type = (string.strip(headers.get('Type', headers.get('type', '')))
-                or None)
-        if type is not None:
-            type = string.split(type)[0]
-            #if type not in self.allowedPageTypes():
-            #    # Silently ignore it.
-            #    type = None
+        type = string.strip(headers.get('Type', headers.get('type', ''))) or None
+        if type is not None: type = string.split(type)[0]
         timestamp = string.strip(headers.get('Wiki-Safetybelt', '')) or None
         if timestamp and self.checkEditConflict(timestamp, REQUEST):
             RESPONSE.setStatus(423) # Resource Locked
             return RESPONSE
-
-        #self.setText(body)
-        #self.setLastEditor(REQUEST)
-        #self.index_object()
-        #RESPONSE.setStatus(204)
-        #return RESPONSE
         try:
             self.edit(text=body, type=type, timeStamp=timestamp,
                       REQUEST=REQUEST, log=log, check_conflict=0)
