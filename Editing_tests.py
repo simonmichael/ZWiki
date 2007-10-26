@@ -659,3 +659,56 @@ bbb
 
         # test again with a brand new page
         #new = p.create('NewPage', REQUEST=p.REQUEST)
+
+    def test_expungeLastEditor(self):
+        p, r = self.page, self.request
+        def be(u):r.cookies['zwiki_username'] = u
+        be('joe')
+        p.append('x',REQUEST=r)
+        be('jim')
+        p.append('x',REQUEST=r)
+        be('joe')
+        p.append('x',REQUEST=r)
+        p.append('x',REQUEST=r)
+
+        self.assertEqual(5,p.revisionCount())
+        self.assertEqual('joe',p.last_editor)
+
+        def expungeLastEditorAndRefresh():
+            p.expungeLastEditor()
+            return p.pageWithId(p.getId())
+
+        p = expungeLastEditorAndRefresh()
+        self.assertEqual(3,p.revisionCount())
+        self.assertEqual('jim',p.last_editor)
+
+        p = expungeLastEditorAndRefresh()
+        self.assertEqual(2,p.revisionCount())
+        self.assertEqual('joe',p.last_editor)
+
+        p = expungeLastEditorAndRefresh()
+        self.assertEqual(1,p.revisionCount())
+        self.assertEqual('',p.last_editor)
+        
+    def test_expungeLastEditorEverywhere(self):
+        a, r = self.page, self.request
+        def be(u):r.cookies['zwiki_username'] = u
+        b = a.pageWithName(a.create('B'))
+        b.append('x',REQUEST=r)
+        be('joe')
+        b.append('x',REQUEST=r)
+        c = a.pageWithName(a.create('C'))
+        be('jim')
+        c.append('x',REQUEST=r)
+
+        self.assertEqual([1,3,2], [p.revisionCount() for p in [a,b,c]])
+            
+        def expungeLastEditorEverywhereAndRefresh(p):
+            p.expungeLastEditorEverywhere()
+            return [p.pageWithId(q.getId()) for q in [a,b,c]]
+
+        a,b,c = expungeLastEditorEverywhereAndRefresh(c) # removes jim
+        self.assertEqual([1,3,1], [p.revisionCount() for p in [a,b,c]])
+
+        a,b,c = expungeLastEditorEverywhereAndRefresh(b) # removes joe, but not page creation
+        self.assertEqual([1,2,1], [p.revisionCount() for p in [a,b,c]])
