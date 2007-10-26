@@ -525,15 +525,13 @@ class PageEditingSupport:
 
     security.declareProtected(Permissions.manage_properties, 'expunge')
     def expunge(self, rev, REQUEST=None):
-        """
-        Revert this page to the specified revision, discarding later history.
-        """
+        """Revert myself to the specified revision, discarding later history."""
         if not rev: return
         rev = int(rev)
-        revs = self.revisionNumbers()[:-1]
-        if not rev in revs: return
+        oldrevs = self.revisionNumbers()[:-1]
+        if not rev in oldrevs: return
         id = self.getId()
-        def replaceMyselfWith(o):
+        def replaceMyselfWith(o): # in zodb (self is not changed)
             self.folder()._delObject(id)
             self.folder()._setObject(id,o)
         def replaceMyselfWithRev(r):
@@ -541,7 +539,7 @@ class PageEditingSupport:
             newself._setId(id)
             replaceMyselfWith(newself)
         def deleteRevsSince(r):
-            for r in revs[revs.index(rev):]:
+            for r in oldrevs[oldrevs.index(rev):]:
                 self.revisionsFolder()._delObject('%s.%d' % (id,r))
         replaceMyselfWithRev(rev)
         deleteRevsSince(rev)
@@ -550,7 +548,7 @@ class PageEditingSupport:
 
     security.declareProtected(Permissions.manage_properties, 'expungeEditsBy')
     def expungeEditsBy(self, username, REQUEST=None):
-        """Expunge all the recent edits to this page by username, if any."""
+        """Expunge all my recent edits by username, if any."""
         self.expunge(self.revisionNumberBefore(username), REQUEST=REQUEST)
 
     security.declareProtected(Permissions.manage_properties, 'expungeEditsEverywhereBy')
