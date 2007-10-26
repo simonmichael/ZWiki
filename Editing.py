@@ -473,8 +473,7 @@ class PageEditingSupport:
 
     security.declareProtected(Permissions.Edit, 'revert')
     def revert(self, rev, REQUEST=None):
-        """
-        Revert this page to the specified revision's state, updating history.
+        """Revert this page to the specified revision's state, updating history.
 
         We do this by looking at the old page revision object and applying
         a corrective edit to the current page. This records a new page
@@ -491,44 +490,32 @@ class PageEditingSupport:
         rev = int(rev)
         old = self.revision(rev)
         if not old: return
-        reparent = self.getParents() != old.getParents()
-        if reparent and not self.checkPermission(Permissions.Reparent, self):
+        reparenting = self.getParents() != old.getParents()
+        if reparenting and not self.checkPermission(Permissions.Reparent, self):
             raise 'Unauthorized', (
                 _('You are not authorized to reparent this ZWiki Page.'))
-        #rename = self.pageName() != old.pageName():
-        #if rename and not self.checkPermission(Permissions.Rename, self):
-        #    raise 'Unauthorized', (
-        #        _('You are not authorized to rename this ZWiki Page.'))
-
+        # do it
         self.saveRevision()
         self.setText(old.text())
         self.setPageType(old.pageTypeId())
         self.setVotes(old.votes())
-        if reparent:
+        if reparenting:
             self.setParents(old.getParents())
             self.updateWikiOutline()
-        #if rename:
-        #    self.rename(old.pageName())
-        self.setLastEditor(REQUEST)
-#         self.last_editor    = old.last_editor
-#         self.last_editor_ip = old.last_editor_ip
-#         self.last_edit_time = old.last_edit_time
+        self.setLastEditor(REQUEST) #seems better than self.setLastEditorLike(old)
         self.setLastLog('reverted by %s' % self.usernameFrom(REQUEST))
         self.index_object()
         self.sendMailToEditSubscribers(
             'This page was reverted to the %s version.\n' % old.last_edit_time,
-            REQUEST=REQUEST,
-            subjectSuffix='',
-            subject='(reverted)')
-        if REQUEST is not None:
-            REQUEST.RESPONSE.redirect(self.pageUrl())
+            REQUEST=REQUEST,subjectSuffix='',subject='(reverted)')
+        if REQUEST is not None: REQUEST.RESPONSE.redirect(self.pageUrl())
 
     security.declareProtected(Permissions.manage_properties, 'expunge')
     def expunge(self, rev, REQUEST=None):
         """Revert myself to the specified revision, discarding later history."""
         if not rev: return
         rev = int(rev)
-        oldrevs = self.revisionNumbers()[:-1]
+        oldrevs = self.oldRevisionNumbers()
         if not rev in oldrevs: return
         id = self.getId()
         def replaceMyselfWith(o): # in zodb (self is not changed)
