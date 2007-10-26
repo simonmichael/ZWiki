@@ -915,9 +915,7 @@ class PageEditingSupport:
         return disablejs(stripcr(t))
 
     def setLastEditor(self, REQUEST=None):
-        """
-        Record last editor info based on the current REQUEST and time.
-        """
+        """Record last editor info based on the current REQUEST and time."""
         if REQUEST:
             self.last_editor_ip = REQUEST.REMOTE_ADDR
             self.last_editor = self.usernameFrom(REQUEST)
@@ -928,19 +926,20 @@ class PageEditingSupport:
             self.last_editor = ''
         self.last_edit_time = DateTime().ISO8601()
 
+    def setLastEditorLike(self,p):
+        """Copy last editor info from p."""
+        self.last_editor    = p.last_editor
+        self.last_editor_ip = p.last_editor_ip
+        self.last_edit_time = p.last_edit_time
+
     def hasCreatorInfo(self):
-        """
-        True if this page already has creator attributes.
-        """
+        """True if this page already has creator attributes."""
         return (safe_hasattr(self,'creator') and
                 safe_hasattr(self,'creation_time') and
                 safe_hasattr(self,'creator_ip'))
-                
 
     def setCreator(self, REQUEST=None):
-        """
-        record my creator, creator_ip & creation_time
-        """
+        """Record my creator, creator_ip & creation_time."""
         self.creation_time = DateTime().ISO8601()
         if REQUEST:
             self.creator_ip = REQUEST.REMOTE_ADDR
@@ -948,6 +947,12 @@ class PageEditingSupport:
         else:
             self.creator_ip = ''
             self.creator = ''
+
+    def setCreatorLike(self,p):
+        """Copy creator info from p."""
+        self.creator       = p.creator
+        self.creator_ip    = p.creator_ip
+        self.creation_time = p.creation_time
 
     security.declareProtected(Permissions.View, 'checkEditConflict')
     def checkEditConflict(self, timeStamp, REQUEST):
