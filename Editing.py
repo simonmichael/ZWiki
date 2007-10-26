@@ -7,6 +7,7 @@ import re, string, time
 from string import split,join,find,lower,rfind,atoi,strip
 from urllib import quote, unquote
 from types import *
+from itertools import *
 from email.Message import Message
 from copy import deepcopy
 import os.path
@@ -529,21 +530,23 @@ class PageEditingSupport:
         """
         if not rev: return
         rev = int(rev)
-        savedrevs = self.revisionNumbers()[:-1]
-        if not rev in savedrevs: return
+        revs = self.revisionNumbers()[:-1]
+        if not rev in revs: return
         id = self.getId()
-        old = self.revision(rev)
-        old._setId(id)
-        self.folder()._delObject(id)
-        self.folder()._setObject(id,old)
-        # delete history
-        rf = self.revisionsFolder()
-        deadrevs = savedrevs[savedrevs.index(rev):]
-        for r in deadrevs:
-            rf._delObject('%s.%d' % (id,r))
+        def replaceMyselfWith(o):
+            self.folder()._delObject(id)
+            self.folder()._setObject(id,o)
+        def replaceMyselfWithRev(r):
+            newself = self.revision(rev)
+            newself._setId(id)
+            replaceMyselfWith(newself)
+        def deleteRevsSince(r):
+            for r in revs[revs.index(rev):]:
+                self.revisionsFolder()._delObject('%s.%d' % (id,r))
+        replaceMyselfWithRev(rev)
+        deleteRevsSince(rev)
         BLATHER('expunged %s history after revision %d' % (id,rev))
-        if REQUEST is not None:
-            REQUEST.RESPONSE.redirect(self.pageUrl())
+        if REQUEST is not None: REQUEST.RESPONSE.redirect(self.pageUrl())
 
     security.declareProtected(Permissions.manage_properties, 'expungeEditsBy')
     def expungeEditsBy(self, username, REQUEST=None):
@@ -552,29 +555,38 @@ class PageEditingSupport:
 
     security.declareProtected(Permissions.manage_properties, 'expungeEditsEverywhereBy')
     def expungeEditsEverywhereBy(self, username, REQUEST=None, batch=0):
-        """
-        Expunge all the most recent edits by username throughout the wiki.
+        """Expunge all the most recent edits by username throughout the wiki.
 
         This is a powerful spam repair tool for managers. It removes all
         recent consecutive edits by username from each page in the
         wiki. The corresponding revisions will disappear from the page
         history.  See #1157.
+
+        Should this use the catalog ? Currently uses a more expensive and
+        failsafe brute force ZODB search.
         """
         batch = int(batch)
-        n = 0
-        for p in self.pageObjects():
-            if p.last_editor == username:
-                n += 1
-                try:
-                    p.expungeEditsBy(username,REQUEST=REQUEST)
-                except IndexError:
-                    # IndexError - we don't have a version that old
-                    BLATHER('failed to expunge edits by %s at %s: %s' \
-                            % (username,p.id(),formattedTraceback()))
-                if batch and n % batch == 0:
-                    BLATHER('committing after %d expunges' % n)
-                    get_transaction().commit()
-        
+        for n,p in izip(count(1),
+                        [p for p in self.pageObjects() if p.last_editor==username]):
+            try:
+                p.expungeEditsBy(username,REQUEST=REQUEST)
+            except IndexError:
+                BLATHER('failed to expunge edits by %s at %s: %s' \
+                        % (username,p.id(),formattedTraceback()))
+            if batch and (n % batch)==0:
+                BLATHER('committing after %d expunges' % n)
+                get_transaction().commit()
+
+    security.declareProtected(Permissions.manage_properties, 'expungeLastEditor')
+    def expungeLastEditor(self, REQUEST=None):
+        """Expunge all the recent edits to this page by the last editor."""
+        self.expungeEditsBy(self.last_editor, REQUEST=REQUEST)
+
+    security.declareProtected(Permissions.manage_properties, 'expungeLastEditorEverywhere')
+    def expungeLastEditorEverywhere(self, REQUEST=None):
+        """Expunge all the recent edits by this page's last editor throughout the wiki."""
+        self.expungeEditsEverywhereBy(self.last_editor, REQUEST=REQUEST)
+
     def ensureTitle(self):
         if not self.title: self.title = self.getId()
 
