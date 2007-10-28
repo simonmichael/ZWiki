@@ -377,32 +377,22 @@ class PageEditingSupport:
     def handleEditText(self,text,REQUEST=None, subjectSuffix='', log=''):
         old = self.read()
         new = self.cleanupText(text)
-        # is the new text different ?
-        if new != old:
-            # do we have permission ?
-            if (not
-                (self.checkPermission(Permissions.Edit, self) or
-                 (self.checkPermission(Permissions.Comment, self)
-                  and find(new,old) == 0))):
-                raise 'Unauthorized', (
-                    _('You are not authorized to edit this ZWiki Page.'))
-
-            # does this edit look like spam ?
-            # Tries to count the links added by this edit. Not perfect -
-            # existing links on a line that you tweak will be counted.
-            # Not sure what happens if you replace existing links.
-            self.checkForSpam(addedtext(old, new))
-                
-            # change it
-            self.setText(text,REQUEST)
-            self.setLastEditor(REQUEST)
-            self.setLastLog(log)
-
-            # send mail if appropriate
-            self.sendMailToEditSubscribers(
-                textdiff(a=old,b=self.read()),
-                REQUEST=REQUEST,
-                subject='(edit) %s' % log)
+        if new == old: return
+        if (not
+            (self.checkPermission(Permissions.Edit, self) or
+             (self.checkPermission(Permissions.Comment, self)
+              and find(new,old) == 0))):
+            raise 'Unauthorized', (
+                _('You are not authorized to edit this ZWiki Page.'))
+        self.checkForSpam(addedtext(old, new))
+        # do it
+        self.setText(text,REQUEST)
+        self.setLastEditor(REQUEST)
+        self.setLastLog(log)
+        self.sendMailToEditSubscribers(
+            textdiff(a=old,b=self.read()),
+            REQUEST=REQUEST,
+            subject='(edit) %s' % log)
 
     def handleRename(self,newname,leaveplaceholder,updatebacklinks,
                       REQUEST=None,log=''):
@@ -842,9 +832,9 @@ class PageEditingSupport:
                 raiseSpamError(_("banned_links match"),
                                _("your edit contained a banned link pattern. Please contact the site administrator for help."))
 
-        # anonymous edit with too many urls ?
+        # anonymous edit with too many external links ?
+        # tries to count the links added by this edit.
         prop = 'max_anonymous_links'
-        # we'll handle either an int or string property
         if (not self.requestHasUsername(REQUEST) and
             safe_hasattr(self.folder(), prop)):
             try: max = int(getattr(self.folder(), prop))
