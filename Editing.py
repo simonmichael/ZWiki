@@ -94,16 +94,18 @@ class PageEditingSupport:
         name = unquote(page or pagename)
         id = self.canonicalIdFrom(name)
         p = self.__class__(__name__=id)
-        p.title = name # manage_afterAdd will add this to the wiki outline
-        p = self.folder()[self.folder()._setObject(id,p))] # place in folder
+        p.title = name # because manage_afterAdd adds this to the wiki outline
+        p = self.folder()[self.folder()._setObject(id,p)] # place in folder
         p.checkForSpam(text) # now we're acquiring wiki options, check for spam
         p.ensureMyRevisionNumberIsLatest()
         p.setCreator(REQUEST)
         p.setLastEditor(REQUEST)
         p.setLastLog(log)
         p._setOwnership(REQUEST)
-        self.wikiOutline().add( # now really update the wiki outline
-            p.pageName(), (parents==None) and [self.pageName()] or parents)
+        # now really update the wiki outline
+        # XXX should reuse reparent code to do parents validation etc.
+        p.parents = (parents==None) and [self.pageName()] or parents
+        self.wikiOutline().add(p.pageName(), p.parents) 
         p.setPageType(type or self.defaultPageType())
         p.setText(text,REQUEST)
         p.handleFileUpload(REQUEST)
@@ -227,7 +229,7 @@ class PageEditingSupport:
             if re.match(r'^(?:\d{1,3}\.){3}\d{1,3}$',username): username = ''
         subject_heading = self.cleanupText(subject_heading)
         text = self.cleanupText(text)
-        firstcomment = self.messageCount()==0:
+        firstcomment = self.messageCount()==0
         # ensure the page comment and mail-out will have the same
         # message-id, and the same timestamp if possible (helps threading
         # & troubleshooting)
