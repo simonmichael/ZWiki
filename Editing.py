@@ -90,63 +90,39 @@ class PageEditingSupport:
         if not self.checkSufficientId(REQUEST):
             if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl()+'/denied')
             return None
-        
+        # here goes.. sequence is important
         name = unquote(page or pagename)
         id = self.canonicalIdFrom(name)
-
-        # here goes.. sequence is delicate here
-
-        # make a new page object and situate it in the wiki
-        # get a hold of it's acquisition wrapper
         p = self.__class__(__name__=id)
-        # set title now since manage_afterAdd will use it for wiki outline
-        p.title = name
-        # place it in the folder
-        # newid should be the same as id, but we won't assume
-        newid = self.folder()._setObject(id,p)
-        p = getattr(self.folder(),newid)
-        # check and abort if text is spammy (after name is set up, for logging)
-        p.checkForSpam(text)
-
+        p.title = name # manage_afterAdd will add this to the wiki outline
+        p = self.folder()[self.folder()._setObject(id,p))] # place in folder
+        p.checkForSpam(text) # now we're acquiring wiki options, check for spam
         p.ensureMyRevisionNumberIsLatest()
         p.setCreator(REQUEST)
         p.setLastEditor(REQUEST)
         p.setLastLog(log)
         p._setOwnership(REQUEST)
-        if parents == None: p.parents = [self.pageName()]
-        else: p.parents = parents
-        self.wikiOutline().add(p.pageName(),p.parents) # update wiki outline
-
-        # choose the specified type, the default type or whatever we're allowed 
+        self.wikiOutline().add( # now really update the wiki outline
+            p.pageName(), (parents==None) and [self.pageName()] or parents)
         p.setPageType(type or self.defaultPageType())
         p.setText(text,REQUEST)
         p.handleFileUpload(REQUEST)
         p.handleSubtopicsProperty(subtopics,REQUEST)
         if p.autoSubscriptionEnabled(): p.subscribeThisUser(REQUEST)
-
-        # users can alter the page name in the creation form; allow that.
-        # We do a full rename, only after all the above, to make sure
-        # everything gets handled properly.  We must first commit though,
-        # to get p.cb_isMoveable(). Renaming will also get us indexed.
-        # We never leave a placeholder, always update backlinks.
+        # allow users to alter the page name in the creation form.  We do
+        # a full rename after all the above to make sure everything gets
+        # handled properly, such as updating backlinks.  We must first
+        # commit though, to get p.cb_isMoveable().
         if title and title != p.pageName():
             get_transaction().note('rename during creation')
             get_transaction().commit()
             p.handleRename(title,0,1,REQUEST,log)
-        else:
-            # we got indexed after _setObject, but do it again with our text
+        else: # reindex now all attributes are set. handleRename does it too.
             p.index_object()
-
-        # mail subscribers, unless disabled
         if sendmail:
             p.sendMailToSubscribers(
-                p.read(),
-                REQUEST=REQUEST,
-                subjectSuffix='',
-                subject=log,
-                message_id=self.messageIdFromTime(p.creationTime())
-                )
-        # and move on
+                p.read(), REQUEST=REQUEST, subjectSuffix='', subject=log,
+                message_id=self.messageIdFromTime(p.creationTime()))
         if REQUEST:
             try:
                 u = (REQUEST.get('redirectURL',None) or
