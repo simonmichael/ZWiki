@@ -155,10 +155,6 @@ class PageEditingSupport:
             except KeyError: pass
         return name
 
-    security.declarePublic('isDavLocked')
-    def isDavLocked(self):
-        return safe_hasattr(self,'wl_isLocked') and self.wl_isLocked()
-
     security.declareProtected(Permissions.Comment, 'comment')
     def comment(self, text='', username='', time='',
                 note=None, use_heading=None, # not used
@@ -1003,6 +999,10 @@ class PageEditingSupport:
         types = "%s" % self.pageTypeId()
         return "Wiki-Safetybelt: %s\nType: %s\nLog: \n\n%s" % (
             self.timeStamp(), types, self.read())
+
+    security.declarePublic('isDavLocked')
+    def isDavLocked(self):
+        return safe_hasattr(self,'wl_isLocked') and self.wl_isLocked()
 
     security.declareProtected(Permissions.Edit, 'PUT')
     def PUT(self, REQUEST, RESPONSE):
