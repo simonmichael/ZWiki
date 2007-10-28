@@ -406,11 +406,8 @@ class PageEditingSupport:
 
     def handleRename(self,newname,leaveplaceholder,updatebacklinks,
                       REQUEST=None,log=''):
-        # rename does everything we need
-        return self.rename(newname,
-                           leaveplaceholder=leaveplaceholder,
-                           updatebacklinks=updatebacklinks,
-                           REQUEST=REQUEST)
+        return self.rename(newname, leaveplaceholder=leaveplaceholder,
+                           updatebacklinks=updatebacklinks, REQUEST=REQUEST)
 
     def handleDeleteMe(self,text,REQUEST=None,log=''):
         if not text or not re.match('(?m)^DeleteMe', text):
