@@ -157,15 +157,15 @@ class PageEditingSupport:
 
     security.declareProtected(Permissions.Comment, 'comment')
     def comment(self, text='', username='', time='',
-                note=None, use_heading=None, # not used
+                note=None, use_heading=None,
                 REQUEST=None, subject_heading='', message_id=None,
                 in_reply_to=None, exclude_address=None):
-        """
-        Add a comment to this page.
+        """Add a comment to this page.
 
-        We try to do this without unnecessary rendering.  The comment will
-        also be mailed out to any subscribers.  If auto-subscription is in
-        effect, we subscribe the poster to this page.
+        We try to do this efficiently, avoiding re-rendering the full page
+        if possible.  The comment will be mailed out to any subscribers.
+        If auto-subscription is in effect, we subscribe the poster to this
+        page.
 
         subject_heading is so named to avoid a clash with some existing
         zope subject attribute.  note and use_heading are not used and
@@ -174,26 +174,24 @@ class PageEditingSupport:
         if not self.checkSufficientId(REQUEST):
             return self.denied(
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
-
         if self.isDavLocked(): return self.davLockDialog()
-
-        # gather various bits and pieces
+        # gather info
         oldtext = self.read()
         if not username:
             username = self.usernameFrom(REQUEST)
             if re.match(r'^(?:\d{1,3}\.){3}\d{1,3}$',username): username = ''
         subject_heading = self.cleanupText(subject_heading)
         text = self.cleanupText(text)
-        # some subtleties here: we ensure the page comment and mail-out
-        # will use the same message-id, and the same timestamp if possible
-        # (helps threading & debugging)
+        firstcomment = self.messageCount()==0:
+        # ensure the page comment and mail-out will have the same
+        # message-id, and the same timestamp if possible (helps threading
+        # & troubleshooting)
         if time: dtime = DateTime(time)
         else:
             dtime = self.ZopeTime()
             time = dtime.rfc822()
         if not message_id: message_id = self.messageIdFromTime(dtime)
-
-        # make a Message representing this comment
+        # format this comment as standard rfc2822
         m = Message()
         m['From'] = username
         m['Date'] = time
@@ -202,49 +200,33 @@ class PageEditingSupport:
         if in_reply_to: m['In-Reply-To'] = in_reply_to
         m.set_payload(text)
         m.set_unixfrom(self.fromLineFrom(m['From'],m['Date'])[:-1])
-        
+        t = str(m)
         # discard junk comments
         if not (m['Subject'] or m.get_payload()): return
-
-        # optimisation:
-        # add the comment to the page with minimal work - carefully append
-        # it to both source and _prerendered cached without re-rendering
-        # the whole thing! This might not be legal for all future page
-        # types.
-        self.saveRevision()
-        # add to source, in standard rfc2822 format:
-        t = str(m)
         self.checkForSpam(t)
+
+        # do it
+        self.saveRevision()
+        # append to the raw source
         t = '\n\n' + t
         self.raw += t
-        # add to prerendered html:
-        # apply single-message prerendering XXX
+        # and to the _prerendered cache, carefully mimicking a full
+        # prerender. This works with current page types at least.
         t = self.pageType().preRenderMessage(self,m)
-        # if it's the first, add appropriate discussion separator
-        if self.messageCount()==1:
-            t=self.pageType().discussionSeparator(self) + t
-        # apply page's standard prerender to the lot XXX
+        if firstcomment: t=self.pageType().discussionSeparator(self) + t
         t = self.pageType().preRender(self,t)
-        # and append to the page's prerendered html
         self.setPreRendered(self.preRendered()+t)
         self.cookDtmlIfNeeded()
-
+        # extras
         self.setLastEditor(REQUEST)
         self.setLastLog(subject_heading)
         if self.autoSubscriptionEnabled(): self.subscribeThisUser(REQUEST)
         self.index_object()
-
-        # send out mail to any subscribers
-        # hack the username in there for usernameFrom
-        if REQUEST: REQUEST.cookies['zwiki_username'] = m['From']
-        self.sendMailToSubscribers(m.get_payload(),
-                                   REQUEST,
-                                   subject=m['Subject'],
-                                   message_id=m['Message-ID'],
-                                   in_reply_to=m['In-Reply-To'],
-                                   exclude_address=exclude_address
-                                   )
-
+        if REQUEST: REQUEST.cookies['zwiki_username'] = m['From'] # use real from address
+        self.sendMailToSubscribers(
+            m.get_payload(), REQUEST, subject=m['Subject'],
+            message_id=m['Message-ID'], in_reply_to=m['In-Reply-To'],
+            exclude_address=exclude_address)
         if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1']+'#bottom')
 
     security.declareProtected(Permissions.Comment, 'append')
