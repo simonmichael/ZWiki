@@ -343,13 +343,12 @@ class PageEditingSupport:
     update = edit
 
     def handleSubtopicsProperty(self,subtopics,REQUEST=None):
-        if subtopics is not None:
-            # do we have permission ?
-            if not self.checkPermission(Permissions.Reparent, self):
-                raise 'Unauthorized', (
-                    _('You are not authorized to reparent or change subtopics links on this ZWiki Page.'))
-            subtopics = int(subtopics or '0')
-            self.setSubtopicsPropertyStatus(subtopics,REQUEST)
+        if subtopics is None: return
+        if not self.checkPermission(Permissions.Reparent, self):
+            raise 'Unauthorized', (
+                _('You are not authorized to reparent or change subtopics links on this ZWiki Page.'))
+        subtopics = int(subtopics or '0')
+        self.setSubtopicsPropertyStatus(subtopics,REQUEST)
 
     def handleEditPageType(self,type,REQUEST=None,log=''):
         if not type or type==self.pageTypeId(): return
