@@ -348,10 +348,7 @@ class PageSubscriptionSupport:
         return subs
 
     def autoSubscriptionEnabled(self):
-        if getattr(self,'auto_subscribe',0):
-            return 1
-        else:
-            return 0
+        return getattr(self,'auto_subscribe',0) and 1
 
     def usernameOrEmailOfSubscriber(self):
         """
