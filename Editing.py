@@ -320,10 +320,9 @@ class PageEditingSupport:
         old = self.read()
         new = self.cleanupText(text)
         if new == old: return
-        if (not
-            (self.checkPermission(Permissions.Edit, self) or
-             (self.checkPermission(Permissions.Comment, self)
-              and find(new,old) == 0))):
+        appending = find(new,old)==0
+        if not (self.checkPermission(Permissions.Edit,self) or
+                (appending and self.checkPermission(Permissions.Comment,self))):
             raise 'Unauthorized', (
                 _('You are not authorized to edit this ZWiki Page.'))
         self.checkForSpam(addedtext(old, new))
