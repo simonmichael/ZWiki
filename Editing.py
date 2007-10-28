@@ -155,6 +155,75 @@ class PageEditingSupport:
             except KeyError: pass
         return name
 
+    security.declarePublic('edit')      # check permissions at runtime
+    def edit(self, page=None, text=None, type=None, title='', 
+             timeStamp=None, REQUEST=None, 
+             subjectSuffix='', log='', check_conflict=1, # temp (?)
+             leaveplaceholder=LEAVE_PLACEHOLDER, updatebacklinks=1,
+             subtopics=None): 
+        """General-purpose method for editing & creating zwiki pages.
+
+        This method does a lot; combining all this stuff in one powerful
+        method simplifies the skin layer above, I think.
+
+        - changes the text and/or formatting type of this (or another )
+          page, or creates that page if it doesn't exist.
+        - when called from a time-stamped web form, detects and warn when
+          two people attempt to work on a page at the same time
+        - The username (authenticated user or zwiki_username cookie) and
+          ip address are saved in page's last_editor, last_editor_ip
+          attributes if a change is made
+        - If the text begins with "DeleteMe", delete this page
+        - If file has been submitted in REQUEST, create a file or image
+          object and link or inline it on the current page.
+        - if title differs from page, assume it is the new page name and
+          do a rename (the argument remains"title" for backwards compatibility)
+        - may set, clear or remove this page's show_subtopics property
+        - sends mail notification to subscribers if appropriate
+        """
+        if page: page = unquote(page)
+        if page is None:                  # changing this page
+            p = self                        
+        elif self.pageWithNameOrId(page): # changing another page
+            p = self.pageWithNameOrId(page) 
+        else:                             # creating a new page
+            return self.create(page,        
+                               text or '',
+                               type,
+                               title,
+                               REQUEST,
+                               log,
+                               subtopics=subtopics)
+        if not self.checkSufficientId(REQUEST):
+            return self.denied(
+                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
+        if check_conflict:
+            if self.checkEditConflict(timeStamp, REQUEST):
+                return self.editConflictDialog()
+            if self.isDavLocked():
+                return self.davLockDialog()
+
+        # each of these handlers checks relevant permissions and does the necessary
+        if p.handleDeleteMe(text,REQUEST,log): return
+        p.saveRevision()
+        p.handleEditPageType(type,REQUEST,log)
+        if text != None: p.handleEditText(text,REQUEST,subjectSuffix,log)
+        p.handleSubtopicsProperty(subtopics,REQUEST)
+        p.handleFileUpload(REQUEST,log)
+        p.handleRename(title,leaveplaceholder,updatebacklinks,REQUEST,log)
+        p.index_object()
+
+        if REQUEST:
+            try:
+                REQUEST.RESPONSE.redirect(
+                    (REQUEST.get('redirectURL',None) or
+                     REQUEST['URL2']+'/'+ quote(p.id())))
+            except KeyError: pass
+
+    # This alternate spelling exists so that we can define an "edit" alias
+    # in Plone 3, needed to work around a createObject bug
+    update = edit
+
     security.declareProtected(Permissions.Comment, 'comment')
     def comment(self, text='', username='', time='',
                 note=None, use_heading=None,
@@ -237,75 +306,6 @@ class PageEditingSupport:
         if not text: return
         if REQUEST: REQUEST.set('redirectURL',REQUEST['URL1']+'#bottom')
         self.edit(text=self.read()+separator+str(text), REQUEST=REQUEST,log=log)
-
-    security.declarePublic('edit')      # check permissions at runtime
-    def edit(self, page=None, text=None, type=None, title='', 
-             timeStamp=None, REQUEST=None, 
-             subjectSuffix='', log='', check_conflict=1, # temp (?)
-             leaveplaceholder=LEAVE_PLACEHOLDER, updatebacklinks=1,
-             subtopics=None): 
-        """General-purpose method for editing & creating zwiki pages.
-
-        This method does a lot; combining all this stuff in one powerful
-        method simplifies the skin layer above, I think.
-
-        - changes the text and/or formatting type of this (or another )
-          page, or creates that page if it doesn't exist.
-        - when called from a time-stamped web form, detects and warn when
-          two people attempt to work on a page at the same time
-        - The username (authenticated user or zwiki_username cookie) and
-          ip address are saved in page's last_editor, last_editor_ip
-          attributes if a change is made
-        - If the text begins with "DeleteMe", delete this page
-        - If file has been submitted in REQUEST, create a file or image
-          object and link or inline it on the current page.
-        - if title differs from page, assume it is the new page name and
-          do a rename (the argument remains"title" for backwards compatibility)
-        - may set, clear or remove this page's show_subtopics property
-        - sends mail notification to subscribers if appropriate
-        """
-        if page: page = unquote(page)
-        if page is None:                  # changing this page
-            p = self                        
-        elif self.pageWithNameOrId(page): # changing another page
-            p = self.pageWithNameOrId(page) 
-        else:                             # creating a new page
-            return self.create(page,        
-                               text or '',
-                               type,
-                               title,
-                               REQUEST,
-                               log,
-                               subtopics=subtopics)
-        if not self.checkSufficientId(REQUEST):
-            return self.denied(
-                _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
-        if check_conflict:
-            if self.checkEditConflict(timeStamp, REQUEST):
-                return self.editConflictDialog()
-            if self.isDavLocked():
-                return self.davLockDialog()
-
-        # each of these handlers checks relevant permissions and does the necessary
-        if p.handleDeleteMe(text,REQUEST,log): return
-        p.saveRevision()
-        p.handleEditPageType(type,REQUEST,log)
-        if text != None: p.handleEditText(text,REQUEST,subjectSuffix,log)
-        p.handleSubtopicsProperty(subtopics,REQUEST)
-        p.handleFileUpload(REQUEST,log)
-        p.handleRename(title,leaveplaceholder,updatebacklinks,REQUEST,log)
-        p.index_object()
-
-        if REQUEST:
-            try:
-                REQUEST.RESPONSE.redirect(
-                    (REQUEST.get('redirectURL',None) or
-                     REQUEST['URL2']+'/'+ quote(p.id())))
-            except KeyError: pass
-
-    # This alternate spelling exists so that we can define an "edit" alias
-    # in Plone 3, needed to work around a createObject bug
-    update = edit
 
     def handleSubtopicsProperty(self,subtopics,REQUEST=None):
         if subtopics is None: return
