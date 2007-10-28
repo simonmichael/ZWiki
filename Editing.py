@@ -423,36 +423,25 @@ class PageEditingSupport:
         return 1 # terminate edit processing
 
     security.declareProtected(Permissions.Delete, 'delete')
-    def delete(self,REQUEST=None, updatebacklinks=1, pagename=None):
-        """
-        Delete this page, if permissions allow.
+    def delete(self,REQUEST=None, pagename=None):
+        """Delete this page, after saving a final revision.
 
-        The last revision will be archived.
-
-        If the pagename argument is provided (so named due to the page
-        management form), we will try to redirect all links which point to
-        this page, to that one. This is like doing a rename except this
-        page vanishes in a puff of smoke. See also rename. As with that
-        method, an updatebacklinks=0 argument will disable this.
-        XXX no it won't ? also, need a flag to disable reparenting
+        Any subtopics will be reparented. If the pagename argument is
+        provided (so named to help the page management form) we will try
+        to redirect all incoming wiki links there instead, similar to a
+        rename.
         """
         oldname,oldid,redirecturl = self.pageName(),self.getId(),self.upUrl()
-        # reparent my children, if any
         self.reparentChildren(self.primaryParentName())
-        # if a replacement pagename is specified, redirect my backlinks there
-        if pagename and string.strip(pagename):
+        if pagename and strip(pagename):
             self._replaceLinksEverywhere(oldname,pagename,REQUEST)
-        # archive my last revision
         self.saveRevision()
-        # delete me - hopefully this updates outline and catalog too
         self.folder().manage_delObjects([self.getId()])
-        # notify subscribers if appropriate
         self.sendMailToEditSubscribers(
             'This page was deleted.\n',
             REQUEST=REQUEST,
             subjectSuffix='',
             subject='(deleted)')
-        # redirect somewhere sensible
         if REQUEST: REQUEST.RESPONSE.redirect(redirecturl)
 
     security.declareProtected(Permissions.Edit, 'revert')
