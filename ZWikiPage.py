@@ -141,14 +141,16 @@ class ZWikiPage(
     security.declareProtected(Permissions.Edit, 'manage_upload')
     security.declareProtected(Permissions.FTP, 'manage_FTPstat') # needed
     security.declareProtected(Permissions.FTP, 'manage_FTPlist') # ?
+
+    def checkPermission(self, permission, object):
+        return getSecurityManager().checkPermission(permission,object)
+
     # perms need at least one declaration (in this file ?) to be recognized
     # this is dumb indeed.. need tests to figure out the rules of this game
     security.declareProtected(Permissions.ChangeType, 'dummy')
     def dummy(self): pass
     security.declareProtected(Permissions.Reparent, 'dummy2')
     def dummy2(self): pass
-    def checkPermission(self, permission, object):
-        return getSecurityManager().checkPermission(permission,object)
 
     # properties visible in the ZMI
     _properties=(
@@ -189,9 +191,12 @@ class ZWikiPage(
     # behaviour. It will return the old id string when called, which
     # should keep existing catalogs working.
     page_type = DEFAULT_PAGETYPE()
+    # pre-rendered text cache
+    _prerendered = ''   
 
     # XXX page_type's are separate instances - use class or singleton instance ?
     def setPageType(self,id=None): self.page_type = self.lookupPageType(id)()
+
     security.declarePublic('pageType') # useful for troubleshooting
     def pageType(self):
         """Return this page's page type object."""
@@ -205,18 +210,19 @@ class ZWikiPage(
         elif not safe_hasattr(self.page_type,'render'):
             self.setPageType(DEFAULT_PAGETYPE)
         return self.page_type
+
     def lookupPageType(self,id=None):
         """Return the page type object with this id (or the default)"""
         match = filter(lambda x:x._id==id,PAGETYPES)
         return (match and match[0]) or DEFAULT_PAGETYPE
+
     security.declarePublic('pageTypeId') # useful for troubleshooting
     def pageTypeId(self):
         """Return the short id for this page's page type."""
         return self.pageType().id()
 
-    # pre-rendered text cache
-    _prerendered = ''   
     def setPreRendered(self,t): self._prerendered = t
+
     def preRendered(self):
         # cope with non-existing or None attribute on old instances - needed ?
         return getattr(self,'_prerendered','') or ''
