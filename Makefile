@@ -249,6 +249,9 @@ tarball: clean
 
 # misc
 
+linecounts:
+	wc -l `ls *.py |grep -v _tests` |sort -nr >LINECOUNTS
+
 PYFILES=*.py [A-Za-z]*/*.py [A-Za-z]*/*/*.py [A-Za-z]*/*/*/*.py
 pyflakes:
 	pyflakes $(PYFILES)
