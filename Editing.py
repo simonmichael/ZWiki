@@ -352,22 +352,13 @@ class PageEditingSupport:
             self.setSubtopicsPropertyStatus(subtopics,REQUEST)
 
     def handleEditPageType(self,type,REQUEST=None,log=''):
-        # is the new page type valid and different ?
-        if (type is not None and
-            type != self.pageTypeId()):
-            # do we have permission ?
-            if not self.checkPermission(Permissions.ChangeType,self):
-                raise 'Unauthorized', (
-                    _("You are not authorized to change this ZWiki Page's type."))
-            # is it one of the allowed types for this wiki ?
-            #if not type in self.allowedPageTypes():
-            #    raise 'Unauthorized', (
-            #        _("Sorry, that's not one of the allowed page types in this wiki."))
-            # change it
-            self.setPageType(type)
-            self.preRender(clear_cache=1)
-            self.setLastEditor(REQUEST)
-            self.setLastLog(log)
+        if not type or type==self.pageTypeId(): return
+        if not self.checkPermission(Permissions.ChangeType,self):
+            raise 'Unauthorized', (_("You are not authorized to change this ZWiki Page's type."))
+        self.setPageType(type)
+        self.preRender(clear_cache=1)
+        self.setLastEditor(REQUEST)
+        self.setLastLog(log)
 
     security.declarePrivate('setLastLog')
     def setLastLog(self,log):
