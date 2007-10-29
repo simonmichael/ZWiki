@@ -15,8 +15,6 @@ gradually being moved here and pluginised. Some of them still have
 hard-coded dependencies in other parts of the code, such as:
 
 - dependencies in the Admin upgrade methods - resolved ?
-- edit calls purple numbers when setting text
-- some page types call purple numbers during rendering
 - issue tracker access key and link in wikipage template
 - tracker action in CMFInit fti
 - tracker hotkey in showAccessKeys
