@@ -1,3 +1,12 @@
+Leading to Zwiki 0.61
+=====================
+
+Changes in darcs, leading up to the next planned release.
+
+  * Rewrote the rating module to use a BTree to store votes, instead
+    of a dictionary. Saves some kB writing to Data.fs and avoids
+    conflicts.
+
 Zwiki 0.60.0 2007/09/15
 =======================
 
