@@ -92,7 +92,10 @@ class PluginRating:
                 votes[username] = vote
                 BLATHER("%s: recorded %s vote for %s" % \
                                     (self.pageName(),vote,username))
-            self.index_object() # XXX only need update votes fields
+            catalog=self.catalog()
+            catalog.catalog_object(self, idxs=['rating', 'voteCount'])
+            # only need to update votes indexes
+            # note that likely all metadata is updated anyway
 
             if REQUEST:
                 REQUEST.RESPONSE.redirect(

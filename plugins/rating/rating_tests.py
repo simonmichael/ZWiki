@@ -13,6 +13,7 @@ class Tests(ZwikiTestCase):
         ZwikiTestCase.afterSetUp(self)
         self.p.REQUEST.REMOTE_ADDR = '1'
         self.p.resetVotes()
+        self.p.ensureCatalog() # tests only, nowadays zwikis have catalogs
 
     def test_rating(self):
         p = self.p
