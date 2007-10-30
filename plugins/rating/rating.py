@@ -7,6 +7,9 @@ import string, re
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 
+from BTrees.OOBTree import OOBTree
+from types import DictionaryType
+
 from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki import Permissions
@@ -34,24 +37,22 @@ class PluginRating:
     """
     security = ClassSecurityInfo()
 
-    _votes = None # not {}, it would be shared
+    _votes = None # not setting directly, it would be shared
 
     security.declarePrivate('votes')
     def votes(self):
         """Private accessor."""
         self = getattr(self,'aq_base',self)
-        return self._votes or {}
+        if self._votes is None:
+            self._votes = OOBTree()
+        else:
+            self.ensureVotesIsBtree()
+        return self._votes
 
-    security.declarePrivate('setVotes')
-    def setVotes(self,votes):
-        """Private accessor."""
-        self = getattr(self,'aq_base',self)
-        self._votes = votes
-        
     security.declarePrivate('resetVotes')
     def resetVotes(self):
         """Private accessor."""
-        self.setVotes({})
+        self._votes = OOBTree() # start over
 
     security.declarePublic('numericVotes') # XXX better name ?
     def numericVotes(self):
@@ -84,13 +85,15 @@ class PluginRating:
             if vote == None:
                 try:
                     del votes[username]
-                    BLATHER("%s: removed %s's vote" % (self.pageName(),username))
+                    BLATHER("%s: removed %s's vote" % \
+                                    (self.pageName(),username))
                 except KeyError: pass
             else:
                 votes[username] = vote
-                BLATHER("%s: recorded %s vote for %s" % (self.pageName(),vote,username))
-            self.setVotes(votes)
+                BLATHER("%s: recorded %s vote for %s" % \
+                                    (self.pageName(),vote,username))
             self.index_object() # XXX only need update votes fields
+
             if REQUEST:
                 REQUEST.RESPONSE.redirect(
                     # redirect to the page they came on.. might be some
@@ -185,6 +188,17 @@ class PluginRating:
         """
         if rating == '' or rating == None: rating = self.rating()
         return '<span class="%s">(%s)</span>' % (self.ratingStyle(rating),rating)
+
+    security.declarePrivate('ensureVotesIsBtree')
+    def ensureVotesIsBtree(self):
+        """
+        Move from a dictionary to a OOBTree.
+        """
+        if isinstance(self._votes, DictionaryType):
+            temp_dict = self._votes.copy()
+            self._votes = OOBTree()
+            for k,v in temp_dict.iteritems():
+                self._votes[k] = v
 
 InitializeClass(PluginRating) 
 registerPlugin(PluginRating)

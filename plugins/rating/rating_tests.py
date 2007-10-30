@@ -1,4 +1,5 @@
 from Products.ZWiki.testsupport import *
+from types import DictionaryType
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 
@@ -33,3 +34,11 @@ class Tests(ZwikiTestCase):
         p.vote(1)
         self.assert_(p.voteCount() == 2)
 
+    def test_ensureVotesIsBtree(self):
+        p = self.p
+        p._votes = {'someoneelse':3} # fakeing an old voting module
+        p.ensureVotesIsBtree() # now "upgrading"
+        self.failIf(isinstance(p._votes, DictionaryType), \
+            'Not been converted to Btree!')
+        self.assert_(p.voteCount() == 1)
+        self.assertEqual(p._votes['someoneelse'], 3)
