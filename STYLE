@@ -1,0 +1,63 @@
+================================
+Zwiki coding style and practices
+================================
+
+This is both to explain current practices and to collect guidelines that help us.
+
+Documentation
+=============
+
+Most Zwiki documentation is kept in the http://zwiki.org wiki.  
+Developer-specific docs are under http://zwiki.org/DeveloperNotes.
+
+Developer documentation may increasingly move to files within the
+codebase, however.  These typically use restructured text markup, like
+this file.  To browse these filesystem docs online, use
+http://zwiki.org/repos/ZWiki or the darcsweb interface.
+(See also: FILESYSTEM_VS_WIKI_DOCS)
+
+We have the following kinds of in-code documentation:
+
+- ALLCAPS documentation files in any directory, like this README
+
+- File docstrings
+
+- Class docstrings
+
+- Method/function docstrings
+
+- Comments
+
+  - comments are sometimes used instead of the docstrings above. This may
+    or may not be appropriate, I don't know.
+
+  - a section heading within a file, class or method.
+
+  - a short explanatory comment appended to a line of code. 
+
+  The Zwiki code has a lot of chatty comments. Nowadays we should try to
+  minimise their use eg by using intention-revealing names.
+
+- Names
+
+  Names of directories, files, classes, methods, variables are where
+  documentation meets code. They are perhaps our most powerful tool. :)
+
+  Use clarifying and intention-revealing names wherever possible to
+  minimise the need for other documentation.
+
+  Choosing good names for small chunks of code helps us to build up our
+  own mini-language (DSL) for Zwiki-building, which helps us to say more
+  with less code.
+
+
+Concise, not over-verbose, non-redundant docs are good. To help us write
+better docs, we could try to follow this length guideline when possible:
+
+ ================= =================================================
+ doc files         any length
+ file docstrings   one paragraph
+ class docstrings  one paragraph
+ method docstrings one sentence, plus one per argument, or as needed
+ comments          one sentence, phrase or word, on one line
+ ================= =================================================
