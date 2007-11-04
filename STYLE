@@ -4,6 +4,7 @@ Zwiki coding style and practices
 
 This is both to explain current practices and to collect guidelines that help us.
 
+
 Documentation
 =============
 
@@ -35,8 +36,11 @@ We have the following kinds of in-code documentation:
 
   - a short explanatory comment appended to a line of code. 
 
+  - longer explanatory comments when necessary.
+
   The Zwiki code has a lot of chatty comments. Nowadays we should try to
-  minimise their use eg by using intention-revealing names.
+  minimise their use eg by making them unnecessary or by using
+  intention-revealing names.
 
 - Names
 
@@ -51,6 +55,8 @@ We have the following kinds of in-code documentation:
   with less code.
 
 
+Conciseness
+-----------
 Concise, not over-verbose, non-redundant docs are good. To help us write
 better docs, we could try to follow this length guideline when possible:
 
@@ -59,5 +65,50 @@ better docs, we could try to follow this length guideline when possible:
  file docstrings   one paragraph
  class docstrings  one paragraph
  method docstrings one sentence, plus one per argument, or as needed
- comments          one sentence, phrase or word, on one line
+ comments          one sentence or fragment, on one line
  ================= =================================================
+
+
+More about docstrings
+---------------------
+
+The first sentence should be concise summary of the object's purpose.
+Older docstrings follow the PEP guideline to separate the first line from
+the rest with a blank line, but we have abandoned this to save vertical
+space. For the same reason, feel free to omit the line breaks at the
+docstring's start and end if it doesn't hurt readability. 
+
+Describe method arguments and return values when needed. We might want to
+come up with a standard haskellish way of noting the expected input and
+output types and whether side effects are expected.
+
+
+More about naming
+-----------------
+Try to give procedures (functions/methods with side effects) verb names.
+Try to give variables and side-effect-free functions noun names.
+
+
+Security
+--------
+
+To specify method permissions, we sometimes use explicit zope security
+declarations, sometimes omit the docstring, and sometimes use the _
+prefix. The latter two interfere with readability and should be phased
+out. We probably want to move to an all methods private by default policy,
+and explicity declare permissions on everything that we want to expose.a
+
+
+Imports
+-------
+Imports are usually at the start of the file and in three groups: python,
+then zope, then zwiki imports.
+
+
+
+
+.. 
+
+ Local Variables:
+ mode: rst
+ End:

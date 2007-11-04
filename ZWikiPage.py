@@ -9,41 +9,6 @@ Full credits are at http://zwiki.org/ZwikiContributors .
 
 This product is available under the GNU GPL.  All rights reserved, all
 disclaimers apply, etc.
-
-
-STYLE NOTES
-    
-imports
-
- are usually in three groups: python, then zope, then zwiki imports
-
-docstrings
-
- "The first line should always be a short, concise summary of the
- object's purpose.  For brevity, it should not explicitly state the
- object's name or type, since these are available by other means (except
- if the name happens to be a verb describing a function's operation).
- This line should begin with a capital letter and end with a period.
-
- If there are more lines in the documentation string, the second line
- should be blank, visually separating the summary from the rest of the
- description.  The following lines should be one or more paragraphs
- describing the object's calling conventions, its side effects, etc.
-
- Data attributes override method attributes with the same name; to
- avoid accidental name conflicts, which may cause hard-to-find bugs in
- large programs, it is wise to use some kind of convention 
- [such as] verbs for methods and nouns for data attributes."
-
-method visibility
-
- naming with _ for privacy obscures the code, and so do excessive
- security declarations. Omitting docstrings or documenting with comments
- are not good either. Where a docstring is needed, I'm considering
- putting it above the method name to indicate private methods, which
- avoids these problems and makes it easy to change your mind.
- No, too weird.
-
 """
 
 from __future__ import nested_scopes
