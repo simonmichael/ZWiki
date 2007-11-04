@@ -20,7 +20,7 @@ ZWiki/           main source files
   latexwiki/     page types supporting LaTeX
   mathaction/    page types supporting math tools
  tools/          administrator command-line tools
- pagetypes/      support for each wiki page type
+ pagetypes/      standard zwiki page types
  Extensions/     external methods
  scripts/        example zope/zwiki scripts
  i18n/           translation files
@@ -111,9 +111,50 @@ better docs, we could try to follow this length guideline when possible:
 Code
 ====
 
-In general, it's best to follow, first, any guidelines in this file,
-second, the style of existing Zwiki code, and third, standard Python best
-practices.
+In general, it's best to follow, first, the current guidelines in this
+file, second, the style of existing Zwiki code, and third, standard Python
+best practices.
+
+
+Vertical space is precious
+--------------------------
+
+IMHO, vertical space is more valuable than horizontal space. It's more
+valuable to see more lines on the screen than to see the full contents of
+every line. Keeping lines within 80 characters can obscure the shape of
+code constructs, especially with functional coding style, and also means
+we see fewer real lines of code. Long lines, even over 80 characters, may
+be preferable. This assumes you have your editor truncate long lines, not
+wrap them.  I do this, and maximize the window when I need more visibility
+on the line ends.
+
+
+Message passing style, functional programming style, etc.
+---------------------------------------------------------
+
+The Zwiki codebase is influenced by Smalltalk. Eg: 
+
+- we encapsulate state and behaviour as objects when that makes sense
+
+- we break up code into many small methods with intention-revealing names
+  to form an expressive mini-language.
+
+- "tell, don't ask", ie just send messages, ignore what's returned. 
+  We haven't used this and I don't know how it applies to us; it's
+  something to think about.
+
+Recent code is also influenced by functional programming. Eg: 
+
+- we minimise the use of variables and the use of procedural/sequential
+  code (do this, then that, then the other). Instead, we compose functions
+  (/methods) where possible.
+
+- we prefer referentially-transparent functions where possible (return
+  value depends only on the arguments - no side effects).
+
+Think "fewer moving parts". Variables, sequence of instructions, and side
+effects are often unnecessary.  When we cut them out, there is less to
+break and the code is more reliable and more testable.
 
 
 More about docstrings
@@ -122,8 +163,8 @@ More about docstrings
 The first sentence should be concise summary of the object's purpose.
 Older docstrings follow the PEP guideline to separate the first line from
 the rest with a blank line, but we have abandoned this to save vertical
-space. For the same reason, feel free to omit the line breaks at the
-docstring's start and end if it doesn't hurt readability. 
+space. It may sometimes be ok to omit the line breaks at the docstring's
+start and end if it doesn't hurt readability.
 
 Describe method arguments and return values when needed. We might want to
 come up with a standard haskellish way of noting the expected input and
@@ -143,7 +184,7 @@ To specify method permissions, we sometimes use explicit zope security
 declarations, sometimes omit the docstring, and sometimes use the _
 prefix. The latter two interfere with readability and should be phased
 out. We probably want to move to an all methods private by default policy,
-and explicity declare permissions on everything that we want to expose.a
+and explicity declare permissions on everything that we want to expose.
 
 
 Imports
