@@ -2,20 +2,59 @@
 Zwiki coding style and practices
 ================================
 
-This is both to explain current practices and to collect guidelines that help us.
+This is to explain/improve current practices and to collect guidelines
+that help us.
+
+File Layout
+===========
+
+See README for a list of documentation files.
+
+Directory overview:
+
+================ ==================================================
+ZWiki/           main source files
+ plugins/        functionality-adding plugins
+  tracker/       zwiki issue tracker plugin
+  rating/        zwiki page rating plugin
+  latexwiki/     page types supporting LaTeX
+  mathaction/    page types supporting math tools
+ tools/          administrator command-line tools
+ pagetypes/      support for each wiki page type
+ Extensions/     external methods
+ scripts/        example zope/zwiki scripts
+ i18n/           translation files
+ skins/          skin templates & skin-based content
+  zwiki/         the standard zwiki skin for zope & plone
+ wikis/          wiki templates
+  basic/         the standard pages and scripts for a new wiki
+ profiles/       CMF/Plone GenericSetup configuration
+================ ==================================================
+
+Currently,
+
+- there is no separate tests directory. Each source file has a companion
+  file with _tests appended to the name, in the same directory. This
+  sometimes is cluttersome but it makes tests easier to find, grep, and
+  makes plugin tests easier.
+
+- similarly, there is no separate docs directory. Documentation files are
+  kept in the most appropriate directory, with ALLCAPITALIZED names to
+  make them stand out.
+
+- most source files have capitalized names. Some newer files have
+  lower-case names.
 
 
 Documentation
 =============
 
-Most Zwiki documentation is kept in the http://zwiki.org wiki.  
+Most Zwiki documentation is kept in the http://zwiki.org wiki.
 Developer-specific docs are under http://zwiki.org/DeveloperNotes.
-
-Developer documentation may increasingly move to files within the
-codebase, however.  These typically use restructured text markup, like
-this file.  To browse these filesystem docs online, use
-http://zwiki.org/repos/ZWiki or the darcsweb interface.
-(See also: FILESYSTEM_VS_WIKI_DOCS)
+Developer documentation is to some extent moving to files within the
+codebase, like this file.  These typically use restructured text markup.
+To browse these filesystem docs online, use http://zwiki.org/repos/ZWiki
+or the darcsweb interface.  (See also: FILESYSTEM_VS_WIKI_DOCS)
 
 We have the following kinds of in-code documentation:
 
@@ -67,6 +106,14 @@ better docs, we could try to follow this length guideline when possible:
  method docstrings one sentence, plus one per argument, or as needed
  comments          one sentence or fragment, on one line
  ================= =================================================
+
+
+Code
+====
+
+In general, it's best to follow, first, any guidelines in this file,
+second, the style of existing Zwiki code, and third, standard Python best
+practices.
 
 
 More about docstrings
