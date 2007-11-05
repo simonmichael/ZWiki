@@ -384,7 +384,12 @@ class PageUtils:
 
     security.declareProtected(Permissions.View, 'preferencesUrl')
     def preferencesUrl(self):
-        return self.urlForDtmlPageOrMethod('UserOptions','useroptions')
+        """
+        Produce the link for the "options" page, also transmitting
+        the current page URL to redirect back to.
+        """
+        prefurl = self.urlForDtmlPageOrMethod('UserOptions','useroptions')
+        return prefurl + '?redirectURL='+quote(self.pageUrl())
 
     security.declareProtected(Permissions.View, 'helpUrl')
     def helpUrl(self):

@@ -40,7 +40,7 @@
                title="show upload page"
                i18n:attributes="title">
             <span i18n:translate="">uploads</span></a>
-            <a tal:attributes="href python:here.preferencesUrl()+'?redirectURL='+here.pageUrl()"
+            <a tal:attributes="href python:here.preferencesUrl()"
                accesskey="o"
                title="show wiki options"
                i18n:attributes="title">
