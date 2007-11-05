@@ -91,7 +91,8 @@ class PageEditingSupport:
             if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl()+'/denied')
             return None
         # here goes.. sequence is important
-        name = unquote(page or pagename)
+        name = unquote(page or pagename or REQUEST.form.get('title'))
+        # XXX #1017 check here "if not name:" and show a proper error page!
         id = self.canonicalIdFrom(name)
         p = self.__class__(__name__=id)
         p.title = name # because manage_afterAdd adds this to the wiki outline
