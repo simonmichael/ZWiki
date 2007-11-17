@@ -3,7 +3,7 @@
 <dtml-comment>
 This check is essentially acting as Plone detection
 </dtml-comment>
-<dtml-if "_.len(objectValues('ZWiki Page')) > 0 and not _.hasattr(this(), 'portal_factory')">
+<dtml-if "_.len(objectValues('ZWiki Page')) > 0 and not _.getattr(this(), 'portal_factory', False)">
 @import url("<dtml-var expr="objectValues('ZWiki Page')[0].id()">/stylesheet");
 <dtml-else>
 </dtml-if>

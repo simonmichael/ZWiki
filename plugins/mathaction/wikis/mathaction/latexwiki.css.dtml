@@ -4,7 +4,7 @@
 We're in trouble if someone sets up a ZWiki site without a FrontPage
 this check is essentially acting as Plone detection
 </dtml-comment>
-<dtml-if "_.hasattr(this(), 'FrontPage' )">
+<dtml-if "_.getattr(this(), 'FrontPage', False)">
 @import url("FrontPage/stylesheet");
 <dtml-else>
 </dtml-if>

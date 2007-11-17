@@ -231,7 +231,7 @@
                 <span i18n:translate="">edit</span></a>
                 <a tal:condition="python:
                     user.has_permission('Zwiki: Edit pages',here) and
-                    hasattr(root.misc_,'ExternalEditor') and
+                    getattr(root.misc_,'ExternalEditor', False) and
                     user.has_permission('Use external editor',here)"
                    tal:attributes="href python:
                     here.wiki_url() + '/externalEdit_/' +

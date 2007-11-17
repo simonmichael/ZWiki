@@ -70,7 +70,7 @@
                   last edited n days ago by by so-and-so
                 </span>
                 <div metal:use-macro="python:
-                                      (hasattr(here,'document_actions')
+                                      (getattr(here,'document_actions',False)
                                       and here.document_actions.macros['document_actions'])
                                       or default
                                       # degrade gracefully. By all means make this more elegant.." />
