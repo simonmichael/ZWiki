@@ -206,6 +206,7 @@ for s in os.listdir(abszwikipath('skins')):
         'backlinks',
         'contentspage',
         'denied',
+        'genericerror',
         'diffform',
         'editform',
         'history',
@@ -379,6 +380,13 @@ class SkinViews:
         Render the denied form (template-customizable).
         """
         return self.getSkinTemplate('denied')(self,REQUEST,reason=reason)
+
+    security.declarePublic('genericerror')
+    def genericerror(self, shorttitle='', messagetitle='', messages=[], REQUEST=None):
+        """
+        Render a generic error message (template-customizable).
+        """
+        return self.getSkinTemplate('genericerror')(self,REQUEST,shorttitle=shorttitle, messagetitle=messagetitle, messages=messages)
 
     security.declareProtected(Permissions.View, 'diffform')
     def diffform(self, rev, difftext, bodytext, REQUEST=None):

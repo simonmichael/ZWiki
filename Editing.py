@@ -92,7 +92,10 @@ class PageEditingSupport:
             return None
         # here goes.. sequence is important
         name = unquote(page or pagename or REQUEST.form.get('title'))
-        # XXX #1017 check here "if not name:" and show a proper error page!
+        if not name:
+            return self.genericerror(shorttitle=_('No Page Name'),
+            messagetitle=_('Please enter a Page Name'),
+            messages=[_('You did not enter a name for your new page. Please go Back and enter a name in the form.'), _('Your browser should still have your edits.')])
         id = self.canonicalIdFrom(name)
         p = self.__class__(__name__=id)
         p.title = name # because manage_afterAdd adds this to the wiki outline
