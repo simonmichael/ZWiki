@@ -1,0 +1,134 @@
+Set up some functional tests - these will work only in Zope 2.10 :-(
+because in 2.9 Five does not yet have testbrowser apparently.
+
+    >>> folder_url = self.folder.absolute_url()
+
+    >>> from Products.Five.testbrowser import Browser
+    >>> browser = Browser()
+    >>> browser.handleErrors = False
+
+For simplicity's sake, we're running this as manager:
+
+    >>> from Testing.ZopeTestCase import user_name
+    >>> from Testing.ZopeTestCase import user_password
+    >>> user_auth = 'Basic '+user_name+':'+user_password
+    >>> self.setRoles(['Manager'])
+    >>> browser.addHeader('Authorization', user_auth)
+
+Now let's go and install a ZWiki:
+
+    >>> browser.open(folder_url+'/manage_main')
+    >>> browser.isHtml
+    True
+    >>> browser.contents
+    '...ZWiki...'
+
+Can we add a wiki using the "add" menu?
+
+    >>> control = browser.getControl('ZWiki', index=0)
+    >>> control.selected = True
+    >>> submit = browser.getControl(name='submit')
+    >>> submit.click()
+    >>> browser.contents
+    '...The wiki folder id, which will appear in urls...'
+
+We're in the "Add ZWiki" form.
+Fill out the form:
+
+    >>> id = browser.getControl(name='new_id')
+    >>> title = browser.getControl(name='new_title')
+    >>> type = browser.getControl(name='wiki_type', index=0)
+    >>> print type.value
+    ['basic']
+    >>> id.value = 'testwiki'
+    >>> title.value = 'Test Wiki'
+    >>> type.value = ['basic'] # just to be sure
+    >>> submit = browser.getControl('Add wiki')
+
+    >>> submit.click()
+    >>> browser.contents
+    '...This is the front page of...'
+
+So our new wiki is installed! We are viewing the FrontPage.
+
+Next step is to edit the FrontPage:
+
+    >>> editlink = browser.getLink('edit')
+    >>> editlink.click()
+    >>> browser.url
+    '.../FrontPage/editform'
+
+Change the text.
+
+    >>> textarea = browser.getControl(name='text')
+    >>> textarea.value = "Some text here."
+
+Let's look at a preview first:
+
+    >>> submit = browser.getControl('Preview')
+    >>> submit.click()
+    >>> browser.contents
+    '...Some text here...'
+
+Save it:
+
+    >>> submit = browser.getControl('Save')
+    >>> submit.click()
+    >>> browser.contents
+    '...Some text here...'
+
+Let's revert this edit again.
+First have a look at the history page:
+
+    >>> historylink = browser.getLink(url='FrontPage/history')
+    >>> historylink.click()
+    >>> browser.url
+    '.../FrontPage/history'
+    >>> browser.contents
+    '...Edit history for FrontPage...'
+
+There is a Revision 2 here:
+
+    >>> rev2button = browser.getControl('2')
+
+Have to find the button for Revision 1 now.
+
+    >>> rev1button = browser.getControl('1')
+    >>> rev1button.click()
+    >>> browser.url
+    '.../FrontPage/diff?rev=1'
+
+Now just revert to this revision:
+
+    >>> revertbutton = browser.getControl('Revert to this version')
+    >>> revertbutton.click()
+    >>> browser.url
+    '.../FrontPage'
+    >>> browser.contents
+    '...This is the front page of...'
+
+So we came around full circle to our normal FrontPage. While we're at it,
+we might want to add a new page too. Going through the form at the bottom.
+
+    >>> pagename = browser.getControl(name='pagename')
+    >>> pagename.value = 'My First Wiki Page'
+    >>> create = browser.getControl('create')
+    >>> create.click()
+    >>> browser.url
+    '.../FrontPage'
+    >>> browser.contents
+    '...Optional change note...'
+
+Fill in some text etc.
+
+    >>> textarea = browser.getControl(name='text')
+    >>> textarea.value = 'I like me some text here.'
+    >>> logtext = browser.getControl(name='log')
+    >>> logtext.value = 'initial text entered'
+    >>> create = browser.getControl('Create') # capital C here
+    >>> create.click()
+    >>> browser.url
+    '.../MyFirstWikiPage'
+    >>> browser.contents
+    '...I like me some text here...'
+
