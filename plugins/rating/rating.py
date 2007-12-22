@@ -105,6 +105,15 @@ class PluginRating:
                     REQUEST.HTTP_REFERER
                     )
 
+    security.declarePrivate('setVotes')
+    def setVotes(self, votes):
+        """
+        Private accessor. Still needed for reverting edits.
+        """
+        self = getattr(self,'aq_base',self)
+        self._votes = votes
+        self.ensureVotesIsBtree()
+
     security.declareProtected(Permissions.Rate, 'unvote')
     def unvote(self,REQUEST=None):
         """
