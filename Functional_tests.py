@@ -15,7 +15,13 @@ from Testing import ZopeTestCase
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 
-from zope import traversing, component, interface
+try:
+    from zope import traversing, component, interface
+except ImportError:
+    print '--------------------------------------------'
+    print 'Functional tests will only run in Zope 2.10+'
+    print '--------------------------------------------'
+    raise
 from zope.traversing.adapters import DefaultTraversable
 from zope.traversing.interfaces import ITraversable
 from zope.component import provideAdapter
