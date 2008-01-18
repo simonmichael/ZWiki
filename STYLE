@@ -5,6 +5,7 @@ Zwiki coding style and practices
 This is to explain/improve current practices and to collect guidelines
 that help us.
 
+
 File Layout
 ===========
 
@@ -123,10 +124,12 @@ IMHO, vertical space is more valuable than horizontal space. It's more
 valuable to see more lines on the screen than to see the full contents of
 every line. Keeping lines within 80 characters can obscure the shape of
 code constructs, especially with functional coding style, and also means
-we see fewer real lines of code. Long lines, even over 80 characters, may
-be preferable. This assumes you have your editor truncate long lines, not
-wrap them.  I do this, and maximize the window when I need more visibility
-on the line ends.
+we are less likely to see the whole method at once. Long lines, even over
+80 characters, may sometimes be preferable. 
+
+This assumes you have your editor truncate long lines, not wrap them.  I
+do this, and maximize the window when I need more visibility on the line
+ends.
 
 
 Message passing style, functional programming style, etc.
@@ -137,7 +140,7 @@ The Zwiki codebase is influenced by Smalltalk. Eg:
 - we encapsulate state and behaviour as objects when that makes sense
 
 - we break up code into many small methods with intention-revealing names
-  to form an expressive mini-language.
+  to form an expressive domain-specific language.
 
 - "tell, don't ask", ie just send messages, ignore what's returned. 
   We haven't used this and I don't know how it applies to us; it's
@@ -160,11 +163,14 @@ break and the code is more reliable and more testable.
 More about docstrings
 ---------------------
 
-The first sentence should be concise summary of the object's purpose.
+The first sentence should be a concise summary of the object's purpose.
+
 Older docstrings follow the PEP guideline to separate the first line from
 the rest with a blank line, but we have abandoned this to save vertical
-space. It may sometimes be ok to omit the line breaks at the docstring's
-start and end if it doesn't hurt readability.
+space.
+
+It may sometimes be ok to omit the line breaks at the docstring's start
+and end if it doesn't hurt readability.
 
 Describe method arguments and return values when needed. We might want to
 come up with a standard haskellish way of noting the expected input and
@@ -173,6 +179,7 @@ output types and whether side effects are expected.
 
 More about naming
 -----------------
+
 Try to give procedures (functions/methods with side effects) verb names.
 Try to give variables and side-effect-free functions noun names.
 
