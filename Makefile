@@ -3,7 +3,7 @@
 # Zwiki release reminders
 # -----------------------
 # check for unrecorded changes
-# check for translations 
+# check for translations
 # check tests pass
 # check for late tracker issues
 # check showAccessKeys,README,wikis/,skins/,zwiki.org HelpPage,QuickReference
@@ -121,7 +121,7 @@ rosettatarballs:
 ## testing
 
 # To run Zwiki unit tests, you need Zope 2.9 or greater. Some additional
-# tests will run only if Plone is installed.  
+# tests will run only if Plone is installed.
 
 # The testrunner will test code in this INSTANCE, regardless of your
 # current dir or testrunner args. Adjust the path as needed.
@@ -184,7 +184,7 @@ rcheck:
 rpush:
 	rsync -ruvC -e ssh releases $(RSYNCPATH)
 
-check: 
+check:
 	darcs whatsnew --summary
 
 push:
@@ -193,19 +193,19 @@ push:
 push-exp:
 	darcs push -v -a $(HOST):/repos/$(PRODUCT)-exp
 
-pull-simon pull: 
+pull-simon pull:
 	darcs pull --interactive -v http://zwiki.org/repos/ZWiki
 
-pull-lele: 
+pull-lele:
 	darcs pull --interactive -v http://nautilus.homeip.net/~lele/projects/ZWiki
 
-pull-bob: 
+pull-bob:
 	darcs pull --interactive -v http://bob.mcelrath.org/darcs/zwiki
 
-pull-bobtest: 
+pull-bobtest:
 	darcs pull --interactive -v http://bob.mcelrath.org/darcs/zwiki-testing
 
-pull-bill: 
+pull-bill:
 	darcs pull --interactive -v http://page.axiom-developer.org/repository/ZWiki
 
 ## release
@@ -236,7 +236,7 @@ version:
 
 releasetag:
 	@echo tagging release-$(VERSION)
-	darcs tag --checkpoint -m release-$(VERSION) 
+	darcs tag --checkpoint -m release-$(VERSION)
 
 # always puts tarball in mainbranch/releases
 # look at darcs dist
@@ -270,7 +270,7 @@ etags:
 	  -o -name .NOTES     -prune -type f \
 	  | xargs etags
 
-XTAGS=ctags-exuberant -eR --langmap=python:+.cpy.vpy,c:+.css,html:+.pt.cpt.dtml.xml.zcml 
+XTAGS=ctags-exuberant -eR --langmap=python:+.cpy.vpy,c:+.css,html:+.pt.cpt.dtml.xml.zcml
 xtags:
 	$(XTAGS) --exclude=@.tagsexclude * || $(XTAGS) *
 
@@ -281,12 +281,12 @@ zopetags:
 
 getproducts:
 	cd /zope2/Products; \
-	  rsync -rl --progress --exclude="*.pyc" zwiki.org:/zope2/Products . 
+	  rsync -rl --progress --exclude="*.pyc" zwiki.org:/zope2/Products .
 
 producttags:
 	cd /zope2/Products; \
 	  ~/bin/eptags.py `find $$PWD/ -name '*.py' -o  -name '*.dtml' -o -name '*.pt' \
-	     -o -name old -o -name .old    -prune -type f ` 
+	     -o -name old -o -name .old    -prune -type f `
 
 plonetags:
 	cd /zope2/Products/CMFPlone; \
@@ -471,4 +471,4 @@ reinstall:
 fixperms:
 	chgrp -R zwiki *
 	chmod -R ug+rw *
-	find . -type d -exec chmod g+s {}  \; 
+	find . -type d -exec chmod g+s {}  \;
