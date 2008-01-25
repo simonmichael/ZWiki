@@ -168,10 +168,10 @@ def isPageTemplate(obj):
 
 def isDtmlMethod(obj):
     return getattr(obj,'meta_type',None) in (
-        'DTML Method', 
+        'DTML Method',
         'Filesystem DTML Method',
         'DTML Method (File)',
-        'DTML Document', 
+        'DTML Document',
         'Filesystem DTML Document',
         'DTML Document (File)',
         )
@@ -291,7 +291,7 @@ MACROS['wikilinks']   = nullmacro
 
 
 class SkinViews:
-    """ 
+    """
     This mixin defines the main Zwiki UI views as methods.
 
     These view methods usually just call a built-in template of the same
@@ -457,7 +457,7 @@ class SkinViews:
         if not self.checkSufficientId(REQUEST):
             return self.denied(
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
-        
+
         if ((not page or page == self.pageName()) and
             safe_hasattr(self,'wl_isLocked') and self.wl_isLocked()):
             return self.davLockDialog()
@@ -481,7 +481,7 @@ class SkinViews:
         # XXX can we simplify this/make dtml more version independent ?
         # NB 'id' and 'oldid' are no longer used, but provide them for
         # backwards compatibility with old templates
-            
+
         return self.getSkinTemplate('editform')(self,REQUEST,
                                                 page=page,
                                                 text=text,
@@ -535,7 +535,7 @@ class SkinViews:
         o    show wiki options (preferences)
         h    show help page
         s    go to search field
-        
+
         page functions:
         +    (in a plone/cmf site with skin switching set up) use zwiki's plone/cmf skin
         -    (in a plone/cmf site with skin switching set up) use zwiki's standard skin
@@ -544,7 +544,7 @@ class SkinViews:
         b    show backlinks (links to this page)
         d    show diffs (page edit history)
         y    show full history (in ZMI)
-        e    edit this page                       
+        e    edit this page
         x    edit with an external editor
              print this page (and subtopics)
         q    view page source (quick-view)
@@ -555,16 +555,16 @@ class SkinViews:
         n    next page
         p    previous page
         u    up to parent page
-        
+
         in edit form:
         s    save changes
         p    preview
-        
+
         when viewing diffs:
         n    next edit
         p    previous edit
         """)
-    
+
     security.declareProtected(Permissions.View, 'stylesheet')
     def stylesheet(self, REQUEST=None):
         """
@@ -624,12 +624,12 @@ class SkinUtils:
     #    XXX should be going away soon. Old comment: the wikipage template
     #    is usually applied by __call__ -> addSkinTo, but this method is
     #    provided so you can configure it as the"view" action
-    #    in portal_types -> Wiki Page -> actions and get use Zwiki's standard 
+    #    in portal_types -> Wiki Page -> actions and get use Zwiki's standard
     #    skin inside a CMF/Plone site.
     #    """
     #    return self.render(REQUEST=REQUEST,RESPONSE=RESPONSE)
     #wikipage_view = wikipage
-    
+
     # backwards compatibility - some old templates expect
     # wikipage_template().macros or wikipage_macros something something
     def wikipage_template(self, REQUEST=None): return self
@@ -697,7 +697,7 @@ class SkinUtils:
         """
         # != ignores any acquisition wrapper
         return self.getSkinTemplate(name) != TEMPLATES['badtemplate']
-        
+
     security.declareProtected(Permissions.View, 'addSkinTo')
     def addSkinTo(self,body,**kw):
         """
@@ -780,7 +780,7 @@ class SkinSwitchingUtils:
         Ie, are we using the plone display mode of zwiki's standard skin.
         """
         return (self.inCMF() and self.displayMode()=='plone')
-        
+
     security.declareProtected(Permissions.View, 'setCMFSkin')
     def setCMFSkin(self,REQUEST,skin):
         """
