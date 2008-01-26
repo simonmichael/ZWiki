@@ -23,6 +23,7 @@
   <body>
     <div metal:use-macro="here/macros/siteheader" />
     <div metal:define-slot="main" />
+    <div metal:use-macro="here/macros/sitefooter" />
   </body>
 </html>
 </metal:block>

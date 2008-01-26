@@ -1,0 +1,11 @@
+<html>
+  <body>
+
+    <!--  optional extra site footer XXX use talsafe -->
+    <div metal:define-macro="sitefooter" 
+         tal:condition="here/site_footer|nothing" 
+         tal:replace="structure here/site_footer" 
+         class="sitefooter" />
+
+  </body>
+</html>

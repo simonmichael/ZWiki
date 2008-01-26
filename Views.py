@@ -227,6 +227,7 @@ for s in os.listdir(abszwikipath('skins')):
         'pageheader',
         'pagemanagementform',
         'siteheader',
+        'sitefooter',
         'testtemplate',
         'badtemplate',
         ]:
