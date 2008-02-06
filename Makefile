@@ -41,31 +41,43 @@ epydoc:
 
 ## i18n
 
-# OLD WAY - all in darcs repo. Each month:
-# 1. record code changes
-# 2. accept/apply any pending darcs/diff patches to po files
-# 3. update pot and po files from code (make pot po) and record
+# TRANSLATION UPDATE PROCEDURE
+# ----------------------------
+# OLD WAY - accept translations only via darcs
+#  apply any patches to po files, update pot and po files from code, record
 #
-# NEW WAY - syncing back & forth with http://launchpad.net/rosetta
-# why accept changes in rosetta ? we get translations we wouldn't otherwise get
-# why accept changes in darcs ? we have to sync po files with latest code
-# Each month:
-# 1. record code changes
-# 2. accept/apply any pending darcs/diff patches to po files
-# 3. download latest good po files from rosetta, msgmerge with above and record
-# 4. add any new translations to makefile's language list
-# 5. update pot and po files from code (make pot po) and record
-# 6. re-upload all to rosetta
+# NEW WAY - accept translations via darcs or launchpad, syncing back & forth
+#  ensure no unrecorded changes
+#  apply any new translation patches
+#  apply any new launchpad translations
+#   download latest po files from launchpad
+#    request downloads
+#     https://translations.launchpad.net/zwiki/trunk/+pots/zwiki
+#     https://translations.launchpad.net/zwiki/trunk/+pots/zwiki-plone
+#    use download links in mail, unpack to i18n/new/*.po
+#   merge launchpad updates: make -C.. mergelp
+#   record
+#  add new translations to makefile
+#  update pot file from code: make -C.. pot
+#  update po files from pot: make -C.. po
+#  record pot/po updates
+#  re-upload pot/po files to launchpad
+#
+# PROBLEMS
+#  launchpad strips out #. Default lines, which are important ?
+#  i18nextract requires Zope 3, ZWiki/configure.zcml etc.
 
-LANGUAGES=af ar br de en_GB es et fi fr he hu it ja nl pl pt pt_BR ro ru sv th tr zh_CN zh_TW
+
+LANGUAGES=af ar de en_GB es et fi fr he hu it ja nl pl pt pt_BR ro ru sv th tr zh_CN zh_TW
+# fr is preferred to the incomplete fr_CA
 LANGUAGES_DISABLED=fr_CA ga
 
-# how to set up i18nextract:
-# cd /usr/local/src (or adapt ZOPE3SRC above)
-# svn co svn://svn.zope.org/repos/main/Zope3/trunk Zope3
-# cd Zope3; make inplace; cp sample_principals.zcml  principals.zcml
-# cd ZWiki; make pot should work
-# NB also add -x argument for any new directories that should be excluded
+# we use zope 3's i18nextract. Setup procedure:
+#  cd /usr/local/src
+#  svn co svn://svn.zope.org/repos/main/Zope3/trunk Zope3
+#  cd Zope3; make inplace; cp sample_principals.zcml  principals.zcml
+# also add -x argument for any new directories that should be excluded ?
+# then cd ZWiki; make pot should work
 ZOPE3SRC=/usr/local/src/Zope3
 I18NEXTRACT=PYTHONPATH=$(ZOPE3SRC)/src $(ZOPE3SRC)/utilities/i18nextract.py
 pot:
@@ -86,6 +98,13 @@ pot:
 	               t); \
 	    open('i18n/zwiki.pot','w').write(t)"  #one more for font-lock: "
 	rm -f skins/dtmlmessages.pt
+
+# osx msgmerge has some issues
+mergelp:
+	cd i18n; \
+	for L in $(LANGUAGES); do \
+	 msgmerge --no-wrap $$L.po new/zwiki-$$L.po >$$L.new; mv $$L.new $$L.po; \
+	 done
 
 po:
 	cd i18n; \
