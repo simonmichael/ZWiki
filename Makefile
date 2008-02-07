@@ -43,73 +43,32 @@ epydoc:
 
 # TRANSLATION UPDATE PROCEDURE
 # ----------------------------
-# WAY 1 - accept translations only via darcs
-#  apply any patches to po files, update pot and po files from code, record
-#
-# WAY 2 - accept translations via darcs or launchpad, syncing back & forth
-#  ensure no unrecorded changes
-#  apply any new translation patches
-#  apply any new launchpad translations
-#   download latest po files from launchpad
-#    request downloads
-#    use download links in mail, unpack to i18n/new/*.po
-#   merge launchpad updates: make -C.. mergelp
-#   record
-#  add new translations to makefile
-#  update pot file from code: make -C.. pot
-#  update po files from pot: make -C.. po
-#  record pot/po updates
-#  re-upload pot/po files to launchpad
-#
-# WAY 3 - accept translation only via launchpad
-#  translators update translations through launchpad
-#  developers update pot files and upload to launchpad periodically
+# translators update translations through launchpad, any time
+# developers update and upload pot files, any time
+# release manager, before release:
+#  updates and uploads pot files
+#   make pot, record
 #   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki/+upload
-#  release manager downloads and commits latest po files before release
-#   request downloads
-#    https://translations.launchpad.net/zwiki/trunk/+pots/zwiki
-#    https://translations.launchpad.net/zwiki/trunk/+pots/zwiki-plone
-#    use download links in mail, unpack to i18n/new/*.po
-#   make -C.. updatepo
+#   wait for upload
+#   wait for po status update
+#  downloads and records po files
+#   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki
+#   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki-plone
+#   use download links in mail, unpack to i18n/new/
+#    curl -s http://launchpadlibrarian.net/11807388/launchpad-export.tar.gz | tar xzvf - -C i18n/new 
+#   check for new languages, darcs wh -sl i18n
+#   make po, record
 #
 # PROBLEMS
-#  launchpad strips out some #. Default lines, did we need them ?
-#  separate zwiki-plone.pot complicates life unnecessarily ?
+#  launchpad strips out some #. Default lines ? need them ?
+#  zwiki-plone.pot complicates, figure out how to simplify
 
-LANGUAGES=af ar de en_GB es et fi fr he hu it ja nl pl pt pt_BR ro ru sv th tr zh_CN zh_TW
-# fr is preferred to the incomplete fr_CA
-LANGUAGES_DISABLED=fr_CA ga
+LANGUAGES=af ar de en_GB es et fi fr he hu it ja nl pl pt pt_BR ro ru sv th tr zh_CN zh_TW #fr_CA ga
 
-# # we use zope 3's i18nextract. Setup procedure:
-# #  cd /usr/local/src
-# #  svn co svn://svn.zope.org/repos/main/Zope3/trunk Zope3
-# #  cd Zope3; make inplace; cp sample_principals.zcml  principals.zcml
-# # also add -x argument for any new directories that should be excluded ?
-# # then cd ZWiki; make pot should work
-# ZOPE3SRC=/usr/local/src/Zope3
-# I18NEXTRACT=PYTHONPATH=$(ZOPE3SRC)/src $(ZOPE3SRC)/utilities/i18nextract.py
-# pot:
-# 	echo '<div i18n:domain="zwiki">' >skins/dtmlmessages.pt # dtml extraction hack
-# 	find plugins skins wikis -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt
-# 	echo '</div>' >>skins/dtmlmessages.pt
-# 	$(I18NEXTRACT) -d zwiki -p . -o ./i18n -x _darcs -x releases -x misc -x .NOTES -x tichu -x nautica
-# 	tail +12 i18n/zwiki-manual.pot >>i18n/zwiki.pot
-# 	python -c \
-# 	   "import re; \
-# 	    t = open('i18n/zwiki.pot').read(); \
-# 	    t = re.sub(r'(?s)^.*?msgid',r'msgid',t); \
-# 	    t = re.sub(r'Zope 3 Developers <zope3-dev@zope.org>',\
-# 	               r'<zwiki@zwiki.org>', \
-# 	               t); \
-# 	    t = re.sub(r'(?s)(\"Generated-By:.*?\n)', \
-# 	               r'\1\"Language-code: xx\\\n\"\n\"Language-name: X\\\n\"\n\"Preferred-encodings: utf-8 latin1\\\n\"\n\"Domain: zwiki\\\n\"\n', \
-# 	               t); \
-# 	    open('i18n/zwiki.pot','w').write(t)"  #one more for font-lock: "
-# 	rm -f skins/dtmlmessages.pt
-
+# requires 18ndude >= 2008/02/06
 pot:
 	echo '<div i18n:domain="zwiki">' >skins/dtmlmessages.pt # dtml extraction hack
-	find plugins skins wikis -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt                             #
+	find plugins skins wikis -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt                           #
 	echo '</div>' >>skins/dtmlmessages.pt                   #
 	i18ndude rebuild-pot --pot i18n/tmp.pot --create zwiki --exclude="_darcs" .
 	echo '# Gettext message file for Zwiki' >i18n/zwiki.pot
@@ -117,22 +76,13 @@ pot:
 	rm -f i18n/tmp.pot
 	rm -f skins/dtmlmessages.pt                             #
 
-# osx msgmerge has some issues
-mergelp:
-	cd i18n; \
-	for L in $(LANGUAGES); do \
-	 msgmerge --no-wrap $$L.po new/zwiki-$$L.po >$$L.new; mv $$L.new $$L.po; \
-	 done
-
 po:
 	cd i18n; \
 	for L in $(LANGUAGES); do \
-	 msgmerge -U --no-wrap $$L.po zwiki.pot; \
-	 msgmerge -U --no-wrap plone-$$L.po zwiki-plone.pot; \
+	 mv new/zwiki/zwiki-$$L.po $$L.po; \
 	 done
 
-# PTS auto-generates these, this is here just for sanity checking and stats
-mo:
+postats:
 	cd i18n; \
 	for L in $(LANGUAGES); do \
 	 echo $$L; \
@@ -142,17 +92,18 @@ mo:
 	rm -f *.mo
 
 # tar up po files for upload to rosetta
-rosettatarballs:
-	cd i18n; \
-	rm -f zwiki.tar zwiki-plone.tar; \
-	tar cvf zwiki.tar zwiki.pot; \
-	for L in $(LANGUAGES); do tar rvf zwiki.tar $$L.po; done; \
-	tar cvf zwiki-plone.tar zwiki-plone.pot; \
-	for L in $(LANGUAGES); do tar rvf zwiki-plone.tar plone-$$L.po; done; \
-	gzip -f zwiki.tar zwiki-plone.tar; \
-	mv zwiki.tar.gz zwiki-`date +%Y%m%d`.tar.gz; \
-	mv zwiki-plone.tar.gz zwiki-plone-`date +%Y%m%d`.tar.gz; \
+# poupload:
+# 	cd i18n; \
+# 	rm -f zwiki.tar zwiki-plone.tar; \
+# 	tar cvf zwiki.tar zwiki.pot; \
+# 	for L in $(LANGUAGES); do tar rvf zwiki.tar $$L.po; done; \
+# 	tar cvf zwiki-plone.tar zwiki-plone.pot; \
+# 	for L in $(LANGUAGES); do tar rvf zwiki-plone.tar plone-$$L.po; done; \
+# 	gzip -f zwiki.tar zwiki-plone.tar; \
+# 	mv zwiki.tar.gz zwiki-`date +%Y%m%d`.tar.gz; \
+# 	mv zwiki-plone.tar.gz zwiki-plone-`date +%Y%m%d`.tar.gz; \
 
+#potupload:
 
 
 ## testing
