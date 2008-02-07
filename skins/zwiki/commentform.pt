@@ -50,8 +50,7 @@
                 <input type="hidden" name="use_heading" value="1" />
                 <span tal:condition="python:here.isMailoutEnabled()" >
                   <small>(
-                  <span tal:define="nbsubscriber 
-                                    python:here.subscriberCount() + here.wikiSubscriberCount()">
+                  <span tal:define="nbsubscriber python:here.subscriberCount()">
                     <span tal:condition="python:nbsubscriber>1" i18n:translate="">
                       <span tal:content="python:str(nbsubscriber)" i18n:name="nb" /> subscribers
                     </span>

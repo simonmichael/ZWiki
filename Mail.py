@@ -183,15 +183,6 @@ class PageSubscriptionSupport:
                 for s in stripList(self._getSubscribers(parent))
                 if (not edits) or s.endswith(':edits')]
 
-    def subscriberCount(self, parent=0, edits=0):
-        """
-        Return the number of subscribers currently subscribed to this page.
-
-        With parent flag, count the parent folder's subscriber list instead.
-        With edits flag, count only subscribers who have requested all edits.
-        """
-        return len(self.subscriberList(parent,edits))
-
     def isSubscriber(self, email, parent=0):
         """
         Is this email address or member id subscribed to this page ?
@@ -266,10 +257,6 @@ class PageSubscriptionSupport:
         """whole-wiki version of subscriberList"""
         return self.subscriberList(parent=1,edits=edits)
 
-    def wikiSubscriberCount(self, edits=0):
-        """whole-wiki version of subscriberCount"""
-        return self.subscriberCount(parent=1,edits=edits)
-
     def isWikiSubscriber(self,email):
         """whole-wiki version of isSubscriber"""
         return self.isSubscriber(email,parent=1)
@@ -283,6 +270,22 @@ class PageSubscriptionSupport:
         return self.unsubscribe(email,REQUEST,parent=1)
 
     ## misc api methods ##################################################
+
+    def pageSubscriberCount(self, edits=0):
+        """The number of subscribers to this page.  With edits flag, count only
+        subscribers who have requested all edits."""
+        return len(self.subscriberList(parent=0,edits=edits))
+
+    def wikiSubscriberCount(self, edits=0):
+        """The number of subscribers to the whole wiki.  With edits flag, count
+        only subscribers who have requested all edits."""
+        return len(self.subscriberList(parent=1,edits=edits))
+
+    def subscriberCount(self, edits=0):
+        """The total number of subscribers to this page, including wiki
+        subscribers.  With edits flag, count only subscribers who have
+        requested all edits."""
+        return self.pageSubscriberCount(edits) + self.wikiSubscriberCount(edits)
 
     def subscribeThisUser(self,REQUEST):
         """
