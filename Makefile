@@ -43,17 +43,15 @@ epydoc:
 
 # TRANSLATION UPDATE PROCEDURE
 # ----------------------------
-# OLD WAY - accept translations only via darcs
+# WAY 1 - accept translations only via darcs
 #  apply any patches to po files, update pot and po files from code, record
 #
-# NEW WAY - accept translations via darcs or launchpad, syncing back & forth
+# WAY 2 - accept translations via darcs or launchpad, syncing back & forth
 #  ensure no unrecorded changes
 #  apply any new translation patches
 #  apply any new launchpad translations
 #   download latest po files from launchpad
 #    request downloads
-#     https://translations.launchpad.net/zwiki/trunk/+pots/zwiki
-#     https://translations.launchpad.net/zwiki/trunk/+pots/zwiki-plone
 #    use download links in mail, unpack to i18n/new/*.po
 #   merge launchpad updates: make -C.. mergelp
 #   record
@@ -63,41 +61,61 @@ epydoc:
 #  record pot/po updates
 #  re-upload pot/po files to launchpad
 #
+# WAY 3 - accept translation only via launchpad
+#  translators update translations through launchpad
+#  developers update pot files and upload to launchpad periodically
+#   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki/+upload
+#  release manager downloads and commits latest po files before release
+#   request downloads
+#    https://translations.launchpad.net/zwiki/trunk/+pots/zwiki
+#    https://translations.launchpad.net/zwiki/trunk/+pots/zwiki-plone
+#    use download links in mail, unpack to i18n/new/*.po
+#   make -C.. updatepo
+#
 # PROBLEMS
-#  launchpad strips out #. Default lines, which are important ?
-#  i18nextract requires Zope 3, ZWiki/configure.zcml etc.
-
+#  launchpad strips out some #. Default lines, did we need them ?
+#  separate zwiki-plone.pot complicates life unnecessarily ?
 
 LANGUAGES=af ar de en_GB es et fi fr he hu it ja nl pl pt pt_BR ro ru sv th tr zh_CN zh_TW
 # fr is preferred to the incomplete fr_CA
 LANGUAGES_DISABLED=fr_CA ga
 
-# we use zope 3's i18nextract. Setup procedure:
-#  cd /usr/local/src
-#  svn co svn://svn.zope.org/repos/main/Zope3/trunk Zope3
-#  cd Zope3; make inplace; cp sample_principals.zcml  principals.zcml
-# also add -x argument for any new directories that should be excluded ?
-# then cd ZWiki; make pot should work
-ZOPE3SRC=/usr/local/src/Zope3
-I18NEXTRACT=PYTHONPATH=$(ZOPE3SRC)/src $(ZOPE3SRC)/utilities/i18nextract.py
+# # we use zope 3's i18nextract. Setup procedure:
+# #  cd /usr/local/src
+# #  svn co svn://svn.zope.org/repos/main/Zope3/trunk Zope3
+# #  cd Zope3; make inplace; cp sample_principals.zcml  principals.zcml
+# # also add -x argument for any new directories that should be excluded ?
+# # then cd ZWiki; make pot should work
+# ZOPE3SRC=/usr/local/src/Zope3
+# I18NEXTRACT=PYTHONPATH=$(ZOPE3SRC)/src $(ZOPE3SRC)/utilities/i18nextract.py
+# pot:
+# 	echo '<div i18n:domain="zwiki">' >skins/dtmlmessages.pt # dtml extraction hack
+# 	find plugins skins wikis -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt
+# 	echo '</div>' >>skins/dtmlmessages.pt
+# 	$(I18NEXTRACT) -d zwiki -p . -o ./i18n -x _darcs -x releases -x misc -x .NOTES -x tichu -x nautica
+# 	tail +12 i18n/zwiki-manual.pot >>i18n/zwiki.pot
+# 	python -c \
+# 	   "import re; \
+# 	    t = open('i18n/zwiki.pot').read(); \
+# 	    t = re.sub(r'(?s)^.*?msgid',r'msgid',t); \
+# 	    t = re.sub(r'Zope 3 Developers <zope3-dev@zope.org>',\
+# 	               r'<zwiki@zwiki.org>', \
+# 	               t); \
+# 	    t = re.sub(r'(?s)(\"Generated-By:.*?\n)', \
+# 	               r'\1\"Language-code: xx\\\n\"\n\"Language-name: X\\\n\"\n\"Preferred-encodings: utf-8 latin1\\\n\"\n\"Domain: zwiki\\\n\"\n', \
+# 	               t); \
+# 	    open('i18n/zwiki.pot','w').write(t)"  #one more for font-lock: "
+# 	rm -f skins/dtmlmessages.pt
+
 pot:
 	echo '<div i18n:domain="zwiki">' >skins/dtmlmessages.pt # dtml extraction hack
-	find plugins skins wikis -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt
-	echo '</div>' >>skins/dtmlmessages.pt
-	$(I18NEXTRACT) -d zwiki -p . -o ./i18n -x _darcs -x releases -x misc -x .NOTES -x tichu -x nautica
-	tail +12 i18n/zwiki-manual.pot >>i18n/zwiki.pot
-	python -c \
-	   "import re; \
-	    t = open('i18n/zwiki.pot').read(); \
-	    t = re.sub(r'(?s)^.*?msgid',r'msgid',t); \
-	    t = re.sub(r'Zope 3 Developers <zope3-dev@zope.org>',\
-	               r'<zwiki@zwiki.org>', \
-	               t); \
-	    t = re.sub(r'(?s)(\"Generated-By:.*?\n)', \
-	               r'\1\"Language-code: xx\\\n\"\n\"Language-name: X\\\n\"\n\"Preferred-encodings: utf-8 latin1\\\n\"\n\"Domain: zwiki\\\n\"\n', \
-	               t); \
-	    open('i18n/zwiki.pot','w').write(t)"  #one more for font-lock: "
-	rm -f skins/dtmlmessages.pt
+	find plugins skins wikis -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt                             #
+	echo '</div>' >>skins/dtmlmessages.pt                   #
+	i18ndude rebuild-pot --pot i18n/tmp.pot --create zwiki --exclude="_darcs" .
+	echo '# Gettext message file for Zwiki' >i18n/zwiki.pot
+	tail +4 i18n/tmp.pot >>i18n/zwiki.pot
+	rm -f i18n/tmp.pot
+	rm -f skins/dtmlmessages.pt                             #
 
 # osx msgmerge has some issues
 mergelp:
