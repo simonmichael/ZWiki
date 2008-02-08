@@ -24,9 +24,11 @@ RSYNCPATH=$(HOST):/repos/$(PRODUCT)
 LHOST=localhost:8080
 CURL=curl -o.curllog -sS -n
 
-## misc
 
 default: test
+
+
+## docs
 
 docs: doxygen epydoc
 
@@ -37,6 +39,7 @@ doxygen:
 epydoc:
 	rm -rf doc/epydoc/*
 	epydoc --parse-only --exclude='_tests' --docformat=restructuredtext -o doc/epydoc --name=Zwiki --url=http://zwiki.org --graph=all .
+
 
 
 ## i18n
@@ -50,14 +53,20 @@ epydoc:
 #   make pot, record
 #   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki/+upload
 #   wait for upload
-#   wait for po status update
+#    https://translations.launchpad.net/zwiki/trunk/+imports
 #  downloads and records po files
 #   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki
 #   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki-plone
 #   use download links in mail, unpack to i18n/new/
-#    curl -s http://launchpadlibrarian.net/11807388/launchpad-export.tar.gz | tar xzvf - -C i18n/new 
+#    curl -s http://launchpadlibrarian.net/11807388/launchpad-export.tar.gz -o launchpad.tar.gz
+#    curl -s http://launchpadlibrarian.net/11807673/launchpad-export.tar.gz -o launchpad-plone.tar.gz
 #   check for new languages, darcs wh -sl i18n
 #   make po, record
+#  re-uploads po files to update status bars..
+#   make poupload
+#   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki/+upload
+#   wait for upload
+#    https://translations.launchpad.net/zwiki/trunk/+imports
 #
 # PROBLEMS
 #  launchpad strips out some #. Default lines ? need them ?
@@ -76,10 +85,26 @@ pot:
 	rm -f i18n/tmp.pot
 	rm -f skins/dtmlmessages.pt                             #
 
+# tar up pot & po files for upload to launchpad
+poupload:
+	cd i18n; \
+	rm -f zwiki.tar.gz; \
+	tar cvf zwiki.tar zwiki.pot; \
+	for L in $(LANGUAGES); do tar rvf zwiki.tar $$L.po; done; \
+	tar rvf zwiki.tar zwiki-plone.pot; \
+	for L in $(LANGUAGES); do tar rvf zwiki.tar plone-$$L.po; done; \
+	gzip -f zwiki.tar; 
+
+# unpack po files downloaded from launchpad
 po:
 	cd i18n; \
+  rm -rf new; \
+  mkdir new; \
+  tar xzvf launchpad.tar.gz -C new; \
+  tar xzvf launchpad-plone.tar.gz -C new; \
 	for L in $(LANGUAGES); do \
 	 mv new/zwiki/zwiki-$$L.po $$L.po; \
+	 mv new/i18n/zwiki-plone-$$L.po plone-$$L.po; \
 	 done
 
 postats:
@@ -91,35 +116,19 @@ postats:
 	 done; \
 	rm -f *.mo
 
-# tar up po files for upload to rosetta
-# poupload:
-# 	cd i18n; \
-# 	rm -f zwiki.tar zwiki-plone.tar; \
-# 	tar cvf zwiki.tar zwiki.pot; \
-# 	for L in $(LANGUAGES); do tar rvf zwiki.tar $$L.po; done; \
-# 	tar cvf zwiki-plone.tar zwiki-plone.pot; \
-# 	for L in $(LANGUAGES); do tar rvf zwiki-plone.tar plone-$$L.po; done; \
-# 	gzip -f zwiki.tar zwiki-plone.tar; \
-# 	mv zwiki.tar.gz zwiki-`date +%Y%m%d`.tar.gz; \
-# 	mv zwiki-plone.tar.gz zwiki-plone-`date +%Y%m%d`.tar.gz; \
-
-#potupload:
 
 
 ## testing
 
-# To run Zwiki unit tests, you need Zope 2.9 or greater. Some additional
-# tests will run only if Plone is installed.
+# To run Zwiki unit tests: install Zope 2.10, adjust INSTANCE paths,
+# install or link your ZWiki directory in $INSTANCE/Products.
+# Some additional tests will run if Plone is installed.
+# minimal products, fast startup
+INSTANCE=/zope2
+# all products
+BIGINSTANCE=/zope1
 
-# The testrunner will test code in this INSTANCE, regardless of your
-# current dir or testrunner args. Adjust the path as needed.
-# For quicker testing, you may want to keep only minimal products here..
-INSTANCE=/zope1
-
-# ..and all products (eg Plone) here.
-BIGINSTANCE=/zope2
-
-# zwiki tests are kept in *_tests.py in the same directory as code
+# we keep zwiki's tests in *_tests.py alongside the code
 ZWIKITESTS=--tests-pattern='_tests$$' --test-file-pattern='_tests$$'
 
 # run tests as quickly as possible
@@ -164,37 +173,7 @@ testresults:
 testhelp:
 	$(INSTANCE)/bin/zopectl test --help
 
-## upload (rsync and darcs)
 
-rcheck:
-	rsync -ruvC -e ssh -n releases $(RSYNCPATH)
-
-rpush:
-	rsync -ruvC -e ssh releases $(RSYNCPATH)
-
-check:
-	darcs whatsnew --summary
-
-push:
-	darcs push -v -a $(REPO)
-
-push-exp:
-	darcs push -v -a $(HOST):/repos/$(PRODUCT)-exp
-
-pull-simon pull:
-	darcs pull --interactive -v http://zwiki.org/repos/ZWiki
-
-pull-lele:
-	darcs pull --interactive -v http://nautilus.homeip.net/~lele/projects/ZWiki
-
-pull-bob:
-	darcs pull --interactive -v http://bob.mcelrath.org/darcs/zwiki
-
-pull-bobtest:
-	darcs pull --interactive -v http://bob.mcelrath.org/darcs/zwiki-testing
-
-pull-bill:
-	darcs pull --interactive -v http://page.axiom-developer.org/repository/ZWiki
 
 ## release
 
@@ -235,41 +214,67 @@ tarball: clean
 	@rm -rf $(PRODUCT)
 
 
+
+## misc. syncing
+
+rcheck:
+	rsync -ruvC -e ssh -n releases $(RSYNCPATH)
+
+rpush:
+	rsync -ruvC -e ssh releases $(RSYNCPATH)
+
+check:
+	darcs whatsnew --summary
+
+push:
+	darcs push -v -a $(REPO)
+
+push-exp:
+	darcs push -v -a $(HOST):/repos/$(PRODUCT)-exp
+
+pull-simon pull:
+	darcs pull --interactive -v http://zwiki.org/repos/ZWiki
+
+pull-lele:
+	darcs pull --interactive -v http://nautilus.homeip.net/~lele/projects/ZWiki
+
+pull-bob:
+	darcs pull --interactive -v http://bob.mcelrath.org/darcs/zwiki
+
+pull-bobtest:
+	darcs pull --interactive -v http://bob.mcelrath.org/darcs/zwiki-testing
+
+pull-bill:
+	darcs pull --interactive -v http://page.axiom-developer.org/repository/ZWiki
+
+getproducts:
+	cd /zope2/Products; \
+	  rsync -rl --progress --exclude="*.pyc" zwiki.org:/zope2/Products .
+
+
+
 # misc
 
-linecounts:
-	wc -l `ls *.py |grep -v _tests` |sort -nr >LINECOUNTS
+tags: xctags
 
-PYFILES=*.py [A-Za-z]*/*.py [A-Za-z]*/*/*.py [A-Za-z]*/*/*/*.py
-pyflakes:
-	pyflakes $(PYFILES)
+# to make a good tag file, get exuberant ctags
+XCTAGS=ctags -eR --langmap=python:+.cpy.vpy,c:+.css,html:+.pt.cpt.dtml.xml.zcml
+xctags:
+	$(XCTAGS) --exclude=@.tagsexclude * || $(XCTAGS) *
 
-tags: xtags
-
+# old way
 etags:
 	find $$PWD/ -name '*.py' -o  -name '*dtml' -o -name '*.pt' \
 	  -o -name '*.css' -o -name '*.pot' -o -name '*.po' \
 	  -o -name _darcs  -prune -type f \
-	  -o -name contrib -prune -type f \
-	  -o -name misc    -prune -type f \
 	  -o -name old     -prune -type f \
-	  -o -name .old     -prune -type f \
 	  -o -name doc     -prune -type f \
-	  -o -name .NOTES     -prune -type f \
 	  | xargs etags
-
-XTAGS=ctags-exuberant -eR --langmap=python:+.cpy.vpy,c:+.css,html:+.pt.cpt.dtml.xml.zcml
-xtags:
-	$(XTAGS) --exclude=@.tagsexclude * || $(XTAGS) *
 
 zopetags:
 	cd /zope/lib/python; \
 	  ~/bin/eptags.py `find $$PWD/ -name '*.py' -o  -name '*.dtml' -o -name '*.pt' \
 	     -o -name old     -prune -type f `
-
-getproducts:
-	cd /zope2/Products; \
-	  rsync -rl --progress --exclude="*.pyc" zwiki.org:/zope2/Products .
 
 producttags:
 	cd /zope2/Products; \
@@ -285,11 +290,29 @@ plonetags:
 alltags: tags producttags zopetags
 	cat TAGS /zope2/Products/TAGS /zope/lib/python/TAGS >TAGS.all
 
+linecounts:
+	wc -l `ls *.py |grep -v _tests` |sort -nr >LINECOUNTS
+
+PYFILES=*.py [A-Za-z]*/*.py [A-Za-z]*/*/*.py [A-Za-z]*/*/*/*.py
+pyflakes:
+	pyflakes $(PYFILES)
+
 clean:
 	rm -f .*~ *~ *.tgz *.bak *.hi *.ho `find . -name "*.pyc"`
 
 Clean: clean
 	rm -f i18n/*.mo skins/dtmlmessages.pt
+
+# ensure all files in zwiki.org repo have the right permissions for all
+# users, darcs mail-in etc. Everything should have group "zwiki", be
+# group-writable, and directories should have the setgid bit set.
+# May need to run this periodically since certain operations mess up
+# the permissions, such as... (?)
+# Run as superuser in the ZWiki dir on zwiki.org.
+fixperms:
+	chgrp -R zwiki *
+	chmod -R ug+rw *
+	find . -type d -exec chmod g+s {}  \;
 
 
 # misc automation examples
@@ -449,14 +472,3 @@ list_authors: list_authors.hs
 reinstall:
 	curl -n 'http://plone.demo.zwiki.org/portal_quickinstaller/reinstallProducts?products=ZWiki'
 
-# ensure all files in zwiki.org repo have the right permissions for all
-# users, darcs mail-in etc. Everything should have group "zwiki", be
-# group-writable, and directories should have the setgid bit set.
-# May need to run this periodically since certain operations mess up
-# the permissions, such as... (?)
-# Run this as root in the ZWiki dir on zwiki.org.
-
-fixperms:
-	chgrp -R zwiki *
-	chmod -R ug+rw *
-	find . -type d -exec chmod g+s {}  \;
