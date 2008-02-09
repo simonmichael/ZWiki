@@ -47,9 +47,48 @@ Subject: %s
 
     __str__ = __call__
 
-TESTMSG = str(TestMessage())
+TESTMSG = """\
+From: sender
+To: recipient
+Date: date
+Subject: subject
 
-TESTDARCSMSG = """\
+mailin comment
+
+
+"""
+
+BOTTOMQUOTEDMSG = """\
+From: sender
+To: recipient
+Date: date
+Subject: subject
+
+mailin comment
+
+-----Original Message-----
+From: someone
+Sent: ...
+To: ...
+Subject: blah blah blah
+
+blah BLAH
+"""
+
+BOTTOMQUOTEDMSG2 = """\
+From: sender
+To: recipient
+Date: date
+Subject: subject
+
+mailin comment
+
+On Jan 14, 2008 10:28 AM, Someone <someone@here> wrote:
+>
+> BLAH BLAH
+"""
+
+DARCSMSG = """\
 To: a@b.com
 From: a@b.com
 Subject: darcs patch: rename changes_rss to edits_rss
@@ -350,7 +389,7 @@ Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
     def testMailinDarcsPatch(self):
         p = self.p
         p.subscribe(TESTSENDER)
-        mailin.mailin(p,TESTDARCSMSG)
+        mailin.mailin(p,DARCSMSG)
         self.assertEqual(1, p.commentCount())
         self.assert_('rename changes_rss to edits_rss' in p.text())
         # keeps a darcs patch part as well as first plain text part
@@ -418,3 +457,8 @@ blah'''),
  --
 blah''')
 
+    def testStripBottomQuoted(self):
+        def linecount(s): return len(s.split('\n'))
+        # re bug.. should be 7 lines
+        self.assertEqual(linecount(mailin.stripBottomQuoted(BOTTOMQUOTEDMSG)),8)
+        #self.assertEqual(linecount(mailin.stripBottomQuoted(BOTTOMQUOTEDMSG2)),8)

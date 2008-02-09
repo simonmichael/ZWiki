@@ -281,13 +281,9 @@ class MailIn:
         """
         # strip trailing newlines that seem to get added in transit
         body = re.sub(r'(?s)\n+$',r'\n',body)
+        body = stripBottomQuoted(body)
         # strip Bob's signature
         body = self.stripSignature(body)
-        # strip TBC (typical bloody citations)
-        #body = re.sub(
-        #    r'(?si)----- ?message d\'origine.*',r'',body)
-        #body = re.sub(
-        #    r'(?si)----- ?original message.*',r'',body)
         return body
 
     def stripSignature(self,body):
@@ -509,6 +505,11 @@ class MailIn:
 #                        msg.aliasUsed = alias
 #                        break
 #        return folder
+
+def stripBottomQuoted(body):
+    origmsg = '(Original Message|message d\'origine)' # XXX i18n.. ?
+    body = re.sub(r'(?smi)^-+ ?%s ?-+$.*' % origmsg, '', body)
+    return body
 
 
 def mailin(self, msg):
