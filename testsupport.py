@@ -33,7 +33,7 @@ following would be good to figure out and make easy:
 * http://plone.org/documentation/how-to/reducing-unit-test-times
 """
 
-import sys, re, unittest
+import sys, re, unittest, doctest
 
 import OFS, DateTime
 from Testing import ZopeTestCase
