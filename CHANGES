@@ -1,6 +1,20 @@
 Leading to Zwiki 0.61
 =====================
 
+  * strip (some) bottom-quoting from mailins ("----Original message:---- ...")
+
+  * replace: subscriberCount, wikiSubscriberCount with: subscriberCount,
+    pageSubscriberCount, wikiSubscriberCount
+
+  * import latest translations from launchpad
+
+  * recognise a site_footer attribute, like site_header, useful for eg
+    stats tracking
+
+  * include Makefile in tarball so that folks can see how to run tests
+
+  * switch to i18ndude for pot/po files
+
   * start a developer style guide, some developer docs cleanup
 
   * Rewrote the rating module to use a BTree to store votes, instead of a
