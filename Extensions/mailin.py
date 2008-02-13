@@ -507,8 +507,8 @@ class MailIn:
 #        return folder
 
 def stripBottomQuoted(body):
-    origmsg = '(Original Message|message d\'origine)' # XXX i18n.. ?
-    body = re.sub(r'(?smi)^-+ ?%s ?-+$.*' % origmsg, '', body)
+    origmsg = '(?:Original Message|message d\'origine)' # XXX i18n.. ?
+    body = re.sub(r'(?smi)^-+%s-+$.*' % origmsg, '', body)
     return body
 
 
