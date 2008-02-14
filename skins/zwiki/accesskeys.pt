@@ -1,6 +1,4 @@
-<html>
-  <body>
-    <metal:block metal:define-macro="accesskeys"
+<metal:block metal:define-macro="accesskeys"
                  tal:define="pageurl here/pageUrl;
                              thisurl python:here.urlquote(request.get('URL'));
                              ">
@@ -28,7 +26,4 @@
       <a tal:attributes="href python:here.nextPageUrl() or here.firstPageUrl()" accesskey="n"></a>
       <a tal:attributes="href python:here.previousPageUrl() or here.lastPageUrl()" accesskey="p"></a>
       <a tal:attributes="href here/upUrl" accesskey="u"></a>
-      <a tal:attributes="href string:${here/pageUrl}/showAccessKeys" accesskey="0"></a>
     </metal:block>
-  </body>
-</html>

@@ -99,7 +99,6 @@
         <a tal:attributes="href python:here.nextPageUrl() or here.firstPageUrl()" accesskey="n"></a>
         <a tal:attributes="href python:here.previousPageUrl() or here.lastPageUrl()" accesskey="p"></a>
         <a tal:attributes="href here/upUrl" accesskey="u"></a>
-        <a tal:attributes="href string:${here/pageUrl}/showAccessKeys" accesskey="0"></a>
       </span>
 
       <!-- main links bar -->

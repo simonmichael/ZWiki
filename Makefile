@@ -6,7 +6,7 @@
 # check for translations
 # check tests pass
 # check for late tracker issues
-# check showAccessKeys,README,wikis/,skins/,zwiki.org HelpPage,QuickReference
+# check README,wikis/,skins/,zwiki.org HelpPage,QuickReference
 # darcs changes --from-tag NN into CHANGES & edit; don't add header at top
 # update version.txt
 # make release

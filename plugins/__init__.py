@@ -17,7 +17,7 @@ hard-coded dependencies in other parts of the code, such as:
 - dependencies in the Admin upgrade methods - resolved ?
 - issue tracker access key and link in wikipage template
 - tracker action in CMFInit fti
-- tracker hotkey in showAccessKeys
+- tracker access key
 - issue linking and link colouring in renderLink
 - isIssue arg support in pages
 - issue creation in mailin

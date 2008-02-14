@@ -516,56 +516,6 @@ class SkinViews:
         """
         return self.getSkinTemplate('helppage')(self,REQUEST)
 
-    security.declareProtected(Permissions.View, 'showAccessKeys')
-    def showAccessKeys(self):
-        """
-        Show the access keys supported by the built-in skins.
-        """
-        return _("""
-        Access key reference (see also http://zwiki.org/QuickReference#access-keys)
-
-        0    show these access key assignments
-
-        wiki functions:
-        f    show front page
-        c    show wiki contents
-        r    show wiki recent changes
-             show discussion page
-        t    show issue tracker
-        i    show wiki index
-        o    show wiki options (preferences)
-        h    show help page
-        s    go to search field
-
-        page functions:
-        +    (in a plone/cmf site with skin switching set up) use zwiki's plone/cmf skin
-        -    (in a plone/cmf site with skin switching set up) use zwiki's standard skin
-        v    view page
-        m    mail subscription
-        b    show backlinks (links to this page)
-        d    show diffs (page edit history)
-        y    show full history (in ZMI)
-        e    edit this page
-        x    edit with an external editor
-             print this page (and subtopics)
-        q    view page source (quick-view)
-             wipe and regenerate this page's render cache
-             go to subtopics
-             go to comments (messages)
-             go to page author's home page, if possible
-        n    next page
-        p    previous page
-        u    up to parent page
-
-        in edit form:
-        s    save changes
-        p    preview
-
-        when viewing diffs:
-        n    next edit
-        p    previous edit
-        """)
-
     security.declareProtected(Permissions.View, 'stylesheet')
     def stylesheet(self, REQUEST=None):
         """
