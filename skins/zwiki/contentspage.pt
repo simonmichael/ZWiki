@@ -21,6 +21,7 @@
   <body>
     <metal:block metal:fill-slot="main">
       <metal:macro metal:use-macro="here/macros/accesskeys" />
+      <metal:macro metal:use-macro="here/macros/sitelinks" />
       <h1>
 
        <span tal:condition="container/title" tal:omit-tag="">
