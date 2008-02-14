@@ -516,6 +516,8 @@ class SkinViews:
         """
         return self.getSkinTemplate('helppage')(self,REQUEST)
 
+    showAccessKeys = helppage #backwards compatibility
+
     security.declareProtected(Permissions.View, 'stylesheet')
     def stylesheet(self, REQUEST=None):
         """
