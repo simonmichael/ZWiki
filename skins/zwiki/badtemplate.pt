@@ -9,6 +9,7 @@
   <body>
     <div metal:fill-slot="main">
       <metal:macro metal:use-macro="here/macros/accesskeys" />
+      <metal:macro metal:use-macro="here/macros/sitelinks" />
       <h1 i18n:translate="">Bad template</h1>
       <p i18n:translate="">
         There was a problem locating one of this wiki's skin templates.

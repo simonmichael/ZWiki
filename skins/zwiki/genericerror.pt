@@ -9,6 +9,7 @@
   <body>
     <div metal:fill-slot="main">
       <metal:macro metal:use-macro="here/macros/accesskeys" />
+      <metal:macro metal:use-macro="here/macros/sitelinks" />
       <h1 tal:content="options/messagetitle">Message Title</h1>
       <tal:loop tal:repeat="messagepara options/messages">
       <p tal:content="messagepara"></p>

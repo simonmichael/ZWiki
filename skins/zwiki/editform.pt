@@ -40,6 +40,7 @@
       onload="document.forms[0].text.focus();"
       >
       <metal:macro metal:use-macro="here/macros/accesskeys" />
+      <metal:macro metal:use-macro="here/macros/sitelinks" />
       <div class="formcontent">
         <form method="post" enctype="multipart/form-data" action=""
               tal:attributes="action string:${here/pageUrl}">

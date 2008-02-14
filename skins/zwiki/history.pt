@@ -10,6 +10,7 @@
     <!-- the diff browser -->
     <div metal:fill-slot="main">
       <metal:macro metal:use-macro="here/macros/accesskeys" />
+      <metal:macro metal:use-macro="here/macros/sitelinks" />
       <h1 i18n:translate="" tal:content="string:Edit history for ${here/pageName}" />
       <div class="formcontent">
         <form tal:attributes="action here/pageUrl">
