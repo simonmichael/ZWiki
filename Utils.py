@@ -369,10 +369,7 @@ class PageUtils:
     def feedUrl(self):
         return self.defaultPageUrl() + '/pages_rss'
 
-    security.declareProtected(Permissions.View, 'discussionUrl')
-    def discussionUrl(self):
-        p = self.pageWithName('GeneralDiscussion')
-        return (p and p.pageUrl()) or ''
+    discussionUrl = defaultPageUrl
 
     security.declareProtected(Permissions.View, 'indexUrl')
     def indexUrl(self):

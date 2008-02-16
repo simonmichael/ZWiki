@@ -38,11 +38,6 @@
          title="show wiki recent changes"
          i18n:attributes="title">
       <span i18n:translate="">changes</span></a>
-      <a href="" tal:attributes="href here/discussionUrl"
-         tal:condition="here/discussionUrl"
-         title="show discussion page"
-         i18n:attributes="title">
-      <span i18n:translate="">discussion</span></a>
       <a href="" tal:attributes="href here/trackerUrl"
          tal:condition="here/hasIssueTracker"
          title="show issue tracker"
