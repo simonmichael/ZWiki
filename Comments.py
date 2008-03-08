@@ -135,28 +135,8 @@ class PageCommentsSupport:
 
     security.declareProtected(Permissions.View, 'upgradeComments')
     def upgradeComments(self,REQUEST=None):
-        """
-        Update the format of any comments on this page.
-        """
-        # XXX it would be good if this could upgrade old-style
-        # (non-rfc2822) zwiki comments to the new style
-        pass
-
-        # convert From: to proper From delimiters, no longer needed
-        #if re.search(r'\n\nFrom: ',self.text()):
-        #    msgs = ''
-        #    mailbox = PortableUnixMailbox(StringIO(
-        #        re.sub(r'\n\nFrom: ',r'\n\nFrom \nFrom: ',self.text())))
-        #    m = mailbox.next()
-        #    while m is not None:
-        #        msgs += self.fromLineFrom(m.get('from'),m.get('date'))
-        #        msgs += string.join(m.headers,'')
-        #        msgs += '\n'
-        #        msgs += m.fp.read()
-        #        m = mailbox.next()
-        #    new = re.split('\n\nFrom: ',self.text(),1)[0]+'\n\n'+msgs
-        #    self.edit(text=new, REQUEST=REQUEST,log='upgraded comments')
-        #    BLATHER('upgraded comments on',self.id())
+        """Update the format of any comments on this page."""
+        pass # all current zwikis use the rfc2822 format
 
     # backwards compatibility
     supportsMessages = supportsComments
