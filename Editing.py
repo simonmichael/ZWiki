@@ -318,7 +318,7 @@ class PageEditingSupport:
 
     def lastLog(self):
         """Accessor for this page's last edit log message."""
-        return self.last_log
+        return self.last_log or ''
 
     def handleEditText(self,text,REQUEST=None, subjectSuffix='', log=''):
         old = self.read()
