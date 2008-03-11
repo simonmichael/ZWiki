@@ -1010,76 +1010,23 @@ class ZWikiPage(
         """
         Look up metadata (brains) for some or all pages in this wiki.
 
-        optimisation: prior to 0.22 this returned the actual page objects,
-        but to help with caching efficiency it now uses the catalog, if
-        possible.  The page metadata objects are catalog brains (search
-        results) containing the catalog's metadata, or workalikes
-        containing a limited number of fields and getObject().
+        This is a wrapper for searching the wiki's catalog. It filters
+        out results for other folders, to allow us to share a catalog
+        (eg within Plone).
 
-        Warning: fields such as the parents list may be
-        copies-by-reference, and should not be mutated.
-
-        Any keyword arguments will be passed through to the catalog, for
-        refining the search, sorting etc. When there is no catalog, only
-        these arguments are supported: id, Title, text, isIssue, and they
-        do case insensitive partial matching.  With no arguments, all
-        pages in the wiki are returned.
-
-        With a partial catalog, ie a catalog which does not include all
-        the metadata Zwiki expects, we'll get the missing fields from the
-        zodb and add them to the catalog brains. In this case the
-        catalog's caching advantage is lost.
-
-        ensureCompleteMetadata may return None, indicating a stale catalog
-        entry; we filter those out.
-
-        Different catalog configurations screw up our title and text
-        searches somewhat. For the standard search form, we want: case
-        insensitive, partial matching in page names and page text.
-        
+        Up to 0.60 it used to fall back to a (less cache-friendly)
+        zodb search when there was no catalog, and this turns out to
+        be bad when viewing old revisions, which don't have a catalog,
+        so we no longer do that.
         """
-        if self.hasAllCatalogFields():
-            wikipath = self.wikiPath()
-            def inthiswiki(b):
-                p = b.getPath()
-                return p[:p.rfind('/')] == wikipath
-            return [b for b in
-                    self.searchCatalog(meta_type=self.meta_type,path=wikipath,**kw)
-                    if inthiswiki(b)]
-
-        else:
-            results = []
-            for p in self.pageObjects(): results.append(self.metadataFor(p))
-            # emulate (some) catalog arguments in a rudimentary way
-            # these are all partial matching, case insensitive
-            if kw:
-                for arg in kw.keys():
-                    value = kw[arg]
-                    # catalog may use wildcards, but we won't
-                    def stripWildCardsFrom(s):
-                        try: return s.replace('*','')
-                        except AttributeError: return s
-                    value = stripWildCardsFrom(value)
-                    if arg == 'text':
-                        results = filter(
-                            lambda x:find(x.getObject().text().lower(),
-                                          value.lower()) != -1,
-                            results)
-                    if arg == 'id':
-                        results = filter(
-                            lambda x:find(x.id.lower(),value.lower()) != -1,
-                            results)
-                    if arg == 'Title':
-                        results = filter(
-                            lambda x:find(x.Title.lower(),value.lower()) != -1,
-                            results)
-                    if arg == 'isIssue':
-                        results = filter(
-                            lambda x:self.isIssue(x.Title) == value,
-                            results)
-                    #if arg == 'sort_order':
-                    #if arg == 'sort_on':
-            return results
+        if not self.hasAllCatalogFields(): return []
+        wikipath = self.wikiPath()
+        def inthiswiki(b):
+            p = b.getPath()
+            return p[:p.rfind('/')] == wikipath
+        return [b for b in
+                self.searchCatalog(meta_type=self.meta_type,path=wikipath,**kw)
+                if inthiswiki(b)]
 
     security.declareProtected(Permissions.View, 'pageCount')
     def pageCount(self):
