@@ -397,7 +397,11 @@ class PageSubscriptionSupport:
                 # NB doesn't work with CMFMember
                 if safe_hasattr(memberdata,'_members'):
                     member = memberdata._members.get(subscriber,None)
-            email = getattr(member,'email','')
+            # dumb robust fix for http://zwiki.org/1400
+            try:
+                email = member.getProperty('email',getattr(member,'email',''))
+            except AttributeError:
+                email = getattr(member,'email','')
         else:
             email = ''
         return email.lower() or None
