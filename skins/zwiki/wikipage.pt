@@ -6,13 +6,13 @@
     <metal:block metal:fill-slot="head_slot">
       <metal:block metal:use-macro="here/macros/pagesearchtags" />
     </metal:block>
-    <!-- override plone styles via main_template's css_slot:  -->
-    <metal:block metal:fill-slot="css_slot">
+    <!-- plone style overrides -->
+    <metal:block metal:fill-slot="style_slot">
       <link rel="stylesheet" type="text/css" href=""
             tal:attributes="href string:${here/defaultPageUrl}/stylesheet"
             tal:condition="python:0 # add the full Zwiki stylesheet to plone's ? no" />
       <style type="text/css">
-        <!-- .documentActions {margin-top:0} /* fix layout in plone 2.0 */-->
+        .documentActions {display:none;}
       </style>
     </metal:block>
   </head>
