@@ -1,55 +1,58 @@
 Leading to Zwiki 0.61
 =====================
 
-  * strip (some) bottom-quoting from mailins ("----Original message:---- ...")
+Upgrade notes
+	
+Configuring
 
-  * replace: subscriberCount, wikiSubscriberCount with: subscriberCount,
-    pageSubscriberCount, wikiSubscriberCount
+  * /setupDtmlMethods now installs a sitemap.xml, which might reduce
+    load from google and possibly other search bots (Simon Michael, Sascha Welter)
 
-  * import latest translations from launchpad
+  * remove the anti-spam 24 hour indexing delay introduced in 0.41, for
+    quicker indexing of actively-edited pages (#1387)
 
   * recognise a site_footer attribute, like site_header, useful for eg
     stats tracking
 
-  * include Makefile in tarball so that folks can see how to run tests
-
-  * switch to i18ndude for pot/po files
-
-  * start a developer style guide, some developer docs cleanup
-
-  * Rewrote the rating module to use a BTree to store votes, instead of a
-    dictionary. Saves some kB writing to Data.fs and avoids
-    conflicts. (Sascha Welter)
-
-  * #1393 Catch ValueError too on importing unknown pagetypes. (Sascha
-     Welter)
-
-  * code review and cleanup. All significant methods in Editing have now
-    been reviewed/tightened up.
-
-  * new methods expungeLastEditor, expungeLastEditorEverywhere, feedUrl,
-    setCreatorLike, setLastEditorLike
-
-  * renamed methods: changes_rss -> edits_rss
-
-  * Catch only AttributeError for self.DestinationURL(). (Sascha Welter)
-
-  * make bare page rendering at the debug prompt work again, cleanup
-
-  * more bare excepts refined (Sascha Welter)
-
-  * Change content-type of the SomePage/text (or /src) methods to UTF-8.
-    Makes the /text view of wiki pages much more usefull for non-ascii
+  * Change content-type of the SomePage/text (or /src) methods to UTF-8,
+    making the /text view of wiki pages much more useful for non-ascii
     languages. (Sascha Welter)
 
-  * a google sitemap.xml, installed by setupDtmlMethod.. may reduce load
-    from search bots (Simon Michael, Sascha Welter)
+Browsing
 
-  * remove the anti-spam 24 hour indexing delay introduced in 0.41, for
-    better indexing of actively-edited pages (#1387)
+  * "fix" the plone 3 document actions layout glitch, by hiding them. This
+    release Zwiki should work as well with Plone 3.x as previous versions
+    did with Plone 2.x.
 
-  * keep any text/x-darcs-patch part, as well as the first text/plain part
-    of a mailin
+  * add the wiki navigation links (home, contents, changes..) to all forms
+
+  * merge access key help with the help page
+
+  * drop the "discussion" nav link activated by GeneralDiscussion, it is a
+    special case and confusable with per-page discussion
+
+Mail
+
+  * fix a bug preventing mail-out in some Plone versions (#1400)
+
+  * strip (some) annoying bottom-quoting from mailins ("----Original message:---- ...")
+
+  * support for mailing darcs patches through a zwiki: keep any
+    text/x-darcs-patch part, as well as the first text/plain part
+
+Translations
+
+  * import latest translations from launchpad
+
+  * switch to launchpad-only translations process, see http://zwiki.org/I18n
+
+  * switch to i18ndude for generating pot files
+
+General
+
+  * More functional tests: recentchanges and options (Sascha Welter)
+
+  * exception handling cleanups (Sascha Welter)
 
   * #1272 - create PageBrain only for Zwiki Pages.  Since we are now
     ensuring that there is always a catalog in a Zwiki, the method
@@ -58,6 +61,31 @@ Leading to Zwiki 0.61
     the time between an upgrade and running the /upgradeAll
     method. (Sascha Welter)
 
+  * Rewrote the rating module to use a BTree to store votes, instead of a
+    dictionary. Saves some kB writing to Data.fs and avoids
+    conflicts. (Sascha Welter)
+
+  * code review and cleanup. All significant methods in Editing have now
+    been reviewed (by Simon) and tightened up
+
+  * make lastLog more robust to prevent possible page view breakage
+
+  * pages now returns nothing without a fully-configured catalog (to avoid
+    blowing up zodb cache when viewing old revisions)
+
+  * new methods expungeLastEditor, expungeLastEditorEverywhere, feedUrl,
+    setCreatorLike, setLastEditorLike
+
+  * replaced subscriberCount, wikiSubscriberCount methods with
+    subscriberCount, pageSubscriberCount, wikiSubscriberCount
+
+  * renamed changes_rss method to edits_rss
+
+  * make bare page rendering at the debug prompt work again, cleanup
+
+  * include Makefile in tarball so that folks can see how to run tests
+
+  * start a developer style guide, some developer docs cleanup
 
 
 Zwiki 0.60.0 2007/09/15
