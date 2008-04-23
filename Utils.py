@@ -901,8 +901,14 @@ if not safe_hasattr(__builtins__,'sorted'):
 else:
     sorted = sorted
 
+# unique values of a list
+def nub(l):
+    u = []
+    for v in l:
+        if not v in u: u.append(v)
+    return u
+        
 isnumeric = lambda v:isinstance(v,IntType) or isinstance(v,FloatType) or isinstance(v,LongType)
 isfloat   = lambda v:isinstance(v,FloatType)
 isstring  = lambda v:isinstance(v,StringType)
 isunicode = lambda v:isinstance(v,UnicodeType)
-

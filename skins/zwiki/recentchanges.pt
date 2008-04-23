@@ -8,8 +8,7 @@
   </head>
   <body>
     <div metal:fill-slot="main">
-      <metal:macro metal:use-macro="here/macros/accesskeys" />
-      <metal:macro metal:use-macro="here/macros/sitelinks" />
+      <metal:macro metal:use-macro="here/macros/wikiheader" />
       <h1 i18n:translate="">Recent changes</h1>
       <div class="formcontent"
            tal:content="structure python:here.talsafe(

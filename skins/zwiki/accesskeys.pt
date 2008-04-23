@@ -1,8 +1,10 @@
-<metal:block metal:define-macro="accesskeys"
-                 tal:define="pageurl here/pageUrl;
-                             thisurl python:here.urlquote(request.get('URL'));
-                             ">
-      <!-- always-available zwiki access keys -->
+<html>
+  <body>
+    <!-- always-available zwiki access keys -->
+    <div metal:define-macro="accesskeys" id="accesskeys"
+         tal:define="pageurl here/pageUrl;
+                     thisurl python:here.urlquote(request.get('URL'));">
+      <a tal:attributes="href string:${here/pageUrl}/showAccessKeys" accesskey="0"></a>
       <a tal:attributes="href here/homeUrl" accesskey="f"></a>
       <a tal:attributes="href here/contentsUrl" accesskey="c"></a>
       <a tal:attributes="href here/changesUrl" accesskey="r"></a>
@@ -14,6 +16,9 @@
       <a tal:attributes="href here/helpUrl" accesskey="h" tal:condition="here/helpUrl"></a>
       <a tal:attributes="href python:'%s/setskin?skin=zwiki&came_from=%s' % (pageurl,thisurl)" accesskey="-" tal:condition="here/inCMF"></a>
       <a tal:attributes="href python:'%s/setskin?skin=plone&came_from=%s' % (pageurl,thisurl)" accesskey="+" tal:condition="here/inCMF"></a>
+      <a tal:attributes="href python:here.nextPageUrl() or here.firstPageUrl()" accesskey="n"></a>
+      <a tal:attributes="href python:here.previousPageUrl() or here.lastPageUrl()" accesskey="p"></a>
+      <a tal:attributes="href here/upUrl" accesskey="u"></a>
       <a tal:attributes="href here/pageUrl" accesskey="v"></a>
       <a tal:attributes="href string:${here/pageUrl}/subscribeform" accesskey="m" tal:condition="here/isMailoutEnabled"></a>
       <a tal:attributes="href string:${here/pageUrl}/backlinks" accesskey="b"></a>
@@ -23,7 +28,6 @@
       <a tal:attributes="href python:here.wikiUrl() + '/externalEdit_/' +
                          modules['Products.PythonScripts.standard'].url_quote(here.id()) +
                          '?borrow_lock=1'" accesskey="x"></a>
-      <a tal:attributes="href python:here.nextPageUrl() or here.firstPageUrl()" accesskey="n"></a>
-      <a tal:attributes="href python:here.previousPageUrl() or here.lastPageUrl()" accesskey="p"></a>
-      <a tal:attributes="href here/upUrl" accesskey="u"></a>
-    </metal:block>
+    </div>
+  </body>
+</html>

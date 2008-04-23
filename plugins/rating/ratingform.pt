@@ -1,6 +1,6 @@
 <html i18n:domain="zwiki">
   <body>
-    <div metal:define-macro="ratingform" align="right">  
+    <div metal:define-macro="ratingform" id="ratingform" align="right">  
       <!-- page rating form -->
       <div tal:condition="python:user.has_permission('Zwiki: Rate pages',here)" >
         <a name="ratingform"></a>

@@ -99,7 +99,7 @@ from ComputedAttribute import ComputedAttribute
 
 import Permissions
 from Defaults import PAGE_METATYPE
-from Utils import BLATHER, formattedTraceback, abszwikipath, safe_hasattr
+from Utils import BLATHER, formattedTraceback, abszwikipath, safe_hasattr, nub
 from I18n import _, DTMLFile, HTMLFile
 
 
@@ -132,7 +132,7 @@ def loadStylesheet(name,dir='skins/zwiki'):
     """
     Load the stylesheet file from the filesystem.
     """
-    f = loadFile(name,dir=dir)
+    f = loadFile(name+".css",dir=dir)
     if f: f.content_type = 'text/css'
     return f
 
@@ -224,14 +224,23 @@ for s in os.listdir(abszwikipath('skins')):
         'hierarchylinks',
         'links',
         'maintemplate',
-        'pageheader',
-        'pagemanagementform',
         'siteheader',
         'sitefooter',
+        'wikiheader',
+        'wikifooter',
+        'pageheader',
+        'pagefooter',
+        'pagemanagementform',
         'testtemplate',
         'badtemplate',
         ]:
         obj = loadPageTemplate(template,dir=skindir)
+        if obj: SKINS[s][template] = obj
+    for template in [
+        # stylesheet
+        'stylesheet',
+        ]:
+        obj = loadStylesheet(template,dir=skindir)
         if obj: SKINS[s][template] = obj
     for template in [
         # helper dtml methods
@@ -240,23 +249,18 @@ for s in os.listdir(abszwikipath('skins')):
         'UserOptions',
         'subtopics_outline',
         'subtopics_board',
-        'stylesheet',
+        'stylesheet', # a stylesheet.dtml would override stylesheet.css
         ]:
         obj = loadDtmlMethod(template,dir=skindir)
         if obj: SKINS[s][template] = obj
-    # extras
-    if s=='zwiki':
-        SKINS[s]['stylesheet'] = loadStylesheet('stylesheet.css')
-        # XXX this really expects to be a full wiki page
-        # for now, read it as a file and format it in helppage.pt
-        # one issue: File does not refresh in debug mode ?
-        SKINS[s]['HelpPage'] = loadFile('HelpPage.stx',dir=skindir)
+
+# extras
+# XXX this really expects to be a full wiki page
+# for now, read it as a file and format it in helppage.pt
+# one issue: File does not refresh in debug mode ?
+SKINS['zwiki']['HelpPage'] = loadFile('HelpPage.stx',dir=skindir)
 
 TEMPLATES = SKINS['zwiki'] # backwards compatibility
-
-#XXX get from request
-CURRENTSKIN = 'zwiki'
-#CURRENTSKIN = 'nautica'
 
 # set up easy access to all PT macros via here/macros.
 MACROS = {} # a flat dictionary of all macros defined in all templates
@@ -264,17 +268,21 @@ MACROS = {} # a flat dictionary of all macros defined in all templates
 [MACROS.update(t.pt_macros()) for t in TEMPLATES.values() if isPageTemplate(t)]
 def getmacros(self):
     """
-    Return a dictionary of all the PT macros in the skin.
+    Get a dictionary of all the page template macros in the skin. More precisely,
+    get all the macros from the zwiki skin, and if the current skin is different,
+    overlay any macros from that.
 
     XXX here/macros is a computed attribute calling this for each access,
     to ensure we always get the fresh macro in debug mode or when a
     template is customised in the zodb. Are we getting into performance
     concerns yet ?  Any simpler acceptable setup we can offer?
     """
-    skin = SKINS[CURRENTSKIN]
-    for t in skin.keys():
-        if isPageTemplate(skin[t]):
-            MACROS.update(self.getSkinTemplate(t).pt_macros())
+    for s in nub(['zwiki',self.currentSkin()]):
+        skin = SKINS[s]
+        for t in skin.keys():
+            if isPageTemplate(skin[t]):
+                #MACROS.update(self.getSkinTemplate(t).pt_macros())
+                MACROS.update(skin[t].pt_macros())
     return MACROS
 
 # provide old macros for backwards compatibility
@@ -289,6 +297,228 @@ MACROS['pagelinks']   = nullmacro
 MACROS['pagenameand'] = nullmacro
 MACROS['wikilinks']   = nullmacro
 
+
+class SkinUtils:
+    """
+    This mixin provides utilities for our views, so that they can work in
+    any kind of configuration - default or customized, standard or
+    cmf/plone, old or new templates..
+    """
+    security = ClassSecurityInfo()
+
+    # make MACROS available to all templates as here/macros
+    macros = ComputedAttribute(getmacros,1)
+
+    ## backwards compatibility - some old plone wikis expect wikipage_view
+    ## or wikipage actions ?
+    #security.declareProtected(Permissions.View, 'wikipage')
+    #def wikipage(self, dummy=None, REQUEST=None, RESPONSE=None):
+    #    """
+    #    Render the main page view (dummy method to allow standard skin in CMF).
+    #
+    #    XXX should be going away soon. Old comment: the wikipage template
+    #    is usually applied by __call__ -> addSkinTo, but this method is
+    #    provided so you can configure it as the"view" action
+    #    in portal_types -> Wiki Page -> actions and get use Zwiki's standard 
+    #    skin inside a CMF/Plone site.
+    #    """
+    #    return self.render(REQUEST=REQUEST,RESPONSE=RESPONSE)
+    #wikipage_view = wikipage
+    
+    # backwards compatibility - some old templates expect
+    # wikipage_template().macros or wikipage_macros something something
+    def wikipage_template(self, REQUEST=None): return self
+    wikipage_macros = wikipage_template
+
+    security.declareProtected(Permissions.View, 'getmaintemplate')
+    def getmaintemplate(self, REQUEST=None):
+        """
+        Return the standard Zwiki or CMF/Plone main template, unevaluated.
+
+        This fetches the appropriate main template depending on whether we
+        are in or out of cmf/plone (and in the latter case, whether the
+        user has selected standard or plone skin mode). We point the
+        'main_template' computed attribute at this method, which allows
+        our templates to use here/main_template and always be
+        appropriately skinned.
+        """
+        # XXX not really working out yet.. need this hack
+        # all skin templates wrap themselves with main_template
+        # in CMF, use the cmf/plone one, otherwise use ours
+        # should allow use of ours in cmf/plone also
+        if self.inCMF() and self.displayMode() == 'plone':
+            return self.getSkinTemplate('main_template') # plone's
+        else:
+            return self.getSkinTemplate('maintemplate')  # zwiki's
+    main_template = ComputedAttribute(getmaintemplate,1)
+
+    def currentSkin(self):
+        """Return the id of the current zwiki skin. Usually 'zwiki',
+        but may be overridden by a 'skin' request var or zodb property."""
+        return self.REQUEST.get('skin',
+                                getattr(self,'skin',
+                                        'zwiki'))
+
+    def getSkinTemplate(self, name, suffixes=['.pt','.dtml','']):
+        """
+        Get the named skin template from the ZODB or filesystem.
+
+        A 'skin template' is responsible for some part of the Zwiki user
+        interface; it may be a Page Template, DTML Method or File.  We
+        look for a template with this name, first in a filesystem skin
+        named by a "skin" request var, trying the suffixes in the order
+        given; then in the ZODB acquisition context; then in a filesystem
+        skin named by a "skin" property, and finally in skins/zwiki on
+        the filesystem.  For convenient skin
+        development, we return the template wrapped in the current page's
+        context (so here = the page, container = the folder, etc).  If no
+        matching template can be found, we return a generic error
+        template.
+
+        This somewhat duplicates the CMF skin system, but will always be
+        available, and provides extra handling useful to zwiki skin
+        customisers.
+        """
+        # look for a similarly-named template..
+        obj = None
+        
+        # in a filesystem skin named by a "skin" request var
+        skin = self.REQUEST.get('skin',None)
+        if SKINS.has_key(skin): obj = SKINS[skin].get(name,None)
+        
+        #in the zodb
+        if not obj:
+            for s in suffixes:
+                obj = getattr(self.folder(), name+s, None)
+                if obj and (isTemplate(obj) or isFile(obj)): break
+                else: obj = None
+                
+        # in a filesystem skin named by a "skin" property
+        if not obj:
+            skin = getattr(self,'skin',None)
+            if SKINS.has_key(skin): obj = SKINS[skin].get(name,None)
+
+        # in the standard zwiki skin
+        if not obj: obj = SKINS['zwiki'].get(name,None)
+
+        # or give up and show a harmless error
+        if not obj: obj = SKINS['zwiki']['badtemplate']
+            
+        # return it, with both folder and page in the acquisition context
+        return obj.__of__(self.folder()).__of__(self)
+
+    def hasSkinTemplate(self,name):
+        """
+        Does the named skin template exist in the aq context or filesystem ?
+        """
+        # != ignores any acquisition wrapper
+        return self.getSkinTemplate(name) != TEMPLATES['badtemplate']
+        
+    security.declareProtected(Permissions.View, 'addSkinTo')
+    def addSkinTo(self,body,**kw):
+        """
+        Add the main wiki page skin to some body text, unless 'bare' is set.
+
+        XXX used only for the main page view. Perhaps a wikipage view
+        method should replace it ? Well for now this is called by the page
+        type render methods, which lets them say whether the skin is
+        applied or not.
+        """
+        REQUEST = getattr(self,'REQUEST',None)
+        if (safe_hasattr(REQUEST,'bare') or kw.has_key('bare')):
+            return body
+        else:
+            return self.getSkinTemplate('wikipage')(self,REQUEST,body=body,**kw)
+
+InitializeClass(SkinUtils)
+
+
+
+class SkinSwitchingUtils:
+    """
+    This mixin provides methods for switching between alternate skins
+    (or between display modes within a single zope skin).
+    """
+    security = ClassSecurityInfo()
+
+    security.declareProtected(Permissions.View, 'setskin')
+    def setskin(self,skin=None):
+        """
+        When in a CMF/Plone site, switch between standard and plonish UI.
+
+        The user's preferred skin mode is stored in a zwiki_displaymode
+        cookie.  This was once used to change the appearance of the
+        non-plone standard skin (full/simple/minimal); later it acquired
+        the ability to switch between CMF skins in CMF/plone; now it just
+        selects the zwiki or plone appearance in CMF/plone, by setting a
+        cookie for getmaintemplate().
+        """
+        if skin in ('plone', 'cmf'):
+            self.setDisplayMode('plone')
+        else:
+            self.setDisplayMode('zwiki')
+
+    security.declareProtected(Permissions.View, 'setDisplayMode')
+    def setDisplayMode(self,mode):
+        """
+        Save the user's choice of skin mode as a cookie.
+
+        For 1 year, should they be permanent ?
+        """
+        REQUEST = self.REQUEST
+        RESPONSE = REQUEST.RESPONSE
+        RESPONSE.setCookie('zwiki_displaymode',
+                           mode,
+                           path='/',
+                           expires=(self.ZopeTime() + 365).rfc822())
+        RESPONSE.redirect(REQUEST.get('came_from',
+                                      REQUEST.get('URL1')))
+
+    setSkinMode = setDisplayMode #backwards compatibility
+
+    security.declareProtected(Permissions.View, 'displayMode')
+    def displayMode(self,REQUEST=None):
+        """
+        Find out the user's preferred skin mode.
+        """
+        REQUEST = REQUEST or self.REQUEST
+        defaultmode = (self.inCMF() and 'plone') or 'zwiki'
+        m = REQUEST.get('zwiki_displaymode', None)
+        if not m in ['zwiki','plone']:
+            m = defaultmode
+        return m
+
+    security.declareProtected(Permissions.View, 'usingPloneSkin')
+    def usingPloneSkin(self,REQUEST=None):
+        """
+        Convenience utility for templates: are we using plone skin ?
+
+        Ie, are we using the plone display mode of zwiki's standard skin.
+        """
+        return (self.inCMF() and self.displayMode()=='plone')
+        
+    security.declareProtected(Permissions.View, 'setCMFSkin')
+    def setCMFSkin(self,REQUEST,skin):
+        """
+        Change the user's CMF/Plone skin preference, if possible.
+        """
+        # are we in a CMF site ?
+        if not self.inCMF(): return
+        portal_skins = self.portal_url.getPortalObject().portal_skins
+        portal_membership = self.portal_url.getPortalObject().portal_membership
+        # does the named skin exist ?
+        def hasSkin(s): return portal_skins.getSkinPath(s) != s
+        if not hasSkin(skin): return
+        # is the user logged in ? if not, return harmlessly
+        member = portal_membership.getAuthenticatedMember()
+        if not safe_hasattr(member,'setProperties'): return
+        # change their skin preference and reload page
+        REQUEST.form['portal_skin'] = skin
+        member.setProperties(REQUEST)
+        portal_skins.updateSkinCookie()
+        REQUEST.RESPONSE.redirect(REQUEST.get('URL1'))
+
+InitializeClass(SkinSwitchingUtils)
 
 
 class SkinViews:
@@ -554,209 +784,6 @@ class SkinViews:
         return self.getSkinTemplate('useroptions')(self,REQUEST)
 
 InitializeClass(SkinViews)
-
-
-
-class SkinUtils:
-    """
-    This mixin provides utilities for our views, so that they can work in
-    any kind of configuration - default or customized, standard or
-    cmf/plone, old or new templates..
-    """
-    security = ClassSecurityInfo()
-
-    # make MACROS available to all templates as here/macros
-    macros = ComputedAttribute(getmacros,1)
-
-    ## backwards compatibility - some old plone wikis expect wikipage_view
-    ## or wikipage actions ?
-    #security.declareProtected(Permissions.View, 'wikipage')
-    #def wikipage(self, dummy=None, REQUEST=None, RESPONSE=None):
-    #    """
-    #    Render the main page view (dummy method to allow standard skin in CMF).
-    #
-    #    XXX should be going away soon. Old comment: the wikipage template
-    #    is usually applied by __call__ -> addSkinTo, but this method is
-    #    provided so you can configure it as the"view" action
-    #    in portal_types -> Wiki Page -> actions and get use Zwiki's standard
-    #    skin inside a CMF/Plone site.
-    #    """
-    #    return self.render(REQUEST=REQUEST,RESPONSE=RESPONSE)
-    #wikipage_view = wikipage
-
-    # backwards compatibility - some old templates expect
-    # wikipage_template().macros or wikipage_macros something something
-    def wikipage_template(self, REQUEST=None): return self
-    wikipage_macros = wikipage_template
-
-    security.declareProtected(Permissions.View, 'getmaintemplate')
-    def getmaintemplate(self, REQUEST=None):
-        """
-        Return the standard Zwiki or CMF/Plone main template, unevaluated.
-
-        This fetches the appropriate main template depending on whether we
-        are in or out of cmf/plone (and in the latter case, whether the
-        user has selected standard or plone skin mode). We point the
-        'main_template' computed attribute at this method, which allows
-        our templates to use here/main_template and always be
-        appropriately skinned.
-        """
-        # XXX not really working out yet.. need this hack
-        # all skin templates wrap themselves with main_template
-        # in CMF, use the cmf/plone one, otherwise use ours
-        # should allow use of ours in cmf/plone also
-        if self.inCMF() and self.displayMode() == 'plone':
-            return self.getSkinTemplate('main_template') # plone's
-        else:
-            return self.getSkinTemplate('maintemplate')  # zwiki's
-    main_template = ComputedAttribute(getmaintemplate,1)
-
-    def getSkinTemplate(self, name, suffixes=['.pt','.dtml','']):
-        """
-        Get the named skin template from the ZODB or filesystem.
-
-        A 'skin template' is responsible for some part of the Zwiki user
-        interface; it may be a Page Template, DTML Method or File.  We
-        look for a template with this name, first in the ZODB acquisition
-        context, trying the suffixes in the order given; then in
-        CURRENTSKIN on the filesystem, if CURRENTSKIN is set; and finally
-        in skins/zwiki on the filesystem.  For convenient skin
-        development, we return the template wrapped in the current page's
-        context (so here = the page, container = the folder, etc).  If no
-        matching template can be found, we return a generic error
-        template.
-
-        This somewhat duplicates the CMF skin system, but will always be
-        available, and provides extra handling useful to zwiki skin
-        customisers.
-        """
-        # look for a similarly-named template in the zodb
-        for s in suffixes:
-            obj = getattr(self.folder(), name+s, None)
-            if obj and (isTemplate(obj) or isFile(obj)): break
-            else: obj = None
-        if not obj:
-            # look in the selected filesystem skin, or finally in the
-            # standard zwiki skin
-            currentskin = CURRENTSKIN #XXX get from request
-            obj = SKINS[currentskin].get(name,
-                              SKINS['zwiki'].get(name,
-                                            SKINS['zwiki']['badtemplate']))
-        # return it, with both folder and page in the acquisition context
-        return obj.__of__(self.folder()).__of__(self)
-
-    def hasSkinTemplate(self,name):
-        """
-        Does the named skin template exist in the aq context or filesystem ?
-        """
-        # != ignores any acquisition wrapper
-        return self.getSkinTemplate(name) != TEMPLATES['badtemplate']
-
-    security.declareProtected(Permissions.View, 'addSkinTo')
-    def addSkinTo(self,body,**kw):
-        """
-        Add the main wiki page skin to some body text, unless 'bare' is set.
-
-        XXX used only for the main page view. Perhaps a wikipage view
-        method should replace it ? Well for now this is called by the page
-        type render methods, which lets them say whether the skin is
-        applied or not.
-        """
-        REQUEST = getattr(self,'REQUEST',None)
-        if (safe_hasattr(REQUEST,'bare') or kw.has_key('bare')):
-            return body
-        else:
-            return self.getSkinTemplate('wikipage')(self,REQUEST,body=body,**kw)
-
-InitializeClass(SkinUtils)
-
-
-
-class SkinSwitchingUtils:
-    """
-    This mixin provides methods for switching between alternate skins
-    (or between display modes within a single zope skin).
-    """
-    security = ClassSecurityInfo()
-
-    security.declareProtected(Permissions.View, 'setskin')
-    def setskin(self,skin=None):
-        """
-        When in a CMF/Plone site, switch between standard and plonish UI.
-
-        The user's preferred skin mode is stored in a zwiki_displaymode
-        cookie.  This was once used to change the appearance of the
-        non-plone standard skin (full/simple/minimal); later it acquired
-        the ability to switch between CMF skins in CMF/plone; now it just
-        selects the zwiki or plone appearance in CMF/plone, by setting a
-        cookie for getmaintemplate().
-        """
-        if skin in ('plone', 'cmf'):
-            self.setDisplayMode('plone')
-        else:
-            self.setDisplayMode('zwiki')
-
-    security.declareProtected(Permissions.View, 'setDisplayMode')
-    def setDisplayMode(self,mode):
-        """
-        Save the user's choice of skin mode as a cookie.
-
-        For 1 year, should they be permanent ?
-        """
-        REQUEST = self.REQUEST
-        RESPONSE = REQUEST.RESPONSE
-        RESPONSE.setCookie('zwiki_displaymode',
-                           mode,
-                           path='/',
-                           expires=(self.ZopeTime() + 365).rfc822())
-        RESPONSE.redirect(REQUEST.get('came_from',
-                                      REQUEST.get('URL1')))
-
-    setSkinMode = setDisplayMode #backwards compatibility
-
-    security.declareProtected(Permissions.View, 'displayMode')
-    def displayMode(self,REQUEST=None):
-        """
-        Find out the user's preferred skin mode.
-        """
-        REQUEST = REQUEST or self.REQUEST
-        defaultmode = (self.inCMF() and 'plone') or 'zwiki'
-        m = REQUEST.get('zwiki_displaymode', None)
-        if not m in ['zwiki','plone']:
-            m = defaultmode
-        return m
-
-    security.declareProtected(Permissions.View, 'usingPloneSkin')
-    def usingPloneSkin(self,REQUEST=None):
-        """
-        Convenience utility for templates: are we using plone skin ?
-
-        Ie, are we using the plone display mode of zwiki's standard skin.
-        """
-        return (self.inCMF() and self.displayMode()=='plone')
-
-    security.declareProtected(Permissions.View, 'setCMFSkin')
-    def setCMFSkin(self,REQUEST,skin):
-        """
-        Change the user's CMF/Plone skin preference, if possible.
-        """
-        # are we in a CMF site ?
-        if not self.inCMF(): return
-        portal_skins = self.portal_url.getPortalObject().portal_skins
-        portal_membership = self.portal_url.getPortalObject().portal_membership
-        # does the named skin exist ?
-        def hasSkin(s): return portal_skins.getSkinPath(s) != s
-        if not hasSkin(skin): return
-        # is the user logged in ? if not, return harmlessly
-        member = portal_membership.getAuthenticatedMember()
-        if not safe_hasattr(member,'setProperties'): return
-        # change their skin preference and reload page
-        REQUEST.form['portal_skin'] = skin
-        member.setProperties(REQUEST)
-        portal_skins.updateSkinCookie()
-        REQUEST.RESPONSE.redirect(REQUEST.get('URL1'))
-
-InitializeClass(SkinSwitchingUtils)
 
 
 class PageViews(

@@ -1,0 +1,8 @@
+<html>
+  <body>
+    <div metal:define-macro="wikiheader" id="wikiheader">
+      <div metal:use-macro="here/macros/accesskeys" />
+      <div metal:use-macro="here/macros/links" />
+    </div>
+  </body>
+</html>

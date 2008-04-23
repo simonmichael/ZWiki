@@ -1,5 +1,5 @@
 <html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki" >
-  <!-- the main view for wiki pages. -->
+  <!-- the main page view for wiki pages. -->
   <head>
     <title metal:fill-slot="title_slot" tal:content="python:
       '%s %s' % (here.talsafe(container.title),here.talsafe(here.pageName()))" />
@@ -17,14 +17,11 @@
     </metal:block>
   </head>
   <body>
-    <div metal:fill-slot="main" tal:omit-tag="">
-      <div metal:use-macro="here/macros/accesskeys" />
-      <div metal:use-macro="here/macros/links" />
+    <div metal:fill-slot="main" id="main">
       <div metal:use-macro="here/macros/pageheader" />
-      <div metal:use-macro="here/macros/ratingform" />
       <br tal:condition="here/usingPloneSkin" />
       <div metal:use-macro="here/macros/content" />
-      <div metal:use-macro="here/macros/pagemanagementform" />
+      <div metal:use-macro="here/macros/pagefooter" />
     </div>
   </body>
 </html>

@@ -1,0 +1,9 @@
+<html>
+  <body>
+    <div metal:define-macro="pagefooter" id="pagefooter">
+      <div tal:condition="python:1">
+      <div metal:use-macro="here/macros/pagemanagementform" />
+      </div>
+    </div>
+  </body>
+</html>

@@ -16,7 +16,7 @@
                      difftext   options/difftext;
                      bodytext   options/bodytext;
                      ">
-      <metal:macro metal:use-macro="here/macros/accesskeys" />
+      <metal:macro metal:use-macro="here/macros/pageheader" />
       <h1 i18n:translate="" tal:content="string:Edit detail for ${here/pageName} revision ${rev} of ${revs}" />
       <div class="formcontent">
         <table border=0 cellspacing=0 width="100%">

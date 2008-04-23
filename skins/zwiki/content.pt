@@ -7,8 +7,8 @@
          <div metal:use-macro="here/macros/subtopics" />
          <div metal:use-macro="here/macros/comments" />
       -->
-    <div metal:define-macro="content" class="content">
-      <div tal:replace="structure python:here.talsafe(options['body'])">
+    <div metal:define-macro="content" id="content" class="content">
+    <div tal:replace="structure python:here.talsafe(options['body'])">
         main text, subtopics links, comments
       </div>
       <a name="bottom"></a>

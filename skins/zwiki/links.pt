@@ -1,7 +1,7 @@
 <html>
   <body>
 
-    <div metal:define-macro="links" class="linkpanel">
+    <div metal:define-macro="links" id="navlinks" class="linkpanel">
       <table class="shade1" width="100%" border="0" cellspacing="0">
         <tr>
           <td align="right">
@@ -24,17 +24,14 @@
 
     <metal:macro metal:define-macro="sitenavlinks">
       <a href="" tal:attributes="href here/homeUrl"
-         accesskey="f"
          title="show front page"
          i18n:attributes="title">
       <span i18n:translate="">home</span></a>
       <a href="" tal:attributes="href here/contentsUrl"
-         accesskey="c"
          title="show wiki contents"
          i18n:attributes="title">
       <span i18n:translate="">contents</span></a>
       <a href="" tal:attributes="href here/changesUrl"
-         accesskey="r"
          title="show wiki recent changes"
          i18n:attributes="title">
       <span i18n:translate="">changes</span></a>
@@ -43,7 +40,7 @@
          title="show issue tracker"
          i18n:attributes="title">
       <span i18n:translate="">issues</span></a>
-      <a tal:attributes="href here/indexUrl" accesskey="i"
+      <a tal:attributes="href here/indexUrl"
          tal:condition="here/indexUrl"
          title="show wiki index"
          i18n:attributes="title">
@@ -53,13 +50,11 @@
          title="show upload page"
          i18n:attributes="title">
       <span i18n:translate="">uploads</span></a>
-      <a tal:attributes="href python:here.preferencesUrl()"
-         accesskey="o"
+      <a tal:attributes="href python:here.preferencesUrl()+'?redirectURL='+here.pageUrl()"
          title="show wiki options"
          i18n:attributes="title">
       <span i18n:translate="">options</span></a>
       <a tal:attributes="href here/helpUrl"
-         accesskey="h"
          tal:condition="here/helpUrl"
          title="show help page"
          i18n:attributes="title">
@@ -72,12 +67,10 @@
          href=""
          title="which pages link to this one ?"
          i18n:attributes="title"
-         accesskey="b"
          ><span i18n:translate="">backlinks</span></a>
       <a tal:condition="here/isMailoutEnabled"
          tal:attributes="href python:here.pageUrl() + '/subscribeform'"
          href="page_url/subscribeform"
-         accesskey="m"
          title="configure email subscription to this page or site"
          i18n:attributes="title"
          >
@@ -90,7 +83,6 @@
          href=""
          title="show this page's change history"
          i18n:attributes="title"
-         accesskey="d"
          ><span i18n:translate="">diff</span></a>
       <a tal:condition="python:user.has_permission('Zwiki: Edit pages',here)"
          tal:attributes="
@@ -98,7 +90,6 @@
                          title python: here.translateHelper('edit-page') + ' (' + here.linkTitle() + ')'"
          href="page_url/editform"
          title="edit this page (last edited n days ago by so-and-so)"
-         accesskey="e"
          >
       <span i18n:translate="">edit</span></a>
       <a tal:condition="python:
@@ -112,7 +103,6 @@
          href="wiki_url/externalEdit_/id"
          title="edit using external editor"
          i18n:attributes="title"
-         accesskey="x"
          ><img src="misc_/ExternalEditor/edit_icon" border="0"
          alt="(external edit)" i18n:attributes="alt" /></a>
     </metal:macro>

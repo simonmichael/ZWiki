@@ -1,7 +1,8 @@
 <html>
   <body>
 
-    <div metal:define-macro="pagemanagementform" 
+    <div id="pagemanagementform"
+         metal:define-macro="pagemanagementform" 
          tal:condition="python:
                         ((user.has_permission('Zwiki: Add pages',container) or
                         user.has_permission('Zwiki: Rename pages',here) or

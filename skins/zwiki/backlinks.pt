@@ -16,8 +16,7 @@
                      sorted_backlinks python:sequence.sort(backlinks, 
                      (('Title', 'nocase', 'asc'),));
                      ">
-      <metal:macro metal:use-macro="here/macros/accesskeys" />
-      <metal:macro metal:use-macro="here/macros/sitelinks" />
+      <metal:macro metal:use-macro="here/macros/pageheader" />
       <h1 i18n:translate="">Related pages</h1>
       <form action="reparent" tal:attributes="action string:${here/pageUrl}/reparent">
         <table border="0" width="100%">
