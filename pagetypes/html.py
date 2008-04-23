@@ -42,8 +42,8 @@ class PageTypeHtml(PageTypeBaseHtml):
         would be expected on a html page? XXX
         """
         heading = '\n\n<p class="commentheading"> '
-        heading += '<strong>%s</strong> --' % (subject or '...')
-        if username: heading = heading + '%s, ' % (username)
+        heading += '<strong>%s</strong> --' % (page.tounicode(subject) or '...')
+        if username: heading = heading + '%s, ' % (page.tounicode(username))
         heading += time or ''
         heading += ' <a class="reference" href="%s?subject=%s%s#bottom">%s</a>' % (
             page.pageUrl(),

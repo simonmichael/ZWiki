@@ -25,11 +25,10 @@ class PageTypeStx(PageTypeBaseHtml):
     supportsHtml = yes
     supportsDtml = yes
 
-    def format(self,t):
+    def format(self,page,t):
         """
         Render some Structured Text as HTML, working around some quirks.
         """
-        t = str(t)        
         # an initial single word plus period becomes a numeric bullet -
         # prepend a temporary marker to prevent
         # XXX use locale/wikichars from Regexps.py instead of A-z
@@ -42,16 +41,20 @@ class PageTypeStx(PageTypeBaseHtml):
         # suppress stx footnote handling so we can do it our way later
         t = re.sub(footnoteexpr,r'<a name="ref\1">![\1]</a>',t)
         t = re.sub(r'(?m)\[',r'[<!--NOSTX-->',t)
-        # let STX loose on it.. 
+        # standard structured text can't handle unicode
+        # it may not handle non-ascii either, so this could still fail
+        t = page.toencoded(t)
+        # let STX loose on it; don't let a formatter error break the whole page
         try:
-            # XXX slow!!
+            # XXX slow!
             t = HTMLWithImages(ZwikiDocumentWithImages(structurize(t)), level=2)
         except:
-            # don't let a formatter problem break the whole page
             BLATHER('Structured Text formatting failed: %s' \
                  % (formattedTraceback()))
             return '<pre>Structured Text formatting failed:\n%s</pre>' \
                    % (formattedTraceback())
+        t = page.tounicode(t)
+
         # clean up
         t = re.sub(r'(<|&lt;)!--NOSTX--(>|&gt;)', r'', t)
         # strip html & body added by some zope versions
@@ -72,7 +75,7 @@ class PageTypeStx(PageTypeBaseHtml):
         t = text or (page.document()+'\n\n'+MIDSECTIONMARKER+ \
                      self.preRenderMessages(page))
         t = page.applyWikiLinkLineEscapesIn(t)
-        t = self.format(t)
+        t = self.format(page,t)
         t = page.markLinksIn(t)
         t = self.protectEmailAddresses(page,t)
         return t

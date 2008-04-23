@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
@@ -102,3 +103,15 @@ class Tests(ZwikiTestCase):
         self.assertEquals(self.wiki.GrandChildPage.offspringIdsAsList(),
                           [])
 
+    def test_renderNesting(self):
+        p = self.page
+        self.assertEqual(
+            '<ul class="outline expandable">\n <li><a href="http://nohost/test_folder_1_/wiki/TestPage" name="TestPage">TestPage</a></li>\n</ul>',
+            p.renderNesting(p.offspringNesting()))
+        # non-ascii
+        p.create('Pagé')
+        self.assertEqual(
+            u'<ul class="outline expandable">\n <li><a href="http://nohost/test_folder_1_/wiki/TestPage" name="TestPage">TestPage</a>\n<ul class="outline expandable">\n <li><a href="http://nohost/test_folder_1_/wiki/Pag_e9" name="Pag_e9">Pag\xe9</a></li>\n</ul>\n </li>\n</ul>',
+            self.page.renderNesting(self.page.offspringNesting()))
+        #self.assertRaises(UnicodeError, self.wiki.NewName.rename, pagename='NéwName')
+        # accepts unicode ?

@@ -35,7 +35,7 @@ class PageTypeMoin(PageTypeBase):
         t = text or (page.document()+'\n'+MIDSECTIONMARKER+\
                      self.preRenderMessages(page))
         t = page.applyWikiLinkLineEscapesIn(t)
-        t = self.format(t)
+        t = self.format(page,t)
         t = page.markLinksIn(t)
         t = self.protectEmailAddresses(page,t)
         return t
@@ -50,18 +50,18 @@ class PageTypeMoin(PageTypeBase):
         t = page.addSkinTo(t,**kw)
         return t
 
-    def format(self,t):
-        # moin assumes utf-8 everwhere, like zwiki (except where we can't,
-        # see moin_support)
-        return render_moin_markup(unicode(t,'utf-8')).encode('utf-8')
+    def format(self,page,t):
+        # zwiki now stores text as unicode but this version of moin
+        # uses utf-8 (it says here)
+        return render_moin_markup(t.encode('utf-8'))
 
 
 ######################################################################
 # modified moin 1.3b2 parsing/formatting code
 
-# character encoding issues
+# character encoding issues XXX update for unicode storage
 #
-# - moin hard-codes utf-8 everywhere like zwiki, but we need the system's
+# - moin hard-codes utf-8 everywhere like zwiki used to, but we need the system's
 # actual configured encoding to encode string.uppercase etc. below 
 # (cf http://zwiki.org/963)
 #

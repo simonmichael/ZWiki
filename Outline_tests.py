@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
@@ -121,6 +122,14 @@ class Tests(unittest.TestCase):
                           [['RootPage','ChildPage']])
         self.assertEquals(o.offspring(['RootPage'],depth=2),
                           [['RootPage',['ChildPage','GrandChildPage']]])
+        # non-ascii
+        # will/won't accept utf8 or other encodings ?
+        o.add('Pagé',parents=['RootPage'])
+        self.assertEquals(o.offspring(['RootPage']),
+                          [['RootPage',['ChildPage','GrandChildPage'],'Pagé']])
+        #self.assertRaises(UnicodeError, self.wiki.NewName.rename, pagename='NéwName')
+        # accepts unicode ?
+
     
     def test_parents(self):
         o = self.outline

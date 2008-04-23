@@ -6,13 +6,13 @@ class PageTypePlaintext(PageTypeBase):
     _id = 'plaintext'
     _name = 'Plain text'
 
-    def format(self,t):
+    def format(self,page,t):
         return "<pre>\n%s\n</pre>\n" % html_quote(t)
 
     def preRender(self, page, text=None):
         t = text or (page.document() + '\n'+MIDSECTIONMARKER + \
                     self.preRenderMessages(page))
-        t = self.format(t)
+        t = self.format(page,t)
         t = self.protectEmailAddresses(page,t)
         return t
 

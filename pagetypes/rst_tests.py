@@ -14,6 +14,9 @@ class Tests(ZwikiTestCase):
         self.assertEquals(
             self.p.render(bare=1),
             '<blockquote>\nPageOne PageTwo</blockquote>\n<p>\n</p>\n')
+        # non-ascii
+        self.p.edit(text=u'\xe9',type='rst')
+        self.assertEquals(self.p.render(bare=1), u'<p>\xe9\n\n</p>\n')
 
     def test_dtml_in_rst(self):
         p = self.p

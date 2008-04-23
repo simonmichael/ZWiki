@@ -39,7 +39,7 @@ class PageTypeStxLatex(PageTypeStx):
                                   getattr(page.folder(),'latex_align_fudge',0), 
                                   getattr(page.folder(),'latex_res_fudge',1.03), latexTemplate)
         # render stx
-        t = self.format(t)
+        t = self.format(page,t)
         t = page.markLinksIn(t)
         t = self.protectEmailAddresses(page,t)
         # add a CSS class to the whole thing

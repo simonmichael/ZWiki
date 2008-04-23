@@ -85,13 +85,12 @@ class PluginRating:
             if vote == None:
                 try:
                     del votes[username]
-                    BLATHER("%s: removed %s's vote" % \
-                                    (self.pageName(),username))
+                    BLATHER("%s: removed %s's vote" % (self.toencoded(self.pageName()),username))
                 except KeyError: pass
             else:
                 votes[username] = vote
-                BLATHER("%s: recorded %s vote for %s" % \
-                                    (self.pageName(),vote,username))
+                BLATHER("%s: recorded %s vote for %s" % (self.toencoded(self.pageName()),vote,username))
+            self.setVotes(votes)
             catalog=self.catalog()
             catalog.catalog_object(self, idxs=['rating', 'voteCount'])
             # only need to update votes indexes

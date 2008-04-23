@@ -107,9 +107,10 @@ class PageUtils:
         mailin_name = REQUEST.get('MAILIN_USERNAME',None)
         ip_addr = ip_address and REQUEST.REMOTE_ADDR or ''
         if PREFER_USERNAME_COOKIE:
-            return mailin_name or cookie_name or authenticated_name or ip_addr
+            name = mailin_name or cookie_name or authenticated_name or ip_addr
         else:
-            return mailin_name or authenticated_name or cookie_name or ip_addr
+            name = mailin_name or authenticated_name or cookie_name or ip_addr
+        return self.tounicode(name)
 
     ######################################################################
 
@@ -133,7 +134,7 @@ class PageUtils:
         strings = filter(lambda x:type(x)==type(''), strings)
         return len(join(strings,''))
 
-    def summary(self,size=200,paragraphs=1,charset="utf-8"):
+    def summary(self,size=200,paragraphs=1):
         """
         Give a short plaintext summary of this page's content.
 
@@ -144,14 +145,12 @@ class PageUtils:
         """
         size, paragraphs = int(size), int(paragraphs)
         t = self.documentPart()
-        t = t.decode(charset)  # go to unicode.
         t = re.sub(r'<(?=\S)[^>]+>','',t).strip() # strip html tags
         if paragraphs: t = join(split(t,'\n\n')[:paragraphs],'\n\n')
         if len(t) > size:
             t = t[:size]
             t = re.sub(r'\w*$',r'',t) + '...'
-        t = t.encode(charset)  # get back from unicode.
-        return html_quote(t)
+        return html_quote(self.toencoded(t))
 
     def renderedSummary(self,size=500,paragraphs=1):
         """
@@ -160,11 +159,13 @@ class PageUtils:
         Similar to summary(), but this one tries to apply the page's
         formatting rules and do wiki linking. We remove any enclosing <p>.
         """
+        # XXX treats summary as internal (unicode), but it encodes - problem ?
         return re.sub(r'(?si)^<p>(.*)</p>\n?$', r'\1',
             self.renderLinksIn(
-            self.pageType().format(
-            self.summary(size=size, paragraphs=paragraphs))))
-
+                self.pageType().format(
+                    self,
+                    self.summary(size=size, paragraphs=paragraphs))))
+    
     security.declareProtected(Permissions.View, 'excerptAt')
     def excerptAt(self, expr, size=100, highlight=1, text=None):
         """
@@ -195,9 +196,9 @@ class PageUtils:
                     # XXX temp
                     '<span class="hit" style="background-color:yellow;font-weight:bold;">%s</span>' % html_quote(m.group()),
                     excerpt)
-            return excerpt
         else:
-            return html_quote(text[:size])
+            excerpt = html_quote(text[:size])
+        return self.toencoded(excerpt)
 
     def metadataFor(self,page):
         """
@@ -555,15 +556,38 @@ class PageUtils:
         string.  Zope 2.10 expects it to be unicode, or to at least be
         convertible to unicode using the default encoding.  We can't
         guarantee the latter, so convert to unicode preemptively assuming
-        our standard encoding in that case.  (cf issue #1330)
+        our standard encoding.  (cf issue #1330)
 
         This is idempotent, safe to call repeatedly.
         """ 
-        if ZOPEVERSION < (2,10) or type(s) is UnicodeType:
-            return s
-        else:
-            return unicode(s, 'utf-8')
+        if ZOPEVERSION < (2,10): return s
+        else:                    return self.tounicode(s)
+
+    # XXX once unicode text handling has settled down, we could try making
+    # this smarter and handle different encodings, perhaps configured per
+    # wiki as a folder property ? For this reason these are page methods,
+    # which means you must have a page object to use them. As well as being
+    # more verbose (self.toencoded vs. toencoded) this meant adding a page
+    # argument to all the pagetype format methods. This is YAGNI code
+    # but it's already done so let's leave it this way for a bit.
+    def encoding(self):
+        return 'utf-8'
         
+    def toencoded(self,s,enc=None):
+        """Safely convert a unicode string to an encoded ordinary string.
+        The wiki's default encoding is used, unless overridden.
+        """
+        if isunicode(s): return s.encode(enc or self.encoding())
+        else:            return s
+
+    def tounicode(self,s,enc=None):
+        """Safely convert an encoded ordinary string to a unicode string.
+        The wiki's default encoding is used, unless overridden.
+        """
+        if isunicode(s): return s
+        else:            return s.decode(enc or self.encoding())
+
+
 InitializeClass(PageUtils)
 
 
@@ -571,10 +595,14 @@ InitializeClass(PageUtils)
 
 #logging
 def STDERR(*args):  sys.stderr.write(' '.join(map(str,args)) + '\n')
-def BLATHER(*args): zLOG.LOG('ZWiki',zLOG.BLATHER,' '.join(map(str,args)))
-def INFO(*args):    zLOG.LOG('ZWiki',zLOG.INFO,' '.join(map(str,args)))
-def WARN(*args):    zLOG.LOG('ZWiki',zLOG.WARNING,' '.join(map(str,args)))
-def DEBUG(*args):   zLOG.LOG('ZWiki',zLOG.DEBUG,' '.join(map(str,args)))
+def LOG(severity,*args): zLOG.LOG('ZWiki',severity,' '.join(map(str,args)))
+def TRACE(*args):   LOG(zLOG.TRACE,  args)
+def DEBUG(*args):   LOG(zLOG.DEBUG,  args)
+def BLATHER(*args): LOG(zLOG.BLATHER,args)
+def INFO(*args):    LOG(zLOG.INFO,   args)
+def WARNING(*args): LOG(zLOG.WARNING,args)
+def ERROR(*args):   LOG(zLOG.ERROR,  args)
+
 
 def formattedTraceback():
     type,val,tb = sys.exc_info()
@@ -595,7 +623,7 @@ def safe_hasattr(obj, name, _marker=object()):
 
 
 from cgi import escape
-def html_quote(s): return escape(str(s))
+def html_quote(s): return escape(s)
 def html_unquote(s,
                  character_entities=(
                        (('&amp;'),    '&'),
@@ -872,3 +900,9 @@ if not safe_hasattr(__builtins__,'sorted'):
         return L
 else:
     sorted = sorted
+
+isnumeric = lambda v:isinstance(v,IntType) or isinstance(v,FloatType) or isinstance(v,LongType)
+isfloat   = lambda v:isinstance(v,FloatType)
+isstring  = lambda v:isinstance(v,StringType)
+isunicode = lambda v:isinstance(v,UnicodeType)
+

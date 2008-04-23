@@ -63,28 +63,32 @@ class Tests(ZwikiTestCase):
         self.assertEqual(self.page.newPageTypeIdFor('nosuchtype'), self.page.defaultPageType())
 
     def test_fixEncoding(self):
-        # some basic edit tests with encoded text
-        latin = 'Envoy\xe9 \xc0\n'
-        utf = 'Envoy\xc3\xa9 \xc3\x80\n'
+        # some basic tests with encoded text
         uni = u'Envoy\xe9 \xc0\n'
-        # zwiki expects ascii or utf8 text
+        utf = 'Envoy\xc3\xa9 \xc3\x80\n'
+        latin = 'Envoy\xe9 \xc0\n'
+        # most zwiki text handling methods now expect and return unicode
+        self.p.setText(uni)
+        self.assertEqual(uni,self.p.text())
+        # setText/cleanupText will accept plain ascii or utf8, also
         self.p.setText(utf)
-        self.assertEqual(utf,self.p.text())
+        self.assertEqual(uni,self.p.text())
         # trying to save latin1 text fails
         self.assertRaises(UnicodeError,self.p.setText,latin)
-        # trying to save unicode text fails
-        self.assertRaises(TypeError,self.p.setText,uni)
-        # simulate an old page containing latin1 text
+        # simulate prerendering/formatting an old page containing latin1
+        # This fails when the formatter expects a different encoding. Eg,
+        # assuming rest-*-encoding options are set to utf8:
         self.p.raw = latin
-        self.assertEqual(latin,self.p.text())
-        # prerendering/formatting the page body fails when the formatter
-        # expects a different encoding. Eg, assuming rest-*-encoding
-        # options are set to utf8:
         self.assertRaises(UnicodeError,self.p.preRender)
-        # fixEncoding converts it to utf8 and everything is happy
-        self.p.fixEncoding()
-        self.assertEqual(utf,self.p.text())
+        # fixEncoding converts it to unicode and everything is happy
+        # but we must specify the encoding if it's different from the wiki's default
+        self.p.fixEncoding(enc='latin1')
+        self.assertEqual(uni,self.p.text())
         self.p.preRender()
+        # should also fix an old page's utf8-encoded parents property
+        self.p.parents = ['\xc3\x89']
+        self.p.fixEncoding()
+        self.assertEqual([u'\xc9'],self.p.parents)
 
     def test_skinWithNonAscii(self):
         # skinning a non-ascii page body can fail due to #1330

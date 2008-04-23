@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
+import transaction
 
 from Diff import textdiff
 
@@ -15,27 +17,19 @@ def test_rename(self):
     #self.login() # no effect ?
     req = self.request
     req.cookies['zwiki_username'] = 'testuser'
-    # under ZopeTestCase the page's _p_jar is present but None,
-    # which makes cb_isMoveable & manage_renameObject fail.
-    # hack it for the duration
-    ZWikiPage.cb_isMoveable = lambda x:1 # XXX affects later tests ?
-    # better, from the ZTC FAQ - but gives this:
-    #  File "/usr/local/zope/software/lib/python/ZODB/Transaction.py", line 235, in commit
-    #    ncommitted += self._commit_objects(objects)
-    #  File "/usr/local/zope/software/lib/python/ZODB/Transaction.py", line 349, in _commit_objects
-    #    jar.commit(o, self)
-    #  File "/usr/local/zope/software/lib/python/ZODB/Connection.py", line 389, in commit
-    #    dump(state)
-    #UnpickleableError: Cannot pickle <type 'file'> objects
-    #get_transaction().commit(1)
+
+    # rename
+    transaction.get().savepoint() # need a _p_jar for manage_renameObject
     self.wiki.TestPage.rename(pagename='NewName',REQUEST=req)
     self.assert_(safe_hasattr(self.wiki,'NewName'))
     # the wiki outline object is also updated
     self.assert_(not self.wiki.NewName.wikiOutline().hasNode('TestPage'))
     self.assert_(self.wiki.NewName.wikiOutline().hasNode('NewName'))
+
     # again, this time with parents and offspring
     self.wiki.NewName.create('NewNameChild')
     self.wiki.NewNameChild.create('NewNameGrandChild')
+    transaction.get().savepoint()
     self.wiki.NewNameChild.rename(pagename='NewNameChildRenamed',REQUEST=req)
     self.assert_(safe_hasattr(self.wiki,'NewNameChildRenamed'))
     self.assert_('NewNameChildRenamed' in self.wiki.NewNameGrandChild.parents)
@@ -44,7 +38,11 @@ def test_rename(self):
                  self.wiki.outline.parents('NewNameGrandChild'))
     self.assert_('NewName' in \
                  self.wiki.outline.parents('NewNameChildRenamed'))
-    
+
+    # now with unicode
+    self.wiki.NewName.rename(u'N\xe9wName')
+    self.assert_('N_e9wName' in self.wiki.objectIds())
+    self.assertEqual(u'N\xe9wName',self.wiki.N_e9wName.pageName())
 
 class Tests(ZwikiTestCase):
 
@@ -217,8 +215,7 @@ class Tests(ZwikiTestCase):
         self.assertEqual(p.read(),
           '\n\n.. image:: http://nohost/test_folder_1_/wiki/edittestimage.jpg\n\n\n!`edittestimage.png`__\n\n__ http://nohost/test_folder_1_/wiki/edittestimage.png\n') #rst
 
-    def testEditLastEditorStamping(self):
-        # Username stamping
+    def test_edit_saves_last_editor(self):
         p = self.page
         f = p.aq_parent
         p.last_editor = '-'
@@ -226,27 +223,76 @@ class Tests(ZwikiTestCase):
         # if no username available, IP address should be recorded
         p.REQUEST.set('REMOTE_ADDR', '1.2.3.4')
         p.append(text='.',REQUEST=p.REQUEST)
-        self.assertEqual(p.last_editor,'1.2.3.4')
-        self.assertEqual(p.last_editor_ip,'1.2.3.4')
+        self.assertEqual(p.lastEditor(),'1.2.3.4')
+        self.assertEqual(p.lastEditorIp(),'1.2.3.4')
 
         # use the zwiki_username cookie if available
         p.REQUEST.cookies['zwiki_username'] = 'cookiename'
         p.append(text='.',REQUEST=p.REQUEST)
-        self.assertEqual(p.last_editor,'cookiename')
-        self.assertEqual(p.last_editor_ip,'1.2.3.4')
+        self.assertEqual(p.lastEditor(),'cookiename')
+        self.assertEqual(p.lastEditorIp(),'1.2.3.4')
 
         # if we are authenticated, use that by preference
         p.REQUEST.set('AUTHENTICATED_USER', MockUser('authusername'))
         p.append(text='.',REQUEST=p.REQUEST)
-        self.assertEqual(p.last_editor,'authusername')
-        self.assertEqual(p.last_editor_ip,'1.2.3.4')
+        self.assertEqual(p.lastEditor(),'authusername')
+        self.assertEqual(p.lastEditorIp(),'1.2.3.4')
 
         # don't record editor if nothing is actually changed
         p.REQUEST.set('AUTHENTICATED_USER', MockUser('differentusername'))
         p.REQUEST.set('REMOTE_ADDR', '5.6.7.8')
         p.edit(text=p.read(),REQUEST=p.REQUEST)
-        self.assertEqual(p.last_editor,'authusername')
-        self.assertEqual(p.last_editor_ip,'1.2.3.4')
+        self.assertEqual(p.lastEditor(),'authusername')
+        self.assertEqual(p.lastEditorIp(),'1.2.3.4')
+
+    def test_lastEditor(self):
+        p = self.page
+        # last_editor is now unicode, but handle old utf8-encoded ones
+        p.last_editor = u'\xe4\xf6'        # unicode
+        self.assertEqual(u'\xe4\xf6',p.lastEditor())
+        p.last_editor = '\xc3\xa4\xc3\xb6' # utf8
+        self.assertEqual(u'\xe4\xf6',p.lastEditor())
+
+    def test_setLastEditor(self):
+        p = self.page
+        p.REQUEST.set('REMOTE_ADDR', '1.2.3.4')
+        p.REQUEST.set('AUTHENTICATED_USER', MockUser('user'))
+        p.setLastEditor(REQUEST=p.REQUEST)
+        self.assertEqual(p.lastEditor(),'user')
+        self.assertEqual(p.lastEditorIp(),'1.2.3.4')
+
+    def test_setText(self):
+        p = self.page
+        p.edit(text='<html blah>\n<body blah>\ntest\n</body>\n</html>')
+        # we don't strip stuff outside body tags any more
+        #self.assertEqual(p.read(),'\ntest\n')
+        self.assertEqual(p.read(),u'<html blah>\n<body blah>\ntest\n</body>\n</html>')
+
+    def test_setCreator(self):
+        p = self.page
+        r = MockRequest()
+        u = MockUser('test user')
+        r.set('AUTHENTICATED_USER',u)
+        r.set('REMOTE_ADDR','4.3.2.1')
+        p.setCreator()
+        self.assert_(p.creation_time)
+        self.assertEqual(p.creator_ip,'')
+        self.assertEqual(p.creator,'')
+        p.setCreator(r)
+        self.assertEqual(p.creator_ip,'4.3.2.1')
+        self.assertEqual(p.creator,'test user')
+        
+    def test_text(self):
+        p = self.page
+        # ensure we don't lose first lines to DTML's decapitate()
+        p.setText(r'first: line\n\nsecond line\n')
+        self.assertEqual(p.text(),'first: line\\n\\nsecond line\\n')
+        # ensure none of these reveal the antidecapkludge
+        p.edit(type='html')
+        p.setText('test text')
+        self.assertEqual(p.text(),'test text')
+        self.assertEqual(p.read(),'test text')
+        self.assertEqual(p.__str__(),'test text')
 
     def test_create(self):
         p = self.page
@@ -446,6 +492,9 @@ long citations
 
 
 From me Fri Dec 31 00:00:00 +0000 1999
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 From: me
 Date: Fri, 31 Dec 1999 00:00:00 +0000
 Subject: 
@@ -475,6 +524,9 @@ long citations
 
 
 From me Fri Dec 31 00:00:00 +0000 1999
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 From: me
 Date: Fri, 31 Dec 1999 00:00:00 +0000
 Subject: 
@@ -625,10 +677,12 @@ bbb
         p.append(text='x')
         p.append(text='x')
         self.assertEqual(4,p.revisionCount())
+        p.render(bare=1)
         p.expunge(1)
         p = p.pageWithId(p.getId()) # the object has been replaced
         self.assertEqual(1,p.revisionCount())
         self.assertEqual(1,p.revisionNumber())
+        p.render(bare=1)
 
     def test_expungeEditsBy(self):
         p = self.page
@@ -638,7 +692,7 @@ bbb
         p.REQUEST.cookies['zwiki_username'] = 'fred'
         p.edit(text='test',REQUEST=p.REQUEST)
         p.append(text='1',REQUEST=p.REQUEST)
-        self.assertEqual(p.last_editor,'fred')
+        self.assertEqual(p.lastEditor(),'fred')
 
         # expunge edits by joe - no change
         freds = p.read()
@@ -648,18 +702,30 @@ bbb
         # joe edits
         p.REQUEST.cookies['zwiki_username'] = 'joe'
         p.edit(text='2',REQUEST=p.REQUEST)
-        self.assertEqual(p.last_editor,'joe')
+        self.assertEqual(p.lastEditor(),'joe')
         self.assertNotEqual(p.read(), freds)
         
         # expunge edits by joe - back to fred's version
         #can't test this yet, cf #1325
         #p.expungeEditsBy('joe')
         #self.assertEqual(p.read(), freds)
-        #self.assertEqual(p.last_editor,'fred')
+        #self.assertEqual(p.lastEditor(),'fred')
 
         # test again with a brand new page
         #new = p.create('NewPage', REQUEST=p.REQUEST)
 
+    def test_comment(self):
+        p = self.page
+        p.comment(text='a')
+        p.render(bare=1)
+        # non-ascii
+        # try to exercise a bug where we wrote unicode in the transaction note
+        # didn't work
+        p.comment(text=u'\xc9', subject_heading=u'\xc9')
+        import transaction
+        transaction.get().commit()
+        p.render(bare=1)
+        
     def test_expungeLastEditor(self):
         p, r = self.page, self.request
         def be(u):r.cookies['zwiki_username'] = u
@@ -712,3 +778,4 @@ bbb
 
         a,b,c = expungeLastEditorEverywhereAndRefresh(b) # removes joe, but not page creation
         self.assertEqual([1,2,1], [p.revisionCount() for p in [a,b,c]])
+

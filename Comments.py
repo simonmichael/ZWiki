@@ -1,7 +1,7 @@
 # PageCommentsSupport mixin
 
 import sys, os, string, re, email, email.Errors
-from mailbox import UnixMailbox, PortableUnixMailbox
+from mailbox import UnixMailbox
 from urllib import quote
 from cStringIO import StringIO
 
@@ -86,11 +86,15 @@ class PageCommentsSupport:
             except email.Errors.MessageParseError:
                 BLATHER('message parsing error in',self.id())
                 return ''
-        return UnixMailbox(StringIO(self.text()), msgfactory)
+        return UnixMailbox(StringIO(self.toencoded(self.text())), msgfactory)
 
     def comments(self):
         """
-        Return this page's comments as a list of Messages.
+        Return this page's comments as a list of email Messages.
+
+        Warning, the email lib's Messages contain encoded text and you
+        must remember to convert their data to unicode when
+        appropriate.
         """
         msgs = []
         mbox = self.mailbox()

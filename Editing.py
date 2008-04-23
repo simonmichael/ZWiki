@@ -34,7 +34,8 @@ from pagetypes import PAGETYPES
 from Defaults import DISABLE_JAVASCRIPT, LARGE_FILE_SIZE, LEAVE_PLACEHOLDER
 import Permissions
 from Regexps import javascriptexpr, htmlheaderexpr, htmlfooterexpr
-from Utils import get_transaction, BLATHER, parseHeadersBody, safe_hasattr
+from Utils import get_transaction, BLATHER, parseHeadersBody, isunicode, \
+     safe_hasattr
 from I18n import _
 from Diff import addedtext, textdiff
 
@@ -91,12 +92,15 @@ class PageEditingSupport:
             if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl()+'/denied')
             return None
         # here goes.. sequence is important
-        name = unquote(page or pagename or REQUEST.form.get('title'))
+        name  = self.tounicode(self.urlunquote(page or pagename or REQUEST.form.get('title')))
+        title = title and self.tounicode(self.urlunquote(title))
+        text  = text and self.tounicode(text)
+        log   = log and self.tounicode(log)
+        id    = self.canonicalIdFrom(name)
         if not name:
             return self.genericerror(shorttitle=_('No Page Name'),
             messagetitle=_('Please enter a Page Name'),
             messages=[_('You did not enter a name for your new page. Please go Back and enter a name in the form.'), _('Your browser should still have your edits.')])
-        id = self.canonicalIdFrom(name)
         p = self.__class__(__name__=id)
         p.title = name # because manage_afterAdd adds this to the wiki outline
         p = self.folder()[self.folder()._setObject(id,p)] # place in folder
@@ -132,7 +136,7 @@ class PageEditingSupport:
         if REQUEST:
             try:
                 u = (REQUEST.get('redirectURL',None) or
-                     REQUEST['URL2']+'/'+ quote(p.id()))
+                     REQUEST['URL2']+'/'+ self.urlquote(p.id()))
                 REQUEST.RESPONSE.redirect(u)
             except KeyError: pass
         return name
@@ -163,6 +167,13 @@ class PageEditingSupport:
         - may set, clear or remove this page's show_subtopics property
         - sends mail notification to subscribers if appropriate
         """
+        page          = page and self.tounicode(self.urlunquote(page))
+        title         = title and self.tounicode(self.urlunquote(title))
+        text          = text and self.tounicode(text)
+        log           = log and self.tounicode(log)
+        subjectSuffix = subjectSuffix and self.tounicode(subjectSuffix)
+
+        # what are we doing ?
         if page: page = unquote(page)
         if page is None:                  # changing this page
             p = self                        
@@ -199,7 +210,7 @@ class PageEditingSupport:
             try:
                 REQUEST.RESPONSE.redirect(
                     (REQUEST.get('redirectURL',None) or
-                     REQUEST['URL2']+'/'+ quote(p.id())))
+                     REQUEST['URL2']+'/'+ self.urlquote(p.id())))
             except KeyError: pass
 
     # This alternate spelling exists so that we can define an "edit" alias
@@ -227,13 +238,14 @@ class PageEditingSupport:
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
         if self.isDavLocked(): return self.davLockDialog()
         # gather info
-        oldtext = self.read()
+        oldtext         = self.read()
+        text            = text and self.cleanupText(text)
+        subject_heading = subject_heading and self.cleanupText(subject_heading)
         if not username:
             username = self.usernameFrom(REQUEST)
             if re.match(r'^(?:\d{1,3}\.){3}\d{1,3}$',username): username = ''
-        subject_heading = self.cleanupText(subject_heading)
-        text = self.cleanupText(text)
-        firstcomment = self.messageCount()==0
+        username        = username and self.tounicode(username)
+        firstcomment    = self.messageCount()==0
         # ensure the page comment and mail-out will have the same
         # message-id, and the same timestamp if possible (helps threading
         # & troubleshooting)
@@ -244,14 +256,15 @@ class PageEditingSupport:
         if not message_id: message_id = self.messageIdFromTime(dtime)
         # format this comment as standard rfc2822
         m = Message()
-        m['From'] = username
+        m.set_charset(self.encoding())
+        m.set_payload(self.toencoded(text))
+        m['From'] = username            # XXX encode ?
         m['Date'] = time
-        m['Subject'] = subject_heading
+        m['Subject'] = subject_heading  # XXX encode ?
         m['Message-ID'] = message_id
         if in_reply_to: m['In-Reply-To'] = in_reply_to
-        m.set_payload(text)
         m.set_unixfrom(self.fromLineFrom(m['From'],m['Date'])[:-1])
-        t = str(m)
+        t = self.tounicode(str(m))
         # discard junk comments
         if not (m['Subject'] or m.get_payload()): return
         self.checkForSpam(t)
@@ -311,7 +324,7 @@ class PageEditingSupport:
         """Save an edit log message, if provided."""
         if log and string.strip(log):
             log = string.strip(log)
-            get_transaction().note('"%s"' % log)
+            get_transaction().note('"%s"' % self.toencoded(log))
             self.last_log = log
         else:
             self.last_log = ''
@@ -496,16 +509,16 @@ class PageEditingSupport:
           creation mailout but not the ones that may result from
           updatebacklinks.
         """
-        # figure out what's going on
         oldname, oldid = self.pageName(), self.getId()
         oldnameisfreeform = oldname != oldid
         def clean(s): return re.sub(r'[\r\n]','',s)
-        newname = clean(pagename)
+        newname = clean(self.tounicode(pagename))
         newid = self.canonicalIdFrom(newname)
         namechanged, idchanged = newname != oldname, newid != oldid
         if not newname or not (namechanged or idchanged): return 
         # sequence is important here
-        BLATHER('renaming %s (%s) to %s (%s)...'%(oldname,oldid,newname,newid))
+        BLATHER('renaming %s (%s) to %s (%s)...' % (
+            self.toencoded(oldname),oldid,self.toencoded(newname),newid))
         self.ensureTitle()
         if idchanged:
             self.changeIdCarefully(newid)
@@ -736,6 +749,8 @@ class PageEditingSupport:
             RESPONSE.setHeader('Content-Type', 'text/plain; charset=utf-8')
             #RESPONSE.setHeader('Last-Modified', rfc1123_date(self._p_mtime))
         return self.read()
+        # XXX or self.toencoded(self.read()) ? used as both an internal and
+        # external fn
 
     def setText(self, text='', REQUEST=None):
         """
@@ -802,12 +817,14 @@ class PageEditingSupport:
                                    _("adding of external links is restricted, even for identified users. Please back up and remove some of the http urls you added, or contact the site administrator for help."))
 
     def cleanupText(self, t):
-        """Clean up incoming text and make sure that it's utf8-encoded."""
-        def checkutf8(s): unicode(t,'utf-8')
+        """Clean up incoming text and convert to unicode for internal use."""
         def stripcr(t): return re.sub('\r\n','\n',t)
         def disablejs(t): return re.sub(javascriptexpr,r'&lt;disabled \1&gt;',t)
-        checkutf8(t)
-        return disablejs(stripcr(t))
+        return disablejs(stripcr(self.tounicode(t)))
+
+    def lastEditor(self):return self.tounicode(self.last_editor)
+
+    def lastEditorIp(self):return self.last_editor_ip
 
     def setLastEditor(self, REQUEST=None):
         """Record last editor info based on the current REQUEST and time."""
@@ -886,8 +903,8 @@ class PageEditingSupport:
             timeStamp != self.timeStamp() and
             (not safe_hasattr(self,'last_editor') or
              not safe_hasattr(self,'last_editor_ip') or
-             username != self.last_editor or
-             REQUEST.REMOTE_ADDR != self.last_editor_ip)):
+             username != self.lastEditor() or
+             REQUEST.REMOTE_ADDR != self.lastEditorIp())):
             return 1
         else:
             return 0
@@ -910,7 +927,7 @@ class PageEditingSupport:
         #types = types + ")"
         types = "%s" % self.pageTypeId()
         return "Wiki-Safetybelt: %s\nType: %s\nLog: \n\n%s" % (
-            self.timeStamp(), types, self.read())
+            self.timeStamp(), types, self.toencoded(self.read()))
 
     security.declarePublic('isDavLocked')
     def isDavLocked(self):
@@ -943,6 +960,8 @@ class PageEditingSupport:
     security.declareProtected(Permissions.Edit, 'manage_edit')
     def manage_edit(self, data, title, REQUEST=None):
         """Do standard manage_edit kind of stuff, using our edit."""
+        data  = self.tounicode(data)
+        title = self.tounicode(title)
         #self.edit(text=data, title=title, REQUEST=REQUEST, check_conflict=0)
         #I think we need to bypass edit to provide correct permissions
         self.title = title

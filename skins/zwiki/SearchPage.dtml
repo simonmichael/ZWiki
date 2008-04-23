@@ -81,7 +81,7 @@
  textsearchexpr=expr
  titlehits="((cleanexpr and pages(Title=titlesearchexpr)+['dummy']) or pages()+['dummy'])[:-1]" 
  titlehits="_.sequence.sort(titlehits,(('Title','nocase','asc'),)) # locale_nocase if locale configured in zope.conf"
- texthits="((cleanexpr and pages(text=textsearchexpr)+['dummy']) or ['dummy'])[:-1]" 
+ texthits="((cleanexpr and pages(SearchableText=textsearchexpr)+['dummy']) or ['dummy'])[:-1]" 
  texthits="_.sequence.sort(texthits,(('Title','nocase','asc'),))"
  >
 

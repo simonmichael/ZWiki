@@ -39,6 +39,7 @@ import OFS, DateTime
 from Testing import ZopeTestCase
 from ZPublisher.HTTPRequest import HTTPRequest
 from ZPublisher.HTTPResponse import HTTPResponse
+import AccessControl.Permissions
 
 from Products.ZWiki.ZWikiPage import ZWikiPage
 from Products import ZWiki
@@ -82,8 +83,9 @@ def afterSetUp(self):
         Permissions.Reparent,
         Permissions.Upload,
         Permissions.FTP,
+        AccessControl.Permissions.copy_or_move,
         #CMFCorePermissions.AddPortalContent,
-        ])
+    ])
     # set up a wiki in a subfolder, with one page of default type (RST)
     self.folder.manage_addFolder('wiki',title='')
     self.wiki = self.folder.wiki
@@ -96,7 +98,14 @@ def afterSetUp(self):
 
 class ZwikiTestCase(ZopeTestCase.ZopeTestCase):
     afterSetUp = afterSetUp
-
+    # kludge.. some recent test exercises code that commits and so
+    # this is required for cleanup, except after test_dtml_in_rst
+    def beforeClose(self):
+        try:
+            import transaction; transaction.commit()
+        except TypeError:
+            pass
+        
     
 # mock objects
 

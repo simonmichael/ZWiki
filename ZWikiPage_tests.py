@@ -1,6 +1,7 @@
 from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
+from Utils import isunicode
 
 def test_suite():
     suite = unittest.TestSuite()
@@ -55,6 +56,7 @@ class Tests(ZwikiTestCase):
         self.assertEquals(p.canonicalIdFrom('Test\xc3Page'),'Test_c3Page') # A tilde
         self.assertEquals(p.canonicalIdFrom('\xc3Page'),'X_c3Page')
         self.assertEquals(p.canonicalIdFrom('_c3Page'),'C3Page')
+        self.failIf(isunicode(p.canonicalIdFrom(u'Test')))
 
     def test_asAgeString(self):
         #p = self.page
@@ -252,3 +254,11 @@ class Tests(ZwikiTestCase):
         edittime = 'not valid'
         r = self.p.linkTitleFrom(last_edit_time=edittime)
         self.assert_( 'some time' in r )
+
+    def test_renderMidsectionIn(self):
+        from pagetypes.common import MIDSECTIONMARKER
+        p = self.page
+        self.assertEqual('a\nb',p.renderMidsectionIn('a'+MIDSECTIONMARKER+'b'))
+        #self.assertEqual('a\n',p.renderMidsectionIn('a'+MIDSECTIONMARKER+'é'))
+        self.assertEqual(u'a\n\xe9',p.renderMidsectionIn('a'+MIDSECTIONMARKER+u'\xe9'))
+        

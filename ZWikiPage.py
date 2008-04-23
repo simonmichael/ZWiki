@@ -36,7 +36,8 @@ from Regexps import url, bracketedexpr, singlebracketedexpr, \
      interwikilink, remotewikiurl, protected_line, zwikiidcharsexpr, \
      anywikilinkexpr, markedwikilinkexpr, localwikilink, \
      spaceandlowerexpr, dtmlorsgmlexpr, wikinamewords, hashnumberexpr
-from Utils import PageUtils, BLATHER, DateTimeSyntaxError, safe_hasattr
+from Utils import PageUtils, BLATHER, DateTimeSyntaxError, isunicode, \
+     safe_hasattr
 from Views import PageViews
 from OutlineSupport import PageOutlineSupport
 from Diff import PageDiffSupport # XXX to be replaced by..
@@ -281,9 +282,13 @@ class ZWikiPage(
         """
         Pre-parse this page's text (the pre-rendered, if available) for DTML.
         """
+        t = self.preRendered() or self.read()
+        # dtml can break with a unicode string here, depending on default
+        # encoding ?  Convert to a normal string. Hmm, lossage here ? XXX
+        t = self.toencoded(t)
         cooklock.acquire()
         try:
-            self._v_blocks=self.parse(self.preRendered() or self.read())
+            self._v_blocks=self.parse(t)
             self._v_cooked=None
         finally:
             cooklock.release()
@@ -735,7 +740,7 @@ class ZWikiPage(
                 self.formatWikiname(linkorig or page),
                 self.wikiUrl(),
                 quote(self.id()),
-                quote(page),
+                quote(self.toencoded(page)),
                 _("create this page")))
 
     def renderInterwikiLink(self, link):
@@ -831,7 +836,7 @@ class ZWikiPage(
         with prettyprint=1, format it for use in the standard header.
         """
         return self.linkTitleFrom(self.last_edit_time,
-                                  self.last_editor,
+                                  self.lastEditor(),
                                   prettyprint=prettyprint)
 
     # please clean me up
@@ -892,12 +897,12 @@ class ZWikiPage(
     security.declareProtected(Permissions.View, 'pageName')
     def pageName(self):
         """
-        Return the name of this wiki page.
+        Return the name of this wiki page, as a unicode string.
 
-        This is normally in the title attribute, but use title_or_id
-        to handle eg pages created via the ZMI.
+        This is normally in the title attribute, but use title_or_id to
+        handle eg pages created via the ZMI.
         """
-        return self.title_or_id()
+        return self.tounicode(self.title_or_id())
 
     def pageId(self):
         return self.id()
@@ -976,6 +981,9 @@ class ZWikiPage(
 
         # some ids collide with common zope objects and would break things
         if safeid in IDS_TO_AVOID: safeid = safeid+'X'
+
+        # unicode can make it through all the above.. convert to normal string
+        if isunicode(safeid): safeid = safeid.encode('ascii')
 
         return safeid
 
@@ -1185,8 +1193,12 @@ class ZWikiPage(
 
         As of 0.17, page ids and names always follow the invariant
         id == canonicalIdFrom(name).
+
+        To ease migration, we will also search for a page with the
+        name utf-8-encoded.
         """
-        return (self.pageWithId(self.canonicalIdFrom(name),url_quoted))
+        return (self.pageWithId(self.canonicalIdFrom(name),url_quoted) or
+                self.pageWithId(self.canonicalIdFrom(self.toencoded(name,'utf-8')),url_quoted))
 
     security.declareProtected(Permissions.View, 'pageWithNameOrId')
     def pageWithNameOrId(self,name,url_quoted=0):

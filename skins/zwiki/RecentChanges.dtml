@@ -74,11 +74,13 @@
       </dtml-unless>
     </td>
     <td align="left" nowrap="">
-      <dtml-if "last_editor and _.string.swapcase(last_editor) != last_editor">
-      <a href="&dtml-wikiurl;/<dtml-var "canonicalIdFrom(last_editor)">">&dtml-last_editor;</a>
+      <dtml-let username=lastEditor ip=lastEditorIp>
+      <dtml-if "username and username != ip">
+      <a href="&dtml-wikiurl;/<dtml-var "canonicalIdFrom(username)">">&dtml-username;</a>
       <dtml-else>
       <dtml-translate domain=zwiki>anonymous</dtml-translate>
       </dtml-if>
+      </dtml-let>
       &nbsp;&nbsp;&nbsp;
     </td>
     <td nowrap="">

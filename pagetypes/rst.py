@@ -28,13 +28,15 @@ class PageTypeRst(PageTypeBase):
     supportsDtml = yes
     supportsWikiLinks = yes
 
-    def format(self, t):
+    def format(self, page, t):
         if reStructuredText:
-            return reStructuredText.HTML(
+            # rst returns an encoded string.. decode it back to unicode
+            # hopefully the rst encoding in zope.conf matches the wiki's encoding
+            return page.tounicode(reStructuredText.HTML(
                 t,
                 report_level=RST_REPORT_LEVEL,
                 initial_header_level=RST_INITIAL_HEADER_LEVEL-1
-                )
+                ))
         else:
             return "<pre>Error: could not import reStructuredText</pre>\n"+t
 
@@ -42,7 +44,7 @@ class PageTypeRst(PageTypeBase):
         t = text or (page.document()+'\n'+MIDSECTIONMARKER+ \
                      self.preRenderMessages(page))
         t = page.applyWikiLinkLineEscapesIn(t)
-        t = self.format(t)
+        t = self.format(page,t)
         t = page.markLinksIn(t,urls=0)
         t = self.protectEmailAddresses(page,t)
         return t
@@ -78,15 +80,16 @@ class PageTypeRst(PageTypeBase):
         using HTML+CSS, not the text markup rules.
         """
         heading = '\n\n.. class:: commentheading\n\n'
-        heading += '**%s** --' % (subject or '...')
-        if username: heading = heading + '%s, ' % (username)
+        heading += '**%s** --' % (page.tounicode(subject) or '...')
+        if username: heading = heading + '%s, ' % (page.tounicode(username))
         heading += time
+        subject    = subject or ''
+        message_id = message_id or ''
         heading += ' `%s <%s?subject=%s%s#bottom>`_' % (
             _("reply"),
             page.pageUrl(),
             quote(subject or ''),
-            ((message_id and '&in_reply_to='+quote(message_id))
-             or '')
+            ((message_id and '&in_reply_to='+quote(message_id)) or '')
             )
         heading += '\n\n.. class:: commentbody\n\n'
         return heading

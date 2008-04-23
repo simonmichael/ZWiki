@@ -13,7 +13,7 @@
       <h1 i18n:translate="">Help page</h1>
       <div class="formcontent" 
            tal:content="structure python:here.talsafe(
-			here.wikilink(here.stxToHtml(str(here.getSkinTemplate('HelpPage')))))
+			here.wikilink(here.stxToHtml(here, str(here.getSkinTemplate('HelpPage')))))
 			# for now - HelpPage really expects to be a wiki page
 			">
         content goes here..

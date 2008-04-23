@@ -459,12 +459,13 @@ class SkinViews:
             return self.denied(
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
 
+        page = self.tounicode(self.urlunquote(page or ''))
         if ((not page or page == self.pageName()) and
             safe_hasattr(self,'wl_isLocked') and self.wl_isLocked()):
             return self.davLockDialog()
 
         # what are we going to do ? set up page, text & action accordingly
-        if page is None:
+        if not page:
             # no page specified - editing the current page
             page = self.pageName()
             text = self.read()

@@ -59,7 +59,7 @@ class PageTypeStxMath(PageTypeStx):
         # Be more generous in STX for links...so they can contain equations
         t = re.sub(r'(^| )(?ms)"([^"]*)":(http://[-:A-Za-z0-9_,./\?=@#~&%()]*?)([.!?,;](?= )|(?= )|$)',\
             r'\1<a href="\3">\2</a>\4',t)
-        t = self.format(t)
+        t = self.format(page,t)
         t = page.markLinksIn(t)
         t = self.protectEmailAddresses(page,t)
         t = re.sub(r'<pre></pre>',restorePre,t,reConsts)
@@ -80,8 +80,8 @@ class PageTypeStxMath(PageTypeStx):
         if page.inCMF():
             heading += \
               '<img src="discussionitem_icon.gif" style="border:none; margin:0" />'
-        heading += '<b>%s</b> --' % (subject or '...') #more robust
-        if username: heading = heading + '%s, ' % (username)
+        heading += '<b>%s</b> --' % (page.tounicode(subject) or '...') #more robust
+        if username: heading = heading + '%s, ' % (page.tounicode(username))
         if message_id:
             heading += ' <a href="%s#msg%s">%s</a>' % \
                        (page.page_url(),
@@ -131,7 +131,7 @@ class PageTypePamphlet(PageTypeStx):
         # Be more generous in STX for links...so they can contain equations
         t = re.sub(r'(^| )(?ms)"([^"]*)":(http://[-:A-Za-z0-9_,./\?=@#~&%()]*?)([.!?,;](?= )|(?= )|$)',\
             r'\1<a href="\3">\2</a>\4',t)
-        t = self.format(t)
+        t = self.format(page,t)
         t = page.markLinksIn(t)
         t = self.protectEmailAddresses(page,t)
         return '<div class="latexwiki">\n' + b + t + '\n</div>\n'
@@ -151,8 +151,8 @@ class PageTypePamphlet(PageTypeStx):
         if page.inCMF():
             heading += \
               '<img src="discussionitem_icon.gif" style="border:none; margin:0" />'
-        heading += '<b>%s</b> --' % (subject or '...') #more robust
-        if username: heading = heading + '%s, ' % (username)
+        heading += '<b>%s</b> --' % (page.tounicode(subject) or '...') #more robust
+        if username: heading = heading + '%s, ' % (page.tounicode(username))
         if message_id:
             heading += ' <a href="%s#msg%s">%s</a>' % \
                        (page.page_url(),

@@ -57,7 +57,7 @@ class PageTypeBase:
                                            self.name(),
                                            hex(id(self))[2:])
 
-    def format(self,text):
+    def format(self,page,text):
         """
         Apply the text formatting rules of this page type, if any.
 
@@ -69,7 +69,7 @@ class PageTypeBase:
         """
         Do all the pre-rendering we can for page, or for a piece of text.
         """
-        return self.format(text or page.read())
+        return self.format(page, text or page.read())
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):
         """
@@ -108,11 +108,11 @@ class PageTypeBase:
         if t: t = self.discussionSeparator(page) + t
         return t
 
-    def preRenderMessage(self,page,msg):
-        t = msg.get_payload()
+    def preRenderMessage(self,page,utfmsg):
+        t = page.tounicode(utfmsg.get_payload())
         t = self.protectEmailAddresses(page,t)
         t = self.renderCitationsIn(page,t)
-        t = self.addCommentHeadingTo(page,t,msg)
+        t = self.addCommentHeadingTo(page,t,utfmsg)
         return t
 
     def protectEmailAddresses(self,page,text):
@@ -126,21 +126,21 @@ class PageTypeBase:
     def renderCitationsIn(self,page,text):
         return text
 
-    def addCommentHeadingTo(self,page,text,msg):
+    def addCommentHeadingTo(self,page,text,utfmsg):
         return self.makeCommentHeading(page,
-                                       msg.get('subject'),
-                                       msg.get('from'),
-                                       msg.get('date'),
-                                       msg.get('message-id'),
-                                       msg.get('in-reply-to')
+                                       utfmsg.get('subject')     or '',
+                                       utfmsg.get('from')        or '',
+                                       utfmsg.get('date')        or '',
+                                       utfmsg.get('message-id'),
+                                       utfmsg.get('in-reply-to') or ''
                                        ) + text
 
     def makeCommentHeading(self, page,
                            subject, username, time, 
                            message_id=None,in_reply_to=None):
         heading = '\n\n'
-        heading += '%s --' % (subject or '...')
-        if username: heading = heading + '%s, ' % (username)
+        heading += '%s --' % (page.tounicode(subject) or '...')
+        if username: heading = heading + '%s, ' % (page.tounicode(username))
         heading += time or ''
         heading += '\n\n'
         return heading
@@ -222,16 +222,16 @@ class PageTypeBaseHtml(PageTypeBase):
         if page.inCMF():
             heading += \
               '<img src="discussionitem_icon.gif" style="border:none; margin:0" />'
-        heading += '<b>%s</b> --' % (subject or '...') #more robust
-        if username: heading = heading + '%s, ' % (username)
+        heading += '<b>%s</b> --' % (page.tounicode(subject) or '...') #more robust
+        if username: heading = heading + '%s, ' % (page.tounicode(username))
         if message_id:
             heading += ' <a href="%s#msg%s">%s</a>' % \
                        (page.pageUrl(),
                         re.sub(r'^<(.*)>$',r'\1',message_id),
-                        html_quote(time or ''))
+                        html_quote(page.tounicode(time) or ''))
             inreplytobit = '&in_reply_to='+quote(message_id)
         else:
-            heading += html_quote(time or '')
+            heading += html_quote(page.tounicode(time) or '')
             inreplytobit = ''
         #heading += ( (' <a href="%s?subject=%s%s#bottom">' 
         #             % (page.pageUrl(),quote(subject or ''),inreplytobit)) +

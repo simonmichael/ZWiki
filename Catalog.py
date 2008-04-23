@@ -104,6 +104,11 @@ class PageCatalogSupport:
         if self.hasCatalog() and self.isCatalogable():
             if log: BLATHER('indexing',self.url())
             try:
+                # XXX zwiki catalogs prior to 0.60 indexed the text
+                # method, it now returns unicode which standard catalogs
+                # can't handle, we now index SearchableText instead but
+                # the old text index may still be present, we could
+                # specify idxs so as to no longer update it
                 self.catalog().catalog_object(self,self.url(),idxs)
             except:
                 BLATHER('failed to index',self.id(),'\n',formattedTraceback())
@@ -118,6 +123,18 @@ class PageCatalogSupport:
         self.unindex_object()
         self.index_object()
 
+    security.declareProtected(Permissions.View, 'SearchableText')
+    def SearchableText(self):
+        """Get the main text fields concatenated and encoded for easy indexing.
+        Used by CMF and Plone, and from 0.60 also by the default zwiki
+        catalog.
+
+        XXX This returns encoded text, for now. This is probably wrong, but
+        default catalog textindexes don't support unicode.
+        """
+        return '%s\n%s' % (
+            self.toencoded(self.pageName()), self.toencoded(self.text()))
+    
     #XXX backwards compatibility
     updateCatalog = reindex_object = index_object 
 

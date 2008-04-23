@@ -11,14 +11,14 @@ class PageTypeWwml(PageTypeBase):
     supportsWwml = yes
     supportsWikiLinks = yes
 
-    def format(self,t):
+    def format(self,page,t):
         return translate_WWML(html_quote(t))
 
     def preRender(self, page, text=None):
         t = text or (page.document()+'\n'+MIDSECTIONMARKER+\
                      self.preRenderMessages(page))
         t = page.applyWikiLinkLineEscapesIn(t)
-        t = self.format(t)
+        t = self.format(page,t)
         t = page.markLinksIn(t)
         t = self.protectEmailAddresses(page,t)
         return t

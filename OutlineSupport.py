@@ -56,7 +56,7 @@ import Persistence
 from OFS.SimpleItem import SimpleItem
 
 import Permissions
-from Utils import flatten, BLATHER, safe_hasattr
+from Utils import flatten, BLATHER, safe_hasattr, isunicode
 from Defaults import PAGE_METATYPE
 from Regexps import bracketedexpr
 import Outline
@@ -141,7 +141,8 @@ class ParentsProperty:
         """
         Robust accessor returning a copy of our parents list.
         """
-        return list(self.parents)
+        # to ease upgrades, ensure unicode
+        return [self.tounicode(p) for p in list(self.parents)]
 
     def setParents(self,parents):
         parents = list(parents)
@@ -300,16 +301,17 @@ class OutlineManager:
 
     def ensureWikiOutline(self):
         """
-        Ensure this wiki has an outline cache, for fast page hierarchy.
-
-        We'll generate it if needed, ie if it's missing or if it's one of
-        the older types which get lost during a folder rename or when
-        moving pages to a new folder. This gets called before any use of
-        the outline cache, so that it is always present and current.
+        Ensure this wiki has an outline cache, for fast page
+        hierarchy.  This gets called before any use of the outline
+        cache, so that it is always present and current.  If it's
+        missing or if it's one of the early types (which get lost
+        during a folder rename or when moving pages to a new folder)
+        or it it's a pre-0.61 non-unicode outline, rebuild it.
         """
-        if (not safe_hasattr(self.folder().aq_base,'outline')
-            or not self.folder().outline):
-            self.updateWikiOutline()
+        o = safe_hasattr(self.folder().aq_base,'outline') and self.folder().outline or None
+        if not o: 
+            self.rebuildWikiOutline()
+            
 
     security.declareProtected(Permissions.View, 'updateWikiOutline')
     def updateWikiOutline(self):
@@ -327,7 +329,7 @@ class OutlineManager:
         loads all page objects from the ZODB, which is probably ok as this
         is not done frequently.
         """
-        BLATHER('regenerating outline data for wiki',self.folder().getId())
+        BLATHER('updating outline data for wiki',self.folder().getId())
         oldchildmap = {}
         # backwards compatibility
         # there have been three kinds of outline cache: folder attribute,
@@ -354,6 +356,15 @@ class OutlineManager:
     # easier-to-type alias ? XXX remove ? updateoutline ?
     updatecontents = updateWikiOutline
         
+    security.declareProtected(Permissions.View, 'rebuildWikiOutline')
+    def rebuildWikiOutline(self):
+        """Regenerate the wiki folder's cached outline object, throwing away
+        the old data. Will reset subtopic order to alphabetic.
+        """
+        BLATHER('purging outline data for wiki',self.folder().getId())
+        self.folder()._delObject('outline')
+        self.updateWikiOutline()
+
     security.declareProtected(Permissions.Reparent, 'reparent')
     def reparent(self, parents=[], REQUEST=None, pagename=None):
         """
@@ -374,6 +385,7 @@ class OutlineManager:
         oldparents = self.getParents()
         # clean the arguments carefully to avoid parenting anomalies
         # page mgmt form must use pagename field:
+        pagename = pagename and self.tounicode(pagename)
         if pagename:
             parents = [pagename] 
         # or parents might be a string
@@ -381,6 +393,8 @@ class OutlineManager:
             parents = [parents] 
         # empty strings are common, remove before calling pageWithFuzzyName
         parents = filter(lambda x:x, parents)
+        # to unicode
+        parents = map(self.tounicode, parents)
         # look up the page (brain) corresponding to each (fuzzy) parent name
         parents = map(lambda x:self.pageWithFuzzyName(x,allow_partial=1),
                       parents)

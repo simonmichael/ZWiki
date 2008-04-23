@@ -69,7 +69,7 @@ def registerPageMetaData(t):
 
 TEXTINDEXES = [
     'Title',
-    'text',
+    'SearchableText',
     ]
 #XXX are these correct choice of FieldIndexes vs. KeywordIndexes ?
 FIELDINDEXES = [

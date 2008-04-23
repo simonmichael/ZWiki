@@ -28,7 +28,7 @@
                  #here.supportsEpoz();
       timestamp  request/form/timeStamp|here/timeStamp;
       isfollowupedit python:editing
-                            and here.usernameFrom(request) == here.last_editor
+                            and here.usernameFrom(request) == here.lastEditor()
                             and here.ZopeTime() - here.lastEditTime() < 1;
       log        python:(request.form.get('log', (isfollowupedit and here.last_log) or ''));
       file       python:'' #doesn't work too well request/form/file|nothing ;

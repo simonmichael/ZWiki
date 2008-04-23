@@ -770,7 +770,7 @@ class PageMailSupport:
                                 mfrom=self.fromHeader(REQUEST), \
                                 subject=self.subjectHeader(subject,subjectSuffix), \
                                 mbcc=self.bccHeader(recipients), \
-                                charset='utf-8', \
+                                charset=self.encoding(), \
                                 **additional_headers )
 
         else: # normal "Mail Host" or "Maildrop Host"
@@ -790,7 +790,7 @@ List-Subscribe: <%s/subscribeform>
 List-Unsubscribe: <%s/subscribeform>
 List-Archive: <%s>
 List-Help: <%s>
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset="%s"
 
 %s
 %s
@@ -811,6 +811,7 @@ Content-Type: text/plain; charset="utf-8"
                self.pageUrl(),
                self.pageUrl(),
                self.wikiUrl(),
+               self.encoding(),
                text,
                self.signature(msgid),
                )

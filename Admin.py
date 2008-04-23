@@ -13,7 +13,8 @@ from DateTime import DateTime
 
 from I18n import _
 import Permissions
-from Utils import get_transaction, BLATHER, formattedTraceback, DateTimeSyntaxError, callHooks, safe_hasattr
+from Utils import get_transaction, BLATHER, formattedTraceback, \
+     DateTimeSyntaxError, callHooks, isunicode, safe_hasattr
 from pagetypes import PAGE_TYPE_UPGRADES
 from Defaults import PAGE_METADATA, \
      TEXTINDEXES, FIELDINDEXES, KEYWORDINDEXES, DATEINDEXES, PATHINDEXES
@@ -64,6 +65,7 @@ class PageAdminSupport:
         starttime = clock()
         n, total = 0, self.pageCount()
         self.setupCatalog(reindex=0)
+        self.rebuildWikiOutline()
         for p in self.pageObjects(): # poor caching (not a problem here)
             n += 1
             try:
@@ -84,8 +86,6 @@ class PageAdminSupport:
             if batch and n % batch == 0:
                 BLATHER('committing')
                 get_transaction().commit()
-
-        self.updateWikiOutline()
         self.setupDtmlMethods()
         endtime = clock()
         BLATHER('upgrade complete, %d pages processed in %fs, %f pages/s' \
@@ -460,36 +460,43 @@ class PageAdminSupport:
             BLATHER('creating catalog for wiki',self.folder().getId())
             self.setupCatalog()
 
-    def fixEncoding(self, FROM='iso8859-1', TO='utf-8', REQUEST=None):
-        """
-        Try to fix any character encoding problems in this page's name or text.
-
-        FROM is the encoding that we will try to convert from if there is trouble
-        TO is the encoding we prefer to use in this wiki
-        """
-        try: 
-            # are there characters in the name or text not using our preferred encoding ?
-            t = unicode(self.pageName(),TO)
-            t = unicode(self.text(),TO)
-            return False
-        except UnicodeDecodeError:
-            # yes - convert 
-            log = "converting %s from %s to %s encoding" % (self.pageName(), FROM, TO)
-            BLATHER(log)
-            # this will send mail and set last editor
-            #self.edit(text=unicode(self.text(), FROM).encode(TO),
-            #       title=unicode(self.pageName(), FROM).encode(TO),
-            #       log=log)
-            # this won't
-            self.setText(unicode(self.text(), FROM).encode(TO))
-            # this will (if the name really needs fixing)
-            self.rename(unicode(self.pageName(), FROM).encode(TO))
-            return True
-        if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl())
-
     def fixAllPagesEncoding(self, REQUEST=None):
-        for p in self.pageObjects(): fixEncoding(p)
+        """Fix character encoding throughout the wiki. Needed eg when
+        upgrading a pre-unicode zwiki."""
+        for p in self.pageObjects(): p.fixEncoding()
         if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1'])
+
+    def fixEncoding(self, enc=None, REQUEST=None):
+        """Try to fix character encoding problems in this page's name,
+        text, or parents property.  From 0.60, we store text as unicode,
+        so this just tries to convert any non-unicode text to unicode
+        using the standard encoding - currently utf-8, which will work for
+        most zwikis.  Some wikis have other encodings, so we also check
+        for the common iso8859-1 encoding, or another specified with the
+        enc argument. (Ideally this would fix anything without such a
+        hint.)  Returns True if changes were made.
+        """
+        name, text, parents = self.pageName(), self.text(), self.getParents()
+        if isunicode(name) and isunicode(text) and self.hasAllUnicodeParents():
+            return False
+        else:
+            BLATHER('converting %s to unicode' % (self.pageName()))
+            enc = enc or self.encoding()
+            self.clearCache()
+            #self.setText(self.tounicode(text,enc))
+            #bypass slow prerendering for now
+            self.raw = self.cleanupText(self.tounicode(text,enc))
+            self.rename(self.tounicode(name,enc))
+            self.convertParentsToUnicode(enc)
+            REQUEST = REQUEST or getattr(self,'REQUEST',None)
+            if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl())
+            return True
+
+    def hasAllUnicodeParents(self):
+        return not [p for p in self.getParents() if not isunicode(p)]
+
+    def convertParentsToUnicode(self, enc=None):
+        self.setParents([self.tounicode(p,enc) for p in self.getParents()])
 
 InitializeClass(PageAdminSupport)
 
