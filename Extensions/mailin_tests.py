@@ -396,19 +396,19 @@ Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
         self.assert_('+    def edits_rss(self, num=10, REQUEST=None):' in p.text())
 
     def testMailinTrackerIssue(self):
-        self.p.upgradeFolderIssueProperties()
-        self.assertEqual(0, self.p.issueCount())
+        self.p.setupTracker()
+        self.assertEqual(1, self.p.issueCount())
         mailin.mailin(self.p.folder(),
                       str(TestMessage(to='bugs@somewhere')))
-        self.assertEqual(1, self.p.issueCount())
+        self.assertEqual(2, self.p.issueCount())
 
     # this works.. need a functional test which sends through mail
     def testMailinTrackerIssueLongSubject(self):
         longsubjmsg = str(TestMessage(to='bugs@somewhere',subject=LONGSUBJECT))
-        self.p.upgradeFolderIssueProperties()
-        self.assertEqual(0, self.p.issueCount())
-        mailin.mailin(self.p.folder(),longsubjmsg)
+        self.p.setupTracker()
         self.assertEqual(1, self.p.issueCount())
+        mailin.mailin(self.p.folder(),longsubjmsg)
+        self.assertEqual(2, self.p.issueCount())
 
     def testStripSignature(self):
         # signatures after -- should be stripped

@@ -17,35 +17,15 @@ class Tests(ZwikiTestCase):
         # the wiki outline object is also updated
         self.assert_(self.folder.ZmiTestPage.wikiOutline().hasNode('ZmiTestPage'))
 
-    def test_excerptAt(self):
-        self.page.edit(text='This is a test of the<br />\n excerptAt method,')
-        self.assertEquals(self.page.excerptAt('excerptat',size=10,highlight=0),
-                          '\n excerptAt ')
-        #self.assertEquals(self.page.excerptAt('this*',size=21,highlight=1),
-        #                  '<span class="hit">This</span> is a tes')
-        #self.assertEquals(self.page.excerptAt('br',size=4),
-        #                  'e&lt;<span class="hit">br</span>&gt;\n')
-        # XXX temp
-        self.assertEquals(self.page.excerptAt('this*',size=21,highlight=1),
-                          '<span class="hit" style="background-color:yellow;font-weight:bold;">This</span> is a tes')
-        self.assertEquals(self.page.excerptAt('br',size=4),
-                          'e&lt;<span class="hit" style="background-color:yellow;font-weight:bold;">br</span> /')
-        self.assertEquals(self.page.excerptAt('<br />',size=4,highlight=0),
-                          '&lt;br /&gt;')
-        self.assertEquals(self.page.excerptAt('nomatch'), 'This is a test of the&lt;br /&gt;\n excerptAt method,')
-        self.assertEquals(self.page.excerptAt(''), 'This is a test of the&lt;br /&gt;\n excerptAt method,')
-
-    def testWithPartialCatalog(self):
-        # a number of things are known to be affected by a partial catalog
-        # - usually a standard CMF/plone portal_catalog that wasn't set up
-        # for Zwiki, but could also be a catalog that's had some of the
-        # zwiki fields removed - eg IssueNo0623.  These seem to boil down
-        # to ensuring the brains returned by pages() have all expected
-        # fields.
+    def test_incompleteCatalogReturnsNothing(self):
+        # an incomplete catalog could be a plone catalog that hasn't yet
+        # had the extra fields added for Zwiki, or a zwiki catalog that's
+        # had some fields removed - eg IssueNo0623. We used to look up the
+        # missing fields in this case, but now return no results to avoid
+        # performance problems in the revisions folder.
         self.page.setupCatalog()
         self.page.catalog().manage_delColumn('parents')
-        brain = self.page.pages()[0]
-        self.assert_(safe_hasattr(brain,'parents'))
+        self.assertEquals(self.page.pages(),[])
 
     def test_canonicalIdFrom(self):
         p = self.page
@@ -71,7 +51,9 @@ class Tests(ZwikiTestCase):
 
     def test_pageNamesStartingWith(self):
         p = self.page
+        p.setupCatalog()
         p.title = 'Test Page'
+        p.index_object()
         p.create('Test Page 2')
         self.assertEqual(p.pageNamesStartingWith('Test'),
                          ['Test Page','Test Page 2'])
@@ -83,7 +65,9 @@ class Tests(ZwikiTestCase):
 
     def test_firstPageNameStartingWith(self):
         p = self.page
+        p.setupCatalog()
         p.title = 'Test Page'
+        p.index_object()
         p.create('Test Page 2')
         self.assertEqual(p.firstPageNameStartingWith('Test'),'Test Page')
 

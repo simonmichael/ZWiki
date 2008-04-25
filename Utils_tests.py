@@ -24,14 +24,3 @@ class Tests(ZwikiTestCase):
         self.failIf(safe_hasattr(p,'muppets'))
         setattr(p, 'muppets', 'gonzo')
         self.assert_(safe_hasattr(p,'muppets'))
-
-    def test_summary(self):
-        p = self.page
-        p.edit(text='É')
-        self.assertEqual('É',p.summary())
-
-    def test_BLATHER(self):
-        BLATHER('E')                    # ascii
-        BLATHER('É')                    # utf-8
-        BLATHER(u'\xc9')                # unicode
-        
