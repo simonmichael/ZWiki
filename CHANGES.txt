@@ -1,12 +1,12 @@
 RELEASE NOTES
 #############
 
-Leading to Zwiki 0.61
+pending
 =====================
 
-Upgrade notes
+**Upgrade notes**
 	
-Configuring
+**Configuring**
 
   * /setupDtmlMethods now installs a sitemap.xml, which might reduce
     load from google and possibly other search bots (Simon Michael, Sascha Welter)
@@ -21,7 +21,7 @@ Configuring
     making the /text view of wiki pages much more useful for non-ascii
     languages. (Sascha Welter)
 
-Browsing
+**Browsing**
 
   * "fix" the plone 3 document actions layout glitch, by hiding them. This
     release Zwiki should work as well with Plone 3.x as previous versions
@@ -34,7 +34,7 @@ Browsing
   * drop the "discussion" nav link activated by GeneralDiscussion, it is a
     special case and confusable with per-page discussion
 
-Mail
+**Mail**
 
   * fix a bug preventing mail-out in some Plone versions (#1400)
 
@@ -43,7 +43,7 @@ Mail
   * support for mailing darcs patches through a zwiki: keep any
     text/x-darcs-patch part, as well as the first text/plain part
 
-Translations
+**Translations**
 
   * import latest translations from launchpad
 
@@ -51,7 +51,7 @@ Translations
 
   * switch to i18ndude for generating pot files
 
-General
+**General**
 
   * More functional tests: recentchanges and options (Sascha Welter)
 
@@ -99,7 +99,8 @@ quicker page rendering, permanent edit history, labelled bracket links,
 better support for custom wiki templates, a tool for importing MoinMoin
 wikis, many other improvements and code cleanups.
 
-Upgrade notes
+**Upgrade notes**
+
   * Zope >=2.10 users should upgrade to this release to avoid TAL unicode
     errors.  Also, skin customizers should update their custom templates
     to avoid the same errors. See #1330 below.
@@ -112,7 +113,8 @@ Upgrade notes
 
   * a wiki catalog is no longer optional, and will be added if missing
 
-Installing
+**Installing**
+
   * #1322: Plone 3 & CMF 2.1 compatibility. Warning, this version of Zwiki
     uses GenericSetup and is not compatible with older versions of
     Plone/CMF.  This could be tackled in a future release if there is
@@ -122,14 +124,16 @@ Installing
 
   * #1217: fix setupDtmlPages error (Sascha Welter)
 
-Configuring
+**Configuring**
+
   * fixPageEncoding renamed to fixEncoding and fixed
 
   * move wiki navigation links to wikipage template for easier customizing
 
   * #1041, #1145: ensure a catalog and an outline cache are always present. 
 
-Browsing
+**Browsing**
+
   * make the home link, wiki logo and index_html use the default page url
     consistently
 
@@ -161,7 +165,8 @@ Browsing
   * speed up hasIssues, which was taking half the 2.5s skin render time on
     zwiki.org
 
-Editing
+**Editing**
+
   * #1157: replace revertEdits[Everywhere]By with history-wiping expunge,
     expungeEditsBy, expungeEditsEverywhereBy methods
 
@@ -221,7 +226,8 @@ Editing
 
   * clean up revertEditsBy, don't break with new pages
 
-Mail
+**Mail**
+
   * #1256: handle mailins with encodings other than utf8
 
   * don't log body of mail-ins by default
@@ -231,10 +237,12 @@ Mail
   * also allow a 'Secure Maildrop Host' for sending mail (Sascha Welter,
     Encolpe Degoute)
 
-Feeds
+**Feeds**
+
   * no updates
 
-Issue tracking
+**Issue tracking**
+
   * yellow color to make open funded issues stand out
 
   * IssueTracker cleanups
@@ -244,7 +252,8 @@ Issue tracking
   * use html instead of stx page type when installing issue tracker as
     dtml pages, for a 4x speedup of the unit test on my system
 
-General
+**General**
+
   * many code cleanups including imports, safe_hasattr, deprecation warnings, pyflakes warnings, tests
 
   * Replace hasattr() with safe_hasattr() everywhere.  Problem with
@@ -301,18 +310,21 @@ General
 
   * inPlone method
 
-Translations
+**Translations**
+
   * no updates
 
 
 Zwiki 0.59.0 2007/04/02
 =======================
 
-Catchup since the last release in november: a truckload of bugfixes from
-Sascha Welter, Frank Laurijssens and many others (YAY!), support for
-conditional http get, skins code cleanup, translation updates and more.
+Catchup since the last release in november: a truckload of bugfixes
+from Sascha Welter, Frank Laurijssens and many others (YAY!), support
+for conditional http get, skins code cleanup, translation updates and
+more.
 
-Upgrade notes
+**Upgrade notes**
+
   * The standard issuetracker and filterissues pages now support sorting
     on issue name and reverse sorting (#14). To enable sorting by name,
     visit SOMEPAGE/setupTracker (as manager) to add a required catalog
@@ -324,12 +336,14 @@ Upgrade notes
     them with SOMEPAGE/setupTracker?pages=1 (as manager), and re-apply
     your customizations.
   
-Installing
+**Installing**
+
   * show accurate page hierarchy after adding a new wiki
 
   * #1313, updated FrontPage links in basic wiki template (Frank Laurijssens)
 
-Configuring
+**Configuring**
+
   * reparent now obeys the edits_need_username option, so reparenting will
     require a username when that property is true
 
@@ -347,7 +361,8 @@ Configuring
 
   * #1227 comment form vulnerability (Sascha Welter)
 
-Browsing
+**Browsing**
+
   * make default site logo work with zope 2.10 (zope bug 2302)
 
   * recent changes default period is now a week, not a day
@@ -374,22 +389,25 @@ Browsing
 
   * don't let a non-wiki page break interwiki link rendering
 
-Editing
+**Editing**
+
   * #1157 after reverting changes, reset last edit time. (Sascha Welter)
 
   * #1314 use UTC for creation_time too (Sascha Welter)
 
   * #1186 fix for last_edited_date losing time zone information -
-    converting to UTC This might be only relevant at hosts that do not
-    have locale support on their operating system (e.g. *BSD, Mac OS
-    X). Further tests in that direction might be necessary. It definitely
-    fixes the problem on Mac OS X. (Sascha Welter)
+    converting to UTC. This might be only relevant at hosts that do
+    not have locale support on their operating system (e.g. BSD, Mac
+    OS X). Further tests in that direction might be necessary. It
+    definitely fixes the problem on Mac OS X. (Sascha Welter)
 
-Mail
+**Mail**
+
   * #1299 - mail out in plone works, could use more error handling though
     (Sascha Welter)
 
-Feeds
+**Feeds**
+
   * #1083 escape html in rss feeds (Sascha Welter)
 
   * #1294 - changes to get rss feeds to validate. pages_rss and changes_rss
@@ -397,10 +415,10 @@ Feeds
 
     - Date formats in head section had to be adjusted
     - feedvalidator.org wanted a guid element (even though specs say it's
-      optional) 
-    (Sascha Welter)
+      optional) (Sascha Welter)
 
-Issue tracking
+**Issue tracking**
+
   * #14 make the zwikitracker list allow filtering & sorting
     (Frank Laurijssens)
 
@@ -416,7 +434,8 @@ Issue tracking
   * #1008 show issue form on plaintext issues, patch from Bill Page
     (Sascha Welter)
 
-General
+**General**
+
   * make skin/template/macro handling more general, add support for
     alternate filesystem skins, rewrite skin system developer docs
 
@@ -446,7 +465,8 @@ General
 
   * Signed CONTRIBUTORS (Frank Laurijssens)
 
-Translations
+**Translations**
+
   * de (Stefan Kose)
 
   * es (Francisco Mañas)
@@ -463,26 +483,30 @@ Zwiki 0.58.0 2006/11/01
 
 Simpler skin customization, bugfixes, cleanups.
 
-Upgrade notes
+**Upgrade notes**
+
   If you have a very old zwiki relying on standard_wiki_header &
-  standard_wiki_footer dtml methods, these will now be ignored;
-  you must use a wikipage page template to customise the skin.
-  I don't think this will affect anyone (let me know if it did!) 
+  standard_wiki_footer dtml methods, these will now be ignored; you
+  must use a wikipage page template to customise the skin.  I don't
+  think this will affect anyone (let me know if it did!)
 	
-Installing
+**Installing**
+
   * remove bad import from CMFInit breaking CMF/Plone installation (#1291,
     #1295)
   * /upgradeAll now sets up a catalog and tries to fix some common
     character encoding problems
 
-Configuring
+**Configuring**
+
   * accept zodb skin templates with .pt or .dtml suffixes too, for easy upload
   * when adding a wiki, keep image and file suffixes
   * when adding a wiki, set the stylesheet's content type to text/css
   * code cleanup, drop standard_wiki_header/standard_wiki_footer support
   * add use_issue_links boolean property
 
-Browsing
+**Browsing**
+
   * help page cleanups, link UsersGuide
   * clarify username option help
   * fix subtopics layout interference from unterminated stx lists &
@@ -490,15 +514,18 @@ Browsing
   * improve contents page styling, make it like subtopics (but bigger)
   * fix star image in message-board-style subtopics template (#1305)
 
-Editing
+**Editing**
+
   * fix editform helppage link
   * clarify page type names, change "type" to "markup"
 
-Issue tracking
+**Issue tracking**
+
   * set a "medium" severity when mailing in a new issue (kludgy, just
     picks the middle list element)
 
-General
+**General**
+
   * use a more stable contents url to reduce bot traffic (#762, #699) 
     (Simon Michael, Daniel Yount, Michael Haubenwallner, Sascha Welter)
   * handle unrecognised page types properly
@@ -511,19 +538,21 @@ Zwiki 0.57.0 2006/10/01
 
 Style and help cleanups, bugfixes.
 
-Upgrade notes
-  If you use the http://zwiki.org/HowToMakeContentsExpandable ,
-  you'll need to update it to work with the new "expandable" 
-  css class.
+**Upgrade notes**
+
+  If you use the http://zwiki.org/HowToMakeContentsExpandable , you'll
+  need to update it to work with the new "expandable" css class.
   
-Configuring
+**Configuring**
+
   * reorganize stylesheet
 
   * add missing mathaction styles 
 
   * rename "aqtree3clickable" css class to "expandable"
 
-Browsing
+**Browsing**
+
   * subtopics, page context, wiki contents styling fixes
 
   * make help page a built-in view like recentchanges etc.
@@ -533,7 +562,8 @@ Browsing
   * make rss feeds and creationTime()/lastEditTime() more robust, eg
     when creation_time property is blank
 
-General
+**General**
+
   * fix backwards compatibility for old page objects
 
   * speed up and quieten down tests a little
@@ -546,14 +576,16 @@ General
 Zwiki 0.56.0 2006/09/02
 =======================
 
-Plone 2.5 support, LatexWiki and MathAction incorporated, plone
-tabs cleanup, translation updates, bug fixes.
+Plone 2.5 support, LatexWiki and MathAction incorporated, plone tabs
+cleanup, translation updates, bug fixes.
 
-Upgrade notes
+**Upgrade notes**
+
   If you are upgrading, re-install Zwiki in your plone site's
   Add/Remove Products to make the metadata tab go away. (See below.)
 
-Installing
+**Installing**
+
   * Wiki pages in Plone (or CMF) will no longer show the metadata
     tab by default. http://zwiki.org/1273 has more about
     this. (#1273)
@@ -561,10 +593,12 @@ Installing
   * add isDefaultPageInFolder method, fixing plone 2.5.x support
     (#1283)
 
-Configuring
+**Configuring**
+
   * don't use # in setupTracker's event log messages, it was confusing
 
-Browsing
+**Browsing**
+
   * don't limit the content area to 80% width in standard skin's stylesheet
 
   * clean up plone/cmf tabs/actions
@@ -573,7 +607,8 @@ Browsing
 
   * in the PAGE/myvotes view, link to pages 
 
-Editing
+**Editing**
+
   * tweak the warning a user sees when too many external links are added
 
   * make restructured text be more silent about errors (report
@@ -589,11 +624,13 @@ Editing
   * increase max page name length in editform from 100 to 300 for eg
     latexwiki formula page names
   
-Issue tracking
+**Issue tracking**
+
   * make the add issue form respect the edits_need_username property,
     closing a spam hole (#1279)
 
-Translations
+**Translations**
+
   * new Breton translation for plone skin (Fulup)
 
   * translation updates: 
@@ -601,10 +638,10 @@ Translations
     - Japanese (Masaya Kato)
     - Russian (Valery Sharapov)
   
-General
+**General**
+
   * in embedded DTML, ensure the context object (_.this) can acquire
     from the folder, as we'd expect. Zope bug ? see collector
-
 
 
 Zwiki 0.55.0 2006/08/02
@@ -612,13 +649,14 @@ Zwiki 0.55.0 2006/08/02
 
 A couple of bugfixes.
 
-Installing
-  * fix installation breakage in vanilla CMF (#1271, koegler, Simon
-    Michael)
+**Installing**
+
+  * fix installation breakage in vanilla CMF (#1271, koegler, Simon Michael)
 
   * fix typo which broke ZMI add zwiki form (#1269)
 
-Editing
+**Editing**
+
   * make standard_error_message create button use createform, not
     editform (#1275, Peter Merel)
   
@@ -628,27 +666,31 @@ Zwiki 0.54.0 2006/06/01
 
 Miscellaneous view-related and general enhancements.
 
-Upgrade notes
-  CMF/Plone users: the zwiki_standard and zwiki_plone skin layers
-  have been replaced by a single zwiki layer. Re-install Zwiki in
-  your CMF/Plone sites, using Plone's add/remove products or CMF's
+**Upgrade notes**
+
+  CMF/Plone users: the zwiki_standard and zwiki_plone skin layers have
+  been replaced by a single zwiki layer. Re-install Zwiki in your
+  CMF/Plone sites, using Plone's add/remove products or CMF's
   quickinstaller, to register the new skin layer. Also remove the
   zwiki_standard and zwiki_plone skin layers from your skins in
   portal_skins -> Properties.
     
-Installing
+**Installing**
+
   * cleaned up ZMI Add ZWiki and Add ZWiki Page forms
 
   * remove _getViewFor import that broke with CMF 2.0
 
   * fix upgradeAll's batch option
 
-Browsing
+**Browsing**
+
   * /myvotes view shows your votes in this wiki
 
   * highlight your current vote for this page, if any
 
-Editing
+**Editing**
+
   * support a max_identified_links property also, for
     cookie-identified users (for now)
     
@@ -656,7 +698,8 @@ Editing
     powerful revert methods. Renames can now be reverted, reverting
     is more reliable, and appropriate mail notifications are sent.
 
-General
+**General**
+
   * replace zwiki_standard and zwiki_plone with just skins/zwiki
 
   * Views code cleanup
@@ -672,25 +715,29 @@ General
 Zwiki 0.53.0 2006/05/01
 =======================
 
-RST+DTML support, alternate heading layout for plone, some
-useful bugfixes.
+RST+DTML support, alternate heading layout for plone, some useful
+bugfixes.
 
-Configuring
+**Configuring**
+
   * add an old-style compact parents list as an alternative in
     pageheader.pt, off by default (#1250)
 
   * CSS cleanups
 
-Browsing
+**Browsing**
+
   * fix action icons layout in plone 2.0 (#1253)
 
   * make top-right links small again in standard skin
 
-Editing
+**Editing**
+
   * enable dtml interpretation in rst pagetype (Stefan Rank,
     Simon Michael)
 
-Mail
+**Mail**
+
   * fix unsubscribe, which was losing all subscribers' "all
     edits" setting (#1254)
 
@@ -700,14 +747,16 @@ Mail
   * don't add NO_ADDRESS_FOR recipients, they break some MTAs
     (#1255)
 
-Issue tracking
+**Issue tracking**
+
   * make changeIssueProperties respect relevant permissions and
     edits_need_username, to protect from spambots (#1260)
 
   * be more robust about including full page name in issue
     creation mails (#1257)
 
-General
+**General**
+
   * easier make test-* rules
 
   * fix WWML test, which wasn't testing WWML at all
@@ -720,13 +769,15 @@ Zwiki 0.52.1 2006/04/09
 
 Bugfix release.
 
-Upgrade notes
-  If you installed 0.52 in a CMF or Plone site for the first time,
-  the zwiki_standard skin layer may not have been installed and some
+**Upgrade notes**
+
+  If you installed 0.52 in a CMF or Plone site for the first time, the
+  zwiki_standard skin layer may not have been installed and some
   images may appear broken. If so, uninstall and reinstall Zwiki in
   add/remove products.
     
-Installing
+**Installing**
+
   * fix backwards compatibility for old custom templates like
     editform (#1241)
 
@@ -737,10 +788,12 @@ Installing
   * Add Zwiki was not setting page type based on the file suffix
     (#1247)
 
-Configuring
+**Configuring**
+
   * don't html-quote the site header, if configured (#1240)
 
-Browsing
+**Browsing**
+
   * fix blank lines in RST page comments (#1248)
   
   * don't show wiki logo in plone skin
@@ -755,11 +808,13 @@ Browsing
 
   * add more whitespace between header and content in plone skin
 
-Editing
+**Editing**
+
   * when creating pages, use epoz based on the new page's type, not
     the parent page's (#1243)
 
-Mail
+**Mail**
+
   * subscribe form fixes for cmf/plone sites: fall back to zwiki
     options cookie when not logged in, don't subscribe Anonymous
     User, more help for logged in users (Jens Nachtigall, Simon
@@ -768,7 +823,8 @@ Mail
   * fix subscribeform _members attribute error with CMFMember
     (#1239, Jens Nachtigall, Simon Michael)
 
-General
+**General**
+
   * don't let find objects in the catalog break due to outline
     (#1246)
 
@@ -779,39 +835,44 @@ General
 Zwiki 0.52.0 2006/04/01
 =======================
 
-Restructured Text fixed & now the default markup, standard skin templates
-refactored and used for plone, zwiki/plone skin switching always
-available, wiki navigation links and issuebrowser (re-)enabled, better
-styles, zope 2.7 support fixed, slow freeform link rendering fixed,
-translation updates including a new Thai translation, much code cleanup.
+Restructured Text fixed & now the default markup, standard skin
+templates refactored and used for plone, zwiki/plone skin switching
+always available, wiki navigation links and issuebrowser
+(re-)enabled, better styles, zope 2.7 support fixed, slow freeform
+link rendering fixed, translation updates including a new Thai
+translation, much code cleanup.
 
-Upgrade notes
-  A lot of skins code has changed. Your old wikis should keep
-  working as before except:
+**Upgrade notes**
 
+  A lot of skins code has changed. Your old wikis should keep working
+  as before except:
+  
   - if you have a customized ``recentchanges`` or ``searchwiki``
     template you'll need to delete it or replace with the latest and
     re-customize
-
+  
   - full/simple/minimal links in old custom skin templates will no
     longer work.
-    
+      
   - http://zwiki.org/HowToUseTheStandardSkinInPlone is now built in,
     if you made a "Zwiki" CMF skin you can delete it.
+  
+**Installing**
 
-Installing
   * fix startup failure with Zope 2.7 (#1222, Frank Laurijssens)
 
   * fix a mysterious new bug with cmf/plone registration (#1237)
 
-Configuring
+**Configuring**
+
   * leave site links enabled by default again (home, changes,
     issues...)
 
   * fix container context, make page management form create button
     respect folder permission (#1220)
 
-Browsing
+**Browsing**
+
   * switching between plone and standard zwiki skins in CMF/plone
     sites is now always available, and no longer changes the url.
     Just use the - and + access keys (in firefox: alt minus, alt
@@ -842,7 +903,8 @@ Browsing
 
   * show a heading on all views except editform
 
-Editing
+**Editing**
+
   * make restructured text the default page type, change page type
     order in editform. (AdoptRestructuredText)
     "As of today, RST is the default page type. Hurrah! And three
@@ -856,24 +918,28 @@ Editing
 
   * remove editform's hard-coded gray background
 
-Page hierarchy
+**Page hierarchy**
+
   * make backlinks form smarter
 
   * make singletons have same style as other links in contents
 
-Issue tracking
+**Issue tracking**
+
   * don't bother showing "(property change)" in issue mailouts
 
   * provide a link to issuebrowser by default
 
   * make IssueBrowser show categories more usefully out of the box
 
-Translations
+**Translations**
+
   * Thai translation started (Bunyawat Singchai)
 
   * update po files from rosetta and code, simplify file names
 
-General
+**General**
+
   * namegeddon. File and class renames and re-ordering for clarity
     and better organization eg in wing ide
 
@@ -895,29 +961,33 @@ Zwiki 0.51.0 2006/03/02
 
 New partial UI translations from Rosetta: arabic, afrikaans, british
 english, estonian, romanian, swedish, turkish (welcome!); a number of
-bugfixes, eg fixing plone 2.0 support; a new option useful to discourage
-random/spam edits on public sites; briefer issue page mailout subjects;
-much cleanup of unit tests.
+bugfixes, eg fixing plone 2.0 support; a new option useful to
+discourage random/spam edits on public sites; briefer issue page
+mailout subjects; much cleanup of unit tests.
 
-Upgrade notes
-    If you have a customised wikipage template, your page management
-  form will not reflect the new edits_need_username property until
-  you update or remove your template.
+**Upgrade notes**
 
-    If you do not have a catalog configured for your wiki, recent
-    changes will no longer sort properly. You will probably want to
-    add a catalog, by visiting SOMEPAGE/setupCatalog as manager.
+  If you have a customised wikipage template, your page management
+  form will not reflect the new edits_need_username property until you
+  update or remove your template.
 
-    Purple numbers are no longer supported out of the box.
+  If you do not have a catalog configured for your wiki, recent
+  changes will no longer sort properly. You will probably want to add
+  a catalog, by visiting SOMEPAGE/setupCatalog as manager.
+
+  Purple numbers are no longer supported out of the box.
     
-Installing
+**Installing**
+
   * fix a bad import which broke CMF 1.4/Plone 2.0 support (#1211)
 
-Configuring
+**Configuring**
+
   * new 'edits_need_username' option can be used to block anonymous
     editors with no username cookie. Off by default.
 
-Browsing
+**Browsing**
+
   * fix partial display of pagemanagement form due to inconsistent
     permission checking (#1172, Frank Laurijssen, Simon Michael)
 
@@ -925,7 +995,8 @@ Browsing
     requiring a catalog. RC no longer sorts properly without a catalog
     (#1145, Simon Michael, Michael Haubenwallner)
 
-Editing
+**Editing**
+
   * fix ExternalEditor webdav locking with Zope >=2.8 (#1194, Phil
     Schumm, Simon Michael)
 
@@ -934,30 +1005,36 @@ Editing
 
   * remove purple numbers plugin
 
-Page hierarchy
+**Page hierarchy**
+
   * make links in contents, eg to pages with brackets in the name,
     more robust
 
-Mail
+**Mail**
+
   * mailouts from issue pages - except for the creation mailout -
     now just include the issue number, not the full page name, in
     the subject. This can be turned off by setting a
     'mail_issue_names' boolean property. (Simon Michael, Frank
     Laurijssens)
 
-Issue tracking
+**Issue tracking**
+
   * issuebrowser layout tweaks - reduce columns from 8 to 6
 
-Translations
+**Translations**
+
   * translation updates from Rosetta at launchpad.net. New
     translations include: arabic, afrikaans, british english,
     estonian, romanian, swedish, turkish. Thanks to all translators!
 
   * rename xx-XX po files to xx_XX
 
-General
+**General**
+
   * testgeddon
-    - move tests/* up to  *_tests.py
+
+    - move tests/\* up to  \*_tests.py
     - update all tests for zope 2.9 testrunner
     - make all tests pass
     - make tests run faster
@@ -974,11 +1051,14 @@ Zwiki 0.50.0 2006/02/01
 =======================
 
 Minor changes.
-    
-Mail
-  * show subscriber counts in subscribeform
+     
+**Mail**
 
-General
+  * show subscriber counts in subscribeform**
+
+
+**General**
+
   * add names from ZwikiContributors to CONTRIBUTORS.txt
     
 
@@ -988,14 +1068,17 @@ Zwiki 0.49.0 2006/01/19
 A new copyright/license policy and contributor list; Plone 2.1 and
 mail fixes.
 
-Upgrade notes
-    You should upgrade to this release if you're using Plone 2.1.
-    
-Browsing
+**Upgrade notes**
+
+  You should upgrade to this release if you're using Plone 2.1.
+  
+**Browsing**
+
   * make the green border & tabs appear in Plone 2.1, and indeed
     force it always on, for now (#1187)
 
-Mail
+**Mail**
+
   * make authenticated/unauthenticated subscriptions in CMF/Plone
     more interchangeable so things just work (#1199, Simon Michael,
     John Riley)
@@ -1006,10 +1089,12 @@ Mail
   * also accept Secure Mailhosts, fixing mailout in Plone 2.1
     (#1197, Tracy Reed, Simon Michael)
 
-General - i18n
+**General - i18n**
+
   * minor fix, one line hadn't been translated (Frank Laurijssens)
 
-General
+**General**
+
   * add new contributors agreement & repo policy
 
 
@@ -1018,12 +1103,17 @@ Zwiki 0.48.0 2005/12/01
 
 French and dutch translation updates & several small bugfixes.
 
-Issue tracking
-  * tweak html to avoid stray hyperlinking in issue browser in plone wikis
+**Issue tracking**
+
+  * tweak html to avoid stray hyperlinking in issue
+
+**browser in plone wikis**
+
 
   * fix a missing space in filter issues
 
-General - i18n
+**General - i18n**
+
   * fix conflicting patch for i18n semicolons
 
   * avoid deprecation warning zope2.8 (i18n:attributes, ';' instead of
@@ -1041,37 +1131,44 @@ Zwiki 0.47.0 2005/11/06
 
 Allow limited-depth hierarchy display, translation updates, bugfixes.
 
-Upgrade notes
-    If you have some #NNN issue links which are not working, the #1179
-    bugfix will take effect when you edit that page (or visit
-    PAGE/clearCache).
+**Upgrade notes**
+
+  If you have some #NNN issue links which are not working, the #1179
+  bugfix will take effect when you edit that page (or visit
+  PAGE/clearCache).
     
-Installing
+**Installing**
+
   * fix Add ZWiki failure on older zopes due to attempted use of
     btree folders - just always use ordinary folders (#1185)
 
   * don't warn about Regexps.py when there is no locale configured;
     log any locale/regexp-related problems at DEBUG level
 
-Editing
+**Editing**
+
   * prevent wiki-linking in reST literal blocks, like STX
 
   * don't add "links updated" log note everywhere during renames
 
-Page hierarchy
+**Page hierarchy**
+
   * subtopics() and offspring() can now take a depth argument to
     display hierarchy only to a certain depth
     
   * be a little smarter about not showing subtopics twice when
     displayed with dtml
 
-Mail
+**Mail**
+
   * don't translate "(edit)" in mailout subjects
     
-Issue tracking
+**Issue tracking**
+
   * make #NNN issue links work again (#1179)
 
-General - i18n
+**General - i18n**
+
   * update pot and po files
 
   * remove stray zope 3 messages from pot and po files (#1188)
@@ -1088,12 +1185,14 @@ General - i18n
 
   * german translation update (Jens Nachtigall)
 
-General - skins
+**General - skins**
+
   * Hide access keys when printing (Encolpe Degoute)
 
   * page template cleanups and syntax fixes (Encolpe Degoute)
 
-General
+**General**
+
   * add a DEBUG logging function
 
 
@@ -1102,18 +1201,21 @@ Zwiki 0.46.0 2005/10/01
 =======================
 
 Per-user mailout policy, skins reorganization, plugin architecture
-enhancements, support for boring pages, wicked link syntax, favicons and
-separate create form, better logging, many code cleanups & bugfixes.
+enhancements, support for boring pages, wicked link syntax, favicons
+and separate create form, better logging, many code cleanups &
+bugfixes.
 
-Upgrade notes
-    To make your rss feeds and zwiki.org-style blog listings less
-    junky, do SomePage/setupCatalog to add the new isBoring index.
+**Upgrade notes**
 
-    An mailout_policy folder property with value "edits" overrides the
-    per-user policy (see below), but this may be dropped in a future
-    release.
+  To make your rss feeds and zwiki.org-style blog listings less junky,
+  do SomePage/setupCatalog to add the new isBoring index.
+
+  An mailout_policy folder property with value "edits" overrides the
+  per-user policy (see below), but this may be dropped in a future
+  release.
     
-Installing
+**Installing**
+
   * fix __implements__ attribute error when CMF is not installed (#1149, Warren)
 
   * make Zwiki startup more robust with strange locales/strange pythons (#1158)
@@ -1134,7 +1236,8 @@ Installing
 
   * don't break when displaying a page whose page type has been uninstalled
 
-Configuring
+**Configuring**
+
   * wiki subscriber mail-out, rss feeds and blog listings will
     ignore boring pages TestPage, SandBox and their offspring, by
     default. You can configure different pages in a boring_pages lines
@@ -1149,19 +1252,22 @@ Configuring
     the permissions (though the skin may still hide them without a
     username.)
 
-Browsing
+**Browsing**
+
   * the /changes_rss feed now shows the edit diff
 
   * misc_/* image paths are now relative to be more robust with vhosting (#689)
 
-Editing
+**Editing**
+
   * be sure to create our own recycle_bin even if the parent folder has one
 
   * purple numbers now disabled by default
 
   * allow create to be called directly by page management form
     
-Mail
+**Mail**
+
   * add "all edits" checkboxes to subscribeform. Zwiki can now send
     comments to some, edits to others.
 
@@ -1171,12 +1277,14 @@ Mail
 
   * just say "links updated" in rename mailout subject
     
-Issue tracking
+**Issue tracking**
+
   * use more consistent (property change) in issue mailouts, and don't say it if no property changed
 
   * /issuebrowser was showing filter issues form
 
-General - skins
+**General - skins**
+
   * big skins reorganization to reduce duplication
 
   * use a separate createform skin template for creating pages if present
@@ -1207,7 +1315,8 @@ General - skins
 
   * drop uploaded and wikinav_portlet templates from plone skin
 
-General
+**General**
+
   * split content/ into wikis/ and scripts/
 
   * strip html tags in the page summary, and add renderedSummary which does formatting and linking
@@ -1227,17 +1336,19 @@ Zwiki 0.45.0 2005/09/01
 Robustness fixes, Plone 2.1 compatibility fixes, simplifications, CMF
 metadata support.
 
-Upgrade notes
-    You might want to delete the "outline" object using the ZMI,
-    allowing Zwiki to create a more ZMI-compliant one. Note this will
-    lose any manual re-ordering of subtopics you may have done.
+**Upgrade notes**
 
-    The default colour for "serious" issues is lighter. This will take
-    effect for each issue page as it is edited. To make all pages show
-    the correct colour right away, visit SomePage/upgradeAll in your
-    browser.
+  You might want to delete the "outline" object using the ZMI,
+  allowing Zwiki to create a more ZMI-compliant one. Note this will
+  lose any manual re-ordering of subtopics you may have done.
+
+  The default colour for "serious" issues is lighter. This will take
+  effect for each issue page as it is edited. To make all pages show
+  the correct colour right away, visit SomePage/upgradeAll in your
+  browser.
     
-Installing
+**Installing**
+
   * make the outline cache replaceable to avoid errors during
     migration of plone 2.1rc<3 sites (#1143, SM, alecm)
 
@@ -1249,7 +1360,8 @@ Installing
 
   * make fit import error at startup less verbose (#1054)
 
-Configuring
+**Configuring**
+
   * make the outline cache object fully ZMI-manageable (#1144)
 
   * drop support for alternate catalog names via SITE_CATALOG property
@@ -1259,18 +1371,21 @@ Configuring
   * don't update page creation times when moving/renaming/importing
     in the ZMI
 
-Editing
+**Editing**
+
   * fix page creation/editing breakage in plone 2.1 due to explicit
     acquisition (#1137, SM, alecm)
 
   * enable CMF/Plone document metadata support (jbb)
 
-Issue tracking
+**Issue tracking**
+
   * make the serious issue default colour lighter
     
   * allow issues without numbers (with at least a "status" property)
 
-General - i18n
+**General - i18n**
+
   * remove unnecessary -en po files
 
   * add missing headers for german po
@@ -1279,13 +1394,15 @@ General - i18n
 
   * fix space-separated i18n attributes to avoid deprecation warnings on startup
 
-General - skins
+**General - skins**
+
   * make hasSkinTemplate check filesystem templates, such as the
     alternate subtopics template (#1113, Mark Ferrell, SM)
 
   * drop the special style for ratings, for now
 
-General
+**General**
+
   * allow create to work without a request, for debugging
 
   * merge moin_support.py with moin.py for easier handling
@@ -1298,21 +1415,24 @@ General
 Zwiki 0.44.0 2005/08/02
 =======================
 
-Drop full/simple/minimal and simplify the standard skin, more robust wiki
-contents.
+Drop full/simple/minimal and simplify the standard skin, more robust
+wiki contents.
 
-Upgrade notes
-    Customized skins which use the old wikipage_macros template will
-    stop working with this release, as discussed in the 0.42 upgrade 
-    notes. If this affects you, you'll need to make the changes 
-    described there now.
+**Upgrade notes**
+
+  Customized skins which use the old wikipage_macros template will
+  stop working with this release, as discussed in the 0.42 upgrade
+  notes. If this affects you, you'll need to make the changes
+  described there now.
     
-Page hierarchy
+**Page hierarchy**
+
   * clarify updateWikiOutline and call it on every page view to
     avoid out of date contents and hopefully avoid the need to call it
     manually
     
-General - skins
+**General - skins**
+
   * drop full/simple/minimal modes from the standard skin. 
     (cf http://zwiki.org/UserDiscussion#msg20050726150738-0700@zwiki.org)
 
@@ -1332,16 +1452,20 @@ General - skins
 Zwiki 0.43.0 2005/07/01
 =======================
 
-Spanish and chinese translation updates, and a small fix for setupDtmlMethods.
+Spanish and chinese translation updates, and a small fix for
+setupDtmlMethods.
 
-Upgrade notes
-    To get fuzzy urls working in (public) plone zwikis, visit
-    SomePage/setupDtmlMethods after this upgrade.
+**Upgrade notes**
+
+  To get fuzzy urls working in (public) plone zwikis, visit
+  SomePage/setupDtmlMethods after this upgrade.
     
-Configuring
+**Configuring**
+
   * make setupDtmlMethods create a standard_error_message in plone (#1117).
 
-General - i18n
+**General - i18n**
+
   * Updated zh-TW & zh-CN po files (T.C. Chou)
 
   * spanish translation updates (Gaspar Quiles)
@@ -1354,22 +1478,23 @@ Skin templates cleanup, message-board-style subtopics display,
 miscellaneous fixes, new portuguese translation and russian/german
 updates.
 
-Upgrade notes
-    Skin macros have been moved from wikipage_macros to wikipage, and
-    some have been renamed. Also some CSS classes have been renamed.
+**Upgrade notes**
 
-    Customised skin templates should continue to work normally for
-    now. If you have any, please replace any macro-related occurrences
-    of the following strings in your templates:
+  Skin macros have been moved from wikipage_macros to wikipage, and
+  some have been renamed. Also some CSS classes have been renamed.
+
+  Customised skin templates should continue to work normally for
+  now. If you have any, please replace any macro-related occurrences
+  of the following strings in your templates::
     
-  * wikipage_macros -> wikipage_template
-  * quickaccesskeys -> accesskeys
-  * quicklinks    -> wikilinks
-  * editlinks     -> pagelinks
-  * pagename    -> pagenameonly
+   wikipage_macros -> wikipage_template
+   quickaccesskeys -> accesskeys
+   quicklinks    -> wikilinks
+   editlinks     -> pagelinks
+   pagename    -> pagenameonly
 
-    The following CSS class has been renamed, you'll need to update
-    any customised zwiki stylesheets accordingly:
+  The following CSS class has been renamed, you'll need to update
+  any customised zwiki stylesheets accordingly:
 
   * quicklinks    -> wikilinks
 
@@ -1383,26 +1508,31 @@ Upgrade notes
     appears in the portal_skins tool. You can then delete
     portal_skins/standard and portal_skins/zmi in the ZMI.
     
-Editing
+**Editing**
+
   * be more robust when saving a page with undated comments (#1103)
 
   * after voting, redirect to the referer instead of the rated page
 
-Page hierarchy
+**Page hierarchy**
+
   * make subtopics template-driven, selectable via subtopics_style
     property, and dtml-aware. Two styles are now included: "outline"
     and "board". The latter shows view counts if mxmCounter is
     installed. See admin guide.
 
-Mail
+**Mail**
+
   * also recognise a MaildropHost as mailhost
 
   * allow mail properties to be configured on a per-page basis
 
-Issue tracking
+**Issue tracking**
+
   * add a full comment form to the issue properties form
 
-General - i18n
+**General - i18n**
+
   * russian translation updates for the standard skin (Michael Krishtopa)
 
   * german translation updates (Jens Nachtigall)
@@ -1413,7 +1543,8 @@ General - i18n
 
   * misc i18n fixes
 
-General - skins
+**General - skins**
+
   * merge wikipage_macros into wikipage template
 
   * macro & stylesheet cleanups; use macro for form headings
@@ -1458,7 +1589,8 @@ General - skins
 
   * add a pagesByType pythonscript to content/misc
 
-General
+**General**
+
   * fix and update broken/failing tests, make all tests pass again
     (#1104, #1049)
 
@@ -1482,10 +1614,12 @@ Zwiki 0.41.0 2005/05/01
 
 Some anti-spam features, skin fixes and translation updates.
 
-Upgrade notes
-    Translations may be somewhat in flux this release.
-    
-Configuring
+**Upgrade notes**
+
+  Translations may be somewhat in flux this release.
+  
+**Configuring**
+
   * restrict external links: if a max_anonymous_links int property
     is defined, edits from unidentified users (with no username)
     containing more than that number of http:// links will be refused
@@ -1495,11 +1629,13 @@ Configuring
     hours after an edit, to reduce the chance of spam links being
     indexed by search engines.
 
-Browsing
+**Browsing**
+
   * show page source links when using thorough search, to help with
     spam cleanup
 
-Mail
+**Mail**
+
   * make subscribe form help reflect the comments/edits mailout policy
      (Jens Nachtigall)
 
@@ -1512,7 +1648,8 @@ Mail
     with the page_subscribers list on the very same subscribeform,
     ie an "<br />" is inserted between each page name.
 
-General - i18n
+**General - i18n**
+
   * regenerate pot and po files, and this time with up-to-date
     Default comments (#1093, SM, Jens Nachtigall)
 
@@ -1522,7 +1659,8 @@ General - i18n
 
   * spanish translation updates (Gaspar Quiles)
 
-General - skins
+**General - skins**
+
   * subscribeform_remove-unneccessary-span-tags (Jens Nachtigall)
 
   * new api method: lastEditIntervalInHours
@@ -1534,22 +1672,26 @@ Zwiki 0.40.0 2005/04/01
 Bugfixes, new japanese translation, chinese translation updates, new
 search option.
 
-Upgrade notes
-    This fixes a high-profile known issue in 0.39, #1062. If you
-    didn't already find the issue page and workaround, upgrade to this
-    version to fix it.
+**Upgrade notes**
+
+  This fixes a high-profile known issue in 0.39, #1062. If you didn't
+  already find the issue page and workaround, upgrade to this version
+  to fix it.
     
-Browsing
+**Browsing**
+
   * add a "thorough" non-catalog search to search form, commented
     out (for spam hunting)
 
-Editing
+**Editing**
+
   * fix the keys attribute error when creating pages in plone (#1062)
 
   * deleting a top-level page redirects to the front page again; new
     upUrl method (#917, Martijn Pieters, SM)
 
-Issue tracking
+**Issue tracking**
+
   * no bogus property change. Some very aggressive search engines
     (spiders) seem to be following form action="xxxx" references in
     pages as well as the usual href links. As a result probes by
@@ -1560,7 +1702,8 @@ Issue tracking
     change if the Change action is triggered with no actually
     changes. (Bill Page)
 
-General - i18n
+**General - i18n**
+
   * new japanese translation (Masaya Kato, Manabu Terada, Yoshiki
     Shibukawa, Takayuki Shimizukawa, Junya Ogino, Takanori Suzuki)
 
@@ -1568,7 +1711,8 @@ General - i18n
 
   * updated all po files from latest pot
 
-General - skins
+**General - skins**
+
   * the site_logo folder property didn't work in plone
 
 
@@ -1578,28 +1722,32 @@ Zwiki 0.39.0 2005/03/01
 
 Search improvements, subtopics ordering, style tweaks, bugfixes.
 
-Upgrade notes
-    To remove excess search keywords from existing zwiki-containing
-    plone sites, reindex and replace the Subject index and metadata in
-    portal_catalog in the ZMI.
+**Upgrade notes**
 
-    For best search functionality, you may need to /setupCatalog
-    and/or upgrade or reconfigure your text indexes. See
-    http://zwiki.org/1036 for more info.
+  To remove excess search keywords from existing zwiki-containing
+  plone sites, reindex and replace the Subject index and metadata in
+  portal_catalog in the ZMI.
 
-    If you have customized the standard skin templates or stylesheet,
-    note a number of CSS ids are now classes.
+  For best search functionality, you may need to /setupCatalog and/or
+  upgrade or reconfigure your text indexes. See http://zwiki.org/1036
+  for more info.
+
+  If you have customized the standard skin templates or stylesheet,
+  note a number of CSS ids are now classes.
     
-Browsing
+**Browsing**
+
   * SearchPage/searchpage form cleanups, robustness fixes, better
     results, google search (#1036)
 
   * don't create so many search keywords in plone (#1059)
 
-Editing
+**Editing**
+
   * set RST error reporting level to 2 by default (#992, Stefan Rank)
 
-Page hierarchy
+**Page hierarchy**
+
   * support subtopics reordering with a backlinks UI and new reorder
     method (#1044)
 
@@ -1609,7 +1757,8 @@ Page hierarchy
   * don't redirect after /updateWikiOutline, because it confuses
     first page creation in plone (#1028, huron)
     
-General - skins
+**General - skins**
+
   * don't add left & right whitespace margins in default skin any
     more
 
@@ -1629,36 +1778,40 @@ General - skins
 Zwiki 0.38.0 2005/02/01
 =======================
 
-New issuebrowser/IssueBrowser form, preliminary built-in RSS
-support, bugfixes.
+New issuebrowser/IssueBrowser form, preliminary built-in RSS support,
+bugfixes.
 
-Upgrade notes
-    There have been changes to the zwiki catalog fields.  After
-    upgrading, if your wikis use a catalog or are in a CMF/plone site,
-    visit FRONTPAGE/setupCatalog, or if issue tracking is enabled,
-    visit FRONTPAGE/setupTracker, to ensure your catalog is configured
-    for best large-wiki performance.
-    
-    index_object's arguments have changed and the reindex_object and
-    updateCatalog methods are deprecated.
+**Upgrade notes**
 
-    As noted below, free form links no longer try so hard to find
-    old-style IssueNo issue pages, so if you have broken links of this
-    kind, upgrade your issue page names (/upgradeAll).
+  There have been changes to the zwiki catalog fields.  After
+  upgrading, if your wikis use a catalog or are in a CMF/plone site,
+  visit FRONTPAGE/setupCatalog, or if issue tracking is enabled, visit
+  FRONTPAGE/setupTracker, to ensure your catalog is configured for
+  best large-wiki performance.
     
-Configuring
+  index_object's arguments have changed and the reindex_object and
+  updateCatalog methods are deprecated.
+
+  As noted below, free form links no longer try so hard to find
+  old-style IssueNo issue pages, so if you have broken links of this
+  kind, upgrade your issue page names (/upgradeAll).
+    
+**Configuring**
+
   * fix dependency on /setupTracker for good large-wiki performance;
     /setupCatalog is now sufficient (#993)
 
   * be compatible with plone's default_page lines property (#914)
 
-Browsing
+**Browsing**
+
   * preliminary built-in RSS support - FRONTPAGE/pages_rss, /changes_rss
 
   * freeform links no longer look for both old and new-style issues;
     a slight (20%) speedup for rendering freeform links
 
-Issue tracking
+**Issue tracking**
+
   * fix sorting issues by number (#934)
 
   * issuebrowser/IssueBrowser form for reviewing open issues
@@ -1670,16 +1823,19 @@ Issue tracking
 
   * try to improve spacing glitch with dtml-translate on filter issues
 
-Fit tests
+**Fit tests**
+
   * just log a fit import warning instead of displaying on the page
 
-General - i18n
+**General - i18n**
+
   * i18n (global and french) for issue tracker in plone -
     i18n in plone skin require some i18n elements (for instance the
     so called 'contentaction' items) to be in zwiki-plone-* as well
     (huron)
 
-General
+**General**
+
   * catalog awareness cleanups
 
   * make setskin links harmless for anonymous users and bots,
@@ -1689,56 +1845,36 @@ General
 Zwiki 0.37.0 2005/01/02
 =======================
 
-Improved rating form, a file -> wiki page import tool, chinese & hungarian
-translation updates, bug fixes.
-
-    Last release was 0.37rc1 on 11/30; there was no december release.
+Improved rating form, a file -> wiki page import tool, chinese &
+hungarian translation updates, bug fixes. 
     
-Editing
+**Page hierarchy**
+
+  * make updateWikiOutline redirect to the updated contents view, and
+    provide an easier alias: updatecontents
+
+  * don't log a traceback when deleting a page with out-of-date outline cache
+
+**Editing**
+
   * avoid creating both pages when you rename during page creation
     drop the leaveplaceholder and updatebacklinks arguments from
     create().  Changing the page name in the create form now always
     updatesbacklinks, never leaves a placeholder.
 
-Rating
+**Rating**
+
+  * new compact rating form at top right. Unrated pages now have
+    rating 1 by default.
+
   * rating could fail when there was only one vote
 
   * make rating's average a little more accurate
 
-Mail
+**Mail**
+
   * workaround for clumsy mailhost lookup (#983)
 
-Issue tracking
-  * don't match xml/html character entities as hash number issue links (Stefan Rank)
-
-General - i18n
-  * hungarian translation updates (Jaroli József)
-
-  * po file typo (T.C. Chou)
-
-General - skins
-  * use canonicaIdFrom to help link user names in recent changes
-
-  * change RecentChanges ZCatalog query-style to avoid deprecation warning (Stefan Rank)
-
-General
-  * add tools folder and a basic import-files-to-wiki utility
-
-
-Zwiki 0.37.0rc1 2004/11/30
-==========================
-
-Page hierarchy
-  * make updateWikiOutline redirect to the updated contents view,
-    and provide an easier alias: updatecontents
-
-  * don't log a traceback when deleting a page with out-of-date outline cache
-
-Rating
-  * new compact rating form at top right. Unrated pages now have
-    rating 1 by default.
-
-Mail
   * mailin: don't log incoming message text or traceback for missing text part
 
   * make mailout logging less verbose
@@ -1746,12 +1882,22 @@ Mail
   * fix a bug preventing subscribe link from appearing when
     mailhost's id is not 'MailHost'
 
-General - i18n
+**Issue tracking**
+
+  * don't match xml/html character entities as hash number issue links (Stefan Rank)
+
+**General - i18n**
+
   * zh-TW and zh-CN translation updates (T.C. Chou)
 
   * add missing metadata to finnish po files
 
-General - skins
+  * hungarian translation updates (Jaroli József)
+
+  * po file typo (T.C. Chou)
+
+**General - skins**
+
   * close a cross-site scripting vulnerability in standard error message (SSA-20041122-12, #925, ChrisW)
 
   * Hide web only elements when printing from plone (Michael Twomey)
@@ -1774,40 +1920,51 @@ General - skins
 
   * display site_header in standard skin header, if present
 
+  * use canonicaIdFrom to help link user names in recent changes
+
+  * change RecentChanges ZCatalog query-style to avoid deprecation warning (Stefan Rank)
+
+**General**
+
+  * add tools folder and a basic import-files-to-wiki utility
 
 
 Zwiki 0.36.2 2004/11/17
 =======================
 
-Installing/upgrading
+**Installing/upgrading**
+
   * another fix for moin regexp encoding at startup (#963,#971,#972)
 
 
 Zwiki 0.36.1 2004/11/14
 =======================
 
-Installing/upgrading
+**Installing/upgrading**
+
   * fix zwiki startup on systems with locale and non-utf-8 encoding (#963)
 
 
 Zwiki 0.36.0 2004/10/31
 =======================
 
-Skin switching in CMF/Plone, better MoinMoin markup support, edit preview,
-easier issue page names and links, russian & hebrew translations,
-bugfixes.
+Skin switching in CMF/Plone, better MoinMoin markup support, edit
+preview, easier issue page names and links, russian & hebrew
+translations, bugfixes.
     
-Upgrade notes
-    Skin switching hotkeys have changed slightly
+**Upgrade notes**
 
-    Issue pages have a new #N naming scheme. Your old IssueNo pages
-    will still work; upgradeAll will rename them all.
+  Skin switching hotkeys have changed slightly
 
-    We now add an optional Zwiki skin in CMF/Plone sites at install
-    time; if you want to enable skin switching within CMF/Plone,
-    re-install Zwiki in plone setup -> add/remove products 
+  Issue pages have a new #N naming scheme. Your old IssueNo pages
+  will still work; upgradeAll will rename them all.
+
+  We now add an optional Zwiki skin in CMF/Plone sites at install
+  time; if you want to enable skin switching within CMF/Plone,
+  re-install Zwiki in plone setup -> add/remove products 
     
-Installing/upgrading
+**Installing/upgrading**
+
   * fix startup problem due to path separator on windows (Stefan Rank)
 
   * upgradeAll: log elapsed time (Bob McElrath)
@@ -1822,14 +1979,16 @@ Installing/upgrading
 
   * simplify upgradeAll & upgrade, do less committing
 
-Creating/configuring
+**Creating/configuring**
+
   * show subtopics is on by default; use a false show_subtopics boolean property to disable
 
   * make add zwiki web use a BTreeFolder2 when possible (untested)
 
   * don't send mail when setupTracker creates dtml pages
 
-Browsing
+**Browsing**
+
   * adjust skin switching keys, allow switching between
     (uncustomized) plone and standard skin in CMF/Plone sites
     (re-install zwiki and try alt -)
@@ -1839,7 +1998,8 @@ Browsing
   * user options: remove unnecessary options; don't show
     logo/heading, consistent with other forms
 
-Editing
+**Editing**
+
   * don't require a username to show page management form
 
   * page management form permission-sensitivity and text improvements
@@ -1857,20 +2017,23 @@ Editing
 
   * fix a case where renaming could fail due to out of date wiki outline
 
-Page hierarchy
+**Page hierarchy**
+
   * more skin cleanups; allow reparenting via backlinks in plone and in minimal mode
 
   * reparenting fixes: prevent the first page appearing as an extra
     parent, handle old tuple parents properties better (#952)
 
-Mail
+**Mail**
+
   * mailin: once again post messages without a page name to a
     default page, unless default_mailin_page property is blank
 
   * be smarter about finding a MailHost; a page of that
     id will no longer break mail-out
 
-Issue tracking
+**Issue tracking**
+
   * use short #N names for new issue pages; old IssueNo pages still
     supported but deprecated; upgradeAll will rename them
 
@@ -1884,10 +2047,12 @@ Issue tracking
   * filterissues: fix this old chestnut again.. a FilterIssues
     page's action should point to itself, not to the template
 
-Fit tests
+**Fit tests**
+
   * fit: display a nice warning at the top of the page when there are fit tables and we can't import fit
 
-General - i18n
+**General - i18n**
+
   * update italian translation (Lele Gaifax)
 
   * new russian translation (Denis Mishunoff)
@@ -1896,7 +2061,8 @@ General - i18n
 
   * hack i18n for unit tests, possible slowdown ?
 
-General
+**General**
+
   * new method: wikiPath()
 
   * rename protectEmailAddresses
@@ -1905,13 +2071,15 @@ General
 Zwiki 0.35.0 2004/10/01
 =======================
 
-Spaced wikiname display, a basic MoinMoin page type, better search engine
-indexability, i18n updates, bugfixes.
+Spaced wikiname display, a basic MoinMoin page type, better search
+engine indexability, i18n updates, bugfixes.
     
-Upgrade notes
-    Nothing special to do.
+**Upgrade notes**
+
+  Nothing special to do.
     
-General
+**General**
+
   * partial MoinMoin markup support (Chad Miller/Simon Michael)
 
   * display wikinames with spaces when there is a true
@@ -1933,7 +2101,8 @@ General
 
   * new methods: spacedPageName, Subject, Description
 
-Skins and content
+**Skins and content**
+
   * provide keywords and description meta headers for better search
     engine listings
 
@@ -1947,10 +2116,12 @@ Skins and content
 
   * make sure page- & skin-based tracker forms are all up to date again
 
-Mail and comments
+**Mail and comments**
+
   * decode quoted printable mailins (get rid of =20's) (Bob McElrath)
 
-I18n
+**I18n**
+
   * removed the workaround to fix utf-8 encoding with PTS, as I
     seem to no longer need it; if your utf-8 encoding breaks, please
     see I18nSupport.py and report
@@ -1974,18 +2145,20 @@ Zwiki 0.34.0 2004/09/02
 =======================
 
 Beginnings of a plugin architecture; mailin simplifications and
-enhancements; new hungarian translation; miscellaneous skin enhancements
-and bugfixes.
+enhancements; new hungarian translation; miscellaneous skin
+enhancements and bugfixes.
 
-Upgrade notes
-    Legacy support for the posting_policy property has been dropped,
-    use mailin_policy instead.
+**Upgrade notes**
 
-    The mailin method no longer supports arguments other than the
-    message itself; control it with folder properties and choice of
-    mail alias instead.
+  Legacy support for the posting_policy property has been dropped,
+  use mailin_policy instead.
+
+  The mailin method no longer supports arguments other than the
+  message itself; control it with folder properties and choice of
+  mail alias instead.
     
-General
+**General**
+
   * add firstPageUrl & lastPageUrl methods
 
   * include() dtml utility now supports show_subtopics keyword argument
@@ -2015,7 +2188,8 @@ General
 
   * likely fix for false contents in new wikis (IssueNo0903)
 
-Skins and content
+**Skins and content**
+
   * make hidden access-key links conditional like the visible ones
     avoids errors in the logs due to spiders viewing non-existent tracker, eg
 
@@ -2038,7 +2212,8 @@ Skins and content
 
   * fix double skin with wikipage() method in cmf/plone (IssueNo0888)
 
-Mail and comments
+**Mail and comments**
+
   * mailin: more code cleanup, add experimental spam url reporting.
     Sending mail to a mailin address of the form spam@... will add all
     urls found in the message to the banned_links folder property, if
@@ -2056,13 +2231,15 @@ Mail and comments
 
   * don't send out mail-outs which have an empty body
 
-Tracker
+**Tracker**
+
   * make createNextIssue choose correct issue number in authenticated wikis
 
   * fix a python 2.3ism causing issue tracker to fail with zope 2.6
     (IssueNo0897, koegler)
 
-I18n
+**I18n**
+
   * add utf-8 content-type header to mail-outs
 
   * new hungarian translation (JÃÂ³zsef JÃÂ¡roli)
@@ -2079,21 +2256,25 @@ Zwiki 0.33.0 2004/08/02
 
 Minor fixes, mail code cleanups, translation updates.
 
-Upgrade notes
-    No special upgrade issues.
-    
-General
+**Upgrade notes**
+
+  No special upgrade issues.
+   
+**General**
+
   * allow page types to change the HTTP content-type header (Bob McElrath)
 
   * make _ work during unit tests again
 
-Skins and content
+**Skins and content**
+
   * fix unnecessary python 2.3-ism in editform
 
   * zope 2.6 compatibility fix for full/simple/minimal getattr error
     (IssueNo0875)
 
-Mail and comments
+**Mail and comments**
+
   * refactor mailin, sendMailTo and other mail code
 
   * mailin policy change: messages with no page name in subject are
@@ -2103,13 +2284,15 @@ Mail and comments
 
   * use "anonymous" as real name for anonymous mailouts
 
-Tracker
+**Tracker**
+
   * createNextIssue updates: return the page name, support
     sendmail=0 argument
 
   * support pages(isIssue=1) when there is no catalog
 
-I18n
+**I18n**
+
   * updated the italian message catalog for 0.32.0 (Lele Gaifax)
 
   * polish translation updates (Jakub Wisniowski)
@@ -2120,17 +2303,19 @@ I18n
 Zwiki 0.32.0 2004/07/05
 =======================
 
-Zwiki's skin is about fully internationalised; translation updates, new
-polish, dutch & german translations; skin cleanups; pluggable page types;
-refactoring, bugfixes.
+Zwiki's skin is about fully internationalised; translation updates,
+new polish, dutch & german translations; skin cleanups; pluggable
+page types; refactoring, bugfixes.
 
-Upgrade notes
-    zwiki_plone/wikipage_view template has been renamed to wikipage
+**Upgrade notes**
 
-    If you use a character encoding other than utf-8: zwiki has been
-    hard-coding utf-8 since 0.31 - see IssueNo0855.
+  zwiki_plone/wikipage_view template has been renamed to wikipage
+
+  If you use a character encoding other than utf-8: zwiki has been
+  hard-coding utf-8 since 0.31 - see IssueNo0855.
     
-General
+**General**
+
   * page types refactoring - moved to separate modules in pagetypes/,
     new short ids, pluggable API docs
 
@@ -2142,7 +2327,8 @@ General
 
   * don't let an empty allowed_page_types property break page creation
 
-Skins and content
+**Skins and content**
+
   * allow python scripts in wiki templates (Bob McElrath)
 
   * tighten up page management form layout and add a subtopic creation button
@@ -2163,7 +2349,8 @@ Skins and content
 
   * xhtml fixes (Bob McElrath, Simon Michael)
 
-Mail and comments
+**Mail and comments**
+
   * make citation formatting in comments more robust (IssueNo0863)
 
   * allow a per-page mailout_policy (Bob McElrath)
@@ -2174,7 +2361,8 @@ Mail and comments
 
   * Do not add extra space on mailin Subject lines. (Bob McElrath)
 
-Tracker
+**Tracker**
+
   * don't treat all pages beginning with a digit as issues by default
 
   * make issue tracker layout cleaner and more consistent in standard/plone
@@ -2183,7 +2371,8 @@ Tracker
 
   * disable subtopics display on the IssueTracker page by default when doing /setupTracker?pages=1
 
-I18n
+**I18n**
+
   * new german translation (Andreas Mayer)
     
   * chinese translation updates (T.C.Chou)
@@ -2216,11 +2405,12 @@ Much i18n progress including a number of new translations; tracker
 cleanups and usability improvements; permissions fixes; tests, code
 cleanups, bugfixes.
 
-Upgrade notes
-    Similar to 0.30. changeIssueProperties() "title" argument is now
-    "name".
+**Upgrade notes**
 
-General
+  Similar to 0.30. changeIssueProperties() "title" argument is now "name".
+
+**General**
+
   * always update links by default when renaming (page
     management form was not)
 
@@ -2245,7 +2435,8 @@ General
 
   * create() can now also set parents
 
-I18n
+**I18n**
+
   * plone editform: don't show duplicate pages types due to i18n
     problem (IssueNo0823)
 
@@ -2268,7 +2459,8 @@ I18n
 
   * fully automate pot extraction
 
-Skins and content
+**Skins and content**
+
   * show current page in contents by default again
     This is much more convenient for a human user. The drawback is
     more hits to contents (one for each page) from robots which treat
@@ -2293,7 +2485,8 @@ Skins and content
 
   * rename zmi forms and move to skins/zmi/
 
-Mail and comments
+**Mail and comments**
+
   * make comment subjects appear in recent changes again (IssueNo0821)
 
   * don't discard mail to TestPage page subscribers (IssueNo0672)
@@ -2302,7 +2495,8 @@ Mail and comments
     an email address pref; highlight problem users in the recipient
     list instead of quietly dropping them
 
-Tracker
+**Tracker**
+
   * usability & page layout improvements; highlight current sort &
     filter options
 
@@ -2336,19 +2530,21 @@ Zwiki 0.30 2004/05/03
 Page rating, fix epoz support, bugfixes, code cleanups, i18n work, a
 french translation.
 
-Upgrade notes
-    You should probably remove the 'links' field from your catalog's
-    indexes and metadata now as it isn't needed and leads to slowdowns
-    in Plone+Epoz sites (IssueNo0784).
-    
-    If you want to do zopewiki-style queries on page ratings, you'll
-    need to add the new rating and voteCount fields to your catalog.
-    Running PAGE/setupCatalog?reindex= will take care of this.
+**Upgrade notes**
 
-    If you have Localizer installed, you may need to apply the
-    workaround at http://zwiki.org/IssueNo0793 .
+  You should probably remove the 'links' field from your catalog's
+  indexes and metadata now as it isn't needed and leads to slowdowns
+  in Plone+Epoz sites (IssueNo0784).
     
-General
+  If you want to do zopewiki-style queries on page ratings, you'll
+  need to add the new rating and voteCount fields to your catalog.
+  Running PAGE/setupCatalog?reindex= will take care of this.
+
+  If you have Localizer installed, you may need to apply the
+  workaround at http://zwiki.org/IssueNo0793 .
+    
+**General**
+
   * page rating support: new methods rating, voteCount, and
     ratingform are supported and enabled in the standard skin by the
     'Zwiki: Rate pages' permission. rating and voteCount are cataloged
@@ -2386,7 +2582,8 @@ General
 
   * code refactoring, new tests
 
-Skins and content
+**Skins and content**
+
   * fix plone skin breakage due to \ in multiline TAL (IssueNo0792)
 
   * epoz fixes: make editform work with epoz 0.8, simplify
@@ -2417,7 +2614,8 @@ Skins and content
 
   * standard: add badtemplate error template
 
-Mail and comments
+**Mail and comments**
+
   * fix mailin destination with multiline subjects (IssueNo0547)
 
   * drop fewer_headers feature
@@ -2434,14 +2632,21 @@ Zwiki 0.29 2004/04/01
 
 Bugfixes for Zope 2.7 & Plone 2, skin tweaks.
 
-NOTE: immediately following this release I am switching to darcs as
-primary revision control system and considering CVS to be frozen. Please
-see http://zwiki.org/ZwikiCVS for new procedures and discussion.
+**NOTE: immediately following this release I am switching to darcs as**
 
-Upgrade notes
-    Nothing special; check past upgrade notes if appropriate
+**primary revision control system and considering CVS to be**
 
-General
+**frozen. Please see http://zwiki.org/ZwikiCVS for new procedures and**
+
+**discussion.**
+
+
+**Upgrade notes**
+
+  Nothing special; check past upgrade notes if appropriate
+
+**General**
+
   * wiki templates (added via ZMI Add ZWiki form) can now import
     zexp, xml, jpg, png, gif and pt files, and run a setup_WIKITYPE
     external method if present. This allows, eg, a latex-enabled
@@ -2463,7 +2668,8 @@ General
     
   * include .cvsignore files in CVS
 
-Skins and content
+**Skins and content**
+
   * xhtml fixes (bob mcelrath, cyrille lebeaupin)
 
   * default: show next/up/prev links in full mode by default
@@ -2496,7 +2702,8 @@ Skins and content
     
   * tell Epoz to look in epoz/ instead of ./ for it's files for easier setup
 
-Mail and messages
+**Mail and messages**
+
   * a citations whitespace fix (bob mcelrath)
 
   * obfuscate email addresses in messages slightly (bob mcelrath)
@@ -2507,7 +2714,8 @@ Mail and messages
 
   * tweaks to support ezmlm integration
 
-Tracker
+**Tracker**
+
   * make setupTracker do robust re-indexing like setupCatalog
 
   * don't let metadataFor and issueColour mistake zodb objects for
@@ -2520,10 +2728,12 @@ Zwiki 0.28 2004/03/01
 
 Bugfixes, tests, refactoring.
 
-Upgrade notes
-    Nothing special. If your tracker doesn't sort, see below.
+**Upgrade notes**
 
-General
+  Nothing special. If your tracker doesn't sort, see below.
+
+**General**
+
   * make wiki outline handling more robust, preventing IssueNo0727
     and similar (when it exists but is None for some reason, regenerate)
 
@@ -2540,7 +2750,8 @@ General
 
   * remove old regulations permission
 
-Skins and content
+**Skins and content**
+
   * fix traceback when creating/editing pages with recent plone/zope
     versions (cmf/plone 'allowed_types' global overriding our
     'allowed_types' define) (IssueNo0726, Christian Heimes)
@@ -2572,7 +2783,8 @@ Skins and content
 
   * include print.dtml, toc.py, view_source.dtml scripts in misc
 
-Mail and messages
+**Mail and messages**
+
   * performance fix: usernamesFrom was too expensive, occasionally
     causing plone.org to max out cpu for 10 minutes at a time with
     it's 7000 users. So now, we don't try so hard to match up email
@@ -2582,7 +2794,8 @@ Mail and messages
 
   * correctly render pages containing only messages (Bob McElrath)
 
-Tracker
+**Tracker**
+
   * a tracker created with zope 2.7 would not sort issues (IssueNo0720).
     Note if you have already created a tracker with 2.7, to fix sorting
     you'll need to visit PAGEURL/index_object on each issue page.
@@ -2593,9 +2806,11 @@ Zwiki 0.27.1 2004-02-06
 
 Fixes a couple of problems with 0.27.
 
-General
+**General**
+
   * fix last minute bug causing updateWikiOutline to fail with
-    pageName attribute error (IssueNo0694)
+    pageName attribute error (IssueNo0694)**
+
 
   * don't break if plone 2's document_actions is not present
     (IssueNo0701)
@@ -2610,26 +2825,26 @@ General
 Zwiki 0.27.0 2004-02-02
 =======================
 
-New, faster page hierarchy implementation; access keys everywhere; page
-management form and action icons in plone; utf-8; bugfixes.
+New, faster page hierarchy implementation; access keys everywhere;
+page management form and action icons in plone; utf-8; bugfixes.
 
-Upgrade notes
-    Two upgrade issues this month:
+**Upgrade notes**
 
-    If you have non-ascii characters in your page names or content:
-    the default skin used to specify iso-8859-1 character encoding; it
-    now specifies utf-8.  So your wiki's character encoding may
-    change, and non-ascii characters may no longer display
-    correctly. You'll have to convert these manually (see
-    http://zwiki.org/IssueNo0682 for tips).
+  Two upgrade issues this month:
 
-    If you were running the 0.27cvs code: 
-    you might be unable to view or add pages after upgrading to 0.27
-    final. To fix, visit SOMEPAGE/updateWikiOutline, or /upgradeAll.
-    (If this happens to you and you weren't running 0.27cvs, I'd like
-    to hear from you).
+  If you have non-ascii characters in your page names or content: the
+  default skin used to specify iso-8859-1 character encoding; it now
+  specifies utf-8.  So your wiki's character encoding may change, and
+  non-ascii characters may no longer display correctly. You'll have to
+  convert these manually (see http://zwiki.org/IssueNo0682 for tips).
 
-General
+  If you were running the 0.27cvs code: you might be unable to view or
+  add pages after upgrading to 0.27 final. To fix, visit
+  SOMEPAGE/updateWikiOutline, or /upgradeAll.  (If this happens to you
+  and you weren't running 0.27cvs, I'd like to hear from you).
+
+**General**
+
   * page hierarchy is now cached in a wiki Outline object, stored as
     a (hidden) folder attribute, instead of being generated from the
     page parents attribute every time. All hierarchy operations
@@ -2652,7 +2867,8 @@ General
   * revert a mistaken "fix" to
     manage_afterAdd/afterClone/beforeDelete (IssueNo0684)
 
-Skins and content
+**Skins and content**
+
   * the default skin now specifies the utf-8 charset, like
     zwiki_plone, and the wikiname regular expressions can now handle
     multi-byte utf-8 encoding. This may cause some page names or
@@ -2678,11 +2894,13 @@ Skins and content
   * default, plone: the useroptions template was not redirecting
     quite right, so options didn't stick (anonymous)
     
-Mail and messages
+**Mail and messages**
+
   * when using "edits" policy, comments weren't sending mailouts
     (Joachim Bauch)
 
-Tracker
+**Tracker**
+
     
 
 Zwiki 0.26.0 2004-01-02
@@ -2690,10 +2908,13 @@ Zwiki 0.26.0 2004-01-02
 
 Epoz support, skin layout tweaks, bugfixes.
 
-Upgrade notes
-    No special upgrade issues.
+**Upgrade notes**
 
-General
+  No special upgrade issues.
+
+
+**General**
+
   * wiki links in HTML pages work again (IssueNo0664)
 
   * simplify and fix locale awareness of bare WikiNames - these
@@ -2706,7 +2927,8 @@ General
   * add python 2.3 encoding declaration in LocalizerSupport.py
     to prevent startup warning
 
-Skins and content
+**Skins and content**
+
   * default, zwiki_plone: the editform now uses Epoz 0.x, if
     installed, to edit HTML-only pages in WYSIWYG fashion. To see
     this, install the Epoz 0.x product; edit one of your pages and
@@ -2731,45 +2953,49 @@ Skins and content
   * zwiki_plone editform: update to the new Plone 2 forms format;
     fix tabindex so it works again; rewrote the help texts (limi)
 
-Mail and messages
+**Mail and messages**
+
   * some mailing list headers in mailouts were empty when there was
     no mail_from property. Now they use mail_replyto in that
     case. (IssueNo0673)
 
-Tracker
+**Tracker**
+
   * disable old broken issue navigation links
 
 
 Zwiki 0.25 2003-12-01
 =====================
 
-Fully-functional non-DTML wikis are now supported and default; refactored
-default skin with macros, CSS and SkinnedFolder support; more zwiki
-features available in CMF/Plone; quicker comments, improved search, easy
-tracker setup, much code refactoring, etc.
+Fully-functional non-DTML wikis are now supported and default;
+refactored default skin with macros, CSS and SkinnedFolder support;
+more zwiki features available in CMF/Plone; quicker comments,
+improved search, easy tracker setup, much code refactoring, etc.
 
-Upgrade notes
-    Many changes, you may want to hold off and watch KnownIssues for a
-    week or two.
+**Upgrade notes**
 
-    The page_type property is no longer a simple string. Customized
-    skin templates should continue to work. Downgrading from this
-    release may cause temporary problems.
+  Many changes, you may want to hold off and watch KnownIssues for a
+  week or two.
+
+  The page_type property is no longer a simple string. Customized skin
+  templates should continue to work. Downgrading from this release may
+  cause temporary problems.
     
-    If you have DTML-using wikis, you will need to take steps to
-    re-enable DTML pages after this upgrade. You can either:
-    1. re-enable DTML: set the allow_dtml property as described below;
-    or 2. become a non-DTML wiki: remove or rename your RecentChanges,
-    SearchPage, UserOptions, IssueTracker or FilterIssues pages. If
-    you're using the default skin, the site navigation links will
-    adjust automatically; if you're using the zwiki_plone skin you'll
-    need to make such links yourself.
+  If you have DTML-using wikis, you will need to take steps to
+  re-enable DTML pages after this upgrade. You can either:
+  1. re-enable DTML: set the allow_dtml property as described below;
+  or 2. become a non-DTML wiki: remove or rename your RecentChanges,
+  SearchPage, UserOptions, IssueTracker or FilterIssues pages. If
+  you're using the default skin, the site navigation links will adjust
+  automatically; if you're using the zwiki_plone skin you'll need to
+  make such links yourself.
 
-    This release includes additional CMF/Plone action links;
-    re-install Zwiki in your CMF/Plone site to see these
-    (or add them manually in portal_types -> Wiki Page -> actions).
+  This release includes additional CMF/Plone action links; re-install
+  Zwiki in your CMF/Plone site to see these (or add them manually in
+  portal_types -> Wiki Page -> actions).
     
-General
+**General**
+
   * no DTML by default
 
     DTML is off again by default, for real this time.  (These days
@@ -2825,10 +3051,10 @@ General
   * code refactoring: extract Editing and Utils mixins, many
     cleanups.  
 
-  * new defaultPage, defaultPageId, defaultPageUrl methods look for
-    a default_page property, or a page named "FrontPage", or the
-    first page in the folder. Other new methods include: pageCount,
-    pageIdsMatching, pageNamesMatching,  *Url helper methods for the
+  * new defaultPage, defaultPageId, defaultPageUrl methods look for a
+    default_page property, or a page named "FrontPage", or the first
+    page in the folder. Other new methods include: pageCount,
+    pageIdsMatching, pageNamesMatching, \*Url helper methods for the
     site navigation links
     
   * reparenting cleanup, bugfixes
@@ -2857,7 +3083,8 @@ General
   * fix "global name 'p' is not defined" when adding pages via plone
     UI
 
-Skins and content
+**Skins and content**
+
   * default, zwiki_plone: new skin-based views - instead of the
     DTML-based RecentChanges, SearchPage, UserOptions, IssueTracker
     and FilterIssues pages, new wikis now use skin-based views
@@ -2943,7 +3170,8 @@ Skins and content
   * remove confusing #parents tag from default content files.. we
     don't need it
 
-Tracker
+**Tracker**
+
   * setupTracker now does not install dtml pages by default, sets up
     an issue_colours property, creates one dummy issue if there are
     none, and redirects to the issue tracker afterward
@@ -2959,15 +3187,17 @@ Zwiki 0.24 2003-11-01
 
 Bugfixes.
 
-Upgrade notes
-    Reminder: the plone skin disables DTML-based pages (like
-    RecentChanges) by default now. If you wish to enable those you'll
-    need to remove the ZWiki/skins/zwiki_plone/no_dtml.dtml file after
-    an upgrade.
+**Upgrade notes**
 
-    In the ZMI add menu, "ZWiki Web" is now just "ZWiki".
+  Reminder: the plone skin disables DTML-based pages (like
+  RecentChanges) by default now. If you wish to enable those you'll
+  need to remove the ZWiki/skins/zwiki_plone/no_dtml.dtml file after
+  an upgrade.
 
-General
+  In the ZMI add menu, "ZWiki Web" is now just "ZWiki".
+
+**General**
+
   * change ZMI add menu's 'Wiki' to 'ZWiki', to locate it back
     beside 'ZWiki Page'
 
@@ -3000,7 +3230,8 @@ General
   * dublin core fixes, so wiki pages should show correct
     modification time, ownership etc. in CMF/Plone
 
-Skins and content
+**Skins and content**
+
   * allow access to diff screens (but not full history button)
     without 'View history' permission
 
@@ -3008,7 +3239,8 @@ Skins and content
 
   * zwiki_plone: tidy up wikinav_portlet a little
 
-Mail and messages
+**Mail and messages**
+
   * fixed never-encountered bug in subscriber list upgrading
     (IssueNo0540)
 
@@ -3017,40 +3249,41 @@ Zwiki 0.23 2003-10-12
 =====================
 
 Permission renames, useful page/catalog/tracker setup methods, more
-functional default skin with slow but nifty hierarchy navigation options,
-default content updates, bugfixes.
+functional default skin with slow but nifty hierarchy navigation
+options, default content updates, bugfixes.
 
-Upgrade notes
-    Three permissions have been renamed, and wherever you have
-    configured these ('Add ZWiki Webs', 'Add ZWiki Pages' & 'Zwiki:
-    Add comments to pages') you'll have to set them again with the new
-    names. You may want to review your settings before upgrading.
-    Sorry; it should be easy to write a script to automate this, I
-    don't have one.
+**Upgrade notes**
 
-    As usual, but especially if upgrading from a very old version, it
-    doesn't hurt to visit SOMEPAGE/upgradeAll once as manager
-    (except, it may be slow in large wikis). This will ensure all your
-    pages have the latest attributes and have been rendered with the
-    latest code. Do this if you want to use the subtopics display
-    option below.
+  Three permissions have been renamed, and wherever you have
+  configured these ('Add ZWiki Webs', 'Add ZWiki Pages' & 'Zwiki: Add
+  comments to pages') you'll have to set them again with the new
+  names. You may want to review your settings before upgrading.
+  Sorry; it should be easy to write a script to automate this, I don't
+  have one.
 
-    Regulations support was not working and has been dropped - I don't
-    expect this to affect you, but if I'm wrong join the discussion on
-    http://zwiki.org/RegulatingYourPages .
+  As usual, but especially if upgrading from a very old version, it
+  doesn't hurt to visit SOMEPAGE/upgradeAll once as manager (except,
+  it may be slow in large wikis). This will ensure all your pages have
+  the latest attributes and have been rendered with the latest
+  code. Do this if you want to use the subtopics display option below.
+
+  Regulations support was not working and has been dropped - I don't
+  expect this to affect you, but if I'm wrong join the discussion on
+  http://zwiki.org/RegulatingYourPages .
     
-General
+**General**
+
   * permissions & ZMI menu renames for usability/consistency:
 
-    - 'Add ZWiki Web' in the ZMI add menu is now 'Add Wiki'. 
-    ('Add ZWiki Page' remains as is to avoid changing the meta type).
+    - 'Add ZWiki Web' in the ZMI add menu is now 'Add Wiki'.  
+      ('Add ZWiki Page' remains as is to avoid changing the meta type).
 
     - 'Add ZWiki Webs' permission is now 'Zwiki: Add wikis'
 
     - 'Add ZWiki Pages' permission is now 'Zwiki: Add pages'
 
     - 'Zwiki: Add comments to pages' permission is now 
-    'Zwiki: Add comments'
+      'Zwiki: Add comments'
 
   * new wiki setup methods
 
@@ -3062,17 +3295,17 @@ General
      - setupDtmlMethods - install index_html and standard_error_message
 
      - setupCatalog - install or configure a wiki catalog, with
-     appropriate configuration for optimizing large wikis.  CMF/Plone
-     notes: this one is called automatically by the CMF install
-     script, to simplify installation. It adds all the indexes and
-     metadata that Zwiki expects from a catalog (see setupCatalog or
-     http://zwiki.org/ZwikiAndZCatalog for a list). NB these will
-     apply for all catalogable plone objects, not just zwiki pages,
-     but will
-     (hopefully) be empty/harmless for the non-pages.
+       appropriate configuration for optimizing large wikis.
+       CMF/Plone notes: this one is called automatically by the CMF
+       install script, to simplify installation. It adds all the
+       indexes and metadata that Zwiki expects from a catalog (see
+       setupCatalog or http://zwiki.org/ZwikiAndZCatalog for a
+       list). NB these will apply for all catalogable plone objects,
+       not just zwiki pages, but will (hopefully) be empty/harmless
+       for the non-pages.
 
      - setupTracker - configure the wiki & catalog for issue tracking
-     and install the IssueTracker and FilterIssues pages
+       and install the IssueTracker and FilterIssues pages
 
      These also work inside CMF/Plone, except for setupDtmlMethods
      which may not work there.
@@ -3085,27 +3318,27 @@ General
 
   * Hierarchy navigation links and subtopics links
 
-     If your wiki folder has a true 'show_navlinks' boolean property,
-     the default skin in full mode will show a navigation links panel.
-     These are GNU Info-style next/previous/up links, with N/P/U quick
-     access keys respectively. See zwiki.org for an example.
+    If your wiki folder has a true 'show_navlinks' boolean property,
+    the default skin in full mode will show a navigation links panel.
+    These are GNU Info-style next/previous/up links, with N/P/U quick
+    access keys respectively. See zwiki.org for an example.
 
-     If your wiki folder has a true 'show_subtopics' boolean property,
-     and the user is currently in full mode (their zwiki_displaymode
-     cookie is "full"): pages with children will have a "subtopics"
-     panel displayed, after the document part and before any
-     messages. (This will appear after the next edit, or after running
-     upgradeAll.)
+    If your wiki folder has a true 'show_subtopics' boolean property,
+    and the user is currently in full mode (their zwiki_displaymode
+    cookie is "full"): pages with children will have a "subtopics"
+    panel displayed, after the document part and before any
+    messages. (This will appear after the next edit, or after running
+    upgradeAll.)
 
-     Subtopics display can also be turned permanently on or off for a
-     specific page, and all pages below it in the hierarchy, by
-     setting an option in the default skin's editform (requires
-     'Zwiki: Reparent pages' permission). We may find a way to
-     simplify this later, ideas welcome.
+    Subtopics display can also be turned permanently on or off for a
+    specific page, and all pages below it in the hierarchy, by setting
+    an option in the default skin's editform (requires 'Zwiki:
+    Reparent pages' permission). We may find a way to simplify this
+    later, ideas welcome.
 
-     Both of these options (navlinks and subtopics) are expensive in a
-     large wiki, even if you set up a catalog to optimize it (and you
-     should). When active they will slow page rendering down a lot
+    Both of these options (navlinks and subtopics) are expensive in a
+    large wiki, even if you set up a catalog to optimize it (and you
+    should). When active they will slow page rendering down a lot
     (ballpark figure: zwiki.org FrontPage goes from 0.1 to ~1 second).
     
   * regulations support dropped - this has been broken for some
@@ -3147,7 +3380,8 @@ General
     bit more useful; first unit tests for cmf/plone and page
     hierarchy functionality
 
-Skins and content
+**Skins and content**
+
   * default: the default skin has been rearranged somewhat, as at
     zwiki.org; cf recent GeneralDiscussion. Less gray, widgets
     grouped into panels, site links moved to top, annoying quote and
@@ -3205,7 +3439,8 @@ Skins and content
     (untested). These are: recentchanges, searchwiki, useroptions,
     issuetracker, filterissues. 
 
-Mail and messages
+**Mail and messages**
+
   * mailout signatures now include the precise message url
 
   * a whitespace + horizontal rule separator is inserted before the
@@ -3218,7 +3453,8 @@ Mail and messages
   * new 'fewer_threads' option, disabled by default, tries to gather
     comments under a single thread per page per month
 
-Tracker
+**Tracker**
+
   * creating issue pages without first setting issue_* folder
     properties didn't work.. it should work now.  The necessary
     folder properties will be installed as needed.
@@ -3234,27 +3470,29 @@ Tracker
 Zwiki 0.22 2003-09-10
 =====================
 
-Memory efficiency/performance/scalability improvements; simpler page types
-and DTML control; zwiki_plone and default skin updates; wikimail tweaks;
-STX images; bugs, fixes, features.
+Memory efficiency/performance/scalability improvements; simpler page
+types and DTML control; zwiki_plone and default skin updates;
+wikimail tweaks; STX images; bugs, fixes, features.
     
-Upgrade notes
-    Control of page types and DTML has been simplified. NB in this
-    release wikis tend to allow embedded DTML by default.  To disallow
-    it, add a 'no_dtml' property as described below.
+**Upgrade notes**
 
-    The backlinksFor() and pages() methods have changed; Title() is
-    now preferred instead of title_or_id(); and RESPONSE is no longer
-    provided in the default namespace for skin templates (see below).
-    If you have DTML pages or customized skin templates using these
-    things, they may need to be updated.
+  Control of page types and DTML has been simplified. NB in this
+  release wikis tend to allow embedded DTML by default.  To disallow
+  it, add a 'no_dtml' property as described below.
 
-    If using a catalog, you should add the Title field to your
-    metadata if not already present. Use of title_or_id is being
-    phased out but you may want to leave it in your catalog until
-    Zwiki 0.23 to be safe.
+  The backlinksFor() and pages() methods have changed; Title() is now
+  preferred instead of title_or_id(); and RESPONSE is no longer
+  provided in the default namespace for skin templates (see below).
+  If you have DTML pages or customized skin templates using these
+  things, they may need to be updated.
 
-General
+  If using a catalog, you should add the Title field to your metadata
+  if not already present. Use of title_or_id is being phased out but
+  you may want to leave it in your catalog until Zwiki 0.23 to be
+  safe.
+
+**General**
+
   * page type cleanups and DTML changes: deprecated page types have
     been removed, as have the non-DTML-supporting STX and HTML types.
     DTML is now controlled as follows: a 'no_dtml' property (value
@@ -3262,12 +3500,12 @@ General
     functionality below that point. You can set this on the root
     folder to disable it server-wide.
 
-     NB: non-CMF wikis, and CMF/Plone wikis which don't use the
-    zwiki_plone skin, are DTML-enabled by default for the moment.  
-    The zwiki_plone skin includes an empty 'no_dtml' method which
-    disables DTML. To enable it in all your CMF/Plone wikis, you need
-    to remove ZWiki/skins/zwiki_plone/no_dtml.dtml and restart zope,
-    (or switch to a similar skin without that file).
+    NB: non-CMF wikis, and CMF/Plone wikis which don't use the
+    zwiki_plone skin, are DTML-enabled by default for the moment.  The
+    zwiki_plone skin includes an empty 'no_dtml' method which disables
+    DTML. To enable it in all your CMF/Plone wikis, you need to remove
+    ZWiki/skins/zwiki_plone/no_dtml.dtml and restart zope, (or switch
+    to a similar skin without that file).
 
   * the 'allowed_page_types' lines property is supported again.  It
     does not prevent setting any type, but is used to restrict the
@@ -3359,7 +3597,8 @@ General
   * ChangeLog is no longer provided in releases for the moment, to
     simplify maintenance
 
-Skins and content
+**Skins and content**
+
   * RESPONSE is no longer provided in the namespace for DTML Method
     skin templates; they must use REQUEST.RESPONSE (code simplification)
 
@@ -3413,7 +3652,8 @@ Skins and content
   * content/basic/SearchPage.stxdtml: remove other search tools for
     now
 
-Mail and messages
+**Mail and messages**
+
   * fix message id inconsistencies preventing proper threading in
     mail clients (IssueNo0587)
 
@@ -3454,14 +3694,16 @@ Bugfix release.
 Zwiki 0.21 2003-08-01
 =====================
 
-A number of important bugfixes & usability tweaks for wiki mail and the
-Plone/CMF skin, and preliminary optional Purple Numbers support
+A number of important bugfixes & usability tweaks for wiki mail and
+the Plone/CMF skin, and preliminary optional Purple Numbers support
 (fine-grained linking).
     
-Upgrade notes
-    Should be routine. Upgrading to this release is recommended.
+**Upgrade notes**
 
-General
+  Should be routine. Upgrading to this release is recommended.
+
+**General**
+
   * CMF/Plone: Wiki Folder is no more! use ordinary folders instead.
     NB this means you can't create a pre-populated wiki for the
     moment; copy RecentChanges, UserOptions, SearchPage, HelpPage,
@@ -3488,7 +3730,8 @@ General
   * use latest page types in new wikis, avoiding excessive
     "non-allowed page type" warnings in edit form (IssueNo0564)
 
-Skins and content
+**Skins and content**
+
   * the zwiki product icon was not checked in to CVS as a binary
     file, which may have been causing problems for (even crashing!)
     certain web browsers in the ZMI (Alexander Limi)
@@ -3543,7 +3786,8 @@ Skins and content
 
   * zwiki plone editform: move least-used widgets to the bottom
 
-Mail and messages
+**Mail and messages**
+
   * comment heading display tweaks - message number no longer
     displayed, date now links to more permanent url based on message
     id, email sender's name is now enclosed in [] to link to personal
@@ -3568,23 +3812,25 @@ Mail and messages
 Zwiki 0.20.0 2003-07-02
 =======================
 
-Simpler page types, smarter message handling, auto subscription option;
-mail, skin and miscellaneous bugfixes; python 2.1 or greater now required.
+Simpler page types, smarter message handling, auto subscription
+option; mail, skin and miscellaneous bugfixes; python 2.1 or greater
+now required.
 
-Upgrade notes
-    Page types have been simplified and renamed (both the end-user and
-    developer names) as mentioned below.  If you have
-    standard_page_type or allowed_page_types properties on your wiki
-    folders, you should update them to the latest types (in the left
-    column below):
+**Upgrade notes**
 
-    I have dropped python 1.5.2 compatibility as of this release; this
-    allows us to use more up-to-date python 2.1 features and means
-    zwiki 0.20 and later won't run on very old zope installations.
+  Page types have been simplified and renamed (both the end-user and
+  developer names) as mentioned below.  If you have standard_page_type
+  or allowed_page_types properties on your wiki folders, you should
+  update them to the latest types (in the left column below):
 
-    The comment method's arguments have changed.
-    
-General
+  I have dropped python 1.5.2 compatibility as of this release; this
+  allows us to use more up-to-date python 2.1 features and means zwiki
+  0.20 and later won't run on very old zope installations.
+
+  The comment method's arguments have changed.
+  
+**General**
+
   * more page type simplifications: 
     As shipped, Zwiki now supports four main wiki page types and
     three non-wiki page types::
@@ -3630,7 +3876,8 @@ General
   * clean up '\r\n' line terminators if added by browser, in
     comment().
 
-Mail
+**Mail**
+
   * fill paragraphs in mailouts, finally. Also wrap at column 70,
     not 78. (IssueNo0340)
 
@@ -3653,7 +3900,8 @@ Mail
   * exclude a page named "TestPage" from whole-wiki subscription.
     Page subscribers will still receive mail from it.
 
-Tracker
+**Tracker**
+
   * supply default categories, severities, statuses lists for the
     issue properties form if they have not been defined. This should
     allow "IssueNoXXXX ..." pages to work in any wiki without
@@ -3661,7 +3909,8 @@ Tracker
 
   * tolerate whitespace in the issue_colours list
     
-Skins and content
+**Skins and content**
+
   * zwiki_plone: added the last basic elements of the Plone styling,
     cosmetic change to footer, external edit link moved to header.
     (Alexander Limi)
@@ -3689,13 +3938,15 @@ Skins and content
 Zwiki 0.19.0 2003-06-01
 =======================
 
-Preliminary reStructured Text support, page types cleanup, skin bugfixes,
-customizable issue colours.
+Preliminary reStructured Text support, page types cleanup, skin
+bugfixes, customizable issue colours.
 
-Upgrade notes
-    Nothing special this month.
+**Upgrade notes**
 
-General
+  Nothing special this month.  
+
+**General**
+
   * preliminary reStructured Text support, based on Andreas' and 
     Richard's work.
 
@@ -3723,7 +3974,8 @@ General
 
   * fix NameErrors due to missing imports
 
-Skins and content
+**Skins and content**
+
   * start with no bookmarks by default
 
   * UI code cleanups, more useful error messages
@@ -3747,7 +3999,8 @@ Skins and content
 
   * zwiki_plone: remove the bookmarks & help links from the page footer
 
-Tracker
+**Tracker**
+
   * IssueTracker & FilterIssues dtml cleanups, robustness enhancements
 
   * Instead of highlighting open and pending issues, we now highlight 
@@ -3762,28 +4015,29 @@ Zwiki 0.18.0 2003-05-01
 
 Full Plone and CMF skin, miscellaneous fixes.
 
-Upgrade notes
-    If you have a cmf_install_zwiki external method, refresh it after
-    installing this release (by saving it, or restarting zope).
+**Upgrade notes**
 
-    The new zwiki_plone skin replaces the zwiki_cmf skin; although the
-    latter is still shipped it will hopefully go away soon.  An
-    existing CMF zwiki should keep working as before. To change it
-    over to the zwiki_plone skin, do this:
+  If you have a cmf_install_zwiki external method, refresh it after
+  installing this release (by saving it, or restarting zope).
 
-     1. in your CMF site's portal_skins Contents tab, delete the
-     default and zwiki_cmf folders (and zwiki_orig, if you don't use
-     that)
+  The new zwiki_plone skin replaces the zwiki_cmf skin; although the
+  latter is still shipped it will hopefully go away soon.  An existing
+  CMF zwiki should keep working as before. To change it over to the
+  zwiki_plone skin, do this:
 
-     2. in the properties tab, remove zwiki_cmf (and zwiki_orig) from
-     all skins
+   1. in your CMF site's portal_skins Contents tab, delete the default
+   and zwiki_cmf folders (and zwiki_orig, if you don't use that)
 
-     3. run the install method again (CMFSITEURL/cmf_install_zwiki)
+   2. in the properties tab, remove zwiki_cmf (and zwiki_orig) from
+   all skins
 
-    Structured text headings will get bigger next time you save the
-    page (or visit SOMEPAGEURL/upgradeAll to re-render all pages).
+   3. run the install method again (CMFSITEURL/cmf_install_zwiki)
+
+  Structured text headings will get bigger next time you save the page
+  (or visit SOMEPAGEURL/upgradeAll to re-render all pages).
     
-General
+**General**
+
   * structured text headings now start at H2 not H3
 
   * when using regulations, don't require change regulations
@@ -3807,7 +4061,8 @@ General
 
   * new method: ancestorsAsList
 
-Skins and content
+**Skins and content**
+
   * a fully functional Plone (and CMF) skin, at last! The
     zwiki_plone skin provides most current features of Zwiki's default
     skin, within the standard plone UI. It should also be functional
@@ -3825,13 +4080,15 @@ Skins and content
   * tweaked blank subject comment heading format.. not happy with it
     yet
 
-Mail
+**Mail**
+
   * mailouts were failing when creating a page with no initial text
 
   * make comment mailout work when there is no subject_heading field
     (IssueNo0481, az` on irc)
 
-Tracker
+**Tracker**
+
   * when changing issue properties, add a user-supplied or default
     comment to the page recording what was done (DeanGoodmanson)
 
@@ -3839,28 +4096,30 @@ Tracker
 Zwiki 0.17.0 2003-04-01
 =======================
 
-Simpler page ids, faster performance and better memory efficiency, new
-general-purpose page type including tracker and fit support, more robust
-parenting, skin improvements, preliminary stylesheet support, code
-cleanups, doctest no longer used.
+Simpler page ids, faster performance and better memory efficiency,
+new general-purpose page type including tracker and fit support, more
+robust parenting, skin improvements, preliminary stylesheet support,
+code cleanups, doctest no longer used.
 
-Upgrade notes
-    If you have pages with punctuation in the names, or zwiki tracker
-    issues, you'll need to change their id/name. See below.
+**Upgrade notes**
 
-    If you have a tracker in your wiki, you'll also need to install
-    the latest IssueTracker/FilterIssues pages and add a new 'isIssue'
-    FieldIndex to your catalog. Also, in a large wiki you may find
-    changing issue descriptions is much slower than before. See below.
+  If you have pages with punctuation in the names, or zwiki tracker
+  issues, you'll need to change their id/name. See below.
 
-    issuedtml and stxprelinkdtmlhtml pages will be auto-upgraded to
-    the new stxprelinkdtmlfitissuehtml type.
+  If you have a tracker in your wiki, you'll also need to install the
+  latest IssueTracker/FilterIssues pages and add a new 'isIssue'
+  FieldIndex to your catalog. Also, in a large wiki you may find
+  changing issue descriptions is much slower than before. See below.
+
+  issuedtml and stxprelinkdtmlhtml pages will be auto-upgraded to the
+  new stxprelinkdtmlfitissuehtml type.
     
-    The CMF install method in Extensions has been renamed to Install.py.
-    
-General
+  The CMF install method in Extensions has been renamed to Install.py.
+  
+**General**
+
   * Simpler page ids
- 
+
     Page ids are now always derived from the name (title). This
     improves performance, removes a source of confusion, but means
     pages can no longer have a totally different title and id (like
@@ -3920,23 +4179,24 @@ General
 
   * Details of WWML changes in last month's release (PeterMerel):
 
-     - C2-compatible apostrophe embedding using minimal-munch
+    - C2-compatible apostrophe embedding using minimal-munch
 
-     - C2-compatible generation of indents from leading spaces
+    - C2-compatible generation of indents from leading spaces
 
-     - Intuitive fixed-width tables using | as a column delimiter. I
-     purely hate the STX tables, which do everything except the most
-     obvious formatting everybody wants.
+    - Intuitive fixed-width tables using | as a column delimiter. I
+      purely hate the STX tables, which do everything except the most
+      obvious formatting everybody wants.
 
-     - Ability to use images as page names with [image-url]
+    - Ability to use images as page names with [image-url]
 
-     - Ability to generate blockquotes by using = instead of  *
+    - Ability to generate blockquotes by using = instead of  *
 
-     - Ability to force a BR in definitions using \\
+    - Ability to force a BR in definitions using \\
 
-     - Probably some other things I've forgotten.
+    - Probably some other things I've forgotten.
     
-Skins and content
+**Skins and content**
+
   * the latest zwiki.org RecentChanges: fix a mispaced try which
     allowed errors, be less chatty about brute force/catalog, move
     note field next to page name, drop the "use table" option and the
@@ -3967,7 +4227,8 @@ Skins and content
   * preliminary CSS support: the default skin embeds a "stylesheet"
     object if present. 
 
-Mail
+**Mail**
+
   * longish headings were not being stripped from mailouts
 
   * mail out comments with their original formatting (not the page
@@ -3978,10 +4239,12 @@ Mail
   * don't send mailouts from a page named TestPage, whether or not it has
     [test] subject; log discarded [test] mailouts
 
-CMF
+**CMF**
+
   * cmf_install_zwiki.py has been renamed to Install.py (IssueNo0460)
 
-Tracker
+**Tracker**
+
   * Issue pages have a new naming scheme to conform with the new
     page ids: "IssueNoNNNN issue description". upgradeAll will take
     care of this for you. Old IssueNoXXXX urls will still work if
@@ -4005,10 +4268,11 @@ Tracker
 Zwiki 0.16.0 2003-03-02
 =======================
 
-CMF skin updates, various mail tweaks to support mailing list integration,
-enhancements to comment behaviour, WWML, misc. bugfixes.
+CMF skin updates, various mail tweaks to support mailing list
+integration, enhancements to comment behaviour, WWML, misc. bugfixes.
 
-Skins and content
+**Skins and content**
+
   * enhancements and fixes to the CMF support and zwiki_cmf skin
     from the nzo project - title fix, wiki folder edit view, don't
     create standard_error_message in CMF, CMF-style edit form, other
@@ -4023,7 +4287,8 @@ Skins and content
 
   * add discussion icon to comment headings in a CMF site
 
-Mail
+**Mail**
+
   * mailout all comments, regardless of use_heading flag
 
   * with multiple bracketed strings in a subject, use the right-most
@@ -4044,7 +4309,8 @@ Mail
 
   * log reason for mailout failures
 
-General
+**General**
+
   * WWML: fixed a couple of little bugs and added a couple of little
     extra markups. (PeterMerel)
 
@@ -4069,11 +4335,13 @@ Zwiki 0.15.0 2003-02-01
 
 Minor bugfixes and some changes to wikimail behaviour.
 
-Upgrade notes
-    If you're doing mailin, don't forget to re-save your external
-    method after installing this release.
+**Upgrade notes**
 
-Mail
+  If you're doing mailin, don't forget to re-save your external method
+  after installing this release.
+
+**Mail**
+
   * don't store page names in recipient real name. This seems to
     create more confusion than it solves. mailin.py's checkrecipient
     option is now off by default, and the line in Mail.py:sendMailTo()
@@ -4087,14 +4355,16 @@ Mail
   * non-headed comments were sending error reports to mail_admin
     if configured
 
-Skins and content
+**Skins and content**
+
   * default: some fixes for valid HTML (Pieter Biemond, IssueNo0399)
 
   * default, zwiki_orig: increase max quote size in header to 300
 
   * zwiki_orig: get rid of the javascript double-click
 
-General
+**General**
+
   * leave unknown link titles blank instead of showing "xxx zwiki bug"
 
   * a comment's subject (explicit from a field or inlined) is now
@@ -4106,13 +4376,15 @@ Zwiki 0.14.0 2003-01-09
 
 A mailin.py rewrite.
 
-Upgrade notes
-    If you don't use mailin, no need to upgrade.  After installing
-    this you'll want to click your external method's save button to
-    update it. Note this version of mailin.py drops the special
-    virtual host support.
+**Upgrade notes**
 
-Mail
+  If you don't use mailin, no need to upgrade.  After installing this
+  you'll want to click your external method's save button to update
+  it. Note this version of mailin.py drops the special virtual host
+  support.
+
+**Mail**
+
   * a rewritten mailin.py with tweaked delivery rules and unit
     tests. Fixes IssueNo0376.
 
@@ -4128,8 +4400,8 @@ Zwiki 0.13.1 2002-12-07
 
 A "bugfix-plus" release, for IssueNo0385 (missing permissions).
 
-  * finish the switch to modern security declarations,
-    fixing IssueNo0385 and hopefully not breaking much else.
+  * finish the switch to modern security declarations, fixing
+    IssueNo0385 and hopefully not breaking much else.
 
   * also send mailouts on page deletion and renaming
 
@@ -4137,14 +4409,16 @@ A "bugfix-plus" release, for IssueNo0385 (missing permissions).
 Zwiki 0.13.0 2002-12-01
 =======================
 
-Bugfixes, more solid CMF & Plone support, wikimail enhancements, skins
-re-organization.
+Bugfixes, more solid CMF & Plone support, wikimail enhancements,
+skins re-organization.
 
-Upgrade notes
-    If you have mailin set up and find replies going to the default
-    page instead of the originating page, see IssueNo0376.
+**Upgrade notes**
 
-CMF
+  If you have mailin set up and find replies going to the default page
+  instead of the originating page, see IssueNo0376.
+
+**CMF**
+
   * rename CMFInstall.py to cmf_install_zwiki.py
 
   * CMF skin support. zwiki_cmf is a lightweight CMF skin for zwiki;
@@ -4164,7 +4438,8 @@ CMF
 
   * hide user options when in CMF
 
-Mail
+**Mail**
+
   * look up destination page in the recipient's real name (first); 
     mailouts will encode the source page in the reply-to's real name.
     This should make addressing and replying more natural.
@@ -4190,14 +4465,16 @@ Mail
 
   * don't use < hr> in comment headings
 
-Skins and wiki content
+**Skins and wiki content**
+
   * clean out & reorganize templates and default content under
     skins, content
 
   * new unified RecentChanges implementation; use SITE_CATALOG,
     remove hard-coded zwiki.org
 
-General
+**General**
+
   * wiki links to pages with accented names (and freeform names in
     general if standard_error_message is not present ?) were not working
 
@@ -4253,16 +4530,18 @@ Zwiki 0.11.0 2002-10-01
 Bugfixes, international page names, edit log notes, WikiForNow
 assimilation completed, CMFWiki integration (alpha).
 
-Upgrade notes
-    See Regexps.py for notes on configuring international page names.
-    When running large & extensively cataloged wikis, you might notice
-    this version being more memory intensive than 0.10 (which itself
-    may be more memory hungry than 0.9.9). This release should coexist
-    with CMFWiki without problems.  Otherwise the usual, see
-    http://zwiki.org/TenMinuteZwikiUpgradeGuide &
-    http://zwiki.org/HowToUpgradeZwiki for more.
+**Upgrade notes**
+
+  See Regexps.py for notes on configuring international page names.
+  When running large & extensively cataloged wikis, you might notice
+  this version being more memory intensive than 0.10 (which itself may
+  be more memory hungry than 0.9.9). This release should coexist with
+  CMFWiki without problems.  Otherwise the usual, see
+  http://zwiki.org/TenMinuteZwikiUpgradeGuide &
+  http://zwiki.org/HowToUpgradeZwiki for more.
     
-Misc
+**Misc**
+
   * better support for (single-byte) international characters in
     page names & ids; enable out of the box, with or without a locale
     set up (IssueNo0257)
@@ -4291,7 +4570,8 @@ Misc
     instance - provide view & SearchableText methods, use
     portal_catalog if present, don't use rule in comment headings.
 
-Default UI & wiki content
+**Default UI & wiki content**
+
   * custom wikipage template was being called with the wrong context
     (IssueNo0225)
 
@@ -4313,7 +4593,8 @@ Default UI & wiki content
 
   * use ZMI widgets for page_type and NOT_CATALOGED (WikiForNow)
 
-Rendering
+**Rendering**
+
   * new "text + links" page type
 
   * wwml: some rendering fixes and convert spaces to tabs, described
@@ -4323,10 +4604,12 @@ Rendering
 
   * enable stx bullet workaround for all zope versions (IssueNo0273)
     
-Mail
+**Mail**
+
   * filter blank items from mailout recipients (IssueNo0221)
 
-Compatibility
+**Compatibility**
+
   * be more robust when upgrading timestamps (IssueNo0222)
 
   * be more robust with older zopes which may not have page
@@ -4340,7 +4623,7 @@ Compatibility
 
   * fixprops.py utility method for fixing up zwiki page properties
 
-  API changes (summary)
+**API changes (summary)**
 
     Nothing major.
     
@@ -4348,26 +4631,22 @@ Compatibility
 Zwiki 0.10.0 2002-09-01
 =======================
 
-  * minor text cleanups in default editform & zwikidotorg content
+Pre-rendering for better performance, new freeform page names and
+fuzzy linking, WikiForNow regulations support (beta), page renaming &
+deleting, UI enhancement & simplification, better upgradability, page
+templates support, i18n started, many bugfixes & minor enhancements.
 
+**Upgrade notes**
 
-Zwiki 0.10.0rc1 2002-08-25
-==========================
-
-Pre-rendering for better performance, new freeform page names and fuzzy
-linking, WikiForNow regulations support (beta), page renaming & deleting,
-UI enhancement & simplification, better upgradability, page templates
-support, i18n started, many bugfixes & minor enhancements.
-
-Upgrade notes
-    This release has renamed page types and a new render-caching
-    mechanism, to which pages are upgraded automatically; full-featured
-    UI defaults which will be used if you delete your custom DTML
-    methods; and one new and one renamed permission.
-    See http://zwiki.org/TenMinuteZwikiUpgradeGuide &
-    http://zwiki.org/HowToUpgradeZwiki for more.
+  This release has renamed page types and a new render-caching
+  mechanism, to which pages are upgraded automatically; full-featured
+  UI defaults which will be used if you delete your custom DTML
+  methods; and one new and one renamed permission.  See
+  http://zwiki.org/TenMinuteZwikiUpgradeGuide &
+  http://zwiki.org/HowToUpgradeZwiki for more.
     
-Default UI
+**Default UI**
+
   * made built-in defaults full-featured (equivalent to current
     zwiki.org UI). 
 
@@ -4426,7 +4705,8 @@ Default UI
     editform/subscribeform/backlinks; use form buttons instead of
     links to keep robots out of page history etc.
 
-Default zwikidotorg content
+**Default zwikidotorg content**
+
   * fewer pages
 
   * new FrontPage
@@ -4445,7 +4725,11 @@ Default zwikidotorg content
   * a standard_error_message method handles nonexistent urls,
     with fuzzy and partial matching on page names
 
-Rendering
+  * minor text cleanups in default editform & zwikidotorg content
+
+
+**Rendering**
+
   * Pre-rendering support: new page types (used by default) process
     text formatting rules and wiki linking rules once at edit time.
     This makes rendering of large pages much faster (possibly at the
@@ -4495,7 +4779,8 @@ Rendering
     
   * display "you are here" in page hierarchy
 
-Editing
+**Editing**
+
   * strip HTML header & footer found in edit text
 
   * make post-stx HTML & BODY tag stripping more robust (EdwardKreis)
@@ -4514,7 +4799,8 @@ Editing
 
   * abandon the old antidecap kludge
 
-Mail
+**Mail**
+
   * fixed the multiple subscription bug (IssueNo0161)
 
   * fixed page creation
@@ -4536,7 +4822,8 @@ Mail
   * fixed a bug in upgradeSubscribers which caused folder properties
     to proliferate
 
-Tracker
+**Tracker**
+
   * added a createIssue method which can replace the AddIssue &
     IssuePrototype pages
     
@@ -4545,7 +4832,8 @@ Tracker
   * when rendering the issue form, generate option menus dynamically
     from the issue_* properties (MikeFair)
 
-Compatibility
+**Compatibility**
+
   * better auto-upgrading & backwards compatibility; allow
     auto-upgrading to be disabled via flag in Defaults.py; 
     new upgradeAll method for batch upgrading & re-rendering
@@ -4561,7 +4849,8 @@ Compatibility
 
   * improved zope version checking
 
-Misc
+**Misc**
+
   * support WikiForNow-style regulations if use_regulations boolean
     folder property is true
 
@@ -4589,7 +4878,7 @@ Misc
   * debug logging of zwiki catalog operations (if Z_DEBUG_MODE or
     ZWIKI_DEBUG variables are true and STUPID_LOG_SEVERITY is <= -200)
     
-  API changes (summary)
+**API changes (summary)**
 
   * wikimail/editform/subscribeform/backlinks page templates will be
     used in preference to standard_wiki_header/standard_wiki_footer/
@@ -4600,22 +4889,22 @@ Misc
   * page types renamed. Here is the current list of page types (see
     AllAboutPageTypes for details)::
 
-    stxprelinkdtmlhtml
-    stxdtmllinkhtml
-    dtmlstxlinkhtml
-    stxprelinkhtml
-    stxlinkhtml
-    stxprelink
-    stxlink
-    wwmlprelink
-    wwmllink
-    prelinkdtmlhtml
-    dtmllinkhtml
-    prelinkhtml
-    linkhtml
-    dtmlhtml
-    html
-    plaintext
+     stxprelinkdtmlhtml
+     stxdtmllinkhtml
+     dtmlstxlinkhtml
+     stxprelinkhtml
+     stxlinkhtml
+     stxprelink
+     stxlink
+     wwmlprelink
+     wwmllink
+     prelinkdtmlhtml
+     dtmllinkhtml
+     prelinkhtml
+     linkhtml
+     dtmlhtml
+     html
+     plaintext
 
   * the RemoteWikiURL tag is case-insensitive
 
@@ -4625,7 +4914,8 @@ Misc
   * some properties are now looked up by containment rather than
     acquisition context, eg subscriber lists
 
-ADDED::
+**ADDED::**
+
     'Zwiki: Rename pages' permission
     use_regulations folder property
     zwiki_displaymode cookie
@@ -4665,96 +4955,35 @@ ADDED::
     urlunquote
     wikipage
     
-CHANGED::
+**CHANGED::**
+
     'Zwiki: Recycle pages' permission -> 'Zwiki: Delete pages'
     creation_time and last_edit_time are now ISO-format strings
     doLegacyFixups -> upgrade
     
-REMOVED::
+**REMOVED::**
+
     zwiki_advancededit cookie
 
 
 Zwiki 0.9.9 2002-04-16
 ======================
 
-    Focus: unit tests, wikimail enhancements, general fixes and a
-    permissions rename. See main release notes below (rc1).
+Focus: unit tests, wikimail enhancements, general fixes and a
+permissions rename.
 
-Bug fixes
-  * zwikidotorg template: remove references to old permissions 
+**Upgrade notes**
 
+  You'll need to make a note of your zwiki permissions settings before
+  upgrading and recreate them after this upgrade. You'll find all the
+  new permissions at the bottom of the security page, aside from the
+  Add permissions which are unchanged. Also you may have dtml which
+  checks for the old permissions and needs to be updated. For example,
+  the wiki templates refer to the permissions by name in
+  standard_wiki_header, standard_wiki_footer and editform.
 
-Zwiki 0.9.9rc6 2002-04-15
-=========================
+**Features**
 
-Bug fixes
-  * recognize , in urls (IssueNo0130)
-
-  * zwikidotorg template: remove comment form border
-
-
-Zwiki 0.9.9rc5 2002-04-14
-=========================
-
-Bug fixes
-  * fix bracketed path linking (IssueNo0139)
-
-  * missed some old-style imports in the subscription code
-
-
-Zwiki 0.9.9rc4 2002-04-13
-=========================
-
-Bug fixes
-  * zwikidotorg template: UserOptions tweaks - make default editform
-    dimensions match built-in default (60x15); don't use PST as
-    default timezone
-    
-  * zwikidotorg template: make timezone conversion in the header
-    more robust
-
-  * remove a local PYTHONPATH dependency from all imports, and 
-    make unit tests more robust across zope versions & invocation
-    methods
-
-  * wikimail: multipart message handling got broken in the cleanup, 
-    fixed
-
-  * wikimail: make inclusion of poster's username in mailout From
-    header more robust
-
-
-Zwiki 0.9.9rc3 2002-04-10
-=========================
-
-Bug fixes
-  * zwikidotorg template: removed SiteLogo capability & obsolete
-    zwiki_homepage reference, added secret feature for minimalists.
-
-
-Zwiki 0.9.9rc2 2002-04-09
-=========================
-
-Bug fixes
-  * render page header  *after* body, so that body can turn it off
-    with dtml
-
-  * make create more robust for dtml use in a top-level folder
-
-  * built-in ui tweaks - use colours like zwikidotorg's, make
-    editform textarea smaller, remove non-useful help links
-
-  * zwikidotorg template: include user option presets in the footer,
-    make help link depend on a HelpPage, update default bookmarks
-
-API changes (summary)
-  * new page method zwiki_version()
-    
-
-Zwiki 0.9.9rc1 2002-04-08
-=========================
-
-Features
   * zwiki permissions renamed. Details::
 
     'Add ZWiki Pages' (no change)
@@ -4766,15 +4995,6 @@ Features
     'Zwiki: Recycle pages' (was Send ZWiki Pages to Recycle Bin)
     
     Zwiki also uses zope's 'Add Documents, Images, and Files' (no change)
-
-     Upgrade notes: you'll need to make a note of your zwiki
-     permissions settings before upgrading and recreate them after this
-     upgrade. You'll find all the new permissions at the bottom of the
-     security page, aside from the Add permissions which are
-     unchanged. Also you may have dtml which checks for the old
-     permissions and needs to be updated. For example, the wiki
-     templates refer to the permissions by name in
-     standard_wiki_header, standard_wiki_footer and editform.
 
   * zwiki page 'subscribers' property replaced by 'subscriber_list'
     property; the folder also now exposes this in the ZMI.  Upgrade
@@ -4850,7 +5070,8 @@ Features
     named TEMPLATE_config is found, redirect there to create the wiki)
 
 
-Bug fixes
+**Bug fixes**
+
   * DeleteMe should redirect to the first existing parent
     afterwards, now working again (IssueNo0008)
 
@@ -4926,7 +5147,49 @@ Bug fixes
   * unit tests overhauled, cleaned out and updated. Zwiki now
     follows the latest zope testing practices. 
 
-API changes (summary)
+  * zwikidotorg template: remove references to old permissions 
+
+  * recognize , in urls (IssueNo0130)
+
+  * zwikidotorg template: remove comment form border
+
+  * fix bracketed path linking (IssueNo0139)
+
+  * missed some old-style imports in the subscription code
+
+  * zwikidotorg template: UserOptions tweaks - make default editform
+    dimensions match built-in default (60x15); don't use PST as
+    default timezone
+    
+  * zwikidotorg template: make timezone conversion in the header
+    more robust
+
+  * remove a local PYTHONPATH dependency from all imports, and 
+    make unit tests more robust across zope versions & invocation
+    methods
+
+  * wikimail: multipart message handling got broken in the cleanup, 
+    fixed
+
+  * wikimail: make inclusion of poster's username in mailout From
+    header more robust
+
+  * zwikidotorg template: removed SiteLogo capability & obsolete
+    zwiki_homepage reference, added secret feature for minimalists.
+
+  * render page header  *after* body, so that body can turn it off
+    with dtml
+
+  * make create more robust for dtml use in a top-level folder
+
+  * built-in ui tweaks - use colours like zwikidotorg's, make
+    editform textarea smaller, remove non-useful help links
+
+  * zwikidotorg template: include user option presets in the footer,
+    make help link depend on a HelpPage, update default bookmarks
+
+**API changes (summary)**
+
   * permissions renamed (see above)
     
   * viewing editform() now requires edit permission
@@ -4964,6 +5227,8 @@ API changes (summary)
 
   * tracker support: new page methods: category_index(),
     severity_index(), status_index()
+    
+  * new page method zwiki_version()
     
 
 Zwiki 0.9.8 2001-11-29
@@ -5063,9 +5328,9 @@ Zwiki 0.9.7 2001-11-23
     colourizes textDiff's output and adds whizzy navigation links for
     stepping through the edits. (Click on the page timestamp).
 
-  * zwikidotorg template: automatic comment headings now available
-    on all pages and enabled by default on  *Discussion pages; 
-    horizontal rules now used
+  * zwikidotorg template: automatic comment headings now available on
+    all pages and enabled by default on \*Discussion pages; horizontal
+    rules now used
     
   * zwikidotorg template: header & footer tweaks; don't display 
     ip address for last editor
@@ -5287,9 +5552,6 @@ Zwiki 0.8.1 2001-01-04
   * added more unit tests
 
 
-Zwiki 0.8.0rc1 2000-12-14
-=========================
-
   * log last editor's IP address if there is no username cookie
 
   * wrapped a bunch of long lines
@@ -5438,11 +5700,8 @@ Zwiki 0.3 1999-11-14
   * sample wiki: included latest DTML features from ZWikiWeb - 
     SearchPage, JumpTo, AnnoyingQuote, separate edit page, etc etc.
 
-  * multiple markup formats - 
-      structured text
-      classic wiki (TresSeaver)
-      HTML/DTML
-      plain text
+  * multiple markup formats - structured text, 
+    classic wiki (TresSeaver), HTML/DTML, plain text
 
   * better international character handling (AlexandreRatti)
 
