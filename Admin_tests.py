@@ -88,7 +88,7 @@ class Tests(ZwikiTestCase):
         # should also fix an old page's utf8-encoded parents property
         self.p.parents = ['\xc3\x89']
         self.p.fixEncoding()
-        self.assertEqual([u'\xc9'],self.p.parents)
+        self.assertEqual([u'\xc9'],self.p.getParents())
 
     def test_skinWithNonAscii(self):
         # skinning a non-ascii page body can fail due to #1330
