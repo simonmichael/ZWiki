@@ -46,8 +46,8 @@ Currently,
   lower-case names.
 
 
-Documentation
-=============
+Documentation guidelines
+========================
 
 Most Zwiki documentation is kept in the http://zwiki.org wiki.
 Developer-specific docs are under http://zwiki.org/DeveloperNotes.
@@ -108,16 +108,33 @@ better docs, we could try to follow this length guideline when possible:
  ================= =================================================
 
 
-Code
-====
+Docstrings
+----------
+
+The first sentence should be a concise summary of the object's purpose.
+
+Older docstrings follow the PEP guideline to separate the first line from
+the rest with a blank line, but we have abandoned this to save vertical
+space.
+
+It may sometimes be ok to omit the line breaks at the docstring's start
+and end if it doesn't hurt readability.
+
+Describe method arguments and return values when needed. We might want to
+come up with a standard haskellish way of noting the expected input and
+output types and whether side effects are expected.
+
+
+Code guidelines
+===============
 
 In general, it's best to follow, first, the current guidelines in this
 file, second, the style of existing Zwiki code, and third, standard Python
 best practices.
 
 
-Vertical space is precious
---------------------------
+Vertical space is precious, use long lines
+------------------------------------------
 
 IMHO, vertical space is more valuable than horizontal space. It's more
 valuable to see more lines on the screen than to see the full contents of
@@ -154,26 +171,9 @@ Recent code is also influenced by functional programming. Eg:
 - we prefer referentially-transparent functions where possible (return
   value depends only on the arguments - no side effects).
 
-Think "fewer moving parts". Variables, sequence of instructions, and side
-effects are often unnecessary.  When we cut them out, there is less to
-break and the code is more reliable and more testable.
-
-
-More about docstrings
----------------------
-
-The first sentence should be a concise summary of the object's purpose.
-
-Older docstrings follow the PEP guideline to separate the first line from
-the rest with a blank line, but we have abandoned this to save vertical
-space.
-
-It may sometimes be ok to omit the line breaks at the docstring's start
-and end if it doesn't hurt readability.
-
-Describe method arguments and return values when needed. We might want to
-come up with a standard haskellish way of noting the expected input and
-output types and whether side effects are expected.
+Think "fewer moving parts". Variables, imperative sequenced instructions,
+and side effects are often unnecessary.  When we cut them out, there is
+less to break and the code is more reliable and more testable.
 
 
 More about naming
