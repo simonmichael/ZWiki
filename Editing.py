@@ -258,9 +258,9 @@ class PageEditingSupport:
         m = Message()
         m.set_charset(self.encoding())
         m.set_payload(self.toencoded(text))
-        m['From'] = username            # XXX encode ?
-        m['Date'] = time
-        m['Subject'] = subject_heading  # XXX encode ?
+        m['From']       = self.toencoded(username)
+        m['Date']       = time
+        m['Subject']    = self.toencoded(subject_heading)
         m['Message-ID'] = message_id
         if in_reply_to: m['In-Reply-To'] = in_reply_to
         m.set_unixfrom(self.fromLineFrom(m['From'],m['Date'])[:-1])
