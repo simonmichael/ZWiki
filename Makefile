@@ -30,7 +30,10 @@ default: test
 
 ## docs
 
-docs: doxygen epydoc
+doc: sphinx
+
+sphinx:
+	make -f sphinx.mk html
 
 doxygen:
 	rm -rf doc/doxygen/*
