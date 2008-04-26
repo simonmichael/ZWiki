@@ -362,7 +362,7 @@ class OutlineManager:
         the old data. Will reset subtopic order to alphabetic.
         """
         BLATHER('purging outline data for wiki',self.folder().getId())
-        self.folder()._delObject('outline')
+        if 'outline' in self.folder().objectIds(): self.folder()._delObject('outline')
         self.updateWikiOutline()
 
     security.declareProtected(Permissions.Reparent, 'reparent')
