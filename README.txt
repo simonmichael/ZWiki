@@ -1,3 +1,6 @@
+README
+######
+
 A wiki engine for Zope. 
 
 For documentation and assistance, please see http://zwiki.org .
