@@ -221,7 +221,7 @@ class PageEditingSupport:
     def comment(self, text='', username='', time='',
                 note=None, use_heading=None,
                 REQUEST=None, subject_heading='', message_id=None,
-                in_reply_to=None, exclude_address=None):
+                in_reply_to=None, exclude_address=None, sendmail=1):
         """Add a comment to this page.
 
         We try to do this efficiently, avoiding re-rendering the full page
@@ -287,10 +287,11 @@ class PageEditingSupport:
         if self.autoSubscriptionEnabled(): self.subscribeThisUser(REQUEST)
         self.index_object()
         if REQUEST: REQUEST.cookies['zwiki_username'] = m['From'] # use real from address
-        self.sendMailToSubscribers(
-            m.get_payload(), REQUEST, subject=m['Subject'],
-            message_id=m['Message-ID'], in_reply_to=m['In-Reply-To'],
-            exclude_address=exclude_address)
+        if sendmail:
+            self.sendMailToSubscribers(
+                m.get_payload(), REQUEST, subject=m['Subject'],
+                message_id=m['Message-ID'], in_reply_to=m['In-Reply-To'],
+                exclude_address=exclude_address)
         if REQUEST: REQUEST.RESPONSE.redirect(REQUEST['URL1']+'#bottom')
 
     security.declareProtected(Permissions.Comment, 'append')
