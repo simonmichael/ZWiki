@@ -311,7 +311,11 @@ ul.auto-toc {
 .searchbox a:link        {color: gray;}
 .searchbox a:visited     {color: #aaaaaa;}
 
-.lasteditor              {color:gray;}
+.lasteditor, .creator {
+  color:gray;
+  font-style:italic;
+  white-space:nowrap;
+}
 
 /* can't get these to combine with dimtext for some reason */
 .highrated               {font-size: 80%; color: green} 
@@ -419,9 +423,6 @@ input,select {
 #searchinput { /* generated tag with id=searchinput already has a class (multiple classes bad for IE<5.5 ?) */
  width:95%; 
  margin-top: 0px;
-}
-.lasteditor {
-  font-style: italic;
 }
 
 /*
