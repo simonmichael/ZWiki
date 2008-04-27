@@ -375,8 +375,11 @@ class WWMLTranslator :
     __call__ = translate
 
 def translate_WWML(text) :
-    return string.join(WWMLTranslator()(str(text).split('\n')),'\n')
-
+    return unicode(
+        string.join(
+            WWMLTranslator()(str(text.encode('utf8')).split('\n')),
+            '\n'),
+        'utf8')
 
 registerPageType(PageTypeWwml)
 
