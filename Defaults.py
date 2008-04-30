@@ -28,12 +28,22 @@ CONDITIONAL_HTTP_GET_IGNORE = [ 'allow_dtml' ]
                              # ignore pages with these properties set to 
                              # non-False values
 
-# Standard metadata fields which Zwiki will expect in page brain objects.
-# Plugins will add more of these.
-# NB for best large-wiki performance, all of these must be in the wiki
-# catalog so that ensureCompleteMetadataIn() does not have to go to the
-# ZODB. To be safe, setupCatalog will add them all.
-# see also http://zwiki.org/ZwikiAndZCatalog
+# Standard metadata fields which we add to the wiki (or plone) catalog
+# and expect in page brain objects.  Plugins can add more of these.
+# 
+# shouldn't these use the latest accessors, instead of direct field
+# access, eg to ensure proper unicode encoding ?
+# there will probably be new and exciting breakage, since our metadata
+# will now contain unicode and also, because of things relying on the
+# old metadata field names.
+# these seem affected: creation_time, creator, last_edit_time,
+# last_editor, last_log, parents.. possibly even subscriber_list
+# they possibly should be: creationTime, Creator (or a new getCreator,
+# since Creator is for plone and might not want to be unicode),
+# lastEditTime, lastEditor, lastLog, getParents, subscriberList 
+# seems like a hassle.. would it be bad to add all of them, old and
+# new ? - metadata can eat a lot of kb
+#
 PAGE_METADATA = [
     'Title',
     'creation_time',
@@ -41,7 +51,7 @@ PAGE_METADATA = [
     'id',
     'lastEditTime',
     'last_edit_time',
-    'last_editor',   
+    'lastEditor',   
     'last_log',
     'page_type',     
     'parents',
