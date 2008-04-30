@@ -195,3 +195,24 @@ For now it's still our manager user.
     ''
     >>> zwiki_height.value
     '20'
+    >>> zwiki_username.value = 'testy'
+    >>> zwiki_height.value = '30'
+    >>> email.value = 'testy@example.org'
+
+Submit to get back to normal wiki page
+
+    >>> submit = browser.getControl('Save options')
+    >>> submit.click()
+    >>> browser.url
+    '.../MyFirstWikiPage'
+
+Let's get some search rolling!
+
+    >>> form = browser.getForm(index=0) # should be the searchwiki form
+    >>> searchinput = browser.getControl(name='expr')
+    >>> searchinput.value = 'Welcome'
+    >>> form.submit()
+    >>> browser.url
+    '.../searchwiki?expr=Welcome'
+    >>> browser.contents # in the results we will find the FrontPage:
+    '...This is the front page of ZWiki...'
