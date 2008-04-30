@@ -434,7 +434,7 @@ class PluginTracker:
         Add an issue property form above the rendered page text.
         """
         REQUEST = getattr(self,'REQUEST',None)
-        return self.stxToHtml(self,self.issuepropertiesform(REQUEST=REQUEST)) + body
+        return self.stxToHtml(self,self.issuepropertiesform(REQUEST=REQUEST)) + self.tounicode(body)
             
     security.declareProtected(Permissions.View, 'issueColour')
     def issueColour(self):
