@@ -747,7 +747,7 @@ class PageMailSupport:
 
         mailhost = self.mailhost()
         if mailhost.meta_type in ('Secure Mail Host', 'Secure Maildrop Host'):
-            msg = text + "\n\n" +  self.signature(msgid)
+            msg = self.toencoded(text) + "\n\n" +  self.toencoded(self.signature(msgid))
             additional_headers = {
                                 'Reply-To':self.replyToHeader(), \
                                 'X-Zwiki-Version':self.zwiki_version(), \
@@ -795,11 +795,11 @@ Content-Type: text/plain; charset="%s"
 %s
 %s
 """ \
-            % (self.fromHeader(REQUEST),
+            % (self.toencoded(self.fromHeader(REQUEST)),
                self.replyToHeader(),
                tohdr,
                self.bccHeader(recipients),
-               self.subjectHeader(subject,subjectSuffix),
+               self.toencoded(self.subjectHeader(subject,subjectSuffix)),
                msgid,
                (in_reply_to and '\nIn-reply-to: %s' % in_reply_to.splitlines()[0]) or '',
                # splitlines to fend off header injection attacks from spammers
@@ -812,8 +812,8 @@ Content-Type: text/plain; charset="%s"
                self.pageUrl(),
                self.wikiUrl(),
                self.encoding(),
-               text,
-               self.signature(msgid),
+               self.toencoded(text),
+               self.toencoded(self.signature(msgid)),
                )
 
             # send
