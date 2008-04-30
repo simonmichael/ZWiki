@@ -63,8 +63,8 @@ class PageRSSSupport:
 <language>%(feedlanguage)s</language>
 <pubDate>%(feeddate)s</pubDate>
 """ % {
-            'feedtitle':self.title_quote(feedtitle),
-            'feeddescription':html_quote(feeddescription),
+            'feedtitle':self.toencoded(self.title_quote(feedtitle)),
+            'feeddescription':self.toencoded(html_quote(feeddescription)),
             'feedurl':wikiurl,
             'feedlanguage':feedlanguage,
             'feeddate':feeddate,
@@ -80,10 +80,10 @@ class PageRSSSupport:
 <pubDate>%(creation_time)s</pubDate>
 </item>
 """ % {
-            'title':self.title_quote(p.Title),
+            'title':self.toencoded(self.title_quote(p.Title)),
             'wikiurl':wikiurl,
             'id':p.id,
-            'summary':pobj.summary(1000),
+            'summary':self.toencoded(pobj.summary(1000)),
             'creation_time':pobj.creationTime().rfc822(), # be robust here
             }
         #      <description><![CDATA[%(summary)s]]></description>
@@ -124,8 +124,8 @@ class PageRSSSupport:
 <language>%(feedlanguage)s</language>
 <pubDate>%(feeddate)s</pubDate>
 """ % {
-            'feedtitle':self.title_quote(feedtitle),
-            'feeddescription':html_quote(feeddescription),
+            'feedtitle':self.toencoded(self.title_quote(feedtitle)),
+            'feeddescription':self.toencoded(html_quote(feeddescription)),
             'feedurl':wikiurl,
             'feedlanguage':feedlanguage,
             'feeddate':feeddate,
@@ -141,10 +141,10 @@ class PageRSSSupport:
 <pubDate>%(last_edit_time)s</pubDate>
 </item>
 """ % {
-            'title':'[%s] %s' % (self.title_quote(p.Title),self.title_quote(p.last_log)),
+            'title':'[%s] %s' % (self.toencoded(self.title_quote(p.Title)),self.toencoded(self.title_quote(p.last_log))),
             'wikiurl':wikiurl,
             'id':p.id,
-            'last_log':html_quote(pobj.textDiff()),
+            'last_log':self.toencoded(html_quote(pobj.textDiff())),
             'last_edit_time':pobj.lastEditTime().rfc822(), # be robust here
             }
         t += """\
