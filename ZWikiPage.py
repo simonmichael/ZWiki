@@ -567,10 +567,8 @@ class ZWikiPage(
         An alternative to the more usual markLinksIn + renderMarkedLinksIn.
         """
         t = self.applyWikiLinkLineEscapesIn(text)
-        # ken's clever thunk_substituter helps provide context (or something)
-        return re.sub(anywikilinkexpr,
-                      thunk_substituter(self.renderLink, t, 1),
-                      t)
+        # ken's clever thunk_substituter helps keep track of state
+        return re.sub(anywikilinkexpr, thunk_substituter(self.renderLink, t), t)
 
     wikilink = renderLinksIn # convenience alias
 
@@ -584,8 +582,7 @@ class ZWikiPage(
             lambda m:re.sub(wikilink, r'!\1', m.group(1)),
             text)
         
-    def renderLink(self,link,allowed=0,state=None,text='',
-                   link_title=None,access_key=None):
+    def renderLink(self,link,state=None,text='',link_title=None,access_key=None):
         """
         Render various kinds of hyperlink, based on page and wiki state.
 
@@ -1333,20 +1330,17 @@ InitializeClass(ZWikiPage)
 
 # rendering helper functions
 
-def thunk_substituter(func, text, allowed):
+def thunk_substituter(func, text):
     """Return a function which takes one arg and passes it with other args
     to passed-in func.
 
-    thunk_substituter passes in the value of it's parameter, 'allowed', and a
-    dictionary {'lastend': int, 'inpre': bool, 'intag': bool}.
-
-    This is for use in a re.sub situation, to get the 'allowed' parameter and
-    the state dict into the callback.
+    thunk_substituter passes in a state dictionary: {'lastend': int,
+    'inpre': bool, 'intag': bool}.  This is for use in a re.sub
+    situation, to get the state into the callback.
 
     (The technical term really is "thunk".  Honest.-)"""
     state = {'lastend':0,'inpre':0,'incode':0,'intag':0,'inanchor':0}
-    return lambda arg, func=func, allowed=allowed, text=text, state=state: (
-        func(arg, allowed, state, text))
+    return lambda arg, func=func, text=text, state=state: func(arg,state,text)
 
 def within_literal(upto, after, state, text,
                    rfind=rfind, lower=lower):
