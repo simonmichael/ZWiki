@@ -421,12 +421,33 @@ class PageAdminSupport:
         catalog = self.catalog()
         catalogindexes, catalogmetadata = catalog.indexes(), catalog.schema()
         PluginIndexes = catalog.manage_addProduct['PluginIndexes']
+        class Extra:
+            """ Just a dummy to build records for the Lexicon."""
+            pass
+
+        if 'ZwikiLexicon' not in catalog.objectIds('ZCTextIndex Lexicon'):
+            wordSplitter = Extra()
+            wordSplitter.group = 'Word Splitter'
+            wordSplitter.name = 'Unicode HTML aware splitter'
+            caseNormalizer = Extra()
+            caseNormalizer.group = 'Case Normalizer'
+            caseNormalizer.name = 'Unicode Case normalizer'
+            catalog.manage_addProduct['ZCTextIndex'].manage_addLexicon(
+              'ZwikiLexicon', 'Lexicon', (wordSplitter, caseNormalizer))
         for i in TEXTINDEXES:
-            # XXX should choose a TING2 or ZCTI here and set up appropriately
+            # we use a ZCTI here and set up appropriately
+            # this will always work with what stock Zope and Zwiki provides
+            # admins can replace with a more potent or differently setup index
             # a TextIndex is case sensitive, exact word matches only
             # a ZCTextIndex can be case insensitive and do right-side wildcards
             # a TextIndexNG2 can be case insensitive and do both wildcards
-            if not i in catalogindexes: PluginIndexes.manage_addTextIndex(i)
+            if not i in catalogindexes:
+                extra = Extra()
+                extra.index_type = 'Okapi BM25 Rank'
+                extra.lexicon_id = 'ZwikiLexicon'
+                extra.doc_attr = i
+                catalog.addIndex(i, 'ZCTextIndex', extra)
+
         for i in FIELDINDEXES:
             if not i in catalogindexes: PluginIndexes.manage_addFieldIndex(i)
         for i in KEYWORDINDEXES:

@@ -1,6 +1,7 @@
 from Products.ZWiki.testsupport import *
 ZopeTestCase.installProduct('ZWiki')
 ZopeTestCase.installProduct('ZCatalog')
+ZopeTestCase.installProduct('ZCTextIndex')
 
 def test_suite():
     suite = unittest.TestSuite()
