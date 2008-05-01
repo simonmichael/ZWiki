@@ -577,15 +577,25 @@ class PageUtils:
         """Safely convert a unicode string to an encoded ordinary string.
         The wiki's default encoding is used, unless overridden.
         """
-        if isunicode(s): return s.encode(enc or self.encoding())
-        else:            return s
+        return toencoded(s,enc or self.encoding())
 
     def tounicode(self,s,enc=None):
         """Safely convert an encoded ordinary string to a unicode string.
         The wiki's default encoding is used, unless overridden.
         """
-        if isunicode(s): return s
-        else:            return s.decode(enc or self.encoding())
+        return tounicode(s,enc or self.encoding())
+
+def toencoded(s,enc='utf8'):
+    """Safely convert a unicode string to an encoded ordinary string.
+    UTF8 is used by default."""
+    if isunicode(s): return s.encode(enc)
+    else:            return s
+
+def tounicode(s,enc='utf8'):
+    """Safely convert an encoded ordinary string to a unicode string.
+    UTF8 is used by default."""
+    if isunicode(s): return s
+    else:            return s.decode(enc)
 
 
 InitializeClass(PageUtils)
@@ -595,7 +605,7 @@ InitializeClass(PageUtils)
 
 #logging
 def STDERR(*args):  sys.stderr.write(' '.join(map(str,args)) + '\n')
-def LOG(severity,*args): zLOG.LOG('ZWiki',severity,' '.join(map(str,*args)))
+def LOG(severity,*args): zLOG.LOG('ZWiki',severity,' '.join(map(toencoded,*args)))
 def TRACE(*args):   LOG(zLOG.TRACE,  args)
 def DEBUG(*args):   LOG(zLOG.DEBUG,  args)
 def BLATHER(*args): LOG(zLOG.BLATHER,args)
