@@ -135,8 +135,9 @@ class PageCatalogSupport:
         return '%s\n%s' % (
             self.toencoded(self.pageName()), self.toencoded(self.text()))
     
-    #XXX backwards compatibility
-    updateCatalog = indexObject = reindex_object
+    
+    index = index_object         # convenience alias
+    indexObject = reindex_object # plone compatibility
 
 
 InitializeClass(PageCatalogSupport)
