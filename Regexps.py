@@ -155,7 +155,7 @@ hashnumberexpr   = r'(?:(?<!&)%s|(?<=&)%s(?![0-9;]))' % (simplehashnumber, simpl
 wikilink         = r'!?(%s|%s|%s|%s|%s)' % (wikiname4,bracketedexpr,doubleparenthesisexpr,url,hashnumberexpr)
 localwikilink1   = r'(?:%s|%s|%s|%s)' % (wikiname4,bracketedexpr,doubleparenthesisexpr,hashnumberexpr)
 localwikilink    = r'!?(%s)' % (localwikilink1)
-interwikilink    = r'!?((?P<local>%s):(?P<remote>%s))' % (localwikilink1,urlchars)
+interwikilink    = r'!?((?P<local>%s):(?P<remote>\w%s))' % (localwikilink1,urlchars) # local wiki link, a colon, one word char, one or more url chars
 anywikilinkexpr  = re.compile(r'(%s|%s)' % (interwikilink,wikilink))
 markedwikilinkexpr  = re.compile(r'<zwiki>(.*?)</zwiki>')
 untitledwikilinkexpr = re.compile(r'<a href="([^"/]*/)*(?P<page>[^/"]*)" title="">.*?</a>')

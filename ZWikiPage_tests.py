@@ -2,6 +2,7 @@ from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 from Utils import isunicode
+from Regexps import *
 
 def test_suite():
     suite = unittest.TestSuite()
@@ -147,6 +148,9 @@ class Tests(ZwikiTestCase):
         self.assertEquals(self.p.formatWikiname('CamelCase'),'CamelCase')
         self.p.folder().space_wikinames = 1
         self.assertEquals(self.p.formatWikiname('CamelCase'),'Camel Case')
+
+    def test_regexps(self):
+        self.assert_(not re.search(interwikilink,'TestPage::'))
 
     def test_renderLink(self):
         self.assertEquals(
