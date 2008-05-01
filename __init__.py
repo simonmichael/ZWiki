@@ -22,6 +22,7 @@ from I18n import _, DTMLFile
 from pagetypes import PAGETYPES
 from Utils import parseHeadersBody, safe_hasattr, INFO, BLATHER, \
      formattedTraceback
+from Splitter import UnicodeWordSplitter, UnicodeHTMLWordSplitter, UnicodeCaseNormalizer
 
 
 misc_ = {
