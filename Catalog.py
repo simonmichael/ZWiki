@@ -136,7 +136,7 @@ class PageCatalogSupport:
             self.toencoded(self.pageName()), self.toencoded(self.text()))
     
     #XXX backwards compatibility
-    updateCatalog = reindex_object = index_object 
+    updateCatalog = indexObject = reindex_object
 
 
 InitializeClass(PageCatalogSupport)
