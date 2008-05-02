@@ -157,10 +157,13 @@ class ParentsProperty:
             if parent and not parent in self.parents:
                 self.ensureParentsPropertyIsList()
                 self.parents.append(parent)
+                self._p_changed = 1
 
     def removeParent(self,parent):
         self.ensureParentsPropertyIsList()
-        try: self.parents.remove(parent)
+        try:
+            self.parents.remove(parent)
+            self._p_changed = 1
         except ValueError:
             BLATHER("failed to remove %s from %s's parents (%s)" \
                  % (parent,self.getId(),self.parents))
