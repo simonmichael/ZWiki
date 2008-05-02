@@ -45,8 +45,8 @@ class Tests(ZwikiTestCase):
 
     def test_summary(self):
         p = self.page
-        p.edit(text='É')
-        self.assertEqual('É',p.summary())
+        p.edit(text=u'É')
+        self.assertEqual(u'É',p.summary())
 
     def test_BLATHER(self):
         BLATHER('E')                    # ascii

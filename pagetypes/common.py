@@ -214,6 +214,7 @@ class PageTypeBaseHtml(PageTypeBase):
                            subject, username, time, 
                            message_id=None,in_reply_to=None):
         heading = '\n\n'
+        time = page.tounicode(time)
         if message_id:
             # use the message id for linking, but strip the <>
             # and leave it unquoted, browsers can handle it
@@ -228,10 +229,10 @@ class PageTypeBaseHtml(PageTypeBase):
             heading += ' <a href="%s#msg%s">%s</a>' % \
                        (page.pageUrl(),
                         re.sub(r'^<(.*)>$',r'\1',message_id),
-                        html_quote(page.tounicode(time) or ''))
+                        html_quote(time or ''))
             inreplytobit = '&in_reply_to='+quote(message_id)
         else:
-            heading += html_quote(page.tounicode(time) or '')
+            heading += html_quote(time or '')
             inreplytobit = ''
         #heading += ( (' <a href="%s?subject=%s%s#bottom">' 
         #             % (page.pageUrl(),quote(subject or ''),inreplytobit)) +

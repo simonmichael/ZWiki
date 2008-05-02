@@ -150,7 +150,7 @@ class PageUtils:
         if len(t) > size:
             t = t[:size]
             t = re.sub(r'\w*$',r'',t) + '...'
-        return html_quote(self.toencoded(t))
+        return html_quote(t)
 
     def renderedSummary(self,size=500,paragraphs=1):
         """
@@ -159,7 +159,6 @@ class PageUtils:
         Similar to summary(), but this one tries to apply the page's
         formatting rules and do wiki linking. We remove any enclosing <p>.
         """
-        # XXX treats summary as internal (unicode), but it encodes - problem ?
         return re.sub(r'(?si)^<p>(.*)</p>\n?$', r'\1',
             self.renderLinksIn(
                 self.pageType().format(
@@ -180,8 +179,13 @@ class PageUtils:
         It should mimic the search strategy of SearchPage, but that
         depends on catalog configuration and it currently doesn't do a
         very good job, so the excerpts and highlights can be misleading.
+
+        If the arguments are not unicode or convertible to unicode,
+        returns the empty string.
         """
         text = text or self.text()
+        try: text, expr = tounicode(text), tounicode(expr)
+        except UnicodeDecodeError: return ''
         string = re.sub(r'\*','',expr)
         m = re.search(r'(?i)'+re.escape(string),text)
         if m and string:
@@ -192,13 +196,11 @@ class PageUtils:
             if highlight:
                 excerpt = re.sub(
                     r'(?i)'+re.escape(html_quote(string)),
-                    #'<span class="hit">%s</span>' % html_quote(m.group()),
-                    # XXX temp
                     '<span class="hit" style="background-color:yellow;font-weight:bold;">%s</span>' % html_quote(m.group()),
                     excerpt)
         else:
             excerpt = html_quote(text[:size])
-        return self.toencoded(excerpt)
+        return excerpt
 
     def metadataFor(self,page):
         """
@@ -631,11 +633,13 @@ def safe_hasattr(obj, name, _marker=object()):
     """
     return getattr(obj, name, _marker) is not _marker
 
+def html_quote(s): 
+    s = re.sub(r'&','&amp;',s)
+    s = re.sub(r'<','&lt;',s)
+    s = re.sub(r'>','&gt;',s)
+    return s
 
-from cgi import escape
-def html_quote(s): return escape(s)
-def html_unquote(s,
-                 character_entities=(
+def html_unquote(s, character_entities=(
                        (('&amp;'),    '&'),
                        (('&lt;'),    '<' ),
                        (('&gt;'),    '>' ),

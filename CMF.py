@@ -76,7 +76,7 @@ else:
 
         security.declarePublic('Description')
         def Description(self):
-            return self.summary()
+            return self.toencoded(self.summary())
 
         security.declarePublic( 'CreationDate' )
         def CreationDate(self):
@@ -151,7 +151,7 @@ else:
 
         security.declareProtected(Permissions.View, 'Description')
         def Description(self):
-            return self.summary()
+            return self.toencoded(self.summary())
 
         def wiki_context(self, REQUEST=None, with_siblings=0):
             return self.context(REQUEST, with_siblings)
