@@ -6,6 +6,7 @@ from AccessControl.Permissions import view, manage_properties, \
 View          = view
 Upload        = add_documents_images_and_files
 FTPRead = FTP = ftp_access
+ExternalEdit  = 'Use external editor'
 
 AddWiki       = 'Zwiki: Add wikis'
 Add           = 'Zwiki: Add pages'
@@ -20,3 +21,4 @@ Reparent      = 'Zwiki: Reparent pages'
 AddPage = Add
 Change = Edit
 Append = Comment
+

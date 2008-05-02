@@ -958,6 +958,12 @@ class PageEditingSupport:
         RESPONSE.setStatus(204)
         return RESPONSE
 
+    security.declarePublic('isExternalEditEnabled')
+    def isExternalEditEnabled(self):
+        return (safe_hasattr(self.getPhysicalRoot().misc_,'ExternalEditor') and
+                self.checkPermission(Permissions.Edit, self) and
+                self.checkPermission(Permissions.ExternalEdit, self))
+
     security.declareProtected(Permissions.Edit, 'manage_edit')
     def manage_edit(self, data, title, REQUEST=None):
         """Do standard manage_edit kind of stuff, using our edit."""

@@ -27,7 +27,7 @@
       <a tal:attributes="href string:${here/pageUrl}/editform" accesskey="e"></a>
       <a tal:attributes="href python:here.wikiUrl() + '/externalEdit_/' +
                          modules['Products.PythonScripts.standard'].url_quote(here.id()) +
-                         '?borrow_lock=1'" accesskey="x"></a>
+                         '?borrow_lock=1'" accesskey="x" tal:condition="here/isExternalEditEnabled"></a>
     </div>
   </body>
 </html>
