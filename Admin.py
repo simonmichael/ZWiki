@@ -442,7 +442,10 @@ class PageAdminSupport:
             # a TextIndex is case sensitive, exact word matches only
             # a ZCTextIndex can be case insensitive and do right-side wildcards
             # a TextIndexNG2 can be case insensitive and do both wildcards
-            if not i in catalogindexes:
+            if not i in catalogindexes or \
+            catalog._catalog.getIndex(i).meta_type == 'TextIndex':
+                if i in catalogindexes: # it's there, so it's the wrong kind
+                    catalog.delIndex(i)
                 extra = Extra()
                 extra.index_type = 'Okapi BM25 Rank'
                 extra.lexicon_id = 'ZwikiLexicon'
