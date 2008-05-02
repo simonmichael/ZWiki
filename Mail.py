@@ -719,92 +719,71 @@ class PageMailSupport:
         if not self.isMailoutEnabled(): return
         if exclude_address in recipients: recipients.remove(exclude_address) # help mailin.py avoid loops
         if not recipients: return
-        
-	# some lists may deliver duplicated addresses twice; try to avoid
-        # unnecessary
-        #unique = []
-        #for r in recipients:
-        #    if not r in unique:
-        #        unique.append(r)
-        #if self.toProperty() in unique: unique.remove(self.toProperty())
-
-        mailhost = self.mailhost()
-        if mailhost.meta_type in ('Secure Mail Host', 'Secure Maildrop Host'):
-            msg = text + "\n\n" +  self.signature(msgid)
-            additional_headers = {
-                                'Reply-To':self.replyToHeader(), \
-                                'X-Zwiki-Version':self.zwiki_version(), \
-                                'X-BeenThere':self.xBeenThereHeader(), \
-                                'List-Id':self.listIdHeader(), \
-                                'List-Post':self.listPostHeader(), \
-                                'List-Subscribe':'<'+self.pageUrl()+'/subscribeform>', \
-                                'List-Unsubscribe': '<'+self.pageUrl()+'/subscribeform>', \
-                                'List-Archive':'<'+self.pageUrl()+'>', \
-                                'List-Help':'<'+self.wikiUrl()+'>' }
-            if not in_reply_to:
-                additional_headers['Message-ID']=msgid
-            else:
-                additional_headers['Message-ID']=msgid + \
-                    '\nIn-reply-to: %s' % in_reply_to.splitlines()[0]
-            # XXX should we do error checking and reporting here, similar to below
-            # where we do it for normal mail hosts?
-            mailhost.secureSend(msg,
-                                mto=tohdr,
-                                mfrom=self.fromHeader(REQUEST), \
-                                subject=self.subjectHeader(subject,subjectSuffix), \
-                                mbcc=self.bccHeader(recipients), \
-                                charset=self.encoding(), \
-                                **additional_headers )
-
-        else: # normal "Mail Host" or "Maildrop Host"
-
+        try:
+            msgid = message_id or self.messageIdFromTime(self.ZopeTime())
+            # XXX what do we want to do ? are we doing that ?
+            # If text is simple body text, augment it with wiki headers and signature.
+            # If text is an rfc822 message, send it as-is except for these modifications:
+            # - add wiki signature
+            # - set From, convert old From to Sender
+            # - set To and Bcc, save old To as X-Original-To ?
+            # - add X-Zwiki-Version, BeenThere, and list headers
+            fields = {
+                'body':'%s\n\n%s' % (self.toencoded(text),self.toencoded(self.signature(msgid))),
+                'From':self.toencoded(self.fromHeader(REQUEST)),
+                'Reply-To':self.toencoded(self.replyToHeader()),
+                'To':self.toencoded(to or self.toHeader()),
+                'Bcc':self.toencoded(self.bccHeader(recipients)),
+                'Subject':self.toencoded(self.subjectHeader(subject,subjectSuffix)),
+                'Message-ID':self.toencoded(msgid),
+                'In-Reply-To':self.toencoded((in_reply_to and '\nIn-reply-to: %s' % in_reply_to.splitlines()[0]) or ''),
+                'Content-Type':'text/plain; charset="%s"' % self.encoding(),
+                'charset':self.encoding(),
+                'X-Zwiki-Version':self.zwiki_version(),
+                'X-BeenThere':self.toencoded(self.xBeenThereHeader()),
+                'List-Id':self.toencoded(self.listIdHeader()),
+                'List-Post':self.toencoded(self.listPostHeader()),
+                'List-Subscribe':'<'+self.pageUrl()+'/subscribeform>',
+                'List-Unsubscribe': '<'+self.pageUrl()+'/subscribeform>',
+                'List-Archive':'<'+self.pageUrl()+'>',
+                'List-Help':'<'+self.wikiUrl()+'>',
+                }
+            AbstractMailHost(self.mailhost()).send(fields)
+            BLATHER('sent mail to subscribers:\nTo: %s\nBcc: %s' % (headers['To'],headers['Bcc']))
+        except: 
+            BLATHER('**** failed to send mail to %s: %s' % (recipients,formattedTraceback()))
+            
+class AbstractMailHost:
+    """Adapts whatever kind of mailhost is available - [Secure] Mail[drop] Host -  to a generic one."""
+    def __init__(self, mailhost):
+        self.context = mailhost
+    def send(self,headers):
+        if self.context.meta_type in ('Secure Mail Host', 'Secure Maildrop Host'):
+            r = self.context.secureSend(
+                headers['body'],
+                mto=headers['To'],
+                mfrom=headers['From'],
+                subject=headers['Subject'],
+                mbcc=headers['Bcc'],
+                charset=headers['charset'],
+                **headers)
+        else:
             msg = """\
-From: %s
-Reply-To: %s
-To: %s
-Bcc: %s
-Subject: %s
-Message-ID: %s%s
-X-Zwiki-Version: %s
-X-BeenThere: %s
-List-Id: %s
-List-Post: %s
-List-Subscribe: <%s/subscribeform>
-List-Unsubscribe: <%s/subscribeform>
-List-Archive: <%s>
-List-Help: <%s>
-Content-Type: text/plain; charset="%s"
-
-%s
-%s
-""" \
-            % (self.fromHeader(REQUEST),
-               self.replyToHeader(),
-               tohdr,
-               self.bccHeader(recipients),
-               self.subjectHeader(subject,subjectSuffix),
-               msgid,
-               (in_reply_to and '\nIn-reply-to: %s' % in_reply_to.splitlines()[0]) or '',
-               # splitlines to fend off header injection attacks from spammers
-               self.zwiki_version(),
-               self.xBeenThereHeader(),
-               self.listIdHeader(),
-               self.listPostHeader(),
-               self.pageUrl(),
-               self.pageUrl(),
-               self.pageUrl(),
-               self.wikiUrl(),
-               self.encoding(),
-               text,
-               self.signature(msgid),
-               )
-
-            # send
-            try:
-                mailhost.send(msg)
-                #BLATHER('sent mail:\n%s' % msg)
-                BLATHER('sent mail to subscribers:\nTo: %s\nBcc: %s' % (
-                    tohdr,self.bccHeader(recipients)))
+From: %(From)s
+Reply-To: %(Reply-To)s
+To: %(To)s
+Bcc: %(Bcc)s
+Subject: %(Subject)s%(In-Reply-To)s
+Message-ID: %(Message-ID)s
+X-Zwiki-Version: %(X-Zwiki-Version)s
+X-BeenThere: %(X-BeenThere)s
+List-Id: %(List-Id)s
+List-Post: %(List-Post)s
+List-Subscribe: %(List-Subscribe)s
+List-Unsubscribe: %(List-Unsubscribe)s
+List-Archive: %(List-Archive)s
+List-Help: %(List-Help)s
+Content-Type: text/plain; charset="%(charset)s"
 
 %(body)s
 """ % headers
