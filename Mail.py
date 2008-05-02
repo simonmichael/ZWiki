@@ -721,13 +721,6 @@ class PageMailSupport:
         if not recipients: return
         try:
             msgid = message_id or self.messageIdFromTime(self.ZopeTime())
-            # XXX what do we want to do ? are we doing that ?
-            # If text is simple body text, augment it with wiki headers and signature.
-            # If text is an rfc822 message, send it as-is except for these modifications:
-            # - add wiki signature
-            # - set From, convert old From to Sender
-            # - set To and Bcc, save old To as X-Original-To ?
-            # - add X-Zwiki-Version, BeenThere, and list headers
             fields = {
                 'body':'%s\n\n%s' % (self.toencoded(text),self.toencoded(self.signature(msgid))),
                 'From':self.toencoded(self.fromHeader(REQUEST)),
@@ -749,7 +742,7 @@ class PageMailSupport:
                 'List-Help':'<'+self.wikiUrl()+'>',
                 }
             AbstractMailHost(self.mailhost()).send(fields)
-            BLATHER('sent mail to subscribers:\nTo: %s\nBcc: %s' % (headers['To'],headers['Bcc']))
+            BLATHER('sent mail to subscribers:\nTo: %s\nBcc: %s' % (fields['To'],fields['Bcc']))
         except: 
             BLATHER('**** failed to send mail to %s: %s' % (recipients,formattedTraceback()))
             
@@ -757,16 +750,16 @@ class AbstractMailHost:
     """Adapts whatever kind of mailhost is available - [Secure] Mail[drop] Host -  to a generic one."""
     def __init__(self, mailhost):
         self.context = mailhost
-    def send(self,headers):
+    def send(self,fields):
         if self.context.meta_type in ('Secure Mail Host', 'Secure Maildrop Host'):
             r = self.context.secureSend(
-                headers['body'],
-                mto=headers['To'],
-                mfrom=headers['From'],
-                subject=headers['Subject'],
-                mbcc=headers['Bcc'],
-                charset=headers['charset'],
-                **headers)
+                fields['body'],
+                mto=fields['To'],
+                mfrom=fields['From'],
+                subject=fields['Subject'],
+                mbcc=fields['Bcc'],
+                charset=fields['charset'],
+                **fields)
         else:
             msg = """\
 From: %(From)s
@@ -786,12 +779,7 @@ List-Help: %(List-Help)s
 Content-Type: text/plain; charset="%(charset)s"
 
 %(body)s
-""" % headers
-            r = self.context.send(
-                msg,
-                mto=headers['To'],
-                mfrom=headers['From'],
-                subject=headers['Subject'],
-                )
+""" % fields
+            r = self.context.send(msg)
         if r: BLATHER(r)
 
