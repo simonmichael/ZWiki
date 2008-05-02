@@ -703,7 +703,6 @@ class PageMailSupport:
             in_reply_to=in_reply_to,
             exclude_address=exclude_address)
         
-
     def sendMailTo(self, recipients, text, REQUEST,
                    subjectSuffix='',
                    subject='',
@@ -712,29 +711,13 @@ class PageMailSupport:
                    to=None,
                    exclude_address=None,
                    ):
-        """
-        Send a mail-out containing text to a list of email addresses.
-
+        """Send a mail-out containing text to a list of email addresses.
         If mail-out is not configured in this wiki or there are no valid
-        recipients, do nothing.  Catch and log any errors when sending
-        mail.
-        
-        XXX templatize ?
-        XXX ezmlm won't deliver with precedence: bulk, which these are, what to do
+        recipients, do nothing. Log any errors but don't stop.
+        text can be body text or rfc-822 message text.
         """
         if not self.isMailoutEnabled(): return
-
-        # gather bits and pieces
-        msgid = message_id or self.messageIdFromTime(self.ZopeTime())
-        tohdr = to or self.toHeader()
-
-        # do some last-minute winnowing-out of recipients we don't want to
-        # send to (and mail we don't want to send)
-
-	# help mailin.py to exclude a list address to avoid a loop
-        try: recipients.remove(exclude_address)
-        except ValueError: pass
-
+        if exclude_address in recipients: recipients.remove(exclude_address) # help mailin.py avoid loops
         if not recipients: return
         
 	# some lists may deliver duplicated addresses twice; try to avoid
@@ -747,7 +730,7 @@ class PageMailSupport:
 
         mailhost = self.mailhost()
         if mailhost.meta_type in ('Secure Mail Host', 'Secure Maildrop Host'):
-            msg = self.toencoded(text) + "\n\n" +  self.toencoded(self.signature(msgid))
+            msg = text + "\n\n" +  self.signature(msgid)
             additional_headers = {
                                 'Reply-To':self.replyToHeader(), \
                                 'X-Zwiki-Version':self.zwiki_version(), \
@@ -795,11 +778,11 @@ Content-Type: text/plain; charset="%s"
 %s
 %s
 """ \
-            % (self.toencoded(self.fromHeader(REQUEST)),
+            % (self.fromHeader(REQUEST),
                self.replyToHeader(),
                tohdr,
                self.bccHeader(recipients),
-               self.toencoded(self.subjectHeader(subject,subjectSuffix)),
+               self.subjectHeader(subject,subjectSuffix),
                msgid,
                (in_reply_to and '\nIn-reply-to: %s' % in_reply_to.splitlines()[0]) or '',
                # splitlines to fend off header injection attacks from spammers
@@ -812,8 +795,8 @@ Content-Type: text/plain; charset="%s"
                self.pageUrl(),
                self.wikiUrl(),
                self.encoding(),
-               self.toencoded(text),
-               self.toencoded(self.signature(msgid)),
+               text,
+               self.signature(msgid),
                )
 
             # send
@@ -823,133 +806,13 @@ Content-Type: text/plain; charset="%s"
                 BLATHER('sent mail to subscribers:\nTo: %s\nBcc: %s' % (
                     tohdr,self.bccHeader(recipients)))
 
-            # if there is any failure, notify admin or log
-            except: # XXX this bare except doesn't help for a lot of stuff!
-                    # e.g. if the MailHost is configured to an inexisting mail server
-                    # only the BLATHER would do anything in that case, 
-                    # admin mails fail too of course
-                BLATHER('failed to send mail to %s: %s' % (recipients,
-                                                           formattedTraceback()))
-                admin = getattr(self.folder(),'mail_admin',None)
-                if admin:
-                    try:
-                        self.sendMailTo( #XXX possible infinite recursion ?
-                            [],text,REQUEST,
-                            subjectSuffix='ERROR, subscriber mailout failed',
-                            to=admin)
-                    except:
-                        BLATHER('failed to send error report to admin: %s' % \
-                                formattedTraceback())
-
-
-        # XXX experimental
-        #self.sendCiaBotMail
-#    def sendCiaBotMail(self):
-#        """
-#        Send mail to an IRC channel via ciabot (or similar).
-#
-#        This is sent separately so we can provide the special headers.
-#        """
-#        mail_irc_address = getattr(self.folder(),'mail_irc_address',None)
-#        if mail_irc_address:
-#            msg = """\
-#From: %s
-#To: %s
-#Subject: %s
-#
-#%s: %s
-#%s
-#""" \
-#            % (fromhdr,
-#               mail_irc_address,
-#               getattr(self.folder(),'mail_irc_subject',''),
-#               username,
-#               body,
-#               signature,
-#               )
-#            self.mailhost().send(msg)
-#            BLATHER('sending mailout to IRC:',msg)
-
-
-        #if subject == 'test':
-        #    BLATHER('discarding test mailout:\n%s' % msg)
-        #    #self.sendTestMail()
-#    def sendTestMail(self):
-#        """
-#        Send a mail which users won't see, but we can monitor in tests
-#        """
-#        BLATHER('diverting test mailout to test server:\n%s' % msg)
-#        # I tried sending to a test SMTP server, but it blocked
-#        #try:
-#        #    self.TestMailHost.send(msg)
-#        #    BLATHER('sent mailout to test server')
-#        #    BLATHER('TestMailHost info:',
-#        #         self.TestMailHost.smtp_host,
-#        #         self.TestMailHost.smtp_port)
-#        #except:
-#        #    type, val, tb = sys.exc_info()
-#        #    err = string.join(
-#        #        traceback.format_exception(type,val,tb),'')
-#        #    BLATHER('failed to send mailout to test server:',
-#        #         err,
-#        #         self.TestMailHost.smtp_host,
-#        #         self.TestMailHost.smtp_port)
-#        # instead, I sent as usual and hacked mailman to drop it
-#        # do add a X-No-Archive header
-#        msg = re.sub(r'(?m)(List-Help:.*$)',
-#                     r'\1\nX-No-Archive: yes',
-#                     msg)
-#        BLATHER('sending mailout:\n%s' % msg)
-#        self.mailhost().send(msg)
-
-
-    #def formatMailout(self, text):
-    #    """
-    #    Format some text (usually a page diff) for email delivery.
-    #
-    #    This is supposed to present a diff, but in the most human-readable
-    #    and clutter-free way possible, since people may be receiving many
-    #    of these. In the case of a simple comment, it should look as if
-    #    the comment was just forwarded out.  See
-    #    test_formatMailout/testEndToEndCommentFormatting for examples.
-    #
-    #    """
-    #    if not text: return ''
-    #    
-    #    # try to do some useful formatting
-    #    # wrap and fill each paragraph, except indented ones,
-    #    # and preserve citation prefixes
-    #    paragraphs = stripList(split(text,'\n\n'))
-    #    for i in range(len(paragraphs)):
-    #        p = paragraphs[i]
-    #        indent = len(p) - len(lstrip(p))
-    #        #if indent or p[0] == '>': continue
-    #        if indent: continue
-    #        m = re.match(r'^[>\s]+',p)
-    #        if m:
-    #            prefix = m.group()
-    #            p = re.sub(r'(?m)^'+prefix,'',p)
-    #        else:
-    #            prefix = ''
-    #        # TextFormatter loses a trailing newline
-    #        # (and a single leading newline, but that shouldn't apply)
-    #        if p[-1] == '\n': nl = '\n'
-    #        else: nl = ''
-    #        p = TextFormatter([{'width':70-len(prefix),
-    #                            'margin':0,
-    #                            'fill':1,
-    #                            'pad':0}]).compose([p])
-    #        p = re.sub(r'(?m)^',prefix,p)
-    #        p += nl
-    #        paragraphs[i] = p
-    #        
-    #    text = join(paragraphs,'\n\n')
-    #
-    #    # strip leading newlines
-    #    text = re.sub(r'(?s)^\n+',r'',text)
-    #    # strip trailing newlines
-    #    text = re.sub(r'(?s)\n+$',r'\n',text)
-    #    # lose any html quoting
-    #    text = html_unquote(text)
-    #    return text
+%(body)s
+""" % headers
+            r = self.context.send(
+                msg,
+                mto=headers['To'],
+                mfrom=headers['From'],
+                subject=headers['Subject'],
+                )
+        if r: BLATHER(r)
 
