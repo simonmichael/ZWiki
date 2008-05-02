@@ -550,7 +550,7 @@ class PageUtils:
 
     def talsafe(self,s):
         """
-        Sanitize a string for use with TAL's structure keyword.
+        Make a string safe for use with TAL's structure keyword.
 
         Zope versions before 2.10 expect such data to be an ordinary
         string.  Zope 2.10 expects it to be unicode, or to at least be
@@ -585,6 +585,8 @@ class PageUtils:
         """
         return tounicode(s,enc or self.encoding())
 
+InitializeClass(PageUtils)
+
 def toencoded(s,enc='utf8'):
     """Safely convert a unicode string to an encoded ordinary string.
     UTF8 is used by default."""
@@ -597,8 +599,6 @@ def tounicode(s,enc='utf8'):
     if isunicode(s): return s
     else:            return s.decode(enc)
 
-
-InitializeClass(PageUtils)
 
 
 # generic utilities

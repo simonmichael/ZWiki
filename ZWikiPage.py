@@ -283,8 +283,9 @@ class ZWikiPage(
         Pre-parse this page's text (the pre-rendered, if available) for DTML.
         """
         t = self.preRendered() or self.read()
-        # dtml can break with a unicode string here, depending on default
-        # encoding ?  Convert to a normal string. Hmm, lossage here ? XXX
+        # dtml can break with a unicode string here (eg
+        # test_dtml_in_rst); we'll encode it and decode again in
+        # evaluatePreRenderedAsDtml
         t = self.toencoded(t)
         cooklock.acquire()
         try:
@@ -298,12 +299,15 @@ class ZWikiPage(
         # optimization: to save memory, avoid unnecessarily calling DTML
         # and generating _v_blocks data
         if not self.hasDynamicContent(): return self.preRendered()
-        return DTMLDocument.__call__(
+        t = DTMLDocument.__call__(
             self.__of__(self.folder()), # ensure dtml in pages can acquire
             client,
             REQUEST,
             RESPONSE,
             **kw)
+        # cook encoded it for safe passage through the DTML monster
+        t = self.tounicode(t)
+        return t
     
     def renderMidsectionIn(self, text, **kw):
         """

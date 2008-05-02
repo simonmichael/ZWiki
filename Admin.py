@@ -489,10 +489,10 @@ class PageAdminSupport:
 
     def fixEncoding(self, enc=None, REQUEST=None):
         """Try to fix character encoding problems in this page's name,
-        text, or parents property.  From 0.60, we store text as unicode,
+        text, or parents property.  We now store text as unicode,
         so this just tries to convert any non-unicode text to unicode
         using the standard encoding - currently utf-8, which will work for
-        most zwikis.  Some wikis have other encodings, so we also check
+        most zwikis.  Some (ancient) zwikis might have other encodings, so we also check
         for the common iso8859-1 encoding, or another specified with the
         enc argument. (Ideally this would fix anything without such a
         hint.)  Returns True if changes were made.
