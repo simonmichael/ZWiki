@@ -69,7 +69,10 @@ else:
 
         security.declarePublic('Creator')
         def Creator(self):
-            return self.creator
+            if self.creators and len(self.creators) > 0: 
+                return self.creators[0] # CMF creators property
+            else: 
+                return self.creator     # Zwiki creator property
 
         security.declarePublic('Description')
         def Description(self):
