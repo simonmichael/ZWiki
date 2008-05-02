@@ -46,7 +46,7 @@
           <input name="timeStamp" type="hidden" value=""
                  tal:attributes="value timestamp" />
           <input name="page" type="hidden" value="page"
-                 tal:attributes="value page" />
+                 tal:attributes="value python:here.talsafe(page)" />
           <input name="leaveplaceholder" value="" type="hidden"
                  tal:condition="python:creating #no placeholder when creating" />
           <div align="center">
