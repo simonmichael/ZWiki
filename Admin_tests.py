@@ -62,6 +62,32 @@ class Tests(ZwikiTestCase):
         self.assert_(catalog._catalog.getIndex('SearchableText').meta_type == 'ZCTextIndex')
         # filled:
         self.assertEqual(catalog._catalog.getIndex('SearchableText').indexSize(), 4)
+        # make sure an existing ZCTextIndex is not upgraded
+        # (e.g. set up with a different Lexicon)
+        # replace one of our indexes with a special one:
+        catalog.delIndex('SearchableText')
+        class Extra:
+            """ Just a dummy to build records for the Lexicon."""
+            pass
+        wordSplitter = Extra()
+        wordSplitter.group = 'Word Splitter'
+        wordSplitter.name = 'Unicode HTML aware splitter'
+        caseNormalizer = Extra()
+        caseNormalizer.group = 'Case Normalizer'
+        caseNormalizer.name = 'Unicode Case normalizer'
+        catalog.manage_addProduct['ZCTextIndex'].manage_addLexicon(
+          'DifferentLexicon', 'Lexicon', (wordSplitter, caseNormalizer))
+        extra = Extra()
+        extra.index_type = 'Okapi BM25 Rank'
+        extra.lexicon_id = 'DifferentLexicon'
+        extra.doc_attr = 'SearchableText'
+        catalog.addIndex('SearchableText', 'ZCTextIndex', extra)
+        self.assert_(catalog._catalog.getIndex('SearchableText').meta_type == 'ZCTextIndex')
+        self.assertEqual(catalog._catalog.getIndex('SearchableText').getLexicon().getId(),'DifferentLexicon')
+        # now we should not get this replaced
+        self.page.setupCatalog()
+        self.assert_(catalog._catalog.getIndex('SearchableText').meta_type == 'ZCTextIndex')
+        self.assertEqual(catalog._catalog.getIndex('SearchableText').getLexicon().getId(),'DifferentLexicon')
 
     def xtest_setupTracker(self): #slow
         self.assert_(not self.page.catalog())
