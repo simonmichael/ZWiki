@@ -286,4 +286,19 @@ Change the text.
     >>> submit.click()
     >>> browser.contents
     '...Changed by testy too...'
+    >>> editlink = browser.getLink('edit') # one more edit, fill revisions
+    >>> editlink.click()
+    >>> textarea = browser.getControl(name='text')
+    >>> textarea.value = "Some other text here. Changed by testy too."
+    >>> submit = browser.getControl('Save')
+    >>> submit.click()
 
+Now become Manager again and mass-expunge all edits by this "testy" person.
+
+    >>> self.setRoles(['Manager'])
+    >>> browser.addHeader('Authorization', user_auth)
+    >>> browser.open(folder_url+'/testwiki/FrontPage/expungeEditsEverywhereBy', 'username=testy')
+    >>> editlink = browser.getLink('changes')
+    >>> editlink.click()
+    >>> 'testy' not in browser.contents
+    True
