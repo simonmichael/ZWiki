@@ -216,3 +216,74 @@ Let's get some search rolling!
     '.../searchwiki?expr=Welcome'
     >>> browser.contents # in the results we will find the FrontPage:
     '...This is the front page of ZWiki...'
+    >>> foundlink = browser.getLink('FrontPage') # take me back
+    >>> foundlink.click()
+
+De-authenticate, to become anonymous, then see if we can still edit
+a page (we should get an exception).
+
+    >>> self.setRoles(['Anonymous'])
+    >>> browser.mech_browser.addheaders.remove(('Authorization', 'Basic test_user_1_:secret'),)
+    >>> editlink = browser.getLink('edit') # if we'd reload,
+    >>> editlink.click()                   # the link would be gone actually
+    Traceback (most recent call last):
+    ...
+    Unauthorized
+
+Set up wiki to work only with options set for anonymous edits
+('edits_need_username'), try again with anonymous, but without options set.
+
+    >>> self.folder.testwiki.manage_addProperty('edits_need_username',True,'boolean')
+    >>> self.folder.testwiki.manage_permission("Zwiki: Edit pages",('Anonymous','Authenticated','Manager'), acquire=1)
+    >>> browser.open(folder_url+'/testwiki/FrontPage')
+    >>> options_l = browser.getLink('options')
+    >>> options_l.click()
+    >>> zwiki_username = browser.getControl(name='zwiki_username')
+    >>> email = browser.getControl(name='email')
+    >>> zwiki_username.value = '' # unset the stuff!
+    >>> email.value = ''
+    >>> submit = browser.getControl('Save options')
+    >>> submit.click() # should get us to FrontPage
+    >>> editlink = browser.getLink('edit') # try again!
+    >>> editlink.click()
+    >>> browser.url
+    '.../FrontPage/editform'
+    >>> browser.contents # and of course it doesn't let me edit!
+    '...Sorry, you need more identification to do that on this wiki...'
+
+Now set options and try again!
+
+    >>> browser.open(folder_url+'/testwiki/FrontPage')
+    >>> options_l = browser.getLink('options')
+    >>> options_l.click()
+    >>> zwiki_username = browser.getControl(name='zwiki_username')
+    >>> email = browser.getControl(name='email')
+    >>> zwiki_username.value = 'testy'
+    >>> email.value = 'testy@example.org'
+    >>> submit = browser.getControl('Save options')
+    >>> submit.click()
+    >>> browser.url
+    '.../FrontPage'
+    >>> editlink = browser.getLink('edit')
+    >>> editlink.click()
+    >>> browser.url
+    '.../FrontPage/editform'
+
+Change the text.
+
+    >>> textarea = browser.getControl(name='text')
+    >>> textarea.value = "Some text here. Changed by testy."
+    >>> submit = browser.getControl('Save')
+    >>> submit.click()
+    >>> browser.contents
+    '...Some text here. Changed by testy...'
+    >>> browser.open(folder_url+'/testwiki/MyFirstWikiPage')
+    >>> editlink = browser.getLink('edit')
+    >>> editlink.click()
+    >>> textarea = browser.getControl(name='text')
+    >>> textarea.value = "Some text here. Changed by testy too."
+    >>> submit = browser.getControl('Save')
+    >>> submit.click()
+    >>> browser.contents
+    '...Changed by testy too...'
+
