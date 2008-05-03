@@ -14,7 +14,7 @@
 <td>
 <form method="GET" action="&dtml-URL;">
   search this wiki:<br />
-  <input name="expr" type="text" size="20" value="<dtml-var expr html_quote missing>" accesskey="s"
+  <input name="expr" type="text" size="20" value="<dtml-var "tounicode(expr)" html_quote missing>" accesskey="s"
   /><input type="submit" name="submit" value="<dtml-translate domain=zwiki>Search</dtml-translate>" />
 </form>
 </td>
@@ -24,7 +24,7 @@
   <input type="hidden" name="sitesearch"  value="<dtml-var "wikiUrl().split('/')[2]">" />
   <input type="hidden" name="cof" VALUE="L:&dtml-SERVER_URL;misc_/ZWiki/ZWikiPage_icon.gif"" />
   <input type="hidden" name="site" value="<dtml-var "wikiUrl().split('/')[2]">" />
-  <input type="text" size="20" name="q" value="<dtml-var expr html_quote missing>" 
+  <input type="text" size="20" name="q" value="<dtml-var "tounicode(expr)" html_quote missing>" 
   /><input type="submit" VALUE="Search" />
 </form>
 </td>
@@ -73,12 +73,13 @@
  #   enable case folding and left truncation in the index
  #   doesn't like quotes or too many wildcards
  "
- cleanexpr="_.string.replace(expr,'*','')"
+ cleanexpr="tounicode(expr)"
+ cleanexpr="_.string.replace(cleanexpr,'*','')"
  cleanexpr="_.string.replace(cleanexpr,_.chr(34),'')"
  cleanexpr="_.string.strip(cleanexpr)"
  wildcardexpr="'*'+_.string.join(_.string.split(cleanexpr),'* *')+'*'"
  titlesearchexpr=wildcardexpr
- textsearchexpr=expr
+ textsearchexpr="tounicode(expr)"
  titlehits="((cleanexpr and pages(Title=titlesearchexpr)+['dummy']) or pages()+['dummy'])[:-1]" 
  titlehits="_.sequence.sort(titlehits,(('Title','nocase','asc'),)) # locale_nocase if locale configured in zope.conf"
  texthits="((cleanexpr and pages(SearchableText=textsearchexpr)+['dummy']) or ['dummy'])[:-1]" 
