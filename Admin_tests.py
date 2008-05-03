@@ -43,6 +43,26 @@ class Tests(ZwikiTestCase):
         self.assert_(self.page.catalog() is not None)
         self.page.setupCatalog()
 
+    def test_setupCatalog_upgrades_TextIndex(self):
+        self.page.setupPages()
+        self.page.setupCatalog()
+        catalog = self.page.catalog()
+        # delete what we have
+        catalog.delIndex('SearchableText')
+        catalog.delIndex('Title')
+        # add "old" TextIndex class indexes
+        PluginIndexes = catalog.manage_addProduct['PluginIndexes']
+        PluginIndexes.manage_addTextIndex('Title')
+        PluginIndexes.manage_addTextIndex('SearchableText')
+        # this worked?
+        self.assert_(catalog._catalog.getIndex('Title').meta_type == 'TextIndex')
+        # now upgrade those indexes within setupCatalog
+        self.page.setupCatalog()
+        self.assert_(catalog._catalog.getIndex('Title').meta_type == 'ZCTextIndex')
+        self.assert_(catalog._catalog.getIndex('SearchableText').meta_type == 'ZCTextIndex')
+        # filled:
+        self.assertEqual(catalog._catalog.getIndex('SearchableText').indexSize(), 4)
+
     def xtest_setupTracker(self): #slow
         self.assert_(not self.page.catalog())
         self.assertEqual(len(self.page.pages()),1)
