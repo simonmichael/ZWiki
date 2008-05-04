@@ -281,6 +281,12 @@ class PluginTracker:
         Otherwise this will redirect to the tracker url (when called
         via the web). Returns the new page's name or None.
         """
+        name          = name and self.tounicode(name)
+        text          = text and self.tounicode(text)
+        category      = category and self.tounicode(category)
+        severity      = severity and self.tounicode(severity)
+        status        = status and self.tounicode(status)
+
         newnumber = self.nextIssueNumber(REQUEST=REQUEST)
         pagename=self.pageNameFromIssueNumberAndName(newnumber,name)
         pagename=self.createIssue(pagename,text,None, 
@@ -325,6 +331,13 @@ class PluginTracker:
         Upgrade issue: calling this before upgrading an issue to a
         0.17-style page id will mess up the id/title.
         """
+        name          = name and self.tounicode(name)
+        text          = text and self.tounicode(text)
+        category      = category and self.tounicode(category)
+        severity      = severity and self.tounicode(severity)
+        status        = status and self.tounicode(status)
+        log           = log and self.tounicode(log)
+
         if not self.checkSufficientId(REQUEST):
             return self.denied(
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
