@@ -356,7 +356,7 @@ class ZWikiPage(
         """
         return (self.hasDynamicContent() and
                 self.dtmlAllowed() and
-                (re.search(r'(?i)(<dtml-var["\s]+|&dtml-)subtopics',
+                (re.search(r'(?i)(<dtml-var[^>]+subtopics|&dtml-subtopics)',
                            self.read()) is not None))
     
     security.declareProtected(Permissions.View, 'supportsStx')
