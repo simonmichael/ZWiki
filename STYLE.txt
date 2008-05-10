@@ -201,10 +201,11 @@ then zope, then zwiki imports.
 
 Function/method contracts
 -------------------------
-We are considering ways to document function and method "contracts". For example,
+We are considering ways to document function and method "contracts". 
+`Here's <http://www.htdp.org/2003-09-26/Book/curriculum-Z-H-5.html#node_sec_2.5>`_
+an example. We are most interested in
 
-- their input and output types, `eg
-<http://www.htdp.org/2003-09-26/Book/curriculum-Z-H-5.html#node_sec_2.5>`_
+- their input (argument) and output (return value) types
 
 - their degree of statefulness/statelessness. Are they
 
@@ -215,17 +216,15 @@ We are considering ways to document function and method "contracts". For example
 Understanding statefulness in particular should help us to identify and
 gather together the most stateful code, reduce state dependencies, and
 increase the proportion of pure and semi-pure functional code, which
-greatly aids testing, debugging and reliability.  
+will greatly aid testing, debugging and reliability.  
 
 Here is a possible convention for now: when you touch code, review the
-docstring and try to add a comment to the function definition describing
-
-a. the return type(s)
-b. state that it depends on other than the arguments, if any, and 
-c. state that it modifies other than the return value, if any. 
-
-Even a rough guess at the state dependencies could be helpful. Here are some examples
-(dependency on self for permission checking is omitted)::
+docstring and try to add a comment to the function definition
+describing (a) the return type(s), (b) state that it depends on other
+than the arguments, if any, and (c) state that it modifies other than
+the return value, if any.  Even a rough guess at the state
+dependencies could be helpful. Here are some examples. The dependency
+on self for permission checking is omitted.::
 
   def method(args) # -> return value type(s) [; depends on: ...] [; modifies: ...]
 
@@ -246,7 +245,7 @@ Even a rough guess at the state dependencies could be helpful. Here are some exa
 
 
 
-.. 
+.. comment
 
  Local Variables:
  mode: rst
