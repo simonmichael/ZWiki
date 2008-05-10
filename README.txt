@@ -6,7 +6,7 @@ A wiki engine for Zope.
 For documentation and assistance, please see http://zwiki.org .
 All feedback, bug reports and other help appreciated.
 
-(c) 1999-2007 Simon Michael <simon@joyful.com> for the zwiki community.
+(c) 1999-2008 Simon Michael <simon@joyful.com> and contributors.
 This product is released under the GNU General Public License.  
 All rights reserved, all disclaimers apply, etc.
 
