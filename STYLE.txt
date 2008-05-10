@@ -226,21 +226,23 @@ the return value, if any.  Even a rough guess at the state
 dependencies could be helpful. Here are some examples. The dependency
 on self for permission checking is omitted.::
 
-  def method(args) # -> return value type(s) [; depends on: ...] [; modifies: ...]
+    def method(args) # -> return type(s) [; depends on: ...] [; modifies: ...] (or multiple lines)
 
-  def htmlquote(self, text): # -> string
+    def htmlquote(self, text): # -> string
 
-  def asAgeString(self,time): # -> string | empty string ; depends on: self (for current time)
+    def asAgeString(self,time): # -> string | empty string; depends on: self (for current time)
 
-  def excerptAt(self, expr, size=100, highlight=1, text=None):  # -> html string | empty string ; depends on: self (if no text provided)
+    def handleSubtopicsProperty(self,subtopics,REQUEST=None): # -> none ; modifies: self
 
-  def revisionNumberBefore(self, username): # -> revision number | none ; depends on: self, revisions
+    def revisionNumberBefore(self, username): # -> revision number | none 
+        # depends on: self, revisions
 
-  def handleSubtopicsProperty(self,subtopics,REQUEST=None): # -> none ; modifies: self
+    def expungeEditsEverywhereBy(self, username, REQUEST=None, batch=0): # -> none
+        # depends on: all pages, revisions ; modifies: all pages, revisions
 
-  def expungeEditsEverywhereBy(self, username, REQUEST=None, batch=0): # -> none ; depends on: all pages, revisions ; modifies: all pages, revisions
-
-  def upgradeAll(self,render=1,batch=0,REQUEST=None): # -> none; depends on: wiki; modifies: wiki (folder, pages, dtml methods, catalog, outline, revisions..)
+    def upgradeAll(self,render=1,batch=0,REQUEST=None): # -> none
+        # depends on: wiki
+        # modifies: wiki (folder, pages, dtml methods, catalog, outline, revisions..)
 
 
 
