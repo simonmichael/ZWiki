@@ -747,7 +747,7 @@ class PageMailSupport:
             BLATHER('**** failed to send mail to %s: %s' % (recipients,formattedTraceback()))
             
 class AbstractMailHost:
-    """Adapts whatever kind of mailhost is available - [Secure] Mail[drop] Host -  to a generic one."""
+    """Adapts the available [Secure] Mail[drop] Host to a generic one."""
     def __init__(self, mailhost):
         self.context = mailhost
     def send(self,fields):
