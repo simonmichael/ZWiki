@@ -154,7 +154,8 @@ class PageHistorySupport:
         if i < len(revnos)-1: return revnos[i+1]
         else: return None
 
-    def revisionNumberBefore(self, username):
+    def revisionNumberBefore(self, username): # -> revision number | none
+        # depends on: self, revisions
         """The revision number of the last edit not by username, or None."""
         for r in range(self.revisionCount(),0,-1):
             if self.revision(r).lastEditor() != username:

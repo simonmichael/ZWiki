@@ -303,7 +303,7 @@ class PageEditingSupport:
         if REQUEST: REQUEST.set('redirectURL',REQUEST['URL1']+'#bottom')
         self.edit(text=self.read()+separator+str(text), REQUEST=REQUEST,log=log)
 
-    def handleSubtopicsProperty(self,subtopics,REQUEST=None):
+    def handleSubtopicsProperty(self,subtopics,REQUEST=None): # -> none ; modifies: self
         if subtopics is None: return
         if not self.checkPermission(Permissions.Reparent, self):
             raise 'Unauthorized', (
@@ -461,7 +461,8 @@ class PageEditingSupport:
         self.expunge(self.revisionNumberBefore(username), REQUEST=REQUEST)
 
     security.declareProtected(Permissions.manage_properties, 'expungeEditsEverywhereBy')
-    def expungeEditsEverywhereBy(self, username, REQUEST=None, batch=0):
+    def expungeEditsEverywhereBy(self, username, REQUEST=None, batch=0): # -> none
+        # depends on: all pages, revisions ; modifies: all pages, revisions
         """Expunge all the most recent edits by username throughout the wiki.
 
         This is a powerful spam repair tool for managers. It removes all

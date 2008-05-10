@@ -27,8 +27,9 @@ class PageAdminSupport:
     security = ClassSecurityInfo()
 
     security.declarePublic('upgradeAll') # we check folder permission at runtime
-    def upgradeAll(self,render=1,batch=0,REQUEST=None):
-                   
+    def upgradeAll(self,render=1,batch=0,REQUEST=None): # -> none
+        # depends on: wiki
+        # modifies: wiki (folder, pages, dtml methods, catalog, outline, revisions..)
         """
         Update, upgrade, pre-render and re-index all pages and data structures.
 

@@ -166,7 +166,8 @@ class PageUtils:
                     self.summary(size=size, paragraphs=paragraphs))))
     
     security.declareProtected(Permissions.View, 'excerptAt')
-    def excerptAt(self, expr, size=100, highlight=1, text=None):
+    def excerptAt(self, expr, size=100, highlight=1, text=None): # -> html string | empty string
+        # depends on: self (if no text provided)
         """
         Return a highlighted search result excerpt from this page (or text).
 
@@ -272,7 +273,7 @@ class PageUtils:
     # expose these darn things for dtml programmers once and for all!
     # XXX security issue ?
     security.declareProtected(Permissions.View, 'htmlquote')
-    def htmlquote(self, text):
+    def htmlquote(self, text): # -> string
         return html_quote(text)
 
     security.declareProtected(Permissions.View, 'htmlunquote')
@@ -473,7 +474,8 @@ class PageUtils:
                     self.lastEditTime()) * 24)
 
     security.declareProtected(Permissions.View, 'asAgeString')
-    def asAgeString(self,time):
+    def asAgeString(self,time): # -> string | empty string
+        # depends on: self (for current time)
         """
         return a string describing the approximate elapsed period since time
 
