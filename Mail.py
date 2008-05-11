@@ -789,26 +789,6 @@ Content-Type: text/plain; charset="%(charset)s"
         if r: BLATHER(r)
 
 ##############################################################################
-# merged from..
-"""
-Zwiki's mailin external method - posts an incoming email message to a wiki
-
-This external method receives a message in RFC2822 format and takes
-appropriate action in the wiki where it has been called (eg, adding a
-comment to one of the pages). This is usually invoked by a mail alias like::
-
- thewiki: |curl -n -F 'msg=<-' http://mysite/mywikifolder/mailin
-
-See http://zwiki.org/HowToSetUpMailin for more help. For the delivery
-algorithm, see the MailIn class docs below.
-
-TODO:
-friendly non-subscriber bounce messages
-keep refactoring
-size limit
-html mail ?
-file attachments ?
-"""
 
 import string
 import email
@@ -839,54 +819,81 @@ PAGEINSUBJECTEXP = bracketedexpr
 MAX_SIGNATURE_STRIP_SIZE = 500
 
 
+class PageMailinSupport:
+    def mailin(self, msg): # -> none; depends on self, wiki; modifies wiki
+        """
+        Handle an incoming email message, eg by posting it as a comment to
+        some page.  For the precise delivery algorithm, see the MailIn
+        helper class below.  msg is a string containing a RFC2822
+        message. This is usually invoked by a mail server alias like::
+
+           wiki:|curl -n -F 'msg=<-' http://site/wikifolder/ANYPAGE/mailin
+
+        See http://zwiki.org/HowToSetUpMailin for more help.
+
+        XXX todo:
+        pass through original mail with attachments
+        non-subscriber bounce messages ?
+        """
+        # parse and figure out how to deliver the message
+        m = MailIn(self, msg)
+        m.decideMailinAction()
+        if m.error: return m.error
+
+        # stash the sender's username in REQUEST as a hint for usernameFrom
+        self.REQUEST.set('MAILIN_USERNAME', m.FromUserName)
+
+        # do whatever action was decided
+        subject = m.realSubject
+        subjectPrefix = ''
+        if m.newpage:
+            # XXX need to pass REQUEST for authentication ?  but "REQUEST has
+            # no URL2" and create fails. Leave out for now.
+            m.workingpage.create(m.destpagename,text='',sendmail=0)
+            m.destpage = m.workingpage.pageWithName(m.destpagename)
+            subjectPrefix = '(new) '
+        elif m.trackerissue:
+            # citation formatting normally happens only within comments;
+            # for this reason we will post the issue details as a comment,
+            # not as initial page text (#879)
+            pagename = m.workingpage.createNextIssue(subject,
+                                                     severity=DEFAULT_SEVERITY,
+                                                     REQUEST=self.REQUEST,
+                                                     sendmail=0)
+            m.destpage = m.workingpage.pageWithName(pagename)
+            subjectPrefix = '(new) '
+        m.destpage.comment(text=m.body,
+                           username=m.FromUserName,
+                           REQUEST=self.REQUEST,
+                           subject_heading=subjectPrefix+subject,
+                           message_id=m.messageid,
+                           in_reply_to=m.inreplyto,
+                           )
+
+#         # handle the mail-out ourselves, to pass through the original message
+#         m.destpage.sendMailToSubscribers(
+#             m.original,
+#             self.REQUEST, 
+#             subject=subjectPrefix+subject,
+#             message_id=m.messageid, 
+#             in_reply_to=m.inreplyto,
+#             # mailing list support: when a list and wiki are mutually subscribed,
+#             # and a mail comes in from the list, we want to forward it out to all
+#             # subscribers except the list, which has done it's own delivery.
+#             # Some lists will detect the duplicate automatically, for others we
+#             # expect the X-BeenThere header and tell zwiki to exclude that address.
+#             exclude_address=m.xbeenthere,
+#             )
+#         return None
+
+InitializeClass(PageMailinSupport)
+
 class MailIn:
     """
-    I represent an incoming mail message being posted to a wiki.
-
-    I parse the incoming rfc2822 message string and expose the parts of
-    interest, and (given a wiki context) figure out how to deliver myself.
-    Here are the delivery rules:
-    
-    - if the message appears to be a zwiki mailout or from an auto-responder
-      or junk, or it does't have a plain text part, DISCARD.
-    
-    - if we have been called in a page context (../SOMEPAGE/mailin), POST
-      message as a comment on that page.
-    
-    - (DISABLED: select virtual host:
-      Intended to allow a single mailin alias to serve many vhosts.  If there
-      is a recipient of the form .*MAILINADDREXP@vhost where vhost matches a
-      virtual host monster entry on this server, use that vhost's folder.
-      )
-    
-    - if there is not at least one zwiki page in the current folder, DISCARD.
-    
-    - check sender's subscription status:
-      unless the folder's mailin_policy property, possibly acquired, is
-      'open', check that the sender is either subscribed somewhere in the wiki
-      or listed in the mail_accept_nonmembers property, and if not BOUNCE the
-      message.
-    
-    - if the recipient looks like a spam reporting address (.*SPAMADDREXP),
-      UPDATE SPAM BLOCKING RULES and DISCARD (see updateSpamBlocks).
-    
-    - if the recipient looks like a tracker mailin address (.*TRACKERADDREXP),
-      CREATE AN ISSUE page.  Otherwise,
-    
-    - identify destination page name: the first [bracketed page name] in the
-      message subject, which may be a fuzzy/partial name; or the folder's
-      default_mailin_page property, possibly acquired; or the first zwiki page
-      in the folder - unless default_mailin_page was blank.
-    
-    - if no destination page could be found (default_mailin_page is
-      blank/false), DISCARD.
-    
-    - if no wiki page by that name exists (fuzzy match allowed), CREATE it
-    
-    - POST message as a comment to that page
-    
+    I represent an incoming mail message being posted to a wiki.  I parse
+    the rfc2822 message string and figure out how to deliver myself within
+    the provided wiki context.
     """
-
     msg = None
     folder = None
     recipient = None
@@ -897,10 +904,7 @@ class MailIn:
     newpage = 0
     error = None
 
-    def __init__(self,
-                 context,
-                 message,
-                 ):
+    def __init__(self, context, message): # -> none
         """
         Extract the bits of interest from an RFC2822 message string.
 
@@ -949,9 +953,182 @@ class MailIn:
         except StopIteration:
             payloadutf8 = ''
 
-        self.body = self.cleanupBody(payloadutf8)
+        self.body = cleanupBody(payloadutf8)
         
-    def isJunk(self):
+    def decideMailinAction(self): # -> none
+        # depends on: self, wiki context
+        # modifies self (destpage/destpagename/newpage/trackerissue or error attributes)
+        """
+        Figure out what to do with this mail-in, setting some flags
+        accordingly. Here are the delivery rules:
+
+        - if the message appears to be a zwiki mailout or from an auto-responder
+          or junk, or it does't have a plain text part, DISCARD.
+
+        - check sender's subscription status:
+          unless the folder's mailin_policy property, possibly acquired, is
+          'open', check that the sender is either subscribed somewhere in the wiki
+          or listed in the mail_accept_nonmembers property, and if not BOUNCE the
+          message.
+
+        - if the recipient looks like a spam reporting address (.*SPAMADDREXP),
+          UPDATE SPAM BLOCKING RULES and DISCARD (see updateSpamBlocks).
+
+        - if the recipient looks like a tracker mailin address (.*TRACKERADDREXP),
+          CREATE AN ISSUE page.  Otherwise,
+
+        - identify destination page name: the first [bracketed page name]
+          in the message subject, which may be a fuzzy/partial name; or
+          the folder's default_mailin_page property, possibly acquired; or
+          the current page (unless default_mailin_page was blank)
+
+        - if no destination page could be found (default_mailin_page is
+          blank/false), DISCARD.
+
+        - if the specified destination page does not exist (fuzzy match
+          allowed), CREATE it
+
+        - POST message as a comment to that page
+
+        """
+        if self.isJunk():
+            self.error = '\nDiscarding junk mailin.\n\n\n'
+            return
+
+        if self.isSpamReport():
+            BLATHER('mailin.py: processing spam report')
+            self.updateSpamBlocks()
+            self.error = '\nProcessed spam report.\n\n\n'
+            return
+
+        if self.contextIsPage():
+            self.workingpage = self.context
+        else:
+            # an old mailin external method, in folder context
+            self.workingpage = self.workingPage()
+        if not self.workingpage:
+            BLATHER('mailin.py: could not find a working page, discarding message')
+            self.error = '\nCould not find a wiki page to work from, discarding message.\n\n\n'
+            return
+
+        self.checkMailinAllowed()
+        if self.error: return
+
+        # are we creating a tracker issue, which doesn't need a name ?
+        # XXX todo: mail to tracker address is not always a new issue
+        if re.search(TRACKERADDREXP,self.recipientAddress()):
+            self.trackerissue = 1
+            return
+
+        # find the destination page name in the subject
+        matches = re.findall(PAGEINSUBJECTEXP,self.subject)
+        if matches:
+            self.destpagename = matches[-1] # use rightmost
+            self.destpagename = re.sub(bracketedexpr,r'\1',self.destpagename)
+                                       
+        # or use the default mailin page if any..
+        if not self.destpagename: self.destpagename = self.defaultMailinPage()
+
+        # now, either we have the (fuzzy) name of an existing page
+        page = (self.destpagename and
+                self.workingpage.pageWithFuzzyName(self.destpagename,
+                                                   allow_partial=1))
+        if page:
+            # use this as working page to get right parentage etc.
+            self.destpage = self.workingpage = page
+            self.destpagename = self.destpage.pageName()
+        # ..or we have the name of a new page to create..
+        elif self.destpagename:
+            self.newpage = 1
+        # ..or we discard this message
+        else:
+            self.error = '\nMessage had no destination page, ignored.\n\n\n'
+            BLATHER('mailin.py: message had no destination page, ignored')
+
+    def checkMailinAllowed(self): # -> none; depends on self, wiki folder; modifies: self
+        """
+        Check if the mailin determined by decideMailinAction() is
+        permitted to the sender and set flags, as follows:
+
+        - if open posting is allowed, we'll accept anybody.
+        - otherwise they must be a subscriber somewhere in the wiki
+        - or be listed in the mail_accept_nonmembers property
+          (useful to allow mailing lists, etc)
+        - otherwise, set self.error
+        
+        Requires self.workingpage to be already set up.
+        """
+        postingpolicy = getattr(self.folder(),'mailin_policy',None)
+        accept = getattr(self.folder(),'mail_accept_nonmembers',[])
+        if (postingpolicy == 'open' or
+            self.FromEmail in accept or
+            self.senderEmail in accept or
+            # XXX poor caching
+            self.workingpage.allSubscriptionsFor(self.FromEmail) or
+            self.workingpage.allSubscriptionsFor(self.senderEmail)):
+            return
+        else:
+            self.error = '\nSorry, you must be a subscriber to send mail to this wiki.\n\n\n'
+            BLATHER('mailin.py: bounced mail from non-subscriber',
+                    self.FromEmail)
+
+    def recipient(self): # -> email lib address tuple; depends on self, wiki folder
+        """
+        Get the recipient that was used to deliver here (as an email tuple).
+
+        This may be needed to determine the mailin action.  If the message
+        has multiple recipients, decide which one refers to us as follows:
+        - the first recipient matching the folder's mail_from property,
+        - or the first one looking like a typical zwiki mailin alias (.*MAILINADDREXP),
+        - or the first one.
+        """
+        if len(self.recipients) == 1:
+            return self.recipients[0]
+        folder_mail_from = getattr(self.folder(),'mail_from',None)
+        if folder_mail_from:
+            for r in self.recipients:
+                if r[1] == folder_mail_from:
+                    return r
+        for r in self.recipients:
+            if re.search(MAILINADDREXP,r[1]):
+                return r
+        return self.recipients[0]
+
+    def recipientAddress(self): # -> string; depends on self, wiki folder
+        """
+        Just the email address part of the recipient used to deliver here.
+        """
+        return self.recipient()[1]
+
+    def workingPage(self): # -> wiki page | none; depends on wiki folder
+        """
+        Try to get a wiki page object which we can use for further operations.
+
+        We'll try to ensure that new pages are parented somewhere sensible:
+        the default mailin page if specified, or FrontPage, or the
+        first page in the hierarchy.
+        """
+        allpages = self.folder().objectValues(spec='ZWiki Page')
+        if allpages:
+            alphafirst = allpages[0]
+            outlinefirst = alphafirst.pageWithName(
+                alphafirst.wikiOutline().first())
+            frontpage = alphafirst.pageWithName('FrontPage')
+            defaultmailinpage = alphafirst.pageWithName(
+                getattr(self.folder(),'default_mailin_page',None))
+            return defaultmailinpage or frontpage or outlinefirst or alphafirst
+        else:
+            return None
+        
+    def defaultMailinPage(self): # -> string | none; depends on wiki folder
+        """
+        The name of the wiki's default destination page for mailins, or None.
+        """
+        return getattr(self.folder(),'default_mailin_page',
+                       ((self.workingPage() and self.workingPage().pageName())
+                        or None))
+        
+    def isJunk(self): # -> boolean; depends on: self
         """
         Return true if this mail message should be silently ignored.
 
@@ -992,13 +1169,12 @@ class MailIn:
             return 1
         return 0
 
-    def isSpamReport(self):
-        """
-        Return true if this message appears to be a spam report.
-        """
+    def isSpamReport(self): # -> boolean; depends on: self
+        """Return true if this message appears to be a spam report."""
         return re.search(SPAMADDREXP,self.recipientAddress()) and 1
 
-    def updateSpamBlocks(self):
+    def updateSpamBlocks(self): # -> none
+        # depends on: self, wiki folder properties; modifies wiki folder properties
         """
         Update the wiki's spam-blocking rules based on this message.
 
@@ -1053,305 +1229,38 @@ class MailIn:
                         subject='(banned_links updated)',
                         to=admin)
 
-    def cleanupBody(self,body):
-        """
-        Clean up/remove uninteresting parts of an incoming message body.
-        """
-        # strip trailing newlines that seem to get added in transit
-        body = re.sub(r'(?s)\n+$',r'\n',body)
-        body = stripBottomQuoted(body)
-        # strip Bob's signature
-        body = self.stripSignature(body)
-        return body
-
-    def stripSignature(self,body):
-        """
-        Strip a signature after -- .
-
-        Can't really do this safely; we'll strip only if it's below a
-        certain size.
-        """
-        signature = re.search(r'(?s)\n--\n.*?$',body)
-        signature = signature and signature.group()
-        if signature and len(signature) <= MAX_SIGNATURE_STRIP_SIZE:
-            body = re.sub(re.escape(signature),'',body)
-        return body
-    
-    def contextIsPage(self):
+    def contextIsPage(self): # -> boolean; depends on: self
         return self.context.meta_type=='ZWiki Page'
     
-    def contextIsFolder(self):
+    def contextIsFolder(self): # -> boolean; depends on: self
         return not self.contextIsPage()
     
-    def folder(self):
-        """
-        The wiki folder to which we are delivering.
-        """
-        if self.contextIsPage(): return self.context.aq_parent
-        else: return self.context
+    def folder(self): # -> container; depends on: self, wiki context
+        """The wiki folder to which we are delivering."""
+        if self.contextIsPage(): return self.context.folder()
+        else: return self.context # handle old external method in folder context
 
-    def recipient(self):
-        """
-        The recipient that was used to deliver here (an email tuple).
+def cleanupBody(body): # -> string
+    """Clean up/remove uninteresting parts of an incoming message body."""
+    # strip trailing newlines that seem to get added in transit
+    body = re.sub(r'(?s)\n+$',r'\n',body)
+    body = stripBottomQuoted(body)
+    # strip Bob's signature
+    body = stripSignature(body)
+    return body
 
-        This may be needed to determine the mailin action.  If the message
-        has multiple recipients, decide which one refers to us as follows:
-        - the first recipient matching the folder's mail_from property,
-        - or the first one looking like a typical zwiki mailin alias (.*MAILINADDREXP),
-        - or the first one.
-        """
-        if len(self.recipients) == 1:
-            return self.recipients[0]
-        folder_mail_from = getattr(self.folder(),'mail_from',None)
-        if folder_mail_from:
-            for r in self.recipients:
-                if r[1] == folder_mail_from:
-                    return r
-        for r in self.recipients:
-            if re.search(MAILINADDREXP,r[1]):
-                return r
-        return self.recipients[0]
-
-    def recipientAddress(self):
-        """
-        Just the email address part of the recipient used to deliver here.
-        """
-        return self.recipient()[1]
-
-    def workingPage(self):
-        """
-        Try to get a wiki page object which we can use for further operations.
-
-        We'll try to ensure that new pages are parented somewhere sensible:
-        the default mailin page if specified, or FrontPage, or the
-        first page in the hierarchy.
-        """
-        allpages = self.folder().objectValues(spec='ZWiki Page')
-        if allpages:
-            alphafirst = allpages[0]
-            outlinefirst = alphafirst.pageWithName(
-                alphafirst.wikiOutline().first())
-            frontpage = alphafirst.pageWithName('FrontPage')
-            defaultmailinpage = alphafirst.pageWithName(
-                getattr(self.folder(),'default_mailin_page',None))
-            return defaultmailinpage or frontpage or outlinefirst or alphafirst
-        else:
-            return None
-        
-    def defaultMailinPage(self):
-        """
-        The name of the wiki's default destination page for mailins, or None.
-        """
-        return getattr(self.folder(),'default_mailin_page',
-                       ((self.workingPage() and self.workingPage().pageName())
-                        or None))
-        
-    def decideMailinAction(self):
-        """
-        Figure out what we should do with this mail-in.
-
-        Fairly involved calculations trying to figure out what to do in a
-        robust way (see the module docstring for more).  Sets
-        self.destpage, self.destpagename, self.newpage, self.trackerissue,
-        or sets a message in self.error if it can't.
-        """
-        if self.isJunk():
-            self.error = '\nDiscarding junk mailin.\n\n\n'
-            return
-
-        if self.isSpamReport():
-            BLATHER('mailin.py: processing spam report')
-            self.updateSpamBlocks()
-            self.error = '\nProcessed spam report.\n\n\n'
-            return
-
-        if self.contextIsPage():
-            self.workingpage = self.context
-        else:
-            # an old mailin external method, in folder context
-            self.workingpage = self.workingPage()
-        if not self.workingpage:
-            BLATHER('mailin.py: could not find a working page, discarding message')
-            self.error = '\nCould not find a wiki page to work from, discarding message.\n\n\n'
-            return
-
-        self.checkMailinAllowed()
-        if self.error: return
-
-        # are we creating a tracker issue, which doesn't need a name ?
-        # XXX todo: mail to tracker address is not always a new issue
-        if re.search(TRACKERADDREXP,self.recipientAddress()):
-            self.trackerissue = 1
-            return
-
-        # find the destination page name
-        ## in the recipient's real name part if enabled..
-        ##if self.checkrecipient:
-        ##    m = re.search(PAGEINREALNAMEEXP,self.recipientRealName())
-        ##    if m:
-        ##        self.destpagename = m.group('page')
-        # in the subject
-        if (not self.destpagename):
-            matches = re.findall(PAGEINSUBJECTEXP,self.subject)
-            if matches:
-                self.destpagename = matches[-1] # use rightmost
-                # strip enclosing []'s
-                self.destpagename = re.sub(bracketedexpr, r'\1',
-                                           self.destpagename)
-        # or use the default mailin page if any..
-        if (not self.destpagename):
-            self.destpagename = self.defaultMailinPage()
-
-        # now, either we have the name of an existing page (fuzzy match
-        # allowed)..
-        page = (self.destpagename and
-                self.workingpage.pageWithFuzzyName(self.destpagename,
-                                                   allow_partial=1))
-        if page:
-            # also adjust working page to get right parentage etc.
-            self.destpage = self.workingpage = page
-            self.destpagename = self.destpage.pageName()
-        # or we have the name of a new page to create..
-        elif self.destpagename:
-            self.newpage = 1
-        # or we discard this message
-        else:
-            self.error = '\nMessage had no destination page, ignored.\n\n\n'
-            BLATHER('mailin.py: message had no destination page, ignored')
-
-    def checkMailinAllowed(self):
-        """
-        Check if the mailin determined by decideMailinAction() is permitted.
-
-        Is the sender allowed to mail in here ?
-        - if open posting is allowed, we'll accept anybody.
-        - otherwise they must be a subscriber somewhere in the wiki
-        - or be listed in the mail_accept_nonmembers property
-          (useful to allow mailing lists, etc)
-        Otherwise, set self.error.
-        Requires self.workingpage to be already set up.
-        """
-        postingpolicy = getattr(self.folder(),'mailin_policy',None)
-        accept = getattr(self.folder(),'mail_accept_nonmembers',[])
-        if (postingpolicy == 'open' or
-            self.FromEmail in accept or
-            self.senderEmail in accept or
-            # XXX poor caching
-            self.workingpage.allSubscriptionsFor(self.FromEmail) or
-            self.workingpage.allSubscriptionsFor(self.senderEmail)):
-            return
-        else:
-            self.error = '\nSorry, you must be a subscriber to send mail to this wiki.\n\n\n'
-            BLATHER('mailin.py: bounced mail from non-subscriber',
-                    self.FromEmail)
-
-#    def destinationVHost(self, msg):
-#        """
-#        Do tricky vhost-folder-finding.
-#        
-#        If we have one of the special recipients listed above along with a
-#        matching virtual host, return the virtual host's folder; otherwise None.
-#        Also save the username part of the matched recipient for later.
-#        """
-#        folder = None
-#        vurt = getattr(self,'vurt',None)
-#        if vurt and msg.wikiRecipients:
-#            for address, realname in msg.wikiRecipients:
-#                alias, host = address
-#                # based on SiteAccess
-#                # extract this -->
-#                dict = getattr(vurt, 'domain_path', None)
-#                if dict:
-#                    real_host=None
-#                    l_host = string.lower(host)
-#                    if vurt.domain_path.has_key(l_host):
-#                        real_host=l_host
-#                    else:
-#                        for hostname in vurt.domain_path.keys():
-#                            if hostname[:2] == '*.':
-#                                if string.find(l_host, hostname[2:]) != -1:
-#                                    real_host = hostname
-#                    # <--
-#                    if real_host:
-#                        path = vurt.domain_path[real_host]
-#                        folder = self.getPhysicalRoot().unrestrictedTraverse(path)
-#                        msg.aliasUsed = alias
-#                        break
-#        return folder
-
-def stripBottomQuoted(body):
+def stripBottomQuoted(body): # -> string
     origmsg = '(?:Original Message|message d\'origine)' # XXX i18n.. ?
     body = re.sub(r'(?smi)^-+%s-+$.*' % origmsg, '', body)
     return body
 
-
-class PageMailinSupport:
-    def mailin(self, msg):
-        """
-        See module docstring.
-        """
-        # parse and figure out how to deliver the message
-        m = MailIn(self, msg)
-        m.decideMailinAction()
-        if m.error: return m.error
-
-        # stash the sender's username in REQUEST as a hint for usernameFrom
-        self.REQUEST.set('MAILIN_USERNAME', m.FromUserName)
-
-        # now, create new page ?
-        subject = m.realSubject
-        subjectPrefix = ''
-        if m.newpage:
-            # XXX need to pass REQUEST for authentication ?  but "REQUEST has
-            # no URL2" and create fails. Leave out for now.
-            m.workingpage.create(m.destpagename,text='',sendmail=0)
-            m.destpage = m.workingpage.pageWithName(m.destpagename)
-            subjectPrefix = '(new) '
-
-        # or new tracker issue ?
-        elif m.trackerissue:
-            # cf IssueNo0879
-            # citations are normally formatted only within comments, but they
-            # are often found in mailed-in issues and we'd like to display
-            # these nicely. Options ?
-            # - format them here as a special case. This means the mailout
-            #   and page source contains ugly html.
-            # - enable citation rendering everywhere. This deviates from
-            #   standard STX etc.
-            # - leave them unformatted
-            # - post the issue details as a comment, not as the initial page
-            #   text. Hey, that makes sense.        
-            pagename = m.workingpage.createNextIssue(subject,
-                                                     severity=DEFAULT_SEVERITY,
-                                                     REQUEST=self.REQUEST,
-                                                     sendmail=0)
-            m.destpage = m.workingpage.pageWithName(pagename)
-            subjectPrefix = '(new) '
-
-        # add comment
-        m.destpage.comment(text=m.body,
-                           username=m.FromUserName,
-                           REQUEST=self.REQUEST,
-                           subject_heading=subjectPrefix+subject,
-                           message_id=m.messageid,
-                           in_reply_to=m.inreplyto,
-                           )
-
-#         # handle the mail-out ourselves, to pass through the original message
-#         m.destpage.sendMailToSubscribers(
-#             m.original,
-#             self.REQUEST, 
-#             subject=subjectPrefix+subject,
-#             message_id=m.messageid, 
-#             in_reply_to=m.inreplyto,
-#             # mailing list support: when a list and wiki are mutually subscribed,
-#             # and a mail comes in from the list, we want to forward it out to all
-#             # subscribers except the list, which has done it's own delivery.
-#             # Some lists will detect the duplicate automatically, for others we
-#             # expect the X-BeenThere header and tell zwiki to exclude that address.
-#             exclude_address=m.xbeenthere,
-#             )
-#         return None
-
-InitializeClass(PageMailinSupport)
+def stripSignature(body): # -> string
+    """Strip a signature after -- . We can't really do this safely; we'll
+    strip only if it's below a certain size.
+    """
+    signature = re.search(r'(?s)\n--\n.*?$',body)
+    signature = signature and signature.group()
+    if signature and len(signature) <= MAX_SIGNATURE_STRIP_SIZE:
+        body = re.sub(re.escape(signature),'',body)
+    return body
 

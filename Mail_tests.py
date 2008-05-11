@@ -1,5 +1,5 @@
 from testsupport import *
-from Mail import MailIn, stripBottomQuoted
+from Mail import MailIn, stripBottomQuoted, stripSignature
 ZopeTestCase.installProduct('ZWiki')
 
 def test_suite():
@@ -561,7 +561,7 @@ Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
     def testStripSignature(self):
         # signatures after -- should be stripped
         self.assertEqual(
-            MailIn(self.p.folder(),str(TestMessage())).stripSignature(
+            stripSignature(
             '''
 blah blah
 
@@ -576,7 +576,7 @@ blah blah
         # unless they are too large
         from Mail import MAX_SIGNATURE_STRIP_SIZE
         self.assertEqual(
-            MailIn(self.p.folder(),str(TestMessage())).stripSignature(
+            stripSignature(
             '''
 blah blah
 
@@ -589,7 +589,7 @@ blah blah
 ''' + 'x'*(MAX_SIGNATURE_STRIP_SIZE+1))
         # leave other things alone
         self.assertEqual(
-            MailIn(self.p.folder(),str(TestMessage())).stripSignature(
+            stripSignature(
             '''blah
 ---
 blah'''),
@@ -597,7 +597,7 @@ blah'''),
 ---
 blah''')
         self.assertEqual(
-            MailIn(self.p.folder(),str(TestMessage())).stripSignature(
+            stripSignature(
             '''blah
  --
 blah'''),
