@@ -218,15 +218,14 @@ gather together the most stateful code, reduce state dependencies, and
 increase the proportion of pure and semi-pure functional code, which
 will greatly aid testing, debugging and reliability.  
 
-Here is a possible convention for now: when you touch code, review the
-docstring and try to add a comment to the function definition
-describing (a) the return type(s), (b) state that it depends on other
-than the arguments, if any, and (c) state that it modifies other than
-the return value, if any.  Even a rough guess at the state
-dependencies could be helpful. Here are some examples. The dependency
-on self for permission checking is omitted.::
+Here is a possible convention for now: when you touch a method or
+function, review the docstring and code and try add a comment describing
+the contract. The contract speficies the return type(s), whether it
+redirects, state that it depends on other than the arguments, state that
+it modifies other than the return value, and any other effects. Here are
+some examples::
 
-    def method(args) # -> return type(s) [; depends on: ...] [; modifies: ...] (or multiple lines)
+    def method(args) # -> return type(s) [; redirects] [; depends on: ...] [; modifies: ...] [; other effects: ...]
 
     def htmlquote(self, text): # -> string
 
@@ -244,6 +243,18 @@ on self for permission checking is omitted.::
         # depends on: wiki
         # modifies: wiki (folder, pages, dtml methods, catalog, outline, revisions..)
 
+A few more notes: 
+
+These don't have to be perfectly correct; even an estimate could be
+useful.  Do review the contract for correctness every time you change some
+code. Contracts should ideally be cumulative, ie reflect the contracts of
+methods called by this one - looking at code one or two levels deep should
+be enough. Very common features like the dependency on self for permission
+checking are omitted. It may be better to keep contracts on one line for
+easy scanning, even if long. Things we depend on or modify include: self
+(usually the current page object), folder (the wiki folder properties and
+acquired context), wiki (the folder and all pages in it), catalog,
+outline, revisions, request.
 
 
 
