@@ -1335,24 +1335,23 @@ class PageMailinSupport:
                            subject_heading=subjectPrefix+subject,
                            message_id=m.messageid,
                            in_reply_to=m.inreplyto,
-                           sendmail=False
                            )
 
-        # handle the mail-out ourselves, to pass through the original message
-        m.destpage.sendMailToSubscribers(
-            m.original,
-            self.REQUEST, 
-            subject=subjectPrefix+subject,
-            message_id=m.messageid, 
-            in_reply_to=m.inreplyto,
-            # mailing list support: when a list and wiki are mutually subscribed,
-            # and a mail comes in from the list, we want to forward it out to all
-            # subscribers except the list, which has done it's own delivery.
-            # Some lists will detect the duplicate automatically, for others we
-            # expect the X-BeenThere header and tell zwiki to exclude that address.
-            exclude_address=m.xbeenthere,
-            )
-        return None
+#         # handle the mail-out ourselves, to pass through the original message
+#         m.destpage.sendMailToSubscribers(
+#             m.original,
+#             self.REQUEST, 
+#             subject=subjectPrefix+subject,
+#             message_id=m.messageid, 
+#             in_reply_to=m.inreplyto,
+#             # mailing list support: when a list and wiki are mutually subscribed,
+#             # and a mail comes in from the list, we want to forward it out to all
+#             # subscribers except the list, which has done it's own delivery.
+#             # Some lists will detect the duplicate automatically, for others we
+#             # expect the X-BeenThere header and tell zwiki to exclude that address.
+#             exclude_address=m.xbeenthere,
+#             )
+#         return None
 
 InitializeClass(PageMailinSupport)
 
