@@ -33,7 +33,7 @@ class PageSubscriptionSupport:
 
     ## private ###########################################################
 
-    def _getSubscribers(self, parent=0):
+    def _getSubscribers(self, parent=0): # -> [string]; depends on self, folder; modifies self, folder
         """
         Return a copy of this page's subscriber list, as a list.
         
@@ -48,7 +48,7 @@ class PageSubscriptionSupport:
         else:
             return list(self.subscriber_list)
 
-    def _setSubscribers(self, subscriberlist, parent=0):
+    def _setSubscribers(self, subscriberlist, parent=0): # -> none; depends on self, folder; modifies self, folder
         """
         Set this page's subscriber list. 
         With parent flag, manage the parent folder's subscriber list instead.
@@ -59,14 +59,14 @@ class PageSubscriptionSupport:
         else:
             self.subscriber_list = subscriberlist
 
-    def _resetSubscribers(self, parent=0):
+    def _resetSubscribers(self, parent=0): # -> none; modifies self, folder
         """
         Clear this page's subscriber list.
         With parent flag, manage the parent folder's subscriber list instead.
         """
         self._setSubscribers([],parent)
 
-    def _upgradeSubscribers(self):
+    def _upgradeSubscribers(self): # -> none; depends on self, folder; modifies self, folder
         """
         Upgrade old subscriber lists, both this page's and the folder's.
 
@@ -166,7 +166,7 @@ class PageSubscriptionSupport:
 
     # XXX rename to subscribers() & wikiSubscribers() ?
     # XXX and add editSubscribers & wikiEditSubscribers 
-    def subscriberList(self, parent=0, edits=0):
+    def subscriberList(self, parent=0, edits=0): # -> [string]; depends on self, folder
         """
         Return a list of this page's subscribers, without the :edits suffix.
 
@@ -185,7 +185,7 @@ class PageSubscriptionSupport:
                 for s in stripList(self._getSubscribers(parent))
                 if (not edits) or s.endswith(':edits')]
 
-    def isSubscriber(self, email, parent=0):
+    def isSubscriber(self, email, parent=0): # -> boolean; depends on self, folder
         """
         Is this email address or member id subscribed to this page ?
 
@@ -205,7 +205,7 @@ class PageSubscriptionSupport:
                     return 1
         return 0
                
-    def subscribe(self, email, REQUEST=None, parent=0, edits=0):
+    def subscribe(self, email, REQUEST=None, parent=0, edits=0): # -> none; redirects; depends on self, folder; modifies self, folder, catalog
         """
         Add an email subscriber to this page.
 
@@ -228,7 +228,7 @@ class PageSubscriptionSupport:
                 REQUEST.get('redirectURL',
                             REQUEST['URL1']+'/subscribeform?email='+subscriber))
 
-    def unsubscribe(self, email, REQUEST=None, parent=0):
+    def unsubscribe(self, email, REQUEST=None, parent=0): # -> none; redirects; depends on self, folder; modifies self, folder, catalog
         """
         Remove email from this page's subscriber list.
 
@@ -255,41 +255,41 @@ class PageSubscriptionSupport:
 
     ## folder subscription api ###########################################
 
-    def wikiSubscriberList(self, edits=0):
+    def wikiSubscriberList(self, edits=0): # -> [string]; depends on folder
         """whole-wiki version of subscriberList"""
         return self.subscriberList(parent=1,edits=edits)
 
-    def isWikiSubscriber(self,email):
+    def isWikiSubscriber(self,email): # -> boolean; depends on folder
         """whole-wiki version of isSubscriber"""
         return self.isSubscriber(email,parent=1)
 
-    def wikiSubscribe(self, email, REQUEST=None, edits=0):
+    def wikiSubscribe(self, email, REQUEST=None, edits=0): # -> none; redirects; depends on self, folder; modifies self, folder, catalog
         """whole-wiki version of subscribe"""
         return self.subscribe(email,REQUEST,parent=1,edits=edits)
 
-    def wikiUnsubscribe(self, email, REQUEST=None):
+    def wikiUnsubscribe(self, email, REQUEST=None): # -> none; redirects; depends on self, folder; modifies self, folder, catalog
         """whole-wiki version of unsubscribe"""
         return self.unsubscribe(email,REQUEST,parent=1)
 
     ## misc api methods ##################################################
 
-    def pageSubscriberCount(self, edits=0):
+    def pageSubscriberCount(self, edits=0): # -> integer; depends on self
         """The number of subscribers to this page.  With edits flag, count only
         subscribers who have requested all edits."""
         return len(self.subscriberList(parent=0,edits=edits))
 
-    def wikiSubscriberCount(self, edits=0):
+    def wikiSubscriberCount(self, edits=0): # -> integer; depends on folder
         """The number of subscribers to the whole wiki.  With edits flag, count
         only subscribers who have requested all edits."""
         return len(self.subscriberList(parent=1,edits=edits))
 
-    def subscriberCount(self, edits=0):
+    def subscriberCount(self, edits=0): # -> integer; depends on self, folder
         """The total number of subscribers to this page, including wiki
         subscribers.  With edits flag, count only subscribers who have
         requested all edits."""
         return self.pageSubscriberCount(edits) + self.wikiSubscriberCount(edits)
 
-    def subscribeThisUser(self,REQUEST):
+    def subscribeThisUser(self,REQUEST): # -> nothing; depends on self, folder, cmf/plone site, request; modifies self
         """
         Subscribe the current user to this page.
 
@@ -302,7 +302,7 @@ class PageSubscriptionSupport:
         if user and not (self.isSubscriber(user) or self.isWikiSubscriber(user)):
             self.subscribe(user)
 
-    def allSubscriptionsFor(self, email):
+    def allSubscriptionsFor(self, email): # -> [string]; depends on self, wiki, catalog
         """
         Return the ids of all pages to which a subscriber is subscribed
         ('whole_wiki' indicates a wiki subscription).
@@ -321,8 +321,7 @@ class PageSubscriptionSupport:
         if self.isWikiSubscriber(subscriber):
             subscriptions.append('whole_wiki')
         # optimization: try to use catalog for memory efficiency..
-        # XXX can we do better - index subscriber_list and search
-        # it directly ?
+        # XXX obsolete, always have a catalog now ?
         if self.hasCatalogIndexesMetadata(
             (['meta_type','path'], ['subscriber_list'])):
             pages = self.pages()
@@ -339,7 +338,7 @@ class PageSubscriptionSupport:
                     subscriptions.append(id)
         return subscriptions
 
-    def otherPageSubscriptionsFor(self, email):
+    def otherPageSubscriptionsFor(self, email): # -> [string]; depends on self, wiki
         """
         Ack, this was too hard in DTML. Return the ids of all pages to
         which a subscriber is subscribed, excluding the current page and
@@ -352,10 +351,10 @@ class PageSubscriptionSupport:
         if 'whole_wiki' in subs: subs.remove('whole_wiki')
         return subs
 
-    def autoSubscriptionEnabled(self):
+    def autoSubscriptionEnabled(self): # -> boolean; depends on self, folder
         return getattr(self,'auto_subscribe',0) and 1
 
-    def usernameOrEmailOfSubscriber(self):
+    def usernameOrEmailOfSubscriber(self): # -> string; depends on cmf/plone site, request
         """
         If the user is logged into the CMF, return his/her username
         else return his/her email address cookie.
@@ -369,7 +368,7 @@ class PageSubscriptionSupport:
 
     # utilities
 
-    def emailAddressFrom(self,subscriber):
+    def emailAddressFrom(self,subscriber): # -> string; depends on cmf/plone site
         """
         Convert a zwiki subscriber list entry to an email address.
         
@@ -408,7 +407,7 @@ class PageSubscriptionSupport:
             email = ''
         return email.lower() or None
 
-    def emailAddressesFrom(self,subscribers):
+    def emailAddressesFrom(self,subscribers): # -> [string]
         """
         Convert a list of subscribers to a list of email addresses.
 
@@ -424,7 +423,7 @@ class PageSubscriptionSupport:
             if e: emails.append(e)
         return emails
 
-    def usernamesFrom(self,subscriber):
+    def usernamesFrom(self,subscriber): # -> [string]
         """
         Convert subscriber to username(s) if needed and return as a list.
 
@@ -458,7 +457,7 @@ class PageMailSupport:
     This mixin class provides mail-out support and general mail utilities.
     """
 
-    def isMailoutEnabled(self):
+    def isMailoutEnabled(self): # -> string; depends on self, folder, mailhost
         """
         Has mailout been configured ?
         """
@@ -468,13 +467,13 @@ class PageMailSupport:
         else:
             return 0
 
-    def mailoutPolicy(self):
+    def mailoutPolicy(self): # -> string; depends on self, folder
         """
         Get my mail-out policy - comments or edits ?
         """
         return getattr(self,'mailout_policy','comments')
 
-    def fromProperty(self):
+    def fromProperty(self): # -> string; depends on self, folder
         """
         Give the mail_from property for this page.
 
@@ -482,7 +481,7 @@ class PageMailSupport:
         """
         return getattr(self,'mail_from','')
     
-    def replyToProperty(self):
+    def replyToProperty(self): # -> string; depends on self, folder
         """
         Give the mail_replyto property for this page.
 
@@ -490,7 +489,7 @@ class PageMailSupport:
         """
         return getattr(self,'mail_replyto','')
     
-    def toProperty(self):
+    def toProperty(self): # -> string; depends on self, folder
         """
         Give the mail_to property for this page.
 
@@ -498,7 +497,7 @@ class PageMailSupport:
         """
         return getattr(self,'mail_to','')
     
-    def fromHeader(self,REQUEST=None):
+    def fromHeader(self,REQUEST=None): # -> string; depends on self, folder
         """
         Give the appropriate From: header for mail-outs from this page.
 
@@ -514,37 +513,37 @@ class PageMailSupport:
         realname = lines and lines[0] or _('anonymous')
         return '%s (%s)' % (address, realname)
 
-    def replyToHeader(self):
+    def replyToHeader(self): # -> string; depends on self, folder
         """
         Give the appropriate Reply-to: header for mail-outs from this page.
         """
         return self.replyToProperty() or self.fromProperty()
     
-    def listId(self):
+    def listId(self): # -> string; depends on self, folder
         """
         Give the "list id" for mail-outs from this page.
         """
         return self.fromProperty() or self.replyToProperty()
     
-    def listPostHeader(self):
+    def listPostHeader(self): # -> string; depends on self, folder
         """
         Give the appropriate List-Post: header for mail-outs from this page.
         """
         return '<mailto:%s>' % (self.listId())
 
-    def listIdHeader(self):
+    def listIdHeader(self): # -> string; depends on self, folder
         """
         Give the appropriate List-ID: header for mail-outs from this page.
         """
         return '%s <%s>' % (self.folder().title,self.listId())
 
-    def xBeenThereHeader(self):
+    def xBeenThereHeader(self): # -> string; depends on self, folder
         """
         Give the appropriate X-Been-There: header for mail-outs from this page.
         """
         return self.listId()
 
-    def bccHeader(self,recipients):
+    def bccHeader(self,recipients): # -> string
         """
         Give the appropriate Bcc: header for mail-outs from this page.
 
@@ -552,7 +551,7 @@ class PageMailSupport:
         """
         return ', '.join(stripList(recipients))
 
-    def subjectHeader(self,subject='',subjectSuffix=''):
+    def subjectHeader(self,subject='',subjectSuffix=''): # -> string; depends on self, folder, time
         """
         Give the appropriate Subject: header for mail-outs from this page.
 
@@ -583,7 +582,7 @@ class PageMailSupport:
             subject +
             subjectSuffix.strip())
 
-    def toHeader(self):
+    def toHeader(self): # -> string; depends on self, folder
         """
         Give the appropriate To: header for mail-outs from this page.
 
@@ -603,7 +602,7 @@ class PageMailSupport:
                 self.fromProperty() or
                 ';')
 
-    def signature(self, message_id=None):
+    def signature(self, message_id=None): # -> string; depends on self, folder
         """
         Give the appropriate signature to add to mail-outs from this page.
 
@@ -619,7 +618,7 @@ class PageMailSupport:
         return getattr(self.folder(),'mail_signature',
                        '--\nforwarded from %s' % url) # XXX i18n
 
-    def mailhost(self):
+    def mailhost(self): # -> mailhost; depends on: folder context
         """
         Give the MailHost that should be used for sending mail, or None.
 
@@ -644,7 +643,7 @@ class PageMailSupport:
 
     def sendMailToSubscribers(self, text, REQUEST, subjectSuffix='',
                               subject='',message_id=None,in_reply_to=None,
-                              exclude_address=None):
+                              exclude_address=None): # -> none; depends on self, wiki, mailhost; other effects: sends mail
         """
         Send mail to this page's and the wiki's subscribers, if any.
         
@@ -675,7 +674,7 @@ class PageMailSupport:
 
     def sendMailToEditSubscribers(self, text, REQUEST, subjectSuffix='',
                                   subject='',message_id=None,in_reply_to=None,
-                                  exclude_address=None):
+                                  exclude_address=None): # -> none; depends on self, wiki, mailhost; other effects: sends mail
         """
         Send mail to this page's and the wiki's all edits subscribers, if any.
         
@@ -713,7 +712,7 @@ class PageMailSupport:
                    in_reply_to=None,
                    to=None,
                    exclude_address=None,
-                   ):
+                   ): # -> none; depends on self, wiki, mailhost, time; other effects: sends encoded msg
         """Send a mail-out containing text to a list of email addresses.
         If mail-out is not configured in this wiki or there are no valid
         recipients, do nothing. Log any errors but don't stop.
@@ -753,9 +752,9 @@ InitializeClass(PageMailSupport)
 
 class AbstractMailHost:
     """Adapts the available [Secure] Mail[drop] Host to a generic one."""
-    def __init__(self, mailhost):
+    def __init__(self, mailhost): # -> none
         self.context = mailhost
-    def send(self,fields):
+    def send(self,fields): # -> none; depends on: self, mailhost; other effects: sends msg
         if self.context.meta_type in ('Secure Mail Host', 'Secure Maildrop Host'):
             r = self.context.secureSend(
                 fields['body'],
@@ -955,11 +954,10 @@ class MailIn:
 
         self.body = cleanupBody(payloadutf8)
         
-    def decideMailinAction(self): # -> none
-        # depends on: self, wiki context
-        # modifies self (destpage/destpagename/newpage/trackerissue or error attributes)
+    def decideMailinAction(self): # -> none; depends on: self, wiki context; modifies self
         """
-        Figure out what to do with this mail-in, setting some flags
+        Figure out what to do with this mail-in, setting the
+        destpage+destpagename+newpage+trackerissue or error flags
         accordingly. Here are the delivery rules:
 
         - if the message appears to be a zwiki mailout or from an auto-responder
@@ -1045,7 +1043,7 @@ class MailIn:
             self.error = '\nMessage had no destination page, ignored.\n\n\n'
             BLATHER('mailin.py: message had no destination page, ignored')
 
-    def checkMailinAllowed(self): # -> none; depends on self, wiki folder; modifies: self
+    def checkMailinAllowed(self): # -> none; depends on self, folder; modifies: self
         """
         Check if the mailin determined by decideMailinAction() is
         permitted to the sender and set flags, as follows:
@@ -1072,7 +1070,7 @@ class MailIn:
             BLATHER('mailin.py: bounced mail from non-subscriber',
                     self.FromEmail)
 
-    def recipient(self): # -> email lib address tuple; depends on self, wiki folder
+    def recipient(self): # -> email lib address tuple; depends on self, folder
         """
         Get the recipient that was used to deliver here (as an email tuple).
 
@@ -1094,13 +1092,13 @@ class MailIn:
                 return r
         return self.recipients[0]
 
-    def recipientAddress(self): # -> string; depends on self, wiki folder
+    def recipientAddress(self): # -> string; depends on self, folder
         """
         Just the email address part of the recipient used to deliver here.
         """
         return self.recipient()[1]
 
-    def workingPage(self): # -> wiki page | none; depends on wiki folder
+    def workingPage(self): # -> wiki page | none; depends on folder
         """
         Try to get a wiki page object which we can use for further operations.
 
@@ -1120,7 +1118,7 @@ class MailIn:
         else:
             return None
         
-    def defaultMailinPage(self): # -> string | none; depends on wiki folder
+    def defaultMailinPage(self): # -> string | none; depends on folder
         """
         The name of the wiki's default destination page for mailins, or None.
         """
@@ -1173,8 +1171,7 @@ class MailIn:
         """Return true if this message appears to be a spam report."""
         return re.search(SPAMADDREXP,self.recipientAddress()) and 1
 
-    def updateSpamBlocks(self): # -> none
-        # depends on: self, wiki folder properties; modifies wiki folder properties
+    def updateSpamBlocks(self): # -> none; depends on: self, folder; modifies folder
         """
         Update the wiki's spam-blocking rules based on this message.
 
@@ -1235,10 +1232,11 @@ class MailIn:
     def contextIsFolder(self): # -> boolean; depends on: self
         return not self.contextIsPage()
     
-    def folder(self): # -> container; depends on: self, wiki context
+    def folder(self): # -> container; depends on: self, folder
         """The wiki folder to which we are delivering."""
         if self.contextIsPage(): return self.context.folder()
-        else: return self.context # handle old external method in folder context
+        # handle old external method called in folder context
+        else: return self.context
 
 def cleanupBody(body): # -> string
     """Clean up/remove uninteresting parts of an incoming message body."""
