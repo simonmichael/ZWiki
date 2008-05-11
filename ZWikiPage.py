@@ -42,7 +42,7 @@ from Views import PageViews
 from OutlineSupport import PageOutlineSupport
 from Diff import PageDiffSupport # XXX to be replaced by..
 from History import PageHistorySupport
-from Mail import PageSubscriptionSupport, PageMailSupport
+from Mail import PageSubscriptionSupport, PageMailSupport, PageMailinSupport
 from Catalog import PageCatalogSupport
 from CMF import PageCMFSupport
 from Comments import PageCommentsSupport
@@ -83,6 +83,7 @@ class ZWikiPage(
     PageDiffSupport,
     PageHistorySupport,
     PageMailSupport,
+    PageMailinSupport,
     PageSubscriptionSupport,
     PageCatalogSupport,
     PageCommentsSupport,
