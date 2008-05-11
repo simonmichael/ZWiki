@@ -803,11 +803,9 @@ DEFAULT_SEVERITY = ISSUE_SEVERITIES[len(ISSUE_SEVERITIES)/2]
 # use email aliases like these to influence delivery
 WIKIADDREXP =    r'(wiki|mailin)@'         # comments and new pages
 TRACKERADDREXP = r'(tracker|bugs|issues)@' # new tracker issues
-SPAMADDREXP =    r'(spam)@'                # spam reports
-MAILINADDREXP = r'(%s|%s|%s)' % (
+MAILINADDREXP = r'(%s|%s)' % (
     WIKIADDREXP,
     TRACKERADDREXP,
-    SPAMADDREXP,
     )
 PAGEINSUBJECTEXP = bracketedexpr
 # extract a page name from the recipient real name
@@ -954,7 +952,7 @@ class MailIn:
 
         self.body = cleanupBody(payloadutf8)
         
-    def decideMailinAction(self): # -> none; depends on: self, wiki context; modifies self
+    def decideMailinAction(self): # -> none; depends on: self, wiki context; modifies self, folder
         """
         Figure out what to do with this mail-in, setting the
         destpage+destpagename+newpage+trackerissue or error flags
@@ -968,9 +966,6 @@ class MailIn:
           'open', check that the sender is either subscribed somewhere in the wiki
           or listed in the mail_accept_nonmembers property, and if not BOUNCE the
           message.
-
-        - if the recipient looks like a spam reporting address (.*SPAMADDREXP),
-          UPDATE SPAM BLOCKING RULES and DISCARD (see updateSpamBlocks).
 
         - if the recipient looks like a tracker mailin address (.*TRACKERADDREXP),
           CREATE AN ISSUE page.  Otherwise,
@@ -991,12 +986,6 @@ class MailIn:
         """
         if self.isJunk():
             self.error = '\nDiscarding junk mailin.\n\n\n'
-            return
-
-        if self.isSpamReport():
-            BLATHER('mailin.py: processing spam report')
-            self.updateSpamBlocks()
-            self.error = '\nProcessed spam report.\n\n\n'
             return
 
         if self.contextIsPage():
@@ -1166,65 +1155,6 @@ class MailIn:
         if not self.body:
             return 1
         return 0
-
-    def isSpamReport(self): # -> boolean; depends on: self
-        """Return true if this message appears to be a spam report."""
-        return re.search(SPAMADDREXP,self.recipientAddress()) and 1
-
-    def updateSpamBlocks(self): # -> none; depends on: self, folder; modifies folder
-        """
-        Update the wiki's spam-blocking rules based on this message.
-
-        1. add any urls in the message body and/or attached message body to the
-           folder's banned_links property, if it exists (can acquire)
-        2. add the first ip address found in the message body, if any, to the
-           folder's banned_ips property, if it exists (can acquire). 
-
-        This means that any subscriber can forward a spam mailout to the
-        wiki's spam address, and/or submit spammer urls or one spammer's
-        IP address manually, and the banned_links/banned_ips properties
-        will be updated. It's probably best to create these on the root
-        folder; they will not be created automatically.
-
-        XXX how to prevent frivolous reports ?
-
-        XXX add support for banned_ips, see http://zwiki.org/BlockList.
-        Better to use apache ? should we append to some filesystem config
-        file instead ? make this a separate external method ?
-        call add_spammer_url() and add_spammer_ip() for each ?
-        
-        """
-        # update the banned links property
-        if safe_hasattr(self.folder(),'banned_links'):
-            banned_links = list(self.folder().banned_links)
-            spam_links = re.findall(
-                r'((?:http|https|ftp|mailto|file):/*%s)' % urlchars,
-                self.subject + ' ' + self.body)
-            added_links = []
-            for l in spam_links:
-                if l not in banned_links:
-                    banned_links.append(l)
-                    added_links.append(l)
-            # have we got new urls to add ?
-            if added_links:
-                # update property - need to find the real  owner
-                folder = self.folder()
-                while not safe_hasattr(folder.aq_base,'banned_links'):
-                    folder = folder.aq_parent
-                folder.manage_changeProperties(banned_links=banned_links)
-                # log, also try to notify admin by mail, for now
-                log = 'mailin.py: added %s to %s/banned_links' % \
-                      (added_links,string.join(folder.getPhysicalPath(),'/'))
-                BLATHER(log)
-                admin = getattr(self.folder(),'mail_admin',None)
-                page = self.workingPage()
-                if admin and page:
-                    page.sendMailTo(
-                        [],
-                        log,
-                        None,
-                        subject='(banned_links updated)',
-                        to=admin)
 
     def contextIsPage(self): # -> boolean; depends on: self
         return self.context.meta_type=='ZWiki Page'
