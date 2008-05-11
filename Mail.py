@@ -3,6 +3,8 @@
 import re, sys
 from types import *
 
+from Globals import InitializeClass
+
 from I18n import _
 from TextFormatter import TextFormatter
 from Utils import html_unquote,BLATHER,formattedTraceback,stripList, \
@@ -449,6 +451,7 @@ class PageSubscriptionSupport:
             #    pass
             #return usernames
         
+InitializeClass(PageSubscriptionSupport)
 
 class PageMailSupport:
     """
@@ -746,6 +749,8 @@ class PageMailSupport:
         except: 
             BLATHER('**** failed to send mail to %s: %s' % (recipients,formattedTraceback()))
             
+InitializeClass(PageMailSupport)
+
 class AbstractMailHost:
     """Adapts the available [Secure] Mail[drop] Host to a generic one."""
     def __init__(self, mailhost):
@@ -1348,4 +1353,6 @@ class PageMailinSupport:
             exclude_address=m.xbeenthere,
             )
         return None
+
+InitializeClass(PageMailinSupport)
 
