@@ -313,14 +313,12 @@ class MailinTests(ZwikiTestCase):
 
     def test_destinationWithNoNamedPage(self):
         m = MailIn(self.p, str(TestMessage(subject='test')))
-        action, info = m.decideMailinAction()
-        self.assertEqual((action,info),('COMMENT','TestPage')) 
+        self.assertEqual(m.decideMailinAction(),('COMMENT','TestPage')) 
 
     def test_destinationWithNoNamedPageAndDefaultMailinPageProperty(self):
         self.p.folder().default_mailin_page='TestPage'
         m = MailIn(self.p, str(TestMessage(subject='test')))
-        action, info = m.decideMailinAction()
-        self.assertEqual((action,info),('COMMENT','TestPage')) 
+        self.assertEqual(m.decideMailinAction(),('COMMENT','TestPage')) 
 
     def test_destinationWithNoNamedPageAndBlankDefaultMailinPageProperty(self):
         self.p.folder().default_mailin_page=''
@@ -330,37 +328,28 @@ class MailinTests(ZwikiTestCase):
 
     def test_destinationFromBracketedNameInSubject(self):
         m = MailIn(self.p, str(TestMessage(subject='[Some Page]')))
-        action, info = m.decideMailinAction()
-        self.assertEqual((action,info),('CREATE','Some Page'))
+        self.assertEqual(m.decideMailinAction(),('CREATE','Some Page'))
 
     def test_destinationFromMultipleBracketedNamesInSubject(self):
         m = MailIn(self.p, str(TestMessage(subject='[Fwd:][LIST][Some Page]')))
-        action, info = m.decideMailinAction()
-        self.assertEqual((action,info),('CREATE','Some Page')) 
+        self.assertEqual(m.decideMailinAction(),('CREATE','Some Page')) 
     
     def test_destinationFromLongSubject(self):
-        m = MailIn(
-            self.p,
-            str(TestMessage(subject='['+' ....'*20+'Test Page'+' ....'*20+']')))
-        action, info = m.decideMailinAction()
-        self.assertEqual((action,info),('COMMENT','TestPage')) 
+        m = MailIn(self.p,
+                   str(TestMessage(subject='['+' ....'*20+'Test Page'+' ....'*20+']')))
+        self.assertEqual(m.decideMailinAction(),('COMMENT','TestPage')) 
     
     def test_destinationFromLongSubjectWithLineBreak(self):
-        m = MailIn(
-            self.p,
-            str(TestMessage(subject='''\
+        m = MailIn(self.p,
+                   str(TestMessage(subject='''\
 Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
  (test with long long long long long long subject)] property change''')))
-        action, info = m.decideMailinAction()
-        self.assertEqual(
-            (action,info),
-            ('CREATE',
-             'IssueNo0547 mail (with long subject ?) may go to wrong page (test with long long long long long long subject)'))
+        self.assertEqual(m.decideMailinAction(),
+                         ('CREATE',
+                          'IssueNo0547 mail (with long subject ?) may go to wrong page (test with long long long long long long subject)'))
     
     def test_destinationFromTrackerAddress(self):
-        m = MailIn(self.p, str(TestMessage(
-            to='bugs@b.c',
-            )))
+        m = MailIn(self.p, str(TestMessage(to='bugs@b.c',)))
         action, info = m.decideMailinAction()
         self.assertEqual(action,'ISSUE')
 
