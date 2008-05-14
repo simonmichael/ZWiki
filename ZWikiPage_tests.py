@@ -124,8 +124,13 @@ class Tests(ZwikiTestCase):
         self.assertEquals(self.p.isValidWikiLinkSyntax('[[double brackets]]'),1)
         self.p.use_double_bracket_links = 0
         self.assertEquals(self.p.isValidWikiLinkSyntax('[[double brackets]]'),0)
+        self.assertEquals(self.p.isValidWikiLinkSyntax('((double brackets))'),0)
         self.p.use_double_bracket_links = 1
         self.assertEquals(self.p.isValidWikiLinkSyntax('[[double brackets]]'),1)
+        self.p.use_double_parenthesis_links= 0
+        self.assertEquals(self.p.isValidWikiLinkSyntax('((double parenthesis))'),0)
+        self.p.use_double_parenthesis_links= 1
+        self.assertEquals(self.p.isValidWikiLinkSyntax('((double parenthesis))'),1)
 
     def test_markLinksIn(self):
         self.assertEquals(self.p.markLinksIn('test'),'test')
@@ -135,6 +140,10 @@ class Tests(ZwikiTestCase):
             self.p.markLinksIn(
             'WikiName, [freeform name], [[double brackets]], ((double parentheses))'),
             '<zwiki>WikiName</zwiki>, <zwiki>[freeform name]</zwiki>, <zwiki>[[double brackets]]</zwiki>, ((double parentheses))')
+        self.assertEquals(
+            self.p.markLinksIn(
+            'WikiName, [[double brackets]], bla, [[double brackets]]'),
+            '<zwiki>WikiName</zwiki>, <zwiki>[[double brackets]]</zwiki>, bla, <zwiki>[[double brackets]]</zwiki>')
         self.p.use_wikiname_links = 0
         self.p.use_bracket_links = 0
         self.p.use_double_bracket_links = 0
@@ -143,6 +152,10 @@ class Tests(ZwikiTestCase):
             self.p.markLinksIn(
             'WikiName, [freeform name], [[double brackets]], ((double parentheses))'),
             'WikiName, [freeform name], [[double brackets]], <zwiki>((double parentheses))</zwiki>')
+        self.assertEquals(
+            self.p.markLinksIn(
+            'WikiName, ((double parentheses)), (bla), ((double parentheses))'),
+            'WikiName, <zwiki>((double parentheses))</zwiki>, (bla), <zwiki>((double parentheses))</zwiki>')
 
     def test_formatWikiname(self):
         self.assertEquals(self.p.formatWikiname('CamelCase'),'CamelCase')

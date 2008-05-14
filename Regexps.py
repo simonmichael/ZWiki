@@ -42,7 +42,7 @@ doublebracketedexpr = r'\[\[([^\n\]]+)\]\]'
 
 # wicked-style double parentheses ((...)), for international users whose
 # keyboards make brackets hard to type
-doubleparenthesisexpr = r'\(\(([^\n\]]+)\)\)'
+doubleparenthesisexpr = r'\(\(([^\n)]+)\)\)'
 
 # match either single or double brackets, to simplify later regexps a little
 bracketedexpr       = r'\[\[?([^\n\]]+)\]\]?'
