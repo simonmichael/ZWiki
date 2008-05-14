@@ -313,8 +313,8 @@ Clean: clean
 # the permissions, such as... (?)
 # Run as superuser in the ZWiki dir on zwiki.org.
 fixperms:
-	chgrp -R zwiki *
-	chmod -R ug+rw *
+	chgrp -R zwiki .
+	chmod -R ug+rw .
 	find . -type d -exec chmod g+s {}  \;
 
 
