@@ -677,7 +677,7 @@ class SkinViews:
             ),
             action=self.pageUrl()+'/editform')
 
-    security.declareProtected(Permissions.Edit, 'editform')
+    security.declarePublic('editform')      # check permissions at runtime
     def editform(self, REQUEST=None, page=None, text=None, action='Change'):
         """
         Render the edit form (template-customizable).
@@ -698,13 +698,23 @@ class SkinViews:
         if not page:
             # no page specified - editing the current page
             page = self.pageName()
+            if not self.checkPermission(Permissions.Edit, self):
+                raise 'Unauthorized', (
+                    _('You are not authorized to edit pages in this wiki.'))
             text = self.read()
         elif self.pageWithName(page):
             # editing a different page
-            text = self.pageWithName(page).read()
+            page = self.pageWithName(page)
+            if not self.checkPermission(Permissions.Edit, page):
+                raise 'Unauthorized', (
+                    _('You are not authorized to edit pages in this wiki.'))
+            text = page.read()
         else:
             # editing a brand-new page
             action = 'Create'
+            if not self.checkPermission(Permissions.Add, self.folder()):
+                raise 'Unauthorized', (
+                    _('You are not authorized to add pages in this wiki.'))
             text = text or ''
 
         # display the edit form - a dtml method or the builtin default
