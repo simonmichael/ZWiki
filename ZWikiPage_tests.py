@@ -136,6 +136,9 @@ class Tests(ZwikiTestCase):
         self.assertEquals(self.p.markLinksIn('test'),'test')
         self.assertEquals(self.p.markLinksIn('http://url'),
                           '<zwiki>http://url</zwiki>')
+        self.assertEquals(self.p.markLinksIn(
+            'http://web.archive.org/web/*/www-cs-faculty.stanford.edu/~knuth/cweb.html'),
+            '<zwiki>http://web.archive.org/web/*/www-cs-faculty.stanford.edu/~knuth/cweb.html</zwiki>')
         self.assertEquals(
             self.p.markLinksIn(
             'WikiName, [freeform name], [[double brackets]], ((double parentheses))'),

@@ -14,7 +14,7 @@ import Defaults
 from Utils import BLATHER, DEBUG, formattedTraceback
 
 # URLs/URIs (better regexps in urllib/urlparse ?)
-urlchars = r'[A-Za-z0-9/:;@_%~#=&\.\-\?\+\$,]+'
+urlchars = r'[A-Za-z0-9/:;@_%~#=&*\.\-\?\+\$,]+'
 url      = r'["=]?((about|gopher|http|https|ftp|mailto|file):%s)' % (urlchars)
 
 # valid characters for zwiki page ids
