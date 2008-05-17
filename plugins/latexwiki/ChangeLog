@@ -25,7 +25,7 @@ LatexWiki 0.42:
   in 10-64 px.
 
 LatexWiki 0.38 (not released):
-* rename escapeEmailAddresses to protectEmailAddresses (grrr)
+* rename escapeEmailAddresses to obfuscateEmailAddresses (grrr)
 * fix publish error on latexwiki.css under some circumstances
 * fix hang-on-startup due to either os.access or os.popen('which ...')
 * Allow runCommand to pass input to child, use it for itex

@@ -41,7 +41,7 @@ class PageTypeStxLatex(PageTypeStx):
         # render stx
         t = self.format(page,t)
         t = page.markLinksIn(t)
-        t = self.protectEmailAddresses(page,t)
+        t = self.obfuscateEmailAddresses(page,t)
         # add a CSS class to the whole thing
         t = '<div class="latexwiki">\n' + t + '\n</div>\n'
         return t

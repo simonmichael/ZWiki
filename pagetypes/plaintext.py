@@ -13,7 +13,7 @@ class PageTypePlaintext(PageTypeBase):
         t = text or (page.document() + '\n'+MIDSECTIONMARKER + \
                     self.preRenderMessages(page))
         t = self.format(page,t)
-        t = self.protectEmailAddresses(page,t)
+        t = self.obfuscateEmailAddresses(page,t)
         return t
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):

@@ -1,4 +1,6 @@
 from Products.ZWiki.testsupport import *
+#from Products.ZWiki.pagetypes.
+from common import PageTypeBase
 ZopeTestCase.installProduct('ZWiki')
 
 def test_suite():
@@ -25,3 +27,7 @@ class Tests(ZwikiTestCase):
         test('>> a\n',
              '<blockquote type="cite">\n<blockquote type="cite">\na</blockquote>\n</blockquote>\n')
 
+    def test_obfuscateEmailAddresses(self):
+        f = lambda s:PageTypeBase().obfuscateEmailAddresses(self.p,s)
+        self.assertEquals(f('test'), 'test')
+        self.assertEquals(f('a@b.c'), '<span class="nospam1">&#97<!-- foobar --></span>&#64;<span class="nospam2">&#98;&#46;c</span>')

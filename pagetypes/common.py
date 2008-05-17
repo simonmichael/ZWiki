@@ -110,12 +110,12 @@ class PageTypeBase:
 
     def preRenderMessage(self,page,utfmsg):
         t = page.tounicode(utfmsg.get_payload())
-        t = self.protectEmailAddresses(page,t)
+        t = self.obfuscateEmailAddresses(page,t)
         t = self.renderCitationsIn(page,t)
         t = self.addCommentHeadingTo(page,t,utfmsg)
         return t
 
-    def protectEmailAddresses(self,page,text):
+    def obfuscateEmailAddresses(self,page,text):
         return re.sub(r'(?<!mailto:)\b(?!msg\d{14}-\d{4})(?<!msg\d{14}-)(\w[\w\-\+\.]*)@([\w\-\.]+)\.([\w\-\.]+)\b([^>]*<|$)', 
             lambda m: '<span class="nospam1">&#' + str(ord(m.groups()[0][0])) 
                 + m.groups()[0][1:] 

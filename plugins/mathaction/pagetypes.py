@@ -61,7 +61,7 @@ class PageTypeStxMath(PageTypeStx):
             r'\1<a href="\3">\2</a>\4',t)
         t = self.format(page,t)
         t = page.markLinksIn(t)
-        t = self.protectEmailAddresses(page,t)
+        t = self.obfuscateEmailAddresses(page,t)
         t = re.sub(r'<pre></pre>',restorePre,t,reConsts)
         return '<div class="latexwiki">\n' + t + '\n</div>\n'
 
@@ -133,7 +133,7 @@ class PageTypePamphlet(PageTypeStx):
             r'\1<a href="\3">\2</a>\4',t)
         t = self.format(page,t)
         t = page.markLinksIn(t)
-        t = self.protectEmailAddresses(page,t)
+        t = self.obfuscateEmailAddresses(page,t)
         return '<div class="latexwiki">\n' + b + t + '\n</div>\n'
 
     def discussionSeparator(self, page):
@@ -230,7 +230,7 @@ registerPageType(PageTypePamphlet)
 #        t = self.renderStxIn(page, t)
 #        if page.usingPurpleNumbers(): t = page.renderPurpleNumbersIn(t)
 #        t = page.markLinksIn(t)
-#        t = self.protectEmailAddresses(page,t)
+#        t = self.obfuscateEmailAddresses(page,t)
 #        return '<div class="latexwiki">\n' + t + '\n</div>\n'
 #
 #    def discussionSeparator(self, page):
@@ -291,7 +291,7 @@ registerPageType(PageTypePamphlet)
 #                                  getattr(page.folder(),'latex_res_fudge',1.03), latexTemplate)
 #        if page.usingPurpleNumbers(): t = page.renderPurpleNumbersIn(t)
 #        t = page.markLinksIn(t)
-#        t = self.protectEmailAddresses(page,t)
+#        t = self.obfuscateEmailAddresses(page,t)
 #        return '<div class="latexwiki">\n' + t + '\n</div>\n'
 #
 #    def discussionSeparator(self, page):
@@ -367,7 +367,7 @@ registerPageType(PageTypePamphlet)
 #                                  getattr(page.folder(),'latex_res_fudge',1.03), latexTemplate)
 #        if page.usingPurpleNumbers(): t = page.renderPurpleNumbersIn(t)
 #        t = page.markLinksIn(t)
-#        t = self.protectEmailAddresses(page,t)
+#        t = self.obfuscateEmailAddresses(page,t)
 #        return '<div class="latexwiki">\n' + t + '\n</div>\n'
 #
 #    def discussionSeparator(self, page):

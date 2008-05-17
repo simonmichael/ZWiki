@@ -14,7 +14,7 @@ class PageTypeHtml(PageTypeBaseHtml):
                     self.preRenderMessages(page))
         t = page.applyWikiLinkLineEscapesIn(t)
         t = page.markLinksIn(t)
-        t = self.protectEmailAddresses(page,t)
+        t = self.obfuscateEmailAddresses(page,t)
         return t
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):
