@@ -272,7 +272,7 @@ class PluginTracker:
 
     security.declareProtected(Permissions.Add, 'createNextIssue')
     def createNextIssue(self,name='',text='',category='',severity='',status='',
-                        REQUEST=None,sendmail=1):
+                        REQUEST=None,sendmail=1): # -> string; ...
         """
         Add a new issue page, using the next available number, and redirect.
 

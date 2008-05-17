@@ -48,7 +48,7 @@ class PageEditingSupport:
 
     security.declarePublic('createform')      # check permissions at runtime
     def create(self,page=None,text='',type=None,title='',REQUEST=None,log='',
-               sendmail=1, parents=None, subtopics=None, pagename=None):
+               sendmail=1, parents=None, subtopics=None, pagename=None): # -> string; ...
         """Create a new wiki page, and optionally do extra stuff. Normally
         called via edit().
 
