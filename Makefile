@@ -154,7 +154,7 @@ testall:
 	$(TESTALL) -m Products.ZWiki
 
 test_%:
-	$(TESTV) -m Products.ZWiki -t $@
+	$(TESTV) -m Products.ZWiki -t $*
 
 testmod_%:
 	$(TESTV) -m Products.ZWiki.$*
