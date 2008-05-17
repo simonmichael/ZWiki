@@ -3,7 +3,8 @@
     <!-- always-available zwiki access keys -->
     <div metal:define-macro="accesskeys" id="accesskeys"
          tal:define="pageurl here/pageUrl;
-                     thisurl python:here.urlquote(request.get('URL'));">
+                     thisurl python:here.urlquote(request.get('URL'));
+                     skip_e_accesskey exists:skip_e_accesskey | python:False">
       <a tal:attributes="href string:${here/pageUrl}/showAccessKeys" accesskey="0"></a>
       <a tal:attributes="href here/homeUrl" accesskey="f"></a>
       <a tal:attributes="href here/contentsUrl" accesskey="c"></a>
@@ -24,7 +25,8 @@
       <a tal:attributes="href string:${here/pageUrl}/backlinks" accesskey="b"></a>
       <a tal:attributes="href string:${here/pageUrl}/diff" accesskey="d"></a>
       <a tal:attributes="href string:${here/pageUrl}/history" accesskey="y"></a>
-      <a tal:attributes="href string:${here/pageUrl}/editform" accesskey="e"></a>
+      <a tal:attributes="href string:${here/pageUrl}/editform" 
+      tal:condition="not:skip_e_accesskey" accesskey="e"></a>
       <a tal:attributes="href python:here.wikiUrl() + '/externalEdit_/' +
                          modules['Products.PythonScripts.standard'].url_quote(here.id()) +
                          '?borrow_lock=1'" accesskey="x" tal:condition="here/isExternalEditEnabled"></a>

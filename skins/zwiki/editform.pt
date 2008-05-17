@@ -36,6 +36,7 @@
       wiki_url   here/wikiUrl;
       rows       python:request.get('zwiki_height',20);
       uploaddir  python:getattr(container,'uploads',container);
+      skip_e_accesskey python:True;
       "
       onload="document.forms[0].text.focus();"
       >
