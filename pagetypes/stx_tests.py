@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from Products.ZWiki.testsupport import *
+from Products.ZWiki.pagetypes.stx import PageTypeStx
 #ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 
@@ -9,14 +10,28 @@ def test_suite():
     return suite
 
 class Tests(ZwikiTestCase):
+    def afterSetUp(self):
+        ZwikiTestCase.afterSetUp(self)
+        self.p.edit(type='stx')
 
-    def test_PageTypeStx(self):
-        self.p.edit(text='! PageOne PageTwo\n',type='stx')
-        self.assertEquals(self.p.render(bare=1),
-                          '<p> PageOne PageTwo</p>\n<p>\n</p>\n')
+    def test_edit(self):
+        self.p.edit(text='! PageOne PageTwo\n')
+        self.assertEquals(self.p.render(bare=1),'<p> PageOne PageTwo</p>\n<p>\n</p>\n')
 
     def test_non_ascii_edit(self):
-        self.p.edit(text='É',type='stx')
-        # render returns unicode, use a unicode literal avoid decode problems
+        self.p.edit(text='É')
         self.assertEquals(u'<p>É</p>\n<p>\n</p>\n', self.p.render(bare=1))
                           
+    #def test_stxToHtml(self):
+    #    p = self.page
+    #    # handle a STX table or other error gracefully
+    #    self.assertEquals(p.stxToHtml('+-+-+\n| | |\n+-+-+'),
+    #                      '')
+
+    def test_mailto_with_dot_1115(self):
+        self.assertEquals(
+            self.p.renderText('mailto:ab@c.com','stx'),
+            u'<p><a href="mailto:ab@c.com">ab@c.com</a></p>\n<p>\n</p>\n')
+        self.assertEquals(
+            self.p.renderText('mailto:a.b@c.com','stx'),
+            u'<p><a href="mailto:a.b@c.com">a.b@c.com</a></p>\n<p>\n</p>\n')

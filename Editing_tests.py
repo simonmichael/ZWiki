@@ -627,12 +627,6 @@ long citations
         self.assertEqual(diff,SHOULDDIFF)
         #self.assertEqual(p.formatMailout(diff), SHOULDMAILOUT)
 
-    #def test_stxToHtml(self):
-    #    p = self.page
-    #    # handle a STX table or other error gracefully
-    #    self.assertEquals(p.stxToHtml('+-+-+\n| | |\n+-+-+'),
-    #                      '')
-
     def XXXtestNoDoubleHtmlTag(self):
         p = self.page
         p.edit(type='stx')
