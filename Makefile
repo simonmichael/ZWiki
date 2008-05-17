@@ -227,28 +227,6 @@ check:
 push:
 	darcs push -v -a $(REPO)
 
-push-exp:
-	darcs push -v -a $(HOST):/repos/$(PRODUCT)-exp
-
-pull-simon pull:
-	darcs pull --interactive -v http://zwiki.org/repos/ZWiki
-
-pull-lele:
-	darcs pull --interactive -v http://nautilus.homeip.net/~lele/projects/ZWiki
-
-pull-bob:
-	darcs pull --interactive -v http://bob.mcelrath.org/darcs/zwiki
-
-pull-bobtest:
-	darcs pull --interactive -v http://bob.mcelrath.org/darcs/zwiki-testing
-
-pull-bill:
-	darcs pull --interactive -v http://page.axiom-developer.org/repository/ZWiki
-
-getproducts:
-	cd /zope2/Products; \
-	  rsync -rl --progress --exclude="*.pyc" zwiki.org:/zope2/Products .
-
 
 
 # misc
