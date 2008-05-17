@@ -220,7 +220,7 @@ will greatly aid testing, debugging and reliability.
 
 Here is a possible convention for now: when you touch a method or
 function, review the docstring and code and try add a comment describing
-the contract. The contract speficies the return type(s), whether it
+the contract. The contract specifies the return type(s), whether it
 redirects, state that it depends on other than the arguments, state that
 it modifies other than the return value, and any other effects. Here are
 some examples::
@@ -245,7 +245,7 @@ some examples::
 
 A few more notes: 
 
-These don't have to be perfectly correct; even an estimate could be
+These don't have to be perfectly correct; even a rough guess could be
 useful.  Do review the contract for correctness every time you change some
 code. Contracts should ideally be cumulative, ie reflect the contracts of
 methods called by this one - looking at code one or two levels deep should
