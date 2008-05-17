@@ -122,23 +122,30 @@ postats:
 
 
 ## testing
+# We provide some handy make rules to help run Zwiki unit & functional tests.
+# Prerequisites:
+# - install at least Zope 2.10
+# - install or symlink your ZWiki directory in $INSTANCE/Products
+# - if necessary (eg if you symlink) adjust INSTANCE paths below
+# Examples:
+#   make test                            # run most tests quickly
+#   make testall                         # run all tests verbosely
+#   make test_methodpattern              # run one or more matching tests
+#   make testmod_Modulename              # run all tests for a module
+#   make testmod_"pagetypes.rst -D"      # run module tests with testrunner arguments
+#   make testmod_Functional              # run only functional tests
+#   make testresults                     # log "make testall" output in TESTRESULTS
+#   make testrunnerhelp                  # see testrunner arguments reference
 
-# To run Zwiki unit tests: install Zope 2.10, adjust INSTANCE paths,
-# install or link your ZWiki directory in $INSTANCE/Products.
-# Some additional tests will run if Plone is installed.
-# minimal products, fast startup
-INSTANCE=/zope2
-# all products
-BIGINSTANCE=/zope1
-
-# we keep zwiki's tests in *_tests.py alongside the code
-ZWIKITESTS=--tests-pattern='_tests$$' --test-file-pattern='_tests$$'
-
-# run tests as quickly as possible
-TEST=$(INSTANCE)/bin/zopectl test $(ZWIKITESTS) --keepbytecode -v #--nowarnings
-
-# run all tests verbosely and thoroughly
-TESTALL=$(BIGINSTANCE)/bin/zopectl test $(ZWIKITESTS) -a 3 -vv
+# an instance with minimal products, for fast testing
+INSTANCE=../..
+# an instance with plone, if you want to run those tests
+INSTANCE2=../..
+# zwiki's tests are in *_tests.py alongside the code
+TESTFILES=--tests-pattern='_tests$$' --test-file-pattern='_tests$$'
+TEST=$(INSTANCE)/bin/zopectl test $(TESTFILES) -v --keepbytecode #--nowarnings
+TESTV=$(TEST) -vv
+TESTALL=$(INSTANCE2)/bin/zopectl test $(TESTFILES) -a 3 -vvv
 
 test:
 	$(TEST) -m Products.ZWiki
@@ -146,34 +153,22 @@ test:
 testall:
 	$(TESTALL) -m Products.ZWiki
 
-# test one module (or all matching modules):
-#   make testmod-Mail
-# in a subdirectory:
-#   make testmod-Extensions.Install
-# with additional testrunner args:
-#   make testmod-"pagetypes.rst -vv -D"
-testmod-%:
-	$(TEST) -m Products.ZWiki.$*
-
-# test one test (or all matching tests):
-#   make test-test_install
-test-%:
-	$(TEST) -m Products.ZWiki -t $*
-
-# as above, but just make testmethodname:
-#   make test_install
 test_%:
-	$(TEST) -m Products.ZWiki -t $@
+	$(TESTV) -m Products.ZWiki -t $@
 
-# silliness to properly capture output of a test run
+testmod_%:
+	$(TESTV) -m Products.ZWiki.$*
+
 TESTRESULTS=TESTRESULTS
+.PHONY: testresults
 testresults:
-	date >$(TESTRESULTS)
-	make -s test >>$(TESTRESULTS) 2>.stderr
-	cat .stderr >>$(TESTRESULTS)
-	rm -f .stderr
+	@rm -f $(TESTRESULTS)
+	@date >$(TESTRESULTS)
+	@make -s test >>$(TESTRESULTS) 2>.stderr
+	@cat .stderr >>$(TESTRESULTS)
+	@rm -f .stderr
 
-testhelp:
+testrunnerhelp:
 	$(INSTANCE)/bin/zopectl test --help
 
 
