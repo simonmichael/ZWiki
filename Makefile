@@ -130,9 +130,9 @@ postats:
 # Examples:
 #   make test                            # run most tests quickly
 #   make testall                         # run all tests verbosely
-#   make test_methodpattern              # run one or more matching tests
+#   make test_methodregexp               # run one or more matching tests
 #   make testmod_Modulename              # run all tests for a module
-#   make testmod_"pagetypes.rst -D"      # run module tests with testrunner arguments
+#   make testmod_"pagetypes.rst -D"      # run rst tests and debug any failure
 #   make testmod_Functional              # run only functional tests
 #   make testresults                     # log "make testall" output in TESTRESULTS
 #   make testrunnerhelp                  # see testrunner arguments reference
