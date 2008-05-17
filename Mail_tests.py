@@ -281,6 +281,58 @@ class MailinTests(ZwikiTestCase):
         ZwikiTestCase.afterSetUp(self)
         self.wiki.mailin_policy='open'
         
+    def test_stripSignature(self):
+        # signatures after -- should be stripped
+        self.assertEqual(
+            stripSignature(
+            '''
+blah blah
+
+--
+my signature
+blah blah blah
+'''),
+            '''
+blah blah
+
+''')
+        # unless they are too large
+        from Mail import MAX_SIGNATURE_STRIP_SIZE
+        self.assertEqual(
+            stripSignature(
+            '''
+blah blah
+
+--
+''' + 'x'*(MAX_SIGNATURE_STRIP_SIZE+1)),
+            '''
+blah blah
+
+--
+''' + 'x'*(MAX_SIGNATURE_STRIP_SIZE+1))
+        # leave other things alone
+        self.assertEqual(
+            stripSignature(
+            '''blah
+---
+blah'''),
+            '''blah
+---
+blah''')
+        self.assertEqual(
+            stripSignature(
+            '''blah
+ --
+blah'''),
+            '''blah
+ --
+blah''')
+
+    def test_stripBottomQuoted(self):
+        def linecount(s): return len(s.split('\n'))
+        self.assertEqual(linecount(stripBottomQuoted(BOTTOMQUOTEDMSG)),8) # re bug, should be 7
+        #self.assertEqual(linecount(stripBottomQuoted(BOTTOMQUOTEDMSG2)),8) # XXX not implemented
+
     def test_recipientIdentification(self):
         # from Mail.py:
         # If the message has multiple recipients, decide which one refers to us
@@ -371,6 +423,19 @@ Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
         self.p.mailin(TESTMSG)
         self.assertEqual(1, len(re.findall(TESTBODY,self.p.text())))
         
+    def test_mailinTrackerIssue(self):
+        self.p.setupTracker()
+        self.assertEqual(1, self.p.issueCount())
+        self.p.mailin(str(TestMessage(to='bugs@somewhere')))
+        self.assertEqual(2, self.p.issueCount())
+
+    def test_mailinTrackerIssueLongSubject(self):
+        longsubjmsg = str(TestMessage(to='bugs@somewhere',subject=LONGSUBJECT))
+        self.p.setupTracker()
+        self.assertEqual(1, self.p.issueCount())
+        self.p.mailin(longsubjmsg)
+        self.assertEqual(2, self.p.issueCount())
+
     def test_mailinMultipart(self):
         p = self.p
         p.subscribe(TESTSENDER)
@@ -392,67 +457,3 @@ Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
         self.assertEqual(1, p.commentCount())
         self.assert_('rename changes_rss to edits_rss' in p.text())
 
-    def test_mailinTrackerIssue(self):
-        self.p.setupTracker()
-        self.assertEqual(1, self.p.issueCount())
-        self.p.mailin(str(TestMessage(to='bugs@somewhere')))
-        self.assertEqual(2, self.p.issueCount())
-
-    def test_mailinTrackerIssueLongSubject(self):
-        longsubjmsg = str(TestMessage(to='bugs@somewhere',subject=LONGSUBJECT))
-        self.p.setupTracker()
-        self.assertEqual(1, self.p.issueCount())
-        self.p.mailin(longsubjmsg)
-        self.assertEqual(2, self.p.issueCount())
-
-    def test_stripSignature(self):
-        # signatures after -- should be stripped
-        self.assertEqual(
-            stripSignature(
-            '''
-blah blah
-
---
-my signature
-blah blah blah
-'''),
-            '''
-blah blah
-
-''')
-        # unless they are too large
-        from Mail import MAX_SIGNATURE_STRIP_SIZE
-        self.assertEqual(
-            stripSignature(
-            '''
-blah blah
-
---
-''' + 'x'*(MAX_SIGNATURE_STRIP_SIZE+1)),
-            '''
-blah blah
-
---
-''' + 'x'*(MAX_SIGNATURE_STRIP_SIZE+1))
-        # leave other things alone
-        self.assertEqual(
-            stripSignature(
-            '''blah
----
-blah'''),
-            '''blah
----
-blah''')
-        self.assertEqual(
-            stripSignature(
-            '''blah
- --
-blah'''),
-            '''blah
- --
-blah''')
-
-    def test_stripBottomQuoted(self):
-        def linecount(s): return len(s.split('\n'))
-        self.assertEqual(linecount(stripBottomQuoted(BOTTOMQUOTEDMSG)),8) # re bug, should be 7
-        #self.assertEqual(linecount(stripBottomQuoted(BOTTOMQUOTEDMSG2)),8) # XXX not implemented
