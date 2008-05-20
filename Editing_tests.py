@@ -773,3 +773,21 @@ bbb
         a,b,c = expungeLastEditorEverywhereAndRefresh(b) # removes joe, but not page creation
         self.assertEqual([1,2,1], [p.revisionCount() for p in [a,b,c]])
 
+    def test_replaceLinks(self):
+        p = self.page
+        p.edit(text=u'something WikiLink other')
+        p._replaceLinks('WikiLink','NewWikiLink',REQUEST=None)
+        self.assertEqual(p.read(),u'something NewWikiLink other')
+        p.edit(text=u'something [bracket link] other')
+        p._replaceLinks('bracket link','new bracket link',REQUEST=None)
+        self.assertEqual(p.read(),u'something [new bracket link] other')
+        p.edit(text=u'something [Installer] other Installer not')
+        p._replaceLinks('Installer','New Installer',REQUEST=None)
+        self.assertEqual(p.read(),u'something [New Installer] other Installer not')
+        p.edit(text=u'something [Old Installer] other OldInstaller is Old Installer not')
+        p._replaceLinks('Old Installer','New Installer',REQUEST=None)
+        self.assertEqual(p.read(),
+            u'something [New Installer] other [New Installer] is Old Installer not')
+        # this is actually not 100% what we want:
+        # the wikilink is replaced by a freeform bracket link
+

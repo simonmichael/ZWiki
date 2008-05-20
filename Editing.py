@@ -621,9 +621,13 @@ class PageEditingSupport:
             oldpat = r'\b%s\b' % oldlink
         else:
             # replace both the freeform  and the equivalent bare wiki link
-            # XXX assumes single brackets are allowed in this wiki
-            oldpat = r'(\[%s\]|\b%s\b)' \
-                     % (re.escape(oldlink), self.canonicalIdFrom(oldlink))
+            # XXX assumes single brackets are used in this wiki
+            canonical_link = self.canonicalIdFrom(oldlink)
+            if self.isWikiName(canonical_link):
+                wikiname_pattern = r'\b%s\b' % canonical_link
+                oldpat = r'(\[%s\]|%s)' % (re.escape(oldlink),wikiname_pattern)
+            else:
+                oldpat = r'\[%s\]' % re.escape(oldlink)
         newpat = (self.isWikiName(newlink) and newlink) or '[%s]' % newlink
         self.edit(text=re.sub(oldpat, newpat, self.read()),
                   REQUEST=REQUEST)
