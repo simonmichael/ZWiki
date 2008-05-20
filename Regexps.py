@@ -47,6 +47,9 @@ doubleparenthesisexpr = r'\(\(([^\n)]+)\)\)'
 # match either single or double brackets, to simplify later regexps a little
 bracketedexpr       = r'\[\[?([^\n\]]+)\]\]?'
 
+# match any kind of bracket or double parenthesis styles, group for sub()
+bracketmatch        = re.compile(r'(\[\[?|\(\()([^\n\]]+)(\]\]?|\)\))')
+
 # bare wikinames
 #
 # "bare wikinames" here means page names which will be automatically

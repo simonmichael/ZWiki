@@ -302,3 +302,39 @@ Now become Manager again and mass-expunge all edits by this "testy" person.
     >>> editlink.click()
     >>> 'testy' not in browser.contents
     True
+
+Renaming a page and changing backlinks:
+
+    >>> browser.open(folder_url+'/testwiki/FrontPage')
+    >>> pagename = browser.getControl(name='pagename')
+    >>> pagename.value = 'bla bla'
+    >>> create = browser.getControl('create')
+    >>> create.click()
+    >>> textarea = browser.getControl(name='text')
+    >>> textarea.value = 'This is the bla bla page'
+    >>> logtext = browser.getControl(name='log')
+    >>> create = browser.getControl('Create') # capital C here
+    >>> create.click()
+    >>> browser.url
+    '.../BlaBla'
+    >>> browser.open(folder_url+'/testwiki/FrontPage')
+    >>> editlink = browser.getLink('edit')
+    >>> editlink.click()
+    >>> textarea = browser.getControl(name='text')
+    >>> textarea.value = """There is a link to ZWiki, to ZWiki:HowToSetUpAZwikiTracker and some to [bla bla]
+    ... and bla bla or BlaBla or even [[bla bla]] - 
+    ... but by default no ((bla bla)), no !MailHost and of course not AnyOther link."""
+    >>> submit = browser.getControl('Save')
+    >>> submit.click()
+    >>> browser.open(folder_url+'/testwiki/FrontPage/text')
+    >>> browser.contents
+    'There is a link to ZWiki, to ZWiki:HowToSetUpAZwikiTracker and some to [bla bla]\nand bla bla or BlaBla or even [[bla bla]] - \nbut by default no ((bla bla)), no !MailHost and of course not AnyOther link.'
+    >>> browser.open(folder_url+'/testwiki/BlaBla')
+    >>> pagename = browser.getControl(name='pagename')
+    >>> pagename.value = 'flub flub'
+    >>> rename = browser.getControl('rename')
+    >>> rename.click()
+    >>> browser.open(folder_url+'/testwiki/FrontPage/text')
+    >>> browser.contents
+    'There is a link to ZWiki, to ZWiki:HowToSetUpAZwikiTracker and some to [flub flub]\nand bla bla or FlubFlub or even [[flub flub]] - \nbut by default no ((bla bla)), no !MailHost and of course not AnyOther link.'
+

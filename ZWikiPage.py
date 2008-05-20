@@ -35,7 +35,8 @@ from Regexps import url, bracketedexpr, singlebracketedexpr, \
      doublebracketedexpr, doubleparenthesisexpr, wikiname, wikilink, \
      interwikilink, remotewikiurl, protected_line, zwikiidcharsexpr, \
      anywikilinkexpr, markedwikilinkexpr, localwikilink, \
-     spaceandlowerexpr, dtmlorsgmlexpr, wikinamewords, hashnumberexpr
+     spaceandlowerexpr, dtmlorsgmlexpr, wikinamewords, hashnumberexpr, \
+     bracketmatch
 from Utils import PageUtils, BLATHER, DateTimeSyntaxError, isunicode, \
      safe_hasattr
 from Views import PageViews
@@ -516,6 +517,17 @@ class ZWikiPage(
             or (self.doubleParenthesisLinksAllowed() and
                 re.match(doubleparenthesisexpr,link))) and 1)
 
+    def firstBracketStyle(self): # -> tuple of strings
+        """
+        Find the first allowed freeform link syntax.
+        """
+        if self.bracketLinksAllowed(): return ('[', ']')
+        if self.doubleBracketLinksAllowed(): return ('[[', ']]')
+        if doubleParenthesisLinksAllowed(): return ('((', '))')
+        else:
+            # XXX: raise? or return something that won't work?
+            return ('[', ']')
+
     def markLinksIn(self,text,urls=1):
         """
         Find and mark links in text, for fast replacement later.
@@ -765,6 +777,64 @@ class ZWikiPage(
                        #XXX old html_unquote needed ? I don't think so
         # otherwise return unchanged
         return link
+
+    def _replaceLinksInSourceText(self,oldlink,newlink,text): # -> string; depends on: link styles
+        """
+        Replace occurrences of oldlink with newlink in a string.
+
+        Depends on: allowed link styles (brackets etc.) on this wiki 
+                    or the current wiki page
+
+        Freeform links given should not be enclosed in brackets.
+
+        We're trying to keep each link in the style it was before
+        (e.g. bracket, double parenthesis, WikiLink...)
+        Only if the new page's canonical id isn't a valid WikiLink
+        and the old link was a WikiLink will we make the new link
+        a freeform link (choosing the simplest link style we can find).
+
+        We'll also replace bare wiki links to a freeform page's id,
+        but not fuzzy links.
+        This tries not to do too much damage.
+        It's slow, since it re-renders every page it changes.
+        """
+        markedtext = ''
+        state = {'lastend':0,'inpre':0,'incode':0,'intag':0,'inanchor':0}
+        lastpos = 0
+        oldlink_canonical = self.canonicalIdFrom(oldlink)
+        newlink_is_wikiname = self.isWikiName(newlink)
+        newlink_canonical = self.canonicalIdFrom(newlink)
+        newlink_canonical_is_wikiname = self.isWikiName(newlink_canonical)
+        l, r = self.firstBracketStyle()
+        while 1:
+            m = anywikilinkexpr.search(text,lastpos)
+            if m:
+                # found some sort of link pattern - check if we should link it
+                link = m.group()
+                linkstart,linkend = m.span()
+                if (not((oldlink in link) or (oldlink_canonical in link)) # not our link
+                or link[0]=='!'
+                or not self.isValidWikiLinkSyntax(link)
+                or within_literal(linkstart,linkend-1,state,text) # XXX these
+                or withinSgmlOrDtml((linkstart,linkend),text)):   # overlap ?
+                    markedtext += text[lastpos:linkstart] + link
+                else: # yes - change the link
+                    if self.isWikiName(link):
+                        if newlink_is_wikiname:
+                            replacelink = newlink
+                        elif newlink_canonical_is_wikiname:
+                            replacelink = newlink_canonical
+                        else:
+                            replacelink = r'%s%s%s' % (l, newlink, r)
+                    else:
+                        replacelink = bracketmatch.sub(r'\1%s\3' % newlink, link)
+                    markedtext += text[lastpos:linkstart] + replacelink
+                lastpos = linkend
+            else:
+                # no more links - save the final text extent & quit
+                markedtext += text[lastpos:]
+                break
+        return markedtext
 
     security.declareProtected(Permissions.View, 'formatWikiname')
     def formatWikiname(self,wikiname):

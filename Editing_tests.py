@@ -778,16 +778,31 @@ bbb
         p.edit(text=u'something WikiLink other')
         p._replaceLinks('WikiLink','NewWikiLink',REQUEST=None)
         self.assertEqual(p.read(),u'something NewWikiLink other')
+        p.edit(text=u'something WikiLink other WikiLink')
+        p._replaceLinks('WikiLink','NewWikiLink',REQUEST=None)
+        self.assertEqual(p.read(),u'something NewWikiLink other NewWikiLink')
         p.edit(text=u'something [bracket link] other')
         p._replaceLinks('bracket link','new bracket link',REQUEST=None)
         self.assertEqual(p.read(),u'something [new bracket link] other')
-        p.edit(text=u'something [Installer] other Installer not')
+        p.edit(text=u'something [Installer] other Installer not') # this was #517
         p._replaceLinks('Installer','New Installer',REQUEST=None)
         self.assertEqual(p.read(),u'something [New Installer] other Installer not')
         p.edit(text=u'something [Old Installer] other OldInstaller is Old Installer not')
         p._replaceLinks('Old Installer','New Installer',REQUEST=None)
         self.assertEqual(p.read(),
-            u'something [New Installer] other [New Installer] is Old Installer not')
-        # this is actually not 100% what we want:
-        # the wikilink is replaced by a freeform bracket link
+            u'something [New Installer] other NewInstaller is Old Installer not')
+        self.p.use_double_bracket_links = 1
+        self.p.use_double_parenthesis_links= 1
+        p.edit(text=u'something [[Old Installer]] is Old Installer not')
+        p._replaceLinks('Old Installer','New Installer',REQUEST=None)
+        self.assertEqual(p.read(),
+            u'something [[New Installer]] is Old Installer not')
+        p.edit(text=u'something [Old Installer] or [[Old Installer]] other OldInstaller is ((Old Installer)) - see: Old Installer not')
+        p._replaceLinks('Old Installer','New Installer',REQUEST=None)
+        self.assertEqual(p.read(),
+            u'something [New Installer] or [[New Installer]] other NewInstaller is ((New Installer)) - see: Old Installer not')
 
+        p.edit(text=u'something [bla bla] or [ga ga] other BlaBla is ((bla bla)) - see: bla bla not')
+        p._replaceLinks('bla bla','flab flab',REQUEST=None)
+        self.assertEqual(p.read(),
+            u'something [flab flab] or [ga ga] other FlabFlab is ((flab flab)) - see: bla bla not')

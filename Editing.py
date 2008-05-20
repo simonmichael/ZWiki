@@ -524,12 +524,10 @@ class PageEditingSupport:
         self.ensureTitle()
         if idchanged:
             self.changeIdCarefully(newid)
-            if updatebacklinks:
-                self._replaceLinksEverywhere(oldid,newid,REQUEST)
         if namechanged:
             self.changeNameCarefully(newname)
-            if updatebacklinks and oldnameisfreeform:
-                self._replaceLinksEverywhere(oldname,newname,REQUEST)
+        if idchanged or namechanged:
+            self._replaceLinksEverywhere(oldname,newname,REQUEST)
         self.index_object() # update catalog XXX manage_renameObject may also, if idchanged
         if idchanged and leaveplaceholder: 
             try: self._makePlaceholder(oldid,newname)
@@ -596,7 +594,7 @@ class PageEditingSupport:
         _replaceLinks for more.
         """
         BLATHER('replacing all %s links with %s' % (oldlink,newlink))
-        for p in self.backlinksFor(oldlink):
+        for p in self.backlinksFor(self.canonicalIdFrom(oldlink)):
             # this is an extensive, risky operation which can fail for
             # a number of reasons - carry on regardless so we don't
             # block renames
@@ -606,31 +604,11 @@ class PageEditingSupport:
                 BLATHER('_replaceLinks failed to update %s links in %s' \
                      % (oldlink,p.id))
 
-    def _replaceLinks(self,oldlink,newlink,REQUEST=None):
-        """Replace occurrences of oldlink with newlink in my text.
-
-        Freeform links should not be enclosed in brackets.
-        We'll also replace bare wiki links to a freeform page's id,
-        but not fuzzy links.
-        This tries not to do too much damage, but is pretty dumb.
-        Maybe it should use the pre-linking information.
-        It's slow, since it re-renders every page it changes.
-        """
-        if self.isWikiName(oldlink):
-            # add a \b to wikinames to make matches more accurate
-            oldpat = r'\b%s\b' % oldlink
-        else:
-            # replace both the freeform  and the equivalent bare wiki link
-            # XXX assumes single brackets are used in this wiki
-            canonical_link = self.canonicalIdFrom(oldlink)
-            if self.isWikiName(canonical_link):
-                wikiname_pattern = r'\b%s\b' % canonical_link
-                oldpat = r'(\[%s\]|%s)' % (re.escape(oldlink),wikiname_pattern)
-            else:
-                oldpat = r'\[%s\]' % re.escape(oldlink)
-        newpat = (self.isWikiName(newlink) and newlink) or '[%s]' % newlink
-        self.edit(text=re.sub(oldpat, newpat, self.read()),
-                  REQUEST=REQUEST)
+    def _replaceLinks(self,oldlink,newlink,REQUEST=None): # modifies: self.text
+        text = self.text()
+        replacement_text = self._replaceLinksInSourceText(oldlink,newlink,text)
+        if replacement_text != text:
+            self.edit(text=replacement_text, REQUEST=REQUEST)
 
     def folderContains(self,folder,id):
         """check folder contents safely, without acquiring"""
