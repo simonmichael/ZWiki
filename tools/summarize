@@ -1,0 +1,15 @@
+#!/bin/sh
+# summarize files in a python source tree
+# A code comprehension aid. Load SUMMARY into emacs for best formatting.
+# Tab once or twice on headings to hide/show code. M-x org-overview hides all.
+
+find -s . -name "*.py" -exec echo \; -exec echo "* {}" \; -exec egrep -i '^ *(class|def) ' {} \; >SUMMARY
+cat <<EOF >>SUMMARY
+
+* 
+Local Variables:
+mode: python
+eval: (highlight-lines-matching-regexp "^\* " (quote hi-pink))
+eval: (orgstruct-mode)
+End:
+EOF

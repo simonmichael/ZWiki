@@ -448,3 +448,6 @@ list_authors: list_authors.hs
 reinstall:
 	curl -n 'http://plone.demo.zwiki.org/portal_quickinstaller/reinstallProducts?products=ZWiki'
 
+# generate code summary
+summarize:
+	tools/summarize
