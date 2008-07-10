@@ -451,3 +451,10 @@ reinstall:
 # generate code summary
 summarize:
 	tools/summarize
+
+#summarypdf:
+#	aquamacs SUMMARY, print, save as SUMMARY.pdf
+
+summaryhtml:
+	pdftohtml -c -noframes SUMMARY.pdf SUMMARY.html
+
