@@ -259,6 +259,7 @@ class ZWikiPage(
         if clear_cache: self.clearCache()
         self.setPreRendered(self.pageType().preRender(self))
 
+    security.declarePublic('renderText')
     def renderText(self, text, type, **kw):
         """
         Render some source text according to the specified page type.
