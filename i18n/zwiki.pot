@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2008-02-07 02:38+0000\n"
+"POT-Creation-Date: 2008-10-25 04:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,61 +26,13 @@ msgid ""
 "            "
 msgstr ""
 
-#: ./Views.py:524
-msgid ""
-"\n"
-"        Access key reference (see also http://zwiki.org/QuickReference#access-keys)\n"
-"\n"
-"        0    show these access key assignments\n"
-"\n"
-"        wiki functions:\n"
-"        f    show front page\n"
-"        c    show wiki contents\n"
-"        r    show wiki recent changes\n"
-"             show discussion page\n"
-"        t    show issue tracker\n"
-"        i    show wiki index\n"
-"        o    show wiki options (preferences)\n"
-"        h    show help page\n"
-"        s    go to search field\n"
-"\n"
-"        page functions:\n"
-"        +    (in a plone/cmf site with skin switching set up) use zwiki's plone/cmf skin\n"
-"        -    (in a plone/cmf site with skin switching set up) use zwiki's standard skin\n"
-"        v    view page\n"
-"        m    mail subscription\n"
-"        b    show backlinks (links to this page)\n"
-"        d    show diffs (page edit history)\n"
-"        y    show full history (in ZMI)\n"
-"        e    edit this page\n"
-"        x    edit with an external editor\n"
-"             print this page (and subtopics)\n"
-"        q    view page source (quick-view)\n"
-"             wipe and regenerate this page's render cache\n"
-"             go to subtopics\n"
-"             go to comments (messages)\n"
-"             go to page author's home page, if possible\n"
-"        n    next page\n"
-"        p    previous page\n"
-"        u    up to parent page\n"
-"\n"
-"        in edit form:\n"
-"        s    save changes\n"
-"        p    preview\n"
-"\n"
-"        when viewing diffs:\n"
-"        n    next edit\n"
-"        p    previous edit\n"
-"        "
-msgstr ""
-
 #. Default: "Subscribe to this page"
-#: ./skins/zwiki/subscribeform.pt:94
+#: ./skins/zwiki/subscribeform.pt:95
 msgid " Subscribe to this page "
 msgstr ""
 
 #. Default: "Unsubscribe from this page"
-#: ./skins/zwiki/subscribeform.pt:87
+#: ./skins/zwiki/subscribeform.pt:88
 msgid " Unsubscribe from this page "
 msgstr ""
 
@@ -90,7 +42,7 @@ msgid "#"
 msgstr ""
 
 #. Default: "${nb} subscribers"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:457
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:455
 msgid "${nb} subscribers"
 msgstr ""
 
@@ -105,7 +57,7 @@ msgid "(allows mail subscription)"
 msgstr ""
 
 #. Default: "(external edit)"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:244
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:243
 msgid "(external edit)"
 msgstr ""
 
@@ -124,7 +76,7 @@ msgid "(localizes most times)"
 msgstr ""
 
 #. Default: "1 subscriber"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:459
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:457
 msgid "1 subscriber"
 msgstr ""
 
@@ -174,17 +126,17 @@ msgid "Add wiki page"
 msgstr ""
 
 #. Default: "Backlinks"
-#: ./skins/zwiki/backlinks.pt:48
+#: ./skins/zwiki/backlinks.pt:49
 msgid "Backlinks"
 msgstr ""
 
 #. Default: "Bad template"
-#: ./skins/zwiki/badtemplate.pt:12
+#: ./skins/zwiki/badtemplate.pt:13
 msgid "Bad template"
 msgstr ""
 
 #. Default: "Cancel"
-#: ./skins/zwiki/editform.pt:182
+#: ./skins/zwiki/editform.pt:183
 msgid "Cancel"
 msgstr ""
 
@@ -209,12 +161,12 @@ msgid "Category:"
 msgstr ""
 
 #. Default: "Change"
-#: ./skins/zwiki/subscribeform.pt:62
+#: ./skins/zwiki/subscribeform.pt:63
 msgid "Change"
 msgstr ""
 
 #. Default: "Check one or more checkboxes or enter a page name here, and click the button."
-#: ./skins/zwiki/backlinks.pt:73
+#: ./skins/zwiki/backlinks.pt:74
 msgid "Check one or more checkboxes or enter a page name here, and click the button."
 msgstr ""
 
@@ -240,7 +192,7 @@ msgid "Copy your recent edits to the clipboard"
 msgstr ""
 
 #. Default: "Create"
-#: ./skins/zwiki/editform.pt:190
+#: ./skins/zwiki/editform.pt:191
 msgid "Create"
 msgstr ""
 
@@ -287,12 +239,12 @@ msgid "Email address:"
 msgstr ""
 
 #. Default: "Email will go to the address you have configured in site preferences."
-#: ./skins/zwiki/subscribeform.pt:53
+#: ./skins/zwiki/subscribeform.pt:54
 msgid "Email will go to the address you have configured in site preferences."
 msgstr ""
 
 #. Default: "Enter a page name here and click the button."
-#: ./skins/zwiki/backlinks.pt:76
+#: ./skins/zwiki/backlinks.pt:77
 msgid "Enter a page name here and click the button."
 msgstr ""
 
@@ -336,7 +288,7 @@ msgid "Filter issues"
 msgstr ""
 
 #. Default: "For editing help, see"
-#: ./skins/zwiki/editform.pt:156
+#: ./skins/zwiki/editform.pt:157
 msgid "For editing help, see"
 msgstr ""
 
@@ -346,22 +298,22 @@ msgid "Forget options"
 msgstr ""
 
 #. Default: "Help page"
-#: ./skins/zwiki/helppage.pt:12
+#: ./skins/zwiki/helppage.pt:13
 msgid "Help page"
 msgstr ""
 
 #. Default: "HelpPage"
-#: ./skins/zwiki/editform.pt:158
+#: ./skins/zwiki/editform.pt:159
 msgid "HelpPage"
 msgstr ""
 
 #. Default: "Here are it's subtopics."
-#: ./skins/zwiki/backlinks.pt:102
+#: ./skins/zwiki/backlinks.pt:103
 msgid "Here are it's subtopics."
 msgstr ""
 
 #. Default: "Here are the pages which link to it:"
-#: ./skins/zwiki/backlinks.pt:49
+#: ./skins/zwiki/backlinks.pt:50
 msgid "Here are the pages which link to it:"
 msgstr ""
 
@@ -396,7 +348,7 @@ msgid "Leave it blank to list all pages."
 msgstr ""
 
 #. Default: "Mail subscription"
-#: ./skins/zwiki/subscribeform.pt:12
+#: ./skins/zwiki/subscribeform.pt:13
 msgid "Mail subscription"
 msgstr ""
 
@@ -434,7 +386,7 @@ msgid "No need to add a Zwiki Outline Cache"
 msgstr ""
 
 #. Default: "No other pages link to this one."
-#: ./skins/zwiki/backlinks.pt:50
+#: ./skins/zwiki/backlinks.pt:51
 msgid "No other pages link to this one."
 msgstr ""
 
@@ -449,7 +401,7 @@ msgid "Note:"
 msgstr ""
 
 #. Default: "Optional change note"
-#: ./skins/zwiki/editform.pt:131
+#: ./skins/zwiki/editform.pt:132
 msgid "Optional change note"
 msgstr ""
 
@@ -473,7 +425,7 @@ msgid "Page is locked"
 msgstr ""
 
 #. Default: "Page name"
-#: ./skins/zwiki/editform.pt:59
+#: ./skins/zwiki/editform.pt:60
 msgid "Page name"
 msgstr ""
 
@@ -483,7 +435,7 @@ msgid "Page names matching"
 msgstr ""
 
 #. Default: "Page subscribers"
-#: ./skins/zwiki/subscribeform.pt:164
+#: ./skins/zwiki/subscribeform.pt:165
 msgid "Page subscribers"
 msgstr ""
 
@@ -508,7 +460,7 @@ msgid "Pages marked (NEW) have been created within the last week"
 msgstr ""
 
 #. Default: "Parents"
-#: ./skins/zwiki/backlinks.pt:26
+#: ./skins/zwiki/backlinks.pt:27
 msgid "Parents"
 msgstr ""
 
@@ -521,12 +473,12 @@ msgid "Please enter a Page Name"
 msgstr ""
 
 #. Default: "Preview"
-#: ./skins/zwiki/editform.pt:177
+#: ./skins/zwiki/editform.pt:178
 msgid "Preview"
 msgstr ""
 
 #. Default: "Recent changes"
-#: ./skins/zwiki/recentchanges.pt:12
+#: ./skins/zwiki/recentchanges.pt:13
 msgid "Recent changes"
 msgstr ""
 
@@ -541,12 +493,12 @@ msgid "Refresh"
 msgstr ""
 
 #. Default: "Related pages"
-#: ./skins/zwiki/backlinks.pt:20
+#: ./skins/zwiki/backlinks.pt:21
 msgid "Related pages"
 msgstr ""
 
 #. Default: "Reparent"
-#: ./skins/zwiki/backlinks.pt:86
+#: ./skins/zwiki/backlinks.pt:87
 msgid "Reparent"
 msgstr ""
 
@@ -556,7 +508,7 @@ msgid "Return to edit history"
 msgstr ""
 
 #. Default: "Return to page"
-#: ./skins/zwiki/history.pt:16
+#: ./skins/zwiki/history.pt:17
 msgid "Return to page"
 msgstr ""
 
@@ -581,7 +533,7 @@ msgid "Search"
 msgstr ""
 
 #. Default: "Search this wiki"
-#: ./skins/zwiki/searchwiki.pt:12
+#: ./skins/zwiki/searchwiki.pt:13
 msgid "Search this wiki"
 msgstr ""
 
@@ -611,7 +563,7 @@ msgid "Show summaries ?"
 msgstr ""
 
 #. Default: "Singletons:"
-#: ./skins/zwiki/contentspage.pt:40
+#: ./skins/zwiki/contentspage.pt:41
 msgid "Singletons:"
 msgstr ""
 
@@ -619,7 +571,7 @@ msgstr ""
 msgid "Someone else has saved this page while you were editing"
 msgstr ""
 
-#: ./Editing.py:651
+#: ./Editing.py:652
 msgid "Sorry, file creation failed for some reason."
 msgstr ""
 
@@ -627,7 +579,7 @@ msgstr ""
 msgid "Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."
 msgstr ""
 
-#: ./OutlineSupport.py:372
+#: ./OutlineSupport.py:375
 msgid "Sorry, this wiki doesn't allow anonymous reparenting. Please configure a username in options first."
 msgstr ""
 
@@ -652,12 +604,12 @@ msgid "Submitted by"
 msgstr ""
 
 #. Default: "Subscribe to whole wiki"
-#: ./skins/zwiki/subscribeform.pt:128
+#: ./skins/zwiki/subscribeform.pt:129
 msgid "Subscribe to whole wiki"
 msgstr ""
 
 #. Default: "Subtopics"
-#: ./skins/zwiki/backlinks.pt:96
+#: ./skins/zwiki/backlinks.pt:97
 msgid "Subtopics"
 msgstr ""
 
@@ -672,7 +624,7 @@ msgid "Text matching"
 msgstr ""
 
 #. Default: "TextFormattingRules"
-#: ./skins/zwiki/editform.pt:165
+#: ./skins/zwiki/editform.pt:166
 msgid "TextFormattingRules"
 msgstr ""
 
@@ -681,11 +633,11 @@ msgid "The requested wiki type does not exist."
 msgstr ""
 
 #. Default: "There was a problem locating one of this wiki's skin templates. There may be another object in the ZODB with the the same ID, obscuring the skin template. Or the template may be missing on the filesystem due to an incomplete Zwiki installation."
-#: ./skins/zwiki/badtemplate.pt:13
+#: ./skins/zwiki/badtemplate.pt:14
 msgid "There was a problem locating one of this wiki's skin templates. There may be another object in the ZODB with the the same ID, obscuring the skin template. Or the template may be missing on the filesystem due to an incomplete Zwiki installation."
 msgstr ""
 
-#: ./Editing.py:770
+#: ./Editing.py:771
 msgid "There was a problem: %s"
 msgstr ""
 
@@ -695,11 +647,11 @@ msgid "This is the same as using the search field at top right."
 msgstr ""
 
 #. Default: "This page has no subtopics."
-#: ./skins/zwiki/backlinks.pt:99
+#: ./skins/zwiki/backlinks.pt:100
 msgid "This page has no subtopics."
 msgstr ""
 
-#: ./Editing.py:535
+#: ./Editing.py:536
 msgid ""
 "This page was renamed to %s. You can delete this one if no longer needed.\n"
 msgstr ""
@@ -751,12 +703,12 @@ msgid "Unknown wiki type"
 msgstr ""
 
 #. Default: "Unsubscribe from whole wiki"
-#: ./skins/zwiki/subscribeform.pt:121
+#: ./skins/zwiki/subscribeform.pt:122
 msgid "Unsubscribe from whole wiki"
 msgstr ""
 
 #. Default: "Upload a file or image"
-#: ./skins/zwiki/editform.pt:145
+#: ./skins/zwiki/editform.pt:146
 msgid "Upload a file or image"
 msgstr ""
 
@@ -770,7 +722,7 @@ msgid "User name:"
 msgstr ""
 
 #. Default: "User options"
-#: ./skins/zwiki/useroptions.pt:12
+#: ./skins/zwiki/useroptions.pt:13
 msgid "User options"
 msgstr ""
 
@@ -796,15 +748,15 @@ msgid "Wiki contents for"
 msgstr ""
 
 #. Default: "Wiki subscribers"
-#: ./skins/zwiki/subscribeform.pt:173
+#: ./skins/zwiki/subscribeform.pt:174
 msgid "Wiki subscribers"
 msgstr ""
 
-#: ./OutlineSupport.py:880
+#: ./OutlineSupport.py:883
 msgid "You are here"
 msgstr ""
 
-#: ./Editing.py:635
+#: ./Editing.py:636
 msgid "You are not authorized to add a link on this ZWiki Page."
 msgstr ""
 
@@ -812,7 +764,7 @@ msgstr ""
 msgid "You are not authorized to add pages in this wiki."
 msgstr ""
 
-#: ./Editing.py:303
+#: ./Editing.py:304
 msgid "You are not authorized to change this ZWiki Page's type."
 msgstr ""
 
@@ -820,11 +772,11 @@ msgstr ""
 msgid "You are not authorized to comment on this ZWiki Page."
 msgstr ""
 
-#: ./Editing.py:355
+#: ./Editing.py:356
 msgid "You are not authorized to delete this ZWiki Page."
 msgstr ""
 
-#: ./Editing.py:331
+#: ./Editing.py:332
 msgid "You are not authorized to edit this ZWiki Page."
 msgstr ""
 
@@ -832,11 +784,11 @@ msgstr ""
 msgid "You are not authorized to rename this ZWiki Page."
 msgstr ""
 
-#: ./Editing.py:296
+#: ./Editing.py:297
 msgid "You are not authorized to reparent or change subtopics links on this ZWiki Page."
 msgstr ""
 
-#: ./Editing.py:404
+#: ./Editing.py:405
 msgid "You are not authorized to reparent this ZWiki Page."
 msgstr ""
 
@@ -844,22 +796,22 @@ msgstr ""
 msgid "You are not authorized to upgrade all pages."
 msgstr ""
 
-#: ./Editing.py:632
+#: ./Editing.py:633
 msgid "You are not authorized to upload files here."
 msgstr ""
 
 #. Default: "You can reorder them by clicking the ^ buttons."
-#: ./skins/zwiki/backlinks.pt:105
+#: ./skins/zwiki/backlinks.pt:106
 msgid "You can reorder them by clicking the ^ buttons."
 msgstr ""
 
 #. Default: "You can set this page's parent(s) to place it within the overall page hierarchy."
-#: ./skins/zwiki/backlinks.pt:70
+#: ./skins/zwiki/backlinks.pt:71
 msgid "You can set this page's parent(s) to place it within the overall page hierarchy."
 msgstr ""
 
 #. Default: "You can type just the first few letters, case and punctuation are ignored."
-#: ./skins/zwiki/backlinks.pt:79
+#: ./skins/zwiki/backlinks.pt:80
 msgid "You can type just the first few letters, case and punctuation are ignored."
 msgstr ""
 
@@ -872,7 +824,7 @@ msgid "Your browser should still have your edits."
 msgstr ""
 
 #. Default: "Your email address"
-#: ./skins/zwiki/subscribeform.pt:58
+#: ./skins/zwiki/subscribeform.pt:59
 msgid "Your email address"
 msgstr ""
 
@@ -894,12 +846,12 @@ msgid ""
 msgstr ""
 
 #. Default: "a note makes RecentChanges more useful"
-#: ./skins/zwiki/editform.pt:132
+#: ./skins/zwiki/editform.pt:133
 msgid "a note makes RecentChanges more useful"
 msgstr ""
 
 #. Default: "a subject helps clarify threads and RecentChanges"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:421
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:420
 msgid "a subject helps clarify threads and RecentChanges"
 msgstr ""
 
@@ -909,15 +861,15 @@ msgid "add issue"
 msgstr ""
 
 #. Default: "add a comment"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:465
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:463
 msgid "add-comment"
 msgstr ""
 
-#: ./Editing.py:790
+#: ./Editing.py:791
 msgid "adding of external links by unidentified users is restricted. Please back up and remove some of the http urls you added, or contact the site administrator for help."
 msgstr ""
 
-#: ./Editing.py:802
+#: ./Editing.py:803
 msgid "adding of external links is restricted, even for identified users. Please back up and remove some of the http urls you added, or contact the site administrator for help."
 msgstr ""
 
@@ -932,7 +884,7 @@ msgid "all"
 msgstr ""
 
 #. Default: "all edits"
-#: ./skins/zwiki/subscribeform.pt:102
+#: ./skins/zwiki/subscribeform.pt:103
 msgid "all edits"
 msgstr ""
 
@@ -942,11 +894,11 @@ msgid "anonymous"
 msgstr ""
 
 #. Default: "backlinks"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:215
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:214
 msgid "backlinks"
 msgstr ""
 
-#: ./Editing.py:777
+#: ./Editing.py:778
 msgid "banned_links match"
 msgstr ""
 
@@ -960,12 +912,12 @@ msgstr ""
 msgid "by"
 msgstr ""
 
-#: ./ZWikiPage.py:876
+#: ./ZWikiPage.py:874
 msgid "by %(editor)s"
 msgstr ""
 
 #. Default: "cancel this edit and return to the page"
-#: ./skins/zwiki/editform.pt:182
+#: ./skins/zwiki/editform.pt:183
 msgid "cancel this edit and return to the page"
 msgstr ""
 
@@ -975,7 +927,7 @@ msgid "category"
 msgstr ""
 
 #. Default: "changes"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:128
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:127
 msgid "changes"
 msgstr ""
 
@@ -984,62 +936,62 @@ msgid "comments"
 msgstr ""
 
 #. Default: "configure email subscription to this page or site"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:198
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:197
 msgid "configure email subscription to this page or site"
 msgstr ""
 
 #. Default: "contents"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:123
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:122
 msgid "contents"
 msgstr ""
 
-#: ./ZWikiPage.py:739
+#: ./ZWikiPage.py:737
 msgid "create this page"
 msgstr ""
 
 #. Default: "create this wiki page"
-#: ./skins/zwiki/editform.pt:191
+#: ./skins/zwiki/editform.pt:192
 msgid "create this wiki page"
 msgstr ""
 
-#: ./Utils.py:511
+#: ./Utils.py:515
 msgid "day"
 msgstr ""
 
-#: ./Utils.py:511
+#: ./Utils.py:515
 msgid "days"
 msgstr ""
 
 #. Default: "diff"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:222
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:221
 msgid "diff"
 msgstr ""
 
 #. Default: "discussion"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:133
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:132
 msgid "discussion"
 msgstr ""
 
 #. Default: "edit"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:231
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:230
 msgid "edit"
 msgstr ""
 
 #. Default: "edit using external editor"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:232
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:231
 msgid "edit using external editor"
 msgstr ""
 
 #. Default: "enter a page name and click buttons to the right (mouse over for help)"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:515
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:513
 msgid "enter a page name and click buttons to the right (mouse over for help)"
 msgstr ""
 
-#: ./Editing.py:789
+#: ./Editing.py:790
 msgid "exceeded max_anonymous_links"
 msgstr ""
 
-#: ./Editing.py:801
+#: ./Editing.py:802
 msgid "exceeded max_identified_links"
 msgstr ""
 
@@ -1049,12 +1001,12 @@ msgid "filter issues"
 msgstr ""
 
 #. Default: "for this page"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:512
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:510
 msgid "for this page"
 msgstr ""
 
 #. Default: "full"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:179
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:178
 msgid "full"
 msgstr ""
 
@@ -1064,40 +1016,40 @@ msgid "full history"
 msgstr ""
 
 #. Default: "go to home page"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:310
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:309
 msgid "go to home page"
 msgstr ""
 
 #. Default: "help"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:159
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:158
 msgid "help"
 msgstr ""
 
 #. Default: "home"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:118
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:117
 msgid "home"
 msgstr ""
 
-#: ./Utils.py:513
+#: ./Utils.py:517
 msgid "hour"
 msgstr ""
 
-#: ./Utils.py:513
+#: ./Utils.py:517
 msgid "hours"
 msgstr ""
 
 #. Default: "index"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:143
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:142
 msgid "index"
 msgstr ""
 
 #. Default: "is a subtopic of:"
-#: ./skins/zwiki/backlinks.pt:29
+#: ./skins/zwiki/backlinks.pt:30
 msgid "is a subtopic of:"
 msgstr ""
 
 #. Default: "is a top-level topic."
-#: ./skins/zwiki/backlinks.pt:28
+#: ./skins/zwiki/backlinks.pt:29
 msgid "is a top-level topic."
 msgstr ""
 
@@ -1107,34 +1059,34 @@ msgid "issue tracker"
 msgstr ""
 
 #. Default: "issues"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:138
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:137
 msgid "issues"
 msgstr ""
 
 #. Default: "PREVIEW"
-#: ./skins/zwiki/editform.pt:202
+#: ./skins/zwiki/editform.pt:203
 msgid "label_preview"
 msgstr ""
 
-#: ./ZWikiPage.py:851
+#: ./ZWikiPage.py:849
 msgid "last edited %(interval)s ago"
 msgstr ""
 
 #. Default: "markup"
-#: ./skins/zwiki/editform.pt:70
+#: ./skins/zwiki/editform.pt:71
 msgid "markup"
 msgstr ""
 
 #. Default: "minimal"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:193
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:192
 msgid "minimal"
 msgstr ""
 
-#: ./Utils.py:515
+#: ./Utils.py:519
 msgid "minute"
 msgstr ""
 
-#: ./Utils.py:515
+#: ./Utils.py:519
 msgid "minutes"
 msgstr ""
 
@@ -1143,11 +1095,11 @@ msgstr ""
 msgid "modified"
 msgstr ""
 
-#: ./Utils.py:507
+#: ./Utils.py:511
 msgid "month"
 msgstr ""
 
-#: ./Utils.py:507
+#: ./Utils.py:511
 msgid "months"
 msgstr ""
 
@@ -1157,12 +1109,12 @@ msgid "name"
 msgstr ""
 
 #. Default: "name,"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:501
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:499
 msgid "name,"
 msgstr ""
 
 #. Default: "new"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:497
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:495
 msgid "new"
 msgstr ""
 
@@ -1177,32 +1129,32 @@ msgid "on"
 msgstr ""
 
 #. Default: "options"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:153
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:152
 msgid "options"
 msgstr ""
 
 #. Default: "or"
-#: ./skins/zwiki/editform.pt:162
+#: ./skins/zwiki/editform.pt:163
 msgid "or"
 msgstr ""
 
 #. Default: "You are subscribed to these other pages"
-#: ./skins/zwiki/subscribeform.pt:146
+#: ./skins/zwiki/subscribeform.pt:147
 msgid "other_page_subscribed"
 msgstr ""
 
 #. Default: "parent,"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:498
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:496
 msgid "parent,"
 msgstr ""
 
 #. Default: "plone"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:172
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:171
 msgid "plone"
 msgstr ""
 
 #. Default: "preview this edit"
-#: ./skins/zwiki/editform.pt:177
+#: ./skins/zwiki/editform.pt:178
 msgid "preview this edit"
 msgstr ""
 
@@ -1212,7 +1164,7 @@ msgid "recent"
 msgstr ""
 
 #. Default: "replacement,"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:504
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:502
 msgid "replacement,"
 msgstr ""
 
@@ -1221,12 +1173,12 @@ msgid "reply"
 msgstr ""
 
 #. Default: "replying"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:428
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:427
 msgid "replying"
 msgstr ""
 
 #. Default: "search all pages"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:331
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:330
 msgid "search all pages"
 msgstr ""
 
@@ -1240,16 +1192,16 @@ msgstr ""
 msgid "search options"
 msgstr ""
 
-#: ./Utils.py:517
+#: ./Utils.py:521
 msgid "second"
 msgstr ""
 
-#: ./Utils.py:517
+#: ./Utils.py:521
 msgid "seconds"
 msgstr ""
 
 #. Default: "select the formatting and rendering style for this page"
-#: ./skins/zwiki/editform.pt:71
+#: ./skins/zwiki/editform.pt:72
 msgid "select the formatting and rendering style for this page"
 msgstr ""
 
@@ -1259,81 +1211,81 @@ msgid "severity"
 msgstr ""
 
 #. Default: "show all features"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:173
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:172
 msgid "show all features"
 msgstr ""
 
 #. Default: "show basic features"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:180
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:179
 msgid "show basic features"
 msgstr ""
 
 #. Default: "show discussion page"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:129
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:128
 msgid "show discussion page"
 msgstr ""
 
 #. Default: "show front page"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:114
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:113
 msgid "show front page"
 msgstr ""
 
 #. Default: "show help page"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:154
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:153
 msgid "show help page"
 msgstr ""
 
 #. Default: "show issue tracker"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:134
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:133
 msgid "show issue tracker"
 msgstr ""
 
-#: ./ZWikiPage.py:861
+#: ./ZWikiPage.py:859
 msgid "show last edit"
 msgstr ""
 
 #. Default: "show only essential features"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:187
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:186
 msgid "show only essential features"
 msgstr ""
 
 #. Default: "show plone skin"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:169
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:168
 msgid "show plone skin"
 msgstr ""
 
 #. Default: "show this page's change history"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:216
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:215
 msgid "show this page's change history"
 msgstr ""
 
 #. Default: "show upload page"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:144
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:143
 msgid "show upload page"
 msgstr ""
 
 #. Default: "show wiki contents"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:119
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:118
 msgid "show wiki contents"
 msgstr ""
 
 #. Default: "show wiki index"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:139
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:138
 msgid "show wiki index"
 msgstr ""
 
 #. Default: "show wiki options"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:149
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:148
 msgid "show wiki options"
 msgstr ""
 
 #. Default: "show wiki recent changes"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:124
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:123
 msgid "show wiki recent changes"
 msgstr ""
 
 #. Default: "simple"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:186
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:185
 msgid "simple"
 msgstr ""
 
@@ -1343,107 +1295,107 @@ msgid "status"
 msgstr ""
 
 #. Default: "subject"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:420
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:419
 msgid "subject"
 msgstr ""
 
 #. Default: "subscribe"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:208
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:207
 msgid "subscribe"
 msgstr ""
 
 #. Default: "You can subscribe to this page or to the whole wiki. Subscribers receive a copy of comments via email. Or return to"
-#: ./skins/zwiki/subscribeform.pt:38
+#: ./skins/zwiki/subscribeform.pt:39
 msgid "subscribe_desc_comments"
 msgstr ""
 
 #. Default: "You can subscribe to this page or to the whole wiki. Subscribers receive a copy of all edits via email. Or return to"
-#: ./skins/zwiki/subscribeform.pt:43
+#: ./skins/zwiki/subscribeform.pt:44
 msgid "subscribe_desc_edits"
 msgstr ""
 
 #. Default: "To subscribe, please configure your email address."
-#: ./skins/zwiki/subscribeform.pt:69
+#: ./skins/zwiki/subscribeform.pt:70
 msgid "subscribe_no_email"
 msgstr ""
 
 #. Default: "You are currently not subscribed<br /> to this page."
-#: ./skins/zwiki/subscribeform.pt:83
+#: ./skins/zwiki/subscribeform.pt:84
 msgid "subscribed_page_no"
 msgstr ""
 
 #. Default: "You are currently subscribed<br /> to this page."
-#: ./skins/zwiki/subscribeform.pt:79
+#: ./skins/zwiki/subscribeform.pt:80
 msgid "subscribed_page_ok"
 msgstr ""
 
 #. Default: "You are currently not subscribed<br /> to the whole wiki."
-#: ./skins/zwiki/subscribeform.pt:117
+#: ./skins/zwiki/subscribeform.pt:118
 msgid "subscribed_wiki_no"
 msgstr ""
 
 #. Default: "You are currently subscribed<br /> to the whole wiki."
-#: ./skins/zwiki/subscribeform.pt:113
+#: ./skins/zwiki/subscribeform.pt:114
 msgid "subscribed_wiki_ok"
 msgstr ""
 
 #. Default: "subtopic"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:507
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:505
 msgid "subtopic"
 msgstr ""
 
 #. Default: "the name of this wiki page (changing this may be slow!)"
-#: ./skins/zwiki/editform.pt:60
+#: ./skins/zwiki/editform.pt:61
 msgid "the name of this wiki page (changing this may be slow!)"
 msgstr ""
 
 #. Default: "reparent"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:520
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:518
 msgid "title"
 msgstr ""
 
 #. Default: "to comment (and cc any subscribers) enter text here and click add"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:436
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:435
 msgid "to comment (and cc any subscribers) enter text here and click add"
 msgstr ""
 
 #. Default: "toggle source/WYSIWYG mode"
-#: ./skins/zwiki/editform.pt:120
+#: ./skins/zwiki/editform.pt:121
 msgid "toggle source/WYSIWYG mode"
 msgstr ""
 
 #. Default: "upload a file and link it on this page ?"
-#: ./skins/zwiki/editform.pt:146
+#: ./skins/zwiki/editform.pt:147
 msgid "upload a file and link it on this page ?"
 msgstr ""
 
 #. Default: "uploads"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:148
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:147
 msgid "uploads"
 msgstr ""
 
-#: ./Utils.py:509
+#: ./Utils.py:513
 msgid "week"
 msgstr ""
 
-#: ./Utils.py:509
+#: ./Utils.py:513
 msgid "weeks"
 msgstr ""
 
 #. Default: "which pages link to this one ?"
-#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:209
+#: ./plugins/latexwiki/wikis/latexwiki/wikipage.pt:208
 msgid "which pages link to this one ?"
 msgstr ""
 
-#: ./Utils.py:505
+#: ./Utils.py:509
 msgid "year"
 msgstr ""
 
-#: ./Utils.py:505
+#: ./Utils.py:509
 msgid "years"
 msgstr ""
 
-#: ./Editing.py:778
+#: ./Editing.py:779
 msgid "your edit contained a banned link pattern. Please contact the site administrator for help."
 msgstr ""
 
