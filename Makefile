@@ -1,21 +1,20 @@
 # Zwiki/zwiki.org makefile
 
-# Zwiki release reminders
+# Zwiki release checklist
 # -----------------------
 # check for unrecorded changes
 # check for translations
 # check tests pass
 # check for late tracker issues
 # check README,wikis/,skins/,zwiki.org HelpPage,QuickReference
-# darcs changes --from-tag NN into CHANGES & edit; don't add header at top
-# update version.txt
+# darcs changes --from-tag NN into CHANGES.txt & edit; don't add header at top
+# update version.txt, don't record
 # make release
-# test restart server
+# restart joyful.com/zwiki.org server, smoke test
 # announce
-#  copy CHANGES to ReleaseNotes
-#  check FrontPage, KnownIssues, OldKnownIssues
+#  check FrontPage, KnownIssues
 #  #zwiki, zwiki@zwiki.org (rc)
-#  #zwiki, zwiki@zwiki.org, zope-announce@zope.org (final)
+#  #zwiki, zwiki@zwiki.org, zope-announce@zope.org, python list ? (final)
 
 PRODUCT=ZWiki
 HOST=zwiki.org
@@ -47,31 +46,32 @@ epydoc:
 
 ## i18n
 
-# TRANSLATION UPDATE PROCEDURE
+# translation update checklist
 # ----------------------------
-# translators update translations through launchpad, any time
-# developers update and upload pot files, any time
-# release manager, before release:
-#  updates and uploads pot files
+# *translators* update translations through launchpad, any time
+# *developers* update and upload pot files, any time
+# *release manager*, before release:
+#  1. update and upload pot files
 #   make pot, record
 #   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki/+upload
 #   wait for upload
 #    https://translations.launchpad.net/zwiki/trunk/+imports
-#  downloads and records po files
+#  2. download and record po files
 #   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki
 #   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki-plone
-#   use download links in mail, unpack to i18n/new/
-#    curl -s http://launchpadlibrarian.net/11807388/launchpad-export.tar.gz -o launchpad.tar.gz
-#    curl -s http://launchpadlibrarian.net/11807673/launchpad-export.tar.gz -o launchpad-plone.tar.gz
+#   use download links in mail, unpack in i18n/
+#    cd i18n
+#    curl http://launchpadlibrarian.net/NNNNNNNN/launchpad-export.tar.gz | tar xzvf - --strip-components=1
+#    curl http://launchpadlibrarian.net/NNNNNNNN/launchpad-export.tar.gz | tar xzvf - --strip-components=1
 #   check for new languages, darcs wh -sl i18n
 #   make po, record
-#  re-uploads po files to update status bars..
+#  3. re-upload po files to update status bars
 #   make poupload
 #   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki/+upload
 #   wait for upload
 #    https://translations.launchpad.net/zwiki/trunk/+imports
 #
-# PROBLEMS
+# problems:
 #  launchpad strips out some #. Default lines ? need them ?
 #  zwiki-plone.pot complicates, figure out how to simplify
 
@@ -137,15 +137,22 @@ postats:
 #   make testresults                     # log "make testall" output in TESTRESULTS
 #   make testrunnerhelp                  # see testrunner arguments reference
 
-# an instance with minimal products, for fast testing
-INSTANCE=../..
-# an instance with plone, if you want to run those tests
-INSTANCE2=../..
-# zwiki's tests are in *_tests.py alongside the code
-TESTFILES=--tests-pattern='_tests$$' --test-file-pattern='_tests$$'
-TEST=$(INSTANCE)/bin/zopectl test $(TESTFILES) -v --keepbytecode #--nowarnings
-TESTV=$(TEST) -vv
-TESTALL=$(INSTANCE2)/bin/zopectl test $(TESTFILES) -a 3 -vvv
+# To run Zwiki unit tests: install Zope 2.10, adjust INSTANCE paths,
+# install or link your ZWiki directory in $INSTANCE/Products.
+# Some additional tests will run if Plone is installed.
+# minimal products, fast startup
+INSTANCE=/zope2
+# all products
+BIGINSTANCE=/zope1
+
+# we keep zwiki's tests in *_tests.py alongside the code
+ZWIKITESTS=--tests-pattern='_tests$$' --test-file-pattern='_tests$$'
+
+# run tests as quickly as possible
+TEST=$(INSTANCE)/bin/zopectl test $(ZWIKITESTS) --keepbytecode -v #--nowarnings
+
+# run all tests verbosely and thoroughly
+TESTALL=$(BIGINSTANCE)/bin/zopectl test $(ZWIKITESTS) -a 3 -vv
 
 test:
 	$(TEST) -m Products.ZWiki
@@ -184,20 +191,20 @@ release: releasenotes version releasetag tarball push rpush
 
 releasenotes:
 	@echo recording release notes
-	@darcs record -am 'release notes' CHANGES
+	@darcs record -am 'release notes' CHANGES.txt
 
 # bump version number in various places and record; don't have other
 # changes in these files
 version:
 	@echo bumping version to $(VERSIONNO)
-	@(echo 'Zwiki' $(VERSIONNO) `date +%Y/%m/%d`; echo '======================='; echo)|cat - CHANGES \
-	  >.temp; mv .temp CHANGES
+	@(echo 'Zwiki' $(VERSIONNO) `date +%Y/%m/%d`; echo '======================='; echo)|cat - CHANGES.txt \
+	  >.temp; mv .temp CHANGES.txt
 	@perl -pi -e "s/__version__='.*?'/__version__='$(VERSIONNO)'/" \
 	  __init__.py
 	@perl -pi -e "s/Zwiki version [0-9a-z.-]+/Zwiki version $(VERSIONNO)/"\
 	  skins/zwiki/HelpPage.stx
 	@darcs record -am 'bump version to $(VERSIONNO)' \
-	  version.txt CHANGES __init__.py skins/zwiki/HelpPage.stx
+	  version.txt CHANGES.txt __init__.py skins/zwiki/HelpPage.stx
 
 releasetag:
 	@echo tagging release-$(VERSION)
