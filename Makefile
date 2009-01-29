@@ -210,13 +210,11 @@ releasetag:
 	@echo tagging release-$(VERSION)
 	darcs tag --checkpoint -m release-$(VERSION)
 
-# always puts tarball in mainbranch/releases
-# look at darcs dist
+# save a release tarball in releases
 tarball: clean
 	@echo building $(FILE) tarball
-	@cp -r _darcs/current $(PRODUCT)
-	@tar -czvf releases/$(FILE) $(PRODUCT)
-	@rm -rf $(PRODUCT)
+	darcs dist --tag release-$(VERSION) --dist-name $(PRODUCT)
+	mv $(PRODUCT).tar.gz releases/$(PRODUCT)-$(VERSIONNO).tgz
 
 
 
