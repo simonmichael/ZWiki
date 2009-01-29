@@ -1,21 +1,30 @@
-Zwiki project and task notes
+Zwiki project and task notes  -*- org -*-
 ############################
 
-* HOT/CURRENT ISSUES
-** UnicodeGeddon - see file:~/clients/wuwien/NOTES
+* CURRENT
+** unicodegeddon
+*** get more real-world upgrade testing from me & #zwiki
+*** test search etc.
+*** archive UnicodeGeddon notes from file:~/clients/wuwien/NOTES
+*** resolve unicode errors in zope3 wiki
+**** upgrade to latest ?
+** stable -> 1.0, unstable -> 2.0
+*** release 0.61, or 0.61 plus a little something, as 1.0 ?
+*** freeze 1.0
+*** update repo urls, docs
+*** announce
+** fix translations process
+**** fix wrong zwiki.pot on launchpad
+***** wait for https://translations.launchpad.net/zwiki/trunk/+imports?field.filter_status=NEEDS_REVIEW&field.filter_extension=all
+**** see if launchpad po files get fixed
+***** if not, re-upload
+**** when fixed, download new ones if any
+**** fix rosetta process
 ** http://zwiki.org/1330 disappearing contents
 ** http://zwiki.org/1354 expunge problems
 *** zope3/FrontPage - revision is None
 *** zope3/ExplicitNamespaceControlInURLs - no RESPONSE in request afterward
-** unicode errors with current utf8 implementation
-*** more errors remain in zope3 wiki
-** plone 3 compatibility
-*** test/finish
-*** merge
 ** release 0.59.1 for 2.10 compatibility ?
-** wiki sysadmin
-*** zope3, other - unicode errors
-*** reduce spam control/maintenance effort
 * PRODUCT
 ** 1335 fix contents
 *** rewrite contents!
