@@ -1,18 +1,152 @@
 CHANGES
 #######
 
+Zwiki 2.0.0 2009/xx/xx
+=======================
+*in progress*
+
+First public release of Zwiki 2, formerly the ZWiki-unstable branch.  For
+more detail of the changes landed since the 0.61 release, see
+http://zwiki.org/ZwikiOneAndTwoDifferences .
+
+The main new thing is we now work internally with unicode rather than
+utf8-encoded text; we believe this will help remove the unicode errors
+which tend to creep in with non-ascii wikis. Thanks to wuwien for funding
+a large part of this work. 
+
+	
+**Browsing**
+
+  * show a "created" timestamp at top right, like Michael Haubenwallner's
+    on the zope3 wiki
+
+  * css fixes, eg issue 1414 (betabug)
+
+**Editing**
+
+  * 517 - more robust and careful updating of backlinks when a page is
+    renamed.  This will now do all kind of nice stuff, like respect the
+    link style that the link on the page previously had (betabug)
+
+  * 939 - suppress confusing "e" accesskey in editform. (betabug)
+
+  * 1361 - determine permissions on editform() at runtime.  The editform()
+    form should be displayed also in the case that the user has "Add"
+    rights on the wiki, but no "Edit" rights on the page he started from.
+    (E.g. going through the "add" form on a restricted page, then clicking
+    on the "Preview" button raised Unauthorized before this fix.)
+    (betabug)
+
+  * 1171 - more than one double parenthesis link in the same paragraph
+    works now. (betabug)
+
+  * interwiki links now require at least one word character after the :
+
+**Mail**
+
+  * use a page method instead of an external method for mailin, so there's
+    one less thing to configure. Have /etc/aliases post incoming mail to
+    SOMEPAGEURL/mailin (any page will do).
+
+  * when there are multiple mailhosts, choose the one with alphabetically
+    first id This lets you use a zope 2.11 "MailHost" when you have a
+    "MaildropHost" still kicking around, may be useful for someone else
+    testing mailhosts.
+
+  * drop mailin's unused spam-reporting feature
+
+**General**
+
+  * UnicodeGeddon mega-patch. A big set of changes switching to unicode
+    for internal text handling. This collapses all patches from the
+    unicode branch, their conflict resolutions, and some subsequent
+    unicode patches into one mega-patch which should avoid the darcs
+    conflict problem. Noteworthy details:
+  
+      * use last editor accessors in templates (if you have customised
+        RecentChanges, editform, history templates they may need
+        upgrading)
+    
+      * upgradeAll (or fixAllPagesEncoding) converts a non-unicode wiki to
+        unicode (a non-reversible upgrade step)
+    
+  * Added a simple unicode-aware splitter, based on code by Stefan
+    H. Holek.  The following code is mostly taken from the UnicodeLexicon
+    product by Stefan H. Holek (ZPL) which can be found at:
+    http://www.zope.org/Members/shh/UnicodeLexicon Many thanks to you
+    Stefan!  We are using this here, so people with minimal needs don't
+    have to install extra products. If you need more than this install a
+    more specific splitter (e.g. a CJK splitter) create a new "ZCTextIndex
+    Lexicon" and recreate the "SearchableText" and "Title" indexes with
+    your new lexicon. (betabug)
+
+  * Use unicode-aware ZCTextIndexes in the wiki catalog by default. Also,
+    setupCatalog upgrades old TextIndex-based indexes if present.
+    (betabug)
+
+  * Many other changes/fixes for unicode support (simon, betabug)
+
+  * Skin cleanups mega-patch. Rearrange templates, enable nav links and
+    access keys in more places, skin machinery cleanups and basic support
+    for alternate filesystem skins. Noteworthy details:
+  
+      * more css ids
+    
+      * move accesskeys, links and ratingform into pageheader template
+    
+      * move pagemanagementform into a new pagefooter template
+    
+      * add wikifooter and wikiheader - visible header/footer for wiki-contextual views
+    
+      * include either pageheader or wikiheader in every view, for
+        appropriate links, access keys, etc.  Show all nav links
+        everywhere.
+    
+      * avoid duplicate access key definitions so you don't have to press
+        enter in firefox 3
+    
+      * drop the s for search form access key, so s for save edit works without enter
+    
+      * some skin machinery cleanup and basic support for alternate
+        filesystem skins, selectable by "skin" property or request var
+    
+  * add /index as an alias for the /index_object page method, drop /updateCatalog
+
+  * catalog search results now contain lastEditor, not last_editor
+
+  * tests & code cleanups (betabug, simon)
+
+
+
+
 2009/01/30: stable, unstable branches become Zwiki 1, Zwiki 2
 =============================================================
+I have repurposed the Zwiki stable and unstable repos and updated
+FrontPage and DarcsHowto. We now have
+	
+  * http://zwiki.org/repos/ZWiki1 <- the classic 0.x branch, formerly
+    stable branch, which I dub "Zwiki 1". This is hereby mothballed unless
+    there is some strong reason for another release in this line.
 
+  * http://zwiki.org/repos/ZWiki <- the new main line of Zwiki
+    development, formerly unstable branch, to be known henceforth as
+    "Zwiki 2". This is the unicode-inside, cleaned-up-skins code, and this
+    is where we will focus our effort going forward. Developers, please
+    get this repo (or use your existing unstable repo, but use this new
+    url).
+
+I hope this will simplify things and help us create some more cool stuff!
+
+	
 Zwiki 0.61.0 2008/10/24
 =======================
-(This release was made from the stable branch.)
+(This and previous releases were made from the Zwiki 1 branch.)
 	
 A catch-up release with various bugfixes, code cleanups, and newer
 translations from launchpad.  You'll want this if you use Plone 3.x, to
 work around a layout glitch with document action icons.
 	
-Upgrade notes
+**Upgrade notes**
 	
 **Configuring**
 
