@@ -1,91 +1,31 @@
 Zwiki project and task notes  -*- org -*-
 ############################
 
-* CURRENT
+* PRODUCT
 ** unicodegeddon
 *** get more real-world upgrade testing from me & #zwiki
 *** test search etc.
 *** archive UnicodeGeddon notes from file:~/clients/wuwien/NOTES
 *** resolve unicode errors in zope3 wiki
 **** upgrade to latest ?
-** stable -> 1.0, unstable -> 2.0
-*** release 0.61, or 0.61 plus a little something, as 1.0 ?
-*** freeze 1.0
-*** update repo urls, docs
-*** announce
-** fix translations process
-**** fix wrong zwiki.pot on launchpad
-***** wait for https://translations.launchpad.net/zwiki/trunk/+imports?field.filter_status=NEEDS_REVIEW&field.filter_extension=all
-**** see if launchpad po files get fixed
-***** if not, re-upload
-**** when fixed, download new ones if any
-**** fix rosetta process
+** 1335 fix contents
 ** http://zwiki.org/1330 disappearing contents
 ** http://zwiki.org/1354 expunge problems
 *** zope3/FrontPage - revision is None
 *** zope3/ExplicitNamespaceControlInURLs - no RESPONSE in request afterward
-** release 0.59.1 for 2.10 compatibility ?
-* PRODUCT
-** 1335 fix contents
-*** rewrite contents!
-** unicode errors (utf8 storage) - ReleaseNotesStx
-** plone 3 support
-*** notes
-   - http://plone.org/documentation/manual/upgrade-guide/version/2.5-3.0/products
-*** finish
-*** commit
-** better markup
-*** crossmark file:misc/crossmark.rst
-*** pandoc http://sophos.berkeley.edu/macfarlane/pandoc/index.html
-*** pandoc rst parser -> pandoc crossmark parser -> python crossmark parser ? zwiki-pseudo-crossmark ?
 ** I18N
-*** easier translations process
-reduce rosetta diffs
- handle rosetta stripping default lines
-  convert defaults to one line
-
+*** fix translations process
+***** fix wrong zwiki.pot on launchpad
+****** wait for https://translations.launchpad.net/zwiki/trunk/+imports?field.filter_status=NEEDS_REVIEW&field.filter_extension=all
+***** see if launchpad po files get fixed
+****** if not, re-upload
+***** when fixed, download new ones if any
+***** fix rosetta process
 ** TESTS
-
-fix cmf tests
-aftersetup -> setup ? clarify in all fixtures
-bring back doctests ?
-
 ** VIEWS AND SKINS
-
-keep cleaning up and simplifying
-
-*** nautica
-
-- make stylesheet work in nautica wiki template, with/without CURRENTSKIN
-- commit nautica template
-
-*** tichu
-- ask kevin to confirm name
-- genericise
-- install for other wikis
-- change side bar button text
-
-*** skin selection
-- select default skin from option
-- select skin from request
-
+*** keep cleaning up and simplifying
 * PROCESS
-
-efficient wiki system announcements
- send by mail
- possible recipients
-  zope-web 
-  wiki.zope.org
-  wiki.zope.org/zope3
-  wiki.zope.org/zope2
-  zwiki.org
-  *.zwiki.org/*.joyful.com ?
- off-zope/off-site location
-
-repo speedups
- partial pulling too many patches, check checkpoints
- try darcs optimize # --reorder-patches
-
+** notes
 highlight active contributors, code and docs
 author stats
 automatic release
@@ -98,21 +38,8 @@ CIA or other bot, darcs, issues etc. on irc
 build dev community on darcs, irc & email
 use ruby and haskell
 hosting stats & cost reporting
-lighter monthly release, perhaps a more thoroughly polished quarterly release
-
 ** better infrastructure
-*** SpecialPageFeatures wikibadge
-*** patch review
-**** DONE set up PatchDiscussion page
-**** DONE does it record patch content ?
-**** DONE submissions
-***** make zwiki-repo forward there
-**** TODO commits
-***** make darcs apply cc there
-**** DONE allow mail-through of darcs patches
-***** investigate darcs mails
-****** implement attachment upload/mailout/pass-through if needed
-**** TODO test
+*** patch review process
 *** irc notifications
 **** general wiki activity
 ***** zwikibot wiki subscriber which reports activity, with filters
@@ -125,26 +52,57 @@ lighter monthly release, perhaps a more thoroughly polished quarterly release
 ***** from PatchDiscussion
 ***** from darcs apply
 ***** from CIA
-
-
-*** simple org-mode support
-
-*** issue reported-in, fixed-in fields
 * DOCS
+** testimonials
+*** John Maxwell
+We've been using ZWiki as our general purpose web platform for five years
+now; its brilliant blend of simplicity and malleability means we've been
+able to extend it in a whole bunch of directions: reference library,
+blogging platform, discussion forum, classroom support, writing
+environment, project tracker, and all-around web content management
+tool. We have redesigned our ZWiki-based site from top-to-bottom four
+times in five years, and I remain convinced that ZWiki is the most
+flexible and capable tool around. - John Maxwell, Canadian Centre for
+Studies in Publishing, SFU. http://thinkubator.ccsp.sfu.ca/AboutThinkubator
+*** Sascha Welter
+One of my cool experiences with Zwiki: I created a site for my father and
+I almost never have support questions from him - he's just updating that
+site all on his own. He'll be 65 now - not stone old, but still no web hip
+youngster any more.
+*** Allen Schmidt Sr.
+We have been using Zwiki for over 3 years now as a sort of internal
+knowledgebase for our group. It has worked out really well and we all like
+using it. The issue tracking features are great and it has really helped
+keep our small group informed about changes to our site and if offers an
+easy way to find out info quickly when we need it.
 
+Thanks for a great project!
+
+Allen Schmidt Sr.
+fredericksburg.com
+The Free Lance-Star Newspaper
+Fredericksburg, Virginia - birthplace of Zope
+
+*** Wu
+*** jham
+*** rdz
+*** tessier
+*** Vejeta
+*** Willi Langenberger
+*** 
+*** 
+*** 
+*** 
+** notes
 clarify division/integration between fs and wiki docs
-publish fs docs online - darcsweb ? epydoc ? trac ? zwiki ?
-get epydoc working
-pursue literate-programming-like wins
-generally rename code files to lower-case
+publish fs docs online with sphinx(/gitit?)
+get epydoc/doxygen working
 simpler more focussed wiki docs
 
 * SITES
-
+** notes
 profile, speed up, simplify
-good stats.. bite google analytics bullet ?
-better tracking of free wikis
+good stats.. google analytics ?
 better free wiki signup/marketing/maintenance
 
-* NOTES
-** source highlighting: http://lukeplant.me.uk/blog.php?id=1107301665
+
