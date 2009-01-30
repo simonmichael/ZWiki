@@ -30,8 +30,8 @@ class Tests(ZwikiTestCase):
 
     def test_mailto_with_dot_1115(self):
         self.assertEquals(
-            self.p.renderText('mailto:ab@c.com','stx'),
-            u'<p><a href="mailto:ab@c.com">ab@c.com</a></p>\n<p>\n</p>\n')
+            u'<p><a href="mailto:ab@c.com">ab@c.com</a></p>\n<p>\n</p>\n',
+            self.p.renderText('mailto:ab@c.com','stx'))
         self.assertEquals(
-            self.p.renderText('mailto:a.b@c.com','stx'),
-            u'<p><a href="mailto:a.b@c.com">a.b@c.com</a></p>\n<p>\n</p>\n')
+            u'<p><a href="mailto:a.b@c.com">a.b@c.com</a></p>\n<p>\n</p>\n',
+            self.p.renderText('mailto:a.b@c.com','stx'))
