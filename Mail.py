@@ -650,8 +650,8 @@ class PageMailSupport:
         folder = self.folder()
         # XXX folder might not have objectValues, don't know why (#938)
         while (not mhost) and folder and safe_hasattr(folder,'objectValues'):
-            mhosts = folder.objectValues(
-                spec=['Mail Host', 'Secure Mail Host', 'Maildrop Host', 'Secure Maildrop Host'])
+            mhosts = sorted(folder.objectValues(
+                spec=['Mail Host', 'Secure Mail Host', 'Maildrop Host', 'Secure Maildrop Host']))
             if mhosts: mhost = mhosts[0]
             folder = getattr(folder,'aq_parent',None)
         return mhost
