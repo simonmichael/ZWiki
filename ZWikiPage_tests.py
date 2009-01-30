@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
