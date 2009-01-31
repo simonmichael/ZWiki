@@ -1,8 +1,8 @@
 CHANGES
 #######
 
-Zwiki 2.0.0 2009/xx/xx
-=======================
+Zwiki 2.0a1 2009/xx/xx
+======================
 *in progress*
 
 First public release of Zwiki 2, formerly the ZWiki-unstable branch.  For
@@ -13,7 +13,13 @@ The main new thing is that we now work internally with unicode rather than
 utf8-encoded text; we believe this will help resolve the unicode errors
 which tend to creep in with non-ascii wikis, and allow accurate searching
 of non-ascii content (with suitable catalog configuration.)  Thanks to
-wuwien for funding a large part of this work.
+Vienna University of Business and Economics for funding a large part of
+this work.
+
+This alpha release is to get people other than myself using the new code
+and to ensure that upgrades are as problem-free as possible. Please try it
+and report back.
+	
 
 **Upgrade notes**
 
@@ -135,8 +141,8 @@ BLATHER logging.
   * tests & code cleanups (betabug, simon)
 
 
-Zwiki 1.0.0 2009/xx/xx ?
-========================
+Zwiki 1.0 2009/xx/xx ?
+======================
 *?*
 
 
