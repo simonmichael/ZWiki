@@ -12,7 +12,7 @@ class PageTypeWwml(PageTypeBase):
     supportsWikiLinks = yes
 
     def format(self,page,t):
-        return page.tounicode(translate_WWML(page.toencoded(html_quote(t))))
+        return page.tounicode(translate_WWML(html_quote(t)))
 
     def preRender(self, page, text=None):
         t = text or (page.document()+'\n'+MIDSECTIONMARKER+\
