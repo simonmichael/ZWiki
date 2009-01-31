@@ -17,16 +17,21 @@ wuwien for funding a large part of this work.
 
 **Upgrade notes**
 
-If your wiki has only ascii content, it will probably keep working as
-before.  Otherwise, you may notice new errors eg when doing a search for
-some non-ascii text. If so, visit SOMEPAGE/upgradeAll as manager. This
-should convert all your pages' text from utf-8 to unicode, and convert
-your wiki catalog's indexes to unicode-aware ones. As usual, this can take
-a while in big wikis (15 minutes for zwiki.org) and you can watch the
-progress in event.log if you enable BLATHER logging.  After it completes
-successfully, you should see no or fewer errors.  (If not, you might need
-to run upgradeAll a second time.) If these notes don't match your
-experience, or errors persist, please report so we can investigate.
+If you were previously running Zwiki 1 (a Zwiki 0.x release), you might
+notice some new encoding-related errors with certain wiki operations,
+especially if you have non-ascii content. Eg try doing a search for some
+non-ascii text. 
+
+If you do notice problems, visit SOMEPAGE/upgradeAll as manager to convert
+all your pages from utf-8 to unicode (and convert your wiki catalog's
+indexes to unicode-aware ones.)  After it completes successfully, the
+errors should be gone.  If not, you might need to run upgradeAll a second
+time.  If errors persist, or these notes don't match your experience,
+please report so we can investigate.
+
+Note upgradeAll can take a while if you have many big pages (15 minutes
+for zwiki.org) and you can watch the progress in event.log if you enable
+BLATHER logging.
 	
 **Browsing**
 
