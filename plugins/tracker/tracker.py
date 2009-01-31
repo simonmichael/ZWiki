@@ -331,18 +331,17 @@ class PluginTracker:
         Upgrade issue: calling this before upgrading an issue to a
         0.17-style page id will mess up the id/title.
         """
-        name          = name and self.tounicode(name)
-        text          = text and self.tounicode(text)
-        category      = category and self.tounicode(category)
-        severity      = severity and self.tounicode(severity)
-        status        = status and self.tounicode(status)
-        log           = log and self.tounicode(log)
-
         if not self.checkSufficientId(REQUEST):
             return self.denied(
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
 
-        comment = ''
+        name     = name and self.tounicode(name)
+        text     = text and self.tounicode(text)
+        category = category and self.tounicode(category)
+        severity = severity and self.tounicode(severity)
+        status   = status and self.tounicode(status)
+        log      = log and self.tounicode(log)
+        comment  = ''
         if name:
             if name != self.issueName():
                 newpagename = self.pageNameFromIssueNumberAndName(
