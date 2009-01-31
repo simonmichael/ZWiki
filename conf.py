@@ -34,7 +34,7 @@ master_doc = 'index'
 
 # General substitutions.
 project = 'Zwiki'
-copyright = '2008, Simon Michael & the Zwiki team'
+copyright = '1999-2009, Simon Michael & the Zwiki team'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
