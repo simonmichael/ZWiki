@@ -103,40 +103,36 @@ def initializeForCMF(context):
         #from Products.Archetypes.public import listTypes, process_types
         from Products.CMFPlone.interfaces import IPloneSiteRoot
         from Products.GenericSetup import EXTENSION, profile_registry
-
-        # register our GenericSetup profiles
-        profile_registry.registerProfile('default',
-                                         'ZWiki',
-                                         'Extension profile for default Zwiki-in-Plone/CMF setup',
-                                         'profiles/default',
-                                         'ZWiki',
-                                         EXTENSION,
-                                         for_=IPloneSiteRoot)
-        profile_registry.registerProfile('uninstall',
-                                         'ZWiki',
-                                         'Extension profile for removing default Zwiki-in-Plone/CMF setup',
-                                         'profiles/uninstall',
-                                         'ZWiki',
-                                         EXTENSION)
-
-        # register our skin layer(s)
-        Products.CMFCore.DirectoryView.registerDirectory('skins', globals())
-
-        # initialize portal content
-        PROJECT = 'Zwiki'
-        #types, cons, ftis = process_types(listTypes(PROJECT),PROJECT)
-        ContentInit(
-            PROJECT + ' Content',
-            content_types      = (ZWikiPage.ZWikiPage,), # types,
-            #permission         = AddPortalContent,   # Add portal content
-            permission         = Permissions.Add,     # Zwiki: Add pages
-            extra_constructors = (addWikiPageInCMF,), # cons
-            #fti                = ftis,               # ignored
-            ).initialize(context)
-
     except ImportError:
-        INFO('failed to initialise for Plone/CMF, Plone/CMF sites will not recognise Zwiki')
-        BLATHER(formattedTraceback())
+        return
+    BLATHER('registering "zwiki" skin layer and "Wiki Page" content type with Plone')
+    # register our GenericSetup profiles
+    profile_registry.registerProfile('default',
+                                     'ZWiki',
+                                     'Extension profile for default Zwiki-in-Plone/CMF setup',
+                                     'profiles/default',
+                                     'ZWiki',
+                                     EXTENSION,
+                                     for_=IPloneSiteRoot)
+    profile_registry.registerProfile('uninstall',
+                                     'ZWiki',
+                                     'Extension profile for removing default Zwiki-in-Plone/CMF setup',
+                                     'profiles/uninstall',
+                                     'ZWiki',
+                                     EXTENSION)
+    # register our skin layer(s)
+    Products.CMFCore.DirectoryView.registerDirectory('skins', globals())
+    # initialize portal content
+    PROJECT = 'Zwiki'
+    #types, cons, ftis = process_types(listTypes(PROJECT),PROJECT)
+    ContentInit(
+        PROJECT + ' Content',
+        content_types      = (ZWikiPage.ZWikiPage,), # types,
+        #permission         = AddPortalContent,   # Add portal content
+        permission         = Permissions.Add,     # Zwiki: Add pages
+        extra_constructors = (addWikiPageInCMF,), # cons
+        #fti                = ftis,               # ignored
+        ).initialize(context)
 
 # a (old-style) CMF factory method
 def addWikiPageInCMF(self, id, title='', page_type=None, file=''):
