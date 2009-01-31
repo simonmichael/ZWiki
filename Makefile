@@ -51,25 +51,23 @@ epydoc:
 # *translators* update translations through launchpad, any time
 # *developers* update and upload pot files, any time
 # *release manager*, before release:
-#  1. update and upload pot files
+#  1. update pot file and upload to launchpad
 #   make pot, record
 #   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki/+upload
-#   wait for upload
-#    https://translations.launchpad.net/zwiki/trunk/+imports
-#  2. download and record po files
-#   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki
-#   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki-plone
-#   use download links in mail, unpack in i18n/
+#   wait for upload (https://translations.launchpad.net/zwiki/trunk/+imports)
+#  2. download latest translations from launchpad
+#   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki/+export (everything, partial po format) 
+#   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki-plone/+export
+#   wait for mail, unpack download links into i18n/ :
 #    cd i18n
 #    curl http://launchpadlibrarian.net/NNNNNNNN/launchpad-export.tar.gz | tar xzvf - --strip-components=1
 #    curl http://launchpadlibrarian.net/NNNNNNNN/launchpad-export.tar.gz | tar xzvf - --strip-components=1
-#   check for new languages, darcs wh -sl i18n
+#   check for new languages: darcs wh -sl i18n
 #   make po, record
 #  3. re-upload po files to update status bars
 #   make poupload
 #   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki/+upload
-#   wait for upload
-#    https://translations.launchpad.net/zwiki/trunk/+imports
+#   wait for upload (https://translations.launchpad.net/zwiki/trunk/+imports)
 #
 # problems:
 #  launchpad strips out some #. Default lines ? need them ?
