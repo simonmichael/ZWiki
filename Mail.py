@@ -879,8 +879,7 @@ class MailIn:
         context should be a wiki page. This perhaps should do the isJunk
         test up front to avoid unnecessary resource usage.
         """
-        #BLATHER('mailin.py processing incoming message:\n%s' % message)
-        BLATHER('mailin.py processing incoming message')
+        #BLATHER('mailin.py processing incoming message') #:\n%s' % message)
         self.context      = context
         self.original     = message
         self.msg          = email.message_from_string(self.original)
@@ -948,7 +947,7 @@ class MailIn:
         """
         if self.isJunk(): return ('ERROR','\nDiscarding junk mailin.\n\n\n')
         if not self.isMailinAllowed():
-            BLATHER('mailin.py: bounced mail from non-subscriber',self.FromEmail)
+            BLATHER('ignoring mail from non-subscriber',self.FromEmail)
             return ('ERROR', '\nSorry, you must be a subscriber to send mail to this wiki.\n\n\n')
         if re.search(TRACKERADDREXP,self.recipientAddress()): return ('ISSUE',None)
         pagename = pageNameFromSubject(self.subject) or self.context.defaultMailinPageName()
