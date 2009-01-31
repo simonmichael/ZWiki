@@ -9,11 +9,24 @@ First public release of Zwiki 2, formerly the ZWiki-unstable branch.  For
 more detail of the changes landed since the 0.61 release, see
 http://zwiki.org/ZwikiOneAndTwoDifferences .
 
-The main new thing is we now work internally with unicode rather than
-utf8-encoded text; we believe this will help remove the unicode errors
-which tend to creep in with non-ascii wikis. Thanks to wuwien for funding
-a large part of this work. 
+The main new thing is that we now work internally with unicode rather than
+utf8-encoded text; we believe this will help resolve the unicode errors
+which tend to creep in with non-ascii wikis, and allow accurate searching
+of non-ascii content (with suitable catalog configuration.)  Thanks to
+wuwien for funding a large part of this work.
 
+**Upgrade notes**
+
+If your wiki has only ascii content, it will probably keep working as
+before.  Otherwise, you may notice new errors eg when doing a search for
+some non-ascii text. If so, visit SOMEPAGE/upgradeAll as manager. This
+should convert all your pages' text from utf-8 to unicode, and convert
+your wiki catalog's indexes to unicode-aware ones. As usual, this can take
+a while in big wikis (15 minutes for zwiki.org) and you can watch the
+progress in event.log if you enable BLATHER logging.  After it completes
+successfully, you should see no or fewer errors.  (If not, you might need
+to run upgradeAll a second time.) If these notes don't match your
+experience, or errors persist, please report so we can investigate.
 	
 **Browsing**
 
@@ -117,9 +130,12 @@ a large part of this work.
   * tests & code cleanups (betabug, simon)
 
 
+Zwiki 1.0.0 2009/xx/xx ?
+========================
+*?*
 
 
-2009/01/30: stable, unstable branches become Zwiki 1, Zwiki 2
+stable/unstable branches become Zwiki 1, Zwiki 2 - 2009/01/30
 =============================================================
 I have repurposed the Zwiki stable and unstable repos and updated
 FrontPage and DarcsHowto. We now have
