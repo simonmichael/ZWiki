@@ -2,11 +2,11 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Zwiki file-based documentation
-==============================
+Zwiki sphinx documentation
+==========================
 
-The following mostly developer-oriented docs are generated from the text
-files within the Zwiki codebase (by Sphinx).  For the main Zwiki
+The following developer-oriented docs are generated from restructured
+text files within the Zwiki codebase by Sphinx.  For the main Zwiki
 documentation, see the wiki at http://zwiki.org.
 
 
@@ -17,10 +17,9 @@ Contents:
    :maxdepth: 2
 
    README
-   functional
-   NOTES
-   STYLE
    FILESYSTEM_VS_WIKI_DOCS
+   STYLE
+   functional
    REPO_POLICY
    CONTRIBUTORS
    LICENSE
