@@ -7,6 +7,9 @@
       <meta http-equiv="pragma" content="no-cache"
             tal:define="dummy python:
                         request.RESPONSE.setHeader('pragma','no-cache')" />
+      <tal:ZTinyMCE tal:condition="context/supportsTinyMCE | python:False">
+          <script tal:replace="structure context/tinymce.conf"></script>
+      </tal:ZTinyMCE>
     </metal:block>
   </head>
   <body>
