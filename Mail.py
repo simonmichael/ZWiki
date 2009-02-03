@@ -912,6 +912,7 @@ class MailIn:
         # ..Type Error - configured ezmlm to provide beenthere instead (?)
         self.xbeenthere = self.msg.get('X-BeenThere')
         # the mailin body will be the message's first text/plain part
+        # (or a null string if there is none or it's misencoded)
         try:
             firstplaintextpart = typed_subpart_iterator(self.msg,
                                                         'text',
@@ -922,7 +923,7 @@ class MailIn:
             # second decoding, from utf8 or whatever to unicode
             charset = self.msg.get_content_charset('ascii')
             payloadutf8 = payload.decode(charset).encode('utf-8')
-        except StopIteration:
+        except StopIteration, UnicodeDecodeError:
             payloadutf8 = ''
         self.body = cleanupBody(payloadutf8)
         
