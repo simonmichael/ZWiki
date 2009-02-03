@@ -7,13 +7,14 @@ import email
 from email.Message import Message
 from email.Utils import parseaddr, getaddresses
 from email.Iterators import typed_subpart_iterator
+from email.Header import Header, decode_header
 
 from Globals import InitializeClass
 
 from I18n import _
 from TextFormatter import TextFormatter
 from Utils import html_unquote,BLATHER,formattedTraceback,stripList, \
-     isIpAddress,isEmailAddress,isUsername,safe_hasattr
+     isIpAddress,isEmailAddress,isUsername,safe_hasattr,tounicode,toencoded
 from Defaults import AUTO_UPGRADE, PAGE_METATYPE
 from Regexps import bracketedexpr,urlchars
 from plugins.tracker.tracker import ISSUE_SEVERITIES
@@ -592,10 +593,10 @@ class PageMailSupport:
             # page name has been suppressed
             pagename = ''
         return (
-            getattr(self.folder(),'mail_subject_prefix','').strip() +
-            pagename +
-            subject +
-            subjectSuffix.strip())
+            self.tounicode(getattr(self.folder(),'mail_subject_prefix','').strip()) +
+            self.tounicode(pagename) +
+            self.tounicode(subject) +
+            self.tounicode(subjectSuffix.strip()))
 
     def toHeader(self): # -> string; depends on self, folder
         """
@@ -738,13 +739,15 @@ class PageMailSupport:
         if not recipients: return
         try:
             msgid = message_id or self.messageIdFromTime(self.ZopeTime())
+            # encode subject with RFC 2047
+            subj = str(Header(self.subjectHeader(subject,subjectSuffix), self.encoding()))
             fields = {
                 'body':'%s\n\n%s' % (self.toencoded(text),self.toencoded(self.signature(msgid))),
                 'From':self.toencoded(self.fromHeader(REQUEST)),
                 'Reply-To':self.toencoded(self.replyToHeader()),
                 'To':self.toencoded(to or self.toHeader()),
                 'Bcc':self.toencoded(self.bccHeader(recipients)),
-                'Subject':self.toencoded(self.subjectHeader(subject,subjectSuffix)),
+                'Subject':subj,
                 'Message-ID':self.toencoded(msgid),
                 'In-Reply-To':self.toencoded((in_reply_to and '\nIn-reply-to: %s' % in_reply_to.splitlines()[0]) or ''),
                 'Content-Type':'text/plain; charset="%s"' % self.encoding(),
@@ -884,7 +887,10 @@ class MailIn:
         self.original     = message
         self.msg          = email.message_from_string(self.original)
         self.date         = self.msg['Date']
-        self.subject      = re.sub(r'\n',r'',self.msg.get('Subject',''))
+        # convert the possibly RFC2047-encoded subject to unicode.
+        # Only the first encoded part is used if there is more than one.
+        (s,enc)           = decode_header(self.msg.get('Subject',''))[0]
+        self.subject      = tounicode(s,enc or 'ascii')
         self.realSubject  = re.sub(r'.*?\[.*?\] ?(.*)',r'\1',self.subject)
         self.messageid    = self.msg.get('Message-id','')
         self.inreplyto    = self.msg.get('In-reply-to','')
@@ -910,9 +916,12 @@ class MailIn:
             firstplaintextpart = typed_subpart_iterator(self.msg,
                                                         'text',
                                                         'plain').next()
+            # as I understand it:
+            # first decoding, from the content-transfer-encoding, eg quoted-printabe
             payload = firstplaintextpart.get_payload(decode=1)
-            content_encoding = self.msg.get_content_charset('ascii')
-            payloadutf8 = payload.decode(content_encoding).encode('utf-8')
+            # second decoding, from utf8 or whatever to unicode
+            charset = self.msg.get_content_charset('ascii')
+            payloadutf8 = payload.decode(charset).encode('utf-8')
         except StopIteration:
             payloadutf8 = ''
         self.body = cleanupBody(payloadutf8)
