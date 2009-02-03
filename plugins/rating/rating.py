@@ -64,10 +64,12 @@ class PluginRating:
     security.declareProtected(Permissions.Rate, 'vote')
     def vote(self,vote=None,REQUEST=None):
         """
-        Record a user's vote for this page (or unrecord it).
+        Record a user's vote for this page, or unrecord it if a null
+        vote string is provided.
 
-        To help build robust image-button forms, if vote is None, also
-        look for form values named like vote0, vote1.. voteN and use N.
+        To make robust image-button voting forms easier, if vote is
+        not provided we also look for form values named like vote0,
+        vote1.. voteN and use the selected N as the vote.
         """
         username = self.usernameFrom(REQUEST)
         if username:
@@ -77,25 +79,24 @@ class PluginRating:
                 # depending on browser, there will also be
                 # voteN.x and voteN.y, or only these
                 if REQUEST:
-                    votefields = [k for k in REQUEST.form.keys()
-                                  if k.startswith('vote')]
+                    votefields = [k for k in REQUEST.form.keys() if k.startswith('vote')]
                     if votefields:
                         vote = votefields[0][4:]
                         vote = re.sub(r'\.[xy]$','',vote)
-            if vote == None:
+            if vote == None: # probably a bot visit, ignore
+                return
+            elif vote == '':
                 try:
                     del votes[username]
                     BLATHER("%s: removed %s's vote" % (self.toencoded(self.pageName()),username))
-                except KeyError: pass
+                except KeyError:
+                    return
             else:
                 votes[username] = vote
                 BLATHER("%s: recorded %s vote for %s" % (self.toencoded(self.pageName()),vote,username))
             self.setVotes(votes)
-            catalog=self.catalog()
-            catalog.catalog_object(self, idxs=['rating', 'voteCount'])
-            # only need to update votes indexes
-            # note that likely all metadata is updated anyway
-
+            # update catalog, just the affected indexes
+            self.catalog().catalog_object(self, idxs=['rating', 'voteCount'])
             if REQUEST:
                 REQUEST.RESPONSE.redirect(
                     # redirect to the page they came on.. might be some
