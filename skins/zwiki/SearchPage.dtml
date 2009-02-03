@@ -9,12 +9,13 @@
 <dtml-translate domain=zwiki>Case-insensitivity and wildcards may be supported depending on your catalog configuration.</dtml-translate>  
 <dtml-translate domain=zwiki>Leave it blank to list all pages.</dtml-translate>  
 
+<dtml-let uexpr="tounicode(REQUEST.get('expr',''))">
 <table border="0" width="100%">
 <tr>
 <td>
 <form method="GET" action="&dtml-URL;">
   search this wiki:<br />
-  <input name="expr" type="text" size="20" value="<dtml-var "tounicode(expr)" html_quote missing>" accesskey="s"
+  <input name="expr" type="text" size="20" value="<dtml-var uexpr html_quote missing>" accesskey="s"
   /><input type="submit" name="submit" value="<dtml-translate domain=zwiki>Search</dtml-translate>" />
 </form>
 </td>
@@ -24,7 +25,7 @@
   <input type="hidden" name="sitesearch"  value="<dtml-var "wikiUrl().split('/')[2]">" />
   <input type="hidden" name="cof" VALUE="L:&dtml-SERVER_URL;misc_/ZWiki/ZWikiPage_icon.gif"" />
   <input type="hidden" name="site" value="<dtml-var "wikiUrl().split('/')[2]">" />
-  <input type="text" size="20" name="q" value="<dtml-var "tounicode(expr)" html_quote missing>" 
+  <input type="text" size="20" name="q" value="<dtml-var uexpr html_quote missing>" 
   /><input type="submit" VALUE="Search" />
 </form>
 </td>
@@ -40,6 +41,7 @@
 </dtml-if>
 </tr>
 </table>
+</dtml-let>
 
 <!-- results -->
 <dtml-if "_.has_key('expr')">
