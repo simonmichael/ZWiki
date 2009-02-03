@@ -31,9 +31,9 @@
                 <input type="submit" tal:attributes="value rev/revisionNumber" />
               </form>
             </td>
-            <td style="padding-right:1em; font-weight:bold;font-style:italic;" tal:content="rev/last_log" ></td>
+            <td style="padding-right:1em; font-weight:bold;font-style:italic;" tal:content="python:here.talsafe(rev.last_log)" ></td>
             <td style="padding-right:1em;" tal:content="rev/size" style="text-align:right;"></td>
-            <td style="padding-right:1em;" tal:content="rev/lastEditor"></td>
+            <td style="padding-right:1em;" tal:content="python:here.talsafe(rev.lastEditor())"></td>
             <td style="padding-right:1em;" tal:content="rev/lastEditTime"></td>
           </tr>
         </table>
