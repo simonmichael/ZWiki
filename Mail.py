@@ -889,8 +889,12 @@ class MailIn:
         self.date         = self.msg['Date']
         # convert the possibly RFC2047-encoded subject to unicode.
         # Only the first encoded part is used if there is more than one.
+        # misencoded subjects are ignored.
         (s,enc)           = decode_header(self.msg.get('Subject',''))[0]
-        self.subject      = tounicode(s,enc or 'ascii')
+        try:
+            self.subject  = tounicode(s,enc or 'ascii')
+        except UnicodeDecodeError:
+            self.subject  = ''
         self.realSubject  = re.sub(r'.*?\[.*?\] ?(.*)',r'\1',self.subject)
         self.messageid    = self.msg.get('Message-id','')
         self.inreplyto    = self.msg.get('In-reply-to','')
