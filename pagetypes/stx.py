@@ -82,9 +82,9 @@ class PageTypeStx(PageTypeBaseHtml):
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):
         """
         In the final render stage, done each at page view, we evaluate
-        DTML (if allowed), render the wiki links, execute any fit test
-        tables, add an issue properties form if this is an issue page,
-        add a subtopics listing if enabled, and add the wiki page skin.
+        DTML (if allowed), render the wiki links, add an issue properties
+        form if this is an issue page, add a subtopics listing if enabled,
+        and add the wiki page skin.
         """
         if page.dtmlAllowed():
             t = page.evaluatePreRenderedAsDtml(page,REQUEST,RESPONSE,**kw)
@@ -92,7 +92,6 @@ class PageTypeStx(PageTypeBaseHtml):
             t = page.preRendered()
         t = page.renderMarkedLinksIn(t)
         t = self.obfuscateEmailAddresses(page,t)
-        if page.hasFitTests(): t = page.runFitTestsIn(t)
         if page.isIssue() and kw.get('show_issueproperties',1):
             t = page.addIssueFormTo(t)
         t = page.renderMidsectionIn(t,**kw)

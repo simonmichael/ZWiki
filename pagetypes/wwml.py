@@ -26,7 +26,6 @@ class PageTypeWwml(PageTypeBase):
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):
         t = page.preRendered()
         t = page.renderMarkedLinksIn(t)
-        if page.hasFitTests(): t = page.runFitTestsIn(t)
         if page.isIssue() and kw.get('show_issueproperties',1):
             t = page.addIssueFormTo(t)
         t = page.renderMidsectionIn(t,**kw)
