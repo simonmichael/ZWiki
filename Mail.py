@@ -13,7 +13,7 @@ from Globals import InitializeClass
 
 from I18n import _
 from TextFormatter import TextFormatter
-from Utils import html_unquote,BLATHER,formattedTraceback,stripList, \
+from Utils import html_unquote,BLATHER,DEBUG,formattedTraceback,stripList, \
      isIpAddress,isEmailAddress,isUsername,safe_hasattr,tounicode,toencoded
 from Defaults import AUTO_UPGRADE, PAGE_METATYPE
 from Regexps import bracketedexpr,urlchars
@@ -882,7 +882,7 @@ class MailIn:
         context should be a wiki page. This perhaps should do the isJunk
         test up front to avoid unnecessary resource usage.
         """
-        #BLATHER('mailin.py processing incoming message') #:\n%s' % message)
+        DEBUG('mailin.py processing incoming message:\n%s' % message)
         self.context      = context
         self.original     = message
         self.msg          = email.message_from_string(self.original)
@@ -961,7 +961,7 @@ class MailIn:
         """
         if self.isJunk(): return ('ERROR','\nDiscarding junk mailin.\n\n\n')
         if not self.isMailinAllowed():
-            BLATHER('ignoring mail from non-subscriber',self.FromEmail)
+            DEBUG('ignoring mail from non-subscriber',self.FromEmail)
             return ('ERROR', '\nSorry, you must be a subscriber to send mail to this wiki.\n\n\n')
         if re.search(TRACKERADDREXP,self.recipientAddress()): return ('ISSUE',None)
         pagename = pageNameFromSubject(self.subject) or self.context.defaultMailinPageName()
