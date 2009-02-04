@@ -431,11 +431,11 @@ comment''')
             '''\
 <p>test
 ZWIKIMIDSECTION</p>
-<p><a name="comments"><br /><b><span class="commentsheader">comments:</span></b></a></p>
+<p><a name="comments"><br /><b><span c'''+'''lass="commentsheader">comments:</span></b></a></p>
 <p><a name="msg19991231000000+0000@foo"></a>
 <b>...</b> --me,  <a href="http://nohost/test_folder<u>1</u>/wiki/TestPage#msg19991231000000+0000@foo">1999/12/31 GMT</a> <a href="http://nohost/test_folder<u>1</u>/wiki/TestPage?subject=&in_reply_to=%3C19991231000000%2B0000%40foo%3E#bottom">reply</a><br />
 comment</p>
-''')
+''') # break "class" to silence ctags warnings
 
         # check there's at most one separator
         p.comment(text='comment',username='me',time='1999/12/31 GMT')
@@ -444,7 +444,7 @@ comment</p>
             '''\
 <p>test
 ZWIKIMIDSECTION</p>
-<p><a name="comments"><br /><b><span class="commentsheader">comments:</span></b></a></p>
+<p><a name="comments"><br /><b><span c'''+'''lass="commentsheader">comments:</span></b></a></p>
 <p><a name="msg19991231000000+0000@foo"></a>
 <b>...</b> --me,  <a href="http://nohost/test_folder<u>1</u>/wiki/TestPage#msg19991231000000+0000@foo">1999/12/31 GMT</a> <a href="http://nohost/test_folder<u>1</u>/wiki/TestPage?subject=&in_reply_to=%3C19991231000000%2B0000%40foo%3E#bottom">reply</a><br />
 comment</p>
