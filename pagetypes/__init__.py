@@ -153,11 +153,6 @@ try:
 except ImportError:
     pass
 try:
-    import moin
-    ZwikiMoinPageType = moin.PageTypeMoin
-except ImportError:
-    pass
-try:
     import plaintext
     ZwikiPlaintextPageType = plaintext.PageTypePlaintext
 except ImportError:
