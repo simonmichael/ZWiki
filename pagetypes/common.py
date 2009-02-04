@@ -116,12 +116,15 @@ class PageTypeBase:
         return t
 
     def obfuscateEmailAddresses(self,page,text):
-        return re.sub(r'(?<!mailto:)\b(?!msg\d{14}-\d{4})(?<!msg\d{14}-)(\w[\w\-\+\.]*)@([\w\-\.]+)\.([\w\-\.]+)\b([^>]*<|$)', 
-            lambda m: '<span class="nospam1">&#' + str(ord(m.groups()[0][0])) 
-                + m.groups()[0][1:] 
-                + '<!-- foobar --></span>&#64;<span class="nospam2">' 
-                + m.groups()[1][0:-1] + '&#' + str(ord(m.groups()[1][-1])) 
-                + ';&#46;' + m.groups()[2] + '</span>' + m.groups()[3], text)
+        ent = lambda c:'&#%s;' % ord(c)
+        obf = lambda s:''.join(map(ent,s))
+        def replace(m):
+            s = m.group()
+            return s.startswith('mailto:') and s or obf(s)
+        return re.sub(
+            r'(mailto:)?(?!msg\d{14}-\d{4})(?<!msg\d{14}-)(?P<addr>\w[-+.\w]*@[-+.\w]+\.[-+.\w]+)',
+            replace,
+            text)
 
     def renderCitationsIn(self,page,text):
         return text
