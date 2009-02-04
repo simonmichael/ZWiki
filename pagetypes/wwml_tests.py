@@ -117,7 +117,7 @@ Let's see if AutomaticURLLinking<a class="new visualNoPrint" href="http://nohost
   <UL>
     <LI> <a href="http://www.palladion.com">http://www.palladion.com</a>
     <LI> <a href="ftp://www.neosoft.com/pub/users/t/tseaver">ftp://www.neosoft.com/pub/users/t/tseaver</a>
-    <LI> <a href="mailto:tseaver@example.com">tseaver@example.com</a>
+    <LI> <a href="mailto:&#116;&#115;&#101;&#97;&#118;&#101;&#114;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#99;&#111;&#109;">&#116;&#115;&#101;&#97;&#118;&#101;&#114;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#99;&#111;&#109;</a>
   </UL>
 <P>
 And [these words]<a class="new visualNoPrint" href="http://nohost/test_folder_1_/wiki/TestPage/createform?page=these%20words" title="create this page">?</a> should be linked, too.

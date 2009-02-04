@@ -119,11 +119,9 @@ class PageTypeBase:
     def obfuscateEmailAddresses(self,page,text):
         ent = lambda c:'&#%s;' % ord(c)
         obf = lambda s:''.join(map(ent,s))
-        def replace(m):
-            s = m.group()
-            return s.startswith('mailto:') and s or obf(s)
+        def replace(m): return obf(m.group())
         return re.sub(
-            r'(mailto:)?(?!msg\d{14}-\d{4})(?<!msg\d{14}-)(?P<addr>\w[-+.\w]*@[-+.\w]+\.[-+.\w]+)',
+            r'(?!msg\d{14}-\d{4})(?<!msg\d{14}-)(?P<addr>\w[-+.\w]*@[-+.\w]+\.[-+.\w]+)',
             replace,
             text)
 
