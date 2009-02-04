@@ -49,7 +49,6 @@ from CMF import PageCMFSupport
 from Comments import PageCommentsSupport
 from Admin import PageAdminSupport
 from Editing import PageEditingSupport
-from RSS import PageRSSSupport
 from I18n import DTMLFile, _
 from pagetypes import PAGETYPES, PAGE_TYPES
 from pagetypes.common import MIDSECTIONMARKER
@@ -89,7 +88,6 @@ class ZWikiPage(
     PageCatalogSupport,
     PageCommentsSupport,
     PageAdminSupport,
-    PageRSSSupport,
     PageUtils,
     PageViews,
     DTMLDocument,

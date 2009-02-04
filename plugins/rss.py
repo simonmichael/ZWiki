@@ -7,10 +7,10 @@ from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 
-import Permissions
-from Utils import BLATHER, html_quote
-
-from I18n import _
+from Products.ZWiki import Permissions
+from Products.ZWiki.Utils import BLATHER, html_quote
+from Products.ZWiki.plugins import registerPlugin
+from Products.ZWiki.I18n import _
 
 class PageRSSSupport:
     """
@@ -18,20 +18,9 @@ class PageRSSSupport:
     """
     security = ClassSecurityInfo()
 
-    def title_quote(self, title):
-        """
-        Quote a string suitable for a title element in an RSS feed.
-        We replace only &, > and <
-        this is according to RSS specs in
-        http://www.rssboard.org/rss-profile#data-types-characterdata
-        Nonetheless, http://feedvalidator.org/ claims there is html in 
-        those encoded titles.
-        """
-        title = title.replace('&', '&#x26;', -1)
-        title = title.replace('<', '&#x3C;', -1)
-        title = title.replace('>', '&#x3E;', -1)
-        return title
-
+    security.declareProtected(Permissions.View, 'feedUrl')
+    def feedUrl(self):
+        return self.defaultPageUrl() + '/pages_rss'
 
     security.declareProtected(Permissions.View, 'pages_rss')
     def pages_rss(self, num=10, REQUEST=None):
@@ -153,7 +142,22 @@ class PageRSSSupport:
 """
         return t
 
+    def title_quote(self, title):
+        """
+        Quote a string suitable for a title element in an RSS feed.
+        We replace only &, > and <
+        this is according to RSS specs in
+        http://www.rssboard.org/rss-profile#data-types-characterdata
+        Nonetheless, http://feedvalidator.org/ claims there is html in 
+        those encoded titles.
+        """
+        title = title.replace('&', '&#x26;', -1)
+        title = title.replace('<', '&#x3C;', -1)
+        title = title.replace('>', '&#x3E;', -1)
+        return title
+
     # backwards compatibility
     changes_rss = edits_rss
 
 InitializeClass(PageRSSSupport) 
+registerPlugin(PageRSSSupport)

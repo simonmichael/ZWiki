@@ -369,10 +369,6 @@ class PageUtils:
     def changesUrl(self):
         return self.urlForDtmlPageOrMethod('RecentChanges','recentchanges')
 
-    security.declareProtected(Permissions.View, 'feedUrl')
-    def feedUrl(self):
-        return self.defaultPageUrl() + '/pages_rss'
-
     discussionUrl = defaultPageUrl
 
     security.declareProtected(Permissions.View, 'indexUrl')
