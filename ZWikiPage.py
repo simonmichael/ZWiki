@@ -409,17 +409,6 @@ class ZWikiPage(
         """Is Epoz installed ?"""
         return safe_hasattr(self,'Epoz')
 
-    security.declareProtected(Permissions.View, 'supportsTinyMCE')
-    def supportsTinyMCE(self):
-        """Is TinyMCE editing available for this page?"""
-        return self.tinyMCEInstalled() and self.pageType().supportsEpoz()
-
-    security.declareProtected(Permissions.View, 'tinyMCEInstalled')
-    def tinyMCEInstalled(self):
-        """Is TinyMCE installed and configured?"""
-        installed = 'ZTinyMCE' in self.Control_Panel.Products.objectIds()
-        return installed and getattr(self, 'tinymce.conf', None) is not None
-
     def handle_modified_headers(self, last_mod=None, REQUEST=None):
         """
         Check if the headers indicate we have changed content.
