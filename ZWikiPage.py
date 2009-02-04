@@ -399,16 +399,6 @@ class ZWikiPage(
             not safe_hasattr(self,'no_dtml')
             )
 
-    security.declareProtected(Permissions.View, 'supportsEpoz')
-    def supportsEpoz(self):
-        """Is Epoz editing available for this page ?"""
-        return self.epozInstalled() and self.pageType().supportsEpoz()
-
-    security.declareProtected(Permissions.View, 'epozInstalled')
-    def epozInstalled(self):
-        """Is Epoz installed ?"""
-        return safe_hasattr(self,'Epoz')
-
     def handle_modified_headers(self, last_mod=None, REQUEST=None):
         """
         Check if the headers indicate we have changed content.
