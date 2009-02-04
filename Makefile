@@ -159,10 +159,10 @@ testall:
 	$(TESTALL) -m Products.ZWiki
 
 test_%:
-	$(TESTV) -m Products.ZWiki -t $*
+	$(TEST) -m Products.ZWiki -t $*
 
 testmod_%:
-	$(TESTV) -m Products.ZWiki.$*
+	$(TEST) -m Products.ZWiki.$*
 
 TESTRESULTS=TESTRESULTS
 .PHONY: testresults
