@@ -36,10 +36,10 @@ class PageDiffSupport:
         atext, btext = '', ''
         b = self.revision(brev)
         if b:
-            btext = b.text()
+            btext = self.tounicode(b.text()) # nb old revisions might be utf-8
             a = b.previousRevision()
             if a:
-                atext = a.text()
+                atext = self.tounicode(a.text())
         difftext     = htmldiff(atext,btext)
         # wiki links won't find their targets in the revisions folder
         # (unless prerendered is still intact). Oh well.
