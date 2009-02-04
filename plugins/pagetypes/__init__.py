@@ -40,7 +40,7 @@ PAGE_TYPE_UPGRADES = {
     'structuredtext_dtml'          :'stx',
     'HTML'                         :'html',
     'html_dtml'                    :'html',
-    'Classic Wiki'                 :'wwml',
+    'Classic Wiki'                 :'plaintext',
     'Plain Text'                   :'plaintext',
     # pre-0.9.10
     'stxprelinkdtml'               :'stx',
@@ -48,7 +48,7 @@ PAGE_TYPE_UPGRADES = {
     'dtmlstructuredtext'           :'stx',
     'structuredtext'               :'stx',
     'structuredtextonly'           :'stx',
-    'classicwiki'                  :'wwml',
+    'classicwiki'                  :'plaintext',
     'htmldtml'                     :'html',
     'plainhtmldtml'                :'html',
     'plainhtml'                    :'html',
@@ -61,8 +61,8 @@ PAGE_TYPE_UPGRADES = {
     'stxprelinkhtml'               :'stx',
     'stxlinkhtml'                  :'stx',
     'stxlink'                      :'stx',
-    'wwmllink'                     :'wwml',
-    'wwmlprelink'                  :'wwml',
+    'wwmllink'                     :'plaintext',
+    'wwmlprelink'                  :'plaintext',
     'prelinkdtmlhtml'              :'html',
     'dtmllinkhtml'                 :'html',
     'prelinkhtml'                  :'html',
@@ -73,7 +73,7 @@ PAGE_TYPE_UPGRADES = {
     'stxprelinkfitissuehtml'       :'stx',
     'stxprelinkdtmlfitissuehtml'   :'stx',
     'rstprelinkfitissue'           :'rst',
-    'wwmlprelinkfitissue'          :'wwml',
+    'wwmlprelinkfitissue'          :'plaintext',
     # pre-0.22
     'msgstxprelinkfitissuehtml'    :'stx',
     # nb pre-.22 'html' pages will not be auto-upgraded
@@ -81,8 +81,14 @@ PAGE_TYPE_UPGRADES = {
     # pre-0.32
     'msgstxprelinkdtmlfitissuehtml':'stx',
     'msgrstprelinkfitissue'        :'rst',
-    'msgwwmlprelinkfitissue'       :'wwml',
+    'msgwwmlprelinkfitissue'       :'plaintext',
     'dtmlhtml'                     :'html',
+    # pre-2.0
+#     'wwml'                         :'plaintext',
+#     'moin'                         :'plaintext',
+#     'stxlatex'                     :'plaintext',
+#     'stxmath'                      :'plaintext',
+#     'pamphlet'                     :'plaintext',
     }
 
 def registerPageType(t,prepend=0):
