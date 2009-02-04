@@ -94,6 +94,7 @@ class PageTypeBase:
         p = p.__of__(page.aq_parent)
         p.setPageType(self.id())
         p.setText(text)
+        p.preRender()
         return p.render(
             page,
             kw.get('REQUEST',{}),
