@@ -51,9 +51,9 @@ class PageTypeMoin(PageTypeBase):
         return t
 
     def format(self,page,t):
-        # zwiki now stores text as unicode but this version of moin
-        # uses utf-8 (it says here)
-        return render_moin_markup(t.encode('utf-8'))
+        # our version of moin requires utf-8 apparently; it has been
+        # hacked to return utf-8 as well
+        return page.tounicode(render_moin_markup(t.encode('utf-8')),'utf-8')
 
 
 ######################################################################
@@ -82,13 +82,13 @@ class MoinConfig:
     pass
 
 class MoinRequest:
-    output = u''
+    output = ''
     form = None
     getText = None
     cfg = MoinConfig()
     _page_headings = {}
     def write(self, text): self.output += text
-    def __unicode__(self): return self.output
+    def __str__(self): return self.output
     def getPragma(self,a,b): return b
 
 class MoinParser:
@@ -968,7 +968,7 @@ class MoinParser:
                 self.formatter.in_p) and lastpos<len(line):
             result.append(self.formatter.paragraph(1))
         result.append(self.formatter.text(line[lastpos:]))
-        return u''.join(result)
+        return ''.join(result)
 
     def replace(self, match):
         #hit = filter(lambda g: g[1], match.groupdict().items())
@@ -2039,7 +2039,7 @@ def render_moin_markup(text):
     formatter = MoinFormatter(req)
     formatter.setPage(MoinPage())
     MoinParser(text,req).format(formatter)
-    return unicode(req)
+    return str(req)
 
 #print render_moin_markup("'''strong'''")
 
