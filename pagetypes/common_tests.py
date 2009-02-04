@@ -29,5 +29,10 @@ class Tests(ZwikiTestCase):
 
     def test_obfuscateEmailAddresses(self):
         f = lambda s:PageTypeBase().obfuscateEmailAddresses(self.p,s)
-        self.assertEquals(f('test'), 'test')
-        self.assertEquals(f('a@b.c'), '<span class="nospam1">&#97<!-- foobar --></span>&#64;<span class="nospam2">&#98;&#46;c</span>')
+        self.assertEquals('abc', f('abc'))
+        self.assertEquals('&#97;&#64;&#98;&#46;&#99;', f('a@b.c'))
+        self.assertEquals('&#97;&#46;&#97;&#64;&#98;&#46;&#99;', f('a.a@b.c'))
+        self.assertEquals('mailto:ab@c.com', f('mailto:ab@c.com'))
+        self.assertEquals('<a href="mailto:a@b.c">&#97;&#64;&#98;&#46;&#99;</a>', f('<a href="mailto:a@b.c">a@b.c</a>'))
+        self.assertEquals('<a href="mailto:aa@b.c">&#97;&#97;&#64;&#98;&#46;&#99;</a>', f('<a href="mailto:aa@b.c">aa@b.c</a>'))
+        self.assertEquals('<a href="mailto:a.a@b.c">&#97;&#46;&#97;&#64;&#98;&#46;&#99;</a>', f('<a href="mailto:a.a@b.c">a.a@b.c</a>'))
