@@ -1,15 +1,9 @@
-# Admin.py - methods supporting wiki administration
-
 from types import *
 import os, re, os.path
 from string import join, split, strip
-from time import clock
 
 from AccessControl import getSecurityManager, ClassSecurityInfo
-from Globals import package_home, InitializeClass
-from OFS.CopySupport import CopyError
-from OFS.DTMLMethod import DTMLMethod
-from DateTime import DateTime
+from Globals import InitializeClass
 
 from Products.ZWiki import Permissions
 from Products.ZWiki.I18n import _
@@ -19,20 +13,20 @@ from Products.ZWiki.plugins import registerPlugin
 
 class TinyMCESupport:
     """
-    This mix-in class provides ZTinyMCE integration.
+    This mix-in class provides ZTinyMCE wysiwyg editor integration.
     """
     security = ClassSecurityInfo()
-
-    security.declareProtected(Permissions.View, 'supportsTinyMCE')
-    def supportsTinyMCE(self):
-        """Is TinyMCE editing available for this page?"""
-        return self.tinyMCEInstalled() and self.pageType().supportsEpoz()
 
     security.declareProtected(Permissions.View, 'tinyMCEInstalled')
     def tinyMCEInstalled(self):
         """Is TinyMCE installed and configured?"""
         installed = 'ZTinyMCE' in self.Control_Panel.Products.objectIds()
         return installed and getattr(self, 'tinymce.conf', None) is not None
+
+    security.declareProtected(Permissions.View, 'supportsTinyMCE')
+    def supportsTinyMCE(self):
+        """Is TinyMCE editing available for this page?"""
+        return self.tinyMCEInstalled() and self.pageTypeId() == 'html'
 
     security.declareProtected(Permissions.AddWiki, 'setupTinyMCE')
     def setupTinyMCE(self):

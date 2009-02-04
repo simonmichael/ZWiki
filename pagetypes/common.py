@@ -44,7 +44,6 @@ class PageTypeBase:
     supportsWikiLinks = no
     supportsHtml = no
     supportsDtml = no
-    supportsEpoz = no
 
     def id(self): return self._id
     def name(self): return self._name

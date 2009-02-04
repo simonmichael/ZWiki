@@ -7,7 +7,6 @@ class PageTypeHtml(PageTypeBaseHtml):
     _name = 'HTML'
     supportsHtml = yes
     supportsDtml = yes
-    supportsEpoz = yes
 
     def preRender(self, page, text=None):
         t = text or (page.document()+'\n'+MIDSECTIONMARKER + \

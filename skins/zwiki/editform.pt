@@ -25,10 +25,7 @@
       title      string:${container/title} ${actioning} ${page};
       text       request/form/text|options/text;
       type       request/form/type|python:(creating and here.defaultPageType()) or here.pageTypeId();
-      useEpoz    python:
-                 here.epozInstalled() and ((editing and here.supportsEpoz())
-                                           or (creating and type=='html'))
-                 #here.supportsEpoz();
+      useEpoz    python: here.epozInstalled() and type=='html';
       timestamp  request/form/timeStamp|here/timeStamp;
       isfollowupedit python:editing
                             and here.usernameFrom(request) == here.lastEditor()
@@ -78,7 +75,7 @@
                       <tal:options tal:repeat="t pagetypes">
                         <option value="type"
                                 tal:define="extrasuffix python:
-                  (t == 'html'         and here.epozInstalled() and ' (WYSIWYG)')
+                  (t == 'html'         and (here.epozInstalled() or here.tinyMCEInstalled()) and ' (WYSIWYG)')
                or (t in ('rst','stx','html') and here.dtmlAllowed()   and ' (+ DTML)')
                or ''
                # Since wysiwyg html editors like epoz mangle it, we'll assume DTML
