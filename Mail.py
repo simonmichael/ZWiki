@@ -887,10 +887,12 @@ class MailIn:
         self.original     = message
         self.msg          = email.message_from_string(self.original)
         self.date         = self.msg['Date']
+        # flatten a multi-line subject into one line
+        s = re.sub('\n','',self.msg.get('Subject',''))
         # convert the possibly RFC2047-encoded subject to unicode.
         # Only the first encoded part is used if there is more than one.
         # misencoded subjects are ignored.
-        (s,enc)           = decode_header(self.msg.get('Subject',''))[0]
+        (s,enc)           = decode_header(s)[0]
         try:
             self.subject  = tounicode(s,enc or 'ascii')
         except UnicodeDecodeError:
