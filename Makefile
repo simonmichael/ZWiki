@@ -139,9 +139,9 @@ postats:
 # install or link your ZWiki directory in $INSTANCE/Products.
 # Some additional tests will run if Plone is installed.
 # minimal products, fast startup
-INSTANCE=/zope2
+INSTANCE=/zope1
 # all products
-BIGINSTANCE=/zope1
+BIGINSTANCE=/zope2
 
 # we keep zwiki's tests in *_tests.py alongside the code
 ZWIKITESTS=--tests-pattern='_tests$$' --test-file-pattern='_tests$$'
