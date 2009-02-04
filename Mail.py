@@ -927,7 +927,7 @@ class MailIn:
             # second decoding, from utf8 or whatever to unicode
             charset = self.msg.get_content_charset('ascii')
             payloadutf8 = payload.decode(charset).encode('utf-8')
-        except StopIteration, UnicodeDecodeError:
+        except (StopIteration, UnicodeDecodeError):
             payloadutf8 = ''
         self.body = cleanupBody(payloadutf8)
         
