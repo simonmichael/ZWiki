@@ -10,7 +10,7 @@ from AccessControl import getSecurityManager, ClassSecurityInfo
 from App.Common import absattr
 from Globals import InitializeClass
 from OFS.SimpleItem import SimpleItem
-import zLOG # LOG,ERROR,INFO,WARNING,BLATHER,DEBUG
+import zLOG
 from DateTime import DateTime
 try: # zope 2.7
     from DateTime import SyntaxError
@@ -601,8 +601,13 @@ def tounicode(s,enc='utf8'):
     """Safely convert an encoded ordinary string to a unicode string.
     UTF8 is used by default."""
     if isunicode(s): return s
-    else:            return s.decode(enc)
-
+    else:
+        try:
+            s2 = s.decode(enc)
+        except UnicodeDecodeError:
+            DEBUG("failed to decode %s with encoding %s" % (repr(s),enc))
+            raise
+        return s2
 
 
 # generic utilities
