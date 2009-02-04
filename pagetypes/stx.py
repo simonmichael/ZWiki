@@ -77,7 +77,6 @@ class PageTypeStx(PageTypeBaseHtml):
         t = page.applyWikiLinkLineEscapesIn(t)
         t = self.format(page,t)
         t = page.markLinksIn(t)
-        t = self.obfuscateEmailAddresses(page,t)
         return t
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):
@@ -92,6 +91,7 @@ class PageTypeStx(PageTypeBaseHtml):
         else:
             t = page.preRendered()
         t = page.renderMarkedLinksIn(t)
+        t = self.obfuscateEmailAddresses(page,t)
         if page.hasFitTests(): t = page.runFitTestsIn(t)
         if page.isIssue() and kw.get('show_issueproperties',1):
             t = page.addIssueFormTo(t)
