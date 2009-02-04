@@ -312,12 +312,6 @@ class Tests(ZwikiTestCase):
         p.create('TestPageB',parents=[])
         self.assertEqual(f.TestPageB.parents,[])
         
-        # create a wwml page with some text
-        p.create('TestPage2',text='test page data',type='wwml')
-        self.assert_(safe_hasattr(f,'TestPage1'))
-        self.assertEqual(f.TestPage2.read(),'test page data')
-        self.assertEqual(f.TestPage2.pageTypeId(),'wwml')
-
 # having trouble making MZP support this
 # handleFileUpload -> checkPermission(,MZP.folder()) loops
 # because page.aq_parent.aq_parent == page

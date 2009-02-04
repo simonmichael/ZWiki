@@ -372,11 +372,6 @@ class ZWikiPage(
         """supportsRst""" 
         return self.pageType().supportsRst()
 
-    security.declareProtected(Permissions.View, 'supportsWwml')
-    def supportsWwml(self): 
-        """supportsWwml""" 
-        return self.pageType().supportsWwml()
-
     security.declareProtected(Permissions.View, 'supportsWikiLinks')
     def supportsWikiLinks(self): 
         """supportsWikiLinks"""

@@ -41,7 +41,6 @@ class PageTypeBase:
     _name = None
     supportsStx = no
     supportsRst = no
-    supportsWwml = no
     supportsWikiLinks = no
     supportsHtml = no
     supportsDtml = no

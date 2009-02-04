@@ -142,7 +142,7 @@ for m in modules:
 # backwards compatibility - old zwiki page objects expect these to be here
 
 # but if a page type has been disabled with a _ prefix, just ignore
-# XXX can't really disable yet, these get imported somewhere else (except wwml)
+# XXX can't really disable yet, these get imported somewhere else
 #def tryImport(module, fromlist):
 #    try: __import__(module,globals(),locals(),fromlist)
 #    except ImportError: pass
@@ -165,10 +165,5 @@ except ImportError:
 try:
     import stx
     ZwikiStxPageType = stx.PageTypeStx
-except ImportError:
-    pass
-try:
-    import wwml
-    ZwikiWwmlPageType = wwml.PageTypeWwml
 except ImportError:
     pass
