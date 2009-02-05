@@ -92,7 +92,7 @@
   <dtml-if summaries>
   <tr <dtml-var "(x_sequence_odd and 'bgcolor=#f0f0f0') or ''">>
     <td colspan=2>
-      <small><dtml-var summary></small>
+      <small><dtml-var "tounicode(summary)"></small>
       <dtml-if last_log>
       <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><em><dtml-var last_log></em></b>&nbsp;
       </dtml-if>
