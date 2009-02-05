@@ -163,7 +163,7 @@ class ZWikiPage(
     # XXX page_type's are separate instances - use class or singleton instance ?
     def setPageType(self,id=None): self.page_type = self.lookupPageType(id)()
 
-    security.declarePublic('pageType') # useful for troubleshooting
+    security.declarePublic('pageType')
     def pageType(self):
         """Return this page's page type object."""
         # check for page type problems
@@ -177,6 +177,7 @@ class ZWikiPage(
             self.setPageType(DEFAULT_PAGETYPE)
         return self.page_type
 
+    security.declarePublic('lookupPageType')
     def lookupPageType(self,id=None):
         """Return the page type object with this id (or the default)"""
         match = filter(lambda x:x._id==id,PAGETYPES)

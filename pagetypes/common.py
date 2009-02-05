@@ -2,6 +2,9 @@ import string, re, urllib
 from string import split,join,find,lower,rfind,atoi,strip,lstrip
 from urllib import quote, unquote
 
+from Globals import InitializeClass
+from AccessControl import getSecurityManager, ClassSecurityInfo
+
 from Products.ZWiki.Utils import BLATHER, html_quote, html_unquote, formattedTraceback, \
      ZOPEVERSION
 #XXX avoid import loop
@@ -36,13 +39,19 @@ class PageTypeBase:
     define _id and _name to make a usable page type object. See
     __init__.py for more.
     """
+    security = ClassSecurityInfo()
 
     _id = None
     _name = None
+    security.declarePublic('supportsStx')
     supportsStx = no
+    security.declarePublic('supportsRst')
     supportsRst = no
+    security.declarePublic('supportsWikiLinks')
     supportsWikiLinks = no
+    security.declarePublic('supportsHtml')
     supportsHtml = no
+    security.declarePublic('supportsDtml')
     supportsDtml = no
 
     def id(self): return self._id
@@ -259,3 +268,4 @@ class PageTypeBaseHtml(PageTypeBase):
     def linkFile(self, page, id, path):
         return '\n\n<a href="%s">%s</a>\n' % (path,id)
 
+InitializeClass(PageTypeBase)
