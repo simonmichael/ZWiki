@@ -67,8 +67,76 @@ Developer-specific docs are under http://zwiki.org/DeveloperNotes.
 Developer documentation is to some extent moving to files within the
 codebase, like this file.  These typically use restructured text markup.
 To browse these filesystem docs online, use http://zwiki.org/repos/ZWiki
-or the darcsweb interface.  (See also: FILESYSTEM_VS_WIKI_DOCS)
+or the darcsweb interface.
 
+Filesystem vs wiki docs
+-----------------------
+Filesystem docs:
+
+- faster for one developer wielding a text editor
+- or several devs who are good with darcs
+- revision controlled - secure, trackable
+- can work offline
+- can get out of sync, uncommited changes here and there
+- can be auto-generated - epydoc, test output, author stats etc.
+- can be published (but not edited directly) online
+- less visible and less pretty for readers
+- better than wiki for large single documents
+
+current uses:
+
+- CHANGES - release notes, also published at zwiki.org/ReleaseNotes
+- CONTRIBUTORS - official contributor list
+- GPL, LICENSE - license and copyright status
+- REPOPOLICY - copyright and other developer policies for this repo
+- README_tests - developer test documentation
+- README - basic product info
+- TODO - project plans & todos
+- other READMEs - basic info for each directory
+- plugins/latexwiki/LICENSE.txt,NOTES.txt,README.txt - latexwiki-specific copyright info, dev notes, admin/user notes
+- plugins/mathaction/INSTALL.txt,LICENSE.txt,Notes,README.txt,UPGRADE - needs consolidation like the above
+- TESTRESULTS - unit test output updated hourly, published at zwiki.org/TestResults
+- misc/ - public notes & snippets, published but not committed
+- MYNOTES/ - simon's notes & snippets, not published
+- MYNOTES/RelNotesTemplate - template for CHANGES
+
+Wiki docs:
+
+- slower to view and slower to edit
+- more accessible and more editable for a wide audience
+- one master copy used by everyone - simple
+- no special tools needed
+- email integration - notification and mailin
+- good for indexing and searching many documents (local and google search)
+- formatting aids - table of contents, headings, tables
+- more effort to protect and maintain; more vulnerable to decay
+- more expensive to host - every page takes memory & speed
+- more public - indexed quickly, for ever
+- can organize a large number of documents in a hierarchy
+
+current uses:
+ 
+- zwiki.org, including
+- NextReleaseNewsDraft - unused
+- GeneralDiscussion
+- InternationalisationDiscussion
+- IssueTracker
+- plone.demo.zwiki.org
+- free zwikis, including kpug zope3 docs, leo, etc.
+- zopewiki.org, joyful.com etc.
+
+Thoughts:
+
+- use filesystem for developers, wiki for users/admins/general public
+- use text files anywhere for fast developer notes
+- one requirement, keep them current - but what to do with old/temporary notes ?
+- no special docs directory, just upper-case, no suffix
+- publish all filesystem docs online, like rdoc or within wiki (they will be googlable ?)
+- restructured text and moving docs between FS and wiki encouraged
+- wiki needs to be fast
+
+Code docs
+---------
 We have the following kinds of in-code documentation:
 
 - ALLCAPS documentation files in any directory, like this README
@@ -136,6 +204,64 @@ and end if it doesn't hurt readability.
 Describe method arguments and return values when needed. We might want to
 come up with a standard haskellish way of noting the expected input and
 output types and whether side effects are expected.
+
+
+Function/method contracts
+-------------------------
+We are considering ways to document function and method "contracts". 
+`Here's <http://www.htdp.org/2003-09-26/Book/curriculum-Z-H-5.html#node_sec_2.5>`_
+an example. We are most interested in
+
+- their input (argument) and output (return value) types
+
+- their degree of statefulness/statelessness. Are they
+
+  - pure functions depending only on the arguments ?
+  - well-behaved methods which depend on/modify only self ?
+  - or do they depend on/modify other pages, the wiki folder, other things ?
+
+Understanding statefulness in particular should help us to identify and
+gather together the most stateful code, reduce state dependencies, and
+increase the proportion of pure and semi-pure functional code, which
+will greatly aid testing, debugging and reliability.  
+
+Here is a possible convention for now: when you touch a method or
+function, review the docstring and code and try add a comment describing
+the contract. The contract specifies the return type(s), whether it
+redirects, state that it depends on other than the arguments, state that
+it modifies other than the return value, and any other effects. Here are
+some examples::
+
+    def method(args) # -> return type(s) [; redirects] [; depends on: ...] [; modifies: ...] [; other effects: ...]
+
+    def htmlquote(self, text): # -> string
+
+    def asAgeString(self,time): # -> string | empty string; depends on: self (for current time)
+
+    def handleSubtopicsProperty(self,subtopics,REQUEST=None): # -> none ; modifies: self
+
+    def revisionNumberBefore(self, username): # -> revision number | none 
+        # depends on: self, revisions
+
+    def expungeEditsEverywhereBy(self, username, REQUEST=None, batch=0): # -> none
+        # depends on: all pages, revisions ; modifies: all pages, revisions
+
+    def upgradeAll(self,render=1,batch=0,REQUEST=None): # -> none
+        # depends on: wiki
+        # modifies: wiki (folder, pages, dtml methods, catalog, outline, revisions..)
+
+A few more notes: 
+
+These don't have to be perfectly correct; even a rough guess could be
+useful.  Do review the contract for correctness every time you change some
+code. Contracts should ideally be cumulative, ie reflect the contracts of
+methods called by this one - looking at code one or two levels deep should
+be enough. Very common features like the dependency on self for permission
+checking are omitted. It may be better to keep contracts on one line for
+easy scanning, even if long. Things we depend on or modify include: self
+(usually the current page object), folder (the wiki folder properties and
+acquired context), wiki (the folder and all pages in it), catalog,
+outline, revisions, request.
 
 
 Code guidelines
@@ -212,59 +338,3 @@ Imports are usually at the start of the file and in three groups: python,
 then zope, then zwiki imports.
 
 
-Function/method contracts
--------------------------
-We are considering ways to document function and method "contracts". 
-`Here's <http://www.htdp.org/2003-09-26/Book/curriculum-Z-H-5.html#node_sec_2.5>`_
-an example. We are most interested in
-
-- their input (argument) and output (return value) types
-
-- their degree of statefulness/statelessness. Are they
-
-  - pure functions depending only on the arguments ?
-  - well-behaved methods which depend on/modify only self ?
-  - or do they depend on/modify other pages, the wiki folder, other things ?
-
-Understanding statefulness in particular should help us to identify and
-gather together the most stateful code, reduce state dependencies, and
-increase the proportion of pure and semi-pure functional code, which
-will greatly aid testing, debugging and reliability.  
-
-Here is a possible convention for now: when you touch a method or
-function, review the docstring and code and try add a comment describing
-the contract. The contract specifies the return type(s), whether it
-redirects, state that it depends on other than the arguments, state that
-it modifies other than the return value, and any other effects. Here are
-some examples::
-
-    def method(args) # -> return type(s) [; redirects] [; depends on: ...] [; modifies: ...] [; other effects: ...]
-
-    def htmlquote(self, text): # -> string
-
-    def asAgeString(self,time): # -> string | empty string; depends on: self (for current time)
-
-    def handleSubtopicsProperty(self,subtopics,REQUEST=None): # -> none ; modifies: self
-
-    def revisionNumberBefore(self, username): # -> revision number | none 
-        # depends on: self, revisions
-
-    def expungeEditsEverywhereBy(self, username, REQUEST=None, batch=0): # -> none
-        # depends on: all pages, revisions ; modifies: all pages, revisions
-
-    def upgradeAll(self,render=1,batch=0,REQUEST=None): # -> none
-        # depends on: wiki
-        # modifies: wiki (folder, pages, dtml methods, catalog, outline, revisions..)
-
-A few more notes: 
-
-These don't have to be perfectly correct; even a rough guess could be
-useful.  Do review the contract for correctness every time you change some
-code. Contracts should ideally be cumulative, ie reflect the contracts of
-methods called by this one - looking at code one or two levels deep should
-be enough. Very common features like the dependency on self for permission
-checking are omitted. It may be better to keep contracts on one line for
-easy scanning, even if long. Things we depend on or modify include: self
-(usually the current page object), folder (the wiki folder properties and
-acquired context), wiki (the folder and all pages in it), catalog,
-outline, revisions, request.
