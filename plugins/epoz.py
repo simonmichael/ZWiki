@@ -20,7 +20,7 @@ class EpozSupport:
     security.declareProtected(Permissions.View, 'epozInstalled')
     def epozInstalled(self):
         """Is Epoz installed ?"""
-        return 'Epoz' in self.Control_Panel.Products.objectIds()
+        return safe_hasattr(self,'Epoz')
 
     security.declareProtected(Permissions.View, 'supportsEpoz')
     def supportsEpoz(self):
