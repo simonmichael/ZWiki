@@ -60,7 +60,7 @@
               <tr>
                 <td valign="middle" align="left">
                   <span tal:condition="python:
-                                       user.has_permission('Zwiki: Rename pages',here)">
+                                       user.has_permission('Zwiki: Rename pages',(creating and here.folder()) or here)">
                     <span i18n:translate="">Page name</span>:
                     <input name="title" size="30" maxlength="300" value=""
                            title="the name of this wiki page (changing this may be slow!)"
