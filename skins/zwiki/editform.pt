@@ -78,16 +78,11 @@
                       <tal:options tal:repeat="t pagetypes">
                         <option value="type"
                                 tal:define="extrasuffix python:
-                  (t == 'html' and here.tinyMCEInstalled() and ' (WYSIWYG)')
-               or (t in ('rst','stx','html') and here.dtmlAllowed()   and ' (+ DTML)')
+               (t in ('rst','stx','html') and here.dtmlAllowed()   and ' (+ DTML)')
                or ''
-               # Since wysiwyg html editors mangle it, we'll assume DTML
-               # is undesirable whenever they are likely to be used.
-               # The following would be better, but I can't figure out the necessary
-               # security declarations.
-               #   (here.lookupPageType(t).supportsDtml() and here.dtmlAllowed()   and ' (+ DTML)')
-               #or (here.lookupPageType(t).supportsTinyMCE() and ' (WYSIWYG)')
-               #or '' ;"
+               #This is what I want, but I still haven't figured out the permission
+               #(here.lookupPageType(t).supportsDtml() and here.dtmlAllowed()   and ' (+ DTML)')
+               ;"
                                 tal:attributes="value t;
                                                 selected python:t==type"
                                 tal:content="python:here.PAGE_TYPES.get(t,t) + extrasuffix">
