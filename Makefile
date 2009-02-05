@@ -463,5 +463,5 @@ summaryhtml:
 
 # run rss2irc to announce commits to #zwiki
 runcommitbot:
-	rss2irc irc.freenode.net 6667 '#zwiki' commitbot 'http://joyful.com/darcsweb/darcsweb.cgi?r=ZWiki;a=rss' 'applied ' 1
+	rss2irc irc.freenode.net 6667 '#zwiki' commitbot 'http://joyful.com/darcsweb/darcsweb.cgi?r=ZWiki;a=rss' '' 1
 
