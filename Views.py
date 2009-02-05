@@ -572,11 +572,9 @@ class SkinViews:
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
 
         if self.hasSkinTemplate('createform'):
-            return self.getSkinTemplate('createform')(
-                REQUEST, page or pagename, text)
+            return self.getSkinTemplate('createform')(REQUEST, page or pagename, text)
         else:
-            return self.editform(
-                REQUEST, page or pagename, text, action='Create')
+            return self.editform(REQUEST, page or pagename, text)
 
     security.declareProtected(Permissions.View, 'davLockDialog')
     def davLockDialog(self):
@@ -678,7 +676,7 @@ class SkinViews:
             action=self.pageUrl()+'/editform')
 
     security.declarePublic('editform')      # check permissions at runtime
-    def editform(self, REQUEST=None, page=None, text=None, action='Change'):
+    def editform(self, REQUEST=None, page=None, text=None):
         """
         Render the edit form (template-customizable).
 
@@ -697,18 +695,15 @@ class SkinViews:
         # what are we going to do ? set up page, text & action accordingly
         if not page:
             # no page specified - editing the current page
+            action = 'Edit'
             page = self.pageName()
             if not self.checkPermission(Permissions.Edit, self):
                 raise 'Unauthorized', (
                     _('You are not authorized to edit pages in this wiki.'))
             text = self.read()
-        elif self.pageWithName(page):
+        elif self.pageWithFuzzyName(page):
             # editing a different page
-            page = self.pageWithName(page)
-            if not self.checkPermission(Permissions.Edit, page):
-                raise 'Unauthorized', (
-                    _('You are not authorized to edit pages in this wiki.'))
-            text = page.read()
+            return self.pageWithFuzzyName(page).editform(REQUEST)
         else:
             # editing a brand-new page
             action = 'Create'

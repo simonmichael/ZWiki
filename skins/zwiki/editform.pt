@@ -22,7 +22,7 @@
       action     request/form/action|options/action;
       creating   python:action == 'Create';
       editing    python:not creating;
-      actioning  python:(creating and 'Creating') or 'Editing';
+      actioning  python:creating and 'Creating' or 'Editing';
       previewing python:request.form.get('editform',None);
       page       request/form/page|options/page;
       newname    request/form/title|page;
