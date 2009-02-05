@@ -7,7 +7,11 @@
       <meta http-equiv="pragma" content="no-cache"
             tal:define="dummy python:
                         request.RESPONSE.setHeader('pragma','no-cache')" />
-      <tal:ZTinyMCE tal:condition="context/supportsTinyMCE | python:False">
+      <tal:ZTinyMCE
+         tal:define="action     request/form/action|options/action;
+										 creating   python:action == 'Create';
+										 type request/form/type|python:(creating and here.defaultPageType()) or here.pageTypeId();"
+         tal:condition="python:context.tinyMCEInstalled() and type=='html'">
           <script tal:replace="structure context/tinymce.conf"></script>
       </tal:ZTinyMCE>
     </metal:block>
@@ -24,7 +28,7 @@
       newname    request/form/title|page;
       title      string:${container/title} ${actioning} ${page};
       text       request/form/text|options/text;
-      type       request/form/type|python:(creating and here.defaultPageType()) or here.pageTypeId();
+      type       request/form/type|python:(creating and here.defaultPageType()) or here.pageTypeId() #same as above;
       useEpoz    python: here.epozInstalled() and type=='html';
       timestamp  request/form/timeStamp|here/timeStamp;
       isfollowupedit python:editing
