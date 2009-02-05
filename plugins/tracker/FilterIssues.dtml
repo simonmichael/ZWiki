@@ -23,12 +23,12 @@ from non-manager users if you are security conscious.
  scrollto="'' #'#tracker'"
  issueCount=issueCount 
  sort_order="REQUEST.get('sort_order','')"
- sort_on="REQUEST.get('sort_on','issueNumber')"
+ sort_on="tounicode(REQUEST.get('sort_on','issueNumber'))"
  num="_.int(REQUEST.get('num',99999))"
- searchexpr="REQUEST.get('textortitle','')"
- category="REQUEST.get('category',[])"
- status="REQUEST.get('status',['open','pending'])"
- severity="REQUEST.get('severity',[])"
+ searchexpr="tounicode(REQUEST.get('textortitle',''))"
+ category="_.map(tounicode,REQUEST.get('category',[]))"
+ status="_.map(tounicode,REQUEST.get('status',['open','pending']))"
+ severity="_.map(tounicode,REQUEST.get('severity',[]))"
  single_category="((_.len(category)==1) and category[0]) or ''"
  single_status="((_.len(status)==1) and status[0]) or ''"
  >
@@ -204,14 +204,14 @@ from non-manager users if you are security conscious.
   (searchexpr and
    (pages(isIssue=1, sort_on=sort_on, sort_limit=num, Title=searchexpr) +
     pages(isIssue=1, sort_on=sort_on, sort_limit=num, category=searchexpr) +
-    pages(isIssue=1, sort_on=sort_on, sort_limit=num, text=searchexpr))[:num])
+    pages(isIssue=1, sort_on=sort_on, sort_limit=num, SearchableText=searchexpr))[:num])
   or 
   (QUERY_STRING and
    pages(isIssue=   1,
          sort_on=   sort_on,
          sort_order=REQUEST.get('sort_order','ascending'),
          sort_limit=num,
-         text=      REQUEST.get('textsearch',''),
+         SearchableText=      REQUEST.get('textsearch',''),
          Title=     REQUEST.get('titlesearch',''),
          category=  REQUEST.get('category',''),
          severity=  REQUEST.get('severity',''),
