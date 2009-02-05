@@ -29,7 +29,6 @@
       title      string:${container/title} ${actioning} ${page};
       text       request/form/text|options/text;
       type       request/form/type|python:(creating and here.defaultPageType()) or here.pageTypeId() #same as above;
-      useEpoz    python: here.epozInstalled() and type=='html';
       timestamp  request/form/timeStamp|here/timeStamp;
       isfollowupedit python:editing
                             and here.usernameFrom(request) == here.lastEditor()
@@ -79,15 +78,15 @@
                       <tal:options tal:repeat="t pagetypes">
                         <option value="type"
                                 tal:define="extrasuffix python:
-                  (t == 'html'         and (here.epozInstalled() or here.tinyMCEInstalled()) and ' (WYSIWYG)')
+                  (t == 'html' and here.tinyMCEInstalled() and ' (WYSIWYG)')
                or (t in ('rst','stx','html') and here.dtmlAllowed()   and ' (+ DTML)')
                or ''
-               # Since wysiwyg html editors like epoz mangle it, we'll assume DTML
+               # Since wysiwyg html editors mangle it, we'll assume DTML
                # is undesirable whenever they are likely to be used.
                # The following would be better, but I can't figure out the necessary
                # security declarations.
                #   (here.lookupPageType(t).supportsDtml() and here.dtmlAllowed()   and ' (+ DTML)')
-               #or (here.lookupPageType(t).supportsEpoz() and here.epozInstalled() and ' (WYSIWYG)')
+               #or (here.lookupPageType(t).supportsTinyMCE() and ' (WYSIWYG)')
                #or '' ;"
                                 tal:attributes="value t;
                                                 selected python:t==type"
@@ -102,32 +101,12 @@
               <!-- edit area -->
               <tr>
                 <td colspan="2" align="center">
-                  <textarea tal:condition="not:useEpoz"
-                            wrap="virtual" name="text" rows="20" cols="60"
+                  <textarea wrap="virtual" name="text" rows="20" cols="60"
                             style="width:100%; background-color:#f0f0f0"
                             tabindex=""
                             tal:attributes="rows rows;"
                             tal:content="python:here.talsafe(text)">text...</textarea>
-                  <span tal:condition="useEpoz"
-                        tal:replace="structure python: here.talsafe(
-                                     here.Epoz(
-                                     'text',
-                                     data=text,
-                                     style='background:white;border:thin solid black;
-                                     width:100%;height:'+str(rows)+'em;',
-                                     css=here.defaultPageUrl()+'/stylesheet',
-                                     ))"></span>
                 </td>
-              </tr>
-              <!-- better-positioned epoz source-mode checkbox -->
-              <tr tal:condition="python:0 #here/supportsEpoz">
-                <td valign="top" align="right" colspan="2"
-                    ><input id="EpozViewMode" type="checkbox" class="formfield"
-                    onclick="SwitchViewMode(this.checked)"
-                    title="toggle source/WYSIWYG mode"
-                    i18n:attributes="title"
-                    tabindex=""
-                    /></td>
               </tr>
               <!-- optional note -->
               <tr>
