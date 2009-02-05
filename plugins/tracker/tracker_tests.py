@@ -1,4 +1,4 @@
-from Products.ZWiki.testsupport import *
+from Products.ZWiki.tests.testsupport import *
 ZopeTestCase.installProduct('ZWiki')
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZCTextIndex')

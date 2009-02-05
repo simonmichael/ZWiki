@@ -41,8 +41,8 @@ from ZPublisher.HTTPRequest import HTTPRequest
 from ZPublisher.HTTPResponse import HTTPResponse
 import AccessControl.Permissions
 
-from Products.ZWiki.ZWikiPage import ZWikiPage
 from Products import ZWiki
+from Products.ZWiki.ZWikiPage import ZWikiPage
 from Products.ZWiki.Utils import safe_hasattr
 
 

@@ -2,7 +2,7 @@
 from testsupport import *
 #ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
-from Utils import TRACE, DEBUG, BLATHER, INFO, WARNING, ERROR
+from Products.ZWiki.Utils import TRACE, DEBUG, BLATHER, INFO, WARNING, ERROR
 
 def test_suite():
     suite = unittest.TestSuite()
@@ -19,7 +19,7 @@ class Tests(ZwikiTestCase):
         self.assert_(p.checkSufficientId(r))
 
     def test_safe_hasattr(self):
-        from Utils import safe_hasattr
+        from Products.ZWiki.Utils import safe_hasattr
         p = self.page
         self.failIf(safe_hasattr(p,'muppets'))
         setattr(p, 'muppets', 'gonzo')

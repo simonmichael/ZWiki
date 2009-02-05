@@ -1,5 +1,5 @@
 from testsupport import *
-from Mail import MailIn, stripBottomQuoted, stripSignature
+from Products.ZWiki.Mail import MailIn, stripBottomQuoted, stripSignature
 ZopeTestCase.installProduct('ZWiki')
 
 def test_suite():
@@ -82,7 +82,7 @@ class SubscriptionTests(ZwikiTestCase):
         
     def test_TextFormatter(self):
         # what's textformatter really doing ?
-        from TextFormatter import TextFormatter
+        from Products.ZWiki.TextFormatter import TextFormatter
         formatter = TextFormatter((
             {'width':78, 'fill':0, 'pad':0},
             ))
@@ -297,7 +297,7 @@ blah blah
 
 ''')
         # unless they are too large
-        from Mail import MAX_SIGNATURE_STRIP_SIZE
+        from Products.ZWiki.Mail import MAX_SIGNATURE_STRIP_SIZE
         self.assertEqual(
             stripSignature(
             '''

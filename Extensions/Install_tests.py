@@ -13,7 +13,7 @@ else:
     from Products.CMFPlone.tests import PloneTestCase
 
     from Products.ZWiki.Utils import safe_hasattr
-    from Products.ZWiki.testsupport import ZopeTestCase, afterSetUp
+    from Products.ZWiki.tests.testsupport import ZopeTestCase, afterSetUp
 
     ZopeTestCase.installProduct('ZWiki')
 

@@ -4,7 +4,7 @@ ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 import transaction
 
-from Diff import textdiff
+from Products.ZWiki.Diff import textdiff
 
 def test_suite():
     suite = unittest.TestSuite()

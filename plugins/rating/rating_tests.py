@@ -1,4 +1,4 @@
-from Products.ZWiki.testsupport import *
+from Products.ZWiki.tests.testsupport import *
 from types import DictionaryType
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')

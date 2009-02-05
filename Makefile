@@ -143,17 +143,21 @@ INSTANCE=/zope1
 # all products
 BIGINSTANCE=/zope2
 
-# we keep zwiki's tests in *_tests.py alongside the code
-ZWIKITESTS=--tests-pattern='_tests$$' --test-file-pattern='_tests$$'
+# zwiki's tests are in *_tests.py files, found in tests/ and other places
+ZWIKITESTS=--tests-pattern='_tests$$'
 
 # run tests as quickly as possible
 TEST=$(INSTANCE)/bin/zopectl test $(ZWIKITESTS) --keepbytecode -v #--nowarnings
+TESTV=$(TEST) -v
 
 # run all tests verbosely and thoroughly
 TESTALL=$(BIGINSTANCE)/bin/zopectl test $(ZWIKITESTS) -a 3 -vv
 
 test:
 	$(TEST) -m Products.ZWiki
+
+testv:
+	$(TESTV) -m Products.ZWiki
 
 testall:
 	$(TESTALL) -m Products.ZWiki

@@ -6,7 +6,7 @@
 #
 # XXX CMF covered adequately ?
 
-from CMF import HAS_PLONE
+from Products.ZWiki.CMF import HAS_PLONE
 
 if not HAS_PLONE:
     import unittest
@@ -15,7 +15,7 @@ if not HAS_PLONE:
 else:
     from Products.CMFPlone.tests import PloneTestCase
 
-    from Extensions.Install_tests import install_via_external_method
+    from Products.ZWiki.Extensions.Install_tests import install_via_external_method
     from Editing_tests import test_rename
     from testsupport import *
 

@@ -3,8 +3,8 @@
 from testsupport import *
 ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
-from Utils import isunicode
-from Regexps import *
+from Products.ZWiki.Utils import isunicode
+from Products.ZWiki.Regexps import *
 
 def test_suite():
     suite = unittest.TestSuite()
@@ -262,7 +262,7 @@ class Tests(ZwikiTestCase):
         self.assert_( 'some time' in r )
 
     def test_renderMidsectionIn(self):
-        from pagetypes.common import MIDSECTIONMARKER
+        from Products.ZWiki.pagetypes.common import MIDSECTIONMARKER
         p = self.page
         self.assertEqual('a\nb',p.renderMidsectionIn('a'+MIDSECTIONMARKER+'b'))
         #self.assertEqual('a\n',p.renderMidsectionIn('a'+MIDSECTIONMARKER+'é'))
