@@ -332,123 +332,12 @@ warm-zodb-cache warm:
 	$(LOADALL) http://zwiki.org/RecycleBin
 	$(LOADALL) http://zwiki.org/FileUploads
 
-# fun.. darcs-style author stats. Need to make this easier.
-authorstats:
-	@make -s list_authors && ./list_authors stats
+# darcs-style author stats, aware of changed email addresses etc.
+showauthors: list_authors
+	tools/list_authors stats
 
-list_authors: list_authors.hs
-	ghc -cpp  -package QuickCheck -package util -package parsec -O -funbox-strict-fields  -Wall -Werror -i/usr/local/src/darcs-unstable -DHAVE_CURSES -optl-lcurses -optl-lz -o list_authors list_authors.hs \
-		/usr/local/src/darcs-unstable/c_compat.o \
-		/usr/local/src/darcs-unstable/maybe_relink.o \
-		/usr/local/src/darcs-unstable/atomic_create.o \
-		/usr/local/src/darcs-unstable/fpstring.o \
-		/usr/local/src/darcs-unstable/umask.o \
-		/usr/local/src/darcs-unstable/Autoconf.o \
-		/usr/local/src/darcs-unstable/CheckFileSystem.o \
-		/usr/local/src/darcs-unstable/ColourPrinter.o \
-		/usr/local/src/darcs-unstable/Compat.o \
-		/usr/local/src/darcs-unstable/Curl.o \
-		/usr/local/src/darcs-unstable/DarcsIO.o \
-		/usr/local/src/darcs-unstable/Pristine.o \
-		/usr/local/src/darcs-unstable/DarcsArguments.o \
-		/usr/local/src/darcs-unstable/DarcsFlags.o \
-		/usr/local/src/darcs-unstable/DarcsUtils.o \
-		/usr/local/src/darcs-unstable/CommandLine.o \
-		/usr/local/src/darcs-unstable/DateMatcher.o \
-		/usr/local/src/darcs-unstable/Depends.o \
-		/usr/local/src/darcs-unstable/Diff.o \
-		/usr/local/src/darcs-unstable/Exec.o \
-		/usr/local/src/darcs-unstable/External.o \
-		/usr/local/src/darcs-unstable/FastPackedString.o \
-		/usr/local/src/darcs-unstable/FileName.o \
-		/usr/local/src/darcs-unstable/FilePathMonad.o \
-		/usr/local/src/darcs-unstable/FilePathUtils.o \
-		/usr/local/src/darcs-unstable/IsoDate.o \
-		/usr/local/src/darcs-unstable/Lcs.o \
-		/usr/local/src/darcs-unstable/Lock.o \
-		/usr/local/src/darcs-unstable/Map.o \
-		/usr/local/src/darcs-unstable/Match.o \
-		/usr/local/src/darcs-unstable/Motd.o \
-		/usr/local/src/darcs-unstable/Patch.o \
-		/usr/local/src/darcs-unstable/PatchApply.o \
-		/usr/local/src/darcs-unstable/PatchBundle.o \
-		/usr/local/src/darcs-unstable/PatchCheck.o \
-		/usr/local/src/darcs-unstable/PatchChoices.o \
-		/usr/local/src/darcs-unstable/PatchCommute.o \
-		/usr/local/src/darcs-unstable/PatchCore.o \
-		/usr/local/src/darcs-unstable/PatchInfo.o \
-		/usr/local/src/darcs-unstable/PatchMatch.o \
-		/usr/local/src/darcs-unstable/PatchMatchData.o \
-		/usr/local/src/darcs-unstable/PatchRead.o \
-		/usr/local/src/darcs-unstable/PatchReadMonads.o \
-		/usr/local/src/darcs-unstable/PatchSet.o \
-		/usr/local/src/darcs-unstable/PatchShow.o \
-		/usr/local/src/darcs-unstable/PatchViewing.o \
-		/usr/local/src/darcs-unstable/Population.o \
-		/usr/local/src/darcs-unstable/PopulationData.o \
-		/usr/local/src/darcs-unstable/PrintPatch.o \
-		/usr/local/src/darcs-unstable/Printer.o \
-		/usr/local/src/darcs-unstable/RawMode.o \
-		/usr/local/src/darcs-unstable/RegChars.o \
-		/usr/local/src/darcs-unstable/RepoFormat.o \
-		/usr/local/src/darcs-unstable/RepoPrefs.o \
-		/usr/local/src/darcs-unstable/DarcsRepo.o \
-		/usr/local/src/darcs-unstable/Repository.o \
-		/usr/local/src/darcs-unstable/Resolution.o \
-		/usr/local/src/darcs-unstable/SHA1.o \
-		/usr/local/src/darcs-unstable/SignalHandler.o \
-		/usr/local/src/darcs-unstable/SlurpDirectory.o \
-		/usr/local/src/darcs-unstable/Stringalike.o \
-		/usr/local/src/darcs-unstable/Test.o \
-		/usr/local/src/darcs-unstable/ThisVersion.o \
-		/usr/local/src/darcs-unstable/UTF8.o \
-		/usr/local/src/darcs-unstable/Workaround.o \
-		/usr/local/src/darcs-unstable/FileSystem.o \
-		/usr/local/src/darcs-unstable/AtExit.o \
-		/usr/local/src/darcs-unstable/GitRepo.o \
-		/usr/local/src/darcs-unstable/Add.o \
-		/usr/local/src/darcs-unstable/AmendRecord.o \
-		/usr/local/src/darcs-unstable/Annotate.o \
-		/usr/local/src/darcs-unstable/Apply.o \
-		/usr/local/src/darcs-unstable/ArgumentDefaults.o \
-		/usr/local/src/darcs-unstable/Changes.o \
-		/usr/local/src/darcs-unstable/Check.o \
-		/usr/local/src/darcs-unstable/Context.o \
-		/usr/local/src/darcs-unstable/DarcsCommands.o \
-		/usr/local/src/darcs-unstable/DarcsURL.o \
-		/usr/local/src/darcs-unstable/DiffCommand.o \
-		/usr/local/src/darcs-unstable/Dist.o \
-		/usr/local/src/darcs-unstable/Email.o \
-		/usr/local/src/darcs-unstable/Get.o \
-		/usr/local/src/darcs-unstable/GuiUtils.o \
-		/usr/local/src/darcs-unstable/Help.o \
-		/usr/local/src/darcs-unstable/Init.o \
-		/usr/local/src/darcs-unstable/MainGui.o \
-		/usr/local/src/darcs-unstable/Mv.o \
-		/usr/local/src/darcs-unstable/Optimize.o \
-		/usr/local/src/darcs-unstable/Pull.o \
-		/usr/local/src/darcs-unstable/Push.o \
-		/usr/local/src/darcs-unstable/Put.o \
-		/usr/local/src/darcs-unstable/Query.o \
-		/usr/local/src/darcs-unstable/QueryManifest.o \
-		/usr/local/src/darcs-unstable/Record.o \
-		/usr/local/src/darcs-unstable/RemoteApply.o \
-		/usr/local/src/darcs-unstable/Remove.o \
-		/usr/local/src/darcs-unstable/Repair.o \
-		/usr/local/src/darcs-unstable/Replace.o \
-		/usr/local/src/darcs-unstable/Resolve.o \
-		/usr/local/src/darcs-unstable/Revert.o \
-		/usr/local/src/darcs-unstable/Rollback.o \
-		/usr/local/src/darcs-unstable/SelectChanges.o \
-		/usr/local/src/darcs-unstable/Send.o \
-		/usr/local/src/darcs-unstable/SetPref.o \
-		/usr/local/src/darcs-unstable/Tag.o \
-		/usr/local/src/darcs-unstable/TheCommands.o \
-		/usr/local/src/darcs-unstable/TouchesFiles.o \
-		/usr/local/src/darcs-unstable/TrackDown.o \
-		/usr/local/src/darcs-unstable/Unrecord.o \
-		/usr/local/src/darcs-unstable/Unrevert.o \
-		/usr/local/src/darcs-unstable/WhatsNew.o
+list_authors: tools/list_authors.hs
+	ghc --make tools/list_authors.hs
 
 # reinstall zwiki product in plone site
 # uses ~/.netrc for authorization
