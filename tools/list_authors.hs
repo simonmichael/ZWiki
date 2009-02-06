@@ -143,9 +143,42 @@ authors_sans_name =
   , ("wnoise@ofb.net"          , "Aaron Denney")
   , ("xhl178@shaw.ca"          , "Randy Roesler") 
   , ("zooko@zooko.com"         , "Bryce Wilcox-O'Hearn")
+-- CUSTOMISE FOR ZWIKI, 1. authors just missing the name
+  ,("bob+zwiki@mcelrath.org"   , "Bob McElrath")
+  ,("lele@seldati.it"          , "Lele Gaifax")
+  ,("nachtigall@web.de"        , "Jens Nachtigall")
+  ,("frank@laurijssens.nl"     , "Frank Laurijssens")
+  ,("foenyx@online.fr"         , "Nicolas Laurent")
+  ,("stefan.rank@oefai.at"     , "Stefan Rank")
+  ,("tcchou@tcchou.org"        , "T. C. Chou")
+  ,("stefan.rank@ofai.at"      , "Stefan Rank")
+  ,("bill.page1@sympatico.ca"  , "Bill Page")
+  ,("riley@uic.com"            , "John Riley")
+  ,("jbb@contradix.com"        , "Jordan Baker")
+  ,("alvaro@antalia.com"       , "Alvaro Cantero")
+  ,("betabug.darcs@betabug.ch" , "Sascha Welter")
+  ,("klippe@pf.pl"             , "Jakub Wiśniowski")
+  ,("vejeta@gmail.com"         , "Juan Manuel Méndez Rey")
+  ,("m.pedersen@icelus.org"    , "Michael Pedersen")
+  ,("huron@sopinspace.com"     , "Raphaël Badin")
+  ,("an.ma@web.de"             , "Andreas Mayer")
+-- END
  ]  
 
 canonize_author :: String -> String
+-- CUSTOMISE FOR ZWIKI, 2: more complex cases:
+canonize_author a
+    | a `elem` [
+       "simon@joyful.com"
+      ,"simon@blue"
+      ,"root <simon@joyful.com>"
+      ,"Simon Michael <simon@dynabook.joyful.com>"
+      ] = "Simon Michael <simon@joyful.com>"
+    | a `elem` [
+       "encolpe.degoute@ingeniweb.com"
+      ,"    darcs sendencolpe.degoute@colpi.info"
+      ] = "Encolpe Degoute <encolpe.degoute@ingeniweb.com>"
+-- END
 canonize_author "David" = droundy
 canonize_author "Tomasz Zielonka <t.zielonka@students.mimuw.edu.pl>" = tomasz_zielonka
 canonize_author "Tomasz Zielonka <tomekz@gemius.pl>" = tomasz_zielonka
