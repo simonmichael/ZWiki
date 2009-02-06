@@ -149,9 +149,7 @@ authors_sans_name =
   ,("nachtigall@web.de"        , "Jens Nachtigall")
   ,("frank@laurijssens.nl"     , "Frank Laurijssens")
   ,("foenyx@online.fr"         , "Nicolas Laurent")
-  ,("stefan.rank@oefai.at"     , "Stefan Rank")
   ,("tcchou@tcchou.org"        , "T. C. Chou")
-  ,("stefan.rank@ofai.at"      , "Stefan Rank")
   ,("bill.page1@sympatico.ca"  , "Bill Page")
   ,("riley@uic.com"            , "John Riley")
   ,("jbb@contradix.com"        , "Jordan Baker")
@@ -178,6 +176,10 @@ canonize_author a
        "encolpe.degoute@ingeniweb.com"
       ,"    darcs sendencolpe.degoute@colpi.info"
       ] = "Encolpe Degoute <encolpe.degoute@ingeniweb.com>"
+    | a `elem` [
+       "stefan.rank@oefai.at"
+      ,"stefan.rank@ofai.at"
+      ] = "Stefan Rank <stefan.rank@oefai.at>"
 -- END
 canonize_author "David" = droundy
 canonize_author "Tomasz Zielonka <t.zielonka@students.mimuw.edu.pl>" = tomasz_zielonka
