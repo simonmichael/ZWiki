@@ -96,7 +96,7 @@ class PluginRating:
                 BLATHER("%s: recorded %s vote for %s" % (self.toencoded(self.pageName()),vote,username))
             self.setVotes(votes)
             # update catalog, just the affected indexes
-            self.catalog().catalog_object(self, idxs=['rating', 'voteCount'])
+            self.catalog().catalog_object(self, idxs=['rating', 'voteCount'], uid=None)
             if REQUEST:
                 REQUEST.RESPONSE.redirect(
                     # redirect to the page they came on.. might be some
