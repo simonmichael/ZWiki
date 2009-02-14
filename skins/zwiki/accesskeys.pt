@@ -4,7 +4,7 @@
     <div metal:define-macro="accesskeys" id="accesskeys"
          tal:define="pageurl here/pageUrl;
                      thisurl python:here.urlquote(request.get('URL'));">
-      <a tal:attributes="href string:${here/pageUrl}/showAccessKeys" accesskey="0"></a>
+      <a tal:attributes="href string:${here/pageUrl}/helpaccesskeys" accesskey="0"></a>
       <a tal:attributes="href here/homeUrl" accesskey="f"></a>
       <a tal:attributes="href here/contentsUrl" accesskey="c"></a>
       <a tal:attributes="href here/changesUrl" accesskey="r"></a>
