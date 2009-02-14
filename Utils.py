@@ -390,7 +390,7 @@ class PageUtils:
 
     security.declareProtected(Permissions.View, 'helpUrl')
     def helpUrl(self):
-        return self.urlForDtmlPageOrMethod('HelpPage','helppage')
+        return self.urlForPageOrDefault('HelpPage','helppage')
 
     security.declareProtected(Permissions.View, 'searchUrl')
     def searchUrl(self):
