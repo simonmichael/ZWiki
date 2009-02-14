@@ -30,7 +30,7 @@ from OFS.ObjectManager import checkValidId
 from zExceptions import BadRequest
 import OFS.Image
 
-from pagetypes import PAGETYPES
+from plugins.pagetypes import PAGETYPES
 from Defaults import DISABLE_JAVASCRIPT, LARGE_FILE_SIZE, LEAVE_PLACEHOLDER
 import Permissions
 from Regexps import javascriptexpr, htmlheaderexpr, htmlfooterexpr

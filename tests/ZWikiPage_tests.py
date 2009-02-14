@@ -262,7 +262,7 @@ class Tests(ZwikiTestCase):
         self.assert_( 'some time' in r )
 
     def test_renderMidsectionIn(self):
-        from Products.ZWiki.pagetypes.common import MIDSECTIONMARKER
+        from Products.ZWiki.plugins.pagetypes.common import MIDSECTIONMARKER
         p = self.page
         self.assertEqual('a\nb',p.renderMidsectionIn('a'+MIDSECTIONMARKER+'b'))
         #self.assertEqual('a\n',p.renderMidsectionIn('a'+MIDSECTIONMARKER+'é'))

@@ -1,5 +1,4 @@
 from Products.ZWiki.tests.testsupport import *
-#from Products.ZWiki.pagetypes.
 from common import PageTypeBase
 ZopeTestCase.installProduct('ZWiki')
 

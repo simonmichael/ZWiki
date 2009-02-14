@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from Products.ZWiki.tests.testsupport import *
-from Products.ZWiki.pagetypes.stx import PageTypeStx
+from Products.ZWiki.plugins.pagetypes.stx import PageTypeStx
 #ZopeTestCase.installProduct('ZCatalog')
 ZopeTestCase.installProduct('ZWiki')
 

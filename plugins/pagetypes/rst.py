@@ -5,7 +5,7 @@ from docutils.nodes import section
 
 from common import *
 from Products.ZWiki.I18n import _
-from Products.ZWiki.pagetypes import registerPageType
+from Products.ZWiki.plugins.pagetypes import registerPageType
 
 # RST verbosity (MORE <- 0 debug, 1 info, 2 warning, 3 error, 4 severe -> LESS) :
 RST_REPORT_LEVEL = 4

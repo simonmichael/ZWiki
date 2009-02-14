@@ -1,28 +1,16 @@
 """
-The plugins package, containing plugins providing non-core functionality.
+The plugins package contains modules or packages that extend Zwiki's
+functionality, usually by providing a mixin for ZWikiPage, thereby
+adding extra features to all wiki pages at startup.  A true plugin can
+(a) be removed without any ill effects aside from disabling the
+feature it provides, and (b) be provided by a separate product.
 
-A Zwiki plugin is a module or package that extends Zwiki's functionality,
-usually by providing a mixin for ZWikiPage, thereby adding extra features
-to all wiki pages at startup.  A true plugin can (a) be removed without
-any ill effects aside from disabling the feature it provides, and (b) be
-provided by a separate product.
-
-Page types are another kind of plugin, residing in their own pagetypes
-package. It seems helpful to keep them separate for the moment.
+Page types are another kind of plugin, residing in their own
+subpackage. It seems helpful to keep them separate for the moment.
 
 Non-core features which used to be in the main ZWiki package are
 gradually being moved here and pluginised. Some of them still have
 hard-coded dependencies in other parts of the code, such as:
-
-- dependencies in the Admin upgrade methods - resolved ?
-- issue tracker access key and link in wikipage template
-- tracker action in CMFInit fti
-- tracker access key
-- issue linking and link colouring in renderLink
-- isIssue arg support in pages
-- issue creation in mailin
-- show_issueproperties=0 in pagetypes/common renderText
-- issue properties form rendering in page types
 
 """
 

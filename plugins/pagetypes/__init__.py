@@ -89,7 +89,7 @@ def registerPageType(t,prepend=0):
     """
     Add a page type class to Zwiki's global registry, optionally at the front.
 
-    >>> from Products.ZWiki.pagetypes import registerPageType
+    >>> from Products.ZWiki.plugins.pagetypes import registerPageType
     >>> registerPageType(MyPageTypeClass)
 
     """
@@ -103,7 +103,7 @@ def registerPageTypeUpgrade(old,new):
     """
     Add a page type transition to ZWiki's list of auto-upgrades.
 
-    >>> from Products.ZWiki.pagetypes import registerPageTypeUpgrade
+    >>> from Products.ZWiki.plugins.pagetypes import registerPageTypeUpgrade
     >>> registerPageTypeUpgrade('oldpagetypeid','newpagetypeid')
 
     """
@@ -134,7 +134,7 @@ for m in modules:
         BLATHER('%s page type disabled with _ prefix, skipping\n' % m[1:])
     else:
         try:
-            __import__('Products.ZWiki.pagetypes.%s' % m)
+            __import__('Products.ZWiki.plugins.pagetypes.%s' % m)
         except (ImportError, ValueError):
             BLATHER('could not load %s page type, skipping (traceback follows)\n%s' % (
                 m, formattedTraceback()))

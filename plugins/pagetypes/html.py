@@ -1,6 +1,6 @@
 from common import *
 from Products.ZWiki.I18n import _
-from Products.ZWiki.pagetypes import registerPageType
+from Products.ZWiki.plugins.pagetypes import registerPageType
 
 class PageTypeHtml(PageTypeBaseHtml):
     _id = 'html'

@@ -15,7 +15,7 @@ from I18n import _
 import Permissions
 from Utils import get_transaction, BLATHER, formattedTraceback, \
      DateTimeSyntaxError, callHooks, isunicode, safe_hasattr
-from pagetypes import PAGE_TYPE_UPGRADES
+from plugins.pagetypes import PAGE_TYPE_UPGRADES
 from Defaults import PAGE_METADATA, \
      TEXTINDEXES, FIELDINDEXES, KEYWORDINDEXES, DATEINDEXES, PATHINDEXES
 
