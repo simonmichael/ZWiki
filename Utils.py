@@ -31,7 +31,7 @@ from Products.ZWiki import __version__
 from Defaults import PREFER_USERNAME_COOKIE, PAGE_METADATA, BORING_PAGES, \
                      PAGE_METATYPE
 import Permissions
-from I18n import _
+from i18n import _
 
 # adapt to zope 2.9 transaction api
 try: from transaction import get as get_transaction

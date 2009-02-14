@@ -36,7 +36,7 @@ import Permissions
 from Regexps import javascriptexpr, htmlheaderexpr, htmlfooterexpr
 from Utils import get_transaction, BLATHER, parseHeadersBody, isunicode, \
      safe_hasattr
-from I18n import _
+from i18n import _
 from Diff import addedtext, textdiff
 
 

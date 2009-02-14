@@ -1,5 +1,5 @@
 from common import *
-from Products.ZWiki.I18n import _
+from Products.ZWiki.i18n import _
 from Products.ZWiki.plugins.pagetypes import registerPageType
 
 class PageTypeHtml(PageTypeBaseHtml):

@@ -10,7 +10,7 @@ from Products.ZWiki.Utils import BLATHER, html_quote, html_unquote, formattedTra
 #XXX avoid import loop
 #from Products.ZWiki.plugins.purplenumbers import add_purple_numbers_to
 from Products.ZWiki.Regexps import dtmlorsgmlexpr, footnoteexpr
-from Products.ZWiki.I18n import _
+from Products.ZWiki.i18n import _
 
 # XXX temporary hack, used for placing subtopics in the page. Supposed to
 # be secret, invisible, and never encountered by users. Ha!

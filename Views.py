@@ -100,7 +100,7 @@ from ComputedAttribute import ComputedAttribute
 import Permissions
 from Defaults import PAGE_METATYPE
 from Utils import BLATHER, formattedTraceback, abszwikipath, safe_hasattr, nub
-from I18n import _, DTMLFile, HTMLFile
+from i18n import _, DTMLFile, HTMLFile
 
 
 def loadPageTemplate(name,dir='skins/zwiki'):

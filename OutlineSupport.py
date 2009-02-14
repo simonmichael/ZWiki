@@ -61,7 +61,7 @@ from Defaults import PAGE_METATYPE
 from Regexps import bracketedexpr
 import Outline
 
-from I18n import _
+from i18n import _
 
 def deepappend(nesting, page):
     """

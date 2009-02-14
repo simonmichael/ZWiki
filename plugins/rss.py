@@ -9,7 +9,7 @@ from Globals import InitializeClass
 
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER, html_quote
-from Products.ZWiki.I18n import _
+from Products.ZWiki.i18n import _
 from Products.ZWiki.plugins import registerPlugin
 
 class PageRSSSupport:

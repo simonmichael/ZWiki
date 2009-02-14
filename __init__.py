@@ -18,7 +18,7 @@ from Products.PythonScripts.PythonScript import PythonScript
 
 import Defaults, OutlineSupport, Permissions, ZWikiPage
 from Admin import addDTMLMethod
-from I18n import _, DTMLFile
+from i18n import _, DTMLFile
 from plugins.pagetypes import PAGETYPES
 from Utils import parseHeadersBody, safe_hasattr, INFO, BLATHER, \
      formattedTraceback

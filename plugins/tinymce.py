@@ -6,7 +6,7 @@ from AccessControl import getSecurityManager, ClassSecurityInfo
 from Globals import InitializeClass
 
 from Products.ZWiki import Permissions
-from Products.ZWiki.I18n import _
+from Products.ZWiki.i18n import _
 from Products.ZWiki.Utils import BLATHER, DEBUG, formattedTraceback
 from Products.ZWiki.plugins import registerPlugin
 

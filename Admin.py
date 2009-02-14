@@ -11,7 +11,7 @@ from OFS.CopySupport import CopyError
 from OFS.DTMLMethod import DTMLMethod
 from DateTime import DateTime
 
-from I18n import _
+from i18n import _
 import Permissions
 from Utils import get_transaction, BLATHER, formattedTraceback, \
      DateTimeSyntaxError, callHooks, isunicode, safe_hasattr

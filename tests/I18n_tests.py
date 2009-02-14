@@ -54,7 +54,7 @@ else: # NEVER RUN
     ZopeTestCase.installProduct('ZWiki')
     ZopeTestCase.installProduct('PlacelessTranslationService')
 
-    from Products.ZWiki.I18n import _
+    from Products.ZWiki.i18n import _
     from Products.ZWiki.Views import loadDtmlMethod
 
     def test_suite():

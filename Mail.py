@@ -11,7 +11,7 @@ from email.Header import Header, decode_header
 
 from Globals import InitializeClass
 
-from I18n import _
+from i18n import _
 from TextFormatter import TextFormatter
 from Utils import html_unquote,BLATHER,DEBUG,formattedTraceback,stripList, \
      isIpAddress,isEmailAddress,isUsername,safe_hasattr,tounicode,toencoded

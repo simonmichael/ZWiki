@@ -49,7 +49,7 @@ from CMF import PageCMFSupport
 from Comments import PageCommentsSupport
 from Admin import PageAdminSupport
 from Editing import PageEditingSupport
-from I18n import DTMLFile, _
+from i18n import DTMLFile, _
 from plugins.pagetypes import PAGETYPES, PAGE_TYPES
 from plugins.pagetypes.common import MIDSECTIONMARKER
 from plugins.pagetypes.stx import PageTypeStx

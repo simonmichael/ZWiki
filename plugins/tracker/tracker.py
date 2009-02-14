@@ -16,7 +16,7 @@ from Products.ZWiki.Utils import BLATHER, formattedTraceback, \
     addHook, safe_hasattr
 from Products.ZWiki.Views import loadDtmlMethod, loadPageTemplate, TEMPLATES
      
-from Products.ZWiki.I18n import _
+from Products.ZWiki.i18n import _
 
 TEMPLATES.update({
     'issuepropertiesform': loadDtmlMethod('issuepropertiesform','plugins/tracker'),
