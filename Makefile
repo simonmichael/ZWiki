@@ -32,11 +32,11 @@ default: test
 doc: sphinx
 
 sphinx:
-	make -f sphinx.mk html
+	make -f .sphinx.mk html
 
 doxygen:
 	rm -rf doc/doxygen/*
-	doxygen doxygen.conf
+	doxygen .doxygen.conf
 
 epydoc:
 	rm -rf doc/epydoc/*
