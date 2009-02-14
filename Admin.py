@@ -314,7 +314,7 @@ class PageAdminSupport:
         Install some default wiki pages to help get a wiki started.
         """
         # copied from ...
-        dir = package_home(globals()) + os.sep + 'wikis' + os.sep + 'basic'
+        dir = package_home(globals()) + os.sep + 'content' + os.sep + 'basic'
         filenames = os.listdir(dir)
         for filename in filenames:
             if filename[-5:] == '.dtml': pass
@@ -376,7 +376,7 @@ class PageAdminSupport:
 
         Existing objects with the same name won't be overwritten.
         """
-        d = os.path.join(package_home(globals()),'wikis','basic')
+        d = os.path.join(package_home(globals()),'content','basic')
         dtmlmethods = [f[:-5] for f in os.listdir(d) if f.endswith('.dtml')]
         ids = self.folder().objectIds()
         for m in dtmlmethods:

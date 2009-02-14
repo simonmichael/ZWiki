@@ -371,7 +371,7 @@ def addWikiFromFs(self, new_id, title='', wiki_type='basic',
     
     # add objects from wiki template
     # cataloging really slows this down!
-    dir = os.path.join(package_home(globals()),'wikis',wiki_type)
+    dir = os.path.join(package_home(globals()),'content',wiki_type)
     createFilesFromFsFolder(self, f, dir) # recurses
     f.objectValues(spec='ZWiki Page')[0].updatecontents()
 
@@ -432,7 +432,7 @@ def listFsWikis(self):
     list the wiki templates available in the filesystem
     """
     try:
-        list = os.listdir(package_home(globals()) + os.sep + 'wikis')
+        list = os.listdir(package_home(globals()) + os.sep + 'content')
         # likewise for Subversion
         if '.svn' in list: list.remove('.svn')
         if 'tracker' in list: list.remove('tracker') #XXX temp

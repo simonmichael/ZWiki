@@ -6,7 +6,7 @@
 # check for translations
 # check tests pass
 # check for late tracker issues
-# check README,wikis/,skins/,zwiki.org HelpPage,QuickReference
+# check README,content/,skins/,zwiki.org HelpPage,QuickReference
 # darcs changes --from-tag NN into CHANGES.txt & edit; don't add header at top
 # update version.txt, don't record
 # make release
@@ -78,7 +78,7 @@ LANGUAGES=af ar de en_GB es et fi fr he hu it ja nl pl pt pt_BR ro ru sv th tr z
 # requires 18ndude >= 2008/02/06
 pot:
 	echo '<div i18n:domain="zwiki">' >skins/dtmlmessages.pt # dtml extraction hack
-	find plugins skins wikis -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt                           #
+	find plugins skins content -name "*dtml" | xargs perl -n -e '/<dtml-translate domain="?zwiki"?>(.*?)<\/dtml-translate>/ and print "<span i18n:translate=\"\">$$1<\/span>\n";' >>skins/dtmlmessages.pt                           #
 	echo '</div>' >>skins/dtmlmessages.pt                   #
 	i18ndude rebuild-pot --pot i18n/tmp.pot --create zwiki --exclude="_darcs" .
 	echo '# Gettext message file for Zwiki' >i18n/zwiki.pot
