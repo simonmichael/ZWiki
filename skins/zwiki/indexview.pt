@@ -1,0 +1,20 @@
+<html metal:use-macro="here/main_template/macros/master" i18n:domain="zwiki" >
+  <head>
+    <title metal:fill-slot="title_slot" tal:content="
+           string:${container/title} index" />
+    <metal:block metal:fill-slot="head_slot">
+      <metal:block metal:use-macro="here/macros/formsearchtags" />
+    </metal:block>
+  </head>
+  <body>
+    <div metal:fill-slot="main">
+      <metal:macro metal:use-macro="here/macros/wikiheader" />
+      <h1 i18n:translate="">Index</h1>
+      <div class="formcontent"
+           tal:content="structure python:here.talsafe(
+                        here.getSkinTemplate('Index')(here,request))">
+        content goes here..
+      </div>
+    </div>
+  </body>
+</html>

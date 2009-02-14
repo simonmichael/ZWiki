@@ -210,6 +210,7 @@ for s in os.listdir(abszwikipath('skins')):
         'diffform',
         'editform',
         'history',
+        'indexview',
         'recentchanges',
         'searchwiki',
         'helppage',
@@ -244,6 +245,7 @@ for s in os.listdir(abszwikipath('skins')):
         if obj: SKINS[s][template] = obj
     for template in [
         # helper dtml methods
+        'Index',
         'RecentChanges',
         'SearchPage',
         'UserOptions',
@@ -725,6 +727,14 @@ class SkinViews:
                                                 action=action,
                                                 id=page,
                                                 oldid=self.id())
+
+    security.declareProtected(Permissions.View, 'indexview')
+    def indexview(self, REQUEST=None):
+        """
+        Render the wiki index (template-customizable).
+        """
+        self.ensureCatalog()
+        return self.getSkinTemplate('indexview')(self,REQUEST)
 
     security.declareProtected(Permissions.View, 'recentchanges')
     def recentchanges(self, REQUEST=None):
