@@ -526,7 +526,7 @@ class PageEditingSupport:
             self.changeIdCarefully(newid)
         if namechanged:
             self.changeNameCarefully(newname)
-        if idchanged or namechanged:
+        if (idchanged or namechanged) and updatebacklinks:
             self._replaceLinksEverywhere(oldname,newname,REQUEST)
         self.index_object() # update catalog XXX manage_renameObject may also, if idchanged
         if idchanged and leaveplaceholder: 
