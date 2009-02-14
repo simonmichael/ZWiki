@@ -332,13 +332,6 @@ warm-zodb-cache warm:
 	$(LOADALL) http://zwiki.org/RecycleBin
 	$(LOADALL) http://zwiki.org/FileUploads
 
-# darcs-style author stats, aware of changed email addresses etc.
-showauthors: list_authors
-	tools/list_authors stats
-
-list_authors: tools/list_authors.hs
-	ghc --make tools/list_authors.hs
-
 # reinstall zwiki product in plone site
 # uses ~/.netrc for authorization
 reinstall:
