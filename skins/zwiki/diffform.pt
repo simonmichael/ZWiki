@@ -36,13 +36,11 @@
                 <input type="hidden" name="rev" tal:attributes="value revision/previousRevisionNumber" />
                 <input tal:condition="python:rev > minrev"
                        value=" &lt;&lt; "
-                       type="submit"
-                       accesskey="p" />
+                       type="submit" />
                 <input tal:condition="not:python:rev > minrev"
                        disabled="1"
                        value=" &lt;&lt; "
-                       type="submit"
-                       accesskey="p" />
+                       type="submit" />
               </form>
               <a tal:repeat="r here/revisionNumbers"
                  tal:content="r"
@@ -53,13 +51,11 @@
                 <input type="hidden" name="rev" tal:attributes="value revision/nextRevisionNumber" />
                 <input tal:condition="python:rev < maxrev"
                        value=" &gt;&gt; "
-                       type="submit"
-                       accesskey="n" />
+                       type="submit" />
                 <input tal:condition="not:python:rev < maxrev"
                        disabled="1"
                        value=" &gt;&gt; "
-                       type="submit"
-                       accesskey="n" />
+                       type="submit" />
               </form>
             </td>
 
