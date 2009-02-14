@@ -146,48 +146,38 @@ Access keys
   Here are the access key shortcuts available on a zwiki site. 
   See also http://zwiki.org/QuickReference#access-keys ::
 
-        wiki functions:
+        wiki actions:
 
-        f    show front page
-        c    show wiki contents
-        r    show wiki recent changes
-             show discussion page
-        t    show issue tracker
-        i    show wiki index
-        o    show wiki options (preferences)
-        h    show help page
-        s    go to search field
+        f    go to **f**ront page
+        c    show wiki **c**ontents
+        r    show wiki **r**ecent changes
+        t    show issue **t**racker
+        i    show wiki **i**ndex
+        o    show wiki **o**ptions (preferences)
+        h    show wiki **h**elp
 
-        page functions:
+        page actions:
 
-        +    (in a plone/cmf site with skin switching set up) use zwiki's plone/cmf skin
-        -    (in a plone/cmf site with skin switching set up) use zwiki's standard skin
-        v    view page
-        m    mail subscription
-        b    show backlinks (links to this page)
-        d    show diffs (page edit history)
-        y    show full history (in ZMI)
-        e    edit this page
-        x    edit with an external editor
-             print this page (and subtopics)
-        q    view page source (quick-view)
-             wipe and regenerate this page's render cache
-             go to subtopics
-             go to comments (messages)
-             go to page author's home page, if possible
-        n    next page
-        p    previous page
-        u    up to parent page
+        n    go to **n**ext page
+        p    go to **p**revious page
+        u    go **u**p to parent page
+        b    show **b**acklinks (links to this page)
+        m    show **m**ail subscription
+        e    **e**dit this page
+        x    edit with an e**x**ternal editor
+        d    show edit **d**iffs
+        y    show full edit histor**y**
+        v    return to main page **v**iew
 
         when editing a page:
 
-        s    save changes
-        p    preview
+        s    **s**ave changes
+        w    previe**w** changes without saving
 
-        when viewing page history:
+        within a Plone site:
 
-        n    next edit
-        p    previous edit
+        -    use the zwiki skin
+        +    use the plone skin
 
 Find out more
 
