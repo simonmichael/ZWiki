@@ -646,14 +646,16 @@ class PageMailSupport:
         sends duplicates in practice; we won't favour one or the other.
         So: look for the first object with Maildrop Host or Mail Host
         meta_type in this folder, then in the parent folder, and so on.
+        When multiple mailhosts are found in one folder, choose the
+        alphabetically first.
         """
         mhost = None
         folder = self.folder()
         # XXX folder might not have objectValues, don't know why (#938)
         while (not mhost) and folder and safe_hasattr(folder,'objectValues'):
-            mhosts = sorted(folder.objectValues(
+            mhostids = sorted(folder.objectIds(
                 spec=['Mail Host', 'Secure Mail Host', 'Maildrop Host', 'Secure Maildrop Host']))
-            if mhosts: mhost = mhosts[0]
+            if mhostids: mhost = folder[mhostids[0]]
             folder = getattr(folder,'aq_parent',None)
         return mhost
 
