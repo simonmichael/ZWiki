@@ -212,27 +212,18 @@ class ShowSubtopicsProperty:
         and return the first one we find. Otherwise return true.
         """
         prop = 'show_subtopics'
-        if not getattr(self.folder(),prop,1):
-            return 0
-        else:
-            if safe_hasattr(self,'REQUEST') and self.REQUEST.has_key(prop):
-                return self.REQUEST.get(prop)
-            elif safe_hasattr(self.aq_base,prop):
-                return getattr(self,prop) and 1
-            else:
-                parent = self.primaryParent()
-                if parent and not parent.getId() == self.getId(): # watch out for circular parents
-                    try: return parent.subtopicsEnabled()
-                    except AttributeError: # experimental: support all-brains
-                        try: return parent.getObject().subtopicsEnabled()
-                        except AttributeError: # XXX still run into errors here, investigate
-                            BLATHER('DEBUG: error in subtopicsEnabled for %s, primaryParent is: %s'\
-                                 % (self.id(),`parent`))
-                            return not (getattr(getattr(self,'REQUEST',None),
-                                                'zwiki_displaymode',
-                                                None) == 'minimal')
-                else:
-                    return 1
+        # disabled by a folder property ?
+        if not getattr(self.folder(),prop,1): return 0
+        # specified by a request var ?
+        if safe_hasattr(self,'REQUEST') and self.REQUEST.has_key(prop): return self.REQUEST.get(prop)
+        # walk upwards from this page
+        for a in [self.pageName()] + self.ancestorsAsList2():
+            p = self.pageWithName(a)
+            if safe_hasattr(p.aq_base,prop):
+                # specified on this page
+                return getattr(p,prop) and 1
+        # not specified, use default
+        return 1
 
     def subtopicsPropertyStatus(self):
         """
@@ -356,7 +347,7 @@ class OutlineManager:
         # update the childmap (without losing subtopics order) and nesting
         self.folder().outline.update()
 
-    # easier-to-type alias ? XXX remove ? updateoutline ?
+    # easier-to-type alias
     updatecontents = updateWikiOutline
         
     security.declareProtected(Permissions.View, 'rebuildWikiOutline')
@@ -543,6 +534,22 @@ class OutlineManager:
         """
         try: return flatten(self.ancestorsNesting())[:-1]
         except: return [] # XXX temp, get rid of
+
+    security.declareProtected(Permissions.View, 'ancestorsAsList2')
+    def ancestorsAsList2(self, REQUEST=None):
+        """
+        A more robust variant of ancestorsAsList (but, in reverse
+        order).  This is a temporary workaround to help
+        subtopicsEnabled because Outline.ancestorsNesting returns
+        nothing in the case of One<->Two circular parents (issue
+        #965).
+        """
+        ps = []
+        p = self.primaryParent()
+        while p and not p.pageName() in ps and not p.pageName()==self.pageName():
+            ps.append(p.pageName())
+            p = p.primaryParent()
+        return ps
 
     security.declareProtected(Permissions.View, 'siblingsAsList')
     def siblingsAsList(self,include_me=False,sort_alpha=True):
