@@ -35,7 +35,12 @@ class PageTypeRst(PageTypeBase):
             return page.tounicode(reStructuredText.HTML(
                 t,
                 report_level=RST_REPORT_LEVEL,
-                initial_header_level=RST_INITIAL_HEADER_LEVEL-1
+                initial_header_level=RST_INITIAL_HEADER_LEVEL-1,
+                # If rst_raw_enabled property is set, try to enable
+                # use of raw html in rst pages. As of Zope 2.11 this
+                # has no effect unless you also apply the zope patch at
+                # https://bugs.launchpad.net/zope2/+bug/143852
+                settings={'raw_enabled':getattr(page,'rst_raw_enabled',0) and 1}
                 ))
         else:
             return "<pre>Error: could not import reStructuredText</pre>\n"+t
