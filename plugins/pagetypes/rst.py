@@ -12,7 +12,6 @@ RST_REPORT_LEVEL = 4
 # top-level RST heading will render as this HTML heading:
 RST_INITIAL_HEADER_LEVEL = 2
 
-import reStructuredText
 
 class PageTypeRst(PageTypeBase):
     """
@@ -27,14 +26,10 @@ class PageTypeRst(PageTypeBase):
     def format(self, page, t):
         # rst returns an encoded string.. decode it back to unicode
         # hopefully the rst encoding in zope.conf matches the wiki's encoding
-        return page.tounicode(reStructuredText.HTML(
+        return page.tounicode(HTML(
                 t,
                 report_level=RST_REPORT_LEVEL,
                 initial_header_level=RST_INITIAL_HEADER_LEVEL-1,
-                # If rst_raw_enabled property is set, try to enable
-                # use of raw html in rst pages. As of Zope 2.11 this
-                # has no effect unless you also apply the zope patch at
-                # https://bugs.launchpad.net/zope2/+bug/143852
                 settings={'raw_enabled':getattr(page,'rst_raw_enabled',0) and 1}
                 ))
 
@@ -168,3 +163,141 @@ registerPageType(PageTypeRst)
 
 # backwards compatibility - need this here for old zodb objects
 ZwikiRstPageType = PageTypeRst
+
+
+# Hackery to permit optional use of raw html in restructured text.
+# Current Zope overrides the rst settings
+# (https://bugs.launchpad.net/zope2/+bug/143852) - hopefully that
+# patch will be applied, but meanwhile we follow standard Zwiki
+# procedure and make it work now by hook or by crook.  The following
+# is based on ZPL-licensed code from lib/python/reStructuredText/__init__.py.
+
+from reStructuredText import sys, getConfiguration, publish_parts, Warnings
+
+# get encoding
+default_enc = sys.getdefaultencoding()
+default_output_encoding = getConfiguration().rest_output_encoding or default_enc
+default_input_encoding = getConfiguration().rest_input_encoding or default_enc
+
+# starting level for <H> elements (default behaviour inside Zope is <H3>)
+default_level = 3
+initial_header_level = getConfiguration().rest_header_level or default_level
+
+# default language used for internal translations and language mappings for DTD
+# elements
+default_lang = 'en'
+default_language_code = getConfiguration().rest_language_code or default_language
+
+def render(src,
+           writer='html4css1',
+           report_level=1,
+           stylesheet=None,
+           input_encoding=default_input_encoding,
+           output_encoding=default_output_encoding,
+           language_code=default_language_code,
+           initial_header_level = initial_header_level,
+           settings = {}):
+    """get the rendered parts of the document the and warning object
+    """
+    # Docutils settings:
+    allsettings = {}
+    allsettings['file_insertion_enabled'] = 0
+    allsettings['raw_enabled'] = 0
+    # don't break if we get errors:
+    allsettings['halt_level'] = 6
+    # remember warnings:
+    allsettings['warning_stream'] = warning_stream = Warnings()
+    # now update with user supplied settings
+    allsettings.update(settings)
+    # and then add settings based on keyword parameters
+    allsettings['input_encoding'] = input_encoding
+    allsettings['output_encoding'] = output_encoding
+    allsettings['stylesheet'] = stylesheet
+    allsettings['stylesheet_path'] = None
+    allsettings['language_code'] = language_code
+    # starting level for <H> elements:
+    allsettings['initial_header_level'] = initial_header_level + 1
+    # set the reporting level to something sane:
+    allsettings['report_level'] = report_level
+
+    parts = publish_parts(source=src, writer_name=writer,
+                          settings_overrides=allsettings,
+                          config_section='zope application')
+
+    return parts, warning_stream
+
+def HTML(src,
+         writer='html4css1',
+         report_level=1,
+         stylesheet=None,
+         input_encoding=default_input_encoding,
+         output_encoding=default_output_encoding,
+         language_code=default_language_code,
+         initial_header_level = initial_header_level,
+         warnings = None,
+         settings = {}):
+    """ render HTML from a reStructuredText string
+
+        - 'src'  -- string containing a valid reST document
+
+        - 'writer' -- docutils writer
+
+        - 'report_level' - verbosity of reST parser
+
+        - 'stylesheet' - Stylesheet to be used
+
+        - 'input_encoding' - encoding of the reST input string
+
+        - 'output_encoding' - encoding of the rendered HTML output
+
+        - 'report_level' - verbosity of reST parser
+
+        - 'language_code' - docutils language
+
+        - 'initial_header_level' - level of the first header tag
+
+        - 'warnings' - will be overwritten with a string containing the warnings
+
+        - 'settings' - dict of settings to pass in to Docutils, with priority
+
+    """
+    parts, warning_stream = render(src,
+                                   writer = writer,
+                                   report_level = report_level,
+                                   stylesheet = stylesheet,
+                                   input_encoding = input_encoding,
+                                   output_encoding = output_encoding,
+                                   language_code=language_code,
+                                   initial_header_level = initial_header_level,
+                                   settings = settings)
+
+    header = '<h%(level)s class="title">%(title)s</h%(level)s>\n' % {
+                  'level': initial_header_level,
+                  'title': parts['title'],
+             }
+
+    subheader = '<h%(level)s class="subtitle">%(subtitle)s</h%(level)s>\n' % {
+                  'level': initial_header_level+1,
+                  'subtitle': parts['subtitle'],
+             }
+
+    body = '%(docinfo)s%(body)s' % {
+                  'docinfo': parts['docinfo'],
+                  'body': parts['body'],
+             }
+
+
+    output = ''
+    if parts['title']:
+        output = output + header
+    if parts['subtitle']:
+        output = output + subheader
+    output = output + body
+
+
+    warnings = ''.join(warning_stream.messages)
+
+    if output_encoding != 'unicode':
+        return output.encode(output_encoding)
+    else:
+        return output
