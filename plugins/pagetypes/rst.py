@@ -12,11 +12,7 @@ RST_REPORT_LEVEL = 4
 # top-level RST heading will render as this HTML heading:
 RST_INITIAL_HEADER_LEVEL = 2
 
-try:
-    import reStructuredText # import this one first
-except ImportError:
-    reStructuredText = None
-    BLATHER('could not import reStructuredText, will not be available')
+import reStructuredText
 
 class PageTypeRst(PageTypeBase):
     """
@@ -29,10 +25,9 @@ class PageTypeRst(PageTypeBase):
     supportsWikiLinks = yes
 
     def format(self, page, t):
-        if reStructuredText:
-            # rst returns an encoded string.. decode it back to unicode
-            # hopefully the rst encoding in zope.conf matches the wiki's encoding
-            return page.tounicode(reStructuredText.HTML(
+        # rst returns an encoded string.. decode it back to unicode
+        # hopefully the rst encoding in zope.conf matches the wiki's encoding
+        return page.tounicode(reStructuredText.HTML(
                 t,
                 report_level=RST_REPORT_LEVEL,
                 initial_header_level=RST_INITIAL_HEADER_LEVEL-1,
@@ -42,8 +37,6 @@ class PageTypeRst(PageTypeBase):
                 # https://bugs.launchpad.net/zope2/+bug/143852
                 settings={'raw_enabled':getattr(page,'rst_raw_enabled',0) and 1}
                 ))
-        else:
-            return "<pre>Error: could not import reStructuredText</pre>\n"+t
 
     def preRender(self, page, text=None):
         t = text or (page.document()+'\n'+MIDSECTIONMARKER+ \
