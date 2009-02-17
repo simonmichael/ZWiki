@@ -56,7 +56,7 @@ import Persistence
 from OFS.SimpleItem import SimpleItem
 
 import Permissions
-from Utils import flatten, BLATHER, safe_hasattr, isunicode
+from Utils import flatten, BLATHER, safe_hasattr, base_hasattr, isunicode
 from Defaults import PAGE_METATYPE
 from Regexps import bracketedexpr
 import Outline
@@ -215,13 +215,14 @@ class ShowSubtopicsProperty:
         # disabled by a folder property ?
         if not getattr(self.folder(),prop,1): return 0
         # specified by a request var ?
-        if safe_hasattr(self,'REQUEST') and self.REQUEST.has_key(prop): return self.REQUEST.get(prop)
-        # walk upwards from this page
-        for a in [self.pageName()] + self.ancestorsAsList2():
+        if safe_hasattr(self,'REQUEST') and self.REQUEST.has_key(prop):
+            return self.REQUEST.get(prop) and 1
+        # specified on this page ?
+        if base_hasattr(self,prop): return getattr(self,prop) and 1
+        # specified on a parent or elder ancestor ?
+        for a in self.ancestorsAsList2():
             p = self.pageWithName(a)
-            if safe_hasattr(p.aq_base,prop):
-                # specified on this page
-                return getattr(p,prop) and 1
+            if base_hasattr(p,prop): return getattr(p,prop) and 1
         # not specified, use default
         return 1
 
