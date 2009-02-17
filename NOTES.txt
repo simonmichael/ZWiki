@@ -1,6 +1,60 @@
 Zwiki project and task notes  -*- org -*-
 ############################
 
+* SITE
+** unresolved event log errors
+*** TypeError: revision() takes exactly 2 arguments (1 given)
+2009-02-14T11:56:52 ERROR Zope.SiteErrorLog http://zwiki.org/FrontPage/manage_change_history_page
+Traceback (innermost last):
+  Module ZPublisher.Publish, line 119, in publish
+  Module ZPublisher.mapply, line 88, in mapply
+  Module ZPublisher.Publish, line 42, in call_object
+  Module Shared.DC.Scripts.Bindings, line 313, in __call__
+  Module Shared.DC.Scripts.Bindings, line 350, in _bindAndExec
+  Module App.special_dtml, line 178, in _exec
+  Module DocumentTemplate.DT_In, line 703, in renderwob
+TypeError: revision() takes exactly 2 arguments (1 given)
+
+*** NotImplementedError
+2009-02-14T11:57:14 ERROR txn.1099901264 Failed to abort object: TransactionalUndo oid=<object object at 0x2ac16ca050a0>
+Traceback (most recent call last):
+  File "/zope-2.11.2/lib/python/transaction/_transaction.py", line 549, in abort
+  File "/zope-2.11.2/lib/python/ZODB/DB.py", line 809, in abort
+NotImplementedError
+
+*** AttributeError: 'list' object has no attribute 'decode'
+2009-02-14T11:57:44 ERROR Zope.SiteErrorLog http://zwiki.org/IssueTracker
+Traceback (innermost last):
+  Module ZPublisher.Publish, line 119, in publish
+  Module ZPublisher.mapply, line 88, in mapply
+  Module ZPublisher.Publish, line 42, in call_object
+  Module Products.ZWiki.ZWikiPage, line 231, in __call__
+  Module Products.ZWiki.ZWikiPage, line 243, in render
+  Module Products.ZWiki.plugins.pagetypes.rst, line 54, in render
+  Module Products.ZWiki.ZWikiPage, line 308, in evaluatePreRenderedAsDtml
+  Module OFS.DTMLDocument, line 132, in __call__
+   - <ZWikiPage 'IssueTracker' at 0x2ab46d0>
+   - URL: http://zwiki.org/IssueTracker/manage_main
+   - Physical Path: /zwiki.org/IssueTracker
+  Module DocumentTemplate.DT_String, line 476, in __call__
+  Module DocumentTemplate.DT_Let, line 75, in render
+  Module DocumentTemplate.DT_Util, line 196, in eval
+   - __traceback_info__: tounicode
+  Module <string>, line 1, in <expression>
+  Module Products.ZWiki.Utils, line 586, in tounicode
+  Module Products.ZWiki.Utils, line 602, in tounicode
+AttributeError: 'list' object has no attribute 'decode'
+
+*** 
+
+*** 
+
+*** 
+
+*** 
+
+*** 
+
 * PRODUCT
 ** stabilisation
 *** resolve issues in zwiki.org event log
