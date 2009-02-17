@@ -321,21 +321,28 @@ class PageUtils:
         p = self.defaultPage()
         return (p and p.pageUrl()) or ''
 
+    def urlForPageOrMethod(self,pagename,methodname):
+        """
+        Return the url of the named wiki page if it exists, otherwise
+        the url of the named method on the default page. Used for our
+        "wiki page overrides built-in page template" behaviour.
+        """
+        p = self.pageWithName(pagename)
+        return ((p and p.pageUrl())
+                or self.defaultPage().pageUrl()+'/'+methodname)
+
     def urlForDtmlPageOrMethod(self,pagename,methodname):
         """
-        Return the url of an existing dtml page, or of a method, or ''.
+        Like urlForPageOrMethod, where the page must not only exist
+        but have functioning dynamic content (ie, DTML is enabled).
+        Early zwikis always had RecentChanges, SearchPage
+        etc. in-wiki, but when DTML became disabled by default those
+        pages no longer worked; this method avoids using them in that
+        situation.
         """
         p = self.pageWithName(pagename)
-        if p and p.dtmlAllowed() and p.hasDynamicContent(): return p.pageUrl()
-        elif methodname: return self.defaultPage().pageUrl()+'/'+methodname
-        else: return ''
-
-    def urlForPageOrDefault(self,pagename,default=''):
-        """
-        Return the url of an existing page, or the default.
-        """
-        p = self.pageWithName(pagename)
-        return (p and p.pageUrl()) or default
+        return ((p and p.dtmlAllowed() and p.hasDynamicContent() and p.pageUrl()) 
+                or self.defaultPage().pageUrl()+'/'+methodname)
 
     # XXX keeping these page names in the skin might be easier for i18n ?
     # but way too cumbersome right now
@@ -390,7 +397,7 @@ class PageUtils:
 
     security.declareProtected(Permissions.View, 'helpUrl')
     def helpUrl(self):
-        return self.urlForPageOrDefault('HelpPage','helppage')
+        return self.urlForPageOrMethod('HelpPage','helppage')
 
     security.declareProtected(Permissions.View, 'searchUrl')
     def searchUrl(self):
