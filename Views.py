@@ -728,13 +728,13 @@ class SkinViews:
                                                 id=page,
                                                 oldid=self.id())
 
-    security.declareProtected(Permissions.View, 'indexview')
-    def indexview(self, REQUEST=None):
+    security.declareProtected(Permissions.View, 'wikiindex')
+    def wikiindex(self, REQUEST=None):
         """
         Render the wiki index (template-customizable).
         """
         self.ensureCatalog()
-        return self.getSkinTemplate('indexview')(self,REQUEST)
+        return self.getSkinTemplate('wikiindex')(self,REQUEST)
 
     security.declareProtected(Permissions.View, 'recentchanges')
     def recentchanges(self, REQUEST=None):

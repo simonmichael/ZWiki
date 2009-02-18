@@ -381,7 +381,7 @@ class PageUtils:
 
     security.declareProtected(Permissions.View, 'indexUrl')
     def indexUrl(self):
-        return self.urlForDtmlPageOrMethod('Index','indexview')
+        return self.urlForDtmlPageOrMethod('Index','wikiindex')
 
     security.declareProtected(Permissions.View, 'uploadsUrl')
     def uploadsUrl(self):
