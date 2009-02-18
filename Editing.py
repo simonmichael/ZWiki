@@ -545,7 +545,7 @@ class PageEditingSupport:
     def _makePlaceholder(self,oldid,newname): 
         self.create(
             oldid,
-            _("This page was renamed to %s. You can delete this one if no longer needed.\n") % (newname),
+            _("This page was renamed to [%s].\n") % (newname),
             sendmail=0)
 
     def _sendRenameNotification(self,oldname,newname,REQUEST):
