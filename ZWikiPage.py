@@ -276,6 +276,8 @@ class ZWikiPage(
             delattr(self,'_v_blocks')
         if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl())
 
+    clear = clearCache
+
     def cookDtmlIfNeeded(self):
         if self.dtmlAllowed() and self.hasDynamicContent(): self.cook()
 
