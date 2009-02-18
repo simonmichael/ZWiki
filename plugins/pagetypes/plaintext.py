@@ -10,10 +10,20 @@ class PageTypePlaintext(PageTypeBase):
         return "<pre>\n%s\n</pre>\n" % html_quote(t)
 
     def preRender(self, page, text=None):
-        t = text or (page.document() + '\n'+MIDSECTIONMARKER + \
+        # a little different.. wrap document part in pre then run stx over the lot
+        t = text or (self.format(page, page.document()) + '\n'+MIDSECTIONMARKER + \
                     self.preRenderMessages(page))
-        t = self.format(page,t)
         t = self.obfuscateEmailAddresses(page,t)
+        return t
+
+    def discussionSeparator(self,page):
+        return '\n<p>\n'
+
+    def preRenderMessage(self,page,utfmsg):
+        t = page.tounicode(utfmsg.get_payload())
+        t = self.renderCitationsIn(page,t)
+        t = self.format(page,t)
+        t = self.addCommentHeadingTo(page,t,utfmsg)
         return t
 
     def render(self, page, REQUEST={}, RESPONSE=None, **kw):

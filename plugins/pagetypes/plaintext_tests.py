@@ -13,7 +13,7 @@ class Tests(ZwikiTestCase):
         self.p.folder().allowed_page_types = ['plaintext']
         self.p.edit(text='! PageOne PageTwo\n',type='plaintext')
         self.assertEquals(self.p.render(bare=1),
-                          '<pre>\n! PageOne PageTwo\n\n\n\n</pre>\n')
+                          '<pre>\n! PageOne PageTwo\n\n</pre>\n\n\n')
         del self.p.folder().allowed_page_types
 
     def test_PageTypePlaintext_with_comment(self):
@@ -27,7 +27,21 @@ Subject: first comment
 Message-ID: <20070517211510+0300@briareus.local:8380>
 
 goes here"""
-        expected = """<pre>\nwith some simple text\n\n\n------------------------------------------------------------\n\n\nfirst comment --betabug, Thu, 17 May 2007 21:15:10 +0300\n\ngoes here\n</pre>\n"""
+        expected = """<pre>
+with some simple text
+</pre>
+
+
+
+<p>
+
+
+first comment --betabug, Thu, 17 May 2007 21:15:10 +0300
+
+<pre>
+goes here
+</pre>
+"""
         self.p.edit(text=text,type='plaintext')
         self.assertEquals(self.p.render(bare=1), expected)
         del self.p.folder().allowed_page_types
