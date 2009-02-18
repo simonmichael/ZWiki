@@ -1371,7 +1371,6 @@ class ZWikiPage(
     # backwards compatibility
 
     # API methods for old skin templates
-    # need security declarations here ?
     security.declareProtected(Permissions.View, 'quickcomment')
     quickcomment = slowcomment = PageEditingSupport.comment
     security.declareProtected(Permissions.View, 'stxToHtml')
@@ -1383,6 +1382,7 @@ class ZWikiPage(
     wiki_base_url = PageUtils.wiki_url
     zwiki_username_or_ip = PageUtils.usernameFrom
     applyLineEscapesIn = applyWikiLinkLineEscapesIn 
+    supportsEpoz = lambda x:False
 
     # CMF compatibility
     view = __call__
