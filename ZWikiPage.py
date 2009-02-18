@@ -166,15 +166,19 @@ class ZWikiPage(
     security.declarePublic('pageType')
     def pageType(self):
         """Return this page's page type object."""
-        # check for page type problems
-        # old-style page type string ?
-        if type(self.page_type) == StringType:
+        # check for problems
+        old = self.page_type
+        if type(old) == StringType:
+            # old-style page type
             new = self.newPageTypeIdFor(self.page_type)
             BLATHER("upgrading %s's page type from %s to %s" % (self.id(),self.page_type,new))
             self.setPageType(new)
-        # page type whose plugin is no longer installed ?
-        elif not safe_hasattr(self.page_type,'render'):
-            self.setPageType(DEFAULT_PAGETYPE)
+        elif old.id == "broken":
+            # page type whose plugin is no longer installed
+            # (or whose module moved, but our __module_aliases__ should cover those.. but don't)
+            new = DEFAULT_PAGETYPE().id()
+            BLATHER("could repair %s's missing page type %s to %s, ignoring for now" % (self.id(), old.__class__, new))
+            #self.setPageType(new)
         return self.page_type
 
     security.declarePublic('lookupPageType')
