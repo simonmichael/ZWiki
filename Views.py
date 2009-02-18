@@ -211,6 +211,7 @@ for s in os.listdir(abszwikipath('skins')):
         'editform',
         'history',
         'wikiindex',
+        'wikistats',
         'recentchanges',
         'searchwiki',
         'helppage',
@@ -249,6 +250,7 @@ for s in os.listdir(abszwikipath('skins')):
         'RecentChanges',
         'SearchPage',
         'UserOptions',
+        'WikiStats',
         'subtopics_outline',
         'subtopics_board',
         'stylesheet', # a stylesheet.dtml would override stylesheet.css
@@ -735,6 +737,14 @@ class SkinViews:
         """
         self.ensureCatalog()
         return self.getSkinTemplate('wikiindex')(self,REQUEST)
+
+    security.declareProtected(Permissions.View, 'wikistats')
+    def wikistats(self, REQUEST=None):
+        """
+        Render the wiki statistics view (template-customizable).
+        """
+        self.ensureCatalog()
+        return self.getSkinTemplate('wikistats')(self,REQUEST)
 
     security.declareProtected(Permissions.View, 'recentchanges')
     def recentchanges(self, REQUEST=None):

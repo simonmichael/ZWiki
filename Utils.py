@@ -383,6 +383,10 @@ class PageUtils:
     def indexUrl(self):
         return self.urlForDtmlPageOrMethod('Index','wikiindex')
 
+    security.declareProtected(Permissions.View, 'statsUrl')
+    def statsUrl(self):
+        return self.urlForDtmlPageOrMethod('WikiStats','wikistats')
+
     security.declareProtected(Permissions.View, 'uploadsUrl')
     def uploadsUrl(self):
         return '' #self.urlForDtmlPageOrMethod('UploadsPage','uploads')

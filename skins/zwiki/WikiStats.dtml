@@ -1,0 +1,168 @@
+<dtml-call "RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
+<dtml-let
+ rated="pages(voteCount={'query':1,'range':'min'}) # pages with votes"
+ rateddescending="_.sequence.sort(rated,(('rating','cmp','desc'),))"
+ ratedascending="_.sequence.sort(rated,(('rating','cmp','asc'),))"
+ highrated="pages(voteCount={'query':1,'range':'min'},rating={'query':1,'range':'min'}) # pages with votes rated 1 or more"
+ lowrated="pages(voteCount={'query':1,'range':'min'},rating={'query':-1,'range':'max'}) # pages with votes rated -1"
+ pages=pages
+ pagesbysize="_.sequence.sort(pages,(('size','cmp','desc'),))"
+ files="folder().objectValues(spec='File')"
+ images="folder().objectValues(spec='Image')"
+ num="int(REQUEST.get('num','10'))"
+>
+<div style="font-size:small">
+<dtml-comment>avoid brains' REQUEST attribute</dtml-comment>
+<dtml-call "_.this.REQUEST.set('totalvotes',0)">
+<dtml-in rated><dtml-call "_.this.REQUEST.set('totalvotes',_.this.REQUEST.get('totalvotes')+voteCount)"></dtml-in>
+<table border="0" cellspacing="0" cellpadding="0">
+<dtml-try>
+<tr><td>Zope uptime:</td><td>&dtml-uptime;</td></tr>
+<dtml-except></dtml-try>
+<dtml-try>
+<tr><td>Memory usage:&nbsp;</td><td><dtml-var "memusage()/1000">M (this zope server, all sites)</td></tr>
+<dtml-except></dtml-try>
+<tr><td>Pages:</td><td><dtml-var "_.len(pages)"></td></tr>
+<tr><td>Issue pages:</td><td><dtml-var issueCount></td></tr>
+<tr><td>Rated pages:</td><td><dtml-var "_.len(rated)"></td></tr>
+<tr><td>Votes:</td><td><dtml-var totalvotes></td></tr>
+<tr>
+  <td>Files:</td>
+  <td>
+    <dtml-var "_.len(files)">
+    <dtml-in files>
+      <dtml-call "REQUEST.set('filetotal',REQUEST.get('filetotal',0)+size)">
+    </dtml-in>
+    (<dtml-var "_.round(filetotal/1024.0/1024.0,1)">M)
+  </td>
+</tr>
+<tr>
+  <td>Images:</td>
+  <td>
+    <dtml-var "_.len(images)">
+    <dtml-in images>
+      <dtml-call "REQUEST.set('imagetotal',REQUEST.get('imagetotal',0)+size)">
+    </dtml-in>
+    (<dtml-var "_.round(imagetotal/1024.0/1024.0,1)">M)
+  </td>
+</tr>
+</table>
+<p>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr valign="top">
+      <td width="20%">
+        Newest:&nbsp;<dtml-comment>("rss":rss)</dtml-comment><br>
+        <dtml-try>
+        <dtml-in "_.sequence.sort(pages,(('creation_time','cmp','desc'),))" size=num>
+          <a href="&dtml.url_quote-id;"
+             style="background-color:&dtml-issueColour;"
+             title="<dtml-var "linkTitleFrom(last_edit_time,last_editor)">"
+             >&dtml-Title;</a>
+          <br>
+        </dtml-in>
+        <dtml-except>(error)</dtml-try>
+      </td>
+      <td width="10">&nbsp;</td>
+      <td width="20%">
+        Recently&nbsp;changed:<br>
+        <dtml-try>
+        <dtml-in "_.sequence.sort(pages,(('last_edit_time','cmp','desc'),))" size=num>
+          <a href="&dtml.url_quote-id;"
+             style="background-color:&dtml-issueColour;"
+             title="<dtml-var "folder()[id].linkTitle()">">&dtml-Title;</a>
+          <br>
+        </dtml-in>
+        <dtml-except>(error)</dtml-try>
+      </td>
+      <td width="10">&nbsp;</td>
+      <td width="20%">
+        Most&nbsp;votes:<br>
+        <dtml-try>
+        <dtml-in "_.sequence.sort(rated,(('voteCount','cmp','desc'),))" size=num>
+          <a href="&dtml.url_quote-id;"
+             style="background-color:&dtml-issueColour;"
+             title="<dtml-var "folder()[id].linkTitle()">">&dtml-Title;</a
+             >&nbsp;(&dtml-voteCount;)
+          <br>
+        </dtml-in>
+        <dtml-except>(error)</dtml-try>
+      </td>
+      <td width="10">&nbsp;</td>
+      <td width="20%">
+        Highest&nbsp;rated:<br>
+        <dtml-try>
+        <dtml-in "_.sequence.sort(highrated,(('rating','cmp','desc'),))" size=num>
+          <a href="&dtml.url_quote-id;"
+             style="background-color:&dtml-issueColour;"
+             title="<dtml-var "folder()[id].linkTitle()">">&dtml-Title;</a
+             >&nbsp;<span class="<dtml-var "ratingStyle(rating)">">(&dtml-rating;)</span>
+          <br>
+        </dtml-in>
+        <dtml-except>(error)</dtml-try>
+      </td>
+      <td width="10">&nbsp;</td>
+      <td width="20%">
+        Lowest&nbsp;rated:<br>
+        <dtml-try>
+        <dtml-in lowrated size=num>
+          <a href="&dtml.url_quote-id;"
+             style="background-color:&dtml-issueColour;"
+             title="<dtml-var "folder()[id].linkTitle()">">&dtml-Title;</a
+             >&nbsp;<span class="<dtml-var "ratingStyle(rating)">">(&dtml-rating;)</span>
+          <br>
+        </dtml-in>
+        <dtml-except>(error)</dtml-try>
+      </td>
+    </tr>
+  </table>
+<p>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr valign="top">
+      <td width="33%">
+        Biggest:<br>
+        <dtml-try>
+        <dtml-in "pagesbysize[:num]">
+          <a href="&dtml.url_quote-id;"
+             style="background-color:&dtml-issueColour;"
+             title="<dtml-var "folder()[id].linkTitle()">"
+             style="background-color:&dtml-issueColour;">&dtml-Title;</a
+             >&nbsp;(<dtml-var "size/1024">K)
+             <br>
+        </dtml-in>
+        <dtml-except>(error)</dtml-try>
+      </td>
+
+      <td width="10">&nbsp;</td>
+      <td width="33%">
+        Smallest:<br>
+        <dtml-try>
+        <dtml-in "pagesbysize[-num:]">
+          <a href="&dtml.url_quote-id;"
+             style="background-color:&dtml-issueColour;"
+             title="<dtml-var "folder()[id].linkTitle()">"
+             style="background-color:&dtml-issueColour;">&dtml-Title;</a
+             >&nbsp;(<dtml-var "size">B)
+             <br>
+        </dtml-in>
+        <dtml-except>(error)</dtml-try>
+      </td>
+
+      <td width="10">&nbsp;</td>
+      <td width="33%">
+        Oldest:<br>
+        <dtml-in "_.sequence.sort(pages,(('creation_time','cmp','asc'),))" size=num>
+          <a href="&dtml.url_quote-id;"
+             style="background-color:&dtml-issueColour;"
+             title="<dtml-var "linkTitleFrom(last_edit_time,last_editor)">"
+             >&dtml-Title;</a>
+          <br>
+        </dtml-in>
+        <dtml-try>
+        <dtml-except>(error)</dtml-try>
+      </td>
+
+    </tr>
+  </table>
+
+</div>
+</dtml-let>
