@@ -1,18 +1,18 @@
 <dtml-call "RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
 All pages in this wiki, grouped alphabetically.
-
-<dtml-let 
+<p>
+<dtml-let
 letters="['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']"
 pages="pages(isIssue=0)"
 >
-
+<p>
 <a href="#_">_</a>
 <dtml-in letters prefix=x>
 | <a href="#&dtml-x_sequence_item;">&dtml-x_sequence_item;</a>
 </dtml-in>
-
+<p>
 <dtml-in pages prefix=x>
-<dtml-let 
+<dtml-let
  thisPageName=Title
  thisLetter="thisPageName[0].upper()"
  pageList="((thisLetter in letters) and 'pagesStartingWith'+thisLetter) or 'pagesStartingWith_'"
@@ -21,12 +21,11 @@ pages="pages(isIssue=0)"
 </dtml-let>
 </dtml-in>
 <dtml-in "['_']+letters" prefix=x>
-
+<p>
 <a name="&dtml-x_sequence_item;"><dtml-var x_sequence_item>
-
+<p>
  <dtml-in "REQUEST.get('pagesStartingWith'+x_sequence_item,[])" sort=Title prefix=y>
  <a href="&dtml-id;" style="background-color:&dtml-issueColour;"><dtml-var "formatWikiname(Title)"></a><br>
  </dtml-in>
 </dtml-in>
-
 </dtml-let>
