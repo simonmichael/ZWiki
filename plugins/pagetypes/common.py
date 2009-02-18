@@ -118,7 +118,6 @@ class PageTypeBase:
 
     def preRenderMessage(self,page,utfmsg):
         t = page.tounicode(utfmsg.get_payload())
-        t = self.obfuscateEmailAddresses(page,t)
         t = self.renderCitationsIn(page,t)
         t = self.addCommentHeadingTo(page,t,utfmsg)
         return t
