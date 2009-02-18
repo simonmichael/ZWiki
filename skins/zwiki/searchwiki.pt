@@ -11,9 +11,7 @@
       <metal:macro metal:use-macro="here/macros/wikiheader" />
       <h1 i18n:translate="">Search this wiki</h1>
       <div class="formcontent"
-           tal:content="structure python:here.talsafe(
-                        here.getSkinTemplate('SearchPage')(here,request))">
-        content goes here..
+           tal:content="structure python:here.talsafe(here.getSkinTemplate('SearchWiki')(here,request))">
       </div>
     </div>
   </body>

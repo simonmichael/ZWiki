@@ -248,7 +248,7 @@ for s in os.listdir(abszwikipath('skins')):
         # helper dtml methods
         'Index',
         'RecentChanges',
-        'SearchPage',
+        'SearchWiki',
         'UserOptions',
         'WikiStats',
         'subtopics_outline',
