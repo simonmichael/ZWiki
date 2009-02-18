@@ -210,7 +210,7 @@ for s in os.listdir(abszwikipath('skins')):
         'diffform',
         'editform',
         'history',
-        'indexview',
+        'wikiindex',
         'recentchanges',
         'searchwiki',
         'helppage',
