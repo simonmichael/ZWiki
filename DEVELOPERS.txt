@@ -339,3 +339,10 @@ Imports are usually at the start of the file and in three groups: python,
 then zope, then zwiki imports.
 
 
+Testing
+-------
+We currently use pyunit for unit testing and a bit of doctest + mechanize
+for functional testing.
+
+This document has useful guidelines for improving our unit tests:
+http://palladion.com/home/tseaver/obzervationz/2008/unit_testing_notes-20080724
