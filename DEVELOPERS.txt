@@ -344,5 +344,16 @@ Testing
 We currently use pyunit for unit testing and a bit of doctest + mechanize
 for functional testing.
 
-This document has useful guidelines for improving our unit tests:
 http://palladion.com/home/tseaver/obzervationz/2008/unit_testing_notes-20080724
+has useful guidelines for improving our unit tests. Excerpt:
+
+ Tests which conform to these rules and guidelines have the following properties:
+
+ - The tests are straightforward to write.
+ - The tests yield excellent coverage of the AUT.
+ - They reward the developer through predictable feedback (e.g., the growing list of dots for passed tests).
+ - They run quickly, and thus encourage the developer to run them frequently.
+ - Expected failures confirm missing / incomplete implementations.
+ - Unexpected failures are easy to diagnose and repair.
+ - When used as regression tests, failures help pinpoint the exact source of the regression (a changed contract, for instance, or an underspecified constraint).
+ - Writing such tests clarifies thinking about the contracts of the code they test, as well as the dependencies of that code.
