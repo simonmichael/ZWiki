@@ -7,12 +7,11 @@
     </metal:block>
   </head>
   <body>
-    <div metal:fill-slot="main" tal:omit-tag="">
-      <metal:macro metal:use-macro="here/macros/accesskeys" />
+    <div metal:fill-slot="main">
+      <metal:macro metal:use-macro="here/macros/wikiheader" />
       <h1 i18n:translate="">Filter issues</h1>
       <div class="formcontent"
-           tal:content="structure python:here.talsafe(
-                        here.getSkinTemplate('FilterIssues')(here,request))" />
+           tal:content="structure python:here.talsafe(here.getSkinTemplate('FilterIssues')(here,request))" />
     </div>
   </body>
 </html>
