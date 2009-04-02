@@ -353,7 +353,6 @@ class PluginTracker:
                     raise 'Unauthorized', (_('You are not authorized to rename this ZWiki Page.'))
                 self.rename(newpagename, updatebacklinks=1, sendmail=0,
                             REQUEST=REQUEST)
- 
         if category:
             old = getattr(self,'category','')
             if category != old:
@@ -375,26 +374,13 @@ class PluginTracker:
                 if not self.checkPermission(Permissions.Edit, self):
                     raise 'Unauthorized', (_('You are not authorized to edit this ZWiki Page.'))
                 self.manage_changeProperties(status=status)
-        if text:
-            comment += '\n' + text
-
+        if text: comment += '\n' + text
         if comment:
-            if not self.checkPermission(Permissions.Comment, self):
-                raise 'Unauthorized', (_('You are not authorized to comment on this ZWiki Page.'))
-            # there was a change, note it on the page and via mail
-            # fine detail: don't say (property change) if there wasn't
+            # there was a change, note it as a page comment
             subject = ''
             if log: subject += log
-            #if '=>' in comment: subject += ' (%s)' % _('property change')
-            self.comment(
-                text=comment,
-                subject_heading=subject,
-                REQUEST=REQUEST)
-            # comment takes care of this I believe
-            #self.setLastEditor(REQUEST)
-            #self.reindex_object()
-        if REQUEST:
-            REQUEST.RESPONSE.redirect(self.pageUrl())
+            self.comment(text=comment,subject_heading=subject,REQUEST=REQUEST)
+        if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl())
 
     def category_index(self):
         """helper method to facilitate sorting catalog results"""
