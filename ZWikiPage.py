@@ -23,7 +23,7 @@ from App.Common import rfc1123_date
 from DateTime import DateTime
 from Globals import InitializeClass
 from OFS.DTMLDocument import DTMLDocument
-from webdav.WriteLockInterface import WriteLockInterface
+from webdav.interfaces import IWriteLock
 
 import Permissions
 from Defaults import AUTO_UPGRADE, IDS_TO_AVOID, \
@@ -100,7 +100,7 @@ class ZWikiPage(
     wiki-building, email, issue tracking, etc.  Mixins are used to
     organize functionality into modules.
     """
-    __implements__ = (WriteLockInterface, PageCMFSupport.__implements__)
+    __implements__ = (IWriteLock, PageCMFSupport.__implements__)
     security = ClassSecurityInfo()
     security.declareObjectProtected('View')
     security.declareProtected(Permissions.Edit, 'revert')
