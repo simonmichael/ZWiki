@@ -23,8 +23,6 @@ from App.Common import rfc1123_date
 from DateTime import DateTime
 from Globals import InitializeClass
 from OFS.DTMLDocument import DTMLDocument
-from webdav.interfaces import IWriteLock
-
 import Permissions
 from Defaults import AUTO_UPGRADE, IDS_TO_AVOID, \
      PAGE_METATYPE, LINK_TO_ALL_CATALOGED, LINK_TO_ALL_OBJECTS, \
@@ -38,7 +36,7 @@ from Regexps import url, bracketedexpr, singlebracketedexpr, \
      spaceandlowerexpr, dtmlorsgmlexpr, wikinamewords, hashnumberexpr, \
      bracketmatch
 from Utils import PageUtils, BLATHER, DateTimeSyntaxError, isunicode, \
-     safe_hasattr
+     safe_hasattr, ZOPEVERSION
 from Views import PageViews
 from OutlineSupport import PageOutlineSupport
 from Diff import PageDiffSupport # XXX to be replaced by..
@@ -100,7 +98,13 @@ class ZWikiPage(
     wiki-building, email, issue tracking, etc.  Mixins are used to
     organize functionality into modules.
     """
-    __implements__ = (IWriteLock, PageCMFSupport.__implements__)
+    if ZOPEVERSION < (2,12):
+        from webdav.WriteLockInterface import WriteLockInterface
+        __implements__ = (WriteLockInterface, PageCMFSupport.__implements__)
+    else:
+        from webdav.interfaces import IWriteLock
+        __implements__ = (IWriteLock, PageCMFSupport.__implements__)
+
     security = ClassSecurityInfo()
     security.declareObjectProtected('View')
     security.declareProtected(Permissions.Edit, 'revert')
