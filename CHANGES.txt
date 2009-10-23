@@ -1,63 +1,67 @@
-CHANGES
-#######
+Release notes
+#############
 
-Zwiki 2.0a1 2009/02/xx
+Zwiki 2.0b1 2009/10/xx
 ======================
+This is the first release of Zwiki 2, formerly the ZWiki-unstable branch.
+To recap, on 2009/01/30 I renamed the old Zwiki stable and unstable repos,
+and we now have:
 
-First public release of Zwiki 2, formerly the ZWiki-unstable branch.  For
-more detail of the changes landed since the 0.61 release, see
-http://zwiki.org/ZwikiOneAndTwoDifferences .
+  * http://zwiki.org/repos/ZWiki1 <- the classic Zwiki 0.x branch, aka
+    Zwiki 1. This version stores text as utf-8 and supports Zope versions
+    up to 2.11. Barring some unusual need, this will receive no further
+    development. At the time of writing the last release in this line is
+    Zwiki 0.61.0, 2008/10/24.
 
-The main new thing is that we now work internally with unicode rather than
-utf8-encoded text; we believe this will help resolve the unicode errors
-which tend to creep in with non-ascii wikis, and allow accurate searching
-of non-ascii content (with suitable catalog configuration.)  Thanks to
-Vienna University of Business and Economics for funding a large part of
-this work.
+  * http://zwiki.org/repos/ZWiki <- the new main line of Zwiki
+    development, aka Zwiki 2. This version stores text as unicode,
+    reorganizes skins, drops some non-essential features and adds support
+    for Zope 2.12 and python 2.6. Older zopes are still supported, at least
+    in the 2.0 release.
 
-This alpha release is to get people other than myself using the new code
-and to check that upgrades just work. Please try it and report back,
-contact sm on #zwiki for support if needed.
+The biggest change in Zwiki 2 is that we now work internally with unicode
+rather than utf8-encoded text. Encoding-related errors in non-ascii wikis
+are hard to prevent; this change will help us stamp them out. Also this
+will permit accurate searching of non-ascii content. Thanks to
+Wirtschaftsuniversität Wien (Vienna University of Economics and Business)
+and Willi Langenberger for funding part of this work. There has also been
+a lot of skins and code cleanup, with more to come.
 
 **Upgrade notes**
 
-If you were previously running Zwiki 1 (a Zwiki 0.x release), you might
-notice some new encoding-related errors with certain wiki operations,
-especially if you have non-ascii content. Eg try doing a search for some
-non-ascii text.
+With an existing wiki containing non-ascii wiki content, you will probably
+notice new encoding-related errors. (Eg try searching for some non-ascii
+text.) In this case you need to convert all wiki content from utf-8 to
+unicode. To do this, visit SOMEPAGE/upgradeAll as manager.
 
-If you do notice problems, visit SOMEPAGE/upgradeAll as manager to convert
-all your pages from utf-8 to unicode (and convert your wiki catalog's
-indexes to unicode-aware ones.)  After it completes successfully, the
-errors should be gone.  If not, you might need to run upgradeAll a second
-time.  If errors persist, or these notes don't match your experience,
-please report so we can investigate.
+As usual, if you have a lot of content this can take several minutes; set
+your logging level to BLATHER (in zope.conf) and watch the event.log to
+see progress and be sure it completes successfully.
 
-Note upgradeAll can take a while if you have many big pages (15 minutes
-for zwiki.org) and you can watch the progress in event.log if you enable
-BLATHER logging.
+Afterward, most encoding-related errors should be gone (try the search
+again).  If not: first try upgradeAll a second time, then please report
+(eg to sm on #zwiki) for investigation.
+
+Also, if you have custom skin templates they will likely need updating
+(see eg the note below about lastEditor). It's probably best to move them
+out of the way and deal with that later, or re-apply your customisations
+to the latest templates.
 
 **Browsing**
 
   * show a "created" timestamp at top right, like Michael Haubenwallner's
     on the zope3 wiki
 
-  * css fixes, eg issue 1414 (betabug)
+  * 1414 - indentation was not displayed in literal code blocks (betabug)
+
+  * minor css fixes (betabug)
+
+  * Fixed the display of non-ascii search expressions on the search form (betabug)
 
 **Editing**
 
-  * 517 - more robust and careful updating of backlinks when a page is
-    renamed.  This will now do all kind of nice stuff, like respect the
-    link style that the link on the page previously had (betabug)
-
-  * 939 - suppress confusing "e" accesskey in editform. (betabug)
-
-  * 1361 - determine permissions on editform() at runtime.  The editform()
-    form should be displayed also in the case that the user has "Add"
-    rights on the wiki, but no "Edit" rights on the page he started from.
-    (E.g. going through the "add" form on a restricted page, then clicking
-    on the "Preview" button raised Unauthorized before this fix.)
-    (betabug)
+  * 517 - more robust and careful updating of backlinks during page renames.
+    (Sascha Welter)
 
   * 1171 - more than one double parenthesis link in the same paragraph
     works now. (betabug)
@@ -66,9 +70,8 @@ BLATHER logging.
 
 **Mail**
 
-  * use a page method instead of an external method for mailin, so there's
-    one less thing to configure. Have /etc/aliases post incoming mail to
-    SOMEPAGEURL/mailin (any page will do).
+  * mail-in no longer requires configuring an external method.
+    Have /etc/aliases post incoming mail to SOMEPAGEURL/mailin.
 
   * when there are multiple mailhosts, choose the one with alphabetically
     first id This lets you use a zope 2.11 "MailHost" when you have a
@@ -79,38 +82,40 @@ BLATHER logging.
 
 **General**
 
-  * UnicodeGeddon mega-patch. A big set of changes switching to unicode
-    for internal text handling. This collapses all patches from the
-    unicode branch, their conflict resolutions, and some subsequent
-    unicode patches into one mega-patch which should avoid the darcs
-    conflict problem. Noteworthy details:
+  * Unicodegeddon! A big set of changes switching to unicode for internal
+    text handling. Many were committed as a single mega-patch from the the
+    early unicode branch. Noteworthy details:
 
-      * use last editor accessors in templates (if you have customised
-        RecentChanges, editform, history templates they may need
-        upgrading)
+    * for proper operation, wiki content should be converted from utf-8
+      to unicode, a one-way upgrade step. See upgrade notes above.
 
-      * upgradeAll (or fixAllPagesEncoding) converts a non-unicode wiki to
-        unicode (a non-reversible upgrade step)
+    * skin templates should use (lastEditor(), lastEditTime() etc.)
+      methods, not properties. If you have customised editform, history,
+      or RecentChanges, they may need to be updated accordingly.
+      Also catalog page brains now contain lastEditor, not last_editor.
 
-  * Added a simple unicode-aware splitter, based on code by Stefan
-    H. Holek.  The following code is mostly taken from the UnicodeLexicon
-    product by Stefan H. Holek (ZPL) which can be found at:
-    http://www.zope.org/Members/shh/UnicodeLexicon Many thanks to you
-    Stefan!  We are using this here, so people with minimal needs don't
-    have to install extra products. If you need more than this install a
-    more specific splitter (e.g. a CJK splitter) create a new "ZCTextIndex
-    Lexicon" and recreate the "SearchableText" and "Title" indexes with
-    your new lexicon. (betabug)
+    * we use unicode-aware ZCTextIndexes in the wiki catalog by
+      default. SOMEPAGE/upgradeAll (or /setupCatalog) upgrades old
+      TextIndex-based indexes if present.  (betabug)
 
-  * Use unicode-aware ZCTextIndexes in the wiki catalog by default. Also,
-    setupCatalog upgrades old TextIndex-based indexes if present.
-    (betabug)
+    * we use a simple unicode-aware splitter, based on code by Stefan
+      Holek.  The following code is mostly taken from the
+      UnicodeLexicon product by Stefan H. Holek (ZPL) which can be found
+      at: http://www.zope.org/Members/shh/UnicodeLexicon . Many thanks to
+      you Stefan!  We are using this here, so people with minimal needs
+      don't have to install extra products. If you need more than this
+      install a more specific splitter (e.g. a CJK splitter) create a new
+      "ZCTextIndex Lexicon" and recreate the "SearchableText" and "Title"
+      indexes with your new lexicon. (betabug)
 
-  * Many other changes/fixes for unicode support (simon, betabug)
+    * preserve unicode when evaluating DTML (#1411)
 
-  * Skin cleanups mega-patch. Rearrange templates, enable nav links and
-    access keys in more places, skin machinery cleanups and basic support
-    for alternate filesystem skins. Noteworthy details:
+    * Many other unicode-related changes/fixes (simon, betabug)
+
+  * Skin cleanups: rearrange templates, provide nav links and access keys
+    more consistently, skin machinerys, basic support for alternate
+    filesystem skins. Many of these were committed as a single mega-patch.
+    Noteworthy details:
 
       * more css ids
 
@@ -132,51 +137,27 @@ BLATHER logging.
       * some skin machinery cleanup and basic support for alternate
         filesystem skins, selectable by "skin" property or request var
 
+      * 939 - suppress "e" access key when already in edit form. (betabug)
+
+      * 1361 - check permission for the edit form more carefully; the edit
+        form should be viewable also in the case that the user has "Add"
+        rights on the wiki. E.g. going through the "add" form on a
+        restricted page, then clicking on the "Preview" button raised
+        Unauthorized before this fix.  (betabug)
+
   * add /index as an alias for the /index_object page method, drop /updateCatalog
 
   * catalog search results now contain lastEditor, not last_editor
 
-  * tests & code cleanups (betabug, simon)
+  * more tests (simon, betabug)
 
-
-Zwiki 1.0 2009/02/xx
-====================
-::
-
-  _        ___    _
- / |      / _ \  | |
- | |     | | | | | |
- | |  _  | |_| | |_|
- |_| (_)  \___/  (_)
-
-Yes, we finally made 1.0. Break out the champagne!  This is the stable
-0.61 code re-released with a new version number for clarity. No further
-work is planned on this branch, but we aren't stopping here; development
-continues with Zwiki 2.0.
-
-
-stable/unstable branches become Zwiki 1, Zwiki 2 - 2009/01/30
-=============================================================
-I have repurposed the Zwiki stable and unstable repos and updated
-FrontPage and DarcsHowto. We now have
-
-  * http://zwiki.org/repos/ZWiki1 <- the classic 0.x branch, formerly
-    stable branch, which I dub "Zwiki 1". This is hereby mothballed unless
-    there is some strong reason for another release in this line.
-
-  * http://zwiki.org/repos/ZWiki <- the new main line of Zwiki
-    development, formerly unstable branch, to be known henceforth as
-    "Zwiki 2". This is the unicode-inside, cleaned-up-skins code, and this
-    is where we will focus our effort going forward. Developers, please
-    get this repo (or use your existing unstable repo, but use this new
-    url).
-
-I hope this will simplify things and help us create some more cool stuff!
+  * code cleanups, documentation (simon)
 
 
 Zwiki 0.61.0 2008/10/24
 =======================
-(This and previous releases were made from the Zwiki 1 branch.)
+This and previous releases were made from the Zwiki 1 branch, formerly
+known as Zwiki-stable.
 
 A catch-up release with various bugfixes, code cleanups, and newer
 translations from launchpad.  You'll want this if you use Plone 3.x, to
