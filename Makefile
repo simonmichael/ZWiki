@@ -346,12 +346,3 @@ summarize:
 
 summaryhtml:
 	pdftohtml -c -noframes SUMMARY.pdf SUMMARY.html
-
-# announce commits on #zwiki
-runcommitbot:
-	rss2irc irc.freenode.net 6667 '#zwiki' zwikicommitbot 'http://joyful.com/darcsweb/darcsweb.cgi?r=ZWiki;a=rss' '' 1
-
-# announce new zwiki.org pages on #zwiki
-runpagebot:
-	rss2irc irc.freenode.net 6667 '#zwiki' zwikipagebot 'http://zwiki.org/FrontPage/pages_rss' '' 1
-
