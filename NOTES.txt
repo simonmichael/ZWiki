@@ -20,7 +20,7 @@ Traceback (innermost last):
 ImportError: No module named pagetypes.stx
 
 ** UnicodeEncodeError in SplitterFunc
-2009-02-17T15:56:14 BLATHER ZWiki failed to index KCRWPlaylistProofOfConceptRequirement 
+2009-02-17T15:56:14 BLATHER ZWiki failed to index KCRWPlaylistProofOfConceptRequirement
  Traceback (most recent call last):
   File "/zope2/Products/ZWiki/Catalog.py", line 112, in index_object
     self.catalog().catalog_object(self,self.url(),idxs)
@@ -125,6 +125,7 @@ TypeError: Can't pickle objects in acquisition wrappers.
 *** cleanup, simplify, make easy and routine
 *** test commits
 ** VIEWS AND SKINS
+*** style for preview: http://phrogz.net/CSS/HowToDevelopWithCSS.html
 *** cleanup, simplify, make custom skinning easy
 ** I18N
 * PROCESS
@@ -152,6 +153,40 @@ use ruby and haskell
 hosting stats & cost reporting
 * DOCS
 ** testimonials
+*** call http://thread.gmane.org/gmane.comp.web.zope.general/61599
+From: Simon Michael <simon@...>
+Subject: calling satisfied Zwiki users
+Newsgroups: gmane.comp.web.zope.general, gmane.comp.web.zope.plone.user
+Date: 2009-01-28 23:11:06 GMT (4 weeks, 2 days, 4 hours and 15 minutes ago)
+
+Forwarding this to the Zwiki and ex-Zwiki diaspora. Thanks all!
+
+-Simon
+
+On Jan 28, 2009, at 3:00 PM, Simon Michael wrote:
+
+Marketing.. sure, why not. New Zwiki users are still showing up and a
+little more marketing wouldn't hurt.
+
+I think some of us enjoy using Zwiki and I've thought about collecting
+some testimonials/quotes. I know when I see a project that has
+realistic testimonials from happy users, that really helps motivate me
+to try it out.
+
+I don't have much sense of how large/active/plugged in to this page
+the Zwiki-using community is, but if you are reading this, are happy
+with the software and can write a short testimonial, please send it.
+Don't wait, just hit reply now! :)
+
+Testimonials are like a micro-review, typically a short quote. (Longer
+reviews are of course welcome too!) They should come from your real
+experience with Zwiki, and be honest (negative reviews are also
+useful.) Include the name you'd like to appear with the quote; the
+strongest testimonials include a real full name and organization. You
+might mention whether you are using Zwiki with or without Plone. If I
+can collect enough positive ones, I'll start rotating them on the
+zwiki.org home page.
+
 *** John Maxwell
 We've been using ZWiki as our general purpose web platform for five years
 now; its brilliant blend of simplicity and malleability means we've been
@@ -181,16 +216,68 @@ fredericksburg.com
 The Free Lance-Star Newspaper
 Fredericksburg, Virginia - birthplace of Zope
 
+*** Ed Leafe
+It was brain-dead easy to set up, and it has been working well. I've added
+a couple of custom formatting things such as <pycode> tags that use
+py2html to render code, but otherwise it's been great. Thanks for your
+work!
 *** Willi Langenberger
+Uh, oh, marketing. I think i'm very bad in it. And i fear my english
+isnt enough. However, im fine if you write one! Here are some
+datapoints:
+
+**** I'm the head of the administrative applications section of the it
+ department of the Vienna University of Economics and Business.
+
+   http://www.wu-wien.ac.at/zid/information/abt/vwa
+   http://www.wu-wien.ac.at/zid/information/abt/vwa/ma#vw
+
+**** My section has 15 employees and makes the software development for
+ the university administration.
+
+**** Our section uses Zope since 2002 and Zwiki since 2004.
+
+**** We use ZWiki as our primary development and administration
+ documentation system. Even most of the user documentation is in
+ ZWiki.
+
+**** currently there are 750 wiki pages in it.
+
+Let me know, if you have any question about it!
+*** Kent Tenney
+TWIMC,
+
+In Aug. of 2002 I was involved in the creation of a computer recycling project
+and had the good fortune to select Zwiki as the repository of
+information about Longrun
+http://longrun.zwiki.org/TheLongrunStory
+
+Since it was created in 2002, the wiki has been moved from isp to localhost, to
+isp, to localhost, and now to Zwiki's hosting service. There were 59 releases
+of the Zwiki software over this time period.
+
+It has gone through periods of heavy use and complete neglect, there are
+currently ~1000 pages of stuff.
+
+Throughout it's life, Simon has provided the assistance required to keep the
+contents safe and sound. It is truly wonderful (and rare) to have this
+degree of continuity and stability.
+
+In the past I have done some programming to integrate Zwiki with other
+software tools, and will be revisiting that soon. Zwiki has so many features,
+such a nice API, and such good support, it will be fun.
+
+Thanks Simon.
+
 *** Wu
 *** jham
 *** rdz
 *** tessier
 *** Vejeta
-*** 
-*** 
-*** 
-*** 
+***
+***
+***
+***
 ** release notes template
 Zwiki 2.x.x 2009/xx/xx
 =======================
