@@ -210,7 +210,7 @@ version:
 
 releasetag:
 	@echo tagging release-$(VERSION)
-	darcs tag --checkpoint -m release-$(VERSION)
+	darcs tag release-$(VERSION)
 
 # save a release tarball in releases
 tarball: clean
