@@ -3,7 +3,7 @@
 __doc__="""
 ZWiki product
 """
-__version__='2.0a1'
+__version__='2.0b1'
 
 import re, os.path, string, urllib
 
