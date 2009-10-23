@@ -6,7 +6,7 @@ from string import join, split, strip
 from types import *
 
 import DocumentTemplate
-from AccessControl import getSecurityManager, ClassSecurityInfo
+from AccessControl import getSecurityManager, ClassSecurityInfo, Unauthorized
 from Globals import InitializeClass, package_home
 
 from Products.ZWiki.plugins import registerPlugin
@@ -350,7 +350,7 @@ class PluginTracker:
                 comment += "Name: '%s' => '%s' \n" % (self.pageName(),
                                                       newpagename)
                 if not self.checkPermission(Permissions.Rename, self):
-                    raise 'Unauthorized', (_('You are not authorized to rename this ZWiki Page.'))
+                    raise Unauthorized, (_('You are not authorized to rename this ZWiki Page.'))
                 self.rename(newpagename, updatebacklinks=1, sendmail=0,
                             REQUEST=REQUEST)
         if category:
@@ -358,21 +358,21 @@ class PluginTracker:
             if category != old:
                 comment += "Category: %s => %s \n" % (old,category)
                 if not self.checkPermission(Permissions.Edit, self):
-                    raise 'Unauthorized', (_('You are not authorized to edit this ZWiki Page.'))
+                    raise Unauthorized, (_('You are not authorized to edit this ZWiki Page.'))
                 self.manage_changeProperties(category=category)
         if severity:
             old = getattr(self,'severity','')
             if severity != old:
                 comment += "Severity: %s => %s \n" % (old,severity)
                 if not self.checkPermission(Permissions.Edit, self):
-                    raise 'Unauthorized', (_('You are not authorized to edit this ZWiki Page.'))
+                    raise Unauthorized, (_('You are not authorized to edit this ZWiki Page.'))
                 self.manage_changeProperties(severity=severity)
         if status:
             old = getattr(self,'status','')
             if status != old:
                 comment += "Status: %s => %s \n" % (old,status)
                 if not self.checkPermission(Permissions.Edit, self):
-                    raise 'Unauthorized', (_('You are not authorized to edit this ZWiki Page.'))
+                    raise Unauthorized, (_('You are not authorized to edit this ZWiki Page.'))
                 self.manage_changeProperties(status=status)
         if text: comment += '\n' + text
         if comment:

@@ -89,7 +89,7 @@ from __future__ import nested_scopes
 import os
 
 from App.Common import rfc1123_date
-from AccessControl import getSecurityManager, ClassSecurityInfo
+from AccessControl import getSecurityManager, ClassSecurityInfo, Unauthorized
 from OFS.Image import File
 from Globals import InitializeClass, MessageDialog
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -569,7 +569,7 @@ class SkinViews:
         which case page creation and page editing forms are different.
         """
         if not self.checkPermission(Permissions.Add, self.folder()):
-            raise 'Unauthorized', (
+            raise Unauthorized, (
                 _('You are not authorized to add pages in this wiki.'))
         if not self.checkSufficientId(REQUEST):
             return self.denied(
@@ -702,7 +702,7 @@ class SkinViews:
             action = 'Edit'
             page = self.pageName()
             if not self.checkPermission(Permissions.Edit, self):
-                raise 'Unauthorized', (
+                raise Unauthorized, (
                     _('You are not authorized to edit pages in this wiki.'))
             text = self.read()
         elif self.pageWithFuzzyName(page):
@@ -712,7 +712,7 @@ class SkinViews:
             # editing a brand-new page
             action = 'Create'
             if not self.checkPermission(Permissions.Add, self.folder()):
-                raise 'Unauthorized', (
+                raise Unauthorized, (
                     _('You are not authorized to add pages in this wiki.'))
             text = text or ''
 

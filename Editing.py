@@ -13,7 +13,7 @@ from copy import deepcopy
 import os.path
 
 import ZODB # need this for pychecker
-from AccessControl import getSecurityManager, ClassSecurityInfo
+from AccessControl import getSecurityManager, ClassSecurityInfo, Unauthorized
 from App.Common import rfc1123_date
 from DateTime import DateTime
 from Globals import InitializeClass
@@ -86,7 +86,7 @@ class PageEditingSupport:
         - if old revisions with this name exist, takes the next revision number
         """
         if not self.checkPermission(Permissions.Add, self.folder()):
-            raise 'Unauthorized', (
+            raise Unauthorized, (
                 _('You are not authorized to add pages in this wiki.'))
         if not self.checkSufficientId(REQUEST):
             if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl()+'/denied')
@@ -306,7 +306,7 @@ class PageEditingSupport:
     def handleSubtopicsProperty(self,subtopics,REQUEST=None): # -> none ; modifies: self
         if subtopics is None: return
         if not self.checkPermission(Permissions.Reparent, self):
-            raise 'Unauthorized', (
+            raise Unauthorized, (
                 _('You are not authorized to reparent or change subtopics links on this ZWiki Page.'))
         subtopics = int(subtopics or '0')
         self.setSubtopicsPropertyStatus(subtopics,REQUEST)
@@ -314,7 +314,7 @@ class PageEditingSupport:
     def handleEditPageType(self,type,REQUEST=None,log=''):
         if not type or type==self.pageTypeId(): return
         if not self.checkPermission(Permissions.ChangeType,self):
-            raise 'Unauthorized', (_("You are not authorized to change this ZWiki Page's type."))
+            raise Unauthorized, (_("You are not authorized to change this ZWiki Page's type."))
         self.setPageType(type)
         self.preRender(clear_cache=1)
         self.setLastEditor(REQUEST)
@@ -341,7 +341,7 @@ class PageEditingSupport:
         appending = find(new,old)==0
         if not (self.checkPermission(Permissions.Edit,self) or
                 (appending and self.checkPermission(Permissions.Comment,self))):
-            raise 'Unauthorized', (
+            raise Unauthorized, (
                 _('You are not authorized to edit this ZWiki Page.'))
         self.checkForSpam(addedtext(old, new))
         # do it
@@ -362,10 +362,10 @@ class PageEditingSupport:
         if not text or not re.match('(?m)^DeleteMe', text):
             return 0
         if not self.checkPermission(Permissions.Edit, self):
-            raise 'Unauthorized', (
+            raise Unauthorized, (
                 _('You are not authorized to edit this ZWiki Page.'))
         if not self.checkPermission(Permissions.Delete, self):
-            raise 'Unauthorized', (
+            raise Unauthorized, (
                 _('You are not authorized to delete this ZWiki Page.'))
         self.setLastLog(log)
         self.delete(REQUEST=REQUEST)
@@ -414,7 +414,7 @@ class PageEditingSupport:
         if not old: return
         reparenting = self.getParents() != old.getParents()
         if reparenting and not self.checkPermission(Permissions.Reparent, self):
-            raise 'Unauthorized', (
+            raise Unauthorized, (
                 _('You are not authorized to reparent this ZWiki Page.'))
         # do it
         self.saveRevision()
@@ -626,10 +626,10 @@ class PageEditingSupport:
         """Raise an exception if the current user does not have permission
         to upload to this wiki page."""
         if not (self.checkPermission(Permissions.Upload,self.uploadFolder())):
-            raise 'Unauthorized', (_('You are not authorized to upload files here.'))
+            raise Unauthorized, (_('You are not authorized to upload files here.'))
         if not (self.checkPermission(Permissions.Edit, self) or
                 self.checkPermission(Permissions.Comment, self)):
-            raise 'Unauthorized', (_('You are not authorized to add a link on this ZWiki Page.'))
+            raise Unauthorized, (_('You are not authorized to add a link on this ZWiki Page.'))
 
     def requestHasFile(self,r):
         return (r and safe_hasattr(r,'file') and safe_hasattr(r.file,'filename') and r.file.filename)
@@ -645,7 +645,7 @@ class PageEditingSupport:
         if not self.requestHasFile(REQUEST): return
         self.checkUploadPermissions()
         newid = self._addFileFromRequest(REQUEST,log=log)
-        if not newid: raise 'Error', (_('Sorry, file creation failed for some reason.'))
+        if not newid: raise Exception, (_('Sorry, file creation failed for some reason.'))
         self._sendUploadNotification(newid,REQUEST)
 
     def _addFileFromRequest(self,REQUEST,log=''):

@@ -5,7 +5,7 @@ import os, re, os.path
 from string import join, split, strip
 from time import clock
 
-from AccessControl import getSecurityManager, ClassSecurityInfo
+from AccessControl import getSecurityManager, ClassSecurityInfo, Unauthorized
 from Globals import package_home, InitializeClass
 from OFS.CopySupport import CopyError
 from OFS.DTMLMethod import DTMLMethod
@@ -56,7 +56,7 @@ class PageAdminSupport:
         """
         if not self.checkPermission(Permissions.manage_properties,
                                      self.folder()):
-            raise 'Unauthorized', (
+            raise Unauthorized, (
              _('You are not authorized to upgrade all pages.') + \
              _('(folder -> Manage properties)'))
         

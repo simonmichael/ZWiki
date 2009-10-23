@@ -421,6 +421,8 @@ class ZWikiPage(
         """
         RESPONSE = getattr(REQUEST,'RESPONSE',None)
         if not RESPONSE:return False
+        RESPONSE.setHeader('Cache-Control', 
+            'max-age=86400, s-maxage=86400, public, must-revalidate, proxy-revalidate')
         # do we handle things at all?
         if not getattr(self, 'conditional_http_get', CONDITIONAL_HTTP_GET):
             return False
@@ -463,8 +465,7 @@ class ZWikiPage(
             except DateTimeSyntaxError: mod_since=None
             if mod_since is not None:
                 if last_mod > 0 and last_mod <= mod_since:
-                    RESPONSE.setHeader('Last-Modified',
-                                       rfc1123_date(last_mod))
+                    RESPONSE.setHeader('Last-Modified',rfc1123_date(last_mod))
                     RESPONSE.setStatus(304)
                     return True
         RESPONSE.setHeader('Last-Modified', rfc1123_date(last_mod))

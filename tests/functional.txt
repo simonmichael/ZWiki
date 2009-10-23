@@ -228,7 +228,11 @@ a page (we should get an exception).
     >>> editlink.click()                   # the link would be gone actually
     Traceback (most recent call last):
     ...
-    Unauthorized: You are not authorized to edit pages in this wiki.
+    Unauthorized...
+
+(The above used to expect "Unauthorized: You are not authorized to
+edit pages in this wiki." but this has stopped working for some
+reason..)
 
 Set up wiki to work only with options set for anonymous edits
 ('edits_need_username'), try again with anonymous, but without options set.

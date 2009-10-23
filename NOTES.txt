@@ -1,9 +1,61 @@
 Zwiki project and task notes  -*- org -*-
 ############################
 
-* SITE
-** unresolved event log errors
-*** TypeError: revision() takes exactly 2 arguments (1 given)
+* ISSUES
+** ImportError: No module named pagetypes.stx when pasting
+2009-02-17T21:44:09 ERROR Zope.SiteErrorLog http://zope2.joyful.com/backup/manage_pasteObjects
+Traceback (innermost last):
+  Module ZPublisher.Publish, line 119, in publish
+  Module ZPublisher.mapply, line 88, in mapply
+  Module ZPublisher.Publish, line 42, in call_object
+  Module OFS.CopySupport, line 220, in manage_pasteObjects
+  Module OFS.CopySupport, line 576, in _getCopy
+  Module ZODB.ExportImport, line 92, in importFile
+  Module transaction._transaction, line 256, in savepoint
+  Module transaction._transaction, line 253, in savepoint
+  Module transaction._transaction, line 642, in __init__
+  Module ZODB.Connection, line 1091, in savepoint
+  Module ZODB.Connection, line 550, in _commit
+  Module ZODB.ExportImport, line 178, in _importDuringCommit
+ImportError: No module named pagetypes.stx
+
+** UnicodeEncodeError in SplitterFunc
+2009-02-17T15:56:14 BLATHER ZWiki failed to index KCRWPlaylistProofOfConceptRequirement 
+ Traceback (most recent call last):
+  File "/zope2/Products/ZWiki/Catalog.py", line 112, in index_object
+    self.catalog().catalog_object(self,self.url(),idxs)
+  File "/zope-2.11.2/lib/python/Products/ZCatalog/ZCatalog.py", line 536, in catalog_object
+    update_metadata=update_metadata)
+  File "/zope-2.11.2/lib/python/Products/ZCatalog/Catalog.py", line 360, in catalogObject
+    blah = x.index_object(index, object, threshold)
+  File "/zope-2.11.2/lib/python/Products/PluginIndexes/TextIndex/TextIndex.py", line 313, in index_object
+    for word in list(splitter(source,encoding=encoding)):
+  File "/zope-2.11.2/lib/python/Products/PluginIndexes/TextIndex/Lexicon.py", line 167, in Splitter
+    return self.SplitterFunc(astring, words)
+UnicodeEncodeError: 'ascii' codec can't encode character u'\u2019' in position 1034: ordinal not in range(128)
+
+happens with production but not test server. After fiddling, recreating catalog and a restart, doesn't happen on production.
+
+** empty recent changes in non-upgradeAll-ed wikis
+
+** old favourite: IndexError: tuple index out of range while rendering an error message
+Traceback (most recent call last):
+  File "/zope-2.11.2/lib/python/OFS/SimpleItem.py", line 225, in raise_standardErrorMessage
+    v = s(client, REQUEST, **kwargs)
+  File "/zope-2.11.2/lib/python/OFS/DTMLMethod.py", line 144, in __call__
+    r=apply(HTML.__call__, (self, client, REQUEST), kw)
+  File "/zope-2.11.2/lib/python/DocumentTemplate/DT_String.py", line 476, in __call__
+    try: result = render_blocks(self._v_blocks, md)
+  File "/zope-2.11.2/lib/python/DocumentTemplate/DT_Let.py", line 75, in render
+    else: d[name]=expr(md)
+  File "/zope-2.11.2/lib/python/DocumentTemplate/DT_Util.py", line 196, in eval
+    return eval(code, d)
+  File "<string>", line 1, in <expression>
+  File "/zope-2.11.2/lib/python/AccessControl/ZopeGuards.py", line 67, in guarded_getitem
+    v = object[index]
+IndexError: tuple index out of range
+
+** TypeError: revision() takes exactly 2 arguments (1 given)
 2009-02-14T11:56:52 ERROR Zope.SiteErrorLog http://zwiki.org/FrontPage/manage_change_history_page
 Traceback (innermost last):
   Module ZPublisher.Publish, line 119, in publish
@@ -15,14 +67,14 @@ Traceback (innermost last):
   Module DocumentTemplate.DT_In, line 703, in renderwob
 TypeError: revision() takes exactly 2 arguments (1 given)
 
-*** NotImplementedError
+** NotImplementedError
 2009-02-14T11:57:14 ERROR txn.1099901264 Failed to abort object: TransactionalUndo oid=<object object at 0x2ac16ca050a0>
 Traceback (most recent call last):
   File "/zope-2.11.2/lib/python/transaction/_transaction.py", line 549, in abort
   File "/zope-2.11.2/lib/python/ZODB/DB.py", line 809, in abort
 NotImplementedError
 
-*** AttributeError: 'list' object has no attribute 'decode'
+** AttributeError: 'list' object has no attribute 'decode'
 2009-02-14T11:57:44 ERROR Zope.SiteErrorLog http://zwiki.org/IssueTracker
 Traceback (innermost last):
   Module ZPublisher.Publish, line 119, in publish
@@ -45,43 +97,46 @@ Traceback (innermost last):
   Module Products.ZWiki.Utils, line 602, in tounicode
 AttributeError: 'list' object has no attribute 'decode'
 
-*** 
+** 2009-02-17T15:50:26 ERROR Zope.SiteErrorLog http://k.zwiki.org/K/setupCatalog
+Traceback (innermost last):
+  Module ZPublisher.Publish, line 125, in publish
+  Module Zope2.App.startup, line 270, in commit
+  Module transaction._manager, line 93, in commit
+  Module transaction._transaction, line 325, in commit
+  Module transaction._transaction, line 424, in _commitResources
+  Module ZODB.Connection, line 541, in commit
+  Module ZODB.Connection, line 586, in _commit
+  Module ZODB.Connection, line 620, in _store_objects
+  Module ZODB.serialize, line 407, in serialize
+TypeError: Can't pickle objects in acquisition wrappers.
 
-*** 
-
-*** 
-
-*** 
-
-*** 
-
+** 1354 expunge problems
 * PRODUCT
+** unicodegeddon
+*** archive UnicodeGeddon notes from file:~/clients/wuwien/NOTES
 ** stabilisation
 *** resolve issues in zwiki.org event log
-*** test search etc.
-** unicodegeddon
-*** get more upgrade testers
-*** resolve unicode errors in zope3 wiki
-**** set up a test server with latest zwiki
-*** archive UnicodeGeddon notes from file:~/clients/wuwien/NOTES
+*** test upgrading
+**** get more upgrade testers
+*** test search
+*** test expunge
 ** release 1.0 & 2.0a1
-** 1335 fix contents
-** 1330 disappearing contents
-** 1354 expunge problems
-*** zope3/FrontPage - revision is None
-*** zope3/ExplicitNamespaceControlInURLs - no RESPONSE in request afterward
-** I18N
-*** fix translations process
-***** fix wrong zwiki.pot on launchpad
-****** wait for https://translations.launchpad.net/zwiki/trunk/+imports?field.filter_status=NEEDS_REVIEW&field.filter_extension=all
-***** see if launchpad po files get fixed
-****** if not, re-upload
-***** when fixed, download new ones if any
-***** fix rosetta process
 ** TESTS
+*** cleanup, simplify, make easy and routine
+*** test commits
 ** VIEWS AND SKINS
-*** keep cleaning up and simplifying
+*** cleanup, simplify, make custom skinning easy
+** I18N
 * PROCESS
+** fix translations process
+**** fix wrong zwiki.pot on launchpad
+***** wait for https://translations.launchpad.net/zwiki/trunk/+imports?field.filter_status=NEEDS_REVIEW&field.filter_extension=all
+**** see if launchpad po files get fixed
+***** if not, re-upload
+**** when fixed, download new ones if any
+**** fix rosetta process
+** patch review
+*** find a new way to make patches visible, before or after commit
 ** notes
 highlight active contributors, code and docs
 author stats
@@ -95,20 +150,6 @@ CIA or other bot, darcs, issues etc. on irc
 build dev community on darcs, irc & email
 use ruby and haskell
 hosting stats & cost reporting
-** better infrastructure
-*** patch review process
-*** irc notifications
-**** general wiki activity
-***** zwikibot wiki subscriber which reports activity, with filters
-****** local/custom bot - supybot ? lambdabot ?
-***** comments
-***** issue changes
-**** submissions
-***** from PatchDiscussion
-**** commits
-***** from PatchDiscussion
-***** from darcs apply
-***** from CIA
 * DOCS
 ** testimonials
 *** John Maxwell
@@ -140,12 +181,12 @@ fredericksburg.com
 The Free Lance-Star Newspaper
 Fredericksburg, Virginia - birthplace of Zope
 
+*** Willi Langenberger
 *** Wu
 *** jham
 *** rdz
 *** tessier
 *** Vejeta
-*** Willi Langenberger
 *** 
 *** 
 *** 
@@ -175,7 +216,6 @@ First public release of Zwiki 2.
 
 **Translations**
 
-
 ** notes
 clarify division/integration between fs and wiki docs
 publish fs docs online with sphinx(/gitit?)
@@ -188,4 +228,5 @@ profile, speed up, simplify
 good stats.. google analytics ?
 better free wiki signup/marketing/maintenance
 
+** resolve unicode errors in zope3 wiki
 
