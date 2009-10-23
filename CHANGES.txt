@@ -1,23 +1,23 @@
 Release notes
 #############
 
-Zwiki 2.0b1 2009/10/xx
+Zwiki 2.0b1 2009/10/23
 ======================
 This is the first release of Zwiki 2, formerly the ZWiki-unstable branch.
 To recap, on 2009/01/30 I renamed the old Zwiki stable and unstable repos,
 and we now have:
 
-  * http://zwiki.org/repos/ZWiki1 <- the classic Zwiki 0.x branch, aka
-    Zwiki 1. This version stores text as utf-8 and supports Zope versions
-    up to 2.11. Barring some unusual need, this will receive no further
-    development. At the time of writing the last release in this line is
-    Zwiki 0.61.0, 2008/10/24.
+* http://zwiki.org/repos/ZWiki1 - the classic Zwiki 0.x branch, aka
+  Zwiki 1. This version stores text as utf-8 and supports Zope versions
+  up to 2.11. Barring some unusual need, this will receive no further
+  development. At the time of writing the last release in this line is
+  Zwiki 0.61.0, 2008/10/24.
 
-  * http://zwiki.org/repos/ZWiki <- the new main line of Zwiki
-    development, aka Zwiki 2. This version stores text as unicode,
-    reorganizes skins, drops some non-essential features and adds support
-    for Zope 2.12 and python 2.6. Older zopes are still supported, at least
-    in the 2.0 release.
+* http://zwiki.org/repos/ZWiki - the new main line of Zwiki
+  development, aka Zwiki 2. This version stores text as unicode,
+  reorganizes skins, drops some non-essential features and adds support
+  for Zope 2.12 and python 2.6. Older zopes are still supported, at least
+  in the 2.0 release.
 
 The biggest change in Zwiki 2 is that we now work internally with unicode
 rather than utf8-encoded text. Encoding-related errors in non-ascii wikis
