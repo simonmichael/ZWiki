@@ -89,7 +89,7 @@ class PageAdminSupport:
                 get_transaction().commit()
         self.setupDtmlMethods()
         endtime = clock()
-        BLATHER('upgrade complete, %d pages processed in %fs, %f pages/s' \
+        BLATHER('upgrade complete, %d pages processed in %fs, %.1f pages/s' \
                 %(n, endtime-starttime, n/(endtime-starttime)))
 
     # allow extra actions to be added to this method
