@@ -161,23 +161,17 @@ class ArchiveSupport:
     #     r = oldrevs and (oldrevs[-1] + 1) or 1
     #     if self.revisionNumber() != r: self.revision_number = r
 
-    # def saveRevision(self, REQUEST=None):
-    #     """Save a copy of this page as a new revision in the revisions
-    #     folder and increment its revision number.  This has no effect if
-    #     called on a revision object, or a non-ZODB object (such as a
-    #     temporary page object created by plone's portal_factory).
+    def archive(self, REQUEST=None):
+        """Move this page (only, for now) to the archive subfolder.:::
+        This has no effect if called on a page already in the archive
+        folder, or a non-ZODB object (such as a temporary page object
+        created by plone's portal_factory).
+        """
+        def inPortalFactory(self):
+            return self.inCMF() and self.folder().getId() == 'portal_factory'
+        if self.inArchiveFolder() or inPortalFactory(self): return
+        self.ensureArchiveFolder()
 
-    #     NB normally the revision number just increments by 1, but if there
-    #     is already a revision object with that number (which can happen
-    #     from renaming, eg), we first bump this page's revision number to
-    #     the number after all existing revisions.
-    #     """
-    #     def inPortalFactory(self):
-    #         return self.inCMF() and self.folder().getId() == 'portal_factory'
-    #     if self.inRevisionsFolder() or inPortalFactory(self): return
-    #     self.ensureRevisionsFolder()
-    #     self.ensureMyRevisionNumberIsLatest()
-    #     rid = '%s.%d' % (self.getId(), self.revisionNumber())
     #     ob = self._getCopy(self.folder())
     #     ob._setId(rid)
 
