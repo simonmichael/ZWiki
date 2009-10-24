@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 setup(
     name = "Zwiki",
     version = "2.0b1",
-    author = "Simon Michael",
+    author = "Simon Michael & co.",
     author_email = "simon@joyful.com",
     description = "Zwiki, the Zope-based wiki engine.",
     long_description = "Zwiki, the Zope-based wiki engine.",
