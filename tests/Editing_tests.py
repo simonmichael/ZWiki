@@ -29,7 +29,7 @@ def test_rename(self):
     # again, this time with parents and offspring
     self.wiki.NewName.create('NewNameChild')
     self.wiki.NewNameChild.create('NewNameGrandChild')
-    transaction.get().savepoint()
+    transaction.get().savepoint() # ensure a _p_jar attribute
     self.wiki.NewNameChild.rename(pagename='NewNameChildRenamed',REQUEST=req)
     self.assert_(safe_hasattr(self.wiki,'NewNameChildRenamed'))
     self.assert_('NewNameChildRenamed' in self.wiki.NewNameGrandChild.parents)
