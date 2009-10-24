@@ -13,6 +13,8 @@ import Permissions
 from Utils import safe_hasattr, sorted
 import re
 
+def inPortalFactory(self): return self.inCMF() and self.folder().getId() == 'portal_factory'
+
 class ArchiveSupport:
     """
     This mixin provides methods to move pages or groups of pages to and
@@ -25,7 +27,7 @@ class ArchiveSupport:
             self.folder()._setObject('archive',Folder('archive'))
 
     def inArchiveFolder(self):
-        return self.folder().getId() == 'archive'
+        return self.folder().getId() == 'archive' # XXX not robust
 
     def archiveFolder(self):
         """Get the archive subfolder, even called from within it."""
@@ -46,170 +48,33 @@ class ArchiveSupport:
     #     else:
     #         return self.folder()
 
-    # security.declareProtected(Permissions.View, 'revisions')
-    # def revisions(self):
-    #     """
-    #     Get a list of this page's revisions, oldest first.
-        
-    #     A page's revisions are all the page objects with the same root id
-    #     plus a possible dot-number suffix. The one with no suffix is the
-    #     latest revision, kept in the main wiki folder; older revisions
-    #     have a suffix and are kept in the revisions subfolder.
-    #     """
-    #     return self.oldRevisions() + [self.latestRevision()]
-
-    # def latestRevision(self):
-    #     return self.wikiFolder()[self.getIdBase()]
-
-    # def oldRevisions(self):
-    #     f = self.revisionsFolder()
-    #     if not f:
-    #         return []
-    #     else:
-    #         isrev = re.compile(r'%s\.\d+$' % self.getIdBase()).match
-    #         ids = filter(isrev, list(f.objectIds(spec=self.meta_type)))
-    #         # probably in the right order, but let's make sure
-    #         ids.sort(lambda a,b: cmp(int(a.split('.')[1]), int(b.split('.')[1])))
-    #         return [f[id] for id in ids]
-
-    # def getIdBase(self):
-    #     """This page's id with any revision number suffix removed."""
-    #     return re.sub(r'^(.*)\.\d+$', r'\1', self.getId())
-
-    # security.declareProtected(Permissions.View, 'revisionCount')
-    # def revisionCount(self):
-    #     """The number of revisions existing for this page."""
-    #     return len(self.revisions())
-
-    # security.declareProtected(Permissions.View, 'revision')
-    # def revision(self, rev):
-    #     """Get the specified revision of this page object (starting from 1)."""
-    #     if rev:
-    #         # should be no more than one, but you never know
-    #         revs = [r for r in self.revisions() if r.revisionNumber()==rev]
-    #         if revs: return revs[0]
-    #     return None
-
-    # security.declareProtected(Permissions.View, 'previousRevision')
-    # def previousRevision(self):
-    #     """Get the oldest saved revision of this page previous to this one."""
-    #     r = self.previousRevisionNumber()
-    #     if r: return self.revision(r)
-    #     else: return None
-
-    # security.declareProtected(Permissions.View, 'nextRevision')
-    # def nextRevision(self):
-    #     """Get the next saved revision of this page after this one."""
-    #     r = self.nextRevisionNumber()
-    #     if r: return self.revision(r)
-    #     else: return None
-
-    # security.declareProtected(Permissions.View, 'revisionNumber')
-    # def revisionNumber(self):
-    #     """Get this page's revision number."""
-    #     return getattr(self.aq_base,'revision_number',1)
-
-    # def revisionNumberFromId(self):
-    #     m = re.search(r'\.(\d+)$',self.getId())
-    #     if m: return int(m.group(1))
-    #     else: return None
-
-    # def revisionNumbers(self):
-    #     """The revision numbers of all available revisions of this page
-    #     (sorted)."""
-    #     return sorted([r.revisionNumber() for r in self.revisions()])
-
-    # def oldRevisionNumbers(self):
-    #     """The revision numbers of all old revisions, excluding the latest
-    #     one (sorted)."""
-    #     return sorted([r.revisionNumber() for r in self.oldRevisions()])
-
-    # def firstRevisionNumber(self):
-    #     """The revision number of the earliest saved revision of this page."""
-    #     return self.revisionNumbers()[0]
-
-    # def lastRevisionNumber(self):
-    #     """The revision number of the latest saved revision of this page."""
-    #     return self.revisionNumbers()[-1]
-
-    # def previousRevisionNumber(self):
-    #     """The number of the latest saved revision before this one, or None."""
-    #     revnos = self.revisionNumbers()
-    #     i = revnos.index(self.revisionNumber())
-    #     if i: return revnos[i-1]
-    #     else: return None
-
-    # def nextRevisionNumber(self):
-    #     """The number of the next saved revision after this one, or None."""
-    #     revnos = self.revisionNumbers()
-    #     i = revnos.index(self.revisionNumber())
-    #     if i < len(revnos)-1: return revnos[i+1]
-    #     else: return None
-
-    # def revisionNumberBefore(self, username): # -> revision number | none
-    #     # depends on: self, revisions
-    #     """The revision number of the last edit not by username, or None."""
-    #     for r in range(self.revisionCount(),0,-1):
-    #         if self.revision(r).lastEditor() != username:
-    #             return r
-    #     return None
-
-    # def ensureMyRevisionNumberIsLatest(self):
-    #     """Make sure this page's revision number is larger than that of
-    #     any existing revisions. Don't bother updating catalog."""
-    #     oldrevs = self.oldRevisionNumbers()
-    #     r = oldrevs and (oldrevs[-1] + 1) or 1
-    #     if self.revisionNumber() != r: self.revision_number = r
-
+    security.declareProtected(Permissions.Archive, 'archive')
     def archive(self, REQUEST=None):
-        """Move this page (only, for now) to the archive subfolder.:::
-        This has no effect if called on a page already in the archive
-        folder, or a non-ZODB object (such as a temporary page object
-        created by plone's portal_factory).
+        """Move this page, and all offspring solely parented under this
+        page, to the archive subfolder.  This has no effect if called on a
+        page already in the archive folder, or a non-ZODB object (such as
+        a temporary page object created by plone's portal_factory).
         """
-        def inPortalFactory(self):
-            return self.inCMF() and self.folder().getId() == 'portal_factory'
         if self.inArchiveFolder() or inPortalFactory(self): return
         self.ensureArchiveFolder()
+        oids = self.offspringIdsAsList()
+        ids = [self.getId()] + oids
+        def notParentedElsewhere(id):
+            pids = [self.pageWithName(p).getId() for p in self.pageWithId(id).getParents()]
+            for p in pids:
+                if not p in ids: return False
+            return True
+        ids2 = [self.getId()] + filter(notParentedElsewhere, oids)
 
-    #     ob = self._getCopy(self.folder())
-    #     ob._setId(rid)
+        # XXX disable outline cache creation with similar kludge to saveRevision's
+        saved_manage_afterAdd                = self.__class__.manage_afterAdd
+        self.__class__.manage_afterAdd = lambda self,item,container:None
 
-    #     # kludge so the following won't update an outline cache
-    #     # in the revisions folder (hopefully thread-safe, oherwise
-    #     # escalate to "horrible kludge"):
-    #     manage_afterAdd                = self.__class__.manage_afterAdd
-    #     wikiOutline                    = self.__class__.wikiOutline
-    #     self.__class__.manage_afterAdd = lambda self,item,container:None
-    #     self.__class__.wikiOutline     = lambda self:PersistentOutline()
+        self.archiveFolder().manage_pasteObjects(
+            self.folder().manage_cutObjects(ids2, REQUEST), REQUEST)
 
-    #     self.revisionsFolder()._setObject(rid, ob)
+        self.__class__.manage_afterAdd = saved_manage_afterAdd
 
-    #     # clean up after kludge
-    #     self.__class__.manage_afterAdd = manage_afterAdd
-    #     self.__class__.wikiOutline     = wikiOutline
-
-    #     # and increment
-    #     self.revision_number = self.revisionNumber() + 1
-
-    # # backwards compatibility / temporary
-
-    # def forwardRev(self,rev): return self.revisionCount() - rev - 1
-
-    # def lastlog(self, rev=0, withQuotes=0):
-    #     """
-    #     Get the log note from an earlier revision of this page.
-
-    #     Just a quick helper for diff browsing.
-    #     """
-    #     rev = self.forwardRev(int(rev))
-    #     note = self.revisions()[rev].lastLog()
-    #     match = re.search(r'"(.*)"',note)
-    #     if match:
-    #         if withQuotes: return match.group()
-    #         else: return match.group(1)
-    #     else:
-    #         return ''
 
 InitializeClass(ArchiveSupport)
 

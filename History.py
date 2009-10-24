@@ -33,7 +33,7 @@ class PageHistorySupport:
             self.folder()._setObject('revisions',Folder('revisions'))
 
     def inRevisionsFolder(self):
-        return self.folder().getId() == 'revisions'
+        return self.folder().getId() == 'revisions' # XXX not robust
 
     def revisionsFolder(self):
         """Get the revisions subfolder, even called from within it."""
@@ -47,7 +47,7 @@ class PageHistorySupport:
             
     def wikiFolder(self):
         """Get the main wiki folder, even if called on a revision object."""
-        if self.inRevisionsFolder():
+        if self.inRevisionsFolder() or self.inArchiveFolder(): # XXX
             f = self.folder()
             # like folder()
             return getattr(getattr(f,'aq_inner',f),'aq_parent',None)

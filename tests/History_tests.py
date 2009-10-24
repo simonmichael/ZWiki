@@ -150,3 +150,8 @@ class Tests(ZwikiTestCase):
         self.assertEqual(p.revision(1).nextRevisionNumber(), 4)
         self.assertEqual(4, p.revision(4).revisionNumber())
         
+    def test_accessing_main_folder_from_revisions(self):
+        p, f = self.page, self.wiki
+        p.saveRevision()
+        self.assertEqual(f, p.revisionsFolder()['TestPage.1'].wikiFolder())
+
