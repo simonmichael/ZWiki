@@ -190,8 +190,8 @@ class PageHistorySupport:
         ob._setId(rid)
 
         # kludge so the following won't update an outline cache
-        # in the revisions folder (hopefully thread-safe, oherwise
-        # escalate to "horrible kludge"):
+        # in the revisions folder (hopefully thread-safe, otherwise
+        # escalate to "horrible kludge"): XXX how to test ?
         manage_afterAdd                = self.__class__.manage_afterAdd
         wikiOutline                    = self.__class__.wikiOutline
         self.__class__.manage_afterAdd = lambda self,item,container:None
