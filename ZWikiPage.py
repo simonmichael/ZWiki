@@ -39,6 +39,7 @@ from Utils import PageUtils, BLATHER, DateTimeSyntaxError, isunicode, \
      safe_hasattr, ZOPEVERSION
 from Views import PageViews
 from OutlineSupport import PageOutlineSupport
+from Archive import ArchiveSupport
 from Diff import PageDiffSupport # XXX to be replaced by..
 from History import PageHistorySupport
 from Mail import PageSubscriptionSupport, PageMailSupport, PageMailinSupport
@@ -76,6 +77,7 @@ class ZWikiPage(
     PLUGINS[13],
     PLUGINS[14],
     PLUGINS[15],
+    ArchiveSupport,
     PageEditingSupport, 
     PageOutlineSupport,
     PageDiffSupport,
