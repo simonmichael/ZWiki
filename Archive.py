@@ -53,6 +53,7 @@ class ArchiveSupport:
         """
         if self.inArchiveFolder() or inPortalFactory(self): return
         self.ensureArchiveFolder()
+        redirecturl = self.upUrl()
         oids = self.offspringIdsAsList()
         ids = [self.getId()] + oids
         def notParentedElsewhere(id):
@@ -71,7 +72,9 @@ class ArchiveSupport:
         self.archiveFolder().manage_pasteObjects(
             self.folder().manage_cutObjects(ids2, REQUEST), REQUEST)
         self.__class__.manage_afterAdd = saved_manage_afterAdd
+
         BLATHER('archived %s' % self.pageName() + (len(oids) and ' %d subtopics' % len(oids) or ''))
+        if REQUEST: REQUEST.RESPONSE.redirect(redirecturl)
 
 
 InitializeClass(ArchiveSupport)
