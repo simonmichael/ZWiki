@@ -62,7 +62,9 @@ class PageHistorySupport:
         return self.oldRevisions() + [self.latestRevision()]
 
     def latestRevision(self):
-        return self.wikiFolder()[self.getIdBase()]
+        if self.inRevisionsFolder(): f = self.wikiFolder()
+        else: f = self.folder()
+        return f[self.getIdBase()]
 
     def oldRevisions(self):
         f = self.revisionsFolder()
