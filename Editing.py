@@ -380,17 +380,21 @@ class PageEditingSupport:
         to redirect all incoming wiki links there instead, similar to a
         rename.
         """
-        oldname,oldid,redirecturl = self.pageName(),self.getId(),self.upUrl()
+        oldname,oldid = self.pageName(),self.getId()
         self.reparentChildren(self.primaryParentName())
         if pagename and strip(pagename):
             self._replaceLinksEverywhere(oldname,pagename,REQUEST)
         self.saveRevision()
+        # figure out where to go afterward - up, or to default page (which may change)
+        redirecturl = self.primaryParent() and self.primaryParentUrl() or None
         self.folder().manage_delObjects([self.getId()])
+        redirecturl = redirecturl or self.defaultPageUrl()
         self.sendMailToEditSubscribers(
             'This page was deleted.\n',
             REQUEST=REQUEST,
             subjectSuffix='',
             subject='(deleted)')
+
         if REQUEST: REQUEST.RESPONSE.redirect(redirecturl)
 
     security.declareProtected(Permissions.Edit, 'revert')

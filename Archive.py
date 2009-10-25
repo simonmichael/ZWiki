@@ -56,7 +56,6 @@ class ArchiveSupport:
         """
         if self.inArchiveFolder() or inPortalFactory(self): return
         self.ensureArchiveFolder()
-        redirecturl = self.upUrl()
         oids = self.offspringIdsAsList()
         ids = [self.getId()] + oids
         def notParentedElsewhere(id):
@@ -69,6 +68,9 @@ class ArchiveSupport:
         if pagename and strip(pagename):
             self._replaceLinksEverywhere(oldname,pagename,REQUEST)
 
+        # figure out where to go afterward - up, or to default page (which may change)
+        redirecturl = self.primaryParent() and self.primaryParentUrl() or None
+
         # XXX disable outline cache creation with similar kludge to saveRevision's
         saved_manage_afterAdd                = self.__class__.manage_afterAdd
         self.__class__.manage_afterAdd = lambda self,item,container:None
@@ -79,6 +81,7 @@ class ArchiveSupport:
         self.__class__.manage_afterAdd = saved_manage_afterAdd
 
         BLATHER('archived %s' % self.pageName() + (len(oids) and ' and %d subtopics' % len(oids) or ''))
+        redirecturl = redirecturl or self.defaultPageUrl()
         if REQUEST: REQUEST.RESPONSE.redirect(redirecturl)
 
 
