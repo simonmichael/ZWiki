@@ -10,7 +10,7 @@ except ImportError: from OFS.Folder import Folder # zope 2.7
 from Globals import InitializeClass
 from OutlineSupport import PersistentOutline
 import Permissions
-from Utils import safe_hasattr, sorted, registerSupportFolderId
+from Utils import safe_hasattr, sorted, registerSupportFolderId, BLATHER
 import re
 
 def inPortalFactory(self): return self.inCMF() and self.folder().getId() == 'portal_factory'
@@ -80,6 +80,7 @@ class ArchiveSupport:
         self.archiveFolder().manage_pasteObjects(
             self.folder().manage_cutObjects(ids2, REQUEST), REQUEST)
         self.__class__.manage_afterAdd = saved_manage_afterAdd
+        BLATHER('archived %s' % self.pageName() + (len(oids) and ' %d subtopics' % len(oids) or ''))
 
 
 InitializeClass(ArchiveSupport)
