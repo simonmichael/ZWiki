@@ -5,6 +5,7 @@ without deleting entirely.
 """
 
 from AccessControl import getSecurityManager, ClassSecurityInfo
+import AccessControl.Permissions
 try: from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2 as Folder
 except ImportError: from OFS.Folder import Folder # zope 2.7
 from Globals import InitializeClass
@@ -42,7 +43,7 @@ class ArchiveSupport:
                 return f
         return None
             
-    security.declareProtected(Permissions.Archive, 'archive')
+    security.declareProtected(AccessControl.Permissions.delete_objects, 'archive')
     def archive(self, REQUEST=None, pagename=None):
         """Move this page, and all offspring solely parented under this
         page, to the archive subfolder.  This has no effect if called on a
@@ -50,6 +51,8 @@ class ArchiveSupport:
         a temporary page object created by plone's portal_factory).
         As with delete, if a pagename argument is provided, redirect all
         incoming wiki links there.
+
+        NB this requires 'Delete objects' permission on the wiki folder.
         """
         if self.inArchiveFolder() or inPortalFactory(self): return
         self.ensureArchiveFolder()
@@ -80,5 +83,3 @@ class ArchiveSupport:
 
 
 InitializeClass(ArchiveSupport)
-
-
