@@ -75,7 +75,7 @@ class ArchiveSupport:
 
         self.__class__.manage_afterAdd = saved_manage_afterAdd
 
-        BLATHER('archived %s' % self.pageName() + (len(oids) and ' %d subtopics' % len(oids) or ''))
+        BLATHER('archived %s' % self.pageName() + (len(oids) and ' and %d subtopics' % len(oids) or ''))
         if REQUEST: REQUEST.RESPONSE.redirect(redirecturl)
 
 
