@@ -456,7 +456,8 @@ class OutlineManager:
 
     def upUrl(self):
         """
-        Get the URL of whatever is "above" this page.
+        Get the URL of the primary parent if any, otherwise the default
+        page, otherwise the first page in the folder
         """
         return self.primaryParentUrl() or self.defaultPageUrl()
 
