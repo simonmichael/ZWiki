@@ -42,15 +42,6 @@ class ArchiveSupport:
                 return f
         return None
             
-    # def wikiFolder(self):
-    #     """Get the main wiki folder, even if called on a revision object."""
-    #     if self.inRevisionsFolder():
-    #         f = self.folder()
-    #         # like folder()
-    #         return getattr(getattr(f,'aq_inner',f),'aq_parent',None)
-    #     else:
-    #         return self.folder()
-
     security.declareProtected(Permissions.Archive, 'archive')
     def archive(self, REQUEST=None, pagename=None):
         """Move this page, and all offspring solely parented under this
