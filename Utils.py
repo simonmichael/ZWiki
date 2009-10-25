@@ -43,6 +43,21 @@ ZWIKI_BIRTHDATE='1999/11/05'
 ZWIKIDIR = os.path.dirname(__file__)
 def abszwikipath(path): return os.path.join(ZWIKIDIR,path)
 
+def container(ob):
+    """Reliably get this zodb object's container, ignoring acquisition
+    paths.  Work for zwiki pages without a proper acquisition wrapper too.
+    """
+    return getattr(getattr(ob,'aq_inner',ob),'aq_parent',None)
+
+def isZwikiSupportObject(ob):
+    """Detect the marker indicating a zwiki's support objects (revisions
+    folder, archive folder, etc.)."""
+    return base_hasattr(ob, 'zwikiSupportObject')
+
+def zwikiSupportObjectType(ob):
+    """What type of zwiki support object is this, ,if any ?"""
+    if isZwikiSupportObject(ob): return ob.zwikiSupportObject
+    else: return None
 
 class PageUtils:
     """
@@ -434,14 +449,15 @@ class PageUtils:
 
     security.declareProtected(Permissions.View, 'folder')
     def folder(self):
-        """
-        return this page's containing folder
+        """Return this page's containing folder."""
+        return container(self)
 
-        We used to use self.aq_parent everywhere, now
-        self.aq_inner.aq_parent to ignore acquisition paths.
-        Work for pages without a proper acquisition wrapper too.
-        """
-        return getattr(getattr(self,'aq_inner',self),'aq_parent',None)
+    def wikiFolder(self):
+        """Get the main wiki folder, which may not be our container if we
+        are a saved revision or archived page."""
+        f = self.folder()
+        if isZwikiSupportObject(f): return container(f)
+        else: return f
 
     security.declareProtected(Permissions.View, 'age')
     def age(self):

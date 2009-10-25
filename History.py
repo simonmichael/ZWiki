@@ -9,7 +9,7 @@ from AccessControl import getSecurityManager, ClassSecurityInfo
 from Globals import InitializeClass
 try:    from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2 as Folder
 except ImportError: from OFS.Folder import Folder # zope 2.7
-from Utils import safe_hasattr, sorted
+from Utils import safe_hasattr, sorted, zwikiSupportObjectType
 
 import re
 import Permissions
@@ -31,9 +31,11 @@ class PageHistorySupport:
     def ensureRevisionsFolder(self):
         if self.revisionsFolder() is None:
             self.folder()._setObject('revisions',Folder('revisions'))
+            self.folder()['revisions'].zwikiSupportObject = 'revisions'
 
     def inRevisionsFolder(self):
         return self.folder().getId() == 'revisions' # XXX not robust
+        #return zwikiSupportObjectType(self.folder()) == 'revisions' # requires wiki fixups
 
     def revisionsFolder(self):
         """Get the revisions subfolder, even called from within it."""
@@ -45,15 +47,6 @@ class PageHistorySupport:
                 return f
         return None
             
-    def wikiFolder(self):
-        """Get the main wiki folder, even if called on a revision object."""
-        if self.inRevisionsFolder() or self.inArchiveFolder(): # XXX
-            f = self.folder()
-            # like folder()
-            return getattr(getattr(f,'aq_inner',f),'aq_parent',None)
-        else:
-            return self.folder()
-
     security.declareProtected(Permissions.View, 'revisions')
     def revisions(self):
         """

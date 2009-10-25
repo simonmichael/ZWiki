@@ -10,7 +10,7 @@ except ImportError: from OFS.Folder import Folder # zope 2.7
 from Globals import InitializeClass
 from OutlineSupport import PersistentOutline
 import Permissions
-from Utils import safe_hasattr, sorted
+from Utils import safe_hasattr, sorted, zwikiSupportObjectType
 import re
 
 def inPortalFactory(self): return self.inCMF() and self.folder().getId() == 'portal_factory'
@@ -25,9 +25,11 @@ class ArchiveSupport:
     def ensureArchiveFolder(self):
         if self.archiveFolder() is None:
             self.folder()._setObject('archive',Folder('archive'))
+            self.folder()['archive'].zwikiSupportObject = 'archive'
 
     def inArchiveFolder(self):
         return self.folder().getId() == 'archive' # XXX not robust
+        #return zwikiSupportObjectType(self.folder()) == 'archive'  # requires wiki fixups
 
     def archiveFolder(self):
         """Get the archive subfolder, even called from within it."""
