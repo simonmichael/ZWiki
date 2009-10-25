@@ -10,10 +10,13 @@ except ImportError: from OFS.Folder import Folder # zope 2.7
 from Globals import InitializeClass
 from OutlineSupport import PersistentOutline
 import Permissions
-from Utils import safe_hasattr, sorted, zwikiSupportObjectType
+from Utils import safe_hasattr, sorted, registerSupportFolderId
 import re
 
 def inPortalFactory(self): return self.inCMF() and self.folder().getId() == 'portal_factory'
+
+ARCHIVE_FOLDER_ID = 'archive'
+registerSupportFolderId(ARCHIVE_FOLDER_ID)
 
 class ArchiveSupport:
     """
@@ -24,19 +27,17 @@ class ArchiveSupport:
 
     def ensureArchiveFolder(self):
         if self.archiveFolder() is None:
-            self.folder()._setObject('archive',Folder('archive'))
-            self.folder()['archive'].zwikiSupportObject = 'archive'
+            self.folder()._setObject(ARCHIVE_FOLDER_ID,Folder(ARCHIVE_FOLDER_ID))
 
     def inArchiveFolder(self):
-        return self.folder().getId() == 'archive' # XXX not robust
-        #return zwikiSupportObjectType(self.folder()) == 'archive'  # requires wiki fixups
+        return self.folder().getId() == ARCHIVE_FOLDER_ID
 
     def archiveFolder(self):
         """Get the archive subfolder, even called from within it."""
         if self.inArchiveFolder():
             return self.folder()
-        elif safe_hasattr(self.folder().aq_base, 'archive'):
-            f = self.folder().archive
+        elif safe_hasattr(self.folder().aq_base, ARCHIVE_FOLDER_ID):
+            f = self.folder()[ARCHIVE_FOLDER_ID]
             if f.isPrincipiaFolderish:
                 return f
         return None

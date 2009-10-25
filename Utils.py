@@ -49,15 +49,41 @@ def container(ob):
     """
     return getattr(getattr(ob,'aq_inner',ob),'aq_parent',None)
 
-def isZwikiSupportObject(ob):
-    """Detect the marker indicating a zwiki's support objects (revisions
-    folder, archive folder, etc.)."""
-    return base_hasattr(ob, 'zwikiSupportObject')
+SUPPORT_FOLDER_IDS = []
 
-def zwikiSupportObjectType(ob):
-    """What type of zwiki support object is this, ,if any ?"""
-    if isZwikiSupportObject(ob): return ob.zwikiSupportObject
-    else: return None
+def registerSupportFolderId(id):
+    """Mixins and plugins may register any special folder ids here at
+    startup, so that the product as a whole can identify them."""
+    SUPPORT_FOLDER_IDS.append(id)
+
+def isSupportFolder(folder):
+    """Is this folder one of Zwiki's special support folders ?
+
+    We sometimes need to know whether we are in a wiki's revisions/archive
+    subfolder, or in the main wiki folder. Here are some alternatives
+    considered:
+
+    1. use known folder ids like 'revisions' or 'archive - this means your
+       wiki will break if you happen to choose that id for the wiki folder.
+
+    2. use ids, but more obscure ones like 'zwiki_revisions' or
+       'revisions_' - old wikis will break and need (quick) upgrading;
+       urls are not as nice
+
+    3. use a custom folder type - old wikis will break and need upgrading;
+       custom types in the zodb are a pain with their ingrained module
+       paths
+
+    4. use folders with a marker attribute added - old wikis will break
+       and need (quick) upgrading; folders that look normal but aren't
+       seems like fertile ground for gotchas (but, when would you ever
+       manually create an archive/revisions folder; and copy/pasting a
+       wiki should still work)
+
+    For now we stick with 1. We could detect and warn in the failure mode,
+    but we don't yet.
+    """
+    return folder.getId() in SUPPORT_FOLDER_IDS
 
 class PageUtils:
     """
@@ -453,10 +479,10 @@ class PageUtils:
         return container(self)
 
     def wikiFolder(self):
-        """Get the main wiki folder, which may not be our container if we
-        are a saved revision or archived page."""
+        """Get the main wiki folder, which may not be our container if
+        this is a saved revision or archived page."""
         f = self.folder()
-        if isZwikiSupportObject(f): return container(f)
+        if isSupportFolder(f): return container(f)
         else: return f
 
     security.declareProtected(Permissions.View, 'age')

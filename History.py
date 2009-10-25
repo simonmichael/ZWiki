@@ -9,11 +9,14 @@ from AccessControl import getSecurityManager, ClassSecurityInfo
 from Globals import InitializeClass
 try:    from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2 as Folder
 except ImportError: from OFS.Folder import Folder # zope 2.7
-from Utils import safe_hasattr, sorted, zwikiSupportObjectType
+from Utils import safe_hasattr, sorted, registerSupportFolderId
 
 import re
 import Permissions
 from OutlineSupport import PersistentOutline
+
+REVISIONS_FOLDER_ID = 'revisions'
+registerSupportFolderId(REVISIONS_FOLDER_ID)
 
 class PageHistorySupport:
     """
@@ -30,19 +33,18 @@ class PageHistorySupport:
 
     def ensureRevisionsFolder(self):
         if self.revisionsFolder() is None:
-            self.folder()._setObject('revisions',Folder('revisions'))
-            self.folder()['revisions'].zwikiSupportObject = 'revisions'
+            self.folder()._setObject(REVISIONS_FOLDER_ID,Folder(REVISIONS_FOLDER_ID))
 
     def inRevisionsFolder(self):
-        return self.folder().getId() == 'revisions' # XXX not robust
-        #return zwikiSupportObjectType(self.folder()) == 'revisions' # requires wiki fixups
+        return self.folder().getId() == REVISIONS_FOLDER_ID
 
     def revisionsFolder(self):
-        """Get the revisions subfolder, even called from within it."""
+        """Get the revisions subfolder, even called from within it, or
+        None if it does not exist yet."""
         if self.inRevisionsFolder():
             return self.folder()
-        elif safe_hasattr(self.folder().aq_base, 'revisions'):
-            f = self.folder().revisions
+        elif safe_hasattr(self.folder().aq_base, REVISIONS_FOLDER_ID):
+            f = self.folder()[REVISIONS_FOLDER_ID]
             if f.isPrincipiaFolderish:
                 return f
         return None
