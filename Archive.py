@@ -69,8 +69,10 @@ class ArchiveSupport:
         # XXX disable outline cache creation with similar kludge to saveRevision's
         saved_manage_afterAdd                = self.__class__.manage_afterAdd
         self.__class__.manage_afterAdd = lambda self,item,container:None
-        self.archiveFolder().manage_pasteObjects(
-            self.folder().manage_cutObjects(ids2, REQUEST), REQUEST)
+
+        cb = self.folder().manage_cutObjects(ids2)
+        self.archiveFolder().manage_pasteObjects(cb, REQUEST)
+
         self.__class__.manage_afterAdd = saved_manage_afterAdd
 
         BLATHER('archived %s' % self.pageName() + (len(oids) and ' %d subtopics' % len(oids) or ''))
