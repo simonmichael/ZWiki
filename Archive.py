@@ -52,11 +52,13 @@ class ArchiveSupport:
     #         return self.folder()
 
     security.declareProtected(Permissions.Archive, 'archive')
-    def archive(self, REQUEST=None):
+    def archive(self, REQUEST=None, pagename=None):
         """Move this page, and all offspring solely parented under this
         page, to the archive subfolder.  This has no effect if called on a
         page already in the archive folder, or a non-ZODB object (such as
         a temporary page object created by plone's portal_factory).
+        As with delete, if a pagename argument is provided, redirect all
+        incoming wiki links there.
         """
         if self.inArchiveFolder() or inPortalFactory(self): return
         self.ensureArchiveFolder()
@@ -69,13 +71,14 @@ class ArchiveSupport:
             return True
         ids2 = [self.getId()] + filter(notParentedElsewhere, oids)
 
+        if pagename and strip(pagename):
+            self._replaceLinksEverywhere(oldname,pagename,REQUEST)
+
         # XXX disable outline cache creation with similar kludge to saveRevision's
         saved_manage_afterAdd                = self.__class__.manage_afterAdd
         self.__class__.manage_afterAdd = lambda self,item,container:None
-
         self.archiveFolder().manage_pasteObjects(
             self.folder().manage_cutObjects(ids2, REQUEST), REQUEST)
-
         self.__class__.manage_afterAdd = saved_manage_afterAdd
 
 
