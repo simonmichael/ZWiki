@@ -66,7 +66,7 @@ class PageHistorySupport:
         else: f = self.folder()
         return f[self.getIdBase()]
 
-    def oldRevisions(self):
+    def oldRevisionIds(self):
         f = self.revisionsFolder()
         if not f:
             return []
@@ -75,7 +75,10 @@ class PageHistorySupport:
             ids = filter(isrev, list(f.objectIds(spec=self.meta_type)))
             # probably in the right order, but let's make sure
             ids.sort(lambda a,b: cmp(int(a.split('.')[1]), int(b.split('.')[1])))
-            return [f[id] for id in ids]
+            return ids
+
+    def oldRevisions(self):
+        return [self.revisionsFolder()[id] for id in self.oldRevisionIds()]
 
     def getIdBase(self):
         """This page's id with any revision number suffix removed."""
