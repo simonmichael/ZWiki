@@ -80,7 +80,13 @@ class ArchiveSupport:
 
         self.__class__.manage_afterAdd = saved_manage_afterAdd
 
-        BLATHER('archived %s' % self.pageName() + (len(oids) and ' and %d subtopics' % len(oids) or ''))
+        # log, notify, redirect
+        msg = 'archived %s' % self.pageName() + (len(oids) and ' and %d subtopics' % len(oids) or '')
+        BLATHER(msg)
+        self.sendMailToEditSubscribers(
+            msg+'\n',
+            REQUEST=REQUEST,
+            subject='(archived)')
         redirecturl = redirecturl or self.defaultPageUrl()
         if REQUEST: REQUEST.RESPONSE.redirect(redirecturl)
 
