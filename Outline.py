@@ -145,18 +145,22 @@ class Outline:
         self.setChildmap(childmap)
             
         self.add(node,newparents,update)
-    def reorder(self,node,child):
+    def reorder(self,node,child=None):
         """
         Moves child one place to the left among node's children (in _childmap).
+        If a child is not specified, sort all children alphabetically.
         """
         childmap = self.childmap()
         #we do no error checking in this class IIRC
         #if not childmap.has_key(node): return
         children = childmap[node]
-        #if not child in children: return
-        i = children.index(child)
-        #if not i: return
-        children[i-1], children[i] = children[i], children[i-1]
+        if child:
+            #if not child in children: return
+            i = children.index(child)
+            #if not i: return
+            children[i-1], children[i] = children[i], children[i-1]
+        else:
+            children.sort()
         childmap[node] = children
         self.setChildmap(childmap)
         self.updateNesting()

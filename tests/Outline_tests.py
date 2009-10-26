@@ -213,3 +213,13 @@ class Tests(unittest.TestCase):
         o.reparent('ChildPage',['TestPage'])
         self.assertEquals(o.parents('ChildPage'),['TestPage'])
 
+    def test_reorder(self):
+        o = self.outline
+        o.add('B',['TestPage'])
+        o.add('C',['TestPage'])
+        o.add('A',['TestPage'])
+        self.assertEquals(o.children('TestPage'),['B','C','A'])
+        o.reorder('TestPage','C')
+        self.assertEquals(o.children('TestPage'),['C','B','A'])
+        o.reorder('TestPage')
+        self.assertEquals(o.children('TestPage'),['A','B','C'])

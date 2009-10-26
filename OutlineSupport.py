@@ -417,16 +417,17 @@ class OutlineManager:
         if REQUEST is not None: REQUEST.RESPONSE.redirect(REQUEST['URL1'])
 
     security.declareProtected(Permissions.Reparent, 'reorder')
-    def reorder(self, child, REQUEST=None):
+    def reorder(self, child=None, REQUEST=None):
         """
-        Move child one place to the left among this page's children.
+        Move the named child page one place to the left among this page's children.
+        If a child is not specified, sort all children alphabetically.
 
         Ordering is only stored in the wiki outline cache, and will be
         lost if the outline is completely regenerated.
 
         When invoked from the web, redirects to /backlinks.
         """
-        if not child in self.childrenAsList(): return
+        if child and not child in self.childrenAsList(): return
         self.wikiOutline().reorder(self.pageName(),child)
         if REQUEST is not None: REQUEST.RESPONSE.redirect(REQUEST['URL1']+'/backlinks')
 
