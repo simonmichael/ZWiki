@@ -56,32 +56,44 @@ class ArchiveSupport:
         """
         if self.inArchiveFolder() or inPortalFactory(self): return
         self.ensureArchiveFolder()
+        f, af, rf = self.folder(), self.archiveFolder(), self.revisionsFolder()
+
+        # which pages to move
         oids = self.offspringIdsAsList()
-        ids = [self.getId()] + oids
+        id = self.getId()
+        ids = [id] + oids
         def notParentedElsewhere(id):
             pids = [self.pageWithName(p).getId() for p in self.pageWithId(id).getParents()]
             for p in pids:
                 if not p in ids: return False
             return True
-        ids2 = [self.getId()] + filter(notParentedElsewhere, oids)
+        ids2 = [id] + filter(notParentedElsewhere, oids)
+        # and their revisions
+        rids = []
+        for i in ids2: rids.extend(self.pageWithId(i).oldRevisionIds())
 
         if pagename and strip(pagename):
             self._replaceLinksEverywhere(oldname,pagename,REQUEST)
 
-        # figure out where to go afterward - up, or to default page (which may change)
+        # where to go afterward - up, or to default page (which may change)
         redirecturl = self.primaryParent() and self.primaryParentUrl() or None
 
         # XXX disable outline cache creation with similar kludge to saveRevision's
         saved_manage_afterAdd                = self.__class__.manage_afterAdd
         self.__class__.manage_afterAdd = lambda self,item,container:None
 
-        cb = self.folder().manage_cutObjects(ids2)
-        self.archiveFolder().manage_pasteObjects(cb, REQUEST)
+        # move pages and revisions
+        af.manage_pasteObjects(f.manage_cutObjects(ids2), REQUEST)
+        if rids:
+            af[id].ensureRevisionsFolder()
+            af[id].revisionsFolder().manage_pasteObjects(rf.manage_cutObjects(rids), REQUEST)
 
         self.__class__.manage_afterAdd = saved_manage_afterAdd
 
         # log, notify, redirect
-        msg = 'archived %s' % self.pageName() + (len(oids) and ' and %d subtopics' % len(oids) or '')
+        msg = 'archived %s' % self.pageName() \
+              + (len(oids) and ' and %d subtopics' % len(oids) or '') \
+              + (len(rids) and ' and %d revisions' % len(rids) or '')
         BLATHER(msg)
         self.sendMailToEditSubscribers(
             msg+'\n',

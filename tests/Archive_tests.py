@@ -2,7 +2,7 @@ from testsupport import *
 ZopeTestCase.installProduct('ZWiki')
 ZopeTestCase.installProduct('ZCatalog')
 import transaction
-from Products.ZWiki.Utils import sorted
+from Products.ZWiki.Utils import sorted, base_hasattr
 
 def test_suite():
     suite = unittest.TestSuite()
@@ -80,14 +80,17 @@ class Tests(ZwikiTestCase):
         # should not create an outline cache in the archive folder
         self.failIf(hasOutline(p.archiveFolder()))
 
-    def test_archive_and_outline(self):
+    def test_archive_and_revisions(self):
         p, f = self.page, self.wiki
-        # should remove the archived page from the outline cache
-        p.ensureWikiOutline()
+        p.saveRevision()
+        p.saveRevision()
         p.archive()
-        self.assertEqual([], p.wikiOutline().nodes())
-        # should not create an outline cache in the archive folder
-        self.failIf(hasOutline(p.archiveFolder()))
+        af, rf = p.archiveFolder(), p.revisionsFolder()
+        arf = af[p.getId()].revisionsFolder()
+        # should have moved the revisions as well
+        self.assertEqual(pageIds(rf), [])
+        self.assert_(arf)
+        self.assertEqual(set(pageIds(arf)), set(['TestPage.1','TestPage.2']))
 
     def test_accessing_main_folder_from_archive(self):
         p, f = self.page, self.wiki
