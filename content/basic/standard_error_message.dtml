@@ -50,4 +50,6 @@ available, to reduce mail noise from test pages.
 </html>
 </dtml-if>
 </dtml-let>
+<dtml-else>
+<dtml-with container><dtml-var standard_error_message></dtml-with>
 </dtml-if>
