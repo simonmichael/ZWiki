@@ -12,6 +12,8 @@ from Products.ZWiki.Utils import BLATHER, html_quote
 from Products.ZWiki.i18n import _
 from Products.ZWiki.plugins import registerPlugin
 
+MAX_ITEM_DESC_SIZE = 1000
+
 class PageRSSSupport:
     """
     I provide various kinds of RSS feed for the page and the whole wiki.
@@ -31,7 +33,25 @@ class PageRSSSupport:
                        sort_order='reverse',
                        sort_limit=num,
                        isBoring=0),
+            lambda p: p.creationTime(),
+            lambda p: p.summary(MAX_ITEM_DESC_SIZE),
             ' new pages',
+            REQUEST=REQUEST)
+
+    security.declareProtected(Permissions.View, 'children_rss')
+    def children_rss(self, num=10, REQUEST=None):
+        """Provide an RSS feed listing this page's N most recently created
+        direct children."""
+        self.ensureCatalog()
+        return self.rssForPages(
+            self.pages(parents=self.pageName(),
+                       sort_on='creation_time',
+                       sort_order='reverse',
+                       sort_limit=num,
+                       isBoring=0),
+            lambda p: p.creationTime(),
+            lambda p: p.summary(MAX_ITEM_DESC_SIZE),
+            " %s child pages" % self.pageName(),
             REQUEST=REQUEST)
 
     security.declareProtected(Permissions.View, 'edits_rss')
@@ -46,28 +66,20 @@ class PageRSSSupport:
                        sort_order='reverse',
                        sort_limit=num,
                        isBoring=0),
+            lambda p: p.lastEditTime(),
+            lambda p: html_quote(p.textDiff()),
             ' changed pages',
             REQUEST=REQUEST)
 
-    security.declareProtected(Permissions.View, 'children_rss')
-    def children_rss(self, num=10, REQUEST=None):
-        """Provide an RSS feed listing this page's N most recently created
-        direct children."""
-        self.ensureCatalog()
-        return self.rssForPages(
-            self.pages(parents=self.pageName(),
-                       sort_on='creation_time',
-                       sort_order='reverse',
-                       sort_limit=num,
-                       isBoring=0),
-            " %s child pages" % self.pageName(),
-            REQUEST=REQUEST)
-
     security.declareProtected(Permissions.View, 'rssForPages')
-    def rssForPages(self, pages, title_suffix='', REQUEST=None):
-        """Generate an RSS feed from the give page brains and title."""
+    def rssForPages(self, pages, datefunc, descriptionfunc, title_suffix='', REQUEST=None):
+        """Generate an RSS feed from the given page brains and
+        date/description functions. datefunc should take a page object
+        and return a DateTime object. descriptionfunc should take a
+        page object and return a html-quoted string.
+        """
         if len(pages) > 0:
-            last_mod = pages[0].getObject().lastEditTime()
+            last_mod = datefunc(pages[0].getObject())
         else:
             last_mod = DateTime()
         if self.handle_modified_headers(last_mod=last_mod, REQUEST=REQUEST):
@@ -100,15 +112,15 @@ class PageRSSSupport:
 <title>%(title)s</title>
 <link>%(wikiurl)s/%(id)s</link>
 <guid>%(wikiurl)s/%(id)s</guid>
-<description>%(last_log)s</description>
-<pubDate>%(last_edit_time)s</pubDate>
+<description>%(description)s</description>
+<pubDate>%(date)s</pubDate>
 </item>
 """ % {
             'title':'[%s] %s' % (self.toencoded(self.title_quote(p.Title)),self.toencoded(self.title_quote(p.last_log))),
             'wikiurl':wikiurl,
             'id':p.id,
-            'last_log':self.toencoded(html_quote(pobj.textDiff())),
-            'last_edit_time':pobj.lastEditTime().rfc822(), # be robust here
+            'description':self.toencoded(descriptionfunc(pobj)),
+            'date':datefunc(pobj).rfc822(), # be robust here
             }
         t += """\
 </channel>
