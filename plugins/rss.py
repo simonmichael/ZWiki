@@ -49,6 +49,20 @@ class PageRSSSupport:
             ' changed pages',
             REQUEST=REQUEST)
 
+    security.declareProtected(Permissions.View, 'children_rss')
+    def children_rss(self, num=10, REQUEST=None):
+        """Provide an RSS feed listing this page's N most recently created
+        direct children."""
+        self.ensureCatalog()
+        return self.rssForPages(
+            self.pages(parents=self.pageName(),
+                       sort_on='last_edit_time',
+                       sort_order='reverse',
+                       sort_limit=num,
+                       isBoring=0),
+            ' changed pages',
+            REQUEST=REQUEST)
+
     security.declareProtected(Permissions.View, 'rssForPages')
     def rssForPages(self, pages, title_suffix='', REQUEST=None):
         """Generate an RSS feed from the give page brains and title."""
