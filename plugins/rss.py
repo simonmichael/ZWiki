@@ -56,7 +56,7 @@ class PageRSSSupport:
         self.ensureCatalog()
         return self.rssForPages(
             self.pages(parents=self.pageName(),
-                       sort_on='last_edit_time',
+                       sort_on='creation_time',
                        sort_order='reverse',
                        sort_limit=num,
                        isBoring=0),
