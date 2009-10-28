@@ -60,7 +60,7 @@ class PageRSSSupport:
                        sort_order='reverse',
                        sort_limit=num,
                        isBoring=0),
-            ' changed pages',
+            " %s child pages" % self.pageName(),
             REQUEST=REQUEST)
 
     security.declareProtected(Permissions.View, 'rssForPages')
