@@ -25,7 +25,8 @@ class PageRSSSupport:
     security.declareProtected(Permissions.View, 'pages_rss')
     def pages_rss(self, num=10, REQUEST=None):
         """Provide an RSS feed showing this wiki's recently created pages."""
-        return rssForPages(
+        self.ensureCatalog()
+        return self.rssForPages(
             self.pages(sort_on='creation_time',
                        sort_order='reverse',
                        sort_limit=num,
@@ -39,7 +40,8 @@ class PageRSSSupport:
         pages. May be useful for monitoring, as a (less detailed)
         alternative to an all edits mail subscription.
         """
-        return rssForPages(
+        self.ensureCatalog()
+        return self.rssForPages(
             self.pages(sort_on='last_edit_time',
                        sort_order='reverse',
                        sort_limit=num,
@@ -61,7 +63,7 @@ class PageRSSSupport:
         feedlanguage = 'en'
         feeddate = self.folder().bobobase_modification_time().rfc822()
         wikiurl = self.wikiUrl()
-        REQUEST.RESPONSE.setHeader('Content-Type','text/xml; charset=utf-8')
+        if REQUEST: REQUEST.RESPONSE.setHeader('Content-Type','text/xml; charset=utf-8')
         t = """\
 <rss version="2.0">
 <channel>
