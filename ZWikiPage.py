@@ -166,6 +166,12 @@ class ZWikiPage(
     # pre-rendered text cache
     _prerendered = ''   
 
+    def __unicode__(self):
+        return self.tounicode(self.read())
+
+    def __str__(self):
+        return self.toencoded(self.read())
+
     # XXX page_type's are separate instances - use class or singleton instance ?
     def setPageType(self,id=None): self.page_type = self.lookupPageType(id)()
 
