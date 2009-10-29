@@ -51,5 +51,7 @@ available, to reduce mail noise from test pages.
 </dtml-if>
 </dtml-let>
 <dtml-else>
+<dtml-if "_.hasattr(aq_parent,'standard_error_message')">
 <dtml-with aq_parent><dtml-var standard_error_message></dtml-with>
+</dtml-if>
 </dtml-if>
