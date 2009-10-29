@@ -1,6 +1,11 @@
 Release notes
 #############
 
+* zope 2.12 requires a change to the standard_error_message object, otherwise
+  errors will appear as a blank page. Delete yours using the ZMI and recreate
+  it with SOMEPAGE/setupDtmlMethods (or /upgradeAll).
+
+
 Zwiki 2.0b1 2009/10/23
 ======================
 This is the first release of Zwiki 2, formerly the ZWiki-unstable branch.
