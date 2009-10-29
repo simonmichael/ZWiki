@@ -5,6 +5,11 @@ Release notes
   errors will appear as a blank page. Delete yours using the ZMI and recreate
   it with SOMEPAGE/setupDtmlMethods (or /upgradeAll).
 
+* to work around incomplete unicode support in Zope, a zwiki page's
+  __str__ method now returns a utf-8 encoded string. This should prevent
+  the ZMI from breaking (#1450). Editing a page with the zmi may break
+  normal rendering, requiring an visit to PAGE/fixEncoding (or
+  /upgradeAll).
 
 Zwiki 2.0b1 2009/10/23
 ======================
