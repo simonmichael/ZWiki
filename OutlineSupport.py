@@ -885,14 +885,14 @@ class OutlineRendering:
             wikiurl = self.wiki_url()
             def quicklink(page):
                 id = self.canonicalIdFrom(page)
-                return '<a href="%s/%s" name="%s">%s</a>' \
+                return u'<a href="%s/%s" name="%s">%s</a>' \
                        % (wikiurl,id,id,self.formatWikiname(page))
             if here and page == here: 
                 if enlarge_current:
                     # just assume we are in the page header, and link to
                     # backlinks as well as enlarging
                     #return '<big><big><big><big><strong>%s</strong></big></big></big></big>' % \
-                    return '<h1 style="display:inline;">%s</h1>' % \
+                    return u'<h1 style="display:inline;">%s</h1>' % \
                            ('<a href="%s/%s/backlinks" title="%s" name="%s">%s</a>' % \
                             (wikiurl,
                              self.canonicalIdFrom(page),
@@ -901,7 +901,7 @@ class OutlineRendering:
                              self.formatWikiname(page)))
                 else:
                     # just highlight "here"
-                    return '%s <span id="youarehere"><-- %s.</span>' % \
+                    return u'%s <span id="youarehere"><-- %s.</span>' % \
                            ((suppress_hyperlink and page) # another special case
                             or quicklink(page),
                             _("You are here"))
