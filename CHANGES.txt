@@ -1,6 +1,21 @@
 Release notes
 #############
 
+* new archive feature, to help with cleanup of large wikis
+
+  This aims to reduce info-clutter and improve wiki resource usage and
+  performance, in situations where you're not willing to delete content
+  entirely, eg because of historical interest.  To enable this feature,
+  create an "archive" folder within your wiki, or visit
+  SOMEOLDPAGE/archive once, and make sure you have ``Delete objects``
+  permission. An archive button will be added to the page management
+  form. This moves the current page, its subtopics, and their edit history
+  to the archive folder.
+
+  Pages in the archive may still be viewed, but they are considered
+  read-only and inaccessible to search bots (but this is not yet enforced
+  - adjust permissions on the archive folder to make it so.).
+
 * zope 2.12 requires a change to the standard_error_message object, otherwise
   errors will appear as a blank page. Delete yours using the ZMI and recreate
   it with SOMEPAGE/setupDtmlMethods (or /upgradeAll).
