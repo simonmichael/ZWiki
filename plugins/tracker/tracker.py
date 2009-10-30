@@ -385,21 +385,21 @@ class PluginTracker:
     def category_index(self):
         """helper method to facilitate sorting catalog results"""
         try:
-            return 1 + list(self.issue_categories).index(self.category)
+            return 1 + self.issueCategories().index(self.category)
         except (AttributeError,ValueError):
             return 0
         
     def severity_index(self):
         """helper method to facilitate sorting catalog results"""
         try:
-            return 1 + list(self.issue_severities).index(self.severity)
+            return 1 + self.issueSeverities().index(self.severity)
         except (AttributeError,ValueError):
             return 0
 
     def status_index(self):
         """helper method to facilitate sorting catalog results"""
         try:
-            return 1 + list(self.issue_statuses).index(self.status)
+            return 1 + self.issueStatuses().index(self.status)
         except (AttributeError,ValueError):
             return 0
 
@@ -462,7 +462,7 @@ class PluginTracker:
                                          (category, status, severity))
         # can't figure out a reasonable way to do this without python 2.1
         # convert the strings into dictionaries
-        colours = getattr(self.folder(),'issue_colours',ISSUE_COLOURS)
+        colours = self.issueColours()
         colours = filter(lambda x:x.strip(),colours)
         l = []
         for i in colours:
@@ -635,6 +635,22 @@ class PluginTracker:
                     changed = 1
 
         return changed
+
+    def issueCategories(self):
+        """This wiki's issue categories, if any."""
+        return getattr(self.folder(),'issue_categories',[])
+
+    def issueSeverities(self):
+        """This wiki's issue severities, if any."""
+        return getattr(self.folder(),'issue_severities',[])
+
+    def issueStatuses(self):
+        """This wiki's issue statuses, if any."""
+        return getattr(self.folder(),'issue_statuses',[])
+
+    def issueColours(self):
+        """This wiki's issue colours, or the default colours."""
+        return getattr(self.folder(),'issue_colours',ISSUE_COLOURS)
 
 InitializeClass(PluginTracker)
 registerPlugin(PluginTracker)
