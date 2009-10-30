@@ -701,6 +701,7 @@ class SkinViews:
                 _("Sorry, this wiki doesn't allow anonymous edits. Please configure a username in options first."))
 
         page = self.tounicode(self.urlunquote(page or ''))
+        text = self.tounicode(text or '')
         if ((not page or page == self.pageName()) and
             safe_hasattr(self,'wl_isLocked') and self.wl_isLocked()):
             return self.davLockDialog()
@@ -723,7 +724,6 @@ class SkinViews:
             if not self.checkPermission(Permissions.Add, self.folder()):
                 raise Unauthorized, (
                     _('You are not authorized to add pages in this wiki.'))
-            text = text or ''
 
         # display the edit form - a dtml method or the builtin default
         # NB we redefine id as a convenience, so that one header can work
