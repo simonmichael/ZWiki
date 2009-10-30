@@ -604,7 +604,8 @@ class PageUtils:
 
     def talsafe(self,s):
         """
-        Make a string safe for use with TAL's structure keyword.
+        Make a string safe for use with TAL's structure keyword across
+        zope versions.
 
         Zope versions before 2.10 expect such data to be an ordinary
         string.  Zope 2.10 expects it to be unicode, or to at least be
