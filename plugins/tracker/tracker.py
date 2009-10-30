@@ -13,7 +13,7 @@ from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Defaults import registerPageMetaData
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER, formattedTraceback, \
-    addHook, safe_hasattr
+    addHook, safe_hasattr, nub
 from Products.ZWiki.Views import loadDtmlMethod, loadPageTemplate, TEMPLATES
      
 from Products.ZWiki.i18n import _
@@ -651,6 +651,17 @@ class PluginTracker:
     def issueColours(self):
         """This wiki's issue colours, or the default colours."""
         return list(getattr(self.folder(),'issue_colours',ISSUE_COLOURS))
+
+    def issueTopLevelCategories(self):
+        """List the top-level category components, where : or - within
+        a category indicates multiple components. If no category
+        contains these characters, this is just the list of
+        categories.
+
+        Example: [user:browsing, user-editing, other] -> [user, other]
+        """
+        firstpart = lambda s: re.sub(r'[:-].*','',s)
+        return nub(map(firstpart,self.issueCategories()))
 
 InitializeClass(PluginTracker)
 registerPlugin(PluginTracker)
