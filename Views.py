@@ -99,8 +99,17 @@ from ComputedAttribute import ComputedAttribute
 
 import Permissions
 from Defaults import PAGE_METATYPE
-from Utils import BLATHER, formattedTraceback, abszwikipath, safe_hasattr, nub
+from Utils import BLATHER, formattedTraceback, abszwikipath, safe_hasattr, nub, ZOPEVERSION, tounicode
 from i18n import _, DTMLFile, HTMLFile
+
+if ZOPEVERSION < (2,10):
+    # workaround for older zopes to fix #1453 edit preview error
+    # monkey-patch PageTemplateFile to use a unicode-safe stringio as suggested
+    from TAL.TALInterpreter import FasterStringIO
+    class UnicodeStringIO(FasterStringIO):
+        def write(self, s):
+            FasterStringIO.write(self, tounicode(s))
+    PageTemplateFile.StringIO = lambda self: UnicodeStringIO()
 
 
 def loadPageTemplate(name,dir='skins/zwiki'):
