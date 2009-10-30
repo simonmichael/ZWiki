@@ -663,6 +663,14 @@ class PluginTracker:
         firstpart = lambda s: re.sub(r'[:-].*','',s)
         return nub(map(firstpart,self.issueCategories()))
 
+    def issueOpenStatuses(self):
+        """List those issue statuses which are considered "open" for
+        the overview report etc. Looks for an issue_open_statuses
+        property, otherwise returns just the first of the issue
+        statuses.
+        """
+        return list(getattr(self.folder(),'issue_open_statuses',self.issueStatuses()[:1]))
+
 InitializeClass(PluginTracker)
 registerPlugin(PluginTracker)
 

@@ -16,7 +16,10 @@ page by going to the security tab and unchecking the "Zwiki:Edit pages"
 and "Zwiki:Add comments" permissions from non-manager users.
 
 </dtml-comment>
+
 <dtml-call "RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
+
+<!-- globals ------------------------- -->
 <dtml-let
  scrollto="'' #'#tracker'"
  issueCount=issueCount
@@ -29,7 +32,14 @@ and "Zwiki:Add comments" permissions from non-manager users.
  num="_.int(REQUEST.get('num',99999))"
  recentnum="30"
  recentlisting="'?sort_on=creationTime&sort_order=reverse&num=%s'%recentnum"
+ openstatuses=issueOpenStatuses
+ allissues="pages(isIssue=1, sort_on='creationTime', sort_order='reverse', sort_limit=num)"
+ openissues="[i for i in allissues if i.status in openstatuses]"
+ allwithcat="lambda c:[i for i in _['allissues'] if i.category==c]"
+ openwithcat="lambda c:[i for i in _['openissues'] if i.category==c]"
+ allwithstatus="lambda s:[i for i in _['allissues'] if i.status==s]"
  >
+
 <!-- simple search form ------------------------- -->
 <a name="tracker"></a>
  <form action="&dtml-URL;" method="GET">
@@ -42,16 +52,15 @@ and "Zwiki:Add comments" permissions from non-manager users.
                   class="formfield" style="font-weight:bold;" accesskey="s"
                   title="search issue pages"
             /><input type="submit" value="<dtml-translate domain=zwiki>search</dtml-translate>"
-                     style="font-weight:bold" title="search issue pages" />,
+                     style="font-weight:bold" title="search issue pages" />
          </b>
-          <a href="&dtml-filterUrl;"><dtml-translate domain=zwiki>filter</dtml-translate></a>,
-          <a href="&dtml-issueBrowserUrl;"><dtml-translate domain=zwiki>browse</dtml-translate></a>,
           or <b><a href="#addissue">report an issue</a></b>
        </td>
+
        <td align="right" style="padding-left:1em;">
            <dtml-in issue_statuses prefix=x>
                      <a href="&dtml-URL;?status:list=&dtml-x_sequence_item;&sort_on=severity_index&dtml-scrollto;"
-                      ><dtml-var "_.len(pages(isIssue=1,status=x_sequence_item))"
+                      ><dtml-var "_.len(allwithstatus(x_sequence_item))"
                       ></a>
                    <span style="white-space:nowrap">&dtml-x_sequence_item;</span>
            </dtml-in>
@@ -59,6 +68,75 @@ and "Zwiki:Add comments" permissions from non-manager users.
     </tr>
    </table>
  </form>
+
+<!-- overview by category ------------------------- -->
+<p>
+<dtml-if "not REQUEST.get('overview',0)">
+<div style="font-size:small;">
+<a href="&dtml-URL;?overview=1">[+] show overview</a>
+</div>
+<dtml-else>
+<div style="font-size:small; border-bottom:thin solid #cccccc; background-color:#f0f0f0;">
+<a href="&dtml-URL;">[-] hide overview</a> Open issues by category:
+<dtml-let 
+    barearg="'bare' in QUERY_STRING and '&bare=%s'%REQUEST.get('bare') or ''"
+    href="lambda x:'%s?category=%s&sort_on=status_index&overview=1%s'%(_['URL'],_.this.urlquote(x),_['barearg'])"
+    cats=issueCategories
+    numcats="_.len(cats)"
+    topcats=issueTopLevelCategories
+    numcols="_.len(topcats)"
+    catsbeginningwith="lambda prefix:[c for c in _['cats'] if c.startswith(prefix)]"
+    colvalues="[catsbeginningwith(c) for c in topcats]"
+    longest="max([_.len(col) for col in colvalues])"
+    >
+<table width="100%" border=0 cellpadding="0" cellspacing="0"
+  <tr valign="top">
+    <dtml-in "_.range(numcols)" prefix=col>
+      <td width="<dtml-var "'%s%%'%(100/numcols)">">
+        <table border="0" width="100%">
+        <dtml-in "_.range(longest)" prefix=row>
+        <dtml-let 
+          row=row_sequence_item
+          col=col_sequence_item
+          >
+          <dtml-if "row < _.len(colvalues[col])">
+          <dtml-let
+            cat="colvalues[col][row]"
+            open="openwithcat(cat)"
+            all="allwithcat(cat)"
+            issues="open or all"
+            highestseverity="min([i.severity_index for i in issues]+[5]) #XXX your highest severity_index"
+            firsthighissue="([i for i in issues if i.severity_index==highestseverity]+[None])[0]"
+            colour="firsthighissue and firsthighissue.issueColour or '#bbeebb'"
+            bold="cat == REQUEST.get('category','')"
+            >
+            <tr height="<dtml-var "'' #'%s'%(10+_.len(open)/2)">"
+                style="font-size:<dtml-var "'small' #'%spt'%(10+_.len(open)/4)">">
+            <td bgcolor="&dtml-colour;" style="<dtml-var "'' #bold and 'border:2px black solid' or ''">">
+              <dtml-var "bold and '<b>' or ''">
+              <a href="<dtml-var "href(cat)">"
+                >&dtml-cat;&nbsp;<dtml-var "_.len(open)">
+              </a>
+              <dtml-var "bold and '</b>' or ''">
+            </td>
+            </tr>
+          </dtml-let>
+          <dtml-else>
+            <tr>
+            <td>&nbsp;</td>
+            </tr>
+          </dtml-if>
+        </dtml-let>
+      </dtml-in>
+      </table>
+      </td>
+    </dtml-in>
+  </tr>
+</table>
+</dtml-let>
+</div>
+</dtml-if>
+
  <p>
  <!-- issue list ------------------------- -->
  <a name="issues"></a>
@@ -90,6 +168,7 @@ and "Zwiki:Add comments" permissions from non-manager users.
   query="(sortorderstart == -1) and query or (query[:sortorderstart]+query[sortorderend:])"
   query="query and ('&'+query) or ''"
   order="(not (REQUEST.get('sort_order','') == 'reverse')) and '&sort_order=reverse' or '&sort_order=ascending' "
+  QUERY_STRING="QUERY_STRING.replace('overview=1','')"
   issues="
   (searchexpr and
    (pages(isIssue=1, sort_on=sort_on, sort_limit=num, Title=searchexpr) +
@@ -108,7 +187,7 @@ and "Zwiki:Add comments" permissions from non-manager users.
          status=    REQUEST.get('status',''))[:num])
   or
   (not searchexpr and not QUERY_STRING and
-   pages(isIssue=1, sort_on='creationTime', sort_order='reverse', sort_limit=num)[:recentnum])
+   allissues[:recentnum])
   "
   >
    <table border=0 width="100%">
@@ -173,10 +252,10 @@ and "Zwiki:Add comments" permissions from non-manager users.
           linktitle="'' #getObject().linkTitle()"
           bold="0#(status in ('open','pending') and
           #severity not in ('wishlist',) and
-	  #page.ageInDays() > 60)"
-	  titleseparator="_.string.find(Title,' ')"
-	  issuenmbr="titleseparator != -1 and Title[:titleseparator] or 'None'"
-	  issuenam="titleseparator != -1 and Title[titleseparator+1:] or 'None'"
+    #page.ageInDays() > 60)"
+    titleseparator="_.string.find(Title,' ')"
+    issuenmbr="titleseparator != -1 and Title[:titleseparator] or 'None'"
+    issuenam="titleseparator != -1 and Title[titleseparator+1:] or 'None'"
           >
            <tr bgcolor="&dtml-issueColour;">
              <td align=left valign=top>
@@ -301,6 +380,7 @@ and "Zwiki:Add comments" permissions from non-manager users.
      </dtml-in>
    </table>
  </dtml-let>
+
  <p>
  <!-- add issue form ------------------------- -->
  <a name="addissue"></a>
