@@ -21,10 +21,18 @@ Release notes
   it with SOMEPAGE/setupDtmlMethods (or /upgradeAll).
 
 * to work around incomplete unicode support in Zope, a zwiki page's
-  __str__ method now returns a utf-8 encoded string. This should prevent
-  the ZMI from breaking (#1450). Editing a page with the zmi may break
-  normal rendering, requiring an visit to PAGE/fixEncoding (or
-  /upgradeAll).
+  __str__ method now returns a utf-8 encoded string. This fixes
+  the ZMI manage_main view on a zwiki page object (#1450).
+
+* also, you'll need to set a string property in the properties tab of
+  your wiki or zope root folder: management_page_charset: UTF-8.
+  (The capitalisation may matter in some cases.) This fixes the ZMI
+  manage_main view on a zwiki folder, eg (#1459).
+
+* however, non-ascii zwiki page content may render incorrectly in the ZMI,
+  and you should not edit zwiki pages in the ZMI, or they may become
+  misencoded. (If it happens, visiting PAGE/fixEncoding or /upgradeAll may
+  fix it.)
 
 Zwiki 2.0b1 2009/10/23
 ======================
