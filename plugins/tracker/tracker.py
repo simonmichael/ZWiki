@@ -638,19 +638,19 @@ class PluginTracker:
 
     def issueCategories(self):
         """This wiki's issue categories, if any."""
-        return getattr(self.folder(),'issue_categories',[])
+        return list(getattr(self.folder(),'issue_categories',[]))
 
     def issueSeverities(self):
         """This wiki's issue severities, if any."""
-        return getattr(self.folder(),'issue_severities',[])
+        return list(getattr(self.folder(),'issue_severities',[]))
 
     def issueStatuses(self):
         """This wiki's issue statuses, if any."""
-        return getattr(self.folder(),'issue_statuses',[])
+        return list(getattr(self.folder(),'issue_statuses',[]))
 
     def issueColours(self):
         """This wiki's issue colours, or the default colours."""
-        return getattr(self.folder(),'issue_colours',ISSUE_COLOURS)
+        return list(getattr(self.folder(),'issue_colours',ISSUE_COLOURS))
 
 InitializeClass(PluginTracker)
 registerPlugin(PluginTracker)
