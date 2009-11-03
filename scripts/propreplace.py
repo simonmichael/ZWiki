@@ -1,6 +1,6 @@
 import string
 
-def fixprops(self,properties,old,new):
+def propreplace(self,properties,old,new):
     """
     Do a text replace in certain properties of zwiki pages in this folder.
     
@@ -8,7 +8,7 @@ def fixprops(self,properties,old,new):
     with new in the specified property or properties (must be string
     properties). You could call this from your browser, eg like so:
 
-    http://.../wikifolder/fixprops?properties:list=creation_time&properties:list=last_edit_time&old=Central Standard Time&new=CST
+    http://.../wikifolder/propreplace?properties:list=creation_time&properties:list=last_edit_time&old=Central Standard Time&new=CST
 
     Don't leave this method accessible to untrusted users.
     """
