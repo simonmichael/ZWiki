@@ -281,10 +281,11 @@ pyflakes:
 	pyflakes $(PYFILES)
 
 clean:
-	rm -f .*~ *~ *.tgz *.bak *.hi *.ho `find . -name "*.pyc"`
+	rm -f `find . -name '.*~' -o -name '*~' -o -name '*.bak' -o -name '*-darcs-backup*'`
 
 Clean: clean
 	rm -f i18n/*.mo skins/dtmlmessages.pt
+	rm -f `find . -name '*.pyc'`
 
 # ensure all files in zwiki.org repo have the right permissions for all
 # users, darcs mail-in etc. Everything should have group "zwiki", be
