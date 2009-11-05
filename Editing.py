@@ -773,14 +773,13 @@ class PageEditingSupport:
             raise Forbidden, "There was a problem, please contact the site admin."
             
         # content matches a banned pattern ?
-        pats = self
         for pat in self.getSpamPatterns():
-            pat = strip(pat)
-            if pat and re.search(pat,t): forbid("spam pattern found")
+            if re.search(pat,t): forbid("spam pattern found")
 
     def getSpamPatterns(self):
-        """Fetch spam patterns from the global zwiki spam blacklist, or
-        a local property.
+        """Fetch spam patterns from the global zwiki spam blacklist,
+        or a local property. Returns a list of stripped non-empty
+        regular expression strings.
         """
         if safe_hasattr(self.folder(), 'spampatterns'):
             return list(getattr(self.folder(),'spampatterns',[]))
