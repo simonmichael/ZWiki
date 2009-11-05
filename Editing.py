@@ -34,7 +34,7 @@ from plugins.pagetypes import PAGETYPES
 from Defaults import DISABLE_JAVASCRIPT, LARGE_FILE_SIZE, LEAVE_PLACEHOLDER
 import Permissions
 from Regexps import javascriptexpr, htmlheaderexpr, htmlfooterexpr
-from Utils import get_transaction, BLATHER, parseHeadersBody, isunicode, \
+from Utils import get_transaction, BLATHER, INFO, parseHeadersBody, isunicode, \
      safe_hasattr
 from i18n import _
 from Diff import addedtext, textdiff
