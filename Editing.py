@@ -38,7 +38,7 @@ from Defaults import DISABLE_JAVASCRIPT, LARGE_FILE_SIZE, LEAVE_PLACEHOLDER, \
 import Permissions
 from Regexps import javascriptexpr, htmlheaderexpr, htmlfooterexpr
 from Utils import get_transaction, BLATHER, INFO, parseHeadersBody, isunicode, \
-     safe_hasattr
+     safe_hasattr, stripList
 from i18n import _
 from Diff import addedtext, textdiff
 
@@ -803,8 +803,19 @@ class PageEditingSupport:
                 t = ''
             finally:
                 socket.setdefaulttimeout(saved)
-            pats = t.split('\n')
-            return pats
+            return self.parseSpamPatterns(t)
+
+    def parseSpamPatterns(self, t):
+        """Parse the contents of spampatterns.txt, returning any
+        patterns as a list of strings.
+
+        spampatterns.txt version 1 may contain:
+
+        - comments - lines beginning with #
+        - whitespace at the start or end of lines, or blank lines
+        - a line of the form "zwiki-spampatterns-version: 1"; assumed if not present
+        """
+        return [p for p in stripList(t.split('\n')) if not (p.startswith('#') or p.startswith('zwiki-spampatterns-version:'))]
 
     def cleanupText(self, t):
         """Clean up incoming text and convert to unicode for internal use."""
