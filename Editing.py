@@ -11,6 +11,8 @@ from itertools import *
 from email.Message import Message
 from copy import deepcopy
 import os.path
+import socket
+import urllib2
 
 import ZODB # need this for pychecker
 from AccessControl import getSecurityManager, ClassSecurityInfo, Unauthorized
@@ -31,7 +33,8 @@ from zExceptions import BadRequest, Forbidden
 import OFS.Image
 
 from plugins.pagetypes import PAGETYPES
-from Defaults import DISABLE_JAVASCRIPT, LARGE_FILE_SIZE, LEAVE_PLACEHOLDER
+from Defaults import DISABLE_JAVASCRIPT, LARGE_FILE_SIZE, LEAVE_PLACEHOLDER, \
+    ZWIKI_SPAMPATTERNS_URL, ZWIKI_SPAMPATTERNS_TIMEOUT
 import Permissions
 from Regexps import javascriptexpr, htmlheaderexpr, htmlfooterexpr
 from Utils import get_transaction, BLATHER, INFO, parseHeadersBody, isunicode, \
@@ -766,15 +769,42 @@ class PageEditingSupport:
         username = self.usernameFrom(REQUEST,ip_address=0)
         path = self.getPath()
         def forbid(reason):
-            INFO('%s blocked edit from %s (%s), %s' % (path, ip, username, reason))
-            BLATHER('blocked content:\n%s' % t)
+            BLATHER('%s blocked edit from %s (%s), %s:\n%s' % (path, ip, username, reason, t))
             raise Forbidden, "There was a problem, please contact the site admin."
             
         # content matches a banned pattern ?
-        pats = getattr(self.folder(),'spampatterns',[])
-        for pat in pats:
+        pats = self
+        for pat in self.getSpamPatterns():
             pat = strip(pat)
             if pat and re.search(pat,t): forbid("spam pattern found")
+
+    def getSpamPatterns(self):
+        """Fetch spam patterns from the global zwiki spam blacklist, or
+        a local property.
+        """
+        if safe_hasattr(self.folder(), 'spampatterns'):
+            return list(getattr(self.folder(),'spampatterns',[]))
+        else:
+            BLATHER('checking zwiki.org spam blacklist')
+            req = urllib2.Request(
+                ZWIKI_SPAMPATTERNS_URL, 
+                None,
+                {'User-Agent':'Zwiki %s' % self.zwiki_version()}
+                )
+            # have to set timeout this way for python 2.4. XXX safe ?
+            saved = socket.getdefaulttimeout()
+            socket.setdefaulttimeout(ZWIKI_SPAMPATTERNS_TIMEOUT)
+            try:
+                response = urllib2.urlopen(req)
+                #hdrs = response.info()
+                t = response.read()
+            except urllib2.URLError, e:
+                BLATHER('failed to read blacklist, skipping (%s)' % e)
+                t = ''
+            finally:
+                socket.setdefaulttimeout(saved)
+            pats = t.split('\n')
+            return pats
 
     def cleanupText(self, t):
         """Clean up incoming text and convert to unicode for internal use."""

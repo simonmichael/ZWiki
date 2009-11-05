@@ -107,3 +107,5 @@ PATHINDEXES = [
     'path',
     ]
 
+ZWIKI_SPAMPATTERNS_URL = 'http://zwiki.org/spampatterns.txt'
+ZWIKI_SPAMPATTERNS_TIMEOUT = 1 # s
