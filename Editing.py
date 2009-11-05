@@ -27,7 +27,7 @@ except ImportError:
 from OFS.DTMLDocument import DTMLDocument
 from OFS.ObjectManager import BadRequestException
 from OFS.ObjectManager import checkValidId
-from zExceptions import BadRequest
+from zExceptions import BadRequest, Forbidden
 import OFS.Image
 
 from plugins.pagetypes import PAGETYPES
@@ -757,52 +757,24 @@ class PageEditingSupport:
         #    #get_transaction().commit()
         #    DTMLDocument.__call__(self,self,REQUEST,REQUEST.RESPONSE)
 
-    def checkForSpam(self, t):
-        """
-        Check for signs of spam in some text, and raise an error if found.
-
-        Also looks at the current user's info in REQUEST.
+    def checkForSpam(self, t=''):
+        """Check the current request and any provided text for signs
+        of spam, and raise an error if found.
         """
         REQUEST = getattr(self,'REQUEST',None)
-        username = self.usernameFrom(REQUEST,ip_address=0)
         ip = getattr(REQUEST,'REMOTE_ADDR','')
-        page = self.pageName()
-        def raiseSpamError(reason, verbose_reason):
-            BLATHER(('blocked edit from %s (%s) on %s (%s)\n%s\n') % \
-                    (ip, username, page, reason, t))
-            raise _("There was a problem: %s" % \
-                    (verbose_reason))
+        username = self.usernameFrom(REQUEST,ip_address=0)
+        path = self.getPath()
+        def forbid(reason):
+            INFO('%s blocked edit from %s (%s), %s' % (path, ip, username, reason))
+            BLATHER('blocked content:\n%s' % t)
+            raise Forbidden, "There was a problem, please contact the site admin."
             
-        # banned link pattern ?
-        for pat in getattr(self.folder(),'banned_links',[]):
+        # content matches a banned pattern ?
+        pats = getattr(self.folder(),'spampatterns',[])
+        for pat in pats:
             pat = strip(pat)
-            if pat and re.search(pat,t):
-                raiseSpamError(_("banned_links match"),
-                               _("your edit contained a banned link pattern. Please contact the site administrator for help."))
-
-        # anonymous edit with too many external links ?
-        # tries to count the links added by this edit.
-        prop = 'max_anonymous_links'
-        if (not self.requestHasUsername(REQUEST) and
-            safe_hasattr(self.folder(), prop)):
-            try: max = int(getattr(self.folder(), prop))
-            except ValueError: max = None
-            if max is not None:
-                if len(re.findall(r'https?://',t)) > max:
-                    raiseSpamError(_("exceeded max_anonymous_links"),
-                                   _("adding of external links by unidentified users is restricted. Please back up and remove some of the http urls you added, or contact the site administrator for help."))
-
-        # and a similar check for identified users
-        # XXX simplify ? one property for both ?
-        prop = 'max_identified_links'
-        # we'll handle either an int or string property
-        if (safe_hasattr(self.folder(), prop)):
-            try: max = int(getattr(self.folder(), prop))
-            except ValueError: max = None
-            if max is not None:
-                if len(re.findall(r'https?://',t)) > max:
-                    raiseSpamError(_("exceeded max_identified_links"),
-                                   _("adding of external links is restricted, even for identified users. Please back up and remove some of the http urls you added, or contact the site administrator for help."))
+            if pat and re.search(pat,t): forbid("spam pattern found")
 
     def cleanupText(self, t):
         """Clean up incoming text and convert to unicode for internal use."""
