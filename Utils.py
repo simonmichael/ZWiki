@@ -884,13 +884,15 @@ class Popen3:
             self.err=open(errfile,"r").read()
             os.remove(errfile)
 
+def nonnulls(xs): return [x for x in xs if x]
+
 def stripList(lines):
     """
-    Strip whitespace elements from a list of strings, such as a lines property.
-
-    Accept a list or tuple, return a list. (Zope 2.7 props are tuples.)
+    Strip leading and trailing whitespace from each of a list of
+    strings, then strip out any empty strings. Useful for cleaning
+    up a zope lines property. Also accepts a tuple of strings.
     """
-    return filter(lambda x:x.strip(),list(lines))
+    return nonnulls(map(strip, list(lines)))
 
 def isIpAddress(s):
     """
