@@ -1,6 +1,25 @@
 Release notes
 #############
 
+* experimental anti-spam blacklist
+
+  The banned_links, max_anonymous_links and max_identified_links
+  properties are no longer supported. Instead, at edit time Zwiki
+  attempts to read a global blacklist of zwiki-specific spam patterns
+  from zwiki.org. This feature aims to stop the most common zwiki spam
+  for all Zwiki users with minimum maintenance effort. For added
+  protection, you can block known spammer ip addresses with
+  http://repel.in-progress.com (see also http://betabug.ch/wiki/HoneyPotBL.)
+
+  This is a prototype. For now, a http get attempt to
+  http://zwiki.org/spampatterns.txt with 1-second timeout is made at
+  each edit. The feature is on by default. Todo: follow suggested
+  caching interval.
+
+  To disable use of the global blacklist, add a local "spampatterns"
+  lines property on or above your wiki folder. You can leave it empty
+  or paste in the contents of your old banned_links property.
+
 * new archive feature, to help with cleanup of large wikis
 
   This aims to reduce info-clutter and improve wiki resource usage and
