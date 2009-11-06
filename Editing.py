@@ -794,12 +794,12 @@ class PageEditingSupport:
             saved = socket.getdefaulttimeout()
             socket.setdefaulttimeout(ZWIKI_SPAMPATTERNS_TIMEOUT)
             try:
-                response = urllib2.urlopen(req)
-                #hdrs = response.info()
-                t = response.read()
-            except urllib2.URLError, e:
-                BLATHER('failed to read blacklist, skipping (%s)' % e)
-                t = ''
+                try:
+                    response = urllib2.urlopen(req)
+                    t = response.read()
+                except urllib2.URLError, e:
+                    BLATHER('failed to read blacklist, skipping (%s)' % e)
+                    t = ''
             finally:
                 socket.setdefaulttimeout(saved)
             return self.parseSpamPatterns(t)
