@@ -8,11 +8,14 @@ from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 
 from Products.ZWiki import Permissions
-from Products.ZWiki.Utils import BLATHER, html_quote
+from Products.ZWiki.Utils import BLATHER, html_quote, toencoded
 from Products.ZWiki.i18n import _
 from Products.ZWiki.plugins import registerPlugin
 
-MAX_ITEM_DESC_SIZE = 1000
+MAX_ITEM_DESC_SIZE = 100000
+
+def pageContentForFeed(p):
+    return toencoded(html_quote(p.render(bare=1,show_subtopics=0,show_issueproperties=0)))
 
 class PageRSSSupport:
     """
@@ -35,7 +38,7 @@ class PageRSSSupport:
                        isBoring=0),
             lambda p: self.toencoded(self.title_quote(p.Title)),
             lambda p: p.creationTime(),
-            lambda p: p.summary(MAX_ITEM_DESC_SIZE),
+            pageContentForFeed,
             ' new pages',
             REQUEST=REQUEST)
 
@@ -52,7 +55,7 @@ class PageRSSSupport:
                        isBoring=0),
             lambda p: self.toencoded(self.title_quote(p.Title)),
             lambda p: p.creationTime(),
-            lambda p: p.summary(MAX_ITEM_DESC_SIZE),
+            pageContentForFeed,
             " %s child pages" % self.pageName(),
             REQUEST=REQUEST)
 
