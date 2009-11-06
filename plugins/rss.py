@@ -33,6 +33,7 @@ class PageRSSSupport:
                        sort_order='reverse',
                        sort_limit=num,
                        isBoring=0),
+            lambda p: self.toencoded(self.title_quote(p.Title)),
             lambda p: p.creationTime(),
             lambda p: p.summary(MAX_ITEM_DESC_SIZE),
             ' new pages',
@@ -49,6 +50,7 @@ class PageRSSSupport:
                        sort_order='reverse',
                        sort_limit=num,
                        isBoring=0),
+            lambda p: self.toencoded(self.title_quote(p.Title)),
             lambda p: p.creationTime(),
             lambda p: p.summary(MAX_ITEM_DESC_SIZE),
             " %s child pages" % self.pageName(),
@@ -66,17 +68,19 @@ class PageRSSSupport:
                        sort_order='reverse',
                        sort_limit=num,
                        isBoring=0),
+            lambda p: '[%s] %s' % (self.toencoded(self.title_quote(p.Title)), self.toencoded(self.title_quote(p.last_log))),
             lambda p: p.lastEditTime(),
             lambda p: html_quote(p.textDiff()),
             ' changed pages',
             REQUEST=REQUEST)
 
     security.declareProtected(Permissions.View, 'rssForPages')
-    def rssForPages(self, pages, datefunc, descriptionfunc, title_suffix='', REQUEST=None):
+    def rssForPages(self, pages, titlefunc, datefunc, descriptionfunc, title_suffix='', REQUEST=None):
         """Generate an RSS feed from the given page brains and
-        date/description functions. datefunc should take a page object
-        and return a DateTime object. descriptionfunc should take a
-        page object and return a html-quoted string.
+        title/date/description functions. titlefunc should take a page
+        brain and return an item title string. datefunc should take a
+        page object and return a DateTime object. descriptionfunc
+        should take a page object and return a html-quoted string.
         """
         if len(pages) > 0:
             last_mod = datefunc(pages[0].getObject())
@@ -116,7 +120,7 @@ class PageRSSSupport:
 <pubDate>%(date)s</pubDate>
 </item>
 """ % {
-            'title':'[%s] %s' % (self.toencoded(self.title_quote(p.Title)),self.toencoded(self.title_quote(p.last_log))),
+            'title':titlefunc(p),
             'wikiurl':wikiurl,
             'id':p.id,
             'description':self.toencoded(descriptionfunc(pobj)),
