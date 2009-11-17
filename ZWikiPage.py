@@ -183,20 +183,20 @@ class ZWikiPage(
         if type(old) == StringType:
             # old-style page type
             new = self.newPageTypeIdFor(self.page_type)
-            BLATHER("upgrading %s's page type from %s to %s" % (self.id(),self.page_type,new))
+            BLATHER("upgrading %s's page type from %s to %s" % (self.getId(),self.page_type,new))
             self.setPageType(new)
-        elif old.id == "broken":
+        elif old.getId() == "broken":
             # page type whose plugin is no longer installed
             # (or whose module moved, but our __module_aliases__ should cover those.. but don't)
-            new = DEFAULT_PAGETYPE().id()
-            BLATHER("could repair %s's missing page type %s to %s, ignoring for now" % (self.id(), old.__class__, new))
+            new = DEFAULT_PAGETYPE().getId()
+            BLATHER("could repair %s's missing page type %s to %s, ignoring for now" % (self.getId(), old.__class__, new))
             #self.setPageType(new)
         return self.page_type
 
     security.declarePublic('pageTypeId')
     def pageTypeId(self): # useful for troubleshooting
         """Return the short id for this page's page type."""
-        return self.pageType().id()
+        return self.pageType().getId()
 
     security.declarePublic('lookupPageType')
     def lookupPageType(self,id=None):

@@ -57,6 +57,7 @@ class PageTypeBase:
     def id(self): return self._id
     def name(self): return self._name
     __call__ = id
+    getId = id
 
     def __repr__(self):
         return "<%s '%s (%s)' at 0x%s>" % (self.__class__.__name__,
