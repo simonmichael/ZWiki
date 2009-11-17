@@ -193,16 +193,16 @@ class ZWikiPage(
             #self.setPageType(new)
         return self.page_type
 
+    security.declarePublic('pageTypeId')
+    def pageTypeId(self): # useful for troubleshooting
+        """Return the short id for this page's page type."""
+        return self.pageType().id()
+
     security.declarePublic('lookupPageType')
     def lookupPageType(self,id=None):
         """Return the page type object with this id (or the default)"""
         match = filter(lambda x:x._id==id,PAGETYPES)
         return (match and match[0]) or DEFAULT_PAGETYPE
-
-    security.declarePublic('pageTypeId') # useful for troubleshooting
-    def pageTypeId(self):
-        """Return the short id for this page's page type."""
-        return self.pageType().id()
 
     def setPreRendered(self,t): self._prerendered = t
 
