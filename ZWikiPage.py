@@ -49,7 +49,7 @@ from Comments import PageCommentsSupport
 from Admin import PageAdminSupport
 from Editing import PageEditingSupport
 from i18n import DTMLFile, _
-from plugins.pagetypes import PAGETYPES, PAGE_TYPES
+from plugins.pagetypes import PAGETYPES, PAGE_TYPES, pageTypeWithId
 from plugins.pagetypes.common import MIDSECTIONMARKER
 from plugins.pagetypes.stx import PageTypeStx
 from plugins import PLUGINS
@@ -172,26 +172,14 @@ class ZWikiPage(
     def __str__(self):
         return self.toencoded(self.read())
 
-    # XXX page_type's are separate instances - use class or singleton instance ?
-    def setPageType(self,id=None): self.page_type = self.lookupPageType(id)()
+    def setPageType(self,id=None):
+        self.page_type = id
 
     security.declarePublic('pageType')
     def pageType(self):
-        """Return this page's page type object."""
-        # check for problems
-        old = self.page_type
-        if type(old) == StringType:
-            # old-style page type
-            new = self.newPageTypeIdFor(self.page_type)
-            BLATHER("upgrading %s's page type from %s to %s" % (self.getId(),self.page_type,new))
-            self.setPageType(new)
-        elif old.getId() == "broken":
-            # page type whose plugin is no longer installed
-            # (or whose module moved, but our __module_aliases__ should cover those.. but don't)
-            new = DEFAULT_PAGETYPE().getId()
-            BLATHER("could repair %s's missing page type %s to %s, ignoring for now" % (self.getId(), old.__class__, new))
-            #self.setPageType(new)
-        return self.page_type
+        """Return this page's page type as a page type object."""
+        if AUTO_UPGRADE: self.upgradePageType()
+        return pageTypeWithId(self.page_type)()
 
     security.declarePublic('pageTypeId')
     def pageTypeId(self): # useful for troubleshooting

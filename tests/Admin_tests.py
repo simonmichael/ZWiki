@@ -102,12 +102,6 @@ class Tests(ZwikiTestCase):
         self.assert_(self.page.catalog() is not None)
         self.assertEqual(len(self.page.pages()),3)
 
-    def test_newPageTypeIdFor(self):
-        # test a few of the page type upgrades
-        self.assertEqual(self.page.newPageTypeIdFor('msgstxprelinkdtmlfitissuehtml'), 'stx')
-        self.assertEqual(self.page.newPageTypeIdFor('dtmlstxlinkhtml'), 'stx')
-        self.assertEqual(self.page.newPageTypeIdFor('nosuchtype'), self.page.defaultPageType())
-
     def test_fixEncoding(self):
         # some basic tests with encoded text
         uni = u'Envoy\xe9 \xc0\n'

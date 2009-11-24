@@ -1,6 +1,9 @@
 from Products.ZWiki.tests.testsupport import *
 from common import PageTypeBase
 ZopeTestCase.installProduct('ZWiki')
+from Products.ZWiki.plugins.pagetypes import modernPageTypeFor
+from Products.ZWiki.plugins.pagetypes.rst import PageTypeRst
+from Products.ZWiki.plugins.pagetypes.html import PageTypeHtml
 
 def test_suite():
     suite = unittest.TestSuite()
@@ -32,3 +35,16 @@ class Tests(ZwikiTestCase):
         self.assertEquals('&#97;&#64;&#98;&#46;&#99;', f('a@b.c'))
         self.assertEquals('&#97;&#46;&#97;&#64;&#98;&#46;&#99;', f('a.a@b.c'))
         self.assertEquals('<a href="mailto:&#97;&#64;&#98;&#46;&#99;">&#97;&#64;&#98;&#46;&#99;</a>', f('<a href="mailto:a@b.c">a@b.c</a>'))
+
+    def test_modernPageTypeFor(self):
+        # test a few of the page type upgrades
+        self.assertEqual(modernPageTypeFor('msgstxprelinkdtmlfitissuehtml'), 'stx')
+        self.assertEqual(modernPageTypeFor('dtmlstxlinkhtml'), 'stx')
+        self.assertEqual(modernPageTypeFor('nosuchtype'), self.page.defaultPageType())
+        self.assertEqual(modernPageTypeFor(PageTypeRst()), 'rst')
+        self.assertEqual(modernPageTypeFor(PageTypeHtml()), 'html')
+        # simulate zodb broken object
+        class Broken:
+            def getId(self): return 'broken'
+        self.assertEqual(modernPageTypeFor(Broken()), self.page.defaultPageType())
+

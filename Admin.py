@@ -15,7 +15,7 @@ from i18n import _
 import Permissions
 from Utils import get_transaction, BLATHER, formattedTraceback, \
      DateTimeSyntaxError, callHooks, isunicode, safe_hasattr
-from plugins.pagetypes import PAGE_TYPE_UPGRADES
+from plugins.pagetypes import PAGE_TYPE_UPGRADES, PAGE_TYPES, modernPageTypeFor
 from Defaults import PAGE_METADATA, \
      TEXTINDEXES, FIELDINDEXES, KEYWORDINDEXES, DATEINDEXES, PATHINDEXES
 
@@ -127,11 +127,13 @@ class PageAdminSupport:
                 'upgradeId for "%s" (%s) failed - does %s already exist ?' \
                 % (self.pageName(),self.getId(),self.canonicalIdFrom(name)))
 
-    def newPageTypeIdFor(self,oldpagetypeid):
-        """
-        Find the best modern equivalent for some arbitrary old page type.
-        """
-        return PAGE_TYPE_UPGRADES.get(oldpagetypeid, self.defaultPageType())
+    def upgradePageType(self):
+        """Correct any problems with this page's page type."""
+        t = self.page_type
+        if not t in PAGE_TYPES.keys():
+            t2 = modernPageTypeFor(t)
+            BLATHER("upgrading %s's page type from %s to %s" % (self.getId(),t,t2))
+            self.setPageType(t2)
 
     # allow extra actions to be added to this method
     # upgrade hooks return non-null if the page object was changed
@@ -184,7 +186,7 @@ class PageAdminSupport:
         # upgrade old page types
         pagetype = self.pageTypeId()
         if pagetype in PAGE_TYPE_UPGRADES.keys():
-            self.setPageType(self.newPageTypeIdFor(pagetype))
+            self.setPageType(self.modernPageTypeFor(pagetype))
             # clear render cache; don't bother prerendering just now
             self.clearCache()
             changed = 1

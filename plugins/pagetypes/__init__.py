@@ -25,6 +25,7 @@ registerPageType. Quick start:
 """
 
 from Products.ZWiki.Utils import BLATHER, formattedTraceback
+from types import StringType
 
 # global page type registry
 #XXX print "__init__.py: setting PAGETYPES to []"
@@ -173,3 +174,28 @@ try:
     ZwikiStxPageType = stx.PageTypeStx
 except ImportError:
     pass
+
+def defaultPageType():
+    """The default page type object, from all the known page types."""
+    return PAGETYPES[0]
+
+def pageTypeWithId(id):
+    """Return the page type object corresponding to this page type id, or
+    the default page type."""
+    for t in PAGETYPES:
+        if t._id == id: return t
+    return defaultPageType()
+
+def modernPageTypeFor(t):
+    """Find the best modern equivalent for some arbitrary old page type,
+    which could be a string or a (possibly broken) page type object.
+
+    This may be confusing. Know that Zwiki versions 0.25-2.0 kept a
+    *PageType instance in the page_type property; older and later versions
+    keep an id string there.
+    """
+    if type(t) != StringType:
+        return pageTypeWithId(t.getId())._id
+    else:
+        return PAGE_TYPE_UPGRADES.get(t, defaultPageType()._id)
+
