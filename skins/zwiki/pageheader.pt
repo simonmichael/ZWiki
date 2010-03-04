@@ -45,7 +45,7 @@
                 <tal:block tal:condition="COMPACT_PARENTS">
                   <tal:block condition="here/ancestorsAsList"
                              repeat="ancestor here/ancestorsAsList">
-                    <span tal:replace="structure python:here.talsafe(here.wikilink('['+ancestor+']'))" />
+                    <span tal:replace="structure python:here.talsafe(here.renderLinkToPage(ancestor))" />
                     <small>>></small>
                   </tal:block>
                   <br />

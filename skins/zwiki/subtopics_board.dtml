@@ -26,7 +26,7 @@
 >
 <tr style="background-color:#eeffdd;">
 <td>
-  <b><dtml-var "wikilink('['+pageName()+']')"></b>
+  <b><dtml-var "renderLinkToPage(pageName())"></b>
 </td>
 <td align="center" style="font-size:90%;&dtml-bold;">
   <dtml-var star>

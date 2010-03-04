@@ -260,7 +260,7 @@ and "Zwiki:Add comments" permissions from non-manager users.
            <tr bgcolor="&dtml-issueColour;">
              <td align=left valign=top>
                <dtml-comment>
-               <dtml-var "wikilink('['+Title+']')">
+               <dtml-var "renderLinkToPage(Title)">
                </dtml-comment>
                <dtml-var "bold and '<b>' or ''"
                ><a href="&dtml-wiki_url;/&dtml-id;"
@@ -269,7 +269,7 @@ and "Zwiki:Add comments" permissions from non-manager users.
              </td>
              <td align=left valign=top>
                <dtml-comment>
-               <dtml-var "wikilink('['+Title+']')">
+               <dtml-var "renderLinkToPage(Title)">
                </dtml-comment>
                <dtml-var "bold and '<b>' or ''"
                ><a href="&dtml-wiki_url;/&dtml-id;"

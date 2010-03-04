@@ -285,7 +285,7 @@ from non-manager users if you are security conscious.
            <tr bgcolor="&dtml-issueColour;">
              <td align=left valign=top>
                <dtml-comment>
-               <dtml-var "wikilink('['+Title+']')">
+               <dtml-var "renderLinkToPage(Title)">
                </dtml-comment>
                <dtml-var "bold and '<b>' or ''"
                ><a href="&dtml-wiki_url;/&dtml-id;" 
@@ -294,7 +294,7 @@ from non-manager users if you are security conscious.
              </td>
              <td align=left valign=top>
                <dtml-comment>
-               <dtml-var "wikilink('['+Title+']')">
+               <dtml-var "renderLinkToPage(Title)">
                </dtml-comment>
                <dtml-var "bold and '<b>' or ''"
                ><a href="&dtml-wiki_url;/&dtml-id;" 
