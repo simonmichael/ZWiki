@@ -886,8 +886,8 @@ class ZWikiPage(
         localwikilinkexpr = re.compile(localwikilink)
         for link in self.links():
             if localwikilinkexpr.match(link):
-                if link[0] == r'[' and link[-1] == r']':
-                    link = link[1:-1]
+                if link[0] == r'[' and link[-1] == r']': link = link[1:-1]
+                if link[0] == r'[' and link[-1] == r']': link = link[1:-1]
                 clink = self.canonicalIdFrom(link)
                 clinks.append(clink)
         return clinks
