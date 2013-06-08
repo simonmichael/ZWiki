@@ -44,7 +44,7 @@
            <input 
                type="image" name="vote0" value="0" alt="0"  class="rating"
                width="14" height="13" 
-               tal:attributes="src python:'/p_/sp';
+               tal:attributes="src string:${here/pageUrl}/../p_/sp;
                                style python:myvotestyle('0');
                                title python:mouseovertitle('0');"
            /><input 
