@@ -175,6 +175,16 @@ class ZWikiPage(
     def setPageType(self,id=None):
         self.page_type = id
 
+    security.declareProtected('Manage properties', 'setType')
+    def setType(self,type=DEFAULT_PAGETYPE):
+        """Quietly (without leaving history or sending mail) change
+        this page's page type and re-render it. A helper for
+        admin cleanup."""
+        self.setPageType(type)
+        self.clearCache()
+        self.index_object()
+        self.REQUEST.RESPONSE.redirect(self.pageUrl())
+
     security.declarePublic('pageType')
     def pageType(self):
         """Return this page's page type as a page type object."""
