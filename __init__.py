@@ -25,6 +25,19 @@ from Utils import parseHeadersBody, safe_hasattr, INFO, BLATHER, \
 from Splitter import UnicodeWordSplitter, UnicodeHTMLWordSplitter, UnicodeCaseNormalizer
 
 
+# make sure old page type objects don't break
+# __module_aliases__ = (
+#     ('Products.ZWiki.plugins.latexwiki.stxlatex', Products.ZWiki.plugins.pagetypes),
+#     ('Products.ZWiki.pagetypes', Products.ZWiki.plugins.pagetypes), # ZwikiHtmlPageType, ZwikiMoinPageType, ZwikiPlaintextPageType, ZwikiRstPageType, ZwikiStxPageType, ZwikiWwmlPageType
+#     #('Products.ZWiki.pagetypes.common', Products.ZWiki.plugins.pagetypes.common),
+#     ('Products.ZWiki.pagetypes.rst', Products.ZWiki.plugins.pagetypes),
+#     ('Products.ZWiki.pagetypes.stx', Products.ZWiki.plugins.pagetypes),
+#     ('Products.ZWiki.pagetypes.html', Products.ZWiki.plugins.pagetypes),
+#     ('Products.ZWiki.pagetypes.plaintext', Products.ZWiki.plugins.pagetypes),
+#     ('Products.ZWiki.pagetypes.wwml', Products.ZWiki.plugins.pagetypes),
+#     ('Products.ZWiki.pagetypes.moin', Products.ZWiki.plugins.pagetypes),
+#     )
+
 misc_ = {
     'ZWikiPage_icon': ImageFile(os.path.join('skins','zwiki','wikipage_icon.gif'), globals()),
     # backwards compatibility
