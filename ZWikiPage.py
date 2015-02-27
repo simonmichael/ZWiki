@@ -206,7 +206,10 @@ class ZWikiPage(
 
     def preRendered(self):
         # cope with non-existing or None attribute on old instances - needed ?
-        return getattr(self,'_prerendered','') or ''
+        try:
+            return unicode(getattr(self,'_prerendered','') or '')
+        except UnicodeError:
+            return ''
 
     ######################################################################
     # initialization
