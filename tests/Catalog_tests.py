@@ -20,7 +20,7 @@ class Tests(unittest.TestCase):
 
     def setUp(self):
         pass
-    
+
     def tearDown(self):
         pass
 
@@ -32,12 +32,12 @@ class Tests(unittest.TestCase):
 
 #    def testCatalogingAwarenessWithZMIEdits(self):
 #        pass
-     
+
 #    def testCatalogingAwarenessWithZWikiEdits(self):
 #        zc = self.ZopeContext
 #        assert not zc.Catalog(id='CatalogTestPage'), \
 #               'uncreated page found in the catalog'
-#        
+#
 #        zc.manage_addProduct['ZWiki'].manage_addZWikiPage('CatalogTestPage1')
 #        zc.CatalogTestPage1.edit(page='CatalogTestPage',text='bleh')
 #        assert zc.Catalog(id='CatalogTestPage'), \
@@ -55,4 +55,4 @@ class Tests(unittest.TestCase):
 #        assert not hasattr(zc,'CatalogTestPage'), 'ack! page not deleted'
 #        assert not zc.Catalog(id='CatalogTestPage'), \
 #               'page still found in catalog after DeleteMe edit'
-        
+

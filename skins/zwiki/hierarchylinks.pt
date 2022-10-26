@@ -13,9 +13,9 @@
               </a>
             </td>
             <td align="center" width="33%">
-              <a tal:condition="here/primaryParentName" 
+              <a tal:condition="here/primaryParentName"
                  tal:attributes="href here/upUrl"
-                 access_key='U' 
+                 access_key='U'
                  tal:content="python:'^^'+(here.primaryParentName() or 'wiki contents')">
                 ^^ParentPage
               </a>

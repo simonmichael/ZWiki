@@ -15,7 +15,7 @@ from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER, formattedTraceback, \
     addHook, safe_hasattr, nub
 from Products.ZWiki.Views import loadDtmlMethod, loadPageTemplate, TEMPLATES
-     
+
 from Products.ZWiki.i18n import _
 
 TEMPLATES.update({
@@ -80,7 +80,7 @@ class PluginTracker:
     wiki-based issue trackers.
     """
     security = ClassSecurityInfo()
-    
+
     security.declareProtected(Permissions.View, 'hasIssues')
     def hasIssueTracker(self): # likely.
         """
@@ -166,7 +166,7 @@ class PluginTracker:
          IssueNoN
 
         and when short_issue_names is enabled:
-        
+
          #N ISSUENAME
          #N
 
@@ -289,7 +289,7 @@ class PluginTracker:
 
         newnumber = self.nextIssueNumber(REQUEST=REQUEST)
         pagename=self.pageNameFromIssueNumberAndName(newnumber,name)
-        pagename=self.createIssue(pagename,text,None, 
+        pagename=self.createIssue(pagename,text,None,
                                   category,severity,status,REQUEST,sendmail)
         if pagename:
             if REQUEST:
@@ -303,7 +303,7 @@ class PluginTracker:
 
         Adds one to the current highest issue number, so gaps are allowed.
         Handles both old and new-style issue page names.
-        
+
         Does a catalog search, so REQUEST may be required to authenticate
         and get the proper results. I think.
         """
@@ -313,7 +313,7 @@ class PluginTracker:
         return (([0]+issuenumbers)[-1]) + 1
 
     security.declareProtected(Permissions.Edit, 'changeIssueProperties')
-    def changeIssueProperties(self, name=None, category=None, severity=None, 
+    def changeIssueProperties(self, name=None, category=None, severity=None,
                               status=None, log=None, text='', REQUEST=None):
         """
         Change an issue page's properties and redirect back there.
@@ -323,7 +323,7 @@ class PluginTracker:
 
         name is the issue name excluding the issue number. Changing this
         will trigger a page rename, which may be slow.
-        
+
         Security: allows modification of some properties
         (title/category/severity/status) with zwiki edit permission rather
         than zope Manage properties permission.
@@ -388,7 +388,7 @@ class PluginTracker:
             return 1 + self.issueCategories().index(self.category)
         except (AttributeError,ValueError):
             return 0
-        
+
     def severity_index(self):
         """helper method to facilitate sorting catalog results"""
         try:
@@ -433,7 +433,7 @@ class PluginTracker:
         """
         REQUEST = getattr(self,'REQUEST',None)
         return self.stxToHtml(self,self.issuepropertiesform(REQUEST=REQUEST)) + self.tounicode(body)
-            
+
     security.declareProtected(Permissions.View, 'issueColour')
     def issueColour(self):
         """
@@ -484,7 +484,7 @@ class PluginTracker:
             return ''
         else:
             return l[0]['colour']
-    
+
     security.declareProtected(Permissions.View, 'issuepropertiesform')
     def issuepropertiesform(self, REQUEST=None):
         """
@@ -516,9 +516,9 @@ class PluginTracker:
         - sets up issue_* folder properties, for customizing
         - creates a dummy issue, if needed, to activate the issue links/tabs
         - if pages=1, installs forms as DTML pages, for easy customizing
-        
+
         Safe to call more than once; will ignore any already existing
-        items.  
+        items.
         """
         TextIndexes = [
             ]
@@ -610,7 +610,7 @@ class PluginTracker:
             ]:
             if not prop in existingprops:
                 folder.manage_addProperty(prop,join(values,'\n'),'lines')
-                    
+
     def upgradeIssueProperties(self):
         """
         Upgrade tracker related properties on this page (and folder) if needed.
@@ -622,7 +622,7 @@ class PluginTracker:
         if self.isIssue():
             # check folder first so our selection properties will work
             self.upgradeFolderIssueProperties()
-            
+
             existingprops = map(lambda x:x['id'], self._properties)
             for prop, values, default in [
                 ['category','issue_categories',None],

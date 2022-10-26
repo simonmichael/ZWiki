@@ -95,7 +95,7 @@ class AddWikiTests(ZwikiTestCase):
 #                               new_title=wikitype+' wiki',
 #                               wiki_type=wikitype,
 #                               REQUEST=zc.REQUEST)
-#            
+#
 #            # verify that it exists and that all pages listed above
 #            # are present and correct
 #            assert hasattr(zc, wikitype), \

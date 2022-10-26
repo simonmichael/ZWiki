@@ -20,19 +20,19 @@ print(text)
 <!-- display header -->
 <dtml-unless "REQUEST.get('no_print_header',0)">
 <p>
-<table width="100%"><tr><td><em>Printer friendly format for &dtml-pageUrl; 
+<table width="100%"><tr><td><em>Printer friendly format for &dtml-pageUrl;
 <dtml-if "REQUEST.get('with_children',0)">
 and all child pages</dtml-if>
 :</em></td>
 <td align="right">
 <FORM><INPUT NAME="print" TYPE="button" VALUE="Print this document" ONCLICK="printdialog()"></FORM>
-Display 
+Display
 <dtml-if print_w_children>
-<a href="&dtml-URL1;/print">without</a> 
+<a href="&dtml-URL1;/print">without</a>
 <dtml-else>
-<a href="&dtml-URL1;/print?with_children=1">with</a> 
+<a href="&dtml-URL1;/print?with_children=1">with</a>
 </dtml-if>
-child pages or 
+child pages or
 <a href="&dtml-URL1;/print?<dtml-if print_w_children>with_children=1&amp;</dtml-if>no_print_header=1">without header</a>
 </td></tr></table>
 </p></dtml-unless>
@@ -47,7 +47,7 @@ child pages or
 <dtml-in "[id()] + page_offspring" prefix=x>
 <dtml-let page="folder[x_sequence_item]">
 <p>
-<table width="100%" border="0" cellspacing="0" cellpadding="3"  
+<table width="100%" border="0" cellspacing="0" cellpadding="3"
 bgcolor="#f0f0f0"
 ><tr><td>
 <h1><dtml-var "page.pageName()"></h1>

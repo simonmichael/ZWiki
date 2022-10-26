@@ -26,7 +26,7 @@ class BindingsTests(ZwikiTestCase):
 
     def checkContainerIsFolder(self, template):
         container = re.match(r'container=(.*)', template(self.page,self.request)).group(1)
-        self.assertEquals(container, repr(self.page.folder()))        
+        self.assertEquals(container, repr(self.page.folder()))
 
     """
     standard wiki:
@@ -68,7 +68,7 @@ class BindingsTests(ZwikiTestCase):
             repr(template),
             '<ZopePageTemplate at /test_folder_1_/testtemplate used for /test_folder_1_/wiki/TestPage>'
             ) # actually '<ZopePageTemplate at /testtemplate used for /test_folder_1_/wiki/TestPage>'
-        
+
         self.checkContainerIsFolder(template)
 
     """

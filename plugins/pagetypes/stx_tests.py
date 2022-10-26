@@ -21,7 +21,7 @@ class Tests(ZwikiTestCase):
     def test_non_ascii_edit(self):
         self.p.edit(text='É')
         self.assertEquals(u'<p>É</p>\n<p>\n</p>\n', self.p.render(bare=1))
-                          
+
     #def test_stxToHtml(self):
     #    p = self.page
     #    # handle a STX table or other error gracefully

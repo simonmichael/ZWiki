@@ -13,7 +13,7 @@
                      thispage here/pageName;
                      thisparents here/parents;
                      backlinks python:here.backlinksFor(thispage);
-                     sorted_backlinks python:sequence.sort(backlinks, 
+                     sorted_backlinks python:sequence.sort(backlinks,
                      (('Title', 'nocase', 'asc'),));
                      ">
       <metal:macro metal:use-macro="here/macros/pageheader" />
@@ -24,7 +24,7 @@
             <td width="50%">
               <p>
                 <b i18n:translate="">Parents</b><br />
-		<a tal:replace="structure python:here.talsafe(here.renderLinkToPage(thispage))"> </a> 
+		<a tal:replace="structure python:here.talsafe(here.renderLinkToPage(thispage))"> </a>
                 <span tal:condition="not:here/parents" i18n:translate="">is a top-level topic.</span>
                 <span tal:condition="here/parents" i18n:translate="">is a subtopic of:</span>
               </p>
@@ -33,12 +33,12 @@
                               thisparents here/parents;
                               sortedparents python:thisparents #sequence.sort(thisparents);
                               ">
-                <li tal:repeat="parent sortedparents"> 
+                <li tal:repeat="parent sortedparents">
                   <span tal:omit-tag="">
                     <input type="checkbox" name="parents" value="parent" checked="checked" class="formfield"
                            tal:attributes="value parent;"
                            tal:condition="canreparent" />
-		    <a tal:replace="structure python:here.talsafe(here.renderLinkToPage(parent))"> </a> 
+		    <a tal:replace="structure python:here.talsafe(here.renderLinkToPage(parent))"> </a>
        		    <br />
                   </span>
                 </li>
@@ -50,7 +50,7 @@
                 <span i18n:translate="" tal:condition="not:backlinks">No other pages link to this one.</span>
               </p>
               <ol>
-                <li tal:repeat="bl sorted_backlinks"> 
+                <li tal:repeat="bl sorted_backlinks">
                   <span tal:omit-tag="" tal:define="
                                                     blpage bl/Title;
                                                     blisparent python:(blpage in thisparents);
@@ -58,7 +58,7 @@
                     <input type="checkbox" name="parents" value="blpage" class="formfield"
                            tal:attributes="checked blisparent; value blpage;"
                            tal:condition="canreparent" />
-		    <a tal:define="bltitle bl/Title" tal:replace="structure python:here.talsafe(here.renderLinkToPage(bltitle))"> </a> 
+		    <a tal:define="bltitle bl/Title" tal:replace="structure python:here.talsafe(here.renderLinkToPage(bltitle))"> </a>
        		    <br />
                   </span>
                 </li>
@@ -68,7 +68,7 @@
             <td width="50%" tal:condition="canreparent">
               <p>
                 <span i18n:translate="">
-                  You can set this page's parent(s) to place it within the overall page hierarchy. 
+                  You can set this page's parent(s) to place it within the overall page hierarchy.
                 </span>
                 <span i18n:translate="" tal:condition="backlinks">
                   Check one or more checkboxes or enter a page name here, and click the button.
@@ -107,9 +107,9 @@
                 </span>
             </p>
             <ol>
-              <li tal:repeat="cname subtopics"> 
-                <form tal:condition="canreparent" 
-                      tal:attributes="action string:${here/pageUrl}/reorder" 
+              <li tal:repeat="cname subtopics">
+                <form tal:condition="canreparent"
+                      tal:attributes="action string:${here/pageUrl}/reorder"
                       style="display:inline;" >
                   <input type="hidden" name="child" tal:attributes="value cname" />
                   <input type="submit" value="^" style="padding:0px;visibility:hidden;" tal:condition="not:repeat/cname/index" />

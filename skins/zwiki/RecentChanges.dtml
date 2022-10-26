@@ -1,5 +1,5 @@
 <dtml-call "RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
-<dtml-let 
+<dtml-let
  wikiurl=wiki_url
  summaries="REQUEST.get('summaries',0)"
  period="_.string.lower(REQUEST.get('period','week'))"
@@ -22,7 +22,7 @@
       <td align="right"><dtml-translate domain=zwiki>Pages changed in the last</dtml-translate></td>
       <dtml-in "['day','week','month','year','ever']" prefix=x>
       <td align="center">
-        <input type=submit name=period value="&dtml-x_sequence_item;" 
+        <input type=submit name=period value="&dtml-x_sequence_item;"
                <dtml-if "x_sequence_item==period">style="font-weight:bold"</dtml-if>
                />
         <dtml-if "x_sequence_item==period"><br />(&dtml-number;)</dtml-if>
@@ -57,7 +57,7 @@
   <dtml-in results prefix=x>
   <tr valign="top" <dtml-var "(x_sequence_odd and 'bgcolor=#f0f0f0') or ''">>
     <td>
-      <a href="&dtml-wikiurl;/&dtml.url_quote-id;" 
+      <a href="&dtml-wikiurl;/&dtml.url_quote-id;"
          title=""
          style="background-color:<dtml-var issueColour>;"
          ><dtml-var "formatWikiname(Title)"></a>

@@ -1,4 +1,4 @@
-<dtml-let 
+<dtml-let
  subtopics=childrenAsList
  viewcounter="_.has_key('mxm_counter')"
 >
@@ -18,7 +18,7 @@
 <th><dtml-translate domain="zwiki">Created</dtml-translate></th>
 </tr>
 <dtml-in "[pageWithName(c) for c in subtopics]" prefix=x sort=ageInDays>
-<dtml-let 
+<dtml-let
   active="lastEditIntervalInDays() < 7"
   bold="active and 'font-weight:bold;' or ''"
   star="active and '<img src=/misc_/ZWiki/star_icon align=right />' or ''"

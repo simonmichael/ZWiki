@@ -60,11 +60,11 @@
                          name="expr" type="text" size="20" maxlength="100" value=""
                          title="search all pages" i18n:attributes="title" /><br />
                   <span class="lasteditor" tal:content="structure python:here.talsafe(here.linkTitle(prettyprint=1))" /><br>
-                  <span class="creator"    tal:content="structure python:'created %s' % here.creation_time[:10]" />   
+                  <span class="creator"    tal:content="structure python:'created %s' % here.creation_time[:10]" />
                 </tal:block>
                 <tal:block tal:condition="here/usingPloneSkin">
                   <span class="lasteditor" tal:content="structure python:here.talsafe(here.linkTitle(prettyprint=1))" /><br>
-                  <span class="creator"    tal:content="structure python:'created: %s' % here.creation_time[:10]" />   
+                  <span class="creator"    tal:content="structure python:'created: %s' % here.creation_time[:10]" />
                   <div metal:use-macro="python:
                                         (hasattr(here,'document_actions')
                                         and here.document_actions.macros['document_actions'])

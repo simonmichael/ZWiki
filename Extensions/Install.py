@@ -20,12 +20,12 @@ def install(portal):
     portal_skins    = getToolByName(portal, 'portal_skins')
     portal_workflow = getToolByName(portal, 'portal_workflow')
     portal_setup = getToolByName(portal, 'portal_setup')
-    
+
     portal_setup.runAllImportStepsFromProfile('profile-ZWiki:default')
 
     # XXX move the following into the profile above.. cf
     # http://dev.plone.org/plone/browser/CMFPlone/trunk/profiles/default/types/Discussion_Item.xml
-    
+
     # register our skin layer(s) and add to each existing skin
     if 'zwiki' not in portal_skins.objectIds():
         addDirectoryViews(portal_skins, 'skins', {'__name__':'Products.ZWiki'})
@@ -50,7 +50,7 @@ def install(portal):
     portal_workflow._chains_by_type = cbt
     out.write("Disabled workflow on Wiki Page\n")
 
-    # make wiki pages use External Editor, if installed, 
+    # make wiki pages use External Editor, if installed,
     if safe_hasattr(portal.Control_Panel.Products, 'ExternalEditor'):
         # XXX Uses addAction and portal_migration, which are plonisms.
         # How should we do this for vanilla CMF ? Do nothing for now.
@@ -58,7 +58,7 @@ def install(portal):
             migrationtool = getToolByName(portal, 'portal_migration')
             for ctype in portal_types.objectValues():
                 if ctype.getId() == 'Wiki Page':
-                    # We must detect plone 1 or plone 2 here because addAction has a 
+                    # We must detect plone 1 or plone 2 here because addAction has a
                     # different number of arguments
                     # XXX actually I'm pretty sure we don't/don't need to support plone 1
                     # any more, check

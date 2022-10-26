@@ -1,4 +1,4 @@
-/* Zwiki stylesheet - edit to change the wiki's appearance 
+/* Zwiki stylesheet - edit to change the wiki's appearance
  *
  * This may be installed
  * - as the built-in skin method "/stylesheet" (default)
@@ -303,7 +303,7 @@ ul.auto-toc {
 .dimtext                 {font-size: 80%; color: gray;}
 
 .linkpanel td, .linkpanel_minimal td {color: gray;}
-                                      
+
 .navpanel {
        color: gray;
 }
@@ -318,7 +318,7 @@ ul.auto-toc {
 }
 
 /* can't get these to combine with dimtext for some reason */
-.highrated               {font-size: 80%; color: green} 
+.highrated               {font-size: 80%; color: green}
 .neutralrated            {font-size: 80%; color: gray}
 .lowrated                {font-size: 80%; color: red}
 
@@ -328,15 +328,15 @@ ul.auto-toc {
 .subscribed              {} /* for subscribeform */
 .notsubscribed           {}
 
-/* background shade of form fields 
+/* background shade of form fields
  * input,textarea,select {} would be cleaner but changes buttons too
  * (except file upload buttons)
- * can select with input[type=submit] but not in IE 
+ * can select with input[type=submit] but not in IE
  */
 .formfield               {background: #f0f0f0;}
 
 body {
-  margin:0; 
+  margin:0;
   padding:0;
   font-family:sans, sans-serif, verdana, arial, helvetica;
   color: black;
@@ -356,22 +356,22 @@ h2 {
 }
 .content {
   margin-top:2em;
-  margin-left:2em; 
+  margin-left:2em;
   margin-right:2em;
  /* width: 80%; */
   background-color: white;
-} 
+}
 td.content {
  border: 1px solid #EEEEEE;
 }
 .formcontent {
  margin:8px;
-} 
+}
 input,select {
   font-size:inherit;
 }
-.error { 
- color:red; background-color:#ffdddd; border:thin solid red; 
+.error {
+ color:red; background-color:#ffdddd; border:thin solid red;
 }
 
 /* top stuff */
@@ -421,7 +421,7 @@ input,select {
   font-size: 80%;
 }
 #searchinput { /* generated tag with id=searchinput already has a class (multiple classes bad for IE<5.5 ?) */
- width:95%; 
+ width:95%;
  margin-top: 0px;
 }
 
@@ -452,7 +452,7 @@ div.subtopics {
   margin-top:1em;
 }
 .subtopics h4 {
-  color: gray; 
+  color: gray;
 /*  margin-bottom:0;*/
 }
 .subtopics ul {
@@ -461,7 +461,7 @@ div.subtopics {
   font-weight:bold;
 }
 .subtopics ul ul {
-  font-weight:normal; 
+  font-weight:normal;
   font-size:0.9em;
 }
 .outline ul {
@@ -471,8 +471,8 @@ div.subtopics {
 .outline li {
   list-style:none;
 }
-.outline a {   
-  text-decoration: none; 
+.outline a {
+  text-decoration: none;
   color: black;
 }
 .expandable {
@@ -555,39 +555,39 @@ pre, code {
 }
 
 #axiomlabel {
-    position:relative; 
-    right:0.8em; 
-    top:-0.2em; 
-    font-size:100%; 
+    position:relative;
+    right:0.8em;
+    top:-0.2em;
+    font-size:100%;
     color: #446644;
     font-family: monospace;
 }
 #axiomcode {
-    background-color: transparent; 
-    font-family: monospace; 
+    background-color: transparent;
+    font-family: monospace;
     font-size:100%;
-}   
+}
 #axiomtext {
     margin-left:2em;
     background-color: lightgrey;
-    font-family: monospace; 
+    font-family: monospace;
     font-size:85%;
     padding: 1ex; padding-top: 0;
 /*    border-width: 0.5ex;  border-style: inset; border-color:lightgrey;*/
-}   
+}
 #axiomcode pre {
     margin-left:1.5em;
-    background-color: lightgreen; 
-    font-family: monospace; 
+    background-color: lightgreen;
+    font-family: monospace;
     font-size:85%;
     padding: 1ex; padding-top: 0;
 /*    border-width: 0.5ex;  border-style: outset; border-color:lightgreen;*/
 }
-#reducelabel { 
-    position:relative; 
-    right:0.8em; 
-    top:-0.2em; 
-    font-size:73%; 
+#reducelabel {
+    position:relative;
+    right:0.8em;
+    top:-0.2em;
+    font-size:73%;
     color: #446644;
     font-family: monospace;
 }
@@ -607,30 +607,30 @@ pre, code {
 }
 
 #maximalabel {
-    position:relative; 
-    right:0.8em; 
-    top:-0.2em; 
-    font-size:100%; 
+    position:relative;
+    right:0.8em;
+    top:-0.2em;
+    font-size:100%;
     color: #448844;
     font-family: monospace;
 }
 #maximacode {
-    background-color: transparent; 
-    font-family: monospace; 
+    background-color: transparent;
+    font-family: monospace;
     font-size:85%;
-}   
+}
 
 #maximaoutput {
     margin-left:2em;
-    background-color: transparent; 
-    font-family: monospace; 
+    background-color: transparent;
+    font-family: monospace;
     font-size:85%;
-}   
+}
 #maximainput {
     width:98%;
     margin-left:1em; margin-bottom:1ex; margin-top:1ex;
     background-color: lightblue;
-    font-family: monospace; 
+    font-family: monospace;
     font-size:85%;
     padding: 1ex; padding-top: 0;
 /*    border-width: 0.5ex;  border-style: inset; border-color:lightgrey;*/
@@ -638,8 +638,8 @@ pre, code {
 
 #maximacode pre {
     margin-left:1.5em;
-    background-color: lightgrey; 
-    font-family: monospace; 
+    background-color: lightgrey;
+    font-family: monospace;
     font-size:85%;
     padding: 1ex; padding-top: 0;
 /*    border-width: 0.5ex;  border-style: outset; border-color:lightgrey;*/

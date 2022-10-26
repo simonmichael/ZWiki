@@ -64,11 +64,11 @@ class PageTypeStx(PageTypeBaseHtml):
     def preRender(self, page, text=None):
         """
         Do as much up-front rendering work as possible and save it.
-        
+
         For the STX page type, this means: format mbox-style messages,
         apply text formatting, format any purple numbers, and identify
         wiki links.
-        
+
         This normally works on page's source, but can be also invoked on
         arbitrary text.
         """
@@ -116,7 +116,7 @@ class ZwikiDocumentWithImages(DocumentWithImages):
     # so we must hard-code STX element types and priorities here..
     # should mimic STXNG behaviour as closely as possible here
     text_types = [
-        'doc_sgml',    
+        'doc_sgml',
         'doc_literal',
         'doc_img',
         'doc_inner_link',
@@ -274,7 +274,7 @@ class ZwikiDocumentWithImages(DocumentWithImages):
         for div in dividers:
             if div in TD:
                 index = all.index(div)
-                for rowindex in range(all[index-1],all[index]):                    
+                for rowindex in range(all[index-1],all[index]):
                     for i in range(len(rows[rowindex])):
                         rows[rowindex][i] = (rows[rowindex][i][0],
                                              rows[rowindex][i][1],
@@ -319,7 +319,7 @@ class ZwikiDocumentWithImages(DocumentWithImages):
                 leftindent      = 0
                 rightindent     = 0
                 left            = []
-                right           = []                                    
+                right           = []
                 text            = row[index][0]
                 text            = split(text,'\n')
                 text            = text[:len(text)-1]
@@ -385,9 +385,9 @@ class ZwikiDocumentWithImages(DocumentWithImages):
             rows.append(cols)
             cols = []
         return StructuredTextTable(rows,text,subs,indent=paragraph.indent)
-            
+
 ZwikiDocumentWithImages = ZwikiDocumentWithImages()
-    
+
 registerPageType(PageTypeStx)
 
 # backwards compatibility - need this here for old zodb objects

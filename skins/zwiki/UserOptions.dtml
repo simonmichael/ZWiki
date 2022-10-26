@@ -1,10 +1,10 @@
 <dtml-call "RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
 <p>
-  <dtml-translate domain="zwiki">Set your preferences for this wiki:</dtml-translate> 
+  <dtml-translate domain="zwiki">Set your preferences for this wiki:</dtml-translate>
 </p>
 
 <dtml-with "REQUEST # needed in cmf/plone for some reason I can't fathom">
-<dtml-let 
+<dtml-let
  RESPONSE="REQUEST.RESPONSE"
  cookiepath="'/' #wikiUrl() # issue 928"
  cookieduration="(ZopeTime() + 365).rfc822() # 1 year"
@@ -28,7 +28,7 @@
 <dtml-if setcookies>
 <dtml-in cookielist prefix=x>
 <dtml-if "_.has_key(x_item)">
-<dtml-call "RESPONSE.setCookie(x_item, REQUEST.get(x_item), 
+<dtml-call "RESPONSE.setCookie(x_item, REQUEST.get(x_item),
                                path=cookiepath, expires=cookieduration)
             # set any cookies we have data for">
 </dtml-if>
@@ -61,15 +61,15 @@
 </p>
 
 <p>
-<dtml-translate domain="zwiki">Email address:</dtml-translate> 
+<dtml-translate domain="zwiki">Email address:</dtml-translate>
 <input type="text" name="email" size="20" maxlength="40"
-       value="<dtml-var email missing>"> 
+       value="<dtml-var email missing>">
 <dtml-translate domain="zwiki">(allows mail subscription)</dtml-translate>
 </p>
 
 <p>
 <dtml-translate domain="zwiki">Your time zone:</dtml-translate>
-<dtml-let 
+<dtml-let
   now=ZopeTime
   timezones="[
   'GMT-1100', 'GMT-1000', 'GMT-0900', 'GMT-0800', 'GMT-0700', 'GMT-0600',
@@ -97,7 +97,7 @@
     <dtml-if "userzone == x_item">selected</dtml-if>
     >
     &dtml-x_item; (current time: <dtml-var "now.toZone(x_item).AMPMMinutes()">)
-    
+
   </dtml-in>
   </select>
   <dtml-translate domain="zwiki">(localizes most times)</dtml-translate>
@@ -111,15 +111,15 @@
   <dtml-translate domain="zwiki">(adjusts form size)</dtml-translate>
 </p>
 
-<div align="right"> 
-<b><input type="submit" name="setcookies" 
-value="<dtml-translate domain="zwiki">Save options</dtml-translate>" 
+<div align="right">
+<b><input type="submit" name="setcookies"
+value="<dtml-translate domain="zwiki">Save options</dtml-translate>"
 style="font-weight:bold"></b>
-<input type="submit" name="clearcookies" 
+<input type="submit" name="clearcookies"
 value="<dtml-translate domain="zwiki">Forget options</dtml-translate>"
-> 
+>
 </div>
-<input type="hidden" name="zwiki_displaymode" 
+<input type="hidden" name="zwiki_displaymode"
 value="<dtml-var "REQUEST.get('zwiki_displaymode',getattr(aq_parent,'default_displaymode','minimal'))">">
 
 </form>

@@ -3,7 +3,7 @@ import string
 def propreplace(self,properties,old,new):
     """
     Do a text replace in certain properties of zwiki pages in this folder.
-    
+
     For all zwiki pages in this folder, replace all occurrences of old
     with new in the specified property or properties (must be string
     properties). You could call this from your browser, eg like so:

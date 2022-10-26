@@ -326,7 +326,7 @@ Renaming a page and changing backlinks:
     >>> editlink.click()
     >>> textarea = browser.getControl(name='text')
     >>> textarea.value = """There is a link to ZWiki, to ZWiki:HowToSetUpAZwikiTracker and some to [bla bla]
-    ... and bla bla or BlaBla or even [[bla bla]] - 
+    ... and bla bla or BlaBla or even [[bla bla]] -
     ... but by default no ((bla bla)), no !MailHost and of course not AnyOther link."""
     >>> submit = browser.getControl('Save')
     >>> submit.click()

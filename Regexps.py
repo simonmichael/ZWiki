@@ -128,7 +128,7 @@ except (TypeError,LookupError):
     Ubr = '[%s]' % ''.join([c.encode('utf8') for c in unicode(uppercase,'utf-8')])
     Lbr = '[%s]' % ''.join([c.encode('utf8') for c in unicode(lowercase,'utf-8')])
     relocaleflag = ''
-    wordboundary = '(?<![A-Za-z0-9\x80-\xff])' 
+    wordboundary = '(?<![A-Za-z0-9\x80-\xff])'
 
 # the basic bare wikiname regexps
 # ?: means "don't remember", apparently a performance optimization
@@ -154,7 +154,7 @@ wikiname         = r'!?(%s)' %(wikiname4)
 simplehashnumber = r'\#[0-9]+'
 # avoid html entities like &#123;
 hashnumberexpr   = r'(?:(?<!&)%s|(?<=&)%s(?![0-9;]))' % (simplehashnumber, simplehashnumber)
-                   
+
 wikilink         = r'!?(%s|%s|%s|%s|%s)' % (wikiname4,bracketedexpr,doubleparenthesisexpr,url,hashnumberexpr)
 localwikilink1   = r'(?:%s|%s|%s|%s)' % (wikiname4,bracketedexpr,doubleparenthesisexpr,hashnumberexpr)
 localwikilink    = r'!?(%s)' % (localwikilink1)
@@ -166,7 +166,7 @@ wikinamewords    = r'((%s(?!%s))+|%s%s+|[0-9]+)'%(Ubr,Lbr,Ubr,Lbr)
 remotewikiurl    = r'(?mi)RemoteWikiURL[:\s]+(?P<remoteurl>[^\s]*)\s*$'
 protected_line   = r'(?m)^!(.*)$'
 
-# stx footnotes 
+# stx footnotes
 # handled by us so as to co-exist with our bracketed links
 # real stx allows refchars = r'[0-9_%s-]' % (string.letters)
 footnoteexpr     = r'(?sm)^\.\. \[([^\n\]]+)\]'

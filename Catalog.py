@@ -13,7 +13,7 @@ class PageCatalogSupport:
     Holds most of ZWikiPage's catalog awareness code.  Similar to Zope's
     or CMF's catalog awareness with a little extra behaviour.
 
-    Confusing code duplication between zwiki/plone/cmf/zope here. 
+    Confusing code duplication between zwiki/plone/cmf/zope here.
     """
     security = ClassSecurityInfo()
 
@@ -58,7 +58,7 @@ class PageCatalogSupport:
         """
         Give the id of the catalog used by this page, or "NONE".
 
-        Should be useful for troubleshooting. 
+        Should be useful for troubleshooting.
         """
         if self.hasCatalog(): return self.catalog().getId()
         else: return 'NONE'
@@ -134,8 +134,8 @@ class PageCatalogSupport:
         """
         return '%s\n%s' % (
             self.toencoded(self.pageName()), self.toencoded(self.text()))
-    
-    
+
+
     index = index_object         # convenience alias
     indexObject = reindex_object # plone compatibility
 

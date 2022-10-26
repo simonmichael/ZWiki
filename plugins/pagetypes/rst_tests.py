@@ -20,7 +20,7 @@ class Tests(ZwikiTestCase):
 
     def test_dtml_in_rst(self):
         p = self.p
-        
+
         # disabled by default ?
         p.edit(text='<dtml-var "1+1">',type='rst')
         self.assert_(p.hasDynamicContent())

@@ -2,13 +2,13 @@
 <dtml-comment>
 A custom error handler for 404 NotFound errors (only). Redirects to a
 similarly-named existing page if possible, otherwise offers create/search
-buttons.  
+buttons.
 
 Assumes at least one zwiki page exists. It doesn't matter which one we
 work from, except created pages will go under it. picks SandBox if
 available, to reduce mail noise from test pages.
 </dtml-comment>
-<dtml-let 
+<dtml-let
  here="objectValues(spec='ZWiki Page')[0]"
  here="here.defaultPage()
        #here.pageWithName('SandBox') or here.defaultPage()
@@ -33,7 +33,7 @@ available, to reduce mail noise from test pages.
       "here.urlunquote(searchexpr)" html_quote></b>"
     </p>
     <p>
-      Click here to 
+      Click here to
       <form action="<dtml-var "here.pageUrl()">/createform"
             method="GET" enctype="multipart/form-data">
         <input type="hidden" name="page" value="&dtml-searchexpr;">
