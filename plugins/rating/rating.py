@@ -5,7 +5,7 @@ import string, re
 #from urllib import quote, unquote
 
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 
 from BTrees.OOBTree import OOBTree
 from types import DictionaryType

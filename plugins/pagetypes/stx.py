@@ -2,7 +2,7 @@ from common import *
 from Products.ZWiki.i18n import _
 from Products.ZWiki.plugins.pagetypes import registerPageType
 
-from Globals import MessageDialog
+from App.Dialogs import MessageDialog
 try: # zope 2.10 and up uses zope3 stx
     from zope.structuredtext.stng         import structurize
     from zope.structuredtext.stng         import StructuredTextTable

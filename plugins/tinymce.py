@@ -3,7 +3,7 @@ import os, re, os.path
 from string import join, split, strip
 
 from AccessControl import getSecurityManager, ClassSecurityInfo
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 
 from Products.ZWiki import Permissions
 from Products.ZWiki.i18n import _

@@ -2,7 +2,7 @@ import string, re, urllib
 from string import split,join,find,lower,rfind,atoi,strip,lstrip
 from urllib import quote, unquote
 
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 from AccessControl import getSecurityManager, ClassSecurityInfo
 
 from Products.ZWiki.Utils import BLATHER, html_quote, html_unquote, formattedTraceback, \

@@ -5,7 +5,7 @@ from types import *
 from urllib import quote, unquote
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER, html_quote, toencoded

@@ -7,7 +7,8 @@ from types import *
 
 import DocumentTemplate
 from AccessControl import getSecurityManager, ClassSecurityInfo, Unauthorized
-from Globals import InitializeClass, package_home
+from AccessControl.class_init import InitializeClass
+from App.Common import package_home
 
 from Products.ZWiki.plugins import registerPlugin
 from Products.ZWiki.Defaults import registerPageMetaData
