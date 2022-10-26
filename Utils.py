@@ -13,11 +13,14 @@ from AccessControl.class_init import InitializeClass
 from OFS.SimpleItem import SimpleItem
 import zLOG
 from DateTime import DateTime
-try: # zope 2.7
-    from DateTime import SyntaxError
-    DateTimeSyntaxError = SyntaxError()
+try: #Zope4
+    from DateTime.interfaces import SyntaxError as DateTimeSyntaxError
 except ImportError:
-    DateTimeSyntaxError = DateTime.SyntaxError
+    try: #Zope2.13
+        DateTimeSyntaxError = DateTime.SyntaxError
+    except AttributeError: # Zope2.7
+        from DateTime import SyntaxError
+        DateTimeSyntaxError = SyntaxError()
 try:
     path = os.path.join(SOFTWARE_HOME,'Zope2','version.txt') # >=2.9
     if not os.path.exists(path):
