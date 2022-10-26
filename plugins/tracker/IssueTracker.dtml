@@ -78,7 +78,7 @@ and "Zwiki:Add comments" permissions from non-manager users.
 <dtml-else>
 <div style="font-size:small; border-bottom:thin solid #cccccc; background-color:#f0f0f0;">
 <a href="&dtml-URL;">[-] hide overview</a> Open issues by category:
-<dtml-let 
+<dtml-let
     barearg="'bare' in QUERY_STRING and '&bare=%s'%REQUEST.get('bare') or ''"
     href="lambda x:'%s?category=%s&sort_on=status_index&overview=1%s'%(_['URL'],_.this.urlquote(x),_['barearg'])"
     cats=issueCategories
@@ -95,7 +95,7 @@ and "Zwiki:Add comments" permissions from non-manager users.
       <td width="<dtml-var "'%s%%'%(100/numcols)">">
         <table border="0" width="100%">
         <dtml-in "_.range(longest)" prefix=row>
-        <dtml-let 
+        <dtml-let
           row=row_sequence_item
           col=col_sequence_item
           >

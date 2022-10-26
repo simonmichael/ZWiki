@@ -43,7 +43,7 @@ class ArchiveSupport:
             if f.isPrincipiaFolderish:
                 return f
         return None
-            
+
     security.declareProtected(AccessControl.Permissions.delete_objects, 'archive')
     def archive(self, REQUEST=None, pagename=None):
         """Move this page, and all offspring solely parented under this

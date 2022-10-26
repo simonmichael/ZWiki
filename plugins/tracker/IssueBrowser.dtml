@@ -7,20 +7,20 @@
 
 This page looks **broken**, because it needs dtml enabled to work.
 
-You can enable dtml by setting a boolean property called allow_dtml to true 
+You can enable dtml by setting a boolean property called allow_dtml to true
 on this page.
 
-You might then want to lock this page by going to the security tab and 
-unchecking the "Zwiki:Edit pages" and "Zwiki:Add comments" permissions 
+You might then want to lock this page by going to the security tab and
+unchecking the "Zwiki:Edit pages" and "Zwiki:Add comments" permissions
 from non-manager users if you are security conscious.
 
 --------------------------------------
 
 </dtml-comment>
 
-<!-- category box and font sizes adjusted for number of open issues --> 
+<!-- category box and font sizes adjusted for number of open issues -->
 <a name="categories"></a>
-<dtml-let 
+<dtml-let
     cols="issue_categories
           #or, a list of issue category prefixes.. categories with the same prefix
           #will be grouped in columns"
@@ -58,7 +58,7 @@ issue categories sized and coloured according to open issues
       <td width="<dtml-var "'%s%%'%(100/_.len(cols))">">
         <table border="0" width="100%">
         <dtml-in "_.range(longest)" prefix=row>
-        <dtml-let 
+        <dtml-let
           row=row_sequence_item
           col=col_sequence_item
           >
@@ -100,7 +100,7 @@ issue categories sized and coloured according to open issues
 <dtml-if "REQUEST.get('category','')">
 <a name="issues"></a>
 <hr class="issuebrowser" style="border:1px black solid" />
-<dtml-let 
+<dtml-let
     category="REQUEST.get('category')"
     barearg="'bare' in QUERY_STRING and '&bare=%s'%REQUEST.get('bare') or ''"
     issues="pages(isIssue=1,category=category,sort_on='creation_time',sort_order='descending')"
@@ -111,11 +111,11 @@ issue categories sized and coloured according to open issues
     cols="_.max(2,_.min(_.int(_.round(_.math.sqrt(num))),6))"
     rows="num/cols + ((num%cols) and 1)"
     >
-<table width="100%" border=0>  
+<table width="100%" border=0>
   <dtml-in "_.range(rows)" prefix=row>
     <tr height="<dtml-var "'%s%%'%(100/(rows+1))">">
       <dtml-in "_.range(cols)" prefix=col>
-        <dtml-let 
+        <dtml-let
           row=row_sequence_item
           col=col_sequence_item
           itemno="row*cols+col"

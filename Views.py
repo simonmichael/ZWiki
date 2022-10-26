@@ -333,12 +333,12 @@ class SkinUtils:
     #    XXX should be going away soon. Old comment: the wikipage template
     #    is usually applied by __call__ -> addSkinTo, but this method is
     #    provided so you can configure it as the"view" action
-    #    in portal_types -> Wiki Page -> actions and get use Zwiki's standard 
+    #    in portal_types -> Wiki Page -> actions and get use Zwiki's standard
     #    skin inside a CMF/Plone site.
     #    """
     #    return self.render(REQUEST=REQUEST,RESPONSE=RESPONSE)
     #wikipage_view = wikipage
-    
+
     # backwards compatibility - some old templates expect
     # wikipage_template().macros or wikipage_macros something something
     def wikipage_template(self, REQUEST=None): return self
@@ -395,18 +395,18 @@ class SkinUtils:
         """
         # look for a similarly-named template..
         obj = None
-        
+
         # in a filesystem skin named by a "skin" request var
         skin = self.REQUEST.get('skin',None)
         if SKINS.has_key(skin): obj = SKINS[skin].get(name,None)
-        
+
         #in the zodb
         if not obj:
             for s in suffixes:
                 obj = getattr(self.folder(), name+s, None)
                 if obj and (isTemplate(obj) or isFile(obj)): break
                 else: obj = None
-                
+
         # in a filesystem skin named by a "skin" property
         if not obj:
             skin = getattr(self,'skin',None)
@@ -417,7 +417,7 @@ class SkinUtils:
 
         # or give up and show a harmless error
         if not obj: obj = SKINS['zwiki']['badtemplate']
-            
+
         # return it, with both folder and page in the acquisition context
         return obj.__of__(self.folder()).__of__(self)
 
@@ -427,7 +427,7 @@ class SkinUtils:
         """
         # != ignores any acquisition wrapper
         return self.getSkinTemplate(name) != TEMPLATES['badtemplate']
-        
+
     security.declareProtected(Permissions.View, 'addSkinTo')
     def addSkinTo(self,body,**kw):
         """
@@ -510,7 +510,7 @@ class SkinSwitchingUtils:
         Ie, are we using the plone display mode of zwiki's standard skin.
         """
         return (self.inCMF() and self.displayMode()=='plone')
-        
+
     security.declareProtected(Permissions.View, 'setCMFSkin')
     def setCMFSkin(self,REQUEST,skin):
         """

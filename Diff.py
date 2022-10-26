@@ -28,7 +28,7 @@ class PageDiffSupport:
     def diff(self, rev=None, REQUEST=None):
         """
         Show what changed in the latest or specified revision of this page.
-        
+
         Uses the diffform template.
         """
         if rev: brev = int(rev)
@@ -124,7 +124,7 @@ def textdiff(a, b, verbose=1):
             addm(abbreviate(b[blo:bhi],'',MAX_NEW_LINES_DISPLAY))
             add('')
         else: # tag == 'equal'
-            pass 
+            pass
     return '\n' + join(r,'\n')
 
 def htmldiff(a,b):
@@ -149,7 +149,7 @@ def htmldiff(a,b):
             add('<b>changed:</b>')
             addnobr('<span style="color:red;text-decoration:line-through">')
             # remember to html-quote the diff segments
-            addm(prefix(map(html_quote, a[alo:ahi]),'-')) 
+            addm(prefix(map(html_quote, a[alo:ahi]),'-'))
             addnobr('</span>')
             addnobr('<span style="color:green">')
             addm(map(html_quote, b[blo:bhi]))

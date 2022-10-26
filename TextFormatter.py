@@ -97,7 +97,7 @@ class TextFormatter:
                             words.append(word[i:i+self.width])
                     words.append('\n')
                 if words[-1] == '\n': words.pop()
-                
+
             if words:
                 current = words.pop(0)
                 for word in words:

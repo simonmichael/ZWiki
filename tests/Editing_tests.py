@@ -61,7 +61,7 @@ class Tests(ZwikiTestCase):
 #         self.assert_(hasattr(req.RESPONSE,'redirectedto'))
 #         self.assertEqual(req.RESPONSE.redirectedto,
 #                          p.wikiUrl()+'/')
-        
+
         ## redirect to first existing parent
         #p.create(page='Dogs')
         ## was:
@@ -96,7 +96,7 @@ class Tests(ZwikiTestCase):
     #    self.assert_(not hasattr(f,'TestPage'))
     #    self.assert_(hasattr(f,'recycle_bin'))
     #    self.assertEqual(f.recycle_bin.TestPage.read(),'\nDeleteMe')
-    
+
     #def test_delete(self):
         #p = mockPage()
         #f = p.folder()
@@ -141,7 +141,7 @@ class Tests(ZwikiTestCase):
 
         # calling with an unnamed file should do nothing much
         self.assertEqual(p._addFileFromRequest(p.REQUEST),None)
-        
+
         # ditto for a blank filename
         file.filename = ''
         self.assertEqual(p._addFileFromRequest(p.REQUEST),None)
@@ -281,7 +281,7 @@ class Tests(ZwikiTestCase):
         p.setCreator(r)
         self.assertEqual(p.creator_ip,'4.3.2.1')
         self.assertEqual(p.creator,'test user')
-        
+
     def test_text(self):
         p = self.page
         # ensure we don't lose first lines to DTML's decapitate()
@@ -297,7 +297,7 @@ class Tests(ZwikiTestCase):
     def test_create(self):
         p = self.page
         f = p.aq_parent
-        
+
         # create a blank page
         p.create('TestPage1',text='')
         self.assert_(safe_hasattr(f,'TestPage1'))
@@ -311,7 +311,7 @@ class Tests(ZwikiTestCase):
         self.assertEqual(f.TestPageA.parents,['a','b'])
         p.create('TestPageB',parents=[])
         self.assertEqual(f.TestPageB.parents,[])
-        
+
 # having trouble making MZP support this
 # handleFileUpload -> checkPermission(,MZP.folder()) loops
 # because page.aq_parent.aq_parent == page
@@ -320,7 +320,7 @@ class Tests(ZwikiTestCase):
 #        p = mockPage()
 #        f = p.folder()
 #        f.aq_parent = None
-#        
+#
 #        # upload a file while creating a page
 #        # this capability broke - fix if ever needed
 #        # and most of this is tested above I think
@@ -381,7 +381,7 @@ class Tests(ZwikiTestCase):
         p.setCreator(r)
         self.assertEqual(p.creator_ip,'4.3.2.1')
         self.assertEqual(p.creator,'test user')
-        
+
     def test_text(self):
         p = self.page
         # ensure we don't lose first lines to DTML's decapitate()
@@ -417,7 +417,7 @@ test
 From me Fri Dec 31 00:00:00 GMT 1999
 From: me
 Date: 1999/12/31 GMT
-Subject: 
+Subject:
 Message-ID: <19991231000000+0000@foo>
 
 comment''')
@@ -452,7 +452,7 @@ comment</p>
 <b>...</b> --me,  <a href="http://nohost/test_folder<u>1</u>/wiki/TestPage#msg19991231000000+0000@foo">1999/12/31 GMT</a> <a href="http://nohost/test_folder<u>1</u>/wiki/TestPage?subject=&in_reply_to=%3C19991231000000%2B0000%40foo%3E#bottom">reply</a><br />
 comment</p>
 ''')
-        
+
         # check we ignore comments with no subject or body
         old = p.read()
         p.comment(text='',subject_heading='')
@@ -491,7 +491,7 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: base64
 From: me
 Date: Fri, 31 Dec 1999 00:00:00 +0000
-Subject: 
+Subject:
 Message-ID: <>
 
 short lines
@@ -523,7 +523,7 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: base64
 From: me
 Date: Fri, 31 Dec 1999 00:00:00 +0000
-Subject: 
+Subject:
 Message-ID: <>
 
 short lines
@@ -686,13 +686,13 @@ bbb
         freds = p.read()
         p.expungeEditsBy('joe')
         self.assertEqual(p.read(), freds)
-        
+
         # joe edits
         p.REQUEST.cookies['zwiki_username'] = 'joe'
         p.edit(text='2',REQUEST=p.REQUEST)
         self.assertEqual(p.lastEditor(),'joe')
         self.assertNotEqual(p.read(), freds)
-        
+
         # expunge edits by joe - back to fred's version
         #can't test this yet, cf #1325
         #p.expungeEditsBy('joe')
@@ -713,7 +713,7 @@ bbb
         import transaction
         transaction.get().commit()
         p.render(bare=1)
-        
+
     def test_expungeLastEditor(self):
         p, r = self.page, self.request
         def be(u):r.cookies['zwiki_username'] = u
@@ -743,7 +743,7 @@ bbb
         p = expungeLastEditorAndRefresh()
         self.assertEqual(1,p.revisionCount())
         self.assertEqual('',p.last_editor)
-        
+
     def test_expungeLastEditorEverywhere(self):
         a, r = self.page, self.request
         def be(u):r.cookies['zwiki_username'] = u
@@ -756,7 +756,7 @@ bbb
         c.append('x',REQUEST=r)
 
         self.assertEqual([1,3,2], [p.revisionCount() for p in [a,b,c]])
-            
+
         def expungeLastEditorEverywhereAndRefresh(p):
             p.expungeLastEditorEverywhere()
             return [p.pageWithId(q.getId()) for q in [a,b,c]]

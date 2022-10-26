@@ -20,9 +20,9 @@
                                  expires=(here.ZopeTime() + 365).rfc822())
                                  "/>
         </span>
-        <form method="post" 
+        <form method="post"
               enctype="multipart/form-data"
-              action="page_url/subscribeform" 
+              action="page_url/subscribeform"
               tal:attributes="action string:${here/pageUrl}/subscribeform"
               tal:define="
                           email here/usernameOrEmailOfSubscriber;
@@ -45,7 +45,7 @@
               Subscribers receive a copy of all edits via email.
               Or return to
             </span>
-            <a href="page_url" tal:attributes="href here/pageUrl" 
+            <a href="page_url" tal:attributes="href here/pageUrl"
                tal:content="here/pageName">Page name</a>.
           </p>
           <div tal:condition="inCMFAndLoggedIn">
@@ -56,13 +56,13 @@
           </div>
           <div tal:condition="not:inCMFAndLoggedIn">
             <span i18n:translate="" tal:omit-tag="">Your email address</span>:
-            <input name="email" type="text" size="30" value="email" 
+            <input name="email" type="text" size="30" value="email"
                    tal:attributes="value email" class="formfield" />
             <input name="emailchanged" type="hidden" value="1" />
             <input class="context"
-                   type="submit" 
-                   name="../subscribeform:method" 
-                   value="Change" 
+                   type="submit"
+                   name="../subscribeform:method"
+                   value="Change"
                    i18n:attributes="value"
                    />
           </div>
@@ -84,25 +84,25 @@
                   to this page.</span>
                 </span>
                 <br />
-                <input tal:condition="pagesubscriber" 
+                <input tal:condition="pagesubscriber"
                        class="standalone"
-                       type="submit" 
-                       name="../unsubscribe:method" 
-                       value=" Unsubscribe from this page " 
+                       type="submit"
+                       name="../unsubscribe:method"
+                       value=" Unsubscribe from this page "
                        i18n:attributes="value"
                        />
-                <input tal:condition="not:pagesubscriber" 
+                <input tal:condition="not:pagesubscriber"
                        class="standalone"
-                       type="submit" 
-                       name="../subscribe:method" 
-                       value=" Subscribe to this page " 
+                       type="submit"
+                       name="../subscribe:method"
+                       value=" Subscribe to this page "
                        i18n:attributes="value"
                        />
                 <span tal:condition="not:pagesubscriber">
                   &nbsp;&nbsp;<span i18n:translate="">all edits</span>:
-                  <input type="checkbox" 
-                         name="edits" 
-                         value="1" 
+                  <input type="checkbox"
+                         name="edits"
+                         value="1"
                          />
                 </span>
               </td>
@@ -118,25 +118,25 @@
                   You are currently not subscribed<br /> to the whole wiki.
                 </span>
                 <br />
-                <input tal:condition="wikisubscriber" 
+                <input tal:condition="wikisubscriber"
                        class="standalone"
-                       type="submit" 
-                       name="../wikiUnsubscribe:method" 
-                       value="Unsubscribe from whole wiki" 
+                       type="submit"
+                       name="../wikiUnsubscribe:method"
+                       value="Unsubscribe from whole wiki"
                        i18n:attributes="value"
                        />
-                <input tal:condition="not:wikisubscriber" 
+                <input tal:condition="not:wikisubscriber"
                        class="standalone"
-                       type="submit" 
-                       name="../wikiSubscribe:method" 
-                       value="Subscribe to whole wiki" 
+                       type="submit"
+                       name="../wikiSubscribe:method"
+                       value="Subscribe to whole wiki"
                        i18n:attributes="value"
                        />
                 <span tal:condition="not:wikisubscriber">
                   &nbsp;&nbsp;<span i18n:translate="">all edits</span>:
-                  <input type="checkbox" 
-                         name="edits" 
-                         value="1" 
+                  <input type="checkbox"
+                         name="edits"
+                         value="1"
                          />
                 </span>
               </td>

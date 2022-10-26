@@ -25,7 +25,7 @@ class TestsOfTrackerSetup(ZwikiTestCase):
         self.assertEqual(f['1FirstIssue'].parents,[])
         f['1FirstIssue'].createNextIssue('test')
         self.assertEqual(f['2Test'].parents,[])
-        
+
     def test_issueParentageWithPageBasedTracker(self):
         # with a tracker page, issues are parented under that
         f = self.p.folder()
@@ -55,7 +55,7 @@ class Tests(ZwikiTestCase):
         self.assert_(not isIssue('IssueNo'))
         self.assert_(    isIssue('IssueNo1'))
         self.assert_(    isIssue('#1'))
-        
+
     def test_issueNumberFrom(self):
         issueNumberFrom = self.p.issueNumberFrom
         self.assertEqual(issueNumberFrom('IssueNo1'),1)
@@ -102,4 +102,4 @@ class Tests(ZwikiTestCase):
         self.assertEqual(issue2, p.pageWithFuzzyName('2', allow_partial=1))
         issue2.delete()
         self.assertEqual(issue20, p.pageWithFuzzyName('2', allow_partial=1))
-        
+

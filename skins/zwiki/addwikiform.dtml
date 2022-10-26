@@ -1,9 +1,9 @@
 <dtml-call "RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
-<html>  
-  <head>  
+<html>
+  <head>
     <title><dtml-translate domain=zwiki>Add ZWiki</dtml-translate></title>
-  </head>  
-  <body bgcolor="#ffffff" link="#000099" vlink="#555555">  
+  </head>
+  <body bgcolor="#ffffff" link="#000099" vlink="#555555">
     <h2><dtml-translate domain=zwiki>Add ZWiki</dtml-translate></h2>
     <p>
       <dtml-translate domain=zwiki>
@@ -14,7 +14,7 @@
     </p>
     <form action="manage_addWiki" method="post" enctype="multipart/form-data">
       <table cellspacing="2">
-	<tr> 
+	<tr>
 	  <th align="left" valign="middle"><dtml-translate domain=zwiki>Id:</dtml-translate></th>
 	  <td align="left" valign="middle">
 	    <input type="text" name="new_id" size="30" />
@@ -25,10 +25,10 @@
 	    </dtml-translate>
 	  </td>
 	</tr>
-	<tr> 
+	<tr>
 	  <td colspan=3><br /></td>
 	</tr>
-	<tr> 
+	<tr>
 	  <th align="left" valign="middle"><dtml-translate domain=zwiki>Title:</dtml-translate></th>
 	  <td align="left" valign="middle">
 	    <input type="text" name="new_title" size="30" />
@@ -39,12 +39,12 @@
 	    </dtml-translate>
 	  </td>
 	</tr>
-	<tr> 
+	<tr>
 	  <td colspan=3><br /></td>
 	</tr>
-	<tr> 
+	<tr>
 	  <th align="left" valign="middle"><dtml-translate domain=zwiki>Template:</dtml-translate></th>
-	  <td align="left" valign="middle">	    
+	  <td align="left" valign="middle">	
 	    <table border="0" cellspacing=3>
 	      <dtml-in listWikis>
 		<dtml-unless "_['sequence-item'][-7:] == '_config'">
@@ -78,7 +78,7 @@
 	    </dtml-translate>
 	  </td>
 	</tr>
-	<tr> 
+	<tr>
 	  <td colspan=3><br /></td>
 	</tr>
 	<tr>

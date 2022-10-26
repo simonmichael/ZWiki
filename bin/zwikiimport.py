@@ -1,4 +1,4 @@
-""" 
+"""
 zwikiimport.py - import files/directories into a zwiki.
 
 (c) 2004-2005 SKWM, GNU GPL.
@@ -112,12 +112,12 @@ def dlog(msg='', newline=True):
 
 def vlog(msg='', newline=True):
     """Print some text and/or a newline if verbose option is true."""
-    if options.verbose: 
+    if options.verbose:
         if newline:
             print '%s' % msg
         else:
             print '%s' % msg,
-            
+
 def bodyFromHtml(t):
     """Return contents of html body tag in t, or None."""
     m = re.search(r'(?is)<body[^>]*>(.*)</body>',t)

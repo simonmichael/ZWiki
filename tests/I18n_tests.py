@@ -1,6 +1,6 @@
 # -*- coding: latin-1 -*-
 #
-# tests to verify l10n works.. none of these work currently 
+# tests to verify l10n works.. none of these work currently
 #
 # OLD ISSUES
 #
@@ -103,7 +103,7 @@ else: # NEVER RUN
         #    # the searchwiki form includes searchwikidtml
         #    t = self.p.searchwiki(REQUEST=MockRequest())
         #    self.assert_(re.search('Enter a word',t))
-        #    
+        #
         #    self.p.REQUEST = MockRequest(language='it')
         #    t = self.p.searchwiki(REQUEST=self.p.REQUEST)
         #    self.assert_(re.search(r'Inserisci una parola',t))
@@ -113,7 +113,7 @@ else: # NEVER RUN
         #    self.p.edit(
         #        text='<dtml-translate domain=zwiki>NEW</dtml-translate>')
         #    self.assert_(re.search('NEW', self.p(bare=1)))
-        #    
+        #
         #    self.p.REQUEST = MockRequest(language='it')
         #    self.assert_(re.search('NUOVA', self.p(bare=1)))
 

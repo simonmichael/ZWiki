@@ -72,7 +72,7 @@ class Tests(unittest.TestCase):
                            'SingletonPage',
                            'TestPage',
                            ])
-        
+
     def test_next(self):
         o = self.outline
         self.assertEquals(o.next('RootPage'),'ChildPage')
@@ -130,7 +130,7 @@ class Tests(unittest.TestCase):
         #self.assertRaises(UnicodeError, self.wiki.NewName.rename, pagename='NéwName')
         # accepts unicode ?
 
-    
+
     def test_parents(self):
         o = self.outline
         self.assertEquals(o.parents('RootPage'),[])

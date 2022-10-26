@@ -52,4 +52,4 @@ class Tests(ZwikiTestCase):
         BLATHER('E')                    # ascii
         BLATHER('É')                    # utf-8
         BLATHER(u'\xc9')                # unicode
-        
+

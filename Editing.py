@@ -59,7 +59,7 @@ class PageEditingSupport:
         understand it: XXX cleanup
 
         - page:     the "original" name of the page we are to create.
-        - pagename: an alternate spelling of the above, to ease page 
+        - pagename: an alternate spelling of the above, to ease page
                     management form implementation. Pass one or the other.
         - title:    optional "new" name to rename to after creation.
                     This allows us to handle the zwiki and CMF/plone
@@ -116,7 +116,7 @@ class PageEditingSupport:
         # now really update the wiki outline
         # XXX should reuse reparent code to do parents validation etc.
         p.parents = (parents==None) and [self.pageName()] or parents
-        self.wikiOutline().add(p.pageName(), p.parents) 
+        self.wikiOutline().add(p.pageName(), p.parents)
         p.setPageType(type or self.defaultPageType())
         p.setText(text,REQUEST)
         p.handleFileUpload(REQUEST)
@@ -145,11 +145,11 @@ class PageEditingSupport:
         return name
 
     security.declarePublic('edit')      # check permissions at runtime
-    def edit(self, page=None, text=None, type=None, title='', 
-             timeStamp=None, REQUEST=None, 
+    def edit(self, page=None, text=None, type=None, title='',
+             timeStamp=None, REQUEST=None,
              subjectSuffix='', log='', check_conflict=1, # temp (?)
              leaveplaceholder=LEAVE_PLACEHOLDER, updatebacklinks=1,
-             subtopics=None): 
+             subtopics=None):
         """General-purpose method for editing & creating zwiki pages.
 
         This method does a lot; combining all this stuff in one powerful
@@ -179,11 +179,11 @@ class PageEditingSupport:
         # what are we doing ?
         if page: page = unquote(page)
         if page is None:                  # changing this page
-            p = self                        
+            p = self
         elif self.pageWithNameOrId(page): # changing another page
-            p = self.pageWithNameOrId(page) 
+            p = self.pageWithNameOrId(page)
         else:                             # creating a new page
-            return self.create(page,        
+            return self.create(page,
                                text or '',
                                type,
                                title,
@@ -524,7 +524,7 @@ class PageEditingSupport:
         newname = clean(self.tounicode(pagename))
         newid = self.canonicalIdFrom(newname)
         namechanged, idchanged = newname != oldname, newid != oldid
-        if not newname or not (namechanged or idchanged): return 
+        if not newname or not (namechanged or idchanged): return
         # sequence is important here
         BLATHER('renaming %s (%s) to %s (%s)...' % (
             self.toencoded(oldname),oldid,self.toencoded(newname),newid))
@@ -536,7 +536,7 @@ class PageEditingSupport:
         if (idchanged or namechanged) and updatebacklinks:
             self._replaceLinksEverywhere(oldname,newname,REQUEST)
         self.index_object() # update catalog XXX manage_renameObject may also, if idchanged
-        if idchanged and leaveplaceholder: 
+        if idchanged and leaveplaceholder:
             try: self._makePlaceholder(oldid,newname)
             except BadRequestException:
                 # special case for CMF/Plone: we'll end up here when first
@@ -549,7 +549,7 @@ class PageEditingSupport:
         BLATHER('rename complete')
         if REQUEST: REQUEST.RESPONSE.redirect(self.pageUrl())
 
-    def _makePlaceholder(self,oldid,newname): 
+    def _makePlaceholder(self,oldid,newname):
         self.create(
             oldid,
             _("This page was renamed to [%s].\n") % (newname),
@@ -592,7 +592,7 @@ class PageEditingSupport:
                 child.removeParent(self.pageName())
                 child.addParent(newparent)
                 child.index_object() # XXX need only reindex parents
-                
+
     def _replaceLinksEverywhere(self,oldlink,newlink,REQUEST=None):
         """Replace one link with another throughout the wiki.
 
@@ -713,14 +713,14 @@ class PageEditingSupport:
             self.setLastLog(log)
             self.index_object()
         appendQuietly(fileOrImageLink(),log,REQUEST)
-        
+
     def _setOwnership(self, REQUEST=None):
         """Set appropriate ownership for a new page.  To help control
         executable content, we make sure the new page acquires it's owner
         from the parent folder.
         """
         self._deleteOwnershipAfterAdd()
-            
+
     # for IssueNo0157
     _old_read = DTMLDocument.read
     security.declareProtected(Permissions.View, 'read')
@@ -732,7 +732,7 @@ class PageEditingSupport:
     def text(self, REQUEST=None, RESPONSE=None):
         """
         Return this page's source text, with text/plain content type.
-        
+
         (a permission-free version of document_src)
         # XXX security ?
         """
@@ -771,7 +771,7 @@ class PageEditingSupport:
         def forbid(reason):
             BLATHER('%s blocked edit from %s (%s), %s:\n%s' % (path, ip, username, reason, t))
             raise Forbidden, "There was a problem, please contact the site admin."
-            
+
         # content matches a banned pattern ?
         for pat in self.getSpamPatterns():
             if re.search(pat,t): forbid("spam pattern found")
@@ -786,7 +786,7 @@ class PageEditingSupport:
         else:
             BLATHER('checking zwiki.org spam blacklist')
             req = urllib2.Request(
-                ZWIKI_SPAMPATTERNS_URL, 
+                ZWIKI_SPAMPATTERNS_URL,
                 None,
                 {'User-Agent':'Zwiki %s' % self.zwiki_version()}
                 )
@@ -872,7 +872,7 @@ class PageEditingSupport:
         Warn if this edit would be in conflict with another.
 
         Edit conflict checking based on timestamps -
-        
+
         things to consider: what if
         - we are behind a proxy so all ip's are the same ?
         - several people use the same cookie-based username ?
@@ -912,7 +912,7 @@ class PageEditingSupport:
     security.declareProtected(Permissions.View, 'timeStamp')
     def timeStamp(self):
         return str(self._p_mtime)
-    
+
     security.declareProtected(Permissions.FTP, 'manage_FTPget')
     def manage_FTPget(self):
         """
@@ -1004,7 +1004,7 @@ class PageEditingSupport:
         here and there.
         """
         return self.pageType().split(self)
-    
+
     security.declareProtected(Permissions.Delete, 'merge')
     def merge(self):
         """
@@ -1014,6 +1014,6 @@ class PageEditingSupport:
         text page type does this.
         """
         return self.pageType().merge(self)
-    
+
 InitializeClass(PageEditingSupport)
 

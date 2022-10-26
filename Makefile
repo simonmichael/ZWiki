@@ -56,7 +56,7 @@ epydoc:
 #   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki/+upload
 #   wait for upload (https://translations.launchpad.net/zwiki/trunk/+imports)
 #  2. download latest translations from launchpad
-#   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki/+export (everything, partial po format) 
+#   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki/+export (everything, partial po format)
 #   https://translations.launchpad.net/zwiki/trunk/+pots/zwiki-plone/+export
 #   wait for mail, unpack download links into i18n/ :
 #    cd i18n
@@ -94,7 +94,7 @@ poupload:
 	for L in $(LANGUAGES); do tar rvf zwiki.tar $$L.po; done; \
 	tar rvf zwiki.tar zwiki-plone.pot; \
 	for L in $(LANGUAGES); do tar rvf zwiki.tar plone-$$L.po; done; \
-	gzip -f zwiki.tar; 
+	gzip -f zwiki.tar;
 
 # unpack po files downloaded from launchpad
 po:

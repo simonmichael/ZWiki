@@ -55,7 +55,7 @@ class PageTypeRst(PageTypeBase):
         return t
 
     def makeCommentHeading(self, page,
-                           subject, username, time, 
+                           subject, username, time,
                            message_id=None,in_reply_to=None):
         """
         Generate restructured text markup for a comment heading in a RST page.
@@ -91,12 +91,12 @@ class PageTypeRst(PageTypeBase):
 
     def inlineImage(self, page, id, path):
         return '\n\n.. image:: %s\n' % path
-   
+
     def linkFile(self, page, id, path):
         return '\n\n!`%s`__\n\n__ %s\n' % (id, path)
 
     # split and merge.. these are trickier than they seemed at first
-    
+
     def split(self, page):
         """
         Move this page's top-level sections to sub-pages.
@@ -119,7 +119,7 @@ class PageTypeRst(PageTypeBase):
         page.edit(
             text=d.child_text_separator.join(
                 [p.astext() for p in d[:d.first_child_matching_class(section)]]))
-        
+
         if getattr(page,'REQUEST',None):
             page.REQUEST.RESPONSE.redirect(page.pageUrl())
 

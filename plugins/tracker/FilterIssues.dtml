@@ -8,11 +8,11 @@
 
 This page looks **broken**, because it needs dtml enabled to work.
 
-You can enable dtml by setting a boolean property called allow_dtml to true 
+You can enable dtml by setting a boolean property called allow_dtml to true
 on this page.
 
-You might then want to lock this page by going to the security tab and 
-unchecking the "Zwiki:Edit pages" and "Zwiki:Add comments" permissions 
+You might then want to lock this page by going to the security tab and
+unchecking the "Zwiki:Edit pages" and "Zwiki:Add comments" permissions
 from non-manager users if you are security conscious.
 
 --------------------------------------
@@ -21,7 +21,7 @@ from non-manager users if you are security conscious.
 
 <dtml-let
  scrollto="'' #'#tracker'"
- issueCount=issueCount 
+ issueCount=issueCount
  sort_order="REQUEST.get('sort_order','')"
  sort_on="tounicode(REQUEST.get('sort_on','issueNumber'))"
  num="_.int(REQUEST.get('num',99999))"
@@ -32,16 +32,16 @@ from non-manager users if you are security conscious.
  single_category="((_.len(category)==1) and category[0]) or ''"
  single_status="((_.len(status)==1) and status[0]) or ''"
  >
-<dtml-translate domain=zwiki>More advanced</dtml-translate> 
+<dtml-translate domain=zwiki>More advanced</dtml-translate>
 
-<a href="&dtml-trackerUrl;"><dtml-translate domain=zwiki>issue tracker</dtml-translate></a> 
+<a href="&dtml-trackerUrl;"><dtml-translate domain=zwiki>issue tracker</dtml-translate></a>
 <dtml-translate domain=zwiki>search options</dtml-translate>.
 
 <table border="0" cellpadding="0" cellspacing="0">
 <tr valign="top">
 <td>
 <!-- start of totals matrix -->
-<dtml-let 
+<dtml-let
 >
 <table border="0" cellspacing="0" cellpadding="2">
 <tr>
@@ -91,9 +91,9 @@ from non-manager users if you are security conscious.
 </dtml-in>
 <td align="right">
 <dtml-let bold="(QUERY_STRING and
-           _.len(category)==0 or 
+           _.len(category)==0 or
            _.len(category)==_.len(issue_categories)) and
-          (_.len(status)==0 or 
+          (_.len(status)==0 or
            _.len(status)==_.len(issue_statuses))">
 <dtml-if bold><b></dtml-if>
 <a href="&dtml-URL;?titlesearch=&sort_on=severity_index"
@@ -135,7 +135,7 @@ from non-manager users if you are security conscious.
 <dtml-if "x_sequence_item in category">SELECTED</dtml-if>
 >&dtml-x_sequence_item;</option>
 </dtml-in>
-</select> 
+</select>
 </td>
 <td align=left valign=top>
 <dtml-translate domain=zwiki>Severities:</dtml-translate><br />
@@ -145,7 +145,7 @@ from non-manager users if you are security conscious.
 <dtml-if "x_sequence_item in severity">SELECTED</dtml-if>
 >&dtml-x_sequence_item;</option>
 </dtml-in>
-</select> 
+</select>
 </td>
 <td align=left valign=top>
 <dtml-translate domain=zwiki>Statuses:</dtml-translate><br />
@@ -155,11 +155,11 @@ from non-manager users if you are security conscious.
 <dtml-if "x_sequence_item in status">SELECTED</dtml-if>
 >&dtml-x_sequence_item;</option>
 </dtml-in>
-</select> 
+</select>
 </td>
 </tr>
 <tr>
-<td align="left"><input type="submit" value="<dtml-translate domain=zwiki>Filter issues</dtml-translate>" style="font-weight:bold;"> 
+<td align="left"><input type="submit" value="<dtml-translate domain=zwiki>Filter issues</dtml-translate>" style="font-weight:bold;">
 </td>
 <td align="center" colspan=2>&nbsp;</td>
 </tr>
@@ -177,7 +177,7 @@ from non-manager users if you are security conscious.
    Three cases:
    - if we have a search term, search for it in title, text and category
      (a dumb way, concatenate three searches)
-   - or, if we have a query string, search and sort according to those 
+   - or, if we have a query string, search and sort according to those
      parameters
    #- otherwise, show a default search (open issues by severity)
  </dtml-comment>
@@ -187,7 +187,7 @@ from non-manager users if you are security conscious.
    results. Try both at once I guess.
    XXX try again ?
  </dtml-comment>
- <dtml-let 
+ <dtml-let
   sortonstart="_.string.find(QUERY_STRING,'sort_on')"
   sortonend="_.string.find(QUERY_STRING,'&',sortonstart)"
   sortonend="(sortonend != -1) and (sortonend+1) or _.len(QUERY_STRING)"
@@ -205,7 +205,7 @@ from non-manager users if you are security conscious.
    (pages(isIssue=1, sort_on=sort_on, sort_limit=num, Title=searchexpr) +
     pages(isIssue=1, sort_on=sort_on, sort_limit=num, category=searchexpr) +
     pages(isIssue=1, sort_on=sort_on, sort_limit=num, SearchableText=searchexpr))[:num])
-  or 
+  or
   (QUERY_STRING and
    pages(isIssue=   1,
          sort_on=   sort_on,
@@ -275,8 +275,8 @@ from non-manager users if you are security conscious.
        <dtml-try>
          <dtml-let
           linktitle="'' #getObject().linkTitle()"
-          bold="0#(status in ('open','pending') and 
-          #severity not in ('wishlist',) and 
+          bold="0#(status in ('open','pending') and
+          #severity not in ('wishlist',) and
           #page.ageInDays() > 60)"
 	  titleseparator="_.string.find(Title,' ')"
 	  issuenmbr="titleseparator != -1 and Title[:titleseparator] or 'None'"
@@ -288,7 +288,7 @@ from non-manager users if you are security conscious.
                <dtml-var "renderLinkToPage(Title)">
                </dtml-comment>
                <dtml-var "bold and '<b>' or ''"
-               ><a href="&dtml-wiki_url;/&dtml-id;" 
+               ><a href="&dtml-wiki_url;/&dtml-id;"
                    title="<dtml-var "'' #page.linkTitle()">">&dtml-issuenmbr;</a>
                <dtml-var "bold and '</b>' or ''">
              </td>
@@ -297,7 +297,7 @@ from non-manager users if you are security conscious.
                <dtml-var "renderLinkToPage(Title)">
                </dtml-comment>
                <dtml-var "bold and '<b>' or ''"
-               ><a href="&dtml-wiki_url;/&dtml-id;" 
+               ><a href="&dtml-wiki_url;/&dtml-id;"
                    title="<dtml-var "'' #page.linkTitle()">">&dtml-issuenam;</a>
                <dtml-var "bold and '</b>' or ''">
              </td>

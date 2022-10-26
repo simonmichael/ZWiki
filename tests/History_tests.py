@@ -28,7 +28,7 @@ class Tests(ZwikiTestCase):
         self.assertEqual(2, len(p.revisions()))
         self.assertEqual(p.getId()+'.1', p.revisions()[0].getId())
         self.assertEqual(p, p.revisions()[1])
-        
+
     def test_revisionNumber(self):
         p = self.page.folder()[self.page.create('NewPage')]
         self.assertEqual(p.revisionNumber(),         1)
@@ -64,8 +64,8 @@ class Tests(ZwikiTestCase):
         self.assertEqual([1],p.revisionNumbers())
         p.edit(text='x')
         self.assertEqual([1,2],p.revisionNumbers())
-        
-        
+
+
     def test_saveRevision(self):
         p = self.page
         f = p.folder()
@@ -80,7 +80,7 @@ class Tests(ZwikiTestCase):
         # should not require create permission
         f.manage_permission('Zwiki: Add pages',[],acquire=0)
         # XXX failure here will only show up in test output, should fail the test
-        p.saveRevision() 
+        p.saveRevision()
         f.manage_permission('Zwiki: Add pages',['Anonymous'],acquire=0)
 
         # should not update catalog in the wiki folder
@@ -149,7 +149,7 @@ class Tests(ZwikiTestCase):
         self.assertEqual(p.previousRevisionNumber(), 1)
         self.assertEqual(p.revision(1).nextRevisionNumber(), 4)
         self.assertEqual(4, p.revision(4).revisionNumber())
-        
+
     def test_accessing_main_folder_from_revisions(self):
         p, f = self.page, self.wiki
         p.saveRevision()

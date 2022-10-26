@@ -24,7 +24,7 @@
       <a tal:attributes="href string:${here/pageUrl}/backlinks" accesskey="b"></a>
       <a tal:attributes="href string:${here/pageUrl}/diff" accesskey="d"></a>
       <a tal:attributes="href string:${here/pageUrl}/history" accesskey="y"></a>
-      <a tal:attributes="href string:${here/pageUrl}/editform" 
+      <a tal:attributes="href string:${here/pageUrl}/editform"
       tal:condition="not:skip_e_accesskey|nothing" accesskey="e"></a>
       <a tal:attributes="href python:here.wikiUrl() + '/externalEdit_/' +
                          modules['Products.PythonScripts.standard'].url_quote(here.id()) +
