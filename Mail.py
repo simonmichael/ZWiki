@@ -9,7 +9,7 @@ from email.Utils import parseaddr, getaddresses
 from email.Iterators import typed_subpart_iterator
 from email.Header import Header, decode_header
 
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 
 from i18n import _
 from TextFormatter import TextFormatter

@@ -2,7 +2,7 @@
 # originally based on Casey Duncan's DTMLDocumentExt 0.1
 
 from AccessControl import getSecurityManager, ClassSecurityInfo
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 
 import Permissions
 from Utils import BLATHER,formattedTraceback,safe_hasattr

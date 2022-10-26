@@ -91,7 +91,8 @@ import os
 from App.Common import rfc1123_date
 from AccessControl import getSecurityManager, ClassSecurityInfo, Unauthorized
 from OFS.Image import File
-from Globals import InitializeClass, MessageDialog
+from AccessControl.class_init import InitializeClass
+from App.Dialogs import MessageDialog
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from Products.PageTemplates.Expressions import SecureModuleImporter

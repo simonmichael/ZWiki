@@ -18,7 +18,7 @@ import ZODB # need this for pychecker
 from AccessControl import getSecurityManager, ClassSecurityInfo, Unauthorized
 from App.Common import rfc1123_date
 from DateTime import DateTime
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 try:
     from zope.contenttype import guess_content_type
 except ImportError:

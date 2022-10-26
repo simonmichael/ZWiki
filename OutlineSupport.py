@@ -51,7 +51,8 @@ from urllib import quote, unquote
 from AccessControl import ClassSecurityInfo
 import Acquisition
 from App.Common import absattr
-from Globals import InitializeClass, REPLACEABLE
+from AccessControl.class_init import InitializeClass
+from OFS.ObjectManager import REPLACEABLE
 import Persistence
 from OFS.SimpleItem import SimpleItem
 

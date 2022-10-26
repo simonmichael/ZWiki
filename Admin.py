@@ -6,7 +6,8 @@ from string import join, split, strip
 from time import clock
 
 from AccessControl import getSecurityManager, ClassSecurityInfo, Unauthorized
-from Globals import package_home, InitializeClass
+from AccessControl.class_init import InitializeClass
+from App.Common import package_home
 from OFS.CopySupport import CopyError
 from OFS.DTMLMethod import DTMLMethod
 from DateTime import DateTime

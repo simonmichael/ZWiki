@@ -21,7 +21,7 @@ from types import *
 from AccessControl import getSecurityManager, ClassSecurityInfo
 from App.Common import rfc1123_date
 from DateTime import DateTime
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 from OFS.DTMLDocument import DTMLDocument
 import Permissions
 from Defaults import AUTO_UPGRADE, IDS_TO_AVOID, \

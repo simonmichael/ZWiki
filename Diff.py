@@ -11,7 +11,7 @@ import difflib
 from DocumentTemplate.DT_Util import html_quote
 from OFS.History import historicalRevision
 from AccessControl import getSecurityManager, ClassSecurityInfo
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 
 from Defaults import MAX_OLD_LINES_DISPLAY, MAX_NEW_LINES_DISPLAY
 import Permissions

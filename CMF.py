@@ -2,7 +2,7 @@
 # See also __init__.py and Extensions/Install.py
 
 #from types import *
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 from Utils import safe_hasattr
 
 try:

@@ -9,7 +9,7 @@ from urllib import quote, unquote
 from Acquisition import aq_base
 from AccessControl import getSecurityManager, ClassSecurityInfo
 from App.Common import absattr
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 from OFS.SimpleItem import SimpleItem
 import zLOG
 from DateTime import DateTime

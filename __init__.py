@@ -9,7 +9,9 @@ import re, os.path, string, urllib
 
 from AccessControl import getSecurityManager
 from DateTime import DateTime
-from Globals import package_home, MessageDialog, ImageFile
+from App.Common import package_home
+from App.Dialogs import MessageDialog
+from App.ImageFile import ImageFile
 from OFS.Folder import Folder
 from OFS.Image import Image, File
 from OFS.ObjectManager import customImporters
