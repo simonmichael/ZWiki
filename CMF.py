@@ -53,9 +53,6 @@ else:
         We use our own similar attributes..
         XXX maybe we can always use dublin core and simplify.
         """
-        # XXX: is this needed?
-        #__implements__ = DefaultDublinCoreImpl.__implements__
-
         security = ClassSecurityInfo()
         security.declarePrivate('setModificationDate')
         def setModificationDate(self, modification_date=None):
@@ -101,10 +98,6 @@ else:
         """
         Mix-in class for CMF support
         """
-        # XXX: is this needed?
-        #__implements__ = ZwikiDublinCoreImpl.__implements__ + \
-        #                 PortalContent.__implements__
-
         portal_type = PAGE_PORTALTYPE
         # provide this so DublinCore.Format works with old instances
         format = 'text/html'

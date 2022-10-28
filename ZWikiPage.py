@@ -104,11 +104,6 @@ class ZWikiPage(
     if ZOPEVERSION < (2,12):
         from webdav.WriteLockInterface import WriteLockInterface
         __implements__ = (WriteLockInterface, PageCMFSupport.__implements__)
-    else:
-        from webdav.interfaces import IWriteLock
-        # XXX: do we need PageCMFSupport.__implements__ ?
-        #__implements__ = (IWriteLock, PageCMFSupport.__implements__)
-        implements(IWriteLock)
 
     security = ClassSecurityInfo()
     security.declareObjectProtected('View')
