@@ -150,7 +150,7 @@ class PageAdminSupport:
 
         Called on every page view (set AUTO_UPGRADE=0 in Default.py to
         prevent this).  You could also call this on every page in your
-        wiki to do a batch upgrade. Affects bobobase_modification_time. If
+        wiki to do a batch upgrade. Affects last_modified. If
         you later downgrade zwiki, the upgraded pages may not work so
         well.
         """
@@ -195,10 +195,10 @@ class PageAdminSupport:
         # Pre-0.9.10, creation_time has been a string in custom format and
         # last_edit_time has been a DateTime. Now both are kept as
         # ISO 8601-format strings. Might not be strictly necessary to upgrade
-        # in all cases.. will cause a lot of bobobase_mod_time
+        # in all cases.. will cause a lot of last_modified
         # updates.. do it anyway.
         if not self.last_edit_time:
-            self.last_edit_time = self.bobobase_modification_time().ISO8601()
+            self.last_edit_time = DateTime(self.last_modified(self)).ISO8601()
             changed = 1
         elif type(self.last_edit_time) is not StringType:
             self.last_edit_time = self.last_edit_time.ISO8601()
@@ -293,7 +293,7 @@ class PageAdminSupport:
 
         if changed:
             # do a commit now so the current render will have the correct
-            # bobobase_modification_time for display (many headers/footers
+            # last_modified for display (many headers/footers
             # still show it)
             # XXX I don't think we need to dick around with commits any more
             #get_transaction().commit()
