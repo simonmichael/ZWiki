@@ -161,7 +161,7 @@ def loadFile(name,dir='skins/zwiki'):
                 mtime = os.path.getmtime(filepath)
                 file = File(name,'',data)
                 # bug workaround: last_modified will otherwise be current time
-                file.last_modified = lambda:mtime
+                file.last_modified = lambda x: mtime
                 return file
             except IOError:
                 return None
