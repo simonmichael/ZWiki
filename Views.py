@@ -281,7 +281,6 @@ TEMPLATES = SKINS['zwiki'] # backwards compatibility
 MACROS = {} # a flat dictionary of all macros defined in all templates
 # need to initialise it for some backwards compatibility assignments at startup
 [MACROS.update(t.pt_macros()) for t in TEMPLATES.values() if isPageTemplate(t)]
-
 def getmacros(self):
     """
     Get a dictionary of all the page template macros in the skin. More precisely,
