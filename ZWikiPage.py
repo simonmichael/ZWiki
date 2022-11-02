@@ -443,13 +443,13 @@ class ZWikiPage(
             if getattr(self, ignore_property, False): return False
         if last_mod == None:
             try:
-                # bobobase_modification_time reflects also changes
+                # modification time reflects also changes
                 # to voting, not like last_edit_time
-                last_mod = self.bobobase_modification_time()
+                last_mod = DateTime(self.last_modified(self))
             except DateTimeSyntaxError:
                 # if anything goes wrong with the stored date, we just
                 # ignore all 304 handling and go on as if nothing happened
-                BLATHER("invalid bobobase_modification time in page %s" \
+                BLATHER("invalid modification time in page %s" \
                             % (self.id()))
                 return False
         try: # we could have been fed an illegal date string

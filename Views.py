@@ -90,6 +90,7 @@ import os
 
 from App.Common import rfc1123_date
 from AccessControl import getSecurityManager, ClassSecurityInfo, Unauthorized
+from DateTime import DateTime
 from OFS.Image import File
 from AccessControl.class_init import InitializeClass
 from App.Dialogs import MessageDialog
@@ -159,8 +160,8 @@ def loadFile(name,dir='skins/zwiki'):
                 data = f.read()
                 mtime = os.path.getmtime(filepath)
                 file = File(name,'',data)
-                # bug workaround: bobobase_modification_time will otherwise be current time
-                file.bobobase_modification_time = lambda:mtime
+                # bug workaround: last_modified will otherwise be current time
+                file.last_modified = lambda x: mtime
                 return file
             except IOError:
                 return None
@@ -804,7 +805,7 @@ class SkinViews:
         form = self.getSkinTemplate('stylesheet',suffixes=['.css',''])
         if isFile(form):
             if self.handle_modified_headers(
-                last_mod=form.bobobase_modification_time(), REQUEST=REQUEST):
+                last_mod=DateTime(form.last_modified(form)), REQUEST=REQUEST):
                 return ''
             else:
                 return form.index_html(REQUEST,REQUEST.RESPONSE)
