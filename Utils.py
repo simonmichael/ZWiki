@@ -624,20 +624,20 @@ class PageUtils:
     # more verbose (self.toencoded vs. toencoded) this meant adding a page
     # argument to all the pagetype format methods. This is YAGNI code
     # but it's already done so let's leave it this way for a bit.
-    def encoding(self):
+    def get_encoding(self):
         return 'utf-8'
 
     def toencoded(self,s,enc=None):
         """Safely convert a unicode string to an encoded ordinary string.
         The wiki's default encoding is used, unless overridden.
         """
-        return toencoded(s,enc or self.encoding())
+        return toencoded(s,enc or self.get_encoding())
 
     def tounicode(self,s,enc=None):
         """Safely convert an encoded ordinary string to a unicode string.
         The wiki's default encoding is used, unless overridden.
         """
-        return tounicode(s,enc or self.encoding())
+        return tounicode(s,enc or self.get_encoding())
 
 InitializeClass(PageUtils)
 
