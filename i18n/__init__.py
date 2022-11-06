@@ -71,7 +71,7 @@ except (ImportError, NameError):
         blockContinuations=()
         _msgid = None
         _domain = None
-        def __init__(self, blocks):
+        def __init__(self, blocks, encoding='utf-8'):
             self.blocks=blocks
             tname, args, section = blocks[0]
             self.__name__="%s %s" % (tname, args)
