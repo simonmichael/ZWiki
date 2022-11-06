@@ -436,9 +436,18 @@ def listZodbWikis(self):
     """
     list the wiki templates available in the ZODB
     """
-    list = self.getPhysicalRoot().Control_Panel.Products.ZWiki.objectIds()
-    list.remove('Help')
-    return list
+    # XXX: currently we have no idea, how to place zwiki templates
+    # (like ZWiki/content/basic) into the ZODB in *Zope4*
+    #
+    # in *Zope2* we used to call
+    #
+    #    list = self.getPhysicalRoot().Control_Panel.Products.ZWiki.objectIds()
+    #    list.remove('Help')
+    #
+    # but this doesnt work in Zope4 anymore (Control_Panel has no Products
+    # attribute). So return the empty list for now.
+
+    return []
 
 def listFsWikis(self):
     """
