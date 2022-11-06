@@ -246,6 +246,7 @@ for s in os.listdir(abszwikipath('skins')):
         'pagemanagementform',
         'testtemplate',
         'badtemplate',
+        'nullmacro',
         ]:
         obj = loadPageTemplate(template,dir=skindir)
         if obj: SKINS[s][template] = obj
@@ -279,8 +280,6 @@ TEMPLATES = SKINS['zwiki'] # backwards compatibility
 
 # set up easy access to all PT macros via here/macros.
 MACROS = {} # a flat dictionary of all macros defined in all templates
-# need to initialise it for some backwards compatibility assignments at startup
-[MACROS.update(t.pt_macros()) for t in TEMPLATES.values() if isPageTemplate(t)]
 def getmacros(self):
     """
     Get a dictionary of all the page template macros in the skin. More precisely,
@@ -296,22 +295,29 @@ def getmacros(self):
         skin = SKINS[s]
         for t in skin.keys():
             if isPageTemplate(skin[t]):
-                #MACROS.update(self.getSkinTemplate(t).pt_macros())
-                MACROS.update(skin[t].pt_macros())
+                ptm = skin[t].pt_macros()
+                if not isinstance(ptm, dict):
+                    # we have to convert Chameleon Macros int a dict
+                    ptm = dict([(n, ptm[n]) for n in ptm.names])
+                MACROS.update(ptm)
+    # some backwards compatibility assignments
+    for compatname, name in macrotrans:
+        MACROS[compatname] = MACROS[name]
     return MACROS
 
 # provide old macros for backwards compatibility
 # pre-0.52 these were defined in wikipage, old custom templates may need them
 # two more were defined in contentspage, we won't support those
-MACROS['linkpanel']   = MACROS['links']
-MACROS['navpanel']    = MACROS['hierarchylinks']
-nullmacro = ZopePageTemplate('null','<div metal:define-macro="null" />').pt_macros()['null']
-MACROS['favicon']     = nullmacro
-MACROS['logolink']    = nullmacro
-MACROS['pagelinks']   = nullmacro
-MACROS['pagenameand'] = nullmacro
-MACROS['wikilinks']   = nullmacro
-
+macrotrans = [
+    # compat, current name
+    ('linkpanel', 'links'),
+    ('navpanel', 'hierarchylinks'),
+    ('favicon', 'null'),
+    ('logolink', 'null'),
+    ('pagelinks', 'null'),
+    ('pagenameand', 'null'),
+    ('wikilinks', 'null'),
+    ]
 
 class SkinUtils:
     """
