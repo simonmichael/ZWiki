@@ -1,7 +1,19 @@
+import sys
+
 from docutils.utils import new_document
 from docutils.frontend import OptionParser
 from docutils.parsers.rst import Parser
 from docutils.nodes import section
+from docutils.core import publish_parts
+
+# Disable inclusion of files for security reasons.  We do this by
+# changing the default value of the ``file_insertion_enabled``
+# parameter to False.
+import docutils.parsers.rst
+for title, options, conf in docutils.parsers.rst.Parser.settings_spec[2]:
+    if options == ['--file-insertion-enabled']:
+        conf['default'] = 0
+        break
 
 from common import *
 from Products.ZWiki.i18n import _
@@ -165,35 +177,42 @@ registerPageType(PageTypeRst)
 ZwikiRstPageType = PageTypeRst
 
 
-# Hackery to permit optional use of raw html in restructured text.
-# Current Zope overrides the rst settings
-# (https://bugs.launchpad.net/zope2/+bug/143852) - hopefully that
-# patch will be applied, but meanwhile we follow standard Zwiki
-# procedure and make it work now by hook or by crook.  The following
-# is based on ZPL-licensed code from lib/python/reStructuredText/__init__.py.
+# Zope4 has dropped reStructuredText package. We call docutils directly,
+# based on the last revision of the 2.13 branch:
+# https://github.com/zopefoundation/Zope/tree/2.13/src/reStructuredText/
+# __init__.py)
+# with the following changes:
+# * let the "settings" argument of "render()" override the default
+#   values: https://bugs.launchpad.net/zope2/+bug/143852
+# * no more settings from Zope configuration:
+#   - rest_{input|output}_encoding => use 'unicode' instead
+#   - rest_header_level => 3 (we use h3 as default)
+#   - rest_language_code => en (we use english as default)
+#  XXX: for the last two (level and lang) we should provide an override
+#       mechanism
 
-from reStructuredText import sys, getConfiguration, publish_parts, Warnings
+class Warnings:
 
-# get encoding
-default_enc = sys.getdefaultencoding()
-default_output_encoding = getConfiguration().rest_output_encoding or default_enc
-default_input_encoding = getConfiguration().rest_input_encoding or default_enc
+    def __init__(self):
+        self.messages = []
+
+    def write(self, message):
+        self.messages.append(message)
 
 # starting level for <H> elements (default behaviour inside Zope is <H3>)
 default_level = 3
-initial_header_level = getConfiguration().rest_header_level or default_level
+initial_header_level = default_level
 
 # default language used for internal translations and language mappings for DTD
 # elements
 default_lang = 'en'
-default_language_code = getConfiguration().rest_language_code or default_language
+default_language_code = default_lang
+
 
 def render(src,
            writer='html4css1',
            report_level=1,
            stylesheet=None,
-           input_encoding=default_input_encoding,
-           output_encoding=default_output_encoding,
            language_code=default_language_code,
            initial_header_level = initial_header_level,
            settings = {}):
@@ -210,8 +229,8 @@ def render(src,
     # now update with user supplied settings
     allsettings.update(settings)
     # and then add settings based on keyword parameters
-    allsettings['input_encoding'] = input_encoding
-    allsettings['output_encoding'] = output_encoding
+    allsettings['input_encoding'] = 'unicode'
+    allsettings['output_encoding'] = 'unicode'
     allsettings['stylesheet'] = stylesheet
     allsettings['stylesheet_path'] = None
     allsettings['language_code'] = language_code
@@ -219,6 +238,9 @@ def render(src,
     allsettings['initial_header_level'] = initial_header_level + 1
     # set the reporting level to something sane:
     allsettings['report_level'] = report_level
+
+    # make sure that ``source`` is a unicode object
+    assert type(src) == unicode
 
     parts = publish_parts(source=src, writer_name=writer,
                           settings_overrides=allsettings,
@@ -230,8 +252,6 @@ def HTML(src,
          writer='html4css1',
          report_level=1,
          stylesheet=None,
-         input_encoding=default_input_encoding,
-         output_encoding=default_output_encoding,
          language_code=default_language_code,
          initial_header_level = initial_header_level,
          warnings = None,
@@ -245,10 +265,6 @@ def HTML(src,
         - 'report_level' - verbosity of reST parser
 
         - 'stylesheet' - Stylesheet to be used
-
-        - 'input_encoding' - encoding of the reST input string
-
-        - 'output_encoding' - encoding of the rendered HTML output
 
         - 'report_level' - verbosity of reST parser
 
