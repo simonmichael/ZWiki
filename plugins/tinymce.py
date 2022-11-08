@@ -20,7 +20,7 @@ class TinyMCESupport:
     security.declareProtected(Permissions.View, 'tinyMCEInstalled')
     def tinyMCEInstalled(self):
         """Is TinyMCE installed and configured?"""
-        installed = 'ZTinyMCE' in self.Control_Panel.Products.objectIds()
+        installed = 'ZTinyMCE' in dir(self.getPhysicalRoot().misc_)
         return installed and getattr(self, 'tinymce.conf', None) is not None
 
     security.declareProtected(Permissions.View, 'supportsTinyMCE')
@@ -33,7 +33,7 @@ class TinyMCESupport:
         """
         Setup ZTinyMCE - if installed - with a useful config object.
         """
-        if not 'ZTinyMCE' in self.Control_Panel.Products.objectIds():
+        if not 'ZTinyMCE' in dir(self.getPhysicalRoot().misc_):
             return 'ZTinyMCE is not installed.' # XXX proper page, localize
         folder = self.folder()
         if 'TinyMCE' not in folder.objectIds():
