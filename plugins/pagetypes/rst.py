@@ -281,8 +281,6 @@ def HTML(src,
                                    writer = writer,
                                    report_level = report_level,
                                    stylesheet = stylesheet,
-                                   input_encoding = input_encoding,
-                                   output_encoding = output_encoding,
                                    language_code=language_code,
                                    initial_header_level = initial_header_level,
                                    settings = settings)
@@ -313,7 +311,4 @@ def HTML(src,
 
     warnings = ''.join(warning_stream.messages)
 
-    if output_encoding != 'unicode':
-        return output.encode(output_encoding)
-    else:
-        return output
+    return output
