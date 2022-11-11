@@ -51,7 +51,8 @@ from urllib import quote, unquote
 from AccessControl import ClassSecurityInfo
 import Acquisition
 from App.Common import absattr
-from Globals import InitializeClass, REPLACEABLE
+from AccessControl.class_init import InitializeClass
+from OFS.ObjectManager import REPLACEABLE
 import Persistence
 from OFS.SimpleItem import SimpleItem
 
@@ -152,7 +153,7 @@ class ParentsProperty:
     def addParent(self,parent):
         if parent:
             # we sometimes start page names with space as a subtopic
-            # ordering hack.. 
+            # ordering hack..
             #parent = string.strip(parent)
             if parent and not parent in self.parents:
                 self.ensureParentsPropertyIsList()
@@ -185,12 +186,12 @@ class ParentsProperty:
         cleanedupparents.sort()
         # if changed, save and reindex
         if cleanedupparents != parents:
-            BLATHER("adjusting %s's parents from %s to %s" % 
+            BLATHER("adjusting %s's parents from %s to %s" %
                  (self.pageName(), parents, cleanedupparents))
             self.setParents(cleanedupparents)
             self.index_object() #XXX only need to update parents index & metadata
 
-InitializeClass(ParentsProperty) 
+InitializeClass(ParentsProperty)
 
 
 class ShowSubtopicsProperty:
@@ -304,9 +305,9 @@ class OutlineManager:
         or it it's a pre-0.61 non-unicode outline, rebuild it.
         """
         o = safe_hasattr(self.folder().aq_base,'outline') and self.folder().outline or None
-        if not o: 
+        if not o:
             self.rebuildWikiOutline()
-            
+
 
     security.declareProtected(Permissions.View, 'updateWikiOutline')
     def updateWikiOutline(self):
@@ -350,7 +351,7 @@ class OutlineManager:
 
     # easier-to-type alias
     updatecontents = updateWikiOutline
-        
+
     security.declareProtected(Permissions.View, 'rebuildWikiOutline')
     def rebuildWikiOutline(self):
         """Regenerate the wiki folder's cached outline object, throwing away
@@ -382,10 +383,10 @@ class OutlineManager:
         # page mgmt form must use pagename field:
         pagename = pagename and self.tounicode(pagename)
         if pagename:
-            parents = [pagename] 
+            parents = [pagename]
         # or parents might be a string
         elif type(parents) != ListType:
-            parents = [parents] 
+            parents = [parents]
         # empty strings are common, remove before calling pageWithFuzzyName
         parents = filter(lambda x:x, parents)
         # to unicode
@@ -401,9 +402,9 @@ class OutlineManager:
         uniqueparents = []
         for p in parents:
             if not p in uniqueparents: uniqueparents.append(p)
-            
+
         # finally - update our parents property, the outline cache, and catalog
-        self.setParents(uniqueparents) 
+        self.setParents(uniqueparents)
         self.wikiOutline().reparent(self.pageName(),uniqueparents)
         self.index_object()
 
@@ -743,7 +744,7 @@ class OutlineRendering:
             self.setParents([])
             self.index_object()
             hierarchy = self.renderNesting(
-                nesting, here, 
+                nesting, here,
                 enlarge_current=enlarge_current,
                 suppress_hyperlink=suppress_hyperlink)
         # if a SiteMap page exists, point the contents link there
@@ -872,11 +873,11 @@ class OutlineRendering:
           (backwards compatibility for old editforms)
         - if suppress_current is true, here will not be shown at all
         - did, got & indent are for recursion, callers should not use
-        
+
         Do we need all this complicated code, can't we do it in the skin
         template ? I think so, except for two issues: for very large
         nestings the python version might be perceptibly quicker; and,
-        it's easier to recurse with python. See also nestingAsRenderList. 
+        it's easier to recurse with python. See also nestingAsRenderList.
         """
         # XXX oh yeah.. kludgorama
         def renderContentsLink(page):
@@ -887,7 +888,7 @@ class OutlineRendering:
                 id = self.canonicalIdFrom(page)
                 return u'<a href="%s/%s" name="%s">%s</a>' \
                        % (wikiurl,id,id,self.formatWikiname(page))
-            if here and page == here: 
+            if here and page == here:
                 if enlarge_current:
                     # just assume we are in the page header, and link to
                     # backlinks as well as enlarging
@@ -908,7 +909,7 @@ class OutlineRendering:
             else:
                 #return self.renderLinkToPage(page,name=page)
                 return quicklink(page)
-            
+
         #XXX cleanup
         if suppress_current and nesting[0] == here: # a single childless page
             return ''
@@ -972,20 +973,20 @@ class OutlineRendering:
 
         which is stored as a nesting like::
 
-          [['AnnoyingQuote', ['AnnoyingQuoteArchive', 'AngryDenial'], 'AnnoyingQuoteDiscussion']]        
+          [['AnnoyingQuote', ['AnnoyingQuoteArchive', 'AngryDenial'], 'AnnoyingQuoteDiscussion']]
 
         gets converted to a render list like::
 
           [
-          {'type': '+'}, 
-          {'href': 'zwikib/AnnoyingQuote', 'type': '=', 'page': 'AnnoyingQuote', 'name': 'AnnoyingQuote'}, 
-          {'type': '+'}, 
-          {'href': 'zwikib/AnnoyingQuoteArchive', 'type': '=', 'page': 'AnnoyingQuoteArchive', 'name': 'AnnoyingQuoteArchive'}, 
-          {'type': '+'}, 
-          {'href': 'zwikib/AngryDenial', 'type': '=', 'page': 'AngryDenial', 'name': 'AngryDenial'}, 
-          {'type': '-'}, 
-          {'href': 'zwikib/AnnoyingQuoteDiscussion', 'type': '=', 'page': 'AnnoyingQuoteDiscussion', 'name': 'AnnoyingQuoteDiscussion'}, 
-          {'type': '-'}, 
+          {'type': '+'},
+          {'href': 'zwikib/AnnoyingQuote', 'type': '=', 'page': 'AnnoyingQuote', 'name': 'AnnoyingQuote'},
+          {'type': '+'},
+          {'href': 'zwikib/AnnoyingQuoteArchive', 'type': '=', 'page': 'AnnoyingQuoteArchive', 'name': 'AnnoyingQuoteArchive'},
+          {'type': '+'},
+          {'href': 'zwikib/AngryDenial', 'type': '=', 'page': 'AngryDenial', 'name': 'AngryDenial'},
+          {'type': '-'},
+          {'href': 'zwikib/AnnoyingQuoteDiscussion', 'type': '=', 'page': 'AnnoyingQuoteDiscussion', 'name': 'AnnoyingQuoteDiscussion'},
+          {'type': '-'},
           {'type': '-'}
           ]
 
@@ -1044,7 +1045,7 @@ class OutlineRendering:
                     if not (n[0]==here and suppress_current): #XXX temp
                         got.append( {'type':'-'} )
                 else:
-                    
+
                     got[-1]['type'] += '.' # a parent whose children were omitted
             else:
                 t = (n==here and '=!' or '=')
@@ -1059,7 +1060,7 @@ class OutlineRendering:
             if '=' in g['type'] :
                 g['href'] = wikiurl + '/' + self.canonicalIdFrom(g['page'])
                 g['name'] = quote(g['page'])
-                
+
         return got
 
     # backwards compatibility
@@ -1070,7 +1071,7 @@ InitializeClass(OutlineRendering)
 class PageOutlineSupport(
     ParentsProperty,
     ShowSubtopicsProperty,
-    OutlineManager, 
+    OutlineManager,
     OutlineRendering
     ):
     """

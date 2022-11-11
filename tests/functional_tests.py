@@ -47,7 +47,7 @@ def test_suite():
     suite = unittest.makeSuite(TestZWikiFunctional)
     suite.addTest(ZopeTestCase.FunctionalDocFileSuite(
             'functional.txt', package='Products.ZWiki.tests',
-            optionflags=doctest.REPORT_ONLY_FIRST_FAILURE | 
+            optionflags=doctest.REPORT_ONLY_FIRST_FAILURE |
                         doctest.NORMALIZE_WHITESPACE | doctest.ELLIPSIS))
     return suite
 

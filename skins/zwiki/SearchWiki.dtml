@@ -3,11 +3,11 @@
 <!-- search form -->
 <p>
 <dtml-translate domain=zwiki>Enter a word or phrase and hit enter to search the entire wiki.</dtml-translate>
-<dtml-translate domain=zwiki>This is the same as using the search field at top right.</dtml-translate>  
+<dtml-translate domain=zwiki>This is the same as using the search field at top right.</dtml-translate>
 <p>
-<dtml-translate domain=zwiki>Tips: A single word works best for matching page names.</dtml-translate>  
-<dtml-translate domain=zwiki>Case-insensitivity and wildcards may be supported depending on your catalog configuration.</dtml-translate>  
-<dtml-translate domain=zwiki>Leave it blank to list all pages.</dtml-translate>  
+<dtml-translate domain=zwiki>Tips: A single word works best for matching page names.</dtml-translate>
+<dtml-translate domain=zwiki>Case-insensitivity and wildcards may be supported depending on your catalog configuration.</dtml-translate>
+<dtml-translate domain=zwiki>Leave it blank to list all pages.</dtml-translate>
 
 <dtml-let uexpr="tounicode(REQUEST.get('expr',''))">
 <table border="0" width="100%">
@@ -25,7 +25,7 @@
   <input type="hidden" name="sitesearch"  value="<dtml-var "wikiUrl().split('/')[2]">" />
   <input type="hidden" name="cof" VALUE="L:&dtml-SERVER_URL;misc_/ZWiki/ZWikiPage_icon.gif"" />
   <input type="hidden" name="site" value="<dtml-var "wikiUrl().split('/')[2]">" />
-  <input type="text" size="20" name="q" value="<dtml-var uexpr html_quote missing>" 
+  <input type="text" size="20" name="q" value="<dtml-var uexpr html_quote missing>"
   /><input type="submit" VALUE="Search" />
 </form>
 </td>
@@ -45,12 +45,12 @@
 
 <!-- results -->
 <dtml-if "_.has_key('expr')">
-<dtml-let 
+<dtml-let
  wikiurl=wikiUrl
  comment="0
  # Catalog notes
  #
- # Ideally we want the user to enter one or more words and find all 
+ # Ideally we want the user to enter one or more words and find all
  # partial matches in page names and text, without fuss.
  # TextIndex, ZCTextIndex, TextIndexNG2 and no catalog can all produce
  # different results, depending on configuration. Also the indexes
@@ -82,9 +82,9 @@
  wildcardexpr="'*'+_.string.join(_.string.split(cleanexpr),'* *')+'*'"
  titlesearchexpr=wildcardexpr
  textsearchexpr="tounicode(expr)"
- titlehits="((cleanexpr and pages(Title=titlesearchexpr)+['dummy']) or pages()+['dummy'])[:-1]" 
+ titlehits="((cleanexpr and pages(Title=titlesearchexpr)+['dummy']) or pages()+['dummy'])[:-1]"
  titlehits="_.sequence.sort(titlehits,(('Title','nocase','asc'),)) # locale_nocase if locale configured in zope.conf"
- texthits="((cleanexpr and pages(SearchableText=textsearchexpr)+['dummy']) or ['dummy'])[:-1]" 
+ texthits="((cleanexpr and pages(SearchableText=textsearchexpr)+['dummy']) or ['dummy'])[:-1]"
  texthits="_.sequence.sort(texthits,(('Title','nocase','asc'),))"
  >
 
@@ -117,7 +117,7 @@
 </dtml-if>
 
 <dtml-if "_.has_key('thoroughexpr')">
-<dtml-let 
+<dtml-let
   wikiurl=wikiUrl
   results="aq_parent.objectValues(spec='ZWiki Page')"
   results="_.sequence.sort(results,(('Title','nocase','asc'),))"

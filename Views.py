@@ -90,8 +90,10 @@ import os
 
 from App.Common import rfc1123_date
 from AccessControl import getSecurityManager, ClassSecurityInfo, Unauthorized
+from DateTime import DateTime
 from OFS.Image import File
-from Globals import InitializeClass, MessageDialog
+from AccessControl.class_init import InitializeClass
+from App.Dialogs import MessageDialog
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from Products.PageTemplates.Expressions import SecureModuleImporter
@@ -158,8 +160,8 @@ def loadFile(name,dir='skins/zwiki'):
                 data = f.read()
                 mtime = os.path.getmtime(filepath)
                 file = File(name,'',data)
-                # bug workaround: bobobase_modification_time will otherwise be current time
-                file.bobobase_modification_time = lambda:mtime
+                # bug workaround: last_modified will otherwise be current time
+                file.last_modified = lambda x: mtime
                 return file
             except IOError:
                 return None
@@ -244,6 +246,7 @@ for s in os.listdir(abszwikipath('skins')):
         'pagemanagementform',
         'testtemplate',
         'badtemplate',
+        'nullmacro',
         ]:
         obj = loadPageTemplate(template,dir=skindir)
         if obj: SKINS[s][template] = obj
@@ -277,8 +280,6 @@ TEMPLATES = SKINS['zwiki'] # backwards compatibility
 
 # set up easy access to all PT macros via here/macros.
 MACROS = {} # a flat dictionary of all macros defined in all templates
-# need to initialise it for some backwards compatibility assignments at startup
-[MACROS.update(t.pt_macros()) for t in TEMPLATES.values() if isPageTemplate(t)]
 def getmacros(self):
     """
     Get a dictionary of all the page template macros in the skin. More precisely,
@@ -294,22 +295,29 @@ def getmacros(self):
         skin = SKINS[s]
         for t in skin.keys():
             if isPageTemplate(skin[t]):
-                #MACROS.update(self.getSkinTemplate(t).pt_macros())
-                MACROS.update(skin[t].pt_macros())
+                ptm = skin[t].pt_macros()
+                if not isinstance(ptm, dict):
+                    # we have to convert Chameleon Macros int a dict
+                    ptm = dict([(n, ptm[n]) for n in ptm.names])
+                MACROS.update(ptm)
+    # some backwards compatibility assignments
+    for compatname, name in macrotrans:
+        MACROS[compatname] = MACROS[name]
     return MACROS
 
 # provide old macros for backwards compatibility
 # pre-0.52 these were defined in wikipage, old custom templates may need them
 # two more were defined in contentspage, we won't support those
-MACROS['linkpanel']   = MACROS['links']
-MACROS['navpanel']    = MACROS['hierarchylinks']
-nullmacro = ZopePageTemplate('null','<div metal:define-macro="null" />').pt_macros()['null']
-MACROS['favicon']     = nullmacro
-MACROS['logolink']    = nullmacro
-MACROS['pagelinks']   = nullmacro
-MACROS['pagenameand'] = nullmacro
-MACROS['wikilinks']   = nullmacro
-
+macrotrans = [
+    # compat, current name
+    ('linkpanel', 'links'),
+    ('navpanel', 'hierarchylinks'),
+    ('favicon', 'null'),
+    ('logolink', 'null'),
+    ('pagelinks', 'null'),
+    ('pagenameand', 'null'),
+    ('wikilinks', 'null'),
+    ]
 
 class SkinUtils:
     """
@@ -332,12 +340,12 @@ class SkinUtils:
     #    XXX should be going away soon. Old comment: the wikipage template
     #    is usually applied by __call__ -> addSkinTo, but this method is
     #    provided so you can configure it as the"view" action
-    #    in portal_types -> Wiki Page -> actions and get use Zwiki's standard 
+    #    in portal_types -> Wiki Page -> actions and get use Zwiki's standard
     #    skin inside a CMF/Plone site.
     #    """
     #    return self.render(REQUEST=REQUEST,RESPONSE=RESPONSE)
     #wikipage_view = wikipage
-    
+
     # backwards compatibility - some old templates expect
     # wikipage_template().macros or wikipage_macros something something
     def wikipage_template(self, REQUEST=None): return self
@@ -394,18 +402,18 @@ class SkinUtils:
         """
         # look for a similarly-named template..
         obj = None
-        
+
         # in a filesystem skin named by a "skin" request var
         skin = self.REQUEST.get('skin',None)
         if SKINS.has_key(skin): obj = SKINS[skin].get(name,None)
-        
+
         #in the zodb
         if not obj:
             for s in suffixes:
                 obj = getattr(self.folder(), name+s, None)
                 if obj and (isTemplate(obj) or isFile(obj)): break
                 else: obj = None
-                
+
         # in a filesystem skin named by a "skin" property
         if not obj:
             skin = getattr(self,'skin',None)
@@ -416,7 +424,7 @@ class SkinUtils:
 
         # or give up and show a harmless error
         if not obj: obj = SKINS['zwiki']['badtemplate']
-            
+
         # return it, with both folder and page in the acquisition context
         return obj.__of__(self.folder()).__of__(self)
 
@@ -426,7 +434,7 @@ class SkinUtils:
         """
         # != ignores any acquisition wrapper
         return self.getSkinTemplate(name) != TEMPLATES['badtemplate']
-        
+
     security.declareProtected(Permissions.View, 'addSkinTo')
     def addSkinTo(self,body,**kw):
         """
@@ -509,7 +517,7 @@ class SkinSwitchingUtils:
         Ie, are we using the plone display mode of zwiki's standard skin.
         """
         return (self.inCMF() and self.displayMode()=='plone')
-        
+
     security.declareProtected(Permissions.View, 'setCMFSkin')
     def setCMFSkin(self,REQUEST,skin):
         """
@@ -803,7 +811,7 @@ class SkinViews:
         form = self.getSkinTemplate('stylesheet',suffixes=['.css',''])
         if isFile(form):
             if self.handle_modified_headers(
-                last_mod=form.bobobase_modification_time(), REQUEST=REQUEST):
+                last_mod=DateTime(form.last_modified(form)), REQUEST=REQUEST):
                 return ''
             else:
                 return form.index_html(REQUEST,REQUEST.RESPONSE)

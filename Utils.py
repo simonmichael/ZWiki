@@ -9,24 +9,23 @@ from urllib import quote, unquote
 from Acquisition import aq_base
 from AccessControl import getSecurityManager, ClassSecurityInfo
 from App.Common import absattr
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 from OFS.SimpleItem import SimpleItem
 import zLOG
 from DateTime import DateTime
-try: # zope 2.7
-    from DateTime import SyntaxError
-    DateTimeSyntaxError = SyntaxError()
+try: #Zope4
+    from DateTime.interfaces import SyntaxError as DateTimeSyntaxError
 except ImportError:
-    DateTimeSyntaxError = DateTime.SyntaxError
-try:
-    path = os.path.join(SOFTWARE_HOME,'Zope2','version.txt') # >=2.9
-    if not os.path.exists(path):
-        path = os.path.join(SOFTWARE_HOME,'version.txt') # <= 2.8
-    v = open(path).read()
-    m = re.match(r'(?i)zope\s*([0-9]+)\.([0-9]+)\.([0-9]+)',v)
-    ZOPEVERSION = (int(m.group(1)),int(m.group(2)),int(m.group(3)))
-except (IOError, AttributeError): # AttributeError: regex didn't match
-    ZOPEVERSION = (9,9,9) # (cvs)
+    try: #Zope2.13
+        DateTimeSyntaxError = DateTime.SyntaxError
+    except AttributeError: # Zope2.7
+        from DateTime import SyntaxError
+        DateTimeSyntaxError = SyntaxError()
+
+from App.version_txt import getZopeVersion
+# getZopeVersion => (major, minor, micro, status, release)
+# ZOPEVERSION: major, minor, micro
+ZOPEVERSION = getZopeVersion()[:3]
 
 from Products.ZWiki import __version__
 from Defaults import PREFER_USERNAME_COOKIE, PAGE_METADATA, BORING_PAGES, \
@@ -94,7 +93,7 @@ class PageUtils:
 
     ######################################################################
     # misc security utilities
-    
+
     def checkPermission(self, permission, object):
         return getSecurityManager().checkPermission(permission,object)
 
@@ -206,7 +205,7 @@ class PageUtils:
                 self.pageType().format(
                     self,
                     self.summary(size=size, paragraphs=paragraphs))))
-    
+
     security.declareProtected(Permissions.View, 'excerptAt')
     def excerptAt(self, expr, size=100, highlight=1, text=None): # -> html string | empty string
         # depends on: self (if no text provided)
@@ -277,7 +276,7 @@ class PageUtils:
             except (ImportError, AttributeError):
                 setattr(brain, attr, None)
         #XXX not using now.. leave blank so tests pass
-        brain.linkTitle = '' 
+        brain.linkTitle = ''
         return brain
 
     def ensureCompleteMetadataIn(self,brain):
@@ -353,7 +352,7 @@ class PageUtils:
     def wikiPath(self):
         """Return the path part of this wiki's url.
         """
-        # absolute_url_path and virtual_url_path just don't work 
+        # absolute_url_path and virtual_url_path just don't work
         # in a apache proxy-vhm-zope situation, apparently.
         #try: return self.folder().absolute_url_path()
         try: return re.sub(r'.*?//.*?/',r'/',self.folder().absolute_url())
@@ -383,7 +382,7 @@ class PageUtils:
         situation.
         """
         p = self.pageWithName(pagename)
-        return ((p and p.dtmlAllowed() and p.hasDynamicContent() and p.pageUrl()) 
+        return ((p and p.dtmlAllowed() and p.hasDynamicContent() and p.pageUrl())
                 or self.defaultPage().pageUrl()+'/'+methodname)
 
     # XXX keeping these page names in the skin might be easier for i18n ?
@@ -413,7 +412,7 @@ class PageUtils:
         url = self.defaultPageUrl() + '/contents'
         if scroll: url += '#' + self.pageId()
         return url
-    
+
     security.declareProtected(Permissions.View, 'changesUrl')
     def changesUrl(self):
         return self.urlForDtmlPageOrMethod('RecentChanges','recentchanges')
@@ -550,9 +549,9 @@ class PageUtils:
         minutes=int(math.floor((elapsed-days-hourfactor*hours)/minutefactor))
         seconds=int(round((
             elapsed-days-hourfactor*hours-minutefactor*minutes)/secondsfactor))
-  
+
         datepattern = ("%(nb)d %(period)s")
-       
+
         if years:
             s = datepattern % {"nb": years, "period": years > 1 and _('years') or _('year')}
         elif months:
@@ -567,7 +566,7 @@ class PageUtils:
             s = datepattern % {"nb":minutes, "period":minutes > 1 and _('minutes') or _('minute')}
         else:
             s = datepattern % {"nb":seconds, "period":seconds > 1 and _('seconds') or _('second')}
-            
+
         return s
 
     security.declareProtected(Permissions.View,'include')
@@ -582,7 +581,7 @@ class PageUtils:
         p = self.pageWithNameOrId(page)
         if p: return p(bare=1,REQUEST=REQUEST, **kw)
         else: return ''
-        
+
     def isBoring(self):
         """
         Is this page one which should be quieter, eg test pages ?
@@ -614,7 +613,7 @@ class PageUtils:
         our standard encoding.  (cf issue #1330)
 
         This is idempotent, safe to call repeatedly.
-        """ 
+        """
         if ZOPEVERSION < (2,10): return s
         else:                    return self.tounicode(s)
 
@@ -625,20 +624,20 @@ class PageUtils:
     # more verbose (self.toencoded vs. toencoded) this meant adding a page
     # argument to all the pagetype format methods. This is YAGNI code
     # but it's already done so let's leave it this way for a bit.
-    def encoding(self):
+    def get_encoding(self):
         return 'utf-8'
-        
+
     def toencoded(self,s,enc=None):
         """Safely convert a unicode string to an encoded ordinary string.
         The wiki's default encoding is used, unless overridden.
         """
-        return toencoded(s,enc or self.encoding())
+        return toencoded(s,enc or self.get_encoding())
 
     def tounicode(self,s,enc=None):
         """Safely convert an encoded ordinary string to a unicode string.
         The wiki's default encoding is used, unless overridden.
         """
-        return tounicode(s,enc or self.encoding())
+        return tounicode(s,enc or self.get_encoding())
 
 InitializeClass(PageUtils)
 
@@ -693,7 +692,7 @@ def base_hasattr(obj, name):
     """Like safe_hasattr, but also disables acquisition."""
     return safe_hasattr(aq_base(obj), name)
 
-def html_quote(s): 
+def html_quote(s):
     s = re.sub(r'&','&amp;',s)
     s = re.sub(r'<','&lt;',s)
     s = re.sub(r'>','&gt;',s)
@@ -983,7 +982,7 @@ def nub(l):
     for v in l:
         if not v in u: u.append(v)
     return u
-        
+
 isnumeric = lambda v:isinstance(v,IntType) or isinstance(v,FloatType) or isinstance(v,LongType)
 isfloat   = lambda v:isinstance(v,FloatType)
 isstring  = lambda v:isinstance(v,StringType)

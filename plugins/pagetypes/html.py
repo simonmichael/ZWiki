@@ -29,13 +29,13 @@ class PageTypeHtml(PageTypeBaseHtml):
         return t
 
     def makeCommentHeading(self, page,
-                           subject, username, time, 
+                           subject, username, time,
                            message_id=None,in_reply_to=None):
         """
         Generate HTML markup for a comment heading in a HTML page.
 
-        Note that we just work on the comment heading here. The content of the 
-        comment is left as is, not certain what to do with it. Users likely 
+        Note that we just work on the comment heading here. The content of the
+        comment is left as is, not certain what to do with it. Users likely
         expect to be able to write comments like on every other page type
         (e.g. with two newlines to format paragraphs) - but what kind of markup
         would be expected on a html page? XXX

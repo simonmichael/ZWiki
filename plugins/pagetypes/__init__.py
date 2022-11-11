@@ -24,7 +24,7 @@ registerPageType. Quick start:
 
 """
 
-from Products.ZWiki.Utils import BLATHER, formattedTraceback
+from Products.ZWiki.Utils import INFO, BLATHER, formattedTraceback
 from types import StringType
 
 # global page type registry
@@ -138,12 +138,12 @@ for mod in firstmods:
 # and import
 for m in modules:
     if m.startswith('_'):
-        BLATHER('%s page type disabled with _ prefix, skipping\n' % m[1:])
+        INFO('%s page type disabled with _ prefix, skipping\n' % m[1:])
     else:
         try:
             __import__('Products.ZWiki.plugins.pagetypes.%s' % m)
         except (ImportError, ValueError):
-            BLATHER('could not load %s page type, skipping (traceback follows)\n%s' % (
+            INFO('could not load %s page type, skipping (traceback follows)\n%s' % (
                 m, formattedTraceback()))
 
 # backwards compatibility - old zwiki page objects expect these to be here

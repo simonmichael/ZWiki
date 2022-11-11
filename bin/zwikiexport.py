@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" 
+"""
 zwikiexport.py - export a zwiki folder or single page to the filesystem.
 
 (c) 2005-2010 SKWM, GNU GPL.
@@ -84,7 +84,7 @@ def vlog(msg='', newline=True):
             print '%s' % msg
         else:
             print '%s' % msg,
-            
+
 if __name__ == "__main__": main()
 
 #def _test():

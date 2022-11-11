@@ -2,7 +2,7 @@ import string, re, urllib
 from string import split,join,find,lower,rfind,atoi,strip,lstrip
 from urllib import quote, unquote
 
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 from AccessControl import getSecurityManager, ClassSecurityInfo
 
 from Products.ZWiki.Utils import BLATHER, html_quote, html_unquote, formattedTraceback, \
@@ -110,7 +110,7 @@ class PageTypeBase:
             bare=1,
             show_subtopics=0,
             show_issueproperties=0)
-    
+
     def preRenderMessages(self,page):
         t = ''
         for m in page.messages(): t += self.preRenderMessage(page,m)
@@ -145,7 +145,7 @@ class PageTypeBase:
                                        ) + text
 
     def makeCommentHeading(self, page,
-                           subject, username, time, 
+                           subject, username, time,
                            message_id=None,in_reply_to=None):
         heading = '\n\n'
         heading += '%s --' % (page.tounicode(subject) or '...')
@@ -170,7 +170,7 @@ class PageTypeBase:
         """
         Move this page's top-level sections to sub-pages.
         """
-        return 
+        return
 
     def merge(self):
         """
@@ -178,7 +178,7 @@ class PageTypeBase:
 
         This merges all offspring, not just immediate children.
         """
-        return 
+        return
 
 class PageTypeBaseHtml(PageTypeBase):
     """
@@ -187,7 +187,7 @@ class PageTypeBaseHtml(PageTypeBase):
     Override me and define _id and _name to make a usable page type
     object. See __init__.py for more.
     """
-    
+
     supportsHtml = yes
 
     def renderCitationsIn(self, page, t):
@@ -217,10 +217,10 @@ class PageTypeBaseHtml(PageTypeBase):
             m = re.match(r'^>\s?(.*)$', lines[i])
             lines[i] = m.group(1)+'</blockquote>\n'
         t += string.join(lines[blockend:], '\n')
-        return t 
+        return t
 
     def makeCommentHeading(self, page,
-                           subject, username, time, 
+                           subject, username, time,
                            message_id=None,in_reply_to=None):
         heading = '\n\n'
         time = page.tounicode(time)
@@ -243,14 +243,14 @@ class PageTypeBaseHtml(PageTypeBase):
         else:
             heading += html_quote(time or '')
             inreplytobit = ''
-        #heading += ( (' <a href="%s?subject=%s%s#bottom">' 
+        #heading += ( (' <a href="%s?subject=%s%s#bottom">'
         #             % (page.pageUrl(),quote(subject or ''),inreplytobit)) +
         #             + _("reply") + '</a>' )
-        
+
         heading += ' <a class="visualNoPrint" href="%s?subject=%s%s#bottom">reply</a>'\
                    % (page.pageUrl(),quote(subject or ''),inreplytobit)
 
-                     
+
         heading += '<br />\n'
         return heading
 
@@ -261,7 +261,7 @@ class PageTypeBaseHtml(PageTypeBase):
         # will work
         return '\n\n<a name="comments"><br /><b><span class="commentsheader">%(comments)s:</span></b></a>\n\n' % \
                { "comments":_("comments") }
-            
+
     def inlineImage(self, page, id, path):
         return '\n\n<img src="%s" />\n' % path
 

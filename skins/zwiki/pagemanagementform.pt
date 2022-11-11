@@ -2,7 +2,7 @@
   <body>
 
     <div id="pagemanagementform"
-         metal:define-macro="pagemanagementform" 
+         metal:define-macro="pagemanagementform"
          tal:condition="python:
                         ((user.has_permission('Zwiki: Add pages',container) or
                         user.has_permission('Zwiki: Rename pages',here) or
@@ -13,61 +13,61 @@
       <!-- page management form -->
       <br />
       <form method="post" action="" enctype="multipart/form-data"
-            tal:attributes="action here/pageUrl" 
+            tal:attributes="action here/pageUrl"
             style="margin-top:0;margin-bottom:0">
-        <table border="0" cellspacing="0" cellpadding="1" 
+        <table border="0" cellspacing="0" cellpadding="1"
                class="shade1" align="center"
-               style="font-size:90%; border-top: thin solid #aaaaaa; 
+               style="font-size:90%; border-top: thin solid #aaaaaa;
                       border-bottom: thin solid #aaaaaa;"
                >
           <tr>
             <td align="left" valign="top">
               <!-- help text -->
-              <span i18n:translate="">new</span> 
+              <span i18n:translate="">new</span>
               <span i18n:translate=""
-                    tal:condition="python:user.has_permission('Zwiki: Reparent pages',here) and here.checkSufficientId(request)" 
+                    tal:condition="python:user.has_permission('Zwiki: Reparent pages',here) and here.checkSufficientId(request)"
                     >parent, </span>
               <span i18n:translate=""
-                    tal:condition="python:user.has_permission('Zwiki: Rename pages',here) and here.checkSufficientId(request)" 
+                    tal:condition="python:user.has_permission('Zwiki: Rename pages',here) and here.checkSufficientId(request)"
                     >name, </span>
               <span i18n:translate=""
-                    tal:condition="python:user.has_permission('Zwiki: Delete pages',here) and here.checkSufficientId(request)" 
+                    tal:condition="python:user.has_permission('Zwiki: Delete pages',here) and here.checkSufficientId(request)"
                     >replacement, </span>
               <span i18n:translate=""
                     tal:condition="python:user.has_permission('Zwiki: Add pages',container)"
                     >page</span
                     ><span tal:condition="not:here/usingPloneSkin" tal:omit-tag="">:</span>
               <!-- multi-purpose input field and buttons -->
-              <input name="pagename" type="text" size="25" maxlength="100" value="" 
+              <input name="pagename" type="text" size="25" maxlength="100" value=""
                      class="formfield"
                      title="enter a page name and click buttons to the right (mouse over for help)"
                      i18n:attributes="title"
                      /><span style="white-space:nowrap;"
-                     ><input type="submit" name="reparent:method" value="reparent" 
+                     ><input type="submit" name="reparent:method" value="reparent"
                      style="font-weight:normal;"
                      title="make this page a subtopic of the page you have entered"
                      i18n:attributes="value; title"
-                     tal:condition="python:user.has_permission('Zwiki: Reparent pages',here) and here.checkSufficientId(request)" 
-                     /><input type="submit" name="rename:method" value="rename" 
-                     style="font-weight:normal" 
+                     tal:condition="python:user.has_permission('Zwiki: Reparent pages',here) and here.checkSufficientId(request)"
+                     /><input type="submit" name="rename:method" value="rename"
+                     style="font-weight:normal"
                      title="rename this page to the name you have entered, updating all links"
                      i18n:attributes="value; title"
-                     tal:condition="python:user.has_permission('Zwiki: Rename pages',here) and here.checkSufficientId(request)" 
+                     tal:condition="python:user.has_permission('Zwiki: Rename pages',here) and here.checkSufficientId(request)"
                      /><input type="submit" name="archive:method" value="archive!"
                      style="font-weight:normal"
                      title="archive this page and all subtopics, and redirect links to the page you have entered, if any"
                      i18n:attributes="value; title"
                      tal:condition="python:user.has_permission('Zwiki: Delete pages',here) and here.checkSufficientId(request) and here.archiveFolder()"
-                     /><input type="submit" name="delete:method" value="delete!" 
+                     /><input type="submit" name="delete:method" value="delete!"
                      style="font-weight:normal"
                      title="delete this page, and redirect links to the page you have entered, if any"
                      i18n:attributes="value; title"
                      tal:condition="python:user.has_permission('Zwiki: Delete pages',here) and here.checkSufficientId(request)"
-                     /><input type="submit" name="createform:method" value="create" 
+                     /><input type="submit" name="createform:method" value="create"
                      style="font-weight:normal"
                      title="create a page with the name you have entered, as a subtopic of this one"
                      i18n:attributes="value; title"
-                     tal:condition="python:user.has_permission('Zwiki: Add pages',container)" 
+                     tal:condition="python:user.has_permission('Zwiki: Add pages',container)"
                      /></span>
             </td>
           </tr>

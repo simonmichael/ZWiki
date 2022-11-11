@@ -5,7 +5,7 @@ import string, re
 #from urllib import quote, unquote
 
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 
 from BTrees.OOBTree import OOBTree
 from types import DictionaryType
@@ -60,7 +60,7 @@ class PluginRating:
         return self.votes().values()
 
     # api methods
-    
+
     security.declareProtected(Permissions.Rate, 'vote')
     def vote(self,vote=None,REQUEST=None):
         """
@@ -130,11 +130,11 @@ class PluginRating:
 
     security.declareProtected(Permissions.View, 'hasVotes')
     def hasVotes(self): return self.voteCount() > 0
-        
+
     security.declareProtected(Permissions.View, 'myVote')
     def myVote(self,REQUEST=None):
         """
-        What is the current user's recorded vote for this page ? 
+        What is the current user's recorded vote for this page ?
 
         Returns a string or None.
         """
@@ -160,13 +160,13 @@ class PluginRating:
     security.declareProtected(Permissions.View, 'myvotes')
     def myvotes(self):
         """
-        A temporary web view for the above. 
+        A temporary web view for the above.
         """
         votes = self.myVotes()
         return '<pre>%s</pre>' % (
             ''.join(['%2s %s\n' % (votes[p], self.renderLinkToPage(p))
                     for p in votes.keys()]))
-        
+
     security.declareProtected(Permissions.View, 'rating')
     def rating(self):
         """
@@ -212,5 +212,5 @@ class PluginRating:
             for k,v in temp_dict.iteritems():
                 self._votes[k] = v
 
-InitializeClass(PluginRating) 
+InitializeClass(PluginRating)
 registerPlugin(PluginRating)

@@ -8,7 +8,7 @@ from cStringIO import StringIO
 from AccessControl import getSecurityManager, ClassSecurityInfo
 from App.Common import absattr
 from DateTime import DateTime
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 
 import Permissions
 from Regexps import fromlineexpr

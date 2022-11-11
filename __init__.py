@@ -9,10 +9,11 @@ import re, os.path, string, urllib
 
 from AccessControl import getSecurityManager
 from DateTime import DateTime
-from Globals import package_home, MessageDialog, ImageFile
+from App.Common import package_home
+from App.Dialogs import MessageDialog
+from App.ImageFile import ImageFile
 from OFS.Folder import Folder
 from OFS.Image import Image, File
-from OFS.ObjectManager import customImporters
 from Products.PageTemplates.ZopePageTemplate import ZopePageTemplate
 from Products.PythonScripts.PythonScript import PythonScript
 
@@ -47,10 +48,10 @@ misc_ = {
     'blank_star_icon': ImageFile(os.path.join('skins','zwiki','blank_star.png'),globals()),
     }
 
-def initialize(context): 
+def initialize(context):
     """Initialize the ZWiki product.
     """
-    try: 
+    try:
         # register the wiki page class
         context.registerClass(
             ZWikiPage.ZWikiPage,
@@ -58,7 +59,7 @@ def initialize(context):
             #meta_type=Defaults.PAGE_ADD_MENU_NAME,
             permission=Permissions.Add,
             icon = 'skins/zwiki/wikipage_icon.gif',
-            constructors = ( 
+            constructors = (
                 ZWikiPage.manage_addZWikiPageForm,
                 ZWikiPage.manage_addZWikiPage,
                 ),
@@ -82,7 +83,7 @@ def initialize(context):
             meta_type=Defaults.WIKI_ADD_MENU_NAME,
             permission=Permissions.AddWiki,
             #icon = 'images/Wiki_icon.gif'
-            constructors = ( 
+            constructors = (
                 manage_addWikiForm,
                 manage_addWiki,
                 listWikis,
@@ -203,7 +204,7 @@ def initializeForFSS(context):
 
 def manage_afterAdd(self, item, container):
     if not self.hasCreatorInfo():
-        self.setCreator(getattr(self,'REQUEST',None)) 
+        self.setCreator(getattr(self,'REQUEST',None))
     self.wikiOutline().add(self.pageName())
     self.index_object()
 ZWikiPage.ZWikiPage.manage_afterAdd = manage_afterAdd
@@ -272,7 +273,7 @@ def manage_addWiki(self, new_id, new_title='', wiki_type='basic',
                                        wiki_type,
                                        urllib.quote(new_id),
                                        urllib.quote(new_title)))
-        
+
     else:
         if wiki_type in self.listFsWikis():
             self.addWikiFromFs(new_id,new_title,wiki_type,REQUEST)
@@ -357,8 +358,7 @@ def createFilesFromFsFolder(self, f, dir):
                 f._getOb(id).write(text)
             elif type == 'zexp' or type == 'xml':
                 connection = self.getPhysicalRoot()._p_jar
-                f._setObject(id, connection.importFile(dir + os.sep + filename, 
-                    customImporters=customImporters))
+                f._setObject(id, connection.importFile(dir + os.sep + filename))
                 #self._getOb(id).manage_changeOwnershipType(explicit=0)
             elif type in ['jpg','jpeg','gif','png']:
                 f._setObject(filename, Image(filename, '', text))
@@ -381,7 +381,7 @@ def addWikiFromFs(self, new_id, title='', wiki_type='basic',
     parent.manage_addFolder(str(new_id))
     f = parent[new_id]
     f.title = str(title)
-    
+
     # add objects from wiki template
     # cataloging really slows this down!
     dir = os.path.join(package_home(globals()),'content',wiki_type)
@@ -436,10 +436,19 @@ def listZodbWikis(self):
     """
     list the wiki templates available in the ZODB
     """
-    list = self.getPhysicalRoot().Control_Panel.Products.ZWiki.objectIds()
-    list.remove('Help')
-    return list
-    
+    # XXX: currently we have no idea, how to place zwiki templates
+    # (like ZWiki/content/basic) into the ZODB in *Zope4*
+    #
+    # in *Zope2* we used to call
+    #
+    #    list = self.getPhysicalRoot().Control_Panel.Products.ZWiki.objectIds()
+    #    list.remove('Help')
+    #
+    # but this doesnt work in Zope4 anymore (Control_Panel has no Products
+    # attribute). So return the empty list for now.
+
+    return []
+
 def listFsWikis(self):
     """
     list the wiki templates available in the filesystem

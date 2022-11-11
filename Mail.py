@@ -9,7 +9,7 @@ from email.Utils import parseaddr, getaddresses
 from email.Iterators import typed_subpart_iterator
 from email.Header import Header, decode_header
 
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 
 from i18n import _
 from TextFormatter import TextFormatter
@@ -52,7 +52,7 @@ class PageSubscriptionSupport:
     def _getSubscribers(self, parent=0): # -> [string]; depends on self, folder; modifies self, folder
         """
         Return a copy of this page's subscriber list, as a list.
-        
+
         With parent flag, manage the parent folder's subscriber list instead.
         """
         if AUTO_UPGRADE: self._upgradeSubscribers()
@@ -66,7 +66,7 @@ class PageSubscriptionSupport:
 
     def _setSubscribers(self, subscriberlist, parent=0): # -> none; depends on self, folder; modifies self, folder
         """
-        Set this page's subscriber list. 
+        Set this page's subscriber list.
         With parent flag, manage the parent folder's subscriber list instead.
         """
         if AUTO_UPGRADE: self._upgradeSubscribers()
@@ -88,7 +88,7 @@ class PageSubscriptionSupport:
 
         Called as needed, ie on each access and also from ZWikiPage.upgrade()
         (set AUTO_UPGRADE=0 in Default.py to disable).
-        
+
         XXX Lord have mercy! couldn't this be simpler
         """
         # upgrade the folder first; we'll check attributes then properties
@@ -181,7 +181,7 @@ class PageSubscriptionSupport:
     ## page subscription api #############################################
 
     # XXX rename to subscribers() & wikiSubscribers() ?
-    # XXX and add editSubscribers & wikiEditSubscribers 
+    # XXX and add editSubscribers & wikiEditSubscribers
     def subscriberList(self, parent=0, edits=0): # -> [string]; depends on self, folder
         """
         Return a list of this page's subscribers, without the :edits suffix.
@@ -220,7 +220,7 @@ class PageSubscriptionSupport:
                     (usernames and (sub in usernames))):
                     return 1
         return 0
-               
+
     def subscribe(self, email, REQUEST=None, parent=0, edits=0): # -> none; redirects; depends on self, folder; modifies self, folder, catalog
         """
         Add an email subscriber to this page.
@@ -387,7 +387,7 @@ class PageSubscriptionSupport:
     def emailAddressFrom(self,subscriber): # -> string; depends on cmf/plone site
         """
         Convert a zwiki subscriber list entry to an email address.
-        
+
         A zwiki subscriber list entry can be: an email address, or a CMF
         member id (if we are in a CMF/Plone site), or either of those with
         ':edits' appended.  We figure out the bare email address and
@@ -465,7 +465,7 @@ class PageSubscriptionSupport:
             #except AttributeError:
             #    pass
             #return usernames
-        
+
 InitializeClass(PageSubscriptionSupport)
 
 class PageMailSupport:
@@ -496,7 +496,7 @@ class PageMailSupport:
         Usually acquires from the folder.
         """
         return getattr(self,'mail_from','')
-    
+
     def replyToProperty(self): # -> string; depends on self, folder
         """
         Give the mail_replyto property for this page.
@@ -504,7 +504,7 @@ class PageMailSupport:
         Usually acquires from the folder.
         """
         return getattr(self,'mail_replyto','')
-    
+
     def toProperty(self): # -> string; depends on self, folder
         """
         Give the mail_to property for this page.
@@ -512,7 +512,7 @@ class PageMailSupport:
         Usually acquires from the folder.
         """
         return getattr(self,'mail_to','')
-    
+
     def fromHeader(self,REQUEST=None): # -> string; depends on self, folder
         """
         Give the appropriate From: header for mail-outs from this page.
@@ -534,13 +534,13 @@ class PageMailSupport:
         Give the appropriate Reply-to: header for mail-outs from this page.
         """
         return self.replyToProperty() or self.fromProperty()
-    
+
     def listId(self): # -> string; depends on self, folder
         """
         Give the "list id" for mail-outs from this page.
         """
         return self.fromProperty() or self.replyToProperty()
-    
+
     def listPostHeader(self): # -> string; depends on self, folder
         """
         Give the appropriate List-Post: header for mail-outs from this page.
@@ -630,7 +630,7 @@ class PageMailSupport:
         url = self.pageUrl()
         if message_id:
             # sync with makeCommentHeading
-            url += '#msg%s' % re.sub(r'^<(.*)>$',r'\1',message_id) 
+            url += '#msg%s' % re.sub(r'^<(.*)>$',r'\1',message_id)
         return getattr(self.folder(),'mail_signature',
                        '--\nforwarded from %s' % url) # XXX i18n
 
@@ -664,7 +664,7 @@ class PageMailSupport:
                               exclude_address=None): # -> none; depends on self, wiki, mailhost; other effects: sends mail
         """
         Send mail to this page's and the wiki's subscribers, if any.
-        
+
         If a mailhost and mail_from property have been configured and
         there are subscribers to this page, email text to them.  So as not
         to prevent page edits, catch any mail-sending errors (and log them
@@ -695,7 +695,7 @@ class PageMailSupport:
                                   exclude_address=None): # -> none; depends on self, wiki, mailhost; other effects: sends mail
         """
         Send mail to this page's and the wiki's all edits subscribers, if any.
-        
+
         Like sendMailToSubscribers, but sends only to the subscribers who
         have requested notification of all edits. If text is empty, send
         nothing.
@@ -722,7 +722,7 @@ class PageMailSupport:
             message_id=message_id,
             in_reply_to=in_reply_to,
             exclude_address=exclude_address)
-        
+
     def sendMailTo(self, recipients, text, REQUEST,
                    subjectSuffix='',
                    subject='',
@@ -765,9 +765,9 @@ class PageMailSupport:
                 }
             GenericMailHost(self.mailhost()).send(fields)
             BLATHER('sent mail to subscribers:\nTo: %s\nBcc: %s' % (fields['To'],fields['Bcc']))
-        except: 
+        except:
             BLATHER('**** failed to send mail to %s: %s' % (recipients,formattedTraceback()))
-            
+
 InitializeClass(PageMailSupport)
 
 class GenericMailHost:
@@ -848,9 +848,9 @@ class PageMailinSupport:
 #         # handle the mail-out ourselves, to pass through the original message
 #         m.destpage.sendMailToSubscribers(
 #             m.original,
-#             self.REQUEST, 
+#             self.REQUEST,
 #             subject=subjectPrefix+subject,
-#             message_id=m.messageid, 
+#             message_id=m.messageid,
 #             in_reply_to=m.inreplyto,
 #             # mailing list support: when a list and wiki are mutually subscribed,
 #             # and a mail comes in from the list, we want to forward it out to all
@@ -870,7 +870,7 @@ class PageMailinSupport:
             return self.folder().default_mailin_page or None
         else:
             return self.pageName()
-        
+
 InitializeClass(PageMailinSupport)
 
 class MailIn:
@@ -934,7 +934,7 @@ class MailIn:
         except (StopIteration, UnicodeDecodeError):
             payloadutf8 = ''
         self.body = cleanupBody(payloadutf8)
-        
+
     def decideMailinAction(self): # -> (string, string|none); depends on: self, wiki context
         """
         Figure out what to do with this mail-in. Returns an (action, info)
@@ -953,7 +953,7 @@ class MailIn:
         - if the recipient looks like a tracker mailin address (.*TRACKERADDREXP),
           CREATE AN ISSUE PAGE.
 
-        - identify the destination page name: the last [bracketed page name] 
+        - identify the destination page name: the last [bracketed page name]
           in the message subject, or the folder's default_mailin_page
           property (possibly acquired) or the current page (unless
           default_mailin_page was blank in which case DISCARD.)

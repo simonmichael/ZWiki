@@ -1,14 +1,14 @@
 <html>
   <!-- old head macro, for backwards compatibility -->
   <head metal:define-macro="head">
-    <meta http-equiv="Content-Type" content="" 
+    <meta http-equiv="Content-Type" content=""
           tal:define="charset string:utf-8;
                       dummy   python:request.RESPONSE.setHeader(
                       'Content-Type','text/html;; charset='+charset);"
-          tal:attributes="content string:text/html;;charset=${charset}" 
+          tal:attributes="content string:text/html;;charset=${charset}"
           />
-    <span metal:define-slot="searchtags" 
-          tal:omit-tag="" 
+    <span metal:define-slot="searchtags"
+          tal:omit-tag=""
           tal:define="indexdelay python:24">
       <span tal:condition="python:here.lastEditIntervalInHours() >= indexdelay"
             tal:omit-tag="">
@@ -22,10 +22,10 @@
         <meta name="robots" content="noindex" />
       </span>
     </span>
-    <span metal:define-slot="extra" tal:omit-tag="" 
+    <span metal:define-slot="extra" tal:omit-tag=""
           />
-    <link rel="stylesheet" type="text/css" href="" 
-          tal:attributes="href string:${here/defaultPageUrl}/stylesheet" 
+    <link rel="stylesheet" type="text/css" href=""
+          tal:attributes="href string:${here/defaultPageUrl}/stylesheet"
           />
     <span metal:define-macro="favicon" tal:condition="container/favicon|nothing" tal:omit-tag="">
     <link rel="shortcut icon" href="favicon"/>

@@ -6,7 +6,8 @@ from string import join, split, strip
 from time import clock
 
 from AccessControl import getSecurityManager, ClassSecurityInfo, Unauthorized
-from Globals import package_home, InitializeClass
+from AccessControl.class_init import InitializeClass
+from App.Common import package_home
 from OFS.CopySupport import CopyError
 from OFS.DTMLMethod import DTMLMethod
 from DateTime import DateTime
@@ -43,7 +44,7 @@ class PageAdminSupport:
         Also installs a wiki catalog if not present, re-indexes each
         page, validates page parents, and rebuilds the wiki outline
         cache. Also installs the index_html and standard_error_message
-        dtml methods. XXX split ? 
+        dtml methods. XXX split ?
 
         You can set render=0 to skip the page pre-rendering part,
         completing much faster on large wikis.
@@ -59,7 +60,7 @@ class PageAdminSupport:
             raise Unauthorized, (
              _('You are not authorized to upgrade all pages.') + \
              _('(folder -> Manage properties)'))
-        
+
         batch = int(batch)
         if render: BLATHER('upgrading/reindexing/pre-rendering all pages:')
         else: BLATHER('upgrading/reindexing all pages:')
@@ -149,7 +150,7 @@ class PageAdminSupport:
 
         Called on every page view (set AUTO_UPGRADE=0 in Default.py to
         prevent this).  You could also call this on every page in your
-        wiki to do a batch upgrade. Affects bobobase_modification_time. If
+        wiki to do a batch upgrade. Affects last_modified. If
         you later downgrade zwiki, the upgraded pages may not work so
         well.
         """
@@ -194,16 +195,16 @@ class PageAdminSupport:
         # Pre-0.9.10, creation_time has been a string in custom format and
         # last_edit_time has been a DateTime. Now both are kept as
         # ISO 8601-format strings. Might not be strictly necessary to upgrade
-        # in all cases.. will cause a lot of bobobase_mod_time
+        # in all cases.. will cause a lot of last_modified
         # updates.. do it anyway.
         if not self.last_edit_time:
-            self.last_edit_time = self.bobobase_modification_time().ISO8601()
+            self.last_edit_time = DateTime(self.last_modified(self)).ISO8601()
             changed = 1
         elif type(self.last_edit_time) is not StringType:
             self.last_edit_time = self.last_edit_time.ISO8601()
             changed = 1
         elif len(self.last_edit_time) != 25:
-            try: 
+            try:
                 if len(self.last_edit_time) == 19: # older "ISO()" format
                     # we're using the behaviour that was standard in
                     # Zope <= 2.9, where a timestamp without timezone
@@ -228,7 +229,7 @@ class PageAdminSupport:
             self.creation_time = self.creation_time.ISO8601()
             changed = 1
         elif len(self.creation_time) != 25:
-            try: 
+            try:
                 if len(self.creation_time) == 19: # older "ISO()" format
                     self.creation_time = \
                     DateTime(self.creation_time+' GMT+0').ISO8601()
@@ -246,10 +247,10 @@ class PageAdminSupport:
             '_links',
             '_prelinked',
             ):
-            if safe_hasattr(self.aq_base,a): 
+            if safe_hasattr(self.aq_base,a):
                 delattr(self,a)
                 self.clearCache()
-                changed = 1 
+                changed = 1
 
         # update _properties
         # keep in sync with _properties above. Better if we used that as
@@ -292,14 +293,14 @@ class PageAdminSupport:
 
         if changed:
             # do a commit now so the current render will have the correct
-            # bobobase_modification_time for display (many headers/footers
+            # last_modified for display (many headers/footers
             # still show it)
             # XXX I don't think we need to dick around with commits any more
             #get_transaction().commit()
             BLATHER('upgraded '+self.id())
 
         self.upgradeComments(REQUEST)
-                
+
         # PageMailSupport does a bit more (merge here ?)
         self._upgradeSubscribers()
 
@@ -475,7 +476,7 @@ class PageAdminSupport:
             BLATHER('indexing complete, %d pages processed' % n)
         if REQUEST:
             REQUEST.RESPONSE.redirect(self.pageUrl())
-            
+
     def ensureCatalog(self):
         """
         Ensure this wiki has a zcatalog, for fast standardized searching.

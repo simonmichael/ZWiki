@@ -50,7 +50,7 @@ try:
         #            return MessageIDFactory.__call__(self,ustr,default)
         #_ = lambda s:str(MessageIDFactoryWithUtf8Fix('zwiki')(s))
         from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-        from Globals import HTMLFile, DTMLFile
+        from App.special_dtml import HTMLFile, DTMLFile
         BLATHER('using PlacelessTranslationService for i18n')
 
     elif 0: #USE_LOCALIZER: # not supported at the moment
@@ -65,13 +65,13 @@ try:
 except (ImportError, NameError):
     def _(s): return s
     from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-    from Globals import HTMLFile, DTMLFile
+    from App.special_dtml import HTMLFile, DTMLFile
     class MockTranslateTag:
         name='translate'
         blockContinuations=()
         _msgid = None
         _domain = None
-        def __init__(self, blocks): 
+        def __init__(self, blocks, encoding='utf-8'):
             self.blocks=blocks
             tname, args, section = blocks[0]
             self.__name__="%s %s" % (tname, args)

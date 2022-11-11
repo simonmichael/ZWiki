@@ -30,7 +30,7 @@ class SubscriptionTests(ZwikiTestCase):
         sl.subscribe('1@test.com')
         self.assertEquals(sl.subscriberList(),['1@test.com'])
         # check issue #161
-        self.assertEquals(MockZWikiPage.subscriber_list,[]) 
+        self.assertEquals(MockZWikiPage.subscriber_list,[])
         self.assertEquals(sl.subscriberCount(),1)
         self.assertEquals(sl.pageSubscriberCount(),1)
         self.assertEquals(sl.wikiSubscriberCount(),0)
@@ -62,7 +62,7 @@ class SubscriptionTests(ZwikiTestCase):
         self.assertEquals(p.allSubscriptionsFor('a@a.a'),['TestPage'])
         self.assertEquals(p.allSubscriptionsFor('b@b.b'),['whole_wiki', 'TestPage'])
         self.assertEquals(p.allSubscriptionsFor('c@c.c'),[])
-        
+
     def test_otherSubscriptionsFor(self):
         thispage = mockPage(__name__='ThisPage')
         thispage.create('ThatPage')
@@ -79,7 +79,7 @@ class SubscriptionTests(ZwikiTestCase):
         p.subscribe('b@b.b')
         p.unsubscribe('b@b.b')
         self.assert_('a@a.a' in p.subscriberList(edits=1))
-        
+
     def test_TextFormatter(self):
         # what's textformatter really doing ?
         from Products.ZWiki.TextFormatter import TextFormatter
@@ -280,7 +280,7 @@ class MailinTests(ZwikiTestCase):
     def afterSetUp(self):
         ZwikiTestCase.afterSetUp(self)
         self.wiki.mailin_policy='open'
-        
+
     def test_stripSignature(self):
         # signatures after -- should be stripped
         self.assertEqual(
@@ -365,12 +365,12 @@ blah''')
 
     def test_destinationWithNoNamedPage(self):
         m = MailIn(self.p, str(TestMessage(subject='test')))
-        self.assertEqual(m.decideMailinAction(),('COMMENT','TestPage')) 
+        self.assertEqual(m.decideMailinAction(),('COMMENT','TestPage'))
 
     def test_destinationWithNoNamedPageAndDefaultMailinPageProperty(self):
         self.p.folder().default_mailin_page='TestPage'
         m = MailIn(self.p, str(TestMessage(subject='test')))
-        self.assertEqual(m.decideMailinAction(),('COMMENT','TestPage')) 
+        self.assertEqual(m.decideMailinAction(),('COMMENT','TestPage'))
 
     def test_destinationWithNoNamedPageAndBlankDefaultMailinPageProperty(self):
         self.p.folder().default_mailin_page=''
@@ -384,13 +384,13 @@ blah''')
 
     def test_destinationFromMultipleBracketedNamesInSubject(self):
         m = MailIn(self.p, str(TestMessage(subject='[Fwd:][LIST][Some Page]')))
-        self.assertEqual(m.decideMailinAction(),('CREATE','Some Page')) 
-    
+        self.assertEqual(m.decideMailinAction(),('CREATE','Some Page'))
+
     def test_destinationFromLongSubject(self):
         m = MailIn(self.p,
                    str(TestMessage(subject='['+' ....'*20+'Test Page'+' ....'*20+']')))
-        self.assertEqual(m.decideMailinAction(),('COMMENT','TestPage')) 
-    
+        self.assertEqual(m.decideMailinAction(),('COMMENT','TestPage'))
+
     def test_destinationFromLongSubjectWithLineBreak(self):
         m = MailIn(self.p,
                    str(TestMessage(subject='''\
@@ -399,7 +399,7 @@ Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
         self.assertEqual(m.decideMailinAction(),
                          ('CREATE',
                           'IssueNo0547 mail (with long subject ?) may go to wrong page (test with long long long long long long subject)'))
-    
+
     def test_destinationFromTrackerAddress(self):
         m = MailIn(self.p, str(TestMessage(to='bugs@b.c',)))
         action, info = m.decideMailinAction()
@@ -411,18 +411,18 @@ Re: [IssueNo0547 mail (with long subject ?) may go to wrong page
         self.p.subscribe(TESTSENDER)
         self.p.mailin(TESTMSG)
         self.assertEqual(1, len(re.findall(TESTBODY,self.p.text())))
-        
+
     def test_nonSubscriberMailinFails(self):
         delattr(self.p.folder(),'mailin_policy')
         old = self.p.text()
         self.p.mailin(TESTMSG)
         self.assertEqual(old, self.p.read())
-        
+
     def test_nonSubscriberMailinWithOpenPosting(self):
         old = self.p.text()
         self.p.mailin(TESTMSG)
         self.assertEqual(1, len(re.findall(TESTBODY,self.p.text())))
-        
+
     def test_mailinTrackerIssue(self):
         self.p.setupTracker()
         self.assertEqual(1, self.p.issueCount())

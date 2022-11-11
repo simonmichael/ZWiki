@@ -1,20 +1,20 @@
 <metal:block metal:define-macro="master"><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
       i18n:domain="zwiki">
-                         
+
   <head>
     <meta http-equiv="Content-Type"
           tal:define="charset string:utf-8;
                       dummy   python:request.RESPONSE.setHeader(
                       'Content-Type','text/html;; charset='+charset);"
-          tal:attributes="content string:text/html;;charset=${charset}" 
+          tal:attributes="content string:text/html;;charset=${charset}"
           />
     <tal:block tal:condition="container/favicon|nothing">
       <link rel="shortcut icon" href="favicon"/>
       <link rel="icon" href="favicon"/>
     </tal:block>
-    <link rel="stylesheet" type="text/css" href="" 
-          tal:attributes="href string:${here/defaultPageUrl}/stylesheet" 
+    <link rel="stylesheet" type="text/css" href=""
+          tal:attributes="href string:${here/defaultPageUrl}/stylesheet"
           />
     <title metal:define-slot="title_slot" tal:content="
            string:${container/title} ${here/pageName}" />

@@ -5,7 +5,7 @@ from types import *
 from urllib import quote, unquote
 from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 
 from Products.ZWiki import Permissions
 from Products.ZWiki.Utils import BLATHER, html_quote, toencoded
@@ -141,7 +141,7 @@ class PageRSSSupport:
         We replace only &, > and <
         this is according to RSS specs in
         http://www.rssboard.org/rss-profile#data-types-characterdata
-        Nonetheless, http://feedvalidator.org/ claims there is html in 
+        Nonetheless, http://feedvalidator.org/ claims there is html in
         those encoded titles.
         """
         title = title.replace('&', '&#x26;', -1)
@@ -152,5 +152,5 @@ class PageRSSSupport:
     # backwards compatibility
     changes_rss = edits_rss
 
-InitializeClass(PageRSSSupport) 
+InitializeClass(PageRSSSupport)
 registerPlugin(PageRSSSupport)

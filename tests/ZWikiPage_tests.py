@@ -185,7 +185,7 @@ class Tests(ZwikiTestCase):
         self.assertEquals(
             self.p.renderLink('[http://some.url|label]'),
             '<a href="http://some.url">label</a>')
-        
+
     def test_renderLinksIn(self):
         self.assertEquals(self.p.renderLinksIn('nolink'),'nolink')
         self.assertEquals(self.p.renderLinksIn('http://a.b.c/d'),
@@ -230,7 +230,7 @@ class Tests(ZwikiTestCase):
         t = time.time()
         self.assertEquals(self.p.pageCount(),1000)
         print time.time() - t
-        
+
     def test_displaysSubtopicsWithDtml(self):
         self.p.edit(text='')
         self.failIf(self.p.displaysSubtopicsWithDtml())
@@ -249,7 +249,7 @@ class Tests(ZwikiTestCase):
         edittime = edittime.ISO8601()
         r = self.p.linkTitleFrom()
         self.assertEquals( r, 'last edited some time ago')
-        r = self.p.linkTitleFrom(prettyprint=1) 
+        r = self.p.linkTitleFrom(prettyprint=1)
         self.assert_( 'some time' in r )
         self.assert_( '<a href=' in r )
         r = self.p.linkTitleFrom(last_edit_time=edittime, prettyprint=1)
@@ -267,4 +267,4 @@ class Tests(ZwikiTestCase):
         self.assertEqual('a\nb',p.renderMidsectionIn('a'+MIDSECTIONMARKER+'b'))
         #self.assertEqual('a\n',p.renderMidsectionIn('a'+MIDSECTIONMARKER+'é'))
         self.assertEqual(u'a\n\xe9',p.renderMidsectionIn('a'+MIDSECTIONMARKER+u'\xe9'))
-        
+

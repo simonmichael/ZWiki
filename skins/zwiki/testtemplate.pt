@@ -1,2 +1,2 @@
-container=<span tal:replace="structure python:here.talsafe(`container`)" />
-here=<span tal:replace="structure python:here.talsafe(`here`)" />
+container=<span tal:replace="structure python:here.talsafe(str(container))" />
+here=<span tal:replace="structure python:here.talsafe(str(here))" />

@@ -2,9 +2,9 @@
   <body>
 
     <!--  optional extra site header XXX use talsafe -->
-    <div metal:define-macro="siteheader" 
-         tal:condition="here/site_header|nothing" 
-         tal:replace="structure here/site_header" 
+    <div metal:define-macro="siteheader"
+         tal:condition="here/site_header|nothing"
+         tal:replace="structure here/site_header"
          class="siteheader" />
 
   </body>

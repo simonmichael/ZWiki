@@ -59,7 +59,7 @@ class Outline:
             childmap = {}
         else:
             # backwards compatibility: 0.39 might have set this to None
-            childmap = self.childmap() or {} 
+            childmap = self.childmap() or {}
             # remove any no-longer-existing nodes from childmap
             for p in childmap.keys()[:]:
                 if not p in nodes: del childmap[p]
@@ -139,11 +139,11 @@ class Outline:
         """
         Change node's parents to newparents in the outline.
         """
-        # help prepare childmap for updateChildMap 
+        # help prepare childmap for updateChildMap
         childmap = self.childmap()
         for p in self.parents(node): childmap[p].remove(node)
         self.setChildmap(childmap)
-            
+
         self.add(node,newparents,update)
     def reorder(self,node,child=None):
         """
@@ -271,7 +271,7 @@ class Outline:
         """
         # Go up, identifying all and topmost forebears:
         ancestors = {}
-        tops = {}     
+        tops = {}
         todo = {node: None}
         while todo:
             doing = todo
@@ -305,7 +305,7 @@ class Outline:
         parents = self.parentmap().get(node,None)
         if parents: return parents[0]
         else: return None
-    def siblings(self,node,include_me=False,sort_alpha=True): 
+    def siblings(self,node,include_me=False,sort_alpha=True):
         """
         Return a nesting/list representing node's siblings.
 
@@ -340,7 +340,7 @@ class Outline:
         If depth is specified, descendendants beyond that depth will be
         ignored.
         XXX this is better done in the view layer, remove it.
-        
+
         """
         if did is None: did = {}
         got = []
@@ -364,7 +364,7 @@ class Outline:
         return got
     # never index this object, so find all object in the catalog doesn't break
     def index_object(self,idxs=[],log=1): pass
-    
+
 # helper functions
 
 def descend_ancestors(page, ancestors, did, children):

@@ -6,7 +6,7 @@ increase.
 """
 
 from AccessControl import getSecurityManager, ClassSecurityInfo
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 try:    from Products.BTreeFolder2.BTreeFolder2 import BTreeFolder2 as Folder
 except ImportError: from OFS.Folder import Folder # zope 2.7
 from Utils import safe_hasattr, sorted, registerSupportFolderId
@@ -48,12 +48,12 @@ class PageHistorySupport:
             if f.isPrincipiaFolderish:
                 return f
         return None
-            
+
     security.declareProtected(Permissions.View, 'revisions')
     def revisions(self):
         """
         Get a list of this page's revisions, oldest first.
-        
+
         A page's revisions are all the page objects with the same root id
         plus a possible dot-number suffix. The one with no suffix is the
         latest revision, kept in the main wiki folder; older revisions

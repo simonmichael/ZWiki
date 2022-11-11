@@ -21,7 +21,7 @@ else:
         site.manage_addProduct['ExternalMethod'].manage_addExternalMethod(
             'installzwiki','','ZWiki.Install','install')
         site.installzwiki(site)
-                
+
     def test_suite():
         suite = unittest.TestSuite()
         suite.addTest(unittest.makeSuite(Tests))

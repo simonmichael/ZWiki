@@ -9,7 +9,7 @@ quickly.)
 
 NOTES
 
-* what is the reason for using afterSetUp instead of setUp ? 
+* what is the reason for using afterSetUp instead of setUp ?
 
 * too many test fixture variants are used in zwiki tests right now:
 - ZwikiTestCase
@@ -105,8 +105,8 @@ class ZwikiTestCase(ZopeTestCase.ZopeTestCase):
             import transaction; transaction.commit()
         except TypeError:
             pass
-        
-    
+
+
 # mock objects
 
 class MockRequest(HTTPRequest):
@@ -128,7 +128,7 @@ class MockRequest(HTTPRequest):
         if language: self.setLanguage(language)
     def setLanguage(self,language):
         self.environ['HTTP_ACCEPT_LANGUAGE']=language
-        
+
 class MockUser:
     def __init__(self,username='testuser'):
         self.username = username

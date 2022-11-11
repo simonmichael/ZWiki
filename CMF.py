@@ -2,7 +2,7 @@
 # See also __init__.py and Extensions/Install.py
 
 #from types import *
-from Globals import InitializeClass
+from AccessControl.class_init import InitializeClass
 from Utils import safe_hasattr
 
 try:
@@ -20,7 +20,7 @@ except ImportError:
     HAS_PLONE = False
 
 # XXX also need to skip when running unit tests ?
-if not HAS_CMF:    
+if not HAS_CMF:
     class PageCMFSupport:
         __implements__ = ()
         def supportsCMF(self): return 0
@@ -45,7 +45,7 @@ else:
         def allowedContentTypes( self ):
             return []
     InitializeClass(WikiFolder)
-        
+
     class ZwikiDublinCoreImpl(DefaultDublinCoreImpl):
         """
         Zwiki's implementation of Dublin Core.
@@ -53,8 +53,6 @@ else:
         We use our own similar attributes..
         XXX maybe we can always use dublin core and simplify.
         """
-        __implements__ = DefaultDublinCoreImpl.__implements__ 
-
         security = ClassSecurityInfo()
         security.declarePrivate('setModificationDate')
         def setModificationDate(self, modification_date=None):
@@ -69,9 +67,9 @@ else:
 
         security.declarePublic('Creator')
         def Creator(self):
-            if self.creators and len(self.creators) > 0: 
+            if self.creators and len(self.creators) > 0:
                 return self.creators[0] # CMF creators property
-            else: 
+            else:
                 return self.creator     # Zwiki creator property
 
         security.declarePublic('Description')
@@ -92,7 +90,7 @@ else:
             XXX file a bug
             """
             return self.toencoded(self.pageName())
-        
+
 
     InitializeClass(ZwikiDublinCoreImpl)
 
@@ -100,9 +98,6 @@ else:
         """
         Mix-in class for CMF support
         """
-        __implements__ = ZwikiDublinCoreImpl.__implements__ + \
-                         PortalContent.__implements__
-   
         portal_type = PAGE_PORTALTYPE
         # provide this so DublinCore.Format works with old instances
         format = 'text/html'
@@ -183,6 +178,6 @@ else:
             """
             return self == self.defaultPage()
 
-            
+
 InitializeClass(PageCMFSupport)
 

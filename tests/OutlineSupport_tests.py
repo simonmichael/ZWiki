@@ -52,7 +52,7 @@ class Tests(ZwikiTestCase):
                            ])
         self.assertEquals(o.parentmap()['TestPage'],[])
         self.assertEquals(o.parentmap()['ChildPage'],['RootPage'])
-        
+
     def test_context(self):
         self.assertEquals(self.wiki.RootPage.context(),
                           '&nbsp;') # XXX should be as below I think
@@ -62,7 +62,7 @@ class Tests(ZwikiTestCase):
         self.assertEquals(self.wiki.ChildPage.context(),
                           '<small><ul class="outline expandable">\n <li><a href="http://nohost/test_folder_1_/wiki/RootPage" name="RootPage">RootPage</a>\n<ul class="outline expandable">\n <li><a href="http://nohost/test_folder_1_/wiki/ChildPage" name="ChildPage">ChildPage</a> <span id="youarehere"><-- You are here.</span></li>\n</ul>\n </li>\n</ul>\n</small>'
                           )
-        
+
     def test_reparent(self):
         p = self.wiki.SingletonPage
         self.wiki.RootPage.create('Parent Page')

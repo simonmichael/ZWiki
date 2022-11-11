@@ -53,14 +53,14 @@ seconds="_.int(_.round((elapsed-days-hourfactor*hours-minutefactor*minutes)/seco
 <option <dtml-if "category==x_sequence_item">selected</dtml-if>>
 &dtml-x_sequence_item;</option>
 </dtml-in>
-</select> 
+</select>
 <b><dtml-translate domain="zwiki">Severity</dtml-translate>:</b>
 <select name="severity" class="formfield">
 <dtml-in issue_severities prefix=x>
 <option <dtml-if "severity==x_sequence_item">selected</dtml-if>>
 &dtml-x_sequence_item;</option>
 </dtml-in>
-</select> 
+</select>
 <b><dtml-translate domain="zwiki">Status</dtml-translate>:</b>
 <select name="status" class="formfield">
 <dtml-in issue_statuses prefix=x>
@@ -72,7 +72,7 @@ seconds="_.int(_.round((elapsed-days-hourfactor*hours-minutefactor*minutes)/seco
 <br /><b><dtml-translate domain="zwiki">Optional subject</dtml-translate>:</b> <input type="text" name="log" value="" size="55" maxlength="100" class="formfield">&nbsp;
 <input name="submit" type="submit" value="Change">
 <br />
-<b><dtml-translate domain="zwiki">Optional comment</dtml-translate>:</b> <textarea 
+<b><dtml-translate domain="zwiki">Optional comment</dtml-translate>:</b> <textarea
 wrap="virtual" name="text" rows="3" cols="50" class="formfield"
 style="vertical-align:top"
 title=""
