@@ -10,7 +10,7 @@ Zwiki repository policies
 Here are some guidelines for committers to the main Zwiki repository.
 
 - http://zwiki.org/repos/ZWiki is the official Zwiki "trunk" repo,
-  used for product releases and for running zwiki.org. 
+  used for product releases and for running zwiki.org.
   A darcsweb interface is available at
   http://joyful.com/darcsweb/darcsweb.cgi?r=ZWiki;a=summary .
 
@@ -116,7 +116,7 @@ Wiki docs:
 - can organize a large number of documents in a hierarchy
 
 current uses:
- 
+
 - zwiki.org, including
 - NextReleaseNewsDraft - unused
 - GeneralDiscussion
@@ -155,7 +155,7 @@ We have the following kinds of in-code documentation:
 
   - a section heading within a file, class or method.
 
-  - a short explanatory comment appended to a line of code. 
+  - a short explanatory comment appended to a line of code.
 
   - longer explanatory comments when necessary.
 
@@ -209,7 +209,7 @@ output types and whether side effects are expected.
 
 Function/method contracts
 -------------------------
-We are considering ways to document function and method "contracts". 
+We are considering ways to document function and method "contracts".
 `Here's <http://www.htdp.org/2003-09-26/Book/curriculum-Z-H-5.html#node_sec_2.5>`_
 an example. We are most interested in
 
@@ -224,7 +224,7 @@ an example. We are most interested in
 Understanding statefulness in particular should help us to identify and
 gather together the most stateful code, reduce state dependencies, and
 increase the proportion of pure and semi-pure functional code, which
-will greatly aid testing, debugging and reliability.  
+will greatly aid testing, debugging and reliability.
 
 Here is a possible convention for now: when you touch a method or
 function, review the docstring and code and try add a comment describing
@@ -241,7 +241,7 @@ some examples::
 
     def handleSubtopicsProperty(self,subtopics,REQUEST=None): # -> none ; modifies: self
 
-    def revisionNumberBefore(self, username): # -> revision number | none 
+    def revisionNumberBefore(self, username): # -> revision number | none
         # depends on: self, revisions
 
     def expungeEditsEverywhereBy(self, username, REQUEST=None, batch=0): # -> none
@@ -251,7 +251,7 @@ some examples::
         # depends on: wiki
         # modifies: wiki (folder, pages, dtml methods, catalog, outline, revisions..)
 
-A few more notes: 
+A few more notes:
 
 These don't have to be perfectly correct; even a rough guess could be
 useful.  Do review the contract for correctness every time you change some
@@ -281,7 +281,7 @@ valuable to see more lines on the screen than to see the full contents of
 every line. Keeping lines within 80 characters can obscure the shape of
 code constructs, especially with functional coding style, and also means
 we are less likely to see the whole method at once. Long lines, even over
-80 characters, may sometimes be preferable. 
+80 characters, may sometimes be preferable.
 
 This assumes you have your editor truncate long lines, not wrap them.  I
 do this, and maximize the window when I need more visibility on the line
@@ -291,18 +291,18 @@ ends.
 Message passing style, functional programming style, etc.
 ---------------------------------------------------------
 
-The Zwiki codebase is influenced by Smalltalk. Eg: 
+The Zwiki codebase is influenced by Smalltalk. Eg:
 
 - we encapsulate state and behaviour as objects when that makes sense
 
 - we break up code into many small methods with intention-revealing names
   to form an expressive domain-specific language.
 
-- "tell, don't ask", ie just send messages, ignore what's returned. 
+- "tell, don't ask", ie just send messages, ignore what's returned.
   We haven't used this and I don't know how it applies to us; it's
   something to think about.
 
-Recent code is also influenced by functional programming. Eg: 
+Recent code is also influenced by functional programming. Eg:
 
 - we minimise the use of variables and the use of procedural/sequential
   code (do this, then that, then the other). Instead, we compose functions

@@ -1,0 +1,344 @@
+Functional tests
+################
+
+Set up some functional tests - these will work only in Zope 2.10 :-(
+because in 2.9 Five does not yet have testbrowser apparently.
+
+    >>> folder_url = self.folder.absolute_url()
+
+    >>> from Products.Five.testbrowser import Browser
+    >>> browser = Browser()
+    >>> browser.handleErrors = False
+
+For simplicity's sake, we're running this as manager:
+
+    >>> from Testing.ZopeTestCase import user_name
+    >>> from Testing.ZopeTestCase import user_password
+    >>> user_auth = 'Basic '+user_name+':'+user_password
+    >>> self.setRoles(['Manager'])
+    >>> browser.addHeader('Authorization', user_auth)
+
+Now let's go and install a ZWiki:
+
+    >>> browser.open(folder_url+'/manage_main')
+    >>> browser.isHtml
+    True
+    >>> browser.contents
+    '...ZWiki...'
+
+Can we add a wiki using the "add" menu?
+
+    >>> control = browser.getControl('ZWiki', index=0)
+    >>> control.selected = True
+    >>> submit = browser.getControl(name='submit')
+    >>> submit.click()
+    >>> browser.contents
+    '...The wiki folder id, which will appear in urls...'
+
+We're in the "Add ZWiki" form.
+Fill out the form:
+
+    >>> id = browser.getControl(name='new_id')
+    >>> title = browser.getControl(name='new_title')
+    >>> type = browser.getControl(name='wiki_type', index=0)
+    >>> print type.value
+    ['basic']
+    >>> id.value = 'testwiki'
+    >>> title.value = 'Test Wiki'
+    >>> type.value = ['basic'] # just to be sure
+    >>> submit = browser.getControl('Add wiki')
+
+    >>> submit.click()
+    >>> browser.contents
+    '...This is the front page of...'
+
+So our new wiki is installed! We are viewing the FrontPage.
+
+Next step is to edit the FrontPage:
+
+    >>> editlink = browser.getLink('edit')
+    >>> editlink.click()
+    >>> browser.url
+    '.../FrontPage/editform'
+
+Change the text.
+
+    >>> textarea = browser.getControl(name='text')
+    >>> textarea.value = "Some text here."
+
+Let's look at a preview first:
+
+    >>> submit = browser.getControl('Preview')
+    >>> submit.click()
+    >>> browser.contents
+    '...Some text here...'
+
+Save it:
+
+    >>> submit = browser.getControl('Save')
+    >>> submit.click()
+    >>> browser.contents
+    '...Some text here...'
+
+Let's revert this edit again.
+First have a look at the history page:
+
+    >>> historylink = browser.getLink(url='FrontPage/history')
+    >>> historylink.click()
+    >>> browser.url
+    '.../FrontPage/history'
+    >>> browser.contents
+    '...Edit history for FrontPage...'
+
+There is a Revision 2 here:
+
+    >>> rev2button = browser.getControl('2')
+
+Have to find the button for Revision 1 now.
+
+    >>> rev1button = browser.getControl('1')
+    >>> rev1button.click()
+    >>> browser.url
+    '.../FrontPage/diff?rev=1'
+
+Now just revert to this revision:
+
+    >>> revertbutton = browser.getControl('Revert to this version')
+    >>> revertbutton.click()
+    >>> browser.url
+    '.../FrontPage'
+    >>> browser.contents
+    '...This is the front page of...'
+
+So we came around full circle to our normal FrontPage. While we're at it,
+we might want to add a new page too. Going through the form at the bottom.
+
+    >>> pagename = browser.getControl(name='pagename')
+    >>> pagename.value = 'My First Wiki Page'
+    >>> create = browser.getControl('create')
+    >>> create.click()
+    >>> browser.url
+    '.../FrontPage'
+    >>> browser.contents
+    '...Optional change note...'
+
+Fill in some text etc.
+
+    >>> textarea = browser.getControl(name='text')
+    >>> textarea.value = 'I like me some text here.'
+    >>> logtext = browser.getControl(name='log')
+    >>> logtext.value = 'initial text entered'
+    >>> create = browser.getControl('Create') # capital C here
+    >>> create.click()
+    >>> browser.url
+    '.../MyFirstWikiPage'
+    >>> browser.contents
+    '...I like me some text here...'
+
+Let's see if our edits show up in recentchanges!
+
+    >>> changes = browser.getLink('changes')
+    >>> changes.click()
+    >>> browser.url
+    '.../FrontPage/recentchanges'
+    >>> browser.contents
+    '...Pages changed in the last...'
+    >>> 'My First Wiki Page' in browser.contents
+    True
+
+Our revert should show up too:
+
+    >>> 'FrontPage' in browser.contents
+    True
+    >>> 'reverted by ' + user_name in browser.contents
+    True
+
+Clicking on our username shows us a "page does not exist" message.
+But I don't yet know how to test for the resulting traceback.
+
+Instead let's try some of the buttons, 'month' and 'ever':
+
+    >>> month = browser.getControl('month')
+    >>> month.click()
+    >>> 'My First Wiki Page' in browser.contents
+    True
+    >>> 'FrontPage' in browser.contents
+    True
+    >>> 'WikiWikiWeb' in browser.contents
+    False
+    >>> ever = browser.getControl('ever')
+    >>> ever.click()
+    >>> 'My First Wiki Page' in browser.contents
+    True
+    >>> 'WikiWikiWeb' in browser.contents
+    True
+
+Setting options - maybe we should test this with an anonymous user
+and the wiki set to allow anonymous edits with options set only.
+For now it's still our manager user.
+
+    >>> mypage = browser.getLink('My First Wiki Page')
+    >>> mypage.click()
+    >>> options_l = browser.getLink('options')
+    >>> options_l.click()
+    >>> 'FrontPage/useroptions?redirectURL=http%3A//' in browser.url
+    True
+    >>> browser.contents
+    '...Set your preferences for this wiki:...'
+    >>> zwiki_username = browser.getControl(name='zwiki_username')
+    >>> email = browser.getControl(name='email')
+    >>> zwiki_timezone = browser.getControl(name='zwiki_timezone')
+    >>> zwiki_height = browser.getControl(name='zwiki_height')
+    >>> zwiki_username.value
+    ''
+    >>> email.value
+    ''
+    >>> zwiki_height.value
+    '20'
+    >>> zwiki_username.value = 'testy'
+    >>> zwiki_height.value = '30'
+    >>> email.value = 'testy@example.org'
+
+Submit to get back to normal wiki page
+
+    >>> submit = browser.getControl('Save options')
+    >>> submit.click()
+    >>> browser.url
+    '.../MyFirstWikiPage'
+
+Let's get some search rolling!
+
+    >>> form = browser.getForm(index=0) # should be the searchwiki form
+    >>> searchinput = browser.getControl(name='expr')
+    >>> searchinput.value = 'Welcome'
+    >>> form.submit()
+    >>> browser.url
+    '.../searchwiki?expr=Welcome'
+    >>> browser.contents # in the results we will find the FrontPage:
+    '...This is the front page of ZWiki...'
+    >>> foundlink = browser.getLink('FrontPage') # take me back
+    >>> foundlink.click()
+
+De-authenticate, to become anonymous, then see if we can still edit
+a page (we should get an exception).
+
+    >>> self.setRoles(['Anonymous'])
+    >>> browser.mech_browser.addheaders.remove(('Authorization', 'Basic test_user_1_:secret'),)
+    >>> editlink = browser.getLink('edit') # if we'd reload,
+    >>> editlink.click()                   # the link would be gone actually
+    Traceback (most recent call last):
+    ...
+    Unauthorized...
+
+(The above used to expect "Unauthorized: You are not authorized to
+edit pages in this wiki." but this has stopped working for some
+reason..)
+
+Set up wiki to work only with options set for anonymous edits
+('edits_need_username'), try again with anonymous, but without options set.
+
+    >>> self.folder.testwiki.manage_addProperty('edits_need_username',True,'boolean')
+    >>> self.folder.testwiki.manage_permission("Zwiki: Edit pages",('Anonymous','Authenticated','Manager'), acquire=1)
+    >>> browser.open(folder_url+'/testwiki/FrontPage')
+    >>> options_l = browser.getLink('options')
+    >>> options_l.click()
+    >>> zwiki_username = browser.getControl(name='zwiki_username')
+    >>> email = browser.getControl(name='email')
+    >>> zwiki_username.value = '' # unset the stuff!
+    >>> email.value = ''
+    >>> submit = browser.getControl('Save options')
+    >>> submit.click() # should get us to FrontPage
+    >>> editlink = browser.getLink('edit') # try again!
+    >>> editlink.click()
+    >>> browser.url
+    '.../FrontPage/editform'
+    >>> browser.contents # and of course it doesn't let me edit!
+    '...Sorry, you need more identification to do that on this wiki...'
+
+Now set options and try again!
+
+    >>> browser.open(folder_url+'/testwiki/FrontPage')
+    >>> options_l = browser.getLink('options')
+    >>> options_l.click()
+    >>> zwiki_username = browser.getControl(name='zwiki_username')
+    >>> email = browser.getControl(name='email')
+    >>> zwiki_username.value = 'testy'
+    >>> email.value = 'testy@example.org'
+    >>> submit = browser.getControl('Save options')
+    >>> submit.click()
+    >>> browser.url
+    '.../FrontPage'
+    >>> editlink = browser.getLink('edit')
+    >>> editlink.click()
+    >>> browser.url
+    '.../FrontPage/editform'
+
+Change the text.
+
+    >>> textarea = browser.getControl(name='text')
+    >>> textarea.value = "Some text here. Changed by testy."
+    >>> submit = browser.getControl('Save')
+    >>> submit.click()
+    >>> browser.contents
+    '...Some text here. Changed by testy...'
+    >>> browser.open(folder_url+'/testwiki/MyFirstWikiPage')
+    >>> editlink = browser.getLink('edit')
+    >>> editlink.click()
+    >>> textarea = browser.getControl(name='text')
+    >>> textarea.value = "Some text here. Changed by testy too."
+    >>> submit = browser.getControl('Save')
+    >>> submit.click()
+    >>> browser.contents
+    '...Changed by testy too...'
+    >>> editlink = browser.getLink('edit') # one more edit, fill revisions
+    >>> editlink.click()
+    >>> textarea = browser.getControl(name='text')
+    >>> textarea.value = "Some other text here. Changed by testy too."
+    >>> submit = browser.getControl('Save')
+    >>> submit.click()
+
+Now become Manager again and mass-expunge all edits by this "testy" person.
+
+    >>> self.setRoles(['Manager'])
+    >>> browser.addHeader('Authorization', user_auth)
+    >>> browser.open(folder_url+'/testwiki/FrontPage/expungeEditsEverywhereBy', 'username=testy')
+    >>> editlink = browser.getLink('changes')
+    >>> editlink.click()
+    >>> 'testy' not in browser.contents
+    True
+
+Renaming a page and changing backlinks:
+
+    >>> browser.open(folder_url+'/testwiki/FrontPage')
+    >>> pagename = browser.getControl(name='pagename')
+    >>> pagename.value = 'bla bla'
+    >>> create = browser.getControl('create')
+    >>> create.click()
+    >>> textarea = browser.getControl(name='text')
+    >>> textarea.value = 'This is the bla bla page'
+    >>> logtext = browser.getControl(name='log')
+    >>> create = browser.getControl('Create') # capital C here
+    >>> create.click()
+    >>> browser.url
+    '.../BlaBla'
+    >>> browser.open(folder_url+'/testwiki/FrontPage')
+    >>> editlink = browser.getLink('edit')
+    >>> editlink.click()
+    >>> textarea = browser.getControl(name='text')
+    >>> textarea.value = """There is a link to ZWiki, to ZWiki:HowToSetUpAZwikiTracker and some to [bla bla]
+    ... and bla bla or BlaBla or even [[bla bla]] -
+    ... but by default no ((bla bla)), no !MailHost and of course not AnyOther link."""
+    >>> submit = browser.getControl('Save')
+    >>> submit.click()
+    >>> browser.open(folder_url+'/testwiki/FrontPage/text')
+    >>> browser.contents
+    'There is a link to ZWiki, to ZWiki:HowToSetUpAZwikiTracker and some to [bla bla]\nand bla bla or BlaBla or even [[bla bla]] - \nbut by default no ((bla bla)), no !MailHost and of course not AnyOther link.'
+    >>> browser.open(folder_url+'/testwiki/BlaBla')
+    >>> pagename = browser.getControl(name='pagename')
+    >>> pagename.value = 'flub flub'
+    >>> rename = browser.getControl('rename')
+    >>> rename.click()
+    >>> browser.open(folder_url+'/testwiki/FrontPage/text')
+    >>> browser.contents
+    'There is a link to ZWiki, to ZWiki:HowToSetUpAZwikiTracker and some to [flub flub]\nand bla bla or FlubFlub or even [[flub flub]] - \nbut by default no ((bla bla)), no !MailHost and of course not AnyOther link.'
+

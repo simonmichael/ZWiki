@@ -1,0 +1,14 @@
+<dtml-try><dtml-call "REQUEST.RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
+<dtml-except></dtml-try>
+<dtml-let
+ depth="_.has_key('depth') and _['depth'] or None #how is this supposed to work"
+ subtopics="offspring(exclude_self=1,depth=depth)"
+>
+<dtml-if subtopics>
+<div class="subtopics">
+<a name="subtopics"></a>
+<h4>subtopics:</h4>
+<dtml-var subtopics>
+</div>
+</dtml-if>
+</dtml-let>

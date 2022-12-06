@@ -1,0 +1,34 @@
+<html>
+  <body>
+    <!-- always-available zwiki access keys -->
+    <div metal:define-macro="accesskeys" id="accesskeys"
+         tal:define="pageurl here/pageUrl;
+                     thisurl python:here.urlquote(request.get('URL'));">
+      <a tal:attributes="href string:${here/pageUrl}/helpaccesskeys" accesskey="0"></a>
+      <a tal:attributes="href here/homeUrl" accesskey="f"></a>
+      <a tal:attributes="href here/contentsUrl" accesskey="c"></a>
+      <a tal:attributes="href here/changesUrl" accesskey="r"></a>
+      <a tal:attributes="href here/discussionUrl" accesskey="" tal:condition="here/discussionUrl"></a>
+      <a tal:attributes="href here/trackerUrl" accesskey="t" tal:condition="here/hasIssueTracker"></a>
+      <a tal:attributes="href here/indexUrl" accesskey="i" tal:condition="here/indexUrl"></a>
+      <a tal:attributes="href here/uploadsUrl" accesskey="" tal:condition="python:0 #here/uploadsUrl"></a>
+      <a tal:attributes="href here/preferencesUrl" accesskey="o"></a>
+      <a tal:attributes="href here/helpUrl" accesskey="h" tal:condition="here/helpUrl"></a>
+      <a tal:attributes="href python:'%s/setskin?skin=zwiki&came_from=%s' % (pageurl,thisurl)" accesskey="-" tal:condition="here/inCMF"></a>
+      <a tal:attributes="href python:'%s/setskin?skin=plone&came_from=%s' % (pageurl,thisurl)" accesskey="+" tal:condition="here/inCMF"></a>
+      <a tal:attributes="href python:here.nextPageUrl() or here.firstPageUrl()" accesskey="n"></a>
+      <a tal:attributes="href python:here.previousPageUrl() or here.lastPageUrl()" accesskey="p"></a>
+      <a tal:attributes="href here/upUrl" accesskey="u"></a>
+      <a tal:attributes="href here/pageUrl" accesskey="v"></a>
+      <a tal:attributes="href string:${here/pageUrl}/subscribeform" accesskey="m" tal:condition="here/isMailoutEnabled"></a>
+      <a tal:attributes="href string:${here/pageUrl}/backlinks" accesskey="b"></a>
+      <a tal:attributes="href string:${here/pageUrl}/diff" accesskey="d"></a>
+      <a tal:attributes="href string:${here/pageUrl}/history" accesskey="y"></a>
+      <a tal:attributes="href string:${here/pageUrl}/editform"
+      tal:condition="not:skip_e_accesskey|nothing" accesskey="e"></a>
+      <a tal:attributes="href python:here.wikiUrl() + '/externalEdit_/' +
+                         modules['Products.PythonScripts.standard'].url_quote(here.id()) +
+                         '?borrow_lock=1'" accesskey="x" tal:condition="here/isExternalEditEnabled"></a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,82 @@
+<html>
+  <body>
+    <div metal:define-macro="pageheader" id="pageheaderall" class="pageheader">
+      <div metal:use-macro="here/macros/accesskeys" />
+      <div metal:use-macro="here/macros/links" />
+      <div id="pageheader">
+        <form method="GET"
+              tal:define="methodname string:searchwiki;
+                          pagename string:SearchPage;
+                          page python:here.pageWithName(pagename);
+                          pagehasdtml python:page and page.dtmlAllowed() and page.hasDynamicContent();
+                          url python:(pagehasdtml and page.id()) or (here.defaultPageId()+'/'+methodname);
+                          "
+              tal:attributes="action python:here.wikiUrl()+'/'+url;"
+              >
+          <table width="100%" border="0" cellspacing="0">
+            <tr>
+              <!-- logo -->
+              <td id="logo" width="1%" valign="top" class="logo"
+                  tal:condition="not:here/usingPloneSkin">
+                <span metal:define-macro="logolink" tal:omit-tag="">
+                  <a tal:attributes="href here/homeUrl"
+                     title="go to home page"
+                     i18n:attributes="title">
+                    <p tal:condition="nothing">workaround for zope bug http://www.zope.org/Collectors/Zope/2302 XXX use talsafe, also in latexwiki, mathaction </p>
+                    <img tal:condition="here/site_logo|nothing"
+                         tal:replace="structure here/site_logo"
+                         />
+                    <img tal:condition="not:here/site_logo|nothing"
+                         src="misc_/ZWiki/ZWikiPage_icon" height="48" width="48"
+                         border="0" alt="home" i18n:attributes="alt"
+                         />
+                  </a>
+                  &nbsp;
+                </span>
+              </td>
+              <!-- page name and context (parent topics) -->
+              <td align="left" width="79%" tal:define="COMPACT_PARENTS python:0">
+                <tal:block tal:condition="not:COMPACT_PARENTS">
+                  <ul tal:replace="structure
+                                   python:here.talsafe(here.context(request,enlarge_current=1))">
+                    <li>context<ul><li><h1 style="display:inline">page name</h1></li></ul></li>
+                  </ul>
+                </tal:block>
+                <tal:block tal:condition="COMPACT_PARENTS">
+                  <tal:block condition="here/ancestorsAsList"
+                             repeat="ancestor here/ancestorsAsList">
+                    <span tal:replace="structure python:here.talsafe(here.renderLinkToPage(ancestor))" />
+                    <small>>></small>
+                  </tal:block>
+                  <br />
+                  <br tal:condition="here/usingPloneSkin" />
+                  <h1 style="display:inline" tal:content="here/formattedPageName" >page name</h1>
+                </tal:block>
+              </td>
+              <!-- search form & page info -->
+              <td class="searchbox" width="20%" align="right">
+                <tal:block tal:condition="not:here/usingPloneSkin">
+                  <input id="searchinput" class="formfield"
+                         name="expr" type="text" size="20" maxlength="100" value=""
+                         title="search all pages" i18n:attributes="title" /><br />
+                  <span class="lasteditor" tal:content="structure python:here.talsafe(here.linkTitle(prettyprint=1))" /><br>
+                  <span class="creator"    tal:content="structure python:'created %s' % here.creation_time[:10]" />
+                </tal:block>
+                <tal:block tal:condition="here/usingPloneSkin">
+                  <span class="lasteditor" tal:content="structure python:here.talsafe(here.linkTitle(prettyprint=1))" /><br>
+                  <span class="creator"    tal:content="structure python:'created: %s' % here.creation_time[:10]" />
+                  <div metal:use-macro="python:
+                                        (hasattr(here,'document_actions')
+                                        and here.document_actions.macros['document_actions'])
+                                        or default
+                                        # degrade gracefully. By all means make this more elegant.." />
+                </tal:block>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+      <div metal:use-macro="here/macros/ratingform" />
+    </div>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+<html>
+  <head />
+  <body>
+    <!-- hierarchy navigation bar - off by default -->
+    <div metal:define-macro="hierarchylinks" tal:omit-tag="">
+      <div class="navpanel">
+        <table class="shade1" width="100%" border="0" cellspacing="0">
+          <tr valign="top">
+            <td align="left" width="33%">
+              <a tal:condition="here/previousPage" tal:attributes="href here/previousPageUrl"
+                 access_key='P' tal:content="python:'&lt;&lt;'+here.previousPage()">
+                &lt;&lt; PreviousPage
+              </a>
+            </td>
+            <td align="center" width="33%">
+              <a tal:condition="here/primaryParentName"
+                 tal:attributes="href here/upUrl"
+                 access_key='U'
+                 tal:content="python:'^^'+(here.primaryParentName() or 'wiki contents')">
+                ^^ParentPage
+              </a>
+            </td>
+            <td align="right" width="33%">
+              <a tal:condition="here/nextPage" tal:attributes="href here/nextPageUrl"
+                 access_key='N' tal:content="python:here.nextPage()+'&gt;&gt;'">
+                &gt;&gt;NextPage
+              </a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

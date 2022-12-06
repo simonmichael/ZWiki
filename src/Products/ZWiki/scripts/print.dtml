@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<TITLE><dtml-var "aq_parent.title"><dtml-var pageName></TITLE>
+<dtml-if standard_wiki_stylesheet><link rel="stylesheet" type="text/css" href="standard_wiki_stylesheet" /></dtml-if>
+<SCRIPT LANGUAGE="JavaScript">
+<!-- Begin
+function printdialog(text){
+text=document
+print(text)
+}
+//  End -->
+</script>
+</HEAD>
+<BODY>
+<dtml-if "REQUEST.get('with_children',0)">
+<dtml-call "REQUEST.set('print_w_children','1')">
+<dtml-else>
+<dtml-call "REQUEST.set('print_w_children','')">
+</dtml-if>
+<!-- display header -->
+<dtml-unless "REQUEST.get('no_print_header',0)">
+<p>
+<table width="100%"><tr><td><em>Printer friendly format for &dtml-pageUrl;
+<dtml-if "REQUEST.get('with_children',0)">
+and all child pages</dtml-if>
+:</em></td>
+<td align="right">
+<FORM><INPUT NAME="print" TYPE="button" VALUE="Print this document" ONCLICK="printdialog()"></FORM>
+Display
+<dtml-if print_w_children>
+<a href="&dtml-URL1;/print">without</a>
+<dtml-else>
+<a href="&dtml-URL1;/print?with_children=1">with</a>
+</dtml-if>
+child pages or
+<a href="&dtml-URL1;/print?<dtml-if print_w_children>with_children=1&amp;</dtml-if>no_print_header=1">without header</a>
+</td></tr></table>
+</p></dtml-unless>
+<!-- build page info -->
+<dtml-let folder="folder()">
+<dtml-if print_w_children>
+<dtml-call "REQUEST.set('page_offspring',offspringIdsAsList())">
+<dtml-else>
+<dtml-call "REQUEST.set('page_offspring',[])">
+</dtml-if>
+<!-- display page(s) -->
+<dtml-in "[id()] + page_offspring" prefix=x>
+<dtml-let page="folder[x_sequence_item]">
+<p>
+<table width="100%" border="0" cellspacing="0" cellpadding="3"
+bgcolor="#f0f0f0"
+><tr><td>
+<h1><dtml-var "page.pageName()"></h1>
+</td>
+</tr>
+</table>
+<dtml-try>
+<dtml-var "page(bare=1)">
+<dtml-except>
+<p>
+Could not render
+</p>
+</dtml-try>
+<br />
+</p>
+
+</dtml-let>
+</dtml-in>
+</dtml-let>
+</BODY>
+</HTML>

@@ -1,0 +1,144 @@
+<div style="margin:0 0 0 20%;">
+
+What is this ?
+
+  This site is a **wiki** - a kind of editable website that is easy and efficient
+  for one or many users to update. Here is <a
+  href="http://en.wikipedia.org/wiki/Wiki">more about wikis</a>.
+
+  **Zwiki** is the software running this wiki site. It's pretty easy to use, but
+  the following quick overview may be helpful. If you need more, please see the
+  User's Guide and other documentation at <a href="http://zwiki.org">zwiki.org</a>.
+
+<a name="navigation" />Getting around a zwiki
+
+  Zwiki's user interface comes in two main flavours: **standard** and
+  (when running inside a Plone site) **plone**.  Try hovering your
+  mouse pointer over user interface elements to see useful tooltips.
+  Standard navigation links are usually available, such as:
+
+  - **home** goes to the wiki's front page
+
+  - **changes** lists recently changed pages
+
+  - **options** lets you set a username
+    (may be required for editing.)
+
+  Pages in a wiki have unique names and can easily link to each other.
+  To see which wiki pages link to this one, click the large page title.
+  Zwiki keeps pages in a loose hierarchy, like an outline. When a page
+  has subtopics, these are linked just below the main text.
+  **contents** shows the full page hierarchy.
+
+<a name="changes" />Making changes
+
+  If the site administrator has allowed it, you can: create, edit,
+  comment, rename, reparent, and delete pages, and upload files and
+  images. Public zwikis often require that you set a username in
+  "options" before you can edit. Tips:
+
+  - Add comments using the comment form at the bottom of the
+    page. (These might be received by many subscribers - to avoid
+    that, use the SandBox page for tests.)  <br><br>
+
+  - Click **edit** to change a page's content.  You may also be able
+    to rename the page, change page type, or upload a file or image
+    here. Also you can enter a change note describing what you did.
+					<br><br>
+
+  - When you save, the text is formatted according to some <a
+    href="http://zwiki.org/Editing#how-to-format-your-text">markup
+    rules</a>, depending on the page type.  Eg, blank lines separate
+    paragraphs and &#42;&#42;bold&#42;&#42; becomes **bold**.
+    <br><br>
+
+  - **!WikiNames** in page text automatically link to the page with
+    that name. <b>![Free-form&nbsp;names]</b> do the same if enclosed
+    in square brackets. If the named page does not yet exist, a **?**
+    link will appear, which you can click when you are ready to create.
+    <br><br>
+
+  - When you create a page, it becomes a subtopic of the page you were
+    on before. In the backlinks view, which also lists parents and
+    subtopics, you can reparent the current page to move it to a new
+    place in the hierarchy.  Page urls are always top-level, so you
+    can rearrange the hierarchy freely without breaking links.
+				<br><br>
+
+  - When permitted, you will also see a quick page management form at
+    the bottom of every page. This is another way to
+    create, rename, reparent, or delete pages.
+
+<a name="email" />Interacting by email
+
+  **subscribe**, when available, lets you subscribe to one or more
+  pages, or the whole wiki, to receive email notifications. You can
+  receive just comments and new pages, or all edits.
+
+  Some zwikis also allow subscribers to post comments and create pages
+  by sending email. Just reply to a mail from the wiki, or send a new
+  mail to the wiki's mail-in address.  Your mail will go to the page
+  named in brackets in the subject (or to a default page).
+
+<a name="access-keys" />Keyboard shortcuts
+
+ Many actions may also be triggered via keyboard shortcuts.  Just hold
+ down **CONTROL** or **ALT** and press one of the access keys below.
+ (If it doesn't work, check the <a
+ href="http://en.wikipedia.org/wiki/Access_keys">browser-specific
+ instructions</a>.)
+
+ <table style="border:0;">
+ <tr style="vertical-align:top;">
+ <td style="padding-left:1em;">
+
+ wiki navigation
+
+  **f** &nbsp; go to **f**ront page <br>
+  **c** &nbsp; show wiki **c**ontents <br>
+  **r** &nbsp; show wiki **r**ecent changes <br>
+  **t** &nbsp; show issue **t**racker <br>
+  **i** &nbsp; show wiki **i**ndex <br>
+  **o** &nbsp; show user **o**ptions <br>
+  **h** &nbsp; show wiki **h**elp <br>
+  **0** &nbsp; (zero) show these access keys <br>
+
+ within a Plone site
+
+  **-** &nbsp; use the zwiki skin <br>
+  **+** &nbsp; use the plone skin <br>
+
+ </td>
+ <td style="padding-left:1em;">
+
+ page actions
+
+  **n** &nbsp; go to **n**ext page <br>
+  **p** &nbsp; go to **p**revious page <br>
+  **u** &nbsp; go **u**p to parent page <br>
+  **b** &nbsp; show **b**acklinks (what links here) <br>
+  **m** &nbsp; show **m**ail subscription status <br>
+  **e** &nbsp; **e**dit this page <br>
+  **x** &nbsp; edit with an e**x**ternal editor <br>
+  **d** &nbsp; show edit **d**iffs <br>
+  **y** &nbsp; show full edit histor**y** <br>
+  **v** &nbsp; return to main page **v**iew <br>
+
+ </td>
+ <td style="padding-left:1em;">
+
+ when editing a page
+
+  **s** &nbsp; **s**ave changes <br>
+  **w** &nbsp; previe**w** changes without saving <br>
+
+ when viewing edit diffs
+
+  **<** &nbsp; show previous diff, if any <br>
+  **>** &nbsp; show next diff, if any <br>
+
+ </td>
+ </tr>
+ </table>
+
+</div>

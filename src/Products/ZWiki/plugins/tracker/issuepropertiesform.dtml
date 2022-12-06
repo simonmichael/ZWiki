@@ -1,0 +1,83 @@
+<dtml-call "REQUEST.RESPONSE.setHeader('Content-Type','text/html; charset=utf-8')">
+<!-- issue properties form -->
+<form action="&dtml-pageUrl;/changeIssueProperties" method="post">
+<table border="0" cellspacing="0" cellpadding="5"
+bgcolor="&dtml-issueColour;">
+<tr><td>
+<b><dtml-translate domain="zwiki">Submitted by</dtml-translate>:</b>
+<dtml-var "_.getattr(this(),'creator','') or '(unknown)'">
+<b>at:</b>
+<dtml-var creation_time missing=""><dtml-let
+creation_time="_.getattr(this(),'creation_time','')"
+creation="_.DateTime(_.getattr(this(),'creation_time','') or 1007105000)"
+current="_.DateTime(ZopeTime().strftime('%Y/%m/%d %H:%M:%S'))"
+elapsed="current-creation"
+hourfactor="0.041666666666666664"
+minutefactor="0.00069444444444444447"
+secondsfactor="1.1574074074074073e-05"
+days="_.int(_.math.floor(elapsed))"
+weeks="days / 7"
+months="days / 30"
+years="days / 365"
+hours="_.int(_.math.floor((elapsed-days)/hourfactor))"
+minutes="_.int(_.math.floor((elapsed-days-hourfactor*hours)/minutefactor))"
+seconds="_.int(_.round((elapsed-days-hourfactor*hours-minutefactor*minutes)/secondsfactor))"
+> (<dtml-unless creation_time>unknown, ></dtml-unless><dtml-if years>
+<dtml-var years> year<dtml-var "years > 1 and 's' or ''">
+<dtml-elif months>
+<dtml-var months> month<dtml-var "months > 1 and 's' or ''">
+<dtml-elif weeks>
+<dtml-var weeks> week<dtml-var "weeks > 1 and 's' or ''">
+<dtml-elif days>
+<dtml-var days> day<dtml-var "days > 1 and 's' or ''">
+<dtml-elif hours>
+<dtml-var hours> hour<dtml-var "hours > 1 and 's' or ''">
+<dtml-elif minutes>
+<dtml-var minutes> minute<dtml-var "minutes > 1 and 's' or ''">
+<dtml-else>
+<dtml-var seconds> second<dtml-var "seconds > 1 and 's' or ''">
+</dtml-if> ago)
+</dtml-let>
+<br />
+<b><dtml-translate domain="zwiki">Name</dtml-translate>:</b>
+<b><input type="text" name="name" value="<dtml-var issueName html_quote>" size="50" maxlength="200" class="formfield" style="font-weight:bold;"></b>
+<dtml-let
+  issue_categories="_.getattr(this(),'issue_categories','') or ['general']"
+  issue_severities="_.getattr(this(),'issue_severities','') or ['serious','normal','wishlist']"
+  issue_statuses="_.getattr(this(),'issue_statuses','') or ['open','closed']"
+  >
+<br />
+<b><dtml-translate domain="zwiki">Category</dtml-translate>:</b>
+<select name="category" class="formfield">
+<dtml-in issue_categories prefix=x>
+<option <dtml-if "category==x_sequence_item">selected</dtml-if>>
+&dtml-x_sequence_item;</option>
+</dtml-in>
+</select>
+<b><dtml-translate domain="zwiki">Severity</dtml-translate>:</b>
+<select name="severity" class="formfield">
+<dtml-in issue_severities prefix=x>
+<option <dtml-if "severity==x_sequence_item">selected</dtml-if>>
+&dtml-x_sequence_item;</option>
+</dtml-in>
+</select>
+<b><dtml-translate domain="zwiki">Status</dtml-translate>:</b>
+<select name="status" class="formfield">
+<dtml-in issue_statuses prefix=x>
+<option <dtml-if "status==x_sequence_item">selected</dtml-if>>
+&dtml-x_sequence_item;</option>
+</dtml-in>
+</select>
+</dtml-let>
+<br /><b><dtml-translate domain="zwiki">Optional subject</dtml-translate>:</b> <input type="text" name="log" value="" size="55" maxlength="100" class="formfield">&nbsp;
+<input name="submit" type="submit" value="Change">
+<br />
+<b><dtml-translate domain="zwiki">Optional comment</dtml-translate>:</b> <textarea
+wrap="virtual" name="text" rows="3" cols="50" class="formfield"
+style="vertical-align:top"
+title=""
+i18n:attributes="title">
+</textarea>
+</td></tr></table>
+</form>
+<!-- end of issue properties form -->

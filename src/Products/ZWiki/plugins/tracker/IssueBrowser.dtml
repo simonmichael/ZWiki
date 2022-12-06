@@ -1,0 +1,154 @@
+
+<dtml-comment>
+
+--------------------------------------
+
+**dtml not enabled**
+
+This page looks **broken**, because it needs dtml enabled to work.
+
+You can enable dtml by setting a boolean property called allow_dtml to true
+on this page.
+
+You might then want to lock this page by going to the security tab and
+unchecking the "Zwiki:Edit pages" and "Zwiki:Add comments" permissions
+from non-manager users if you are security conscious.
+
+--------------------------------------
+
+</dtml-comment>
+
+<!-- category box and font sizes adjusted for number of open issues -->
+<a name="categories"></a>
+<dtml-let
+    cols="issue_categories
+          #or, a list of issue category prefixes.. categories with the same prefix
+          #will be grouped in columns"
+    items=issue_categories
+    barearg="'bare' in QUERY_STRING and '&bare=%s'%REQUEST.get('bare') or ''"
+    href="lambda x:'%s?category=%s&sort_on=status_index%s'%(_['URL'],_.this.urlquote(x),_['barearg'])"
+    num="_.len(issue_categories)"
+    itemsbeginningwith="lambda x:[i for i in _['items'] if i.startswith(x)]"
+    colvalues="[itemsbeginningwith(i) for i in cols]"
+    numcols="_.len(cols)"
+    longest="max([_.len(col) for col in colvalues])"
+    >
+<table width="100%" border=0 cellpadding="0" cellspacing="0"
+  <tr>
+    <td colspan="&dtml-numcols;" align="center">
+      <em>
+issue categories sized and coloured according to open issues
+(also
+<dtml-comment>
+<dtml-if barearg>
+<a href="&dtml-URL;">with skin</a>,
+<dtml-else>
+<a href="<dtml-var "URL+'?bare=1'">">bare</a>,
+</dtml-if>
+</dtml-comment>
+<a href="&dtml-trackerUrl;">issue tracker</a>,
+<a href="&dtml-filterUrl;">filter issues</a>
+)
+      </em>
+
+    </td>
+  </tr>
+  <tr valign="top">
+    <dtml-in "_.range(_.len(cols))" prefix=col>
+      <td width="<dtml-var "'%s%%'%(100/_.len(cols))">">
+        <table border="0" width="100%">
+        <dtml-in "_.range(longest)" prefix=row>
+        <dtml-let
+          row=row_sequence_item
+          col=col_sequence_item
+          >
+          <dtml-if "row < _.len(colvalues[col])">
+          <dtml-let
+            item="colvalues[col][row]"
+            open="pages(isIssue=1,category=item,status=['open','pending'])"
+            all="pages(isIssue=1,category=item)"
+            issues="open or all"
+            highestseverity="min([i.severity_index for i in issues]+[5]) #XXX your highest severity_index"
+            firsthighissue="([i for i in issues if i.severity_index==highestseverity]+[None])[0]"
+            colour="firsthighissue and firsthighissue.issueColour or '#bbeebb'"
+            bold="item == REQUEST.get('category','')"
+            >
+            <tr height="<dtml-var "'%s'%(10+_.len(open)/2)">"
+                style="font-size:<dtml-var "'%spt'%(10+_.len(open)/4)">">
+            <td bgcolor="&dtml-colour;" style="<dtml-var "bold and 'border:2px black solid' or ''">">
+              <dtml-var "bold and '<b>' or ''">
+              <a href="<dtml-var "href(item)">"
+                >&dtml-item;&nbsp;<dtml-var "_.len(open)">
+              </a>
+              <dtml-var "bold and '</b>' or ''">
+            </td>
+            </tr>
+          </dtml-let>
+          <dtml-else>
+            <tr>
+            <td>&nbsp;</td>
+            </tr>
+          </dtml-if>
+        </dtml-let>
+      </dtml-in>
+      </table>
+      </td>
+    </dtml-in>
+  </tr>
+</table>
+</dtml-let>
+<dtml-if "REQUEST.get('category','')">
+<a name="issues"></a>
+<hr class="issuebrowser" style="border:1px black solid" />
+<dtml-let
+    category="REQUEST.get('category')"
+    barearg="'bare' in QUERY_STRING and '&bare=%s'%REQUEST.get('bare') or ''"
+    issues="pages(isIssue=1,category=category,sort_on='creation_time',sort_order='descending')"
+    openissues="pages(isIssue=1,category=category,status=['open','pending'],sort_on='creation_time',sort_order='descending')"
+    items=openissues
+    href="lambda x:'&dtml-URL;?category=&dtml.url_quote-%s;&sort_on=status_index'%x"
+    num="_.len(items)"
+    cols="_.max(2,_.min(_.int(_.round(_.math.sqrt(num))),6))"
+    rows="num/cols + ((num%cols) and 1)"
+    >
+<table width="100%" border=0>
+  <dtml-in "_.range(rows)" prefix=row>
+    <tr height="<dtml-var "'%s%%'%(100/(rows+1))">">
+      <dtml-in "_.range(cols)" prefix=col>
+        <dtml-let
+          row=row_sequence_item
+          col=col_sequence_item
+          itemno="row*cols+col"
+          >
+          <dtml-if "itemno < num">
+          <dtml-with "items[itemno]">
+            <dtml-let bold="id == REQUEST.get('issue','')">
+            <td bgcolor="&dtml-issueColour;"
+                width="<dtml-var "'%s%%'%(100/cols)">"
+                 style="<dtml-var "bold and 'border:2px black solid' or ''">">
+            <dtml-var "bold and '<b>' or ''">
+              <a href="&dtml-URL;?category=&dtml-category;&issue=&dtml-id;&dtml-barearg;#issue"
+                   title="<dtml-var "'' #page.linkTitle()">">&dtml-Title;</a>
+            <dtml-var "bold and '</b>' or ''">
+            </td>
+            </dtml-let>
+          </dtml-with>
+          <dtml-else>
+            <td>&nbsp;</td>
+          </dtml-if>
+        </dtml-let>
+      </dtml-in>
+    </tr>
+  </dtml-in>
+</table>
+</dtml-let>
+</dtml-if>
+<dtml-if "REQUEST.get('issue','')">
+<a name="issue"></a>
+<hr class="issuebrowser" style="border:1px black solid" />
+<dtml-var "include(REQUEST.get('issue'))">
+
+<dtml-with "pageWithId(issue)">
+(<a href="&dtml-id;/editform">edit</a>, <a href="&dtml-id;#bottom">comment</a> this issue)
+</dtml-with>
+</dtml-if>
